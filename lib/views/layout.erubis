@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+{%= stylesheet_link_tag "/stylesheets/screen.css", "/stylesheets/uv.css", "/stylesheets/application.css" %}
+{%= stylesheet_link_tag "/stylesheets/print.css", :media => "print" %}
+<!--[if IE]>
+{%= stylesheet_link_tag "/stylesheets/ie.css" %}
+<![endif]-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{%= javascript_script_tag "/javascripts/application.js" %}
+
+{%= output_filler_for(:head) -%}
+
+<title>{%= filler_for?(:title) ? "WB@NOSQL//" + output_filler_for(:title) : "WB@NOSQL" %}</title>
+
+</head>
+
+<body>
+
+<header>
+  <div class="left">D31AAE36D58CB3C21981974AA335E32AF90C</div>
+  <div class="right"><a href="/nosql/">WB@NOSQL</a></div>
+</header>
+
+<article>
+{% if filler_for?(:title) && show_title? %}
+<h1>{%= output_filler_for(:title) %}</h1>
+{% end %}
+{%= yield %}
+</article>
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-20399167-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</body>
+</html>

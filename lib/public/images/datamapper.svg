@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640px"
+   height="480px"
+   id="svg12"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="datamapper.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/wbzyl/public_git/tutorials/datamapper-tutorial/lib/public/images/datamapper.png"
+   inkscape:export-xdpi="60"
+   inkscape:export-ydpi="60">
+  <defs
+     id="defs14">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 240 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="640 : 240 : 1"
+       inkscape:persp3d-origin="320 : 160 : 1"
+       id="perspective20" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0541667"
+     inkscape:cx="320"
+     inkscape:cy="240"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="727"
+     inkscape:window-x="0"
+     inkscape:window-y="25" />
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <text
+       xml:space="preserve"
+       style="font-size:48;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#800000;font-family:Cyklop;-inkscape-font-specification:Cyklop Italic"
+       x="44.192635"
+       y="111.69319"
+       id="text2018"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2020"
+         x="44.192635"
+         y="111.69319">WB</tspan></text>
+    <g
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Titania MF;-inkscape-font-specification:Titania MF"
+       id="text2022"
+       transform="matrix(0.9659258,-0.258819,0.258819,0.9659258,-73.301956,61.701304)">
+      <path
+         d="M 237.90989,69.02862 C 237.90986,69.172667 237.81389,69.412667 237.62189,69.74862 L 208.53389,116.76462 C 208.34189,117.14862 208.12589,117.34062 207.88589,117.34062 C 207.64589,117.34062 207.45389,117.26862 207.30989,117.12462 L 205.36589,115.75662 C 205.07789,115.56462 204.93389,115.37262 204.93389,115.18062 C 204.93389,115.03662 205.07789,114.72462 205.36589,114.24462 L 234.23789,67.66062 C 234.42986,67.276669 234.62186,67.084669 234.81389,67.08462 C 235.00586,67.084669 235.22186,67.15667 235.46189,67.30062 L 237.62189,68.52462 C 237.81386,68.62067 237.90986,68.788668 237.90989,69.02862"
+         id="path2910" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#d40000;font-family:Cyklop;-inkscape-font-specification:Cyklop Bold Italic"
+       x="168.50166"
+       y="111.69319"
+       id="text2026"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2028"
+         x="168.50166"
+         y="111.69319">Datamapper</tspan></text>
+  </g>
+</svg>

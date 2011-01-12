@@ -1,0 +1,9 @@
+.bundle
+.rvmrc
+log
+pkg
+*~
+.\#*
+\#*
+*.sqlite3
+lib/tmp/**/*

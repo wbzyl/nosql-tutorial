@@ -1,0 +1,11 @@
+--- 
+- !ruby/object:Contact 
+  email: joe@somewhere.abc
+  extras: 
+    :instrument: Cello
+  home: 
+    :street1: 123 Main Street
+    :city: Somewhere
+  name: Joe Smith
+  work: 
+    :phone: (000) 123-4567

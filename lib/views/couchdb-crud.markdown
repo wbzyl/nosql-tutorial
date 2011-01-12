@@ -1,0 +1,311 @@
+#### {% title "Korzystamy z RESTFUL API" %}
+
+Korzystamy z dokumentacji API CouchDB:
+[HTTP Document API](http://wiki.apache.org/couchdb/HTTP_Document_API).
+
+Pzykładowe dokumenty będziemy zapisywać w bazie o nazwie **lz**.
+Umieścimy w niej trochę danych o zespole rockowym „Led Zeppelin”.
+Informacje o zespole skopiowałem ze strony A. Reisner’a
+[Led Zeppelin site](http://ledzeppelin.alexreisner.com/discography.html).
+
+<blockquote>
+ {%= image_tag "/images/led-zeppelin-i.jpg", :alt => "[Led Zeppelin I]" %}
+</blockquote>
+
+**Led Zeppelin I** / Released January 12, 1969
+
+1. Good Times Bad Times (Page/Jones/Bonham)
+2. Babe I'm Gonna Leave You (Page/Plant/Anne Bredon)
+3. You Shook Me (Willie Dixon)
+4. Dazed and Confused (Page)
+5. Your Time Is Gonna Come (Page/Jones)
+6. Black Mountain Side (Page)
+7. Communication Breakdown (Page/Jones/Bonham)
+8. I Can't Quit You Baby (Willie Dixon)
+9. How Many More Times (Page/Jones/Bonham)
+
+<blockquote>
+ {%= image_tag "/images/led-zeppelin-ii.jpg", :alt => "[Led Zeppelin II]" %}
+</blockquote>
+
+**Led Zeppelin II** / Released October 22, 1969
+
+1. Whole Lotta Love (Page/Plant/Jones/Bonham)
+2. What Is and What Should Never Be (Page/Plant)
+3. The Lemon Song (Page/Plant/Jones/Bonham)
+4. Thank You (Page/Plant)
+5. Heartbreaker (Page/Plant/Jones/Bonham)
+6. Living Loving Maid (She's Just a Woman) (Page/Plant)
+7. Ramble On (Page/Plant)
+8. Moby Dick (Page/Jones/Bonham)
+9. Bring it on Home (Page/Plant)
+
+<blockquote>
+ {%= image_tag "/images/led-zeppelin-iii.jpg", :alt => "[Led Zeppelin III]" %}
+</blockquote>
+
+**Led Zeppelin III** / Released October 5, 1970
+
+1. Immigrant Song (Page/Plant)
+2. Friends (Page/Plant)
+3. Celebration Day (Page/Plant/Jones)
+4. Since I've Been Loving You (Page/Plant/Jones)
+5. Out On the Tiles (Page/Plant/Bonham)
+6. Gallows Pole (Traditional)
+7. Tangerine (Page)
+8. That's the Way (Page)
+9. Bron-Y-Aur Stomp (Page/Plant/Jones)
+10. Hats Off to (Roy) Harper (Traditional)
+
+Zaczynamy od utworzenia bazy:
+
+    curl -X PUT http://127.0.0.1:4000/lz/
+
+**Uwagi:**
+
+1. Przykładowy numer portu *4000* należy zmienić na taki jaki mamy
+  ustawiony w swojej konfiguracji CouchDB.
+2. W przykładach numer rewizji wpisany w fomacie **?-XXXX**
+  należy wstawić prawdziwy numer rewizji dokumentu.
+
+W bazie będziemy umieszczać dane w następującym formacie:
+
+    :::yaml
+    title: Led Zeppelin I
+    songs: ['Good Times Bad Times', 'Dazed and Confused']
+    cover: obrazek okładki (załącznik)
+
+
+## CRUD na dokumentach
+
+Dodajemy dane pierwszego albumu:
+
+    :::shell-unix-generic
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i \
+      --data '{"title":"Led Zeppelin I","released":"January 12, 1969","songs":["Good Times Bad Times","Dazed and Confused"]}'
+    {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
+
+Dodajemy załącznik (czyli wykonujemy *update*):
+
+    :::shell-unix-generic
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
+    {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
+
+Uwagi:
+
+1\. Dane dla opcji *--data* wpisujemy w jednym wierszu.
+
+2\. Zamiast podawać swój
+[UUID](http://en.wikipedia.org/wiki/Universally_Unique_Identifier),
+na przykład „houses-of-the-holy”, możemy skorzystać z funkcji
+*use UUID generated document ID*:
+
+    :::shell-unix-generic
+    curl -X POST http://localhost:4000/lz  -H "Content-Type: application/json" \
+      --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
+    {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
+
+Ale w wypadku bazy LZ, użycie z identyfikatora
+*076c85dcf037c293f237c44eac0000a8* zamiast *houses-of-the-holy* nie
+jest to dobrym pomysłem (dlaczego?).
+
+3\. Obrazek zapisany w bazie pobieramy korzystając z takiego url:
+
+    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg
+
+**Ważne:** załączniki **nie** są serwowane jako obiekty JSON.
+Są serwowane *as is* plus w nagłówku dodawany jest wcześniej podany
+*Content-Type*.
+
+Dodawanie pojedynczo rekordów do bazy jest męczące.
+[HTTP Bulk Document API](http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API)
+ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
+
+    curl -X POST -H "Content-Type: application/json" --data @lz.json http://127.0.0.1:4000/lz/_bulk_docs
+
+gdzie w pliku *lz.json* wpisujemy:
+
+    :::javascript lz.json
+    {
+      "docs": [
+         {"_id": "led-zeppelin-ii",
+          "title": "Led Zeppelin II",
+          "released": "October 22, 1969",
+          "songs": ["Whole Lotta Love"]},
+         {"_id": "led-zeppelin-iii",
+          "title": "Led Zeppelin III",
+          "released": "October  5, 1970",
+          "songs": ["Friends","That's the Way"]}
+      ]
+    }
+
+*Uwaga:* Daty powinniśmy wpisywać korzystając z *new Date*, jakoś tak (dlaczego?):
+
+    :::javascript
+    new Date(1969,9,23)
+
+Niestety, obrazki musimy dodać ręcznie. Będziemy potrzebować wartości *rev*.
+
+
+### *_ALL_DOCS* – użyteczny uri
+
+**Użyteczny**, bo wypisuje numery rewizji dokumentów:
+
+    :::shell-unix-generic
+    curl -X GET http://127.0.0.1:4000/lz/_all_docs
+      {"id":"076c...",         "key":"076c...",         "value":{"rev":"1-3b3e..."}},
+      {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
+      {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
+      {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
+    ]}
+
+Do uri możemy dopisać *query parameters*, które modyfikują zwracany
+obiekt JSON. JSON jest posortowany według pola *key*.
+
+Dla przykładu, dopisanie *descending=true* zmienia kolejność dokumentów:
+
+    curl -X GET http://127.0.0.1:4000/lz/_all_docs?descending=true
+
+Dopisująć to i owo na końcu uri, można pobrać kilka dokumentów za jednym żądaniem,
+np. tylko jeden dokument:
+
+    curl -X GET http://127.0.0.1:4000/lz/_all_docs?descending=true\&limit=1
+
+albo pobrać dokumenty z zawartością:
+
+    curl -X GET http://127.0.0.1:4000/lz/_all_docs?include_docs=true
+
+Ostatnie polecenie, to dobry sposób na to, aby „ogłupić” terminal.
+
+
+### Update ≡ Replace ?
+
+Uaktualniamy, tak naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
+
+    curl -X PUT http://127.0.0.1:4000/lz/076c... \
+       --data '{"_rev":"1-XXXX","songs":["The Song Remains The Same"]}'
+
+Ale załącznik dodajemy:
+
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/robert_plant.jpg?rev=4-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @robert_plant.jpg
+
+Dodajemy okładki do albumu II oraz III:
+
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @led-zeppelin-ii.jpg
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
+
+
+### Delete
+
+Usuwamy dokument z „Houses Of The Holy” z bazy:
+
+    curl -X DELETE http://127.0.0.1:4000/lz/076c...?rev=2-XXXX
+
+
+### Get
+
+Pobieramy dokument:
+
+    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i
+    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i?all_doc=true ???
+
+
+### Copy
+
+Kopiujemy dokument z *led-zeppelin-i*:
+
+    curl -X COPY http://127.0.0.1:4000/lz/led-zeppelin-i -H "Destination: mothership"
+
+Czy można użyć kopiowania do czegoś sensownego?
+
+
+# Dziwny przykład
+
+Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-i*:
+
+    :::html i.html
+    <!doctype html>
+    <meta charset="utf-8" />
+    <title>Led Zeppelin I</title>
+    <h1>Led Zeppelin I</h1>
+    <p>
+      <img src="/lz/led-zeppelin-i/cover.jpg" alt="cover">
+    </p>
+
+za pomocą polecenia:
+
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/index.html?rev=2-XXXX \
+      -H "Content-Type: text/html" --data @i.html
+
+i po wpisaniu w przeglądarce:
+
+    http://localhost:4000/lz/led-zeppelin-i/index.html
+
+widzimy stronę z obrazkiem.
+
+
+# Pokrętny przykład
+
+Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-ii*:
+
+    :::html ii.html
+    <!doctype html>
+    <meta charset="utf-8" />
+    <title>Led Zeppelin II</title>
+
+    <h1>Led Zeppelin II</h1>
+    <p>
+      <img src="/lz/led-zeppelin-ii/cover.jpg" alt="cover">
+    </p>
+    <ul id="songs">
+    </ul>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+    <script>
+    $(function() {
+      var ul = $('#songs');
+      $.getJSON('/lz/led-zeppelin-ii', function(data) {
+        /* a bit of debugging */
+        console.log(ul);
+        console.log(data);
+        $.each(data.songs, function(i,e) { ul.append('<li>'+e+'</li>') });
+      });
+    });
+    </script>
+
+Polecenie:
+
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-ii/index.html?rev=8-XXXX \
+      -H "Content-Type: text/html" --data @ii.html
+
+Teraz po wejściu na stronę:
+
+    http://localhost:4000/lz/led-zeppelin-ii/index.html
+
+mamy pod okładką listę utworów.
+
+
+# Replikacja – jakie to proste!
+
+Replikujemy bazę *lz*:
+
+    :::shell-unix-generic
+    curl -X POST http://127.0.0.1:4000/_replicate -H "Content-Type: text/html" \
+      --data '{"source":"lz","target":"lz2-replica","create_target":true}'
+
+    {"ok":true,"session_id":"1410...","source_last_seq":16,"history":
+       [{"session_id":"1410...",
+         "start_time":"Thu,...","end_time":"Thu,...",
+         "start_last_seq":0,"end_last_seq":16,
+         "recorded_seq":16,"missing_checked":0,"missing_found":5,
+         "docs_read":5,"docs_written":5,"doc_write_failures":0}]}
+
+Na razie tyle o replikacji.
+
+
+[couchdb]: http://books.couchdb.org/relax/ "CouchDB: The Definitive Guide"
+[couchdb wiki]: http://wiki.apache.org/couchdb/ "Couchdb Wiki"

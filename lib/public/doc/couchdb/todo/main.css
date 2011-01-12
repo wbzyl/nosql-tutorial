@@ -1,0 +1,93 @@
+body {
+  font-size: 18px;
+  width: 720px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+h1 {
+  padding: 4px 4px 4px 18px;
+  background-color: #761A9A;
+  color: #fff;
+}
+
+p {
+  border: 1px solid #342c03;
+  color: #342c03;
+  background-color: #f0ffc2;
+  padding: 9px 9px 9px 18px;
+  margin: 0 0 18px 0;
+}
+
+fieldset {
+  margin: 18px 0;
+  background-color: #ddd;
+}
+
+legend {
+  padding: 2px 4px;
+  background-color: #bbb;
+  font-weight: bold;
+  font-size: 90%;
+}
+
+label {
+  font-weight: bold;
+  font-size: 80%;
+}
+
+textarea {
+  width: 98%;
+  height: 54px;
+  margin-bottom: 9px;
+}
+
+#task_count {
+  font-size: 80%;
+  color: #666;
+}
+
+#task_count span{
+  font-weight: bold;
+}
+
+ul#my_tasks {
+  list-style: none;
+  margin: 0; padding: 0;
+  border: 1px solid #aaa;
+  border-top: none;
+}
+
+ul#my_tasks li {
+  display: block;
+  padding: 9px;
+  background-color: #fff;
+  border-top: 1px solid #aaa;
+}
+
+ul#my_tasks div.desc {
+  width: 80%;
+  float: left;
+}
+
+ul#my_tasks li div.link {
+  width: 20%;
+  float: left;
+  text-align: right;
+}
+
+ul#my_tasks li div.clear {
+  clear: both;
+}
+
+ul#my_tasks li a {
+  background-color: maroon;
+  color: #fff;
+  padding: 4px;
+  border: 1px solid black;
+  text-decoration: none;
+}
+
+ul#my_tasks li a:hover {
+  background-color: red;
+}
