@@ -1,6 +1,13 @@
 #### {% title "Zadania" %}
 
-# Document-oriented applications
+<blockquote>
+ <p>
+   After three days without programming, life becomes meaningless.
+ </p>
+ <p class="author">[The Tao of Programming 2.1]</p>
+</blockquote>
+
+Typowe zastosowania dokumentowych baz danych to:
 
 * Contact Address/Phone Book
 * Forum/Discussion
@@ -16,6 +23,13 @@
 
 
 # Zadania
+
+<blockquote>
+ <p>
+  A well-written program is its own heaven; a poorly-written program is its own hell.
+ </p>
+ <p class="author">[The Tao of Programming 4.1]</p>
+</blockquote>
 
 0\. Przygotować przykład korzystający
 z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
