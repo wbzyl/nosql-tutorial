@@ -2,7 +2,6 @@
 
 # Document-oriented applications
 
-* CRM
 * Contact Address/Phone Book
 * Forum/Discussion
 * Bug Tracking
@@ -13,17 +12,26 @@
 * Time Sheets
 * E-mail
 * Help/Reference Desk
+* CRM(?)
 
 
 # Zadania
 
+0\. Przygotować przykład korzystający
+z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
+Więcej dokumentacji – [Mozilla Developer Network](https://developer.mozilla.org/en-US/).
+
+Przykład aplikacji offline korzystającej z HTML5 localStorage, np. Offline Apps
+[Part 1](http://railscasts.com/episodes/247) & [Part 2](http://railscasts.com/episodes/248).
+
+
 1\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
 is a web service that enables you to do interactive analysis of
-massively large datasets. 
+massively large datasets.
 Both RESTful and JSON-RPC methods are available. Queries are expressed
 in a SQL dialect.
 
-2\. [Building a Twitter Filter With Sinatra, Redis, and 
+2\. [Building a Twitter Filter With Sinatra, Redis, and
 TweetStream](http://www.digitalhobbit.com/2009/11/08/building-a-twitter-filter-with-sinatra-redis-and-tweetstream/).
 
 Przykłady:
@@ -45,16 +53,16 @@ Linki:
 
 6\. Redis:
 
-* Rob Watson. [A Redis-powered newsfeed 
+* Rob Watson. [A Redis-powered newsfeed
   implementation](http://rfw.posterous.com/a-redis-powered-newsfeed-implementation)
 
 7\. NodeJS:
 
-* Rob Watson. [How NodeJS saved my web 
+* Rob Watson. [How NodeJS saved my web
   application](http://rfw.posterous.com/how-nodejs-saved-my-web-application)
 
 8\. Michael Dirolf.
-[Getting Non-Relational with MongoDB](http://www.softdevtube.com/2010/03/15/getting-non-relational-with-mongodb/) — 
+[Getting Non-Relational with MongoDB](http://www.softdevtube.com/2010/03/15/getting-non-relational-with-mongodb/) —
 This talk will introduce MongoDB and discuss some of the reasons why
 MongoDB might be the right choice for your project. It will include an
 overview of MongoDB as well as detailed examples using MongoDB in
@@ -64,7 +72,7 @@ Ruby.
 
 9\. [MySQL vs MongoDB](http://blog.boardtracker.com/viewtopic.php?f=4&t=75)
 
-10\. Ian Warshak. 
+10\. Ian Warshak.
 [Faceted search with MongoDB](http://ianwarshak.posterous.com/faceted-search-with-mongodb) —
 przepisać na CouchDB.
 
