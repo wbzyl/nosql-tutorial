@@ -33,15 +33,16 @@ Klonujemy repozytoria ze źródłami:
     cd $HOME/.node_modules
     git clone git://github.com/LearnBoost/Socket.IO-node.git socket.io
 
-Uwagi: (1) katalog *$HOME/.node_modules* jest w ścieżce *LOAD_PATH*
-programu *node*.
+Uwagi: (1) katalog *$HOME/.node_modules* jest w ścieżkach z *LOAD_PATH*
+programu *node* (2) dodajemy katalog *$HOME/.node/bin* do zmiennej
+*PATH*.
 
 
 ## Chat
 
 Program *chat* to program „hello world” dla websockets.
 
-Serwer *server.js*:
+Serwer *server.js* („2in1” – serwer www + serwer dla websocket):
 
     :::javascript
     var http = require('http')
