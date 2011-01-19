@@ -214,7 +214,7 @@ Następnie w katalogu *redis* wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     make
-    make PREFIX=/home/wbzyl/.nosql/ install
+    make PREFIX=/home/wbzyl/.nosql install
     make test
 
 Edytujemy plik *redis.conf*:
