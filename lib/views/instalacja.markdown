@@ -1,5 +1,9 @@
 #### {% title "Instalacja & Konfiguracja" %}
 
+<blockquote>
+ {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
+</blockquote>
+
 Przygotowałem archiwum *NoSQL* z bazami i skryptami do ich uruchamiania.
 Paczkę rozpakowujemy w katalogu domowym:
 
@@ -17,6 +21,13 @@ W tym celu w pliku *~/.bashrc* dopisujemy:
 Poniżej opisałem jak powstawała paczka *NoSQL*, jak skonfigurować bazy
 oraz jak przetestować instalację.
 
+Do uruchamiania demonów kontaktujących nas z bazami przygotowałem dwa
+skrypty:
+
+* *mongo.sh*
+* *redis.sh*
+
+Demon dla bazy CouchDB, to *couchdb*.
 
 # CouchDB
 
@@ -39,12 +50,15 @@ Edytujemy w pliku *local.ini*, sekcję *httpd*:
 
     :::ini ~/.node/etc/couchdb/local.ini
     [httpd]
-    port = XXXX             # numer zostanie przydzielony na pierwszych zajęciach
+    ; numery portów zostaną rozdysponowane na pierwszych zajęciach
+    port = XXXX
     bind_address = 0.0.0.0
     ; ???
-    ; To enable Virtual Hosts in CouchDB, add a vhost = path directive. All requests to
-    ; the Virual Host will be redirected to the path. In the example below all requests
-    ; to http://example.com:5984/ are redirected to /database.
+    ; To enable Virtual Hosts in CouchDB, 
+    ; add a vhost = path directive. All requests to
+    ; the Virual Host will be redirected to the path. 
+    ; In the example below all requests to 
+    ; http://example.com:5984/ are redirected to /database.
     [vhosts]
     127.0.0.1:4000 = /database/
 
