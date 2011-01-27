@@ -96,3 +96,4 @@ Różne:
 * [**Open**Government](http://opengovernment.org/) (źródła na [githubie](https://github.com/opengovernment))
 * Rob Ashton.
   [RavenDB vs MongoDB - Why I don't usually bother](http://codeofrob.com/archive/2011/01/26/ravendb-vs-mongodb-why-i-dont-usually-bother.aspx)
+* [Data Modeling in Performant Systems](http://railstips.org/blog/archives/2011/01/27/data-modeling-in-performant-systems/) (from [Moneta](https://github.com/wycats/moneta) to [ToyStore](https://github.com/newtoy/toystore))
