@@ -94,3 +94,5 @@ Różne:
 * [Fluid user interface components](http://www.fluidproject.org/).
   [Setting Up CouchDB and Lucene](http://wiki.fluidproject.org/display/fluid/Setting+Up+CouchDB+and+Lucene)
 * [**Open**Government](http://opengovernment.org/) (źródła na [githubie](https://github.com/opengovernment))
+* Rob Ashton.
+  [RavenDB vs MongoDB - Why I don't usually bother](http://codeofrob.com/archive/2011/01/26/ravendb-vs-mongodb-why-i-dont-usually-bother.aspx)
