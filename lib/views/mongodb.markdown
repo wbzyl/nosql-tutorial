@@ -23,7 +23,7 @@ MongoDB is a document-oriented database.
 * [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
 * [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
 * [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
-
+* [Journaling / Durability](http://www.mongodb.org/display/DOCS/Journaling)
 
 ## Różne
 
