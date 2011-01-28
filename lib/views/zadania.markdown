@@ -31,7 +31,7 @@ Typowe zastosowania dokumentowych baz danych to:
  <p class="author">[The Tao of Programming 4.1]</p>
 </blockquote>
 
-0\. Przygotować przykład korzystający
+1\. Przygotować przykład korzystający
 z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
 Więcej dokumentacji – [Mozilla Developer Network](https://developer.mozilla.org/en-US/).
 
@@ -39,13 +39,27 @@ Przykład aplikacji offline korzystającej z HTML5 localStorage, np. Offline App
 [Part 1](http://railscasts.com/episodes/247) & [Part 2](http://railscasts.com/episodes/248).
 
 
-1\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
+2\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
+Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
+
+[streaming twitter into mongodb](http://eliothorowitz.com/post/459890033/streaming-twitter-into-mongodb):
+
+    curl http://stream.twitter.com/1/statuses/sample.json -u<user>:<password> | mongoimport -c twitter_live
+
+Zamiast twittera użyć YQL. Przygotować przykład.
+
+[YQL Guide](http://developer.yahoo.com/yql/guide/index.html).
+
+Using & Creating YQL Open Data Tables. Jak? Przykłady.
+
+
+3\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
 is a web service that enables you to do interactive analysis of
 massively large datasets.
 Both RESTful and JSON-RPC methods are available. Queries are expressed
 in a SQL dialect.
 
-2\. [Building a Twitter Filter With Sinatra, Redis, and
+4\. [Building a Twitter Filter With Sinatra, Redis, and
 TweetStream](http://www.digitalhobbit.com/2009/11/08/building-a-twitter-filter-with-sinatra-redis-and-tweetstream/).
 
 Przykłady:
