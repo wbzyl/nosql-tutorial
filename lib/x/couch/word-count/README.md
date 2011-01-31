@@ -1,24 +1,16 @@
-# Word count example
+# Word count example && Markov
 
-## TODO: Pierwszy sposób
+## markov
 
-Wykonać kolejno polecenia:
+Dodać kontekst na więcej wyrazów. Teraz jest 1 wyraz kontekstu.
 
-    ruby word_count.rb
-    ruby word_count_views.rb
-    ruby word_count_query.rb  # czekamy ok. 8–10 minut na szybkim komputerze
+## gem couch_docs
 
-## TODO: Drugi sposób
+Czy są jakieś zamienniki w innych klasach dla tego co robimy
+w *Rakefile* korzystając wyłącznie z klasy *CouchDocs::DesignDirectory*:
 
-Wykonać kolejno polecenia:
-
-    ruby word_count.rb
-    cd extra
-    couchapp push default
-    cd ..
-    ./markow dog  # czekamy ok. 15–20 minut na szybkim komputerze
-    ./markow dog
-    ./markow your
-    ./markow you    
-    ./markov love
-    ruby word_count_query.rb
+    desc "Upload database logic from _design/wc"
+    task :views do
+      require 'couch_docs'
+      dir = CouchDocs::DesignDirectory.new('_design/wc')
+      ...

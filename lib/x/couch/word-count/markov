@@ -13,7 +13,6 @@ require 'couchrest'
 
 couch = CouchRest.new("http://localhost:4000")
 Database = couch.database('gutenberg')
-
 @word_memoizer = {}
 
 def probable_follower_for(word)
