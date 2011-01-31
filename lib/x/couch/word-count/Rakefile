@@ -33,8 +33,11 @@ task :views do
   require 'couch_docs'
 
   dir = CouchDocs::DesignDirectory.new('_design/wc')
+
+  # konwertujemy katalog na argument dla *save_doc*
   doc = dir.to_hash
   # pp doc
+
   doc.update '_id' => '_design/wc', 'language' => 'javascript'
   rev = Database.get('_design/wc')['_rev'] rescue nil
   doc.update( {'_rev' => rev} ) if rev
