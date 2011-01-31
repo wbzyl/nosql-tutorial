@@ -1,0 +1,31 @@
+body {
+  font-size: 16px;
+  border-left: 30px solid #a64222;
+}
+
+pre {
+  padding: 0 0 0 30px;
+  font: bold 100%/1.5 "DejaVu Sans Mono", "Anonymous Pro", monospace;
+}
+
+h2 em {
+  font-weight: bold;
+  color: red;
+}
+
+#code {
+  width: 1111px;
+}
+
+#code h1 {
+  width: 880px;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 120%;
+  text-align: right;
+  padding: 10px 60px 12px 0;
+  margin-left: -30px;
+  color: #fff6aa;
+  border-left: 30px solid #777f66;
+  background-color: #38402d;
+}

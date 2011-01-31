@@ -56,6 +56,13 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 *  {%= link_to "Zadania", "/zadania" %}
 
 
+## Przykładowe bazy danych
+
+* {%= link_to "CouchDB", "/couchdb-databases" %}
+* {%= link_to "MongoDB", "/mongodb-databases" %}
+* {%= link_to "Redis", "/redis-databases" %}
+
+
 # Linki
 
 * [myNoSQL](http://nosql.mypopescu.com/)
