@@ -16,7 +16,7 @@ CouchDB stuff:
 
 W bazie zapiszemy dokumenty z info o fotografiach:
 
-    ::json pictures.json
+    :::json pictures.json
     [
       {"_id":"1","name":"fish.jpg","created_at":"Fri, 31 Dec 2010 14:50:03 GMT",
        "user":"bob","type":"jpeg","camera":"nikon",

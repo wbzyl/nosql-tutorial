@@ -6,33 +6,19 @@
   <a href="http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-architecture.html">Enterprise Web Application Architecture 2.0 and kittens</a></p>
 </blockquote>
 
-Czym jest [CouchApp](http://github.com/couchapp/couchapp),
-[Simple JavaScript Applications with CouchDB](http://couchapp.org/),
-oraz [What the HTTP is CouchApp?](http://couchapp.org/page/what-is-couchapp):
+[What the HTTP is CouchApp?](http://couchapp.org/page/what-is-couchapp):
 „CouchApp—a set of scripts that allow complete, stand-alone CouchDB
 applications to be built using just HTML and JavaScript. These
 applications are housed in the CouchDB database, meaning that when the
 database is replicated, any applications stored in that database are
 also replicated.”
 
-* Damien Katz.
-  [Chris demos CouchApps](http://blog.couch.io/post/399191405/screencast-demoing-some-new-couchapp-jquery)
-* Chris Storm. [couch_docs](http://github.com/eee-c/couch_docs) —
-  provides a mapping between CouchDB documents and the file system
-
-Przykłady aplikacji CouchApp i przykłady kodu:
-
-* Przykłady *in the wild* aplikacji napisanych w CouchApp:
-  [Apps](http://wiki.github.com/couchapp/couchapp/apps)
+* [CouchApp](http://github.com/couchapp/couchapp)
+* [Simple JavaScript Applications with CouchDB](http://couchapp.org/)
 * Chris Strom. [japh(r)](http://japhr.blogspot.com/search?q=couchapp)
 
 
 ## Instalujemy CouchApp
-
-<blockquote>
- {%= image_tag "/images/couchdb-apps.png", :alt => "[CouchDB Apps Architecture]" %}
- <p>Źródło: op. cit.</p>
-</blockquote>
 
 CouchApp jest modułem do Pythona.
 Program *easy_install* upraszcza instalację modułów.
@@ -48,61 +34,68 @@ W Fedorze instalujemy pakiety za pomocą programu *yum*:
 Po instalacji paczek, przystępujemy do instalacji *CouchApp*
 (i zależnych modułów):
 
-    sudo easy_install couchdb
-    sudo easy_install simplejson
-    sudo easy_install couchapp
+    git clone git://github.com/couchapp/couchapp.git
+    easy_install --record couchapp.txt --user couchapp/
 
-Instalacja lub upgrade do ostatniej wersji *CouchApp*, też jest
-prosta:
+Dodajemy katalog **$HOME/.local/bin** do ścieżek zmiennej *PATH*.
 
-    sudo easy_install -U couchapp
 
+<blockquote>
+ {%= image_tag "/images/couchdb-apps.png", :alt => "[CouchDB Apps Architecture]" %}
+ <p>Źródło: op. cit.</p>
+</blockquote>
 
 ## Aplikacja *Hello World*
 
 Tworzymy szkielet pierwszej aplikacji CouchApp:
 
-    couchapp generate app hello_world "Hello World"
+    couchapp generate app hello_couchapp "hello world app"
 
 i przygladamy się temu co zostało wygenerowane:
 
-    hello_world/
-    ├── _attachments
-    │   ├── index.html
-    │   └── style
-    │       └── main.css
-    ├── couchapp.json
-    ├── _id
-    ├── lists
-    ├── shows
-    ├── updates
-    ├── vendor
-    │   └── couchapp
-    │       ├── _attachments
-    │       │   └── jquery.couchapp.js
-    │       ├── couchapp.js
-    │       ├── date.js
-    │       ├── metadata.json
-    │       ├── path.js
-    │       ├── README.md
-    │       └── template.js
-    └── views
+    tree -L 2
+    .
+    |-- _attachments
+    |   |-- index.html
+    |   `-- style
+    |-- couchapp.json
+    |-- evently
+    |   |-- items
+    |   `-- profile
+    |-- _id
+    |-- language
+    |-- lists
+    |-- README.md
+    |-- shows
+    |-- updates
+    |-- vendor
+    |   `-- couchapp
+    `-- views
+        `-- recent-items
 
-Aplikację *Hello World* wdrażamy tak:
+Aplikację *Hello World App* wdrażamy tak.
 
-    couchapp -v push hello_world http://wbzyl:sekret@127.0.0.1:5984/hello_world
-    [INFO] database hello_world created.
-    [INFO] push vendor/couchapp/README.md
-    [INFO] push vendor/couchapp/metadata.json
-    [INFO] push vendor/couchapp/path.js
-    [INFO] push vendor/couchapp/couchapp.js
-    [INFO] push vendor/couchapp/template.js
-    [INFO] push vendor/couchapp/date.js
-    [INFO] attach index.html
-    [INFO] attach style/main.css
-    [INFO] attach vendor/couchapp/jquery.couchapp.js
-    [INFO] Visit your CouchApp here:
-    http://127.0.0.1:5984/hello_world/_design/hello_world/index.html
+Tworzymy w katalogu głównym aplikacji plik **.couchapprc**:
+
+    :::json
+    {
+      "env" : {
+        "default" : {
+          "db" : "http://localhost:4000/hello_couchapp"
+        },
+        "prod" : {
+          "db" : "http://admin:password@couchone.com/hello_couchapp"
+        }
+      }
+    }
+
+Plik ten upraszcza wdrażanie. Wystarczy wykonać polecenie (zob. *README.md*):
+
+    couchapp -v push
+    ...
+    ...
+    2011-02-01 19:20:48 [INFO] Visit your CouchApp here:
+    http://localhost:4000/template/_design/hello_couchapp/index.html
 
 Wchodzimy na wypisany URI, a następnie podpatrujemy w Futonie
 jak aplikacja została rozlokowana w bazie.
@@ -116,19 +109,34 @@ Plik *index.html* ma znaczniki *script* poza *head* i *body*. Dziwne!
     <!doctype html>
     <html>
       <head>
-        <title>Generated CouchApp</title>
+        <title>My New CouchApp</title>
         <link rel="stylesheet" href="style/main.css" type="text/css">
       </head>
       <body>
+        <div id="account"></div>
+
         <h1>Generated CouchApp</h1>
-        <p>This is a placeholder page</p>
+
+        <div id="profile"></div>
+        <div id="items"></div>
+
+        <div id="sidebar">
+          <p>Edit welcome message.</p>
+          <p>Ideas: You could easily turn this into a photo sharing app, or a grocery list, or a chat room.</p>
+        </div>
       </body>
-      <script src="/_utils/script/json2.js"></script>
-      <script src="/_utils/script/jquery.js?1.3.1"></script>
-      <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+      <script src="vendor/couchapp/loader.js"></script>
+      <script type="text/javascript" charset="utf-8">
+        $.couch.app(function(app) {
+          $("#account").evently("account", app);
+          $("#profile").evently("profile", app);
+          $.evently.connect("#account","#profile", ["loggedIn","loggedOut"]);
+          $("#items").evently("items", app);
+        });
+      </script>
     </html>
 
-Plik *main.css* zawiera tylko wiersz komentarza.
+**TODO:** Plik *main.css* zawiera tylko wiersz komentarza.
 
 Zmieniamy co trzeba w pliku *couchapp.json*:
 

@@ -28,10 +28,10 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
+1. {%= link_to "Funkcje show", "/couchdb-show" %}
 1. {%= link_to "Dostęp do CouchDB via Javascript", "/couchdb-javascript" %}
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
 1. {%= link_to "Views", "/couchdb-views" %}
-1. {%= link_to "Show", "/couchdb-show" %}
 1. {%= link_to "Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
 1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
@@ -107,3 +107,5 @@ Różne:
 * Rob Ashton.
   [RavenDB vs MongoDB - Why I don't usually bother](http://codeofrob.com/archive/2011/01/26/ravendb-vs-mongodb-why-i-dont-usually-bother.aspx)
 * [Data Modeling in Performant Systems](http://railstips.org/blog/archives/2011/01/27/data-modeling-in-performant-systems/) (from [Moneta](https://github.com/wycats/moneta) to [ToyStore](https://github.com/newtoy/toystore))
+* Chris Storm. [couch_docs](http://github.com/eee-c/couch_docs) —
+  provides a mapping between CouchDB documents and the file system

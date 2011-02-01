@@ -1,0 +1,42 @@
+require 'bundler'
+Bundler.setup
+
+require 'rake'
+require 'rack/mime'
+require 'couchrest'
+require 'couch_docs'
+require 'yajl'
+
+require 'pp'
+
+# store connection to CouchDB in this constant
+#
+Database = CouchRest.database!('http://127.0.0.1:4000/lec')
+
+desc "Upload application design documents"
+task :default => [:design] do
+  puts "-"*80
+  puts "Uploaded design documents into database, please check:",
+       " * http://localhost:4000/lec/_design/default/_show/quotation/4"
+end
+
+desc "Upload design documents from _design/default"
+task :design do
+  dir = CouchDocs::DesignDirectory.new('_design/default')
+
+  doc = dir.to_hash
+  #pp doc
+
+  doc.update '_id' => '_design/default', 'language' => 'javascript'
+  #pp doc
+  
+  rev = Database.get('_design/default')['_rev'] rescue nil
+
+  doc.update({'_rev' => rev}) if rev
+
+  pp doc
+  #pp doc['shows'].keys
+  
+  response = Database.save_doc(doc)
+  pp response
+end

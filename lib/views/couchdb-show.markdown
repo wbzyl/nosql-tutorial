@@ -1,6 +1,4 @@
-#### {% title("Show", false) %}
-
-# Show – potęga znaczników HTML
+#### {% title "Funkcje show" %}
 
 Jeśli jeszcze tego nie zrobiliśmy, to tworzymy bazę *lec*
 i dodajemy do niej dokumenty z pliku *lec.json*:
@@ -11,58 +9,150 @@ i dodajemy do niej dokumenty z pliku *lec.json*:
 
 (Link do pliku {%= link_to "lec.json", "/doc/json/lec.json" %}.)
 
-Funkcję **body** zapisujemy w pliku o nazwie *body.json*:
+Funkcję show wpisujemy w obiekcie JSON według wzoru:
 
     :::json
     {
       "shows" : {
-        "body" : "function(doc, req) { return '<p>' + doc.body + '</p>\\n'; }" }
+        "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
 
-Zapisujemy funkcję *body* jako *shows* w bazie *lec*:
+Więcej szczegółów o [Show Functions](http://guide.couchdb.org/draft/show.html).
 
-     curl -X PUT http://localhost:4000/lec/_design/lec \
-       -H "Content-Type: application/json" -d @body.json
-     => {"ok":true,"id":"_design/lec","rev":"1-84c5"}
+Zapisujemy powyższy obiekt JSON w pliku *guotation.json*
+i umieszczmy go w bazie *lec* z *\_id* równym **_design/default**:
 
-Tak, z wiersza poleceń, wywołujemy funkcję *body*:
+     curl -X PUT http://localhost:4000/lec/_design/default \
+       -H "Content-Type: application/json" -d @quotation.json
 
-    curl http://localhost:4000/lec/_design/lec/_show/body/1
+Teraz po wejściu na stronę:
 
-albo, po prostu, wchodzimy na stronę:
+    http://localhost:4000/lec/_design/default/_show/quotation/4
 
-    http://localhost:4000/lec/_design/shows/_show/body/1
+widzimy sformatowany przez funkcję *quotation* cytat o *_id* równym 4.
 
-**Uwaga:** `1` na końcu URI odnosi się do aforyzmu z id równym jeden.
+Możemy też użyć programu *curl* zamiast przeglądarki:
+
+    curl http://localhost:4000/lec/_design/default/_show/quotation/4
+
+
+## Korzystamy z *couch_docs*
+
+Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
+to (dlaczego?). Unikniemy tego stosując techniki „filesystem mapping”.
+Gem *couch_docs* implementuje tę technikę. 
+
+Przygotowujemy plik *Gemfile*:
+
+    :::ruby
+    source 'http://rubygems.org'
+    gem 'rake'
+    gem 'rack'
+    gem 'couchrest'
+    gem 'couch_docs'
+
+Instalujemy gemy:
+
+    bundle install --path=$HOME/.gems
+
+Przygotowujemy plik *Rakefile* (**thor**?).
+
+    :::ruby Rakefile
+    require 'bundler'
+    Bundler.setup
+    
+    require 'rake'
+    require 'rack/mime'
+    require 'couchrest'
+    require 'couch_docs'
+    
+    require 'pp'
+    
+    Database = CouchRest.database!('http://127.0.0.1:4000/lec')
+    
+    desc "Upload application design documents"
+    task :default => [:design] do
+      puts "-"*80
+      puts "Uploaded design documents into database, please check:",
+           " * http://localhost:4000/lec/_design/default/_show/quotation/4"
+    end
+    
+    desc "Upload design documents from _design/default"
+    task :design do
+      dir = CouchDocs::DesignDirectory.new('_design/default')
+      doc = dir.to_hash
+      doc.update('_id' => '_design/default', 'language' => 'javascript')
+    
+      rev = Database.get('_design/default')['_rev'] rescue nil
+      doc.update({'_rev' => rev}) if rev
+      #pp doc
+      #pp doc['shows'].keys
+      
+      response = Database.save_doc(doc)
+      pp response
+    end
+
+Teraz, aby przenieść zawartość plików javascript do bazy wystarczy
+wykonać polecenie:
+
+    rake
+
 
 ## Za & przeciw
 
-Pisanie funkcji *shows* za bardzo przypomina programowanie CGI.
+Pisanie funkcji *shows* za bardzo przypomina programowanie CGI,
+przez co tutaj rozumiem wpisywanie kodu HTML w kodzie Javascript.
 Przydałyby się jakieś szablony.
 
 Poza tym idea *shows* jest OK?
 
-## Wąsate szablony 
 
-[Krótki samouczek](http://blog.couchone.com/post/622014913/mustache-js).
+## Mustache – wąsate szablony 
 
-**Uwaga**. Od wersji 1.0 możemy korzystać z szablonów.
-Przykład:
+Zaczynamy od [przejrzenia prostych przykładów](http://blog.couchone.com/post/622014913/mustache-js).
 
-    :::javascript
-    function(doc, req) {
-      var Mustache = require('vendor/lib/mustache');
-      var data = {
-        title: "Joe",
-        calc: function() {
-          return 2 + 2;
-        }
-      };
-      var template = "{{title}} spends {{calc}}";
-      return Mustache.to_html( template, data );
+**TODO:** opisać przykład **couch/show2**. Korzystamy z *filesystem mapping*:
+
+    _design/
+    `-- default
+        |-- shows
+        |   `-- quotation.js
+        `-- templates
+            |-- mustache.js
+            `-- quotation.js
+
+Funkcja show korzystającej z szablonu Mustache:
+
+    :::javascript quotation.js
+    function(doc, req) { 
+        var mustache = require('templates/mustache');
+    
+        /* this == design document (JSON) zawierający tę funkcję */
+        var template = this.templates.quotation; 
+        var html = mustache.to_html(template, {quotation: doc.quotation});
+    
+        return html;
     }
 
-Sprawdzić!
+**Uwaga:** plik *mustache.js* to „commonjs-compatible mustache.js module”.
+
+Szablon mustache *quotation.js*:
+
+    :::html
+    <!doctype html>
+    <html lang=pl>
+      <head>
+        <meta charset=utf-8>
+        <link rel="stylesheet" href="/lec/_design/default/application.css">
+        <title>Cytaty Stanisława J. Leca</title>
+      </head>
+    <body>
+      <p>{{quotation}}</p>
+    </body>
+    </html>
+
+Plik CSS jest załącznikiem. Dodałem go ręcznie w Futonie (**TODO**).
+
 
 
 ### Przekazywanie parametrów do *shows*
@@ -95,8 +185,7 @@ przekazujemy parametr **q** w żądaniu tak:
 
 ## Więcej przykładów
 
-Pobieramy [źródła CouchDB](http://couchdb.apache.org/community/code.html)
-i w katalogu *share/www/script/test* znajdziemy dużo przykładów:
+W źródłach CouchDB w katalogu *share/www/script/test* znajdziemy dużo przykładów:
 
 * show_documents.js
 * list_views.js
