@@ -1,0 +1,10 @@
+source 'http://rubygems.org'
+
+gem 'rake'
+gem 'couchrest'
+gem 'yajl-ruby'
+gem 'rack'
+gem 'activesupport'
+gem 'i18n'
+
+gem 'couch_docs'

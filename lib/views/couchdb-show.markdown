@@ -5,10 +5,11 @@
 Jeśli jeszcze tego nie zrobiliśmy, to tworzymy bazę *lec*
 i dodajemy do niej dokumenty z pliku *lec.json*:
 
-    curl -X PUT  http://127.0.0.1:5984/lec
-    curl -X POST http://127.0.0.1:5984/lec/_bulk_docs -d @lec.json
+    curl -X PUT  http://127.0.0.1:4000/lec
+    curl -X POST -H "Content-Type: application/json" \
+      http://127.0.0.1:4000/lec/_bulk_docs -d @lec.json
 
-(plik {%= link_to "lec.json", "/doc/couchdb/lec.json" %})
+(Link do pliku {%= link_to "lec.json", "/doc/json/lec.json" %}.)
 
 Funkcję **body** zapisujemy w pliku o nazwie *body.json*:
 
@@ -20,34 +21,37 @@ Funkcję **body** zapisujemy w pliku o nazwie *body.json*:
 
 Zapisujemy funkcję *body* jako *shows* w bazie *lec*:
 
-     curl -X PUT http://localhost:5984/lec/_design/shows \
+     curl -X PUT http://localhost:4000/lec/_design/lec \
        -H "Content-Type: application/json" -d @body.json
-     => {"ok":true,"id":"_design/shows","rev":"1-84c5"}
+     => {"ok":true,"id":"_design/lec","rev":"1-84c5"}
 
 Tak, z wiersza poleceń, wywołujemy funkcję *body*:
 
-    curl http://localhost:5984/lec/_design/shows/_show/body/1
+    curl http://localhost:4000/lec/_design/lec/_show/body/1
 
 albo, po prostu, wchodzimy na stronę:
 
-    http://localhost:5984/lec/_design/shows/_show/body/1
+    http://localhost:4000/lec/_design/shows/_show/body/1
 
 **Uwaga:** `1` na końcu URI odnosi się do aforyzmu z id równym jeden.
 
-### Za & przeciw
+## Za & przeciw
 
 Pisanie funkcji *shows* za bardzo przypomina programowanie CGI.
-Przydałyby się jakieś szablony. Niestety takich szablonów
-nie ma in nie będzie. Dlaczego?
+Przydałyby się jakieś szablony.
 
 Poza tym idea *shows* jest OK?
+
+## Wąsate szablony 
+
+[Krótki samouczek](http://blog.couchone.com/post/622014913/mustache-js).
 
 **Uwaga**. Od wersji 1.0 możemy korzystać z szablonów.
 Przykład:
 
     :::javascript
     function(doc, req) {
-      var Mustache = require('vendor/couchapp/lib/mustache');
+      var Mustache = require('vendor/lib/mustache');
       var data = {
         title: "Joe",
         calc: function() {
@@ -84,7 +88,7 @@ Dla przykładu, do takiej funkcji *shows*:
 
 przekazujemy parametr **q** w żądaniu tak:
 
-    http://localhost:5984/lec/_design/shows/_show/aye/1?q=Captain
+    http://localhost:4000/lec/_design/shows/_show/aye/1?q=Captain
     => Aye aye, Captain
        Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
 

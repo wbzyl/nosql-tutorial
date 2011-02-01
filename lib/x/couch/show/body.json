@@ -1,0 +1,4 @@
+{
+  "shows" : {
+    "body" : "function(doc, req) { return '<p>' + doc.body + '</p>\\n'; }" }
+}
