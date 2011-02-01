@@ -48,7 +48,7 @@ end
 
 desc "Upload assets from _design/lec"
 task :assets do
-  assets_folder = Pathname.new('_design/lec')
+  assets_folder = Pathname.new('_design/assets')
 
   doc = {
     '_id'   => '_design/lec',

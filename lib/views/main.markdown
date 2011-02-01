@@ -62,6 +62,9 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 * {%= link_to "MongoDB", "/mongodb-databases" %}
 * {%= link_to "Redis", "/redis-databases" %}
 
+[Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
+(denormalizacja, konwersja na UTF-8).
+
 
 # Linki
 
