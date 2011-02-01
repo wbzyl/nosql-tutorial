@@ -42,7 +42,21 @@ Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
 to (dlaczego?). Unikniemy tego stosując techniki „filesystem mapping”.
 Gem *couch_docs* implementuje tę technikę. 
 
-Przygotowujemy plik *Gemfile*:
+Tworzymy taki *filesystem mapping*:
+
+    _design/
+    `-- default
+        |-- shows
+            `-- quotation.js
+
+I takiego pliku *quotation.sj*:
+
+    :::javascript
+    function(doc, req) { 
+      return '<p>' + doc.quotation + '</p>'; 
+    }
+
+Zanim skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
 
     :::ruby
     source 'http://rubygems.org'
@@ -51,11 +65,11 @@ Przygotowujemy plik *Gemfile*:
     gem 'couchrest'
     gem 'couch_docs'
 
-Instalujemy gemy:
+Następnie instalujemy gemy:
 
     bundle install --path=$HOME/.gems
 
-Przygotowujemy plik *Rakefile* (**thor**?).
+Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thor*?).
 
     :::ruby Rakefile
     require 'bundler'
@@ -92,7 +106,7 @@ Przygotowujemy plik *Rakefile* (**thor**?).
       pp response
     end
 
-Teraz, aby przenieść zawartość plików javascript do bazy wystarczy
+Teraz, aby przenieść zawartość plików Javascript do bazy wystarczy
 wykonać polecenie:
 
     rake
@@ -111,7 +125,9 @@ Poza tym idea *shows* jest OK?
 
 Zaczynamy od [przejrzenia prostych przykładów](http://blog.couchone.com/post/622014913/mustache-js).
 
-**TODO:** opisać przykład **couch/show2**. Korzystamy z *filesystem mapping*:
+**TODO:** opisać przykład **couch/show2**. 
+
+Korzystamy z takiego *filesystem mapping*:
 
     _design/
     `-- default
@@ -121,7 +137,7 @@ Zaczynamy od [przejrzenia prostych przykładów](http://blog.couchone.com/post/6
             |-- mustache.js
             `-- quotation.js
 
-Funkcja show korzystającej z szablonu Mustache:
+Funkcja show korzystająca z szablonu Mustache:
 
     :::javascript quotation.js
     function(doc, req) { 
@@ -135,6 +151,8 @@ Funkcja show korzystającej z szablonu Mustache:
     }
 
 **Uwaga:** plik *mustache.js* to „commonjs-compatible mustache.js module”.
+
+TODO: Przerobić kilka przykładów z nodeJS.
 
 Szablon mustache *quotation.js*:
 
