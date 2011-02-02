@@ -147,7 +147,6 @@ Przykłady:
 
 # Linki
 
-
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
   [CouchDB: The Definitive Guide][couchdb]
 * [CouchDB HTTP API Reference](http://docs.couchone.com/couchdb-api/index.html)
@@ -178,3 +177,7 @@ Pozostałe linki:
   [A small application to demonstrate basic CouchDB features](http://github.com/karmi/couchdb-showcase)
 * Jesse Hallett. [Database Queries
   the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
+
+
+[couchdb wiki]: http://wiki.apache.org/couchdb/ "Couchdb Wiki"
+[couchdb]: http://guide.couchdb.org/ "CouchDB: The Definitive Guide"
