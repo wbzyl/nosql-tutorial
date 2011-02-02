@@ -28,7 +28,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
-1. {%= link_to "Funkcje show", "/couchdb-show" %}
+1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
 1. {%= link_to "Dostęp do CouchDB via Javascript", "/couchdb-javascript" %}
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
 1. {%= link_to "Views", "/couchdb-views" %}
@@ -71,6 +71,16 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 zob. też [Code for America](http://codeforamerica.org/),
 [Max Ogden on twitter](http://twitter.com/#!/maxogden)
 oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
+
+Google:
+
+* [Books Ngram Viewer](http://ngrams.googlelabs.com/)
+
+Amazon public datasets:
+
+* [The WestburyLab USENET corpus](http://aws.amazon.com/datasets/1679761938200766) – 40GB
+* [Wikipedia Traffic Statistics V2](http://aws.amazon.com/datasets/4182)
+* [Daily Global Weather Measurements, 1929-2009 (NCDC, GSOD)](http://aws.amazon.com/datasets/2759) – 20GB
 
 
 

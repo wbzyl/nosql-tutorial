@@ -1,4 +1,4 @@
-#### {% title "Funkcje show" %}
+#### {% title "Funkcje *Show*" %}
 
 Jeśli jeszcze tego nie zrobiliśmy, to tworzymy bazę *lec*
 i dodajemy do niej dokumenty z pliku *lec.json*:
