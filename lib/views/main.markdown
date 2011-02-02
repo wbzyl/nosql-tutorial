@@ -65,6 +65,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
 
+[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
+
 
 # Linki
 
