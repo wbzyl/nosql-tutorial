@@ -26,7 +26,6 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
 1. {%= link_to "Dostęp do CouchDB via Javascript", "/couchdb-javascript" %}
@@ -48,6 +47,13 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 ## Redis
 
 1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
+
+
+## Różne rzeczy
+
+1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
+1. {%= link_to "JSON", "/json" %}
+1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 
 
 # Laboratorium
