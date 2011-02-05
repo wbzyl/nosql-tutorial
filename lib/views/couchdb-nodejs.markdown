@@ -1,7 +1,7 @@
-#### {% title "Dostęp do CouchDB via Javascript" %}
+#### {% title "Dostęp do CouchDB via NodeJS" %}
 
 Link do strony [NodeJS][], do strony z [API Node.JS][]
-oraz do *open source eBook for Node.JS* [Mastering Node][]
+oraz do *open source eBook for Node.JS* pt. [Mastering Node][]
 (zawiera opis modułów *commonjs*).
 
 Warto też zajrzeć na stronę [NodeJS Knockout](http://nodeknockout.com/)
@@ -32,7 +32,7 @@ Przykład z screencastu [Meet Node.js](http://peepcode.com/products/nodejs-i)
 [mastering node]: http://github.com/visionmedia/masteringnode "Mastering Node"
 
 
-# TODO
+# Czym jest NodeJS?
 
 [NodeJS](http://nodejs.org/) to *evented I/O for V8 Javascript*.
 
@@ -49,7 +49,9 @@ W programach dla *node*  możemy korzystać z metod zaimplementowanych w
 modułach Javascript i dystrybuowanych z Node.JS. Node korzysta
 z [CommonJS module system](http://wiki.commonjs.org/wiki/Modules/1.1).
 
-Oto lista modułów wymienionych na stronie manuala *node(1)*:
+Oto lista modułów wymienionych na stronie manuala *node(1)*.
+
+**TODO**: Uaktualnić listę do ostatniej wersji NodeJS:
 
 * `sys` — system module
 * `events`
@@ -89,7 +91,7 @@ Poniższy kod:
     });
     request.close();
 
-po wpisaniu do pliku *get_all_dbs.js* uruchamiamy tak:
+po wpisaniu do pliku o nazwie *get_all_dbs.js* uruchamiamy tak:
 
     node get_all_dbs.js
 
