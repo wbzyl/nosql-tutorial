@@ -1,7 +1,5 @@
 #### {% title "Mustache – wąsate szablony" %}
 
-Zaczynamy od [przejrzenia prostych przykładów](http://blog.couchone.com/post/622014913/mustache-js).
-
 Przykład pokazujący jak korzystać z szablonów MustacheJS.
 
 Plik *hello.js*:
@@ -10,12 +8,13 @@ Plik *hello.js*:
     var Mustache = require('./mustache')
       , util = require('util')
       , fs = require('fs');
+    
     var view = {
       name: "Joe", 
       say_hello: function(){ return "hello" }
     };
-
     var template = fs.readFileSync('./hello.mustache', 'utf-8');
+
     var html = Mustache.to_html(template, view);
     
     util.puts(html);
@@ -29,6 +28,12 @@ Sprawdzamy jak działa ten szablon:
     node hello.js  # rozszerzenie .js można pominąć
 
 
-Pozostałe przykłady:
+Przeglądamy pozostałe przykłady ze strony [mustache.js](http://blog.couchone.com/post/622014913/mustache-js):
 
-* {%= link_to "01", "/" %}
+* {%= link_to "02.js", "/node/mustache/02.js" %}
+* {%= link_to "03.js", "/node/mustache/03.js" %}
+* {%= link_to "04.js", "/node/mustache/04.js" %}
+* {%= link_to "05.js", "/node/mustache/05.js" %}
+* {%= link_to "06.js", "/node/mustache/06.js" %}, {%= link_to "06.mustache", "/node/mustache/06.ms" %}
+* {%= link_to "07.js", "/node/mustache/07.js" %}
+* {%= link_to "08.js", "/node/mustache/08.js" %} (*partial templates*)
