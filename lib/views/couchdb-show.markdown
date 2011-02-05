@@ -1,4 +1,4 @@
-#### {% title "Funkcje show" %}
+#### {% title "Funkcje *Show*" %}
 
 Jeśli jeszcze tego nie zrobiliśmy, to tworzymy bazę *lec*
 i dodajemy do niej dokumenty z pliku *lec.json*:
@@ -121,9 +121,7 @@ Przydałyby się jakieś szablony.
 Poza tym idea *shows* jest OK?
 
 
-## Mustache – wąsate szablony 
-
-Zaczynamy od [przejrzenia prostych przykładów](http://blog.couchone.com/post/622014913/mustache-js).
+## Korzystamy z szablonów Mustache
 
 **TODO:** opisać przykład **couch/show2**. 
 
@@ -135,7 +133,7 @@ Korzystamy z takiego *filesystem mapping*:
         |   `-- quotation.js
         `-- templates
             |-- mustache.js
-            `-- quotation.js
+            `-- quotation.html.js
 
 Funkcja show korzystająca z szablonu Mustache:
 
@@ -144,15 +142,13 @@ Funkcja show korzystająca z szablonu Mustache:
         var mustache = require('templates/mustache');
     
         /* this == design document (JSON) zawierający tę funkcję */
-        var template = this.templates.quotation; 
+        var template = this.templates["quotation.html"]; 
         var html = mustache.to_html(template, {quotation: doc.quotation});
     
         return html;
     }
 
 **Uwaga:** plik *mustache.js* to „commonjs-compatible mustache.js module”.
-
-TODO: Przerobić kilka przykładów z nodeJS.
 
 Szablon mustache *quotation.js*:
 

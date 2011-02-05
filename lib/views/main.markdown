@@ -26,9 +26,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
-1. {%= link_to "Funkcje show", "/couchdb-show" %}
+1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
 1. {%= link_to "Dostęp do CouchDB via Javascript", "/couchdb-javascript" %}
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
 1. {%= link_to "Views", "/couchdb-views" %}
@@ -50,6 +49,13 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
 
 
+## Różne rzeczy
+
+1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
+1. {%= link_to "JSON", "/json" %}
+1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
+
+
 # Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
@@ -64,6 +70,28 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
+
+[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
+
+[PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
+zob. też [Code for America](http://codeforamerica.org/),
+[Max Ogden on twitter](http://twitter.com/#!/maxogden)
+oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
+
+Twitter:
+
+* [How Tweet It Is!: Library Acquires Entire Twitter Archive](http://blogs.loc.gov/loc/2010/04/how-tweet-it-is-library-acquires-entire-twitter-archive/)
+
+Google:
+
+* [Books Ngram Viewer](http://ngrams.googlelabs.com/)
+
+Amazon public datasets:
+
+* [The WestburyLab USENET corpus](http://aws.amazon.com/datasets/1679761938200766) – 40GB
+* [Wikipedia Traffic Statistics V2](http://aws.amazon.com/datasets/4182)
+* [Daily Global Weather Measurements, 1929-2009 (NCDC, GSOD)](http://aws.amazon.com/datasets/2759) – 20GB
+
 
 
 # Linki
@@ -85,6 +113,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 Różne:
 
+* [Cloudant](https://cloudant.com/#!/solutions/cloud)
+* [CouchOne](http://www.couchone.com/get)
 * Susan Potter. Why proponents of marriage equality should love graph databases,
   [Part 1: A Reply to „The Database Engineering
   Perspective”](http://geek.susanpotter.net/2010/03/why-proponents-of-marriage-equality.html)
@@ -109,3 +139,4 @@ Różne:
 * [Data Modeling in Performant Systems](http://railstips.org/blog/archives/2011/01/27/data-modeling-in-performant-systems/) (from [Moneta](https://github.com/wycats/moneta) to [ToyStore](https://github.com/newtoy/toystore))
 * Chris Storm. [couch_docs](http://github.com/eee-c/couch_docs) —
   provides a mapping between CouchDB documents and the file system
+* [Add a Searchbox to your CouchApps and CouchDB Databases in 10 Minutes](http://blog.cloudant.com/searchapp-add-a-searchbox-to-your-couchapps-and-couchdb-databases-in-10-minutes/)
