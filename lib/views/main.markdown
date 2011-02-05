@@ -78,6 +78,10 @@ zob. też [Code for America](http://codeforamerica.org/),
 [Max Ogden on twitter](http://twitter.com/#!/maxogden)
 oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
 
+Twitter:
+
+* [How Tweet It Is!: Library Acquires Entire Twitter Archive](http://blogs.loc.gov/loc/2010/04/how-tweet-it-is-library-acquires-entire-twitter-archive/)
+
 Google:
 
 * [Books Ngram Viewer](http://ngrams.googlelabs.com/)
@@ -109,6 +113,8 @@ Amazon public datasets:
 
 Różne:
 
+* [Cloudant](https://cloudant.com/#!/solutions/cloud)
+* [CouchOne](http://www.couchone.com/get)
 * Susan Potter. Why proponents of marriage equality should love graph databases,
   [Part 1: A Reply to „The Database Engineering
   Perspective”](http://geek.susanpotter.net/2010/03/why-proponents-of-marriage-equality.html)
@@ -133,3 +139,4 @@ Różne:
 * [Data Modeling in Performant Systems](http://railstips.org/blog/archives/2011/01/27/data-modeling-in-performant-systems/) (from [Moneta](https://github.com/wycats/moneta) to [ToyStore](https://github.com/newtoy/toystore))
 * Chris Storm. [couch_docs](http://github.com/eee-c/couch_docs) —
   provides a mapping between CouchDB documents and the file system
+* [Add a Searchbox to your CouchApps and CouchDB Databases in 10 Minutes](http://blog.cloudant.com/searchapp-add-a-searchbox-to-your-couchapps-and-couchdb-databases-in-10-minutes/)

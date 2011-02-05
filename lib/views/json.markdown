@@ -4,6 +4,10 @@ Dane w formacie JSON do przykładów poniżej pobierzemy z Twittera.
 
 Więcej info o Twitter API jest na stronie [API Documentation](http://dev.twitter.com/doc).
 
+Pierwszy *tweet*:
+
+    http://twitter.com/#!/jack/status/20
+
 Dane w formacie JSON, przed umieszczeniem w bazie, będziemy przekształcać
 za pomocą:
 
@@ -152,6 +156,36 @@ oraz *bson_ext*:
 i piszemy „bardziej eleganckie rozwiązanie”: 
 {%= link_to "from_twitter_to_mongodb_bulk_insert.rb", "/ruby/json/from_twitter_to_mongodb_bulk_insert.rb" %}.
 
+
+### Twitter streaming API
+
+Przykład z *tracking*:
+
+    curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser:Password | \
+      mongoimport --port 9000 --db twitter --collection nosql
+
+gdzie plik *tracking* zawiera jedną linię w formacie:
+
+    track=couchdb,mongodb,nosql,rails,ruby
+
+Albo wpisujemy „credentials” do pliku np. *twitter.conf*:
+
+    user = wbzyl:sekret
+
+i wywołujemy progeam *curl* tak:
+
+    curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K twitter.conf | \
+      mongoimport --port 9000 --db twitter --collection nosql
+
+Czy można dodać do zapytania *lang*?
+
+    http://stream.twitter.com/1/statuses/filter.json?lang=en
+
+Można! I działa. Sprawdzamy to na konsoli:
+
+    db.nosql.find({},{text:1}).skip(20)
+
+Aby przerzucić dane do CouchDB można skorzystać z *mongoexport*.
 
 
 ## NodeJS
