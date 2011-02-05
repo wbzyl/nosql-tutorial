@@ -172,7 +172,7 @@ Albo wpisujemy „credentials” do pliku np. *twitter.conf*:
 
     user = wbzyl:sekret
 
-i wywołujemy progeam *curl* tak:
+i wywołujemy program *curl* tak:
 
     curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K twitter.conf | \
       mongoimport --port 9000 --db twitter --collection nosql
