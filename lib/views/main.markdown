@@ -28,7 +28,6 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
-1. {%= link_to "Dostęp do CouchDB via Javascript", "/couchdb-javascript" %}
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
 1. {%= link_to "Views", "/couchdb-views" %}
 1. {%= link_to "Lists", "/couchdb-lists" %}
@@ -53,6 +52,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "JSON", "/json" %}
+1. {%= link_to "Dostęp do CouchDB via NodeJS", "/couchdb-nodejs" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 
 
