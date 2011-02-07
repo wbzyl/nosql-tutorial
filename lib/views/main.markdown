@@ -31,6 +31,10 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
 1. {%= link_to "Views", "/couchdb-views" %}
 1. {%= link_to "Lists", "/couchdb-lists" %}
+1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
+
+TODO:
+
 1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
 1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
 1. {%= link_to "Rewrite", "/couchdb-rewrite" %}

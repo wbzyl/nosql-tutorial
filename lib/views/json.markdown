@@ -166,7 +166,7 @@ Przykład z *tracking*:
 
 gdzie plik *tracking* zawiera jedną linię w formacie:
 
-    track=couchdb,mongodb,nosql,rails,ruby
+    track=couchdb,mongodb,redis,nosql,nodejs,html5,jquery
 
 Albo wpisujemy „credentials” do pliku np. *twitter.conf*:
 
@@ -177,15 +177,18 @@ i wywołujemy program *curl* tak:
     curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K twitter.conf | \
       mongoimport --port 9000 --db twitter --collection nosql
 
-Czy można dodać do zapytania *lang*?
+Sprawdzamy co się zaimportowało na konsoli:
 
-    http://stream.twitter.com/1/statuses/filter.json?lang=en
+    db.nosql.find({text:/mongo/},{text:1}).limit(8)
 
-Można! I działa. Sprawdzamy to na konsoli:
+Aby zapisać dane ze strumienia do CouchDB można skorzystać z *mongoexport*. 
 
-    db.nosql.find({},{text:1}).skip(20)
+Ale lepszym rozwiązaniem jest 
+{%= link_to "save_jsons_stream_to_couchdb.rb", "/ruby/json/save_jsons_stream_to_couchdb.rb" %}, 
+gdzie troszkę podrasowujemy JSON-y zanim zapiszemy je w bazie: 
 
-Aby przerzucić dane do CouchDB można skorzystać z *mongoexport*.
+    curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K twitter.conf |
+      ruby save_jsons_stream_to_couchdb.rb nosql
 
 
 ## NodeJS
