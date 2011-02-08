@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang=pl>
+  <head>
+    <meta charset=utf-8>
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../css/application.css">
+    <title>Cytaty Stanisława J. Leca</title>
+  </head>
+<body>
+  <p>{quotation}</p>
+</body>
+</html>

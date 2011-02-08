@@ -1,0 +1,16 @@
+{ "docs": 
+  [
+    {
+      "_id": "led-zeppelin-ii",
+      "title": "Led Zeppelin II",
+      "released": "October 22, 1969",
+      "songs": ["Whole Lotta Love"]
+    },
+    {
+      "_id": "led-zeppelin-iii",
+      "title": "Led Zeppelin III",
+      "released": "October  5, 1970",
+      "songs": ["Friends","That's the Way"]
+    }
+  ]
+}

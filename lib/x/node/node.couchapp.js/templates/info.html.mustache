@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../../css/application.css">
+ <title>{{title}}</title>
+</head>
+
+<body>
+
+<article>
+  <div id="cover">
+    <h1>{{title}} ({{released}})</h1>
+    <img src="/{{dbname}}/{{id}}/cover.jpg" alt="cover">
+    <footer> &copy; 2011 W&#x0142;odek Bzyl</footer>
+  </div>
+
+  <div id="list">
+    <ul> 
+      {{#songs}}
+      <li>{{.}}</li>
+      {{/songs}}
+    </ul>
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+source 'http://rubygems.org'
+
+gem 'rake'
+gem 'couchrest'
+gem 'rack'
+gem 'yajl-ruby'

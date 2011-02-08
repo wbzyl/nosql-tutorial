@@ -26,6 +26,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
+1. {%= link_to "CouchDB & NodeJS", "/couchdb-nodejs" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
 1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
