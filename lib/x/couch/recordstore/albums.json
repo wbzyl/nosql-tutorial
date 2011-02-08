@@ -1,0 +1,20 @@
+{"docs": [
+  {
+    "type": "album",
+    "title": "Blue Lines",
+    "artist": "Massive Attack",
+    "cover": "http://userserve-ak.last.fm/serve/174s/47527219.png"
+  },
+  {
+    "type": "album",
+    "title": "Mezzanine",
+    "artist": "Massive Attack",
+    "cover": "http://userserve-ak.last.fm/serve/174s/38150483.png"
+  },
+  {
+    "type": "album",
+    "artist": "Underworld",
+    "title": "Beaucoup Fish",
+    "cover": "http://userserve-ak.last.fm/serve/174s/41665159.png"
+  }
+]}
