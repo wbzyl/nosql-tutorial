@@ -1,0 +1,42 @@
+/* app.css */
+
+body {
+  background-color: #D6E6C3;
+}
+
+#cover, #list {
+  float: left;
+  width: 320px;
+}
+
+#list ul {
+  margin-top: 50px;
+}
+
+li {
+  list-style-type: square;
+}
+
+#cover h1 {
+  color: #A00;
+  text-align: center;
+  font-size: 120%;
+}
+
+#cover img {
+  display: block;
+  margin: 0 auto;
+}
+
+article {
+  width: 640px;
+  margin: 0 auto;
+  background-color: #FAFBE3;
+}
+
+footer {
+  clear: both;
+  font-size: 80%;
+  padding: 1em 0;
+  text-align: center;
+}
