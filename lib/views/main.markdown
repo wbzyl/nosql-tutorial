@@ -13,7 +13,7 @@
 ## Ważne informacje
 
 Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*. 
-Dla prac należy założyć „free” repozytorium na serwerze *Github*.
+Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
 
 Implementacje należy przygotować w jednym z języków:
