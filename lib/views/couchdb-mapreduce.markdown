@@ -1,5 +1,12 @@
 #### {% title "Map ⇒ Reduce → Rereduce" %}
 
+<blockquote>
+ <p>
+  Wszystko da się zrozumieć poza miłością i sztuką.
+ </p>
+ <p class="author">[stara mądrość]</p>
+</blockquote>
+
 Nieco DOC z Mongo:
 
 * [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)

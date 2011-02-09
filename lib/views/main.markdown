@@ -10,6 +10,19 @@
  <p class="author">— Sir Arthur Conan Doyle</p>
 </blockquote>
 
+## Ważne informacje
+
+Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*. 
+Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
+Repozytorium należy nazwać **nosql**.
+
+Implementacje należy przygotować w jednym z języków:
+Javascript, Ruby, Perl, Python, Scala
+(zob. też [top languages](https://github.com/languages)).
+
+
+## Co to jest „NoSQL”
+
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
 Strozzi wprowadził ten termin w 1998 roku. W 2009 roku Eric Evans
 użył terminu NoSQL w kontekście „the emergence of a
