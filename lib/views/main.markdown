@@ -18,7 +18,7 @@ Repozytorium należy nazwać **nosql**.
 
 Implementacje należy przygotować w jednym z języków:
 Javascript, Ruby, Perl, Python, Scala.
-Zob. też [Top languages](https://github.com/languages) na *github.com*.
+Zob. też [top languages](https://github.com/languages).
 
 
 ## Co to jest „NoSQL”
