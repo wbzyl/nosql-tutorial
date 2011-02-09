@@ -17,8 +17,8 @@ Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
 
 Implementacje należy przygotować w jednym z języków:
-Javascript, Ruby, Perl, Python, Scala.
-Zob. też [top languages](https://github.com/languages).
+Javascript, Ruby, Perl, Python, Scala
+(zob. też [top languages](https://github.com/languages)).
 
 
 ## Co to jest „NoSQL”
