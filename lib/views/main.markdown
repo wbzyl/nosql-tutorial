@@ -15,6 +15,8 @@
 Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*. 
 Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
+(W miarę możliwości należy stosować się do uwag Tima Pope, 
+[A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).)
 
 Implementacje należy przygotować w jednym z języków:
 Javascript, Ruby, Perl, Python, Scala
