@@ -49,7 +49,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Lists", "/couchdb-lists" %}
 1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
 1. {%= link_to "Rewrite", "/couchdb-rewrite" %}
-1. {%= link_to "Rewrite", "/couchdb-kansojs" %}
+1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 
 TODO:
 
