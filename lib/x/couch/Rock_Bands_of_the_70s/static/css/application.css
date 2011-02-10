@@ -1,0 +1,27 @@
+body {
+  background-color: #CFD4D7;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#content {
+  width: 640px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  padding: 20px 20px;
+  border: solid 1px black;
+  margin-top: 20px;
+}
+
+h2 {
+  color: #FC314F;
+  margin-top: 0;
+}
+
+article header h2 {
+  color: #FDB2B7;
+}
+
+a img {
+  border: none;
+}
