@@ -1,4 +1,0 @@
-Hi!
-
-1\. The code in the section “Browser and server together” uses
-*result* variable
