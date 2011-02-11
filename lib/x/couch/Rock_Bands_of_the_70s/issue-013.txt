@@ -1,0 +1,61 @@
+Reworking the example code in the “Browser and server together” section
+
+Two remarks::
+
+1. the *result* variable pops from nowhere
+2. further on the page you use *content*
+
+So, my first suggestion is:
+
+    function example_show(doc, req) {
+        var content = kanso.template('welcome.html', req, {});
+
+        if (req.client) {
+            // being run client-side, update the current page
+            $('#main').html(content);
+        }
+        else {
+            // fallback, returns a complete rendered page
+            return kanso.template('base.html', req, {main: content});
+        }
+    };
+
+Whenever a user visits the page, the *example_show* function is run twice
+(even if Javascript is disabled?).
+
+The second time the *req.client* branch is chosen, and the content
+of the *\#main* is updated with the same content (and *welcome* template
+is rendered twice, too).
+
+So, my second suggestion is:
+
+    function example_show(doc, req) {
+        if (req.client) {
+            // being run client-side
+        }
+        else {
+            // fallback, returns a complete rendered page
+            var content = kanso.template('welcome.html', req, {});
+            return kanso.template('base.html', req, {main: content});
+        }
+    }
+
+But, that example does not make sense.
+
+So, maybe, this example makes some sense:
+
+    function example_show(doc, req) {
+        if (req.client) {
+            // being run client-side: attach event handlers, ajaxify forms..
+            require('lib/client').init();
+        }
+        else {
+            // fallback, returns a complete rendered page
+            var content = kanso.template('welcome.html', req, {});
+            return kanso.template('base.html', req, {main: content});
+        }
+    }
+
+Regards
+
+--Włodek Bzyl
