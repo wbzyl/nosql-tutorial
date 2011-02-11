@@ -1,7 +1,18 @@
 #### {% title "Funkcje *Show*" %}
 
-Jeśli jeszcze tego nie zrobiliśmy, to tworzymy bazę *lec*
-i dodajemy do niej dokumenty z pliku *lec.json*:
+Po co są [Show Functions](http://guide.couchdb.org/draft/show.html)?
+
+Co chcemy osiągnąć? Pobieramy z bazy dokument w formacie JSON,
+ale prezentujemy go w formie strony HTML.
+
+Inne formaty: XML, CSV, etc; zobacz:
+[NOSQL Databases for Web CRUD (CouchDB) - Shows/Views](http://java.dzone.com/articles/nosql-databases-web-crud).
+Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
+pliki *show_documents.js*, *list_views.js*.
+
+Zaczynamy od utworzenia bazy i umieszczenia w niej kilku dokumentów.
+
+To tworzymy bazę *lec* i dodajemy do niej dokumenty z pliku *lec.json*:
 
     curl -X PUT  http://127.0.0.1:4000/lec
     curl -X POST -H "Content-Type: application/json" \
@@ -16,8 +27,6 @@ Funkcję show wpisujemy w obiekcie JSON według wzoru:
       "shows" : {
         "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
-
-Więcej szczegółów o [Show Functions](http://guide.couchdb.org/draft/show.html).
 
 Zapisujemy powyższy obiekt JSON w pliku *guotation.json*
 i umieszczmy go w bazie *lec* z *\_id* równym **_design/default**:
@@ -195,16 +204,3 @@ przekazujemy parametr **q** w żądaniu tak:
     http://localhost:4000/lec/_design/shows/_show/aye/1?q=Captain
     => Aye aye, Captain
        Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
-
-
-## Więcej przykładów
-
-W źródłach CouchDB w katalogu *share/www/script/test* znajdziemy dużo przykładów:
-
-* show_documents.js
-* list_views.js
-* …???
-
-Zobacz też:
-
-* [NOSQL Databases for Web CRUD (CouchDB) - Shows/Views](http://java.dzone.com/articles/nosql-databases-web-crud)
