@@ -9,6 +9,7 @@
 </blockquote>
 
 * [You know, for Search](http://www.elasticsearch.org/)
+* [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
 * [CouchDB Integration](https://github.com/elasticsearch/elasticsearch/wiki/Couchdb-integration)
 
 
@@ -199,3 +200,64 @@ przed umieszczeniem w bazie *nosql*:
      :hour=>22,
      :minute=>13,
      :second=>25}
+
+
+# TODO: Wyszukiwanie tekstowe
+
+* [ElasticSearch Documentation](http://www.elasticsearch.com/docs/)
+* Wyszukiwanie tekstowe z Lucene:
+  [Enables full-text searching of CouchDB documents using
+  Lucene](http://github.com/rnewson/couchdb-lucene) plus opis na
+  [wiki](http://wiki.github.com/couchrest/couchrest/couchdb-lucene-support)
+* Karel Minarik, [slingshot](https://github.com/karmi/slingshot) –
+  a rich Ruby API and DSL for the ElasticSearch search engine/database
+
+
+## TODO: Changes
+
+[Changes API](http://wiki.apache.org/couchdb/HTTP_database_API#Changes):
+A list of changes made to documents in the database, in the order they
+were made, can be obtained from the database's *_changes* resource
+via GET request:
+
+* `since=seqnum` (*default=0*).
+  Start the results from the change
+  immediately after the given sequence number.
+* `feed=normal|longpoll|continuous` (*default=normal*).
+  Select the type of feed.
+* `heartbeat=time` *(milliseconds, default=60000)*.
+  Period in milliseconds after which a empty line is sent in the results.
+  Only applicable for longpoll or continuous feeds. Overrides any timeout.
+* `timeout=time` (*milliseconds, default=60000*).
+  Maximum period in milliseconds to wait for a change before
+  the response is sent, even if there are no results.
+  Only applicable for longpoll or continuous feeds.
+* `filter=designdoc/filtername`.
+  Reference a filter function from a design document to selectively get updates.
+  See the section in the book for more information.
+* `include_docs=true|false` (*default=false*).
+  Include the associated document with each result. (New in version 0.11)
+
+By default all changes are immediately returned as a JSON object:
+
+    curl -X GET http://localhost:5984/nazwa-bazy-danych/_changes
+
+Zobacz też
+[Database Information](http://wiki.apache.org/couchdb/HTTP_database_API#Database_Information):
+
+    curl -X GET http://localhost:5984/nazwa-bazy-danych
+    {
+      "compact_running": false,
+      "db_name": "dj",
+      "disk_format_version": 5,
+      "disk_size": 12377,
+      "doc_count": 1,
+      "doc_del_count": 1,
+      "instance_start_time": "1267612389906234",
+      "purge_seq": 0,
+      "update_seq": 4
+   }
+
+Więcej przykładów:
+
+* [Toast](http://github.com/jchris/toast), gałąź **chip**

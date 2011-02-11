@@ -170,20 +170,14 @@ Ale teraz dokument zapisujemy w dwóch etapach: najpier dane JSON,
 a następnie załączniki.
 
 
-# TODO: Wyszukiwanie tekstowe
+# Przykłady
 
-* [ElasticSearch Documentation](http://www.elasticsearch.com/docs/)
-* Wyszukiwanie tekstowe z Lucene:
-  [Enables full-text searching of CouchDB documents using
-  Lucene](http://github.com/rnewson/couchdb-lucene) plus opis na
-  [wiki](http://wiki.github.com/couchrest/couchrest/couchdb-lucene-support)
+Kilka przykładów…
 
 
-# TODO: Word count
+## Word count
 
-* [przykład z couchrest/examples/word_count](http://github.com/wbzyl/couchrest-word-count)
-
-TODO: jak w couchrest skorzystać z *couchview*?
+TODO: Omówić przykład z katalogu *couch/word-count*.
 
 
 ## Sinatra & Couchrest
@@ -191,15 +185,15 @@ TODO: jak w couchrest skorzystać z *couchview*?
 * [A basic CouchDB/Sinatra wiki](http://github.com/benatkin/weaky)
 
 
-## Korzystamy z gemu *rest-client*
+## *View collation* – przykład z *rest-client*
 
-Przykład z Wiki [collation](http://wiki.apache.org/couchdb/View_collation).
+Przykład pochodzi [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
 
 Instalujemy gemy:
 
     gem install rest-client json
 
-Następnie za pomocą skryptu tworzymy bazę *collator* (ruby 1.9.2):
+Następnie za pomocą poniższego skryptu tworzymy bazę *collator* (ruby 1.9.2):
 
     :::ruby collseq.rb
     require 'restclient'
@@ -228,6 +222,8 @@ Kilka zapytań do bazy:
     curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=4
     curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=2\&descending=true
     curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&endkey=\"68\"
+
+(W przeglądarce powyższe URL-e wpisujemy bez „cytowania“.)
 
 Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola Rubiego.
 
