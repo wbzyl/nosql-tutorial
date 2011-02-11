@@ -1,0 +1,92 @@
+{"docs": [
+    {
+      "type": "album",
+      "title": "Led Zeppelin I",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Good Times Bad Times",
+         "Babe I'm Gonna Leave You",
+         "You Shook Me",
+         "Dazed and Confused",
+         "Your Time Is Gonna Come",
+         "Black Mountain Side",
+         "Communication Breakdown",
+         "I Can't Quit You Baby",
+         "How Many More Times"
+       ]
+    },
+    {
+      "type": "album",
+      "title": "Led Zeppelin II",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Whole Lotta Love",
+         "What Is and What Should Never Be",
+         "The Lemon Song",
+         "Thank You","Heartbreaker",
+         "Living Loving Maid (She's Just a Woman)",
+         "Ramble On",
+         "Moby Dick",
+         "Bring It On Home"
+      ]
+    },
+    {
+      "type": "album",
+      "title": "Led Zeppelin III",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Immigrant Song",
+         "Friends",
+         "Celebration Day",
+         "Since I've Been Loving You",
+         "Out on the Tiles",
+         "Gallows Pole",
+         "Tangerine",
+         "That's the Way",
+         "Bron-Y-Aur Stomp",
+        "Hats Off to (Roy) Harper"  
+      ]
+    },
+    {
+      "type": "album",
+      "title": "Deep Purple in Rock",
+      "artist": "Deep Purple",
+      "tracks" : [ 
+         "Speed King",
+         "Bloodsucker",
+         "Child in Time",
+         "Flight of the Rat",
+         "Into the Fire",
+         "Living Wreck",
+         "Hard Lovin' Man" 
+      ]
+    },
+    {
+      "type": "album",
+      "title": "Fireball",
+      "artist": "Deep Purple",
+      "tracks" : [ 
+         "Fireball",
+         "No No No",
+         "Demon's Eye",
+         "Anyone's Daughter",
+         "The Mule",
+         "Fools",
+         "No One Came"  
+      ]
+    },
+    {
+      "type": "album",
+      "title": "Machine Head",
+      "artist": "Deep Purple",
+      "tracks" : [ 
+         "Highway Star",
+         "Maybe I'm a Leo",
+         "Pictures of Home",
+         "Never Before",
+         "Smoke on the Water",
+         "Lazy",
+         "Space Truckin'"
+      ]
+    }
+]}
