@@ -68,13 +68,6 @@ Zaczynamy od utworzenia bazy:
 2. W przykładach numer rewizji wpisany w fomacie **?-XXXX**
   należy wstawić prawdziwy numer rewizji dokumentu.
 
-W bazie będziemy umieszczać dane w następującym formacie:
-
-    :::yaml
-    title: Led Zeppelin I
-    songs: ['Good Times Bad Times', 'Dazed and Confused']
-    cover: obrazek okładki (załącznik)
-
 
 ## CRUD na dokumentach
 
@@ -82,7 +75,7 @@ Dodajemy dane pierwszego albumu:
 
     :::shell-unix-generic
     curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i \
-      --data '{"title":"Led Zeppelin I","released":"January 12, 1969","songs":["Good Times Bad Times","Dazed and Confused"]}'
+      --data '{"title":"Led Zeppelin I","released":"1969-01-12","songs":["Good Times Bad Times","Dazed and Confused"]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
 
 Dodajemy załącznik (czyli wykonujemy *update*):
@@ -118,6 +111,9 @@ jest to dobrym pomysłem (dlaczego?).
 Są serwowane *as is* plus w nagłówku dodawany jest wcześniej podany
 *Content-Type*.
 
+
+## Jak wygodnie dodawać dokumenty do bazy?
+
 Dodawanie pojedynczo rekordów do bazy jest męczące.
 [HTTP Bulk Document API](http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API)
 ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
@@ -127,30 +123,76 @@ ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
 gdzie w pliku *lz.json* wpisujemy:
 
     :::javascript lz.json
-    {
-      "docs": [
-         {"_id": "led-zeppelin-ii",
+    {"docs": [
+        {
+          "_id": "led-zeppelin-i",
+          "type": "album",
+          "title": "Led Zeppelin I",
+          "released":"1969-01-12",
+          "artist": "Led Zeppelin",
+          "tracks" : [ 
+             "Good Times Bad Times",
+             "Babe I'm Gonna Leave You",
+             "You Shook Me",
+             "Dazed and Confused",
+             "Your Time Is Gonna Come",
+             "Black Mountain Side",
+             "Communication Breakdown",
+             "I Can't Quit You Baby",
+             "How Many More Times"
+           ]
+        },
+        {
+          "_id": "led-zeppelin-ii",
+          "type": "album",
           "title": "Led Zeppelin II",
-          "released": "October 22, 1969",
-          "songs": ["Whole Lotta Love"]},
-         {"_id": "led-zeppelin-iii",
+          "released": "1969-10-22",
+          "artist": "Led Zeppelin",
+          "tracks" : [ 
+             "Whole Lotta Love",
+             "What Is and What Should Never Be",
+             "The Lemon Song",
+             "Thank You","Heartbreaker",
+             "Living Loving Maid (She's Just a Woman)",
+             "Ramble On",
+             "Moby Dick",
+             "Bring It On Home"
+          ]
+        },
+        {
+          "_id": "led-zeppelin-iii",
+          "type": "album",
           "title": "Led Zeppelin III",
-          "released": "October  5, 1970",
-          "songs": ["Friends","That's the Way"]}
-      ]
-    }
+          "released": "1970-10-05",
+          "artist": "Led Zeppelin",
+          "tracks" : [ 
+             "Immigrant Song",
+             "Friends",
+             "Celebration Day",
+             "Since I've Been Loving You",
+             "Out on the Tiles",
+             "Gallows Pole",
+             "Tangerine",
+             "That's the Way",
+             "Bron-Y-Aur Stomp",
+             "Hats Off to (Roy) Harper"  
+          ]
+        }
+    ]}
 
 *Uwaga:* Daty powinniśmy wpisywać korzystając z *new Date*, jakoś tak (dlaczego?):
 
     :::javascript
     new Date(1969,9,23)
 
-Niestety, obrazki musimy dodać ręcznie. Będziemy potrzebować wartości *rev*.
+Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej. 
 
 
 ### *_ALL_DOCS* – użyteczny uri
 
-**Użyteczny**, bo wypisuje numery rewizji dokumentów:
+Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev*.
+
+Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
 
     :::shell-unix-generic
     curl -X GET http://127.0.0.1:4000/lz/_all_docs
@@ -168,9 +210,9 @@ Dla przykładu, dopisanie *descending=true* zmienia kolejność dokumentów:
     curl -X GET http://127.0.0.1:4000/lz/_all_docs?descending=true
 
 Dopisująć to i owo na końcu uri, można pobrać kilka dokumentów za jednym żądaniem,
-np. tylko jeden dokument:
+np. tylko jeden dokument (uwaga na cudzysłowy – ukrywamy `&` przed powłoką):
 
-    curl -X GET http://127.0.0.1:4000/lz/_all_docs?descending=true\&limit=1
+    curl -X GET 'http://127.0.0.1:4000/lz/_all_docs?descending=true&limit=1'
 
 albo pobrać dokumenty z zawartością:
 
@@ -186,10 +228,10 @@ Uaktualniamy, tak naprawdę zamieniamy zawartość dokumentu „Houses of The Ho
     curl -X PUT http://127.0.0.1:4000/lz/076c... \
        --data '{"_rev":"1-XXXX","songs":["The Song Remains The Same"]}'
 
-Ale załącznik dodajemy:
+Ale załącznik dodajemy tak (korzystamy z rewizji wypisanych powyżej):
 
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/robert_plant.jpg?rev=4-XXXX \
-       -H "Content-Type: image/jpg" --data-binary @robert_plant.jpg
+    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @led-zeppelin.jpg
 
 Dodajemy okładki do albumu II oraz III:
 
@@ -198,12 +240,17 @@ Dodajemy okładki do albumu II oraz III:
     curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
 
+W zasadzie, załączniki wygodniej dodawać w Futonie!
+Chyba, że skorzystamy z jakiegoś języka skrytowego oraz
+drivera do bazy CouchDB w tym języku.
+
 
 ### Delete
 
-Usuwamy dokument z „Houses Of The Holy” z bazy:
+Jeśli będziemy chcieli usunąć dokument z „led-zeppelin-i” z bazy,
+to wystarczy wykonać polecenie:
 
-    curl -X DELETE http://127.0.0.1:4000/lz/076c...?rev=2-XXXX
+    curl -X DELETE http://127.0.0.1:4000/lz/led-zeppelin-?rev=2-XXXX
 
 
 ### Get
@@ -211,7 +258,12 @@ Usuwamy dokument z „Houses Of The Holy” z bazy:
 Pobieramy dokument:
 
     curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i
-    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i?all_doc=true ???
+
+Polecenie poniżej wypisze na terminalu zawartość pliku z obrazkiem:
+
+    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i?all_doc=true
+
+Terminale takich rzeczy nie lubią! Dlaczego?
 
 
 ### Copy
@@ -245,7 +297,7 @@ i po wpisaniu w przeglądarce:
 
     http://localhost:4000/lz/led-zeppelin-i/index.html
 
-widzimy stronę z obrazkiem.
+widzimy stronę z obrazkiem. Dziwne, nieprawdaż.
 
 
 # Pokrętny przykład
@@ -286,25 +338,14 @@ Teraz po wejściu na stronę:
 
     http://localhost:4000/lz/led-zeppelin-ii/index.html
 
-mamy pod okładką listę utworów.
+mamy pod okładką listę utworów. To jest naprawdę pokrętne! 
 
+Obie strony HTML powyżej mają podobną zawartość.
+Stąd pytanie: Czy można przygotować 
+jedną stronę (albo, w zasadzie drugie pytanie, szablon strony)
+dla wszystkich trzech albumów?
 
-# Replikacja – jakie to proste!
-
-Replikujemy bazę *lz*:
-
-    :::shell-unix-generic
-    curl -X POST http://127.0.0.1:4000/_replicate -H "Content-Type: text/html" \
-      --data '{"source":"lz","target":"lz2-replica","create_target":true}'
-
-    {"ok":true,"session_id":"1410...","source_last_seq":16,"history":
-       [{"session_id":"1410...",
-         "start_time":"Thu,...","end_time":"Thu,...",
-         "start_last_seq":0,"end_last_seq":16,
-         "recorded_seq":16,"missing_checked":0,"missing_found":5,
-         "docs_read":5,"docs_written":5,"doc_write_failures":0}]}
-
-Na razie tyle o replikacji.
+Odpowiedź jest TAK. I można to zrobić na kilka sposobów.
 
 
 [couchdb]: http://books.couchdb.org/relax/ "CouchDB: The Definitive Guide"

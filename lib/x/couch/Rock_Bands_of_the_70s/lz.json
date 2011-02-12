@@ -1,0 +1,56 @@
+{"docs": [
+    {
+      "_id": "led-zeppelin-i",
+      "type": "album",
+      "title": "Led Zeppelin I",
+      "released":"1969-01-12",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Good Times Bad Times",
+         "Babe I'm Gonna Leave You",
+         "You Shook Me",
+         "Dazed and Confused",
+         "Your Time Is Gonna Come",
+         "Black Mountain Side",
+         "Communication Breakdown",
+         "I Can't Quit You Baby",
+         "How Many More Times"
+       ]
+    },
+    {
+      "_id": "led-zeppelin-ii",
+      "type": "album",
+      "title": "Led Zeppelin II",
+      "released": "1969-10-22",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Whole Lotta Love",
+         "What Is and What Should Never Be",
+         "The Lemon Song",
+         "Thank You","Heartbreaker",
+         "Living Loving Maid (She's Just a Woman)",
+         "Ramble On",
+         "Moby Dick",
+         "Bring It On Home"
+      ]
+    },
+    {
+      "_id": "led-zeppelin-iii",
+      "type": "album",
+      "title": "Led Zeppelin III",
+      "released": "1970-10-05",
+      "artist": "Led Zeppelin",
+      "tracks" : [ 
+         "Immigrant Song",
+         "Friends",
+         "Celebration Day",
+         "Since I've Been Loving You",
+         "Out on the Tiles",
+         "Gallows Pole",
+         "Tangerine",
+         "That's the Way",
+         "Bron-Y-Aur Stomp",
+         "Hats Off to (Roy) Harper"  
+      ]
+    }
+]}

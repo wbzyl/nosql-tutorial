@@ -40,6 +40,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
+1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
