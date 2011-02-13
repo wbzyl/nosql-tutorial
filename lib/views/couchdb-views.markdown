@@ -1,4 +1,4 @@
-#### {% title "Views" %}
+#### {% title "Views ≡ Map + Reduce" %}
 
 Zapytania SQL, takie jak to:
 
@@ -187,6 +187,17 @@ Dla żądań POST oraz do wbudowanego widoku *_all_docs*:
 
 
 ### Przykłady użycia argumentów w żądaniach
+
+Uwaga: parametry zapytań muszą być odpowiedni cytowane/kodowane.
+Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
+tę uciążliwość. Należy skorzystać z opcji `-G` oraz `--data-urlencode`.
+Przykład:
+
+    curl -X GET http://localhost:5984/books/_design/default/_view/authors -G \
+      --data-urlencode startkey='"j"' --data-urlencode endkey='"j\ufff0"' \
+      -d reduce=false
+
+TODO: do poleceń poniżej dopisać nowe wersje z urlencode.
 
 **key**: dokument(y) powiązany(e) z kluczem:
 
