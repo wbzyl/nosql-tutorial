@@ -324,7 +324,7 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-ii*:
         /* a bit of debugging */
         console.log(ul);
         console.log(data);
-        $.each(data.songs, function(i,e) { ul.append('<li>'+e+'</li>') });
+        $.each(data.tracks, function(i,e) { ul.append('<li>'+e+'</li>') });
       });
     });
     </script>
