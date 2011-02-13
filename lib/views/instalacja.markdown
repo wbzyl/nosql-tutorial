@@ -54,10 +54,10 @@ Edytujemy w pliku *local.ini*, sekcję *httpd*:
     port = XXXX
     bind_address = 0.0.0.0
     ; ???
-    ; To enable Virtual Hosts in CouchDB, 
+    ; To enable Virtual Hosts in CouchDB,
     ; add a vhost = path directive. All requests to
-    ; the Virual Host will be redirected to the path. 
-    ; In the example below all requests to 
+    ; the Virual Host will be redirected to the path.
+    ; In the example below all requests to
     ; http://example.com:5984/ are redirected to /database.
     [vhosts]
     127.0.0.1:4000 = /database/
@@ -143,7 +143,7 @@ Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 
 ## Sterowniki:
 
-Lista oficjalnych sterwoników jest na stronie
+Lista oficjalnych sterowników jest na stronie
 [CouchDB Database Drivers - CouchApp Pages](http://www.couchone.com/page/couchdb-drivers).
 
 
