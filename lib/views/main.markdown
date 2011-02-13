@@ -45,8 +45,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
 1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
-1. {%= link_to "MapReduce", "/couchdb-mapreduce" %}
-1. {%= link_to "Views", "/couchdb-views" %}
+1. {%= link_to "Map ⇒ Reduce → Rereduce", "/couchdb-mapreduce" %}
+1. {%= link_to "Views ≡ Map + Reduce", "/couchdb-views" %}
 1. {%= link_to "Lists", "/couchdb-lists" %}
 1. {%= link_to "Rewrite", "/couchdb-rewrite" %}
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}

@@ -1,4 +1,4 @@
-#### {% title "Views" %}
+#### {% title "Views ≡ Map + Reduce" %}
 
 Zapytania SQL, takie jak to:
 
