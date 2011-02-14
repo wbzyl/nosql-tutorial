@@ -47,7 +47,7 @@ program *bootstrap* próbuje utworzyć takie linki i nie sprawdza
 czy zostały one poprawnie utworzone. W takiej sytuacji kompilacja
 albo zakończy się błędem albo, po instalacji, programy nie bedą działać.
 Dlatego, wszystkie poniższe polecenia należy wykonywać po zalogowaniu
-się na *Sigmie*.
+się na *Sigmie*.y
 
 Pozostałe programy instalujemy według przepisów przedstawionych poniżej.
 
@@ -296,7 +296,7 @@ W innym terminalu wpisujemy:
     redis-cli -p 16000 get mykey
         hello world
 
-Albo łączymy się bezpośrednio z powłoką:
+Albo przechodzimy bezpośrednio do powłoki (klienta) wykonując polecenie:
 
     redis.sh shell 16000
     set mykey "hello world"
