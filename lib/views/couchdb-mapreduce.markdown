@@ -1,23 +1,5 @@
 #### {% title "Map ⇒ Reduce → Rereduce" %}
 
-<blockquote>
- <p>
-  Wszystko da się zrozumieć poza miłością i sztuką.
- </p>
- <p class="author">[stara mądrość]</p>
-</blockquote>
-
-Nieco DOC z Mongo:
-
-* [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
-* [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
-* [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
-
-CouchDB stuff:
-
-* [Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html)
-* [Introduction to CouchDB Views](http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views)
-
 
 ## Design documents & MapReduce
 
