@@ -36,30 +36,31 @@ W tym celu dopisujemy w pliku *~/.bashrc*:
     export PATH=$HOME/.nosql/bin:$PATH
 
 Do uruchamiania demonów kontaktujących nas z bazami przygotowałem dwa
-skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*:
+skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*):
 
 * *mongo.sh*
 * *redis.sh*
 
-**Uwaga:**: Na komputerach lokalnych *Sigma* nie tworzy dowiązań symbolicznych
-do plików poza katalogiem */home*. Ponieważ w trakcie konfiguracji,
-program *bootstrap* próbuje utworzyć takie linki i nie sprawdza
-czy zostały one poprawnie utworzone. W takiej sytuacji kompilacja
-albo zakończy się błędem albo, po instalacji, programy nie bedą działać.
-Dlatego, wszystkie poniższe polecenia należy wykonywać po zalogowaniu
-się na *Sigmie*.y
+**Uwaga:** (1) W laboratoriach na komputerach lokalnych nie są tworzone
+dowiązania symboliczne do plików poza katalogiem */home*. (2) W trakcie
+konfiguracji nie jest sprawdzane, czy linki zostały zostały poprawnie
+utworzone.
 
-Pozostałe programy instalujemy według przepisów przedstawionych poniżej.
+Na przykład, w trakcie konfiguracji CouchDB program *bootstrap*
+próbuje utworzyć takie linki.  Dlatego kompilacja zakończy się błędem
+albo po instalacji, programy nie będą działać.
+
+Dlatego, wszystkie polecenia należy wykonywać po zalogowaniu się na *Sigmie*.
 
 
 # Każdy leży na swojej *CouchDB* (czyli sofie)
 
-Z serwera *github.com* klonujemy repozytorium *couchdb*:
+Z serwera *github.com* klonujemy repozytorium CouchDB:
 
     :::shell-unix-generic
     git clone git://github.com/apache/couchdb.git
 
-Następnie przechodzimy do katalogu *couchdb*, gdzie wykonujemy polecenia:
+Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd couchdb
@@ -82,7 +83,7 @@ Instalację kończymy, edytując pliku *local.ini*, sekcję *httpd*:
 
 Powyżej zamiast *XXXXX* wpisujemy numer portu przydzielony na zajęciach.
 
-Wirtualnymi hostami zajmiemy się później, tę część pomijamy:
+Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
 
     :::ini ~/.node/etc/couchdb/local.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
@@ -109,12 +110,12 @@ Uruchamiamy serwer:
     couchdb
         Apache CouchDB 1.2.0aa18429b-git (LogLevel=info) is starting.
         Apache CouchDB has started. Time to relax.
-        [info] [<0.31.0>] Apache CouchDB has started on http://0.0.0.0:4000/
+        [info] [<0.31.0>] Apache CouchDB has started on http://0.0.0.0:XXXXX/
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
     :::shell-unix-generic
-    curl http://127.0.0.1:XXXX
+    curl http://127.0.0.1:XXXXX
         {"couchdb":"Welcome","version":"1.2.0aa18429b-git"}
 
 Następnie wchodzimy na stronę:
@@ -128,15 +129,15 @@ Informacje o bazach i serwerze można uzyskać kilkając w odpowiednie zakładk
 *Futona*, albo korzystając programu *curl*:
 
     :::shell-unix-generic
-    curl -X GET http://127.0.0.1:XXXX/_all_dbs
-    curl -X GET http://127.0.0.1:XXXX/_config
+    curl -X GET http://127.0.0.1:XXXXX/_all_dbs
+    curl -X GET http://127.0.0.1:XXXXX/_config
 
 W odpowiedzi na każde żądanie HTTP (*request*), dostajemy
 odpowiedź HTTP (*response*) w formacie [JSON][json].
 
 Jeśli skorzystamy z opcji *-v*, to *curl* wypisze szczegóły tego co robi:
 
-    curl -vX POST http://127.0.0.1:XXXX/_config
+    curl -vX POST http://127.0.0.1:XXXXX/_config
 
 Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
@@ -182,7 +183,7 @@ Lista oficjalnych sterowników jest na stronie
 biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
 [Nightly download](http://www.mongodb.org/downloads).
 
-Z serwera *github.com* sklonowałem repozytorium:
+Z serwera *github.com* klonujemy repozytorium:
 
     :::shell-unix-generic
     git://github.com/mongodb/mongo.git
@@ -190,6 +191,7 @@ Z serwera *github.com* sklonowałem repozytorium:
 Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
+    cd mongo
     scons all
     scons --prefix=$HOME/.nosql install
 
