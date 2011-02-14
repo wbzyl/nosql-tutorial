@@ -11,6 +11,7 @@ Logujemy się na *Sigmie*, gdzie wykonujemu polecenie wypisujące 10
 katalogów zajmujących najwięcej miejsca:
 
     ssh sigma
+    quota
     du -m ~ | sort -k1nr | head
 
 Jeśli wolnego miejsca jest mniej niż ok. 100MB,
@@ -21,7 +22,8 @@ wykonując w katalogu domowym polecenie:
 
     :::shell-unix-generic
     cd ~
-    tar zxvf nosql-2011-02-14.tar.gz
+    git clone git://sigma.ug.edu.pl/~wbzyl/nosql
+    tar zxvf nosql/nosql-2011-02-14.tar.gz
 
 Archiwum powinno się rozpakować w katalogu *~/.nosql*.
 
@@ -52,6 +54,7 @@ Z serwera *github.com* sklonowałem repozytorium:
 Następnie w katalogu *couchdb* wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
+    cd couchdb
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     # Fedora 64-bit
@@ -61,7 +64,7 @@ Następnie w katalogu *couchdb* wykonujemy kolejno polecenia:
 
 Edytujemy w pliku *local.ini*, sekcję *httpd*:
 
-    :::ini ~/.node/etc/couchdb/local.ini
+    :::ini ~/.nosql/etc/couchdb/local.ini
     [httpd]
     ; numery portów zostaną rozdysponowane na pierwszych zajęciach
     port = XXXX
@@ -72,27 +75,28 @@ Edytujemy w pliku *local.ini*, sekcję *httpd*:
     ; the Virual Host will be redirected to the path.
     ; In the example below all requests to
     ; http://example.com:5984/ are redirected to /database.
-    [vhosts]
-    127.0.0.1:4000 = /database/
+    ;[vhosts]
+    ;127.0.0.1:4000 = /database/
 
-oraz wklejamy do pliku poniższy kod:
+oraz w pliku *default.ini* poprawiamy ścieżki na swoje.
+Poniżej jest cała lista:
 
-[couchdb]
-database_dir = /home/wbzyl/.nosql/var/lib/couchdb
-view_index_dir = /home/wbzyl/.nosql/var/lib/couchdb
-util_driver_dir = /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.2.0aa18429b-git/priv/lib
-uri_file = /home/wbzyl/.nosql/var/run/couchdb/couch.uri
+    :::ini ~/.nosql/etc/couchdb/default.ini
+    [couchdb]
+    database_dir = /home/wbzyl/.nosql/var/lib/couchdb
+    view_index_dir = /home/wbzyl/.nosql/var/lib/couchdb
+    util_driver_dir = /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.2.0aa18429b-git/priv/lib
+    uri_file = /home/wbzyl/.nosql/var/run/couchdb/couch.uri
 
-[log]
-file = /home/wbzyl/.nosql/var/log/couchdb/couch.log
+    [log]
+    file = /home/wbzyl/.nosql/var/log/couchdb/couch.log
 
-[query_servers]
-javascript = /home/wbzyl/.nosql/bin/couchjs /home/wbzyl/.nosql/share/couchdb/server/main.js
-
-[httpd_global_handlers]
-favicon.ico = {couch_httpd_misc_handlers, handle_favicon_req, "/home/wbzyl/.nosql/share/couchdb/www"}
-
-_utils = {couch_httpd_misc_handlers, handle_utils_dir_req, "/home/wbzyl/.nosql/share/couchdb/www"}
+    [query_servers]
+    javascript = /home/wbzyl/.nosql/bin/couchjs /home/wbzyl/.nosql/share/couchdb/server/main.js
+    
+    [httpd_global_handlers]
+    favicon.ico = {couch_httpd_misc_handlers, handle_favicon_req, "/home/wbzyl/.nosql/share/couchdb/www"}
+    _utils = {couch_httpd_misc_handlers, handle_utils_dir_req, "/home/wbzyl/.nosql/share/couchdb/www"}
 
 Po wklejeniu zmieniamy ścieżki na swoje.
 
