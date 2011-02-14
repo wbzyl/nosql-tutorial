@@ -96,6 +96,8 @@ Wirtualnymi hostami zajmiemy się później, tę część pomijamy:
     ; the Virual Host will be redirected to the path.
     ; In the example below all requests to
     ; http://example.com:5984/ are redirected to /database.
+    ; [vhosts]
+    ; example.com:4000 = /database/
 
 Ale można postąpić tak jak to opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
