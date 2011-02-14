@@ -12,10 +12,10 @@
 
 ## Ważne informacje
 
-Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*. 
+Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
 Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
-(W miarę możliwości należy stosować się do uwag Tima Pope, 
+(W miarę możliwości należy stosować się do uwag Tima Pope,
 [A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).)
 
 Implementacje należy przygotować w jednym z języków:
@@ -161,3 +161,5 @@ Różne:
 * Chris Storm. [couch_docs](http://github.com/eee-c/couch_docs) —
   provides a mapping between CouchDB documents and the file system
 * [Add a Searchbox to your CouchApps and CouchDB Databases in 10 Minutes](http://blog.cloudant.com/searchapp-add-a-searchbox-to-your-couchapps-and-couchdb-databases-in-10-minutes/)
+* [Ion](https://github.com/rstacruz/ion) – wyszukiwanie z redis+ruby ohm,
+  [dokumentacja](http://ricostacruz.com/ion/) (rocco)
