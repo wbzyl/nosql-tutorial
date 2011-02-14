@@ -16,8 +16,8 @@ katalogów zajmujących najwięcej miejsca:
 Jeśli wolnego miejsca jest mniej niż ok. 100MB,
 to niestety musimy usunąć zbędne rzeczy.
 
-Dopiero teraz rozpakowujemy paczkę z programami do wykładu:
-Wykonujemy w katalogu domowym polecenie:
+Dopiero teraz rozpakowujemy paczkę z programami do wykładu
+wykonując w katalogu domowym polecenie:
 
     :::shell-unix-generic
     cd ~
