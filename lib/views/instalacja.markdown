@@ -5,17 +5,16 @@
 </blockquote>
 
 Zanim zainstalujemy programy z których będziemy korzystać na zajęciach
-sprawdzamy, czy mamy wystarczająco dużo miejsca:
+sprawdzamy, czy mamy wystarczająco dużo miejsca na *Sigmie*.
+
+Logujemy się na *Sigmie*, gdzie wykonujemu polecenie wypisujące 10
+katalogów zajmujących najwięcej miejsca:
 
     ssh sigma
-
-Jeśli wolenego miejsca jest mniej niż ok. 100MB,
-to niestety musimy usunąć rzeczy których już nie będziemy potrzebować.
-W podjęciu decyzji co usunąć, może pomóc polecenie:
-
     du -m ~ | sort -k1nr | head
-    
-wypisujące 10 katalogów zajmujących najwięcej miejsca.
+
+Jeśli wolnego miejsca jest mniej niż ok. 100MB,
+to niestety musimy usunąć zbędne rzeczy.
 
 Dopiero teraz rozpakowujemy paczkę z programami do wykładu:
 Wykonujemy w katalogu domowym polecenie:
