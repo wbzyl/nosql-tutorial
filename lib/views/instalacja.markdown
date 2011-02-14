@@ -4,113 +4,101 @@
  {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
 </blockquote>
 
-Zanim zainstalujemy programy z których będziemy korzystać na zajęciach
+Zanim zainstalujemy paczkę z programami których będziemy używać na zajęciach,
 sprawdzamy, czy mamy wystarczająco dużo miejsca na *Sigmie*.
 
-Logujemy się na *Sigmie*, gdzie wykonujemu polecenie wypisujące 10
-katalogów zajmujących najwięcej miejsca:
+Logujemy się na *Sigmie* i sprawdzamy, korzystając z polecenia
+*quota*, swoje limity dyskowe i zużycie miejsca na dysku:
 
     ssh sigma
     quota
+
+Jeśli wolnego miejsca jest mniej niż ok. 100 MB, to niestety musimy
+usunąć zbędne rzeczy.  Tutaj może być pomocne wykonanie polecenia,
+wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
+
     du -m ~ | sort -k1nr | head
 
-Jeśli wolnego miejsca jest mniej niż ok. 100MB,
-to niestety musimy usunąć zbędne rzeczy.
-
-Dopiero teraz rozpakowujemy paczkę z programami do wykładu
-wykonując w katalogu domowym polecenie:
+Dopiero teraz pobieramy paczkę z programami, którą rozpakowujemy
+w katalogu domowym:
 
     :::shell-unix-generic
     cd ~
     git clone git://sigma.ug.edu.pl/~wbzyl/nosql
-    tar zxvf nosql/nosql-2011-02-14.tar.gz
+    tar zxf nosql/nosql-2011-02-15.tar.gz
 
-Archiwum powinno się rozpakować w katalogu *~/.nosql*.
+Archiwum powinno się rozpakować do katalogu *~/.nosql*.
 
 Instalację kończymy dodając do zmiennej *PATH* katalog *$HOME/.nosql/bin*.
-W tym celu w pliku *~/.bashrc* dopisujemy:
+W tym celu dopisujemy w pliku *~/.bashrc*:
 
     :::shell-unix-generic
     export PATH=$HOME/.nosql/bin:$PATH
 
-Poniżej opisałem jak powstawała paczka *NoSQL*, jak skonfigurować bazy
-oraz jak przetestować instalację.
-
 Do uruchamiania demonów kontaktujących nas z bazami przygotowałem dwa
-skrypty:
+skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*:
 
 * *mongo.sh*
 * *redis.sh*
 
-Demon dla bazy CouchDB, to *couchdb*.
+**Uwaga:**: Na komputerach lokalnych *Sigma* nie tworzy dowiązań symbolicznych
+do plików poza katalogiem */home*. Ponieważ w trakcie konfiguracji,
+program *bootstrap* próbuje utworzyć takie linki i nie sprawdza
+czy zostały one poprawnie utworzone. W takiej sytuacji kompilacja
+albo zakończy się błędem albo, po instalacji, programy nie bedą działać.
+Dlatego, wszystkie poniższe polecenia należy wykonywać po zalogowaniu
+się na *Sigmie*.
 
-# CouchDB
+Pozostałe programy instalujemy według przepisów przedstawionych poniżej.
 
-Z serwera *github.com* sklonowałem repozytorium:
+
+# Każdy leży na swojej *CouchDB* (czyli sofie)
+
+Z serwera *github.com* klonujemy repozytorium *couchdb*:
 
     :::shell-unix-generic
-    git://github.com/apache/couchdb.git
+    git clone git://github.com/apache/couchdb.git
 
-Następnie w katalogu *couchdb* wykonujemy kolejno polecenia:
+Następnie przechodzimy do katalogu *couchdb*, gdzie wykonujemy polecenia:
 
     :::shell-unix-generic
     cd couchdb
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
-    # Fedora 64-bit
-    # ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
     make
     make install
 
-Edytujemy w pliku *local.ini*, sekcję *httpd*:
+*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej:
+
+    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
+
+
+Instalację kończymy, edytując pliku *local.ini*, sekcję *httpd*:
 
     :::ini ~/.nosql/etc/couchdb/local.ini
     [httpd]
-    ; numery portów zostaną rozdysponowane na pierwszych zajęciach
-    port = XXXX
+    port = XXXXX
     bind_address = 0.0.0.0
-    ; ???
+
+Powyżej zamiast *XXXXX* wpisujemy numer portu przydzielony na zajęciach.
+
+Wirtualnymi hostami zajmiemy się później, tę część pomijamy:
+
+    :::ini ~/.node/etc/couchdb/local.ini
+    ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
+    ; dlatego zamiast *example.com* poniżej,
+    ; powinno zadziałać coś takiego i coś takiego:
+    ; http://lvh.me:4000
+    ; http://couchdb.lvh.me:4000
+    ;
     ; To enable Virtual Hosts in CouchDB,
     ; add a vhost = path directive. All requests to
     ; the Virual Host will be redirected to the path.
     ; In the example below all requests to
     ; http://example.com:5984/ are redirected to /database.
-    ;[vhosts]
-    ;127.0.0.1:4000 = /database/
 
-oraz w pliku *default.ini* poprawiamy ścieżki na swoje.
-Poniżej jest cała lista:
-
-    :::ini ~/.nosql/etc/couchdb/default.ini
-    [couchdb]
-    database_dir = /home/wbzyl/.nosql/var/lib/couchdb
-    view_index_dir = /home/wbzyl/.nosql/var/lib/couchdb
-    util_driver_dir = /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.2.0aa18429b-git/priv/lib
-    uri_file = /home/wbzyl/.nosql/var/run/couchdb/couch.uri
-
-    [log]
-    file = /home/wbzyl/.nosql/var/log/couchdb/couch.log
-
-    [query_servers]
-    javascript = /home/wbzyl/.nosql/bin/couchjs /home/wbzyl/.nosql/share/couchdb/server/main.js
-    
-    [httpd_global_handlers]
-    favicon.ico = {couch_httpd_misc_handlers, handle_favicon_req, "/home/wbzyl/.nosql/share/couchdb/www"}
-    _utils = {couch_httpd_misc_handlers, handle_utils_dir_req, "/home/wbzyl/.nosql/share/couchdb/www"}
-
-Po wklejeniu zmieniamy ścieżki na swoje.
-
-
-**Uwaga:** Host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
-Zamiast *example.com* powinno zadziałać coś takiego i coś takiego:
-
-    http://lvh.me:4000
-    http://couchdb.lvh.me:4000
-
-Sprawdzić!
-
-Można też tak [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
-
+Ale można postąpić tak jak to opisano
+w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
 
 ## Testujemy instalację
 
@@ -188,6 +176,10 @@ Lista oficjalnych sterowników jest na stronie
 
 # MongoDB
 
+**Uwaga:** Niestety na *Sigmie* poniższa procedura nie zadziała, ponieważ nie jest zainstalowana
+biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
+[Nightly download](http://www.mongodb.org/downloads).
+
 Z serwera *github.com* sklonowałem repozytorium:
 
     :::shell-unix-generic
@@ -258,19 +250,22 @@ MongoDB & Ruby:
 
 # Redis
 
-Z serwera *github.com* sklonowałem repozytorium:
+Z serwera *github.com* klonujemy repozytorium:
 
     :::shell-unix-generic
     git clone git://github.com/antirez/redis.git
 
-Następnie w katalogu *redis* wykonujemy kolejno polecenia:
+Następnie przechodzimy do katalogu *redis*, gdzie wykonujemy polecenia:
 
     :::shell-unix-generic
+    cd redis
+    git checkout 2.2
     make
     make PREFIX=$HOME/.nosql install
-    make test
+    make test  # nie działa na Sigmie (brak tclsh8.5)
 
-Edytujemy plik *redis.conf*:
+Na koniec edytujemy plik *redis.conf*, gdzie wpisujemy swoje dane i zmieniamy
+adres dla *bind*:
 
     :::ssh-config  ~/.nosql/etc/redis.conf
     # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
@@ -287,18 +282,26 @@ Edytujemy plik *redis.conf*:
 Uruchamiamy serwer, korzystając ze skryptu *redis.sh*:
 
     :::shell-unix-generic
-    redis.sh server
+    redis.sh server 16000
         [26787] 28 Dec ... * Server started, Redis version 2.1.8
         [26787] 28 Dec ... * The server is now ready to accept connections on port 12000
         [26787] 28 Dec ... - 0 clients connected (0 slaves), 790448 bytes in use
 
 W innym terminalu wpisujemy:
 
-    redis-cli -p XXXX  set mykey "hello world"
+    redis-cli -p 16000  set mykey "hello world"
         OK
-    redis-cli -p XXXX mykey
+    redis-cli -p 16000 get mykey
+        hello world
 
-Więcej poleceń: [﻿A fifteen minutes introduction to Redis data types](http://redis.io/topics/data-types-intro).
+Albo łączymy się bezpośrednio z powłoką:
+
+    redis.sh shell 16000
+    set mykey "hello world"
+    get mykey
+
+Więcej poleceń jest opisanych
+w [﻿A fifteen minutes introduction to Redis data types](http://redis.io/topics/data-types-intro).
 
 
 ## Linki
