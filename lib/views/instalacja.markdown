@@ -4,11 +4,25 @@
  {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
 </blockquote>
 
-Przygotowałem archiwum *NoSQL* z bazami i skryptami do ich uruchamiania.
-Paczkę rozpakowujemy w katalogu domowym:
+Zanim zainstalujemy programy z których będziemy korzystać na zajęciach
+sprawdzamy, czy mamy wystarczająco dużo miejsca:
+
+    ssh sigma
+
+Jeśli wolenego miejsca jest mniej niż ok. 100MB,
+to niestety musimy usunąć rzeczy których już nie będziemy potrzebować.
+W podjęciu decyzji co usunąć, może pomóc polecenie:
+
+    du -m ~ | sort -k1nr | head
+    
+wypisujące 10 katalogów zajmujących najwięcej miejsca.
+
+Dopiero teraz rozpakowujemy paczkę z programami do wykładu:
+Wykonujemy w katalogu domowym polecenie:
 
     :::shell-unix-generic
-    tar zxvf nosql-2011-01-01.tar.gz
+    cd ~
+    tar zxvf nosql-2011-02-14.tar.gz
 
 Archiwum powinno się rozpakować w katalogu *~/.nosql*.
 
@@ -61,6 +75,28 @@ Edytujemy w pliku *local.ini*, sekcję *httpd*:
     ; http://example.com:5984/ are redirected to /database.
     [vhosts]
     127.0.0.1:4000 = /database/
+
+oraz wklejamy do pliku poniższy kod:
+
+[couchdb]
+database_dir = /home/wbzyl/.nosql/var/lib/couchdb
+view_index_dir = /home/wbzyl/.nosql/var/lib/couchdb
+util_driver_dir = /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.2.0aa18429b-git/priv/lib
+uri_file = /home/wbzyl/.nosql/var/run/couchdb/couch.uri
+
+[log]
+file = /home/wbzyl/.nosql/var/log/couchdb/couch.log
+
+[query_servers]
+javascript = /home/wbzyl/.nosql/bin/couchjs /home/wbzyl/.nosql/share/couchdb/server/main.js
+
+[httpd_global_handlers]
+favicon.ico = {couch_httpd_misc_handlers, handle_favicon_req, "/home/wbzyl/.nosql/share/couchdb/www"}
+
+_utils = {couch_httpd_misc_handlers, handle_utils_dir_req, "/home/wbzyl/.nosql/share/couchdb/www"}
+
+Po wklejeniu zmieniamy ścieżki na swoje.
+
 
 **Uwaga:** Host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
 Zamiast *example.com* powinno zadziałać coś takiego i coś takiego:
