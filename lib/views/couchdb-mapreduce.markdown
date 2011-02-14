@@ -45,22 +45,8 @@ W bazie zapiszemy dokumenty z info o fotografiach:
        "info":{"width":640,"height":480,"size":50398},"tags":["maui"]}
     ]
 
-Skrypt zapisujący dokumenty w bazie. Dokumenty zapiujemy hurtem:
+Skrypt zapisujący dokumenty w bazie. Dokumenty zapisujemy hurtem:
 
-    :::ruby pictures.rb
-    require 'yajl'
-    require 'couchrest'
-
-    json = File.new('pictures.json', 'r')
-    parser = Yajl::Parser.new
-    list = parser.parse(json)
-
-    db = CouchRest.database!("http://127.0.0.1:4000/pictures")
-
-    db.bulk_save(list)
-    db.documents
-
-Link do [CouchDB Querying Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
 
 Przykłady Map & Reduce:
 

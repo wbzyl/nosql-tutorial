@@ -87,13 +87,6 @@ Oczywiście operacje CRUD możemy zaprogramować i wykonać
 używając swojego ulubionego języka programowania.
 
 
-## Konfiguracja
-
-Jeśli w pliku konfiguracyjnym **httpd > bind address** zmienimy 127.0.0.1
-na 0.0.0.0, to uzyskamy zdalny dostęp do Futona
-i CouchDB.
-
-
 # Linki
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.

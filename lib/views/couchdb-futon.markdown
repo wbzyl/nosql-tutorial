@@ -1,4 +1,4 @@
-#### {% title "Futon" %}
+#### {% title "Futon: Map ⇒ Reduce → Rereduce" %}
 
 Futon, to graficzny interfejs do CouchDB. Futon jest dostępny z URI:
 
@@ -12,7 +12,9 @@ Zanim przyjrzymy się Futonowi, utworzymy nową bazę o nazwie *photos*.
 
     curl -X PUT http://localhost:4000/photos
 
-W bazie umieścimy dokumenty z info o fotografiach:
+W bazie umieścimy dokumenty z info o fotografiach
+(przykład z fotografiami pochodzi ze strony
+[Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html)):
 
     :::json photos.json
     {
@@ -48,8 +50,24 @@ dokumenty zapiszemy hurtem:
 
     curl -X POST http://localhost:4000/photos/_bulk_docs -d @photos.json
 
-Przykład z fotografiami pochodzi ze strony
-[Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html).
+Albo, umieścimy dokumenty w bazie korzystając z takiego skryptu:
+
+    :::ruby pictures.rb
+    require 'yajl'
+    require 'couchrest'
+
+    json = File.new('pictures.json', 'r')
+    parser = Yajl::Parser.new
+    list = parser.parse(json)
+
+    db = CouchRest.database!("http://127.0.0.1:4000/pictures")
+
+    db.bulk_save(list)
+    db.documents
+
+Ten link otwieramy w zakładce:
+[CouchDB Querying Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
+Za chwilę skorzystamy z argumentów zapytań.
 
 
 ## Widoki tymczasowe
@@ -195,6 +213,7 @@ Czym są argumenty funkcji reduce?
 Wybieramy *Grouping*: exact, level 1, level 2, level 3, level 4.
 Wyjaśnić co oznacza grouping.
 
+
 ### Total size of all images
 
 Funkcja map:
@@ -207,9 +226,7 @@ Funkcja map:
 Funkcja reduce:
 
     :::javascript
-    function(keys, values, rereduce) {
-      return sum(values);
-    }
+    _stats
 
 Teraz uruchamiamy widok z funkcją *map* i *reduce*.
 
@@ -224,7 +241,7 @@ Funkcja map:
 
     :::javascript
     function(doc) {
-      emit(doc.user, 1);
+      emit(doc.user);
     }
 
 Funkcja reduce: j.w.
@@ -236,21 +253,23 @@ Funkcja reduce: j.w.
 
 ## Widoki permanentne
 
-Zapiszmy poniższy widok jako *by_login*
+Zapiszmy poniższy widok jako *by_size*
 
     :::javascript
     function(doc) {
-      emit('agatka', [doc.wyniki['agatka'], doc.nazwa]);
-      emit('jacek',  [doc.wyniki['jacek'],  doc.nazwa]);
+      emit(doc.info.size);
     }
 
 Futon zapisze ten widok w „Design Documents” jako ...?
 
+Wykonajmy ten widok.
 
-## couch.js v. jquery.couch.js
 
-Futon korzysta z biblioteki *jquery.couch.js*. Biblioteka ta
-udostępnia funkcje ułatwiające korzystanie z baz danych CouchDB.
+## Biblioteka *jquery.couch.js*
+
+Futon korzysta z biblioteki *jquery.couch.js* (oraz paru
+innych). Biblioteka ta udostępnia funkcje ułatwiające korzystanie
+z baz danych CouchDB.
 
 Skorzystamy z kilku jej funkcji pisząc widoki/zapytania do bazy
 *sprawdziany*. Kod będziemy wykonywać na konsoli rozszerzenia

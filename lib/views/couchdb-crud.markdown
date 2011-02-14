@@ -75,7 +75,7 @@ Dodajemy dane pierwszego albumu:
 
     :::shell-unix-generic
     curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i \
-      --data '{"title":"Led Zeppelin I","released":"1969-01-12","songs":["Good Times Bad Times","Dazed and Confused"]}'
+      --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
 
 Dodajemy załącznik (czyli wykonujemy *update*):
@@ -91,7 +91,7 @@ Uwagi:
 
 2\. Zamiast podawać swój
 [UUID](http://en.wikipedia.org/wiki/Universally_Unique_Identifier),
-na przykład „houses-of-the-holy”, możemy skorzystać z funkcji
+na przykład „houses-of-the-holy” poniżej, możemy skorzystać z funkcji
 *use UUID generated document ID*:
 
     :::shell-unix-generic
@@ -99,16 +99,12 @@ na przykład „houses-of-the-holy”, możemy skorzystać z funkcji
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
 
-Ale w wypadku bazy LZ, użycie z identyfikatora
-*076c85dcf037c293f237c44eac0000a8* zamiast *houses-of-the-holy* nie
-jest to dobrym pomysłem (dlaczego?).
-
 3\. Obrazek zapisany w bazie pobieramy korzystając z takiego url:
 
     curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg
 
 **Ważne:** załączniki **nie** są serwowane jako obiekty JSON.
-Są serwowane *as is* plus w nagłówku dodawany jest wcześniej podany
+Są serwowane **as is** z wcześniej podanym nagłówkiem
 *Content-Type*.
 
 
@@ -130,7 +126,7 @@ gdzie w pliku *lz.json* wpisujemy:
           "title": "Led Zeppelin I",
           "released":"1969-01-12",
           "artist": "Led Zeppelin",
-          "tracks" : [ 
+          "tracks" : [
              "Good Times Bad Times",
              "Babe I'm Gonna Leave You",
              "You Shook Me",
@@ -148,7 +144,7 @@ gdzie w pliku *lz.json* wpisujemy:
           "title": "Led Zeppelin II",
           "released": "1969-10-22",
           "artist": "Led Zeppelin",
-          "tracks" : [ 
+          "tracks" : [
              "Whole Lotta Love",
              "What Is and What Should Never Be",
              "The Lemon Song",
@@ -165,7 +161,7 @@ gdzie w pliku *lz.json* wpisujemy:
           "title": "Led Zeppelin III",
           "released": "1970-10-05",
           "artist": "Led Zeppelin",
-          "tracks" : [ 
+          "tracks" : [
              "Immigrant Song",
              "Friends",
              "Celebration Day",
@@ -175,7 +171,7 @@ gdzie w pliku *lz.json* wpisujemy:
              "Tangerine",
              "That's the Way",
              "Bron-Y-Aur Stomp",
-             "Hats Off to (Roy) Harper"  
+             "Hats Off to (Roy) Harper"
           ]
         }
     ]}
@@ -185,7 +181,7 @@ gdzie w pliku *lz.json* wpisujemy:
     :::javascript
     new Date(1969,9,23)
 
-Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej. 
+Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej.
 
 
 ### *_ALL_DOCS* – użyteczny uri
@@ -196,39 +192,21 @@ Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery 
 
     :::shell-unix-generic
     curl -X GET http://127.0.0.1:4000/lz/_all_docs
-      {"id":"076c...",         "key":"076c...",         "value":{"rev":"1-3b3e..."}},
+      ...
       {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
       {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
       {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
     ]}
 
-Do uri możemy dopisać *query parameters*, które modyfikują zwracany
-obiekt JSON. JSON jest posortowany według pola *key*.
-
-Dla przykładu, dopisanie *descending=true* zmienia kolejność dokumentów:
-
-    curl -X GET http://127.0.0.1:4000/lz/_all_docs?descending=true
-
-Dopisująć to i owo na końcu uri, można pobrać kilka dokumentów za jednym żądaniem,
-np. tylko jeden dokument (uwaga na cudzysłowy – ukrywamy `&` przed powłoką):
-
-    curl -X GET 'http://127.0.0.1:4000/lz/_all_docs?descending=true&limit=1'
-
-albo pobrać dokumenty z zawartością:
-
-    curl -X GET http://127.0.0.1:4000/lz/_all_docs?include_docs=true
-
-Ostatnie polecenie, to dobry sposób na to, aby „ogłupić” terminal.
-
 
 ### Update ≡ Replace ?
 
-Uaktualniamy, tak naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
+Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
 
     curl -X PUT http://127.0.0.1:4000/lz/076c... \
        --data '{"_rev":"1-XXXX","songs":["The Song Remains The Same"]}'
 
-Ale załącznik dodajemy tak (korzystamy z rewizji wypisanych powyżej):
+Załącznik dodajemy w taki sposób (korzystamy z rewizji wypisanych powyżej):
 
     curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin.jpg
@@ -241,7 +219,7 @@ Dodajemy okładki do albumu II oraz III:
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
 
 W zasadzie, załączniki wygodniej dodawać w Futonie!
-Chyba, że skorzystamy z jakiegoś języka skrytowego oraz
+Chyba, że skorzystamy z jakiegoś języka skryptowego oraz
 drivera do bazy CouchDB w tym języku.
 
 
@@ -258,12 +236,6 @@ to wystarczy wykonać polecenie:
 Pobieramy dokument:
 
     curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i
-
-Polecenie poniżej wypisze na terminalu zawartość pliku z obrazkiem:
-
-    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i?all_doc=true
-
-Terminale takich rzeczy nie lubią! Dlaczego?
 
 
 ### Copy
@@ -338,10 +310,10 @@ Teraz po wejściu na stronę:
 
     http://localhost:4000/lz/led-zeppelin-ii/index.html
 
-mamy pod okładką listę utworów. To jest naprawdę pokrętne! 
+mamy pod okładką listę utworów. To jest naprawdę pokrętne!
 
 Obie strony HTML powyżej mają podobną zawartość.
-Stąd pytanie: Czy można przygotować 
+Stąd pytanie: Czy można przygotować
 jedną stronę (albo, w zasadzie drugie pytanie, szablon strony)
 dla wszystkich trzech albumów?
 

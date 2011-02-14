@@ -41,11 +41,10 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
-1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Futon", "/couchdb-futon" %}
 1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
+1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
-1. {%= link_to "Map ⇒ Reduce → Rereduce", "/couchdb-mapreduce" %}
+1. {%= link_to "Futon: Map ⇒ Reduce → Rereduce", "/couchdb-futon" %}
 1. {%= link_to "Views ≡ Map + Reduce", "/couchdb-views" %}
 1. {%= link_to "Lists", "/couchdb-lists" %}
 1. {%= link_to "Rewrite", "/couchdb-rewrite" %}
