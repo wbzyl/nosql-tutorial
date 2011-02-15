@@ -349,12 +349,6 @@ Instalacja krok po kroku:
     make
     make install
     git checkout master
-    cd
-    node -v
-
-Ostatnie polecenie powinno wypisać:
-
-    v0.4.0
 
 Instalację NodeJS kończymy dodając do zmiennej *PATH* katalog *$HOME/.node/bin*.
 W tym celu dopisujemy w pliku *~/.bashrc*:
@@ -363,6 +357,12 @@ W tym celu dopisujemy w pliku *~/.bashrc*:
     export PATH=$HOME/.node/bin:$PATH
 
 następnie przelogowujemy się (wtedy zostaną wczytane nowe ustawienia *PATH*).
+
+Teraz sprawdzamy czy zainstalowała się wersja stabilna:
+
+    cd
+    node -v
+    v0.4.0
 
 Po instalcji NodeJS zabieramy się za instalację narzędzia
 [NPM](http://npmjs.org/) – a package manager for node:
