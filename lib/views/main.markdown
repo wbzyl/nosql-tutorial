@@ -12,7 +12,13 @@
 
 ## Ważne informacje
 
-Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
+[2011.02.15] Poprawiłem opis instalacji programów z których będziemy korzystać.
+Proszę przed następnymi zajeciami zainstalować wszystkie programy.
+Jeśli pojawią się jakieś problemy proszę o maila.
+
+[2011.02.16] Termin konsultacji: poniedziałek, g. 15.30, p. 228.
+
+[2011.02.02] Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
 Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
 (W miarę możliwości należy stosować się do uwag Tima Pope,
