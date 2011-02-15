@@ -344,11 +344,11 @@ Instalacja krok po kroku:
 
     git clone git://github.com/ry/node.git
     cd node
-    git co v0.4.0
+    git checkout v0.4.0
     ./configure --prefix=$HOME/.node
     make
     make install
-    git co master
+    git checkout master
     cd
     node -v
 
