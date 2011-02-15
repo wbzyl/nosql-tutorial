@@ -387,7 +387,8 @@ Tak, korzystając z *npm* sprawdzamy jakie moduły mamy zainstalowane:
 
     npm ls installed
 
-A tak odinstalowujemy moduły, na przykład *kanso*:
+A tak odinstalowujemy moduły, ale tego polecenia nie wykonujemy,
+to tylko przykład:
 
     npm rm 'kanso@9999.0.0-LINK-93620ec7'
 
