@@ -168,3 +168,5 @@ Różne:
 * [Add a Searchbox to your CouchApps and CouchDB Databases in 10 Minutes](http://blog.cloudant.com/searchapp-add-a-searchbox-to-your-couchapps-and-couchdb-databases-in-10-minutes/)
 * [Ion](https://github.com/rstacruz/ion) – wyszukiwanie z redis+ruby ohm,
   [dokumentacja](http://ricostacruz.com/ion/) (rocco)
+* John Mettraux. [Rufus-jig](https://github.com/jmettraux/rufus-jig) –
+  a HTTP client, greedy with JSON content, GETting conditionally (Ruby gem).
