@@ -347,7 +347,7 @@ Instalacja krok po kroku:
     git co v0.4.0
     ./configure --prefix=$HOME/.node
     make
-    make instal
+    make install
     git co master
     cd
     node -v
