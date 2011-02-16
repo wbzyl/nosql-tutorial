@@ -94,6 +94,12 @@ TODO:
 * {%= link_to "MongoDB", "/mongodb-databases" %}
 * {%= link_to "Redis", "/redis-databases" %}
 
+
+### Przykładowe wizualizacje
+
+* [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
+
+
 ### Linki
 
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
