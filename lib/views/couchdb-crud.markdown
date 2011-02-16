@@ -228,7 +228,7 @@ drivera do bazy CouchDB w tym języku.
 Jeśli będziemy chcieli usunąć dokument z „led-zeppelin-i” z bazy,
 to wystarczy wykonać polecenie:
 
-    curl -X DELETE http://127.0.0.1:4000/lz/led-zeppelin-?rev=2-XXXX
+    curl -X DELETE http://127.0.0.1:4000/lz/led-zeppelin-i?rev=2-XXXX
 
 
 ### Get

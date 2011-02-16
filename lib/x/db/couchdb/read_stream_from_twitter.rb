@@ -8,16 +8,20 @@ require 'pp'
 
 require 'couchrest'
 
-unless ARGV[1]
-  puts "Usage: read_stream_from_twitter PORT DBNAME\n"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb 4000 nosql"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb 4000 nosql"
+unless ARGV[2]
+  puts "Usage: read_stream_from_twitter USER:PASS PORT DBNAME\n"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb wbzyl:sekret 4000 nosql"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb wbzyl:sekret 4000 nosql"
   exit(0)
 end
 
+credentials = ARGV.shift
 port = ARGV.shift
 dbname = ARGV.shift
-db = CouchRest.database!("http://127.0.0.1:#{port}/#{dbname}")
+
+uri = "http://#{credentials}@127.0.0.1:#{port}/#{dbname}"
+
+db = CouchRest.database!(uri)
 
 ARGF.each do |json|
   # czasami w pobieranym strumieniu zapląta się pusty wiersz
