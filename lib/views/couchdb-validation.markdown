@@ -64,7 +64,7 @@ Pierwsza funkcja walidująca zapisuje w logach wartość argumentu
       log(userCtx);
     }
 
-Podglądając logi, powinniśmy znaleźć mniej więcej coś takiego:
+W logach powinniśmy znaleźć mniej więcej coś takiego:
 
     :::json
     {
@@ -73,7 +73,7 @@ Podglądając logi, powinniśmy znaleźć mniej więcej coś takiego:
       "roles": ["_admin"]
     }
 
-gdy jestesmy zalogowani jako admin, albo
+gdy jestesmy zalogowani jako *Admin*, albo coś takiego:
 
     :::json
     {
@@ -96,4 +96,5 @@ umożliwia zapisywanie dokumentów tylko użytkownikowi zalogowanemu jako
     }
 
 
-Zobacz też [New Features in Replication](http://blog.couchone.com/post/468392274/whats-new-in-apache-couchdb-0-11-part-three-new).
+Zobacz też [New Features in Replication](http://blog.couchone.com/post/468392274/whats-new-in-apache-couchdb-0-11-part-three-new),
+przykład w sekcji „Filters”.
