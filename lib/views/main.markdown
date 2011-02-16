@@ -55,12 +55,12 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Lists", "/couchdb-lists" %}
 1. {%= link_to "Rewrite", "/couchdb-rewrite" %}
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
+1. {%= link_to "Walidacja", "/couchdb-validation" %}
 
 TODO:
 
 1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
 1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
-1. {%= link_to "Walidacja", "/couchdb-validation" %}
 1. {%= link_to "Apache", "/couchdb-apache" %}
 
 
