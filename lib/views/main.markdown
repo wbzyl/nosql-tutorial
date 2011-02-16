@@ -102,15 +102,11 @@ TODO:
 
 ### Linki
 
-[Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
-(denormalizacja, konwersja na UTF-8).
+Infochimps – find the world's data:
 
-[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
-
-[PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
-zob. też [Code for America](http://codeforamerica.org/),
-[Max Ogden on twitter](http://twitter.com/#!/maxogden)
-oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
+* [Infochimps Data Marketplace + Commons: Download Sell or Share Databases, statistics, datasets for free](http://infochimps.com/)
+* [Daily 1970-2010 Open, Close, Hi, Low and Volume (NASDAQ exchange)](http://infochimps.com/datasets/daily-1970-2010-open-close-hi-low-and-volume-nasdaq-exchange)
+* warto tam zajrzeć i coś sobie wybrać
 
 Twitter:
 
@@ -126,10 +122,15 @@ Amazon public datasets:
 * [Wikipedia Traffic Statistics V2](http://aws.amazon.com/datasets/4182)
 * [Daily Global Weather Measurements, 1929-2009 (NCDC, GSOD)](http://aws.amazon.com/datasets/2759) – 20GB
 
-Infochips:
+[Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
+(denormalizacja, konwersja na UTF-8).
 
-* [Infochimps Data Marketplace + Commons: Download Sell or Share Databases, statistics, datasets for free](http://infochimps.com/)
+[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
 
+[PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
+zob. też [Code for America](http://codeforamerica.org/),
+[Max Ogden on twitter](http://twitter.com/#!/maxogden)
+oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
 
 
 # Linki
