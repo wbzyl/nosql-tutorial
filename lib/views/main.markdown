@@ -94,6 +94,8 @@ TODO:
 * {%= link_to "MongoDB", "/mongodb-databases" %}
 * {%= link_to "Redis", "/redis-databases" %}
 
+### Linki
+
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
 
@@ -117,6 +119,10 @@ Amazon public datasets:
 * [The WestburyLab USENET corpus](http://aws.amazon.com/datasets/1679761938200766) – 40GB
 * [Wikipedia Traffic Statistics V2](http://aws.amazon.com/datasets/4182)
 * [Daily Global Weather Measurements, 1929-2009 (NCDC, GSOD)](http://aws.amazon.com/datasets/2759) – 20GB
+
+Infochips:
+
+* [Infochimps Data Marketplace + Commons: Download Sell or Share Databases, statistics, datasets for free](http://infochimps.com/)
 
 
 
