@@ -90,6 +90,18 @@ TODO:
 *  {%= link_to "Zadania", "/zadania" %}
 
 
+# Referaty
+
+* Elasticsearch – howto wyszukiwania (np. co to są *facets*),
+  import bazy do elasticsearch, połączenie z CouchDB (przykład)
+* [Neo4j](http://neo4j.org/) – instalacja na Sigmie, przykład objaśniający
+  ideę grafowych baz danych (diagramy, [narzędzie do rysowania](https://cacoo.com/))
+* [Hadoop](http://hadoop.apache.org/) – instalacja na Sigmie, przykład objaśniający jak to działa (diagramy),
+  do czego można użyć hadoopa, hadoop mapreduce (przykłady)
+* Narzędzia do wizualizacji baz danych – zacząć od projektu [Simile](http://simile.mit.edu/),
+  przykłady tylko dla JSONów
+
+
 ## Przykładowe bazy danych
 
 * {%= link_to "CouchDB", "/couchdb-databases" %}
@@ -97,12 +109,12 @@ TODO:
 * {%= link_to "Redis", "/redis-databases" %}
 
 
-### Przykładowe wizualizacje
+### Wizualizacje danych
 
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
 
 
-### Linki
+## Databases in the wild
 
 Infochimps – find the world's data:
 

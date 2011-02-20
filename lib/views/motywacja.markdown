@@ -49,6 +49,38 @@ poprzednia sesja. **Istnieje wiele sposobów takiego
 skomplikowanych.**
 
 
+## What Does Big Data Mean to Infrastructure Professionals?
+
+Cytat z [Ten “Big Data” Realities and What They Mean to You](http://wikibon.org/blog/ten-%E2%80%9Cbig-data%E2%80%9D-realities-and-what-they-mean-to-you/):
+
+* Big data means the amount of data you’re working with today will
+  look trivial within five years.
+* Huge amounts of data will be kept longer and have way more value than
+  today’s archived data.
+* Business people will covet a new breed of alpha geeks. You will need
+  new skills around data science, new types of programming, more math
+  and statistics skills and data hackers… lots of data hackers.
+* **You are going to have to develop new techniques to access, secure,
+  move, analyze, process, visualize and enhance data; in near real
+  time.**
+* **You will be minimizing data movement wherever possible by moving
+  function to the data instead of data to function.** You will be
+  leveraging or inventing specialized capabilities to do certain types
+  of processing — e.g. early recognition of images or content types —
+  so you can do some processing close to the head.
+* The cloud will become the compute and storage platform for big data
+  which will be populated by mobile devices and social networks.
+* Metadata management will become increasingly important.
+* **You will have opportunities to separate data from applications and
+  create new data products.**
+* You will need orders of magnitude cheaper infrastructure that
+  emphasizes bandwidth, not iops and data movement and efficient
+  metadata management.
+* You will realize sooner or later that data and your ability to
+  exploit it is going to change your business, social and personal
+  life; permanently.
+
+
 ## CAP Theorem
 
 &nbsp;{%= image_tag "/images/cap.png", :alt =>"Visual Guide to NoSQL systems" %}
