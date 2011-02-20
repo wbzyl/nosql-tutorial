@@ -78,34 +78,40 @@ Dodajemy dane pierwszego albumu:
       --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
 
-Dodajemy załącznik (czyli wykonujemy *update*):
+CouchDB umożliwia zpisywanie w bazie nie tylko dokumentów w formacie JSON.
+W bazie możemy zapisać dane binarne, na przykład obrazki, filmy;
+możemy też zapisać pliki html, xml. W terminologii CouchDB mówimy
+o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
+
+*Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
 
     :::shell-unix-generic
     curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
     {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
 
+Obrazek, dopiero co zapisany w bazie, pobieramy korzystając z takiego uri:
+
+    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg
+
 Uwagi:
 
-1\. Dane dla opcji *--data* wpisujemy w jednym wierszu.
+1\. **Załączniki nie są serwowane jako obiekty JSON**.
+Są serwowane **as is** z nagłówkiem *Content-Type* podanym
+przy zapisywaniu załącznika w bazie.
 
 2\. Zamiast podawać swój
 [UUID](http://en.wikipedia.org/wiki/Universally_Unique_Identifier),
-na przykład „houses-of-the-holy” poniżej, możemy skorzystać z funkcji
-*use UUID generated document ID*:
+możemy skorzystać z funkcji *use UUID generated document ID*
+(co oznacza, że skorzystamy z *POST* zamiast *PUT*):
 
     :::shell-unix-generic
     curl -X POST http://localhost:4000/lz  -H "Content-Type: application/json" \
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
 
-3\. Obrazek zapisany w bazie pobieramy korzystając z takiego url:
-
-    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg
-
-**Ważne:** załączniki **nie** są serwowane jako obiekty JSON.
-Są serwowane **as is** z wcześniej podanym nagłówkiem
-*Content-Type*.
+Wtedy CouchDB wygeneruje unikalny identityfikator dla dokumentu
+zapisywanego w bazie (powyżej *"076c85dcf037c293f237c44eac0000a8"*).
 
 
 ## Jak wygodnie dodawać dokumenty do bazy?
@@ -181,7 +187,8 @@ gdzie w pliku *lz.json* wpisujemy:
     :::javascript
     new Date(1969,9,23)
 
-Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej.
+Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej –
+*curl* nam w tym nie pomoże (?, sprawdzić najnowszą wersję).
 
 
 ### *_ALL_DOCS* – użyteczny uri
@@ -191,15 +198,31 @@ Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev
 Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
 
     :::shell-unix-generic
-    curl -X GET http://127.0.0.1:4000/lz/_all_docs
+    curl -X GET http://localhost:4000/lz/_all_docs
+      {"total_rows":3, "offset":0,
+       "rows":[
+         {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
+         {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
+         {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
+      ]}
+    curl -X GET http://localhost:4000/lz/_all_docs?include_docs=true
+      {"total_rows":3, "offset":0,
+       "rows":[
+         {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"4-b6b2..."},
+          "doc": {
+            "_id":"led-zeppelin-i",
+            "_rev":"4-b6b2",
+            "title":"Led Zeppelin I",
+            "released":"January 12, 1969",
+            "songs":["Good Times Bad Times", ...],
+            "_attachments": {
+              "index.html":{"content_type":"text/html","revpos":9,"length":152,"stub":true}, ...
       ...
-      {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
-      {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
-      {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
-    ]}
+
+*Uwaga:* adresy URI możemy wpisać bezpośrednio do przeglądarki.
 
 
-### Update ≡ Replace ?
+### Update ≡ Replace ? – wersjonowanie dokumentów
 
 Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
 
