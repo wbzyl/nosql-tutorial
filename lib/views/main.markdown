@@ -183,3 +183,4 @@ Różne:
   [dokumentacja](http://ricostacruz.com/ion/) (rocco)
 * John Mettraux. [Rufus-jig](https://github.com/jmettraux/rufus-jig) –
   a HTTP client, greedy with JSON content, GETting conditionally (Ruby gem).
+* [Orbit: A Slick jQuery Image Slider Plugin](http://www.zurb.com/playground/orbit-jquery-image-slider)

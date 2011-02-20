@@ -410,6 +410,14 @@ Powinniśmy zobaczyć coś takiego:
       help        Show help specific to a command
 
 
+## Linki
+
+* [Node.js](http://nodejs.org/)
+* [Node.js Manual & Documentation](http://nodejs.org/docs/v0.4.1/api/)
+* [Node.js community wiki](https://github.com/ry/node/wiki)
+* [Node.js Tutorial Roundup](http://blogfreakz.com/node/node-js-tutorial-roundup/)
+
+
 
 # FAQ
 
