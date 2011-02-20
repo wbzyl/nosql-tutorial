@@ -138,8 +138,9 @@ Amazon public datasets:
 
 Newspapers:
 
-* [Times Developer Network - Welcome](http://developer.nytimes.com/) (Marcin Sulkowski)
-
+* [Times Developer Network - Welcome](http://developer.nytimes.com/) –
+  [API Request Tool](http://prototype.nytimes.com/gst/apitool/index.html);
+  zob. API artykułów oraz filmów (<i>Marcin Sulkowski</i>)
 
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
