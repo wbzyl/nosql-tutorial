@@ -136,6 +136,11 @@ Amazon public datasets:
 * [Wikipedia Traffic Statistics V2](http://aws.amazon.com/datasets/4182)
 * [Daily Global Weather Measurements, 1929-2009 (NCDC, GSOD)](http://aws.amazon.com/datasets/2759) – 20GB
 
+Newspapers:
+
+* [Times Developer Network - Welcome](http://developer.nytimes.com/) (Marcin Sulkowski)
+
+
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
 
