@@ -1,3 +1,8 @@
 #### {% title "Przykładowe bazy danych dla Redis" %}
 
-TODO
+Poniżej umieściłem opisy jak zapisać w bazie Redis dane pobrane z internetu.
+
+**TODO:** MongoDB ⇔ CouchDB ⇔ Redis
+
+
+## TODO: Twitter Tracking & Ruby

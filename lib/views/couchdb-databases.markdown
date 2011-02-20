@@ -2,8 +2,10 @@
 
 Poniżej umieściłem opisy jak zapisać w CouchDB dane pobrane z internetu.
 
+**TODO:** MongoDB ⇔ CouchDB ⇔ Redis
 
-## Twitter Tracking
+
+## Twitter Tracking & Ruby
 
 Wymagania:
 

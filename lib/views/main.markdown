@@ -47,15 +47,17 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
-1. {%= link_to "ElasticSearch", "/couchdb-elasticsearch" %}
+1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Funkcje *Show*", "/couchdb-show" %}
+1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "Futon: Map ⇒ Reduce → Rereduce", "/couchdb-futon" %}
 1. {%= link_to "Views ≡ Map + Reduce", "/couchdb-views" %}
-1. {%= link_to "Lists", "/couchdb-lists" %}
-1. {%= link_to "Rewrite", "/couchdb-rewrite" %}
+1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
+1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
+
+<!--
 
 TODO:
 
@@ -63,6 +65,7 @@ TODO:
 1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
 1. {%= link_to "Apache", "/couchdb-apache" %}
 
+-->
 
 ## MongoDB
 
@@ -76,7 +79,6 @@ TODO:
 
 ## Różne rzeczy
 
-1. {%= link_to "JSON", "/json" %}
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "Dostęp do CouchDB via NodeJS", "/couchdb-nodejs" %}
@@ -105,7 +107,7 @@ TODO:
 Infochimps – find the world's data:
 
 * [Infochimps Data Marketplace + Commons: Download Sell or Share Databases, statistics, datasets for free](http://infochimps.com/)
-* [Million Songs](http://infochimps.com/collections/million-songs) – ponad 100GB danych
+* [Million Songs](http://infochimps.com/collections/million-songs) – ok 200GB danych
 * [Daily 1970-2010 Open, Close, Hi, Low and Volume (NASDAQ exchange)](http://infochimps.com/datasets/daily-1970-2010-open-close-hi-low-and-volume-nasdaq-exchange)
 
 Twitter:
@@ -142,6 +144,8 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * [CSS3.info](http://www.css3.info/)
 * [jQuery](http://jquery.com/), [JS Bin](http://jsbin.com/)
 * [Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
+* [Introducing JSON](http://www.json.org/) ([polska wersja strony](http://www.json.org/json-pl.html))
+
 
 Ściągi:
 

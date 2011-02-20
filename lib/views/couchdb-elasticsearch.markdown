@@ -1,8 +1,8 @@
-#### {% title "ElasticSearch" %}
+#### {% title "ElasticSearch – odjazdowy „sweet spot”" %}
 
 <blockquote>
  {%= image_tag "/images/john_cage.jpg", :alt => "[John Cage]" %}
- <p>I can't understand why people are frightened of new ideas. 
+ <p>I can't understand why people are frightened of new ideas.
     I'm frightened of the old ones.
  </p>
  <p class="author">— John Cage (1912–1992)</p>
