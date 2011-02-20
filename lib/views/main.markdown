@@ -76,10 +76,10 @@ TODO:
 
 ## Różne rzeczy
 
-1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "JSON", "/json" %}
-1. {%= link_to "Dostęp do CouchDB via NodeJS", "/couchdb-nodejs" %}
+1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
+1. {%= link_to "Dostęp do CouchDB via NodeJS", "/couchdb-nodejs" %}
 
 
 # Laboratorium
@@ -105,8 +105,8 @@ TODO:
 Infochimps – find the world's data:
 
 * [Infochimps Data Marketplace + Commons: Download Sell or Share Databases, statistics, datasets for free](http://infochimps.com/)
+* [Million Songs](http://infochimps.com/collections/million-songs) – ponad 100GB danych
 * [Daily 1970-2010 Open, Close, Hi, Low and Volume (NASDAQ exchange)](http://infochimps.com/datasets/daily-1970-2010-open-close-hi-low-and-volume-nasdaq-exchange)
-* warto tam zajrzeć i coś sobie wybrać
 
 Twitter:
 

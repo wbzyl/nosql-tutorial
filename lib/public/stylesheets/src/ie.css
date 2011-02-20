@@ -8,7 +8,7 @@
 -------------------------------------------------------------- */
 
 /* Make sure the layout is centered in IE5 */
-body { text-align: center; }
+/* body { text-align: center; } */
 .container { text-align: left; }
 
 /* Fixes IE margin bugs */
