@@ -12,6 +12,9 @@
 
 ## Ważne informacje
 
+[2011.02.15] Coś do poczytania – [Sapling Learning Blog](http://blog.saplinglearning.com/2011/02/data-mining-6-things-i-learned-from.html).
+A jakie są nasze zwyczaje?
+
 [2011.02.15] Poprawiłem opis instalacji programów z których będziemy korzystać.
 Proszę **przed następnymi zajeciami** zainstalować wszystkie programy.
 Jeśli pojawią się jakieś problemy proszę o maila.
@@ -104,19 +107,19 @@ TODO:
   przykłady tylko dla JSONów (<em>M. Rusajczyk, M. Pętlicki, M. Smolinski</em>)
 
 
-## Przykładowe bazy danych
+# Przykładowe bazy danych
 
 * {%= link_to "CouchDB", "/couchdb-databases" %}
 * {%= link_to "MongoDB", "/mongodb-databases" %}
 * {%= link_to "Redis", "/redis-databases" %}
 
 
-### Wizualizacje danych
+# Wizualizacje danych
 
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
 
 
-## Databases in the wild
+# Databases in the wild
 
 Infochimps – find the world's data:
 
@@ -143,6 +146,10 @@ Newspapers:
 * [Times Developer Network - Welcome](http://developer.nytimes.com/) –
   [API Request Tool](http://prototype.nytimes.com/gst/apitool/index.html);
   zob. API artykułów oraz filmów (<i>Marcin Sulkowski</i>)
+
+Movies:
+
+* [](ftp://ftp.fu-berlin.de/pub/misc/movies/database/) (<i>Marian Smolinski</i>)
 
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
