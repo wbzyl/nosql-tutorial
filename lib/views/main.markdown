@@ -96,6 +96,7 @@ TODO:
   import bazy do elasticsearch, połączenie z CouchDB (przykład)
 * [Neo4j](http://neo4j.org/) – instalacja na Sigmie, przykład objaśniający
   ideę grafowych baz danych (diagramy, [narzędzie do rysowania](https://cacoo.com/))
+  (<i>M. Kaliszuk, M. Kaszałowicz, M. Tupacz, M. Maszkiewicz</i>)
 * [Hadoop](http://hadoop.apache.org/) – instalacja na Sigmie, przykład objaśniający jak to działa (diagramy),
   do czego można użyć hadoopa, hadoop mapreduce w przykładach
   (<i>Sz. Szypulski, M. Chadaj, B. Drzazgowski, D. Zmitrowicz</i>)
