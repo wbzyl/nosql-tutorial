@@ -61,7 +61,7 @@ próbuje utworzyć linki symboliczne do katalogu */usr*. Dlatego
 kompilacja zakończy się błędem albo po instalacji, programy nie będą
 działać.
 
-**Dlatego, wszystkie polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**cd
+**Dlatego, wszystkie polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**
 
 
 # Każdy leży na swojej *CouchDB* (czyli sofie)
