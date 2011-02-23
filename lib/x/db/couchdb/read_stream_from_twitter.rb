@@ -19,7 +19,11 @@ credentials = ARGV.shift
 port = ARGV.shift
 dbname = ARGV.shift
 
+# credentials, to User:Pass do servera CouchDB
 uri = "http://#{credentials}@127.0.0.1:#{port}/#{dbname}"
+
+# jeśli każdy jest adminem – tryb Admin Party!
+# uri = "http://127.0.0.1:#{port}/#{dbname}"
 
 db = CouchRest.database!(uri)
 
