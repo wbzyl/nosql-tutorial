@@ -262,6 +262,9 @@ Korzystamy z *couchapp* aby umieścić dokumenty w bazie:
     PUT http://wbzyl:******@localhost:4000/lec/_design/default
     Finished push. 2-7068bcbdcec03650a8dee623e5afe1a1
 
+Powtarzamy żądanie z parametrem::
+
+    curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
 
 
 # TODO: nie skorzystamy z *couch_docs*
