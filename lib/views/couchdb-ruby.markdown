@@ -40,9 +40,9 @@ albo tak:
     :::ruby
     db = CouchRest.database!("http://localhost:4000/cr")
 
-powyżej jeśli baza już istnieje to polecenie to nic nie robi.
+czyli utwórz bazę, ale jeśli baza już istnieje to nic nie rób.
 
-Info o bazie:
+Pobieramy informacje o bazie:
 
     :::ruby
     db.host ; db.name ; db.root ; db.uri
@@ -166,23 +166,13 @@ Ale wygodniej jest skorzystać z metody *put_attachment*:
     #                 doc,  name,       file,                          options = {}
     db.put_attachment(doc, 'plant.jpg', File.read('robert_plant.jpg'), :content_type => :jpeg)
 
-Ale teraz dokument zapisujemy w dwóch etapach: najpier dane JSON,
+Ale teraz dokument zapisujemy w dwóch etapach: najpierw dane JSON,
 a następnie załączniki.
 
 
 # Przykłady
 
-Kilka przykładów…
-
-
-## Word count
-
-TODO: Omówić przykład z katalogu *couch/word-count*.
-
-
-## Sinatra & Couchrest
-
-* [A basic CouchDB/Sinatra wiki](http://github.com/benatkin/weaky)
+Kilka przykładów. Na początek coś o sortowaniu.
 
 
 ## *View collation* – przykład z *rest-client*
@@ -234,3 +224,13 @@ Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola 
     response.code
     response.headers
     response.cookies
+
+
+## Word count
+
+TODO: Omówić przykład z katalogu *couch/word-count*.
+
+
+## Sinatra & Couchrest
+
+* [A basic CouchDB/Sinatra wiki](http://github.com/benatkin/weaky)

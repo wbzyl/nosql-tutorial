@@ -15,3 +15,8 @@ Replikujemy bazę *lz*:
 
 A teraz replikujemy – między sobą – swoje bazy danych.
 Na razie do replikacji wykorzystamy Futona.
+
+Teraz kolej na lekturę [New Features in Replication](http://blog.couchone.com/post/468392274):
+
+* [Change Notifications](http://guide.couchdb.org/draft/notifications.html)
+* Filters

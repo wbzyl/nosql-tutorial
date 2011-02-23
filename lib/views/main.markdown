@@ -12,11 +12,12 @@
 
 ## Ważne informacje
 
-[2011.02.15] Coś do poczytania – [Sapling Learning Blog](http://blog.saplinglearning.com/2011/02/data-mining-6-things-i-learned-from.html).
+[2011.02.15] Coś do poczytania – 
+[Sapling Learning Blog](http://blog.saplinglearning.com/2011/02/data-mining-6-things-i-learned-from.html).
 A jakie są nasze zwyczaje?
 
 [2011.02.15] Poprawiłem opis instalacji programów z których będziemy korzystać.
-Proszę **przed następnymi zajeciami** zainstalować wszystkie programy.
+Proszę **przed następnymi zajęciami** zainstalować wszystkie programy.
 Jeśli pojawią się jakieś problemy proszę o maila.
 
 [2011.02.16] Termin konsultacji: poniedziałek, g. 15.30, p. 228.
@@ -51,11 +52,11 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
 1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
-1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "Futon: Map ⇒ Reduce → Rereduce", "/couchdb-futon" %}
 1. {%= link_to "Views ≡ Map + Reduce", "/couchdb-views" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
+1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
