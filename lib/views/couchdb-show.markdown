@@ -192,25 +192,10 @@ Zobacz też opis
 [Querying Options/Parameters](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
 
 
-# Filesystem mapping & node.couchapp.js
+# Korzystamy z modułu NodeJS *node.couchapp.js*
 
 Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
-to (dlaczego?). Unikniemy tego stosując technikę
-o nazwie „filesystem mapping” (mapowania plików).
-
-Takie *filesystem mapping* lepiej pokazuje strukturę JSON-ów:
-
-    _design/
-    `-- default
-        |-- shows
-            `-- quotation.js
-
-gdzie *quotation.js* zawiera jakiś kod Javascript, na przykład:
-
-    :::javascript
-    function(doc, req) {
-      return doc.quotation;
-    }
+to (dlaczego?).
 
 Moduł NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
 ułatwia co nieco. Instalujemy go tak jak to opisano w pliku README.
@@ -265,64 +250,6 @@ Korzystamy z *couchapp* aby umieścić dokumenty w bazie:
 Powtarzamy żądanie z parametrem::
 
     curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
-
-
-# TODO: nie skorzystamy z *couch_docs*
-
-Zanim nie skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
-
-    :::ruby
-    source 'http://rubygems.org'
-    gem 'rake'
-    gem 'rack'
-    gem 'couchrest'
-    gem 'couch_docs'
-
-Następnie instalujemy gemy:
-
-    bundle install --path=$HOME/.gems
-
-Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thora*?).
-
-    :::ruby Rakefile
-    require 'bundler'
-    Bundler.setup
-
-    require 'rake'
-    require 'rack/mime'
-    require 'couchrest'
-    require 'couch_docs'
-
-    require 'pp'
-
-    Database = CouchRest.database!('http://127.0.0.1:4000/lec')
-
-    desc "Upload application design documents"
-    task :default => [:design] do
-      puts "-"*80
-      puts "Uploaded design documents into database, please check:",
-           " * http://localhost:4000/lec/_design/default/_show/quotation/4"
-    end
-
-    desc "Upload design documents from _design/default"
-    task :design do
-      dir = CouchDocs::DesignDirectory.new('_design/default')
-      doc = dir.to_hash
-      doc.update('_id' => '_design/default', 'language' => 'javascript')
-
-      rev = Database.get('_design/default')['_rev'] rescue nil
-      doc.update({'_rev' => rev}) if rev
-      #pp doc
-      #pp doc['shows'].keys
-
-      response = Database.save_doc(doc)
-      pp response
-    end
-
-Teraz, aby przenieść zawartość plików Javascript do bazy wystarczy
-wykonać polecenie:
-
-    rake
 
 
 ## Za & przeciw
@@ -388,3 +315,83 @@ najciekawsze rzeczy są w pliku *render.js*, *views.js*).
 
 Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
 pliki *show_documents.js*, *list_views.js*.
+
+
+
+<!--
+
+# TODO: nie skorzystamy z *couch_docs*
+
+Unikniemy tego stosując technikę
+o nazwie „filesystem mapping” (mapowania plików).
+
+Takie *filesystem mapping* lepiej pokazuje strukturę JSON-ów:
+
+    _design/
+    `-- default
+        |-- shows
+            `-- quotation.js
+
+gdzie *quotation.js* zawiera jakiś kod Javascript, na przykład:
+
+    :::javascript
+    function(doc, req) {
+      return doc.quotation;
+    }
+
+Zanim nie skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
+
+    :::ruby
+    source 'http://rubygems.org'
+    gem 'rake'
+    gem 'rack'
+    gem 'couchrest'
+    gem 'couch_docs'
+
+Następnie instalujemy gemy:
+
+    bundle install --path=$HOME/.gems
+
+Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thora*?).
+
+    :::ruby Rakefile
+    require 'bundler'
+    Bundler.setup
+
+    require 'rake'
+    require 'rack/mime'
+    require 'couchrest'
+    require 'couch_docs'
+
+    require 'pp'
+
+    Database = CouchRest.database!('http://127.0.0.1:4000/lec')
+
+    desc "Upload application design documents"
+    task :default => [:design] do
+      puts "-"*80
+      puts "Uploaded design documents into database, please check:",
+           " * http://localhost:4000/lec/_design/default/_show/quotation/4"
+    end
+
+    desc "Upload design documents from _design/default"
+    task :design do
+      dir = CouchDocs::DesignDirectory.new('_design/default')
+      doc = dir.to_hash
+      doc.update('_id' => '_design/default', 'language' => 'javascript')
+
+      rev = Database.get('_design/default')['_rev'] rescue nil
+      doc.update({'_rev' => rev}) if rev
+      #pp doc
+      #pp doc['shows'].keys
+
+      response = Database.save_doc(doc)
+      pp response
+    end
+
+Teraz, aby przenieść zawartość plików Javascript do bazy wystarczy
+wykonać polecenie:
+
+    rake
+
+-->
