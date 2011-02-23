@@ -1,73 +1,42 @@
-# TODO
-
 require 'bundler'
 Bundler.setup
 
 require 'rake'
-require 'couchrest'
 require 'rack/mime'
-require 'active_support/json'
-require 'active_support/core_ext/hash'
-require 'yajl/http_stream'
+require 'couchrest'
+require 'couch_docs'
+require 'yajl'
 
 require 'pp'
 
-# Store connection to CouchDB in this constant
+# store connection to CouchDB in this constant
 #
 Database = CouchRest.database!('http://127.0.0.1:4000/lec')
 
-desc "Upload application TODO:assets & views"
-task :default => [:assets] do
+desc "Upload application design documents"
+task :default => [:design] do
   puts "-"*80
-  puts "Uploaded application assets into database, please check:",
-  " * TODO: http://localhost:4000/lec/_design/_show/1 ???"
-  puts "Relevant code is in the _design/lec folder", ""
+  puts "Uploaded design documents into database, please check:",
+       " * http://localhost:4000/lec/_design/default/_show/quotation/4"
 end
 
-desc "Upload database shows, views, lists from _design/templates"
-task :shows do
-  require 'couch_docs'
+desc "Upload design documents from _design/default"
+task :design do
+  dir = CouchDocs::DesignDirectory.new('_design/default')
 
-  dir = CouchDocs::DesignDirectory.new('_design/templates')
-
-  # konwertujemy katalog na argument dla *save_doc*
   doc = dir.to_hash
-  #p doc
+  #pp doc
 
-  doc.update '_id' => '_design/lec', 'language' => 'javascript'
-
-  p Database.get('_design/lec')
+  doc.update '_id' => '_design/default', 'language' => 'javascript'
+  #pp doc
   
-  rev = Database.get('_design/lec')['_rev'] rescue nil
-  doc.update( {'_rev' => rev} ) if rev
-  p doc['shows'].keys
-  #p doc['shows']
+  rev = Database.get('_design/default')['_rev'] rescue nil
+
+  doc.update({'_rev' => rev}) if rev
+
+  pp doc
+  #pp doc['shows'].keys
+  
   response = Database.save_doc(doc)
-  p response
-end
-
-desc "Upload assets from _design/lec"
-task :assets do
-  assets_folder = Pathname.new('_design/assets')
-
-  doc = {
-    '_id'   => '_design/lec',
-    '_attachments' => {},
-  }
-
-  puts "* Reading assets in '#{assets_folder}':"
-  FileList.new("#{assets_folder}/**/*.*").each do |source|
-     attachment = source.gsub(Regexp.new("^#{assets_folder}/(.*)$"), '\1')
-     puts "  - #{attachment}"
-     doc['_attachments'][attachment] = {
-       'content_type' => Rack::Mime.mime_type( File.extname(assets_folder.join(attachment)) ),
-       'data' => File.read(assets_folder.join(attachment))
-     }
-  end
-
-  rev = Database.get('_design/lec')['_rev'] rescue nil
-  doc.update( {'_rev' => rev} ) if rev
-
-  p doc['_attachments'].keys
-  Database.save_doc(doc)
+  pp response
 end

@@ -1,4 +1,0 @@
-{
-  "shows" : {
-    "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>\\n'; }" }
-}
