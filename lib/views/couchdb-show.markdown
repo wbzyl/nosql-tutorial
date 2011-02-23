@@ -1,71 +1,272 @@
 #### {% title "Funkcje *Show*" %}
 
-Po co są [Show Functions](http://guide.couchdb.org/draft/show.html)?
+Dlaczego wymyślono [show functions](http://guide.couchdb.org/draft/show.html):
+„There is one important use case that JSON documents don’t cover:
+building plain old HTML web pages.” oraz XML, CSV, etc.
 
-Co chcemy osiągnąć? Pobieramy z bazy dokument w formacie JSON,
-ale prezentujemy go w formie strony HTML.
+Innymi słowy – funkcji show używamy do pobrania dokument JSON z bazy,
+przekształcenie go do innego formatu i zwrócenie klientowi
+przekształconego tak dokumentu.
 
-Inne formaty: XML, CSV, etc; zobacz:
-[NOSQL Databases for Web CRUD (CouchDB) - Shows/Views](http://java.dzone.com/articles/nosql-databases-web-crud).
-Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
-pliki *show_documents.js*, *list_views.js*.
+W przykładach poniżej będziemy korzystać z bazy *lec*, która zawiera
+osiem cytatów {%= link_to "lec.json", "/couch/show/lec.json" %}
+({%= link_to "wszystkie cytaty", "/doc/json/lec.json" %}):
 
-Zaczynamy od utworzenia bazy i umieszczenia w niej kilku dokumentów.
+    :::json
+    {
+      "_id": "1",
+      "created_at": [2010, 0, 1],
+      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
+      "tags": ["wiedza", "nauka", "wszechświat"]
+    }
 
-To tworzymy bazę *lec* i dodajemy do niej dokumenty z pliku *lec.json*:
+Tworzymy bazę i wrzucamy do niej hurtem wszystkie cytaty:
 
-    curl -X PUT  http://127.0.0.1:4000/lec
+    curl -X PUT  http://User:Pass@127.0.0.1:4000/lec
     curl -X POST -H "Content-Type: application/json" \
       http://127.0.0.1:4000/lec/_bulk_docs -d @lec.json
 
-(Link do pliku {%= link_to "lec.json", "/doc/json/lec.json" %}.)
+*Uwaga:* W drugim poleceniu nie podajemy swoich danych.
 
-Funkcję show wpisujemy w obiekcie JSON według wzoru:
 
-    :::json
+## Przykład: HTML
+
+Funkcję show wpisujemy w jakimś design document
+w polu *shows* (uwaga na liczbę mnogą). Oto prosty przykład:
+
+    :::json quotation.json
     {
       "shows" : {
         "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
 
-Zapisujemy powyższy obiekt JSON w pliku *guotation.json*
-i umieszczmy go w bazie *lec* z *\_id* równym **_design/default**:
+Zapisujemy powyższy kod w pliku *quotation.json*.  Następnie,
+korzystając z programu *curl* zapisujemy go w design document
+**_design/default**:
 
-     curl -X PUT http://localhost:4000/lec/_design/default \
+     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
+
+**Uwaga:**: kilka funkcji show wpisujemy w polu *shows* w taki sposób:
+
+    :::json
+    {
+      "shows" : {
+        "quotation" : "function(doc, req) { ... }",
+        "tags" :      "function(doc, req) { ... }"
+      }
+    }
 
 Teraz po wejściu na stronę:
 
     http://localhost:4000/lec/_design/default/_show/quotation/4
 
-widzimy sformatowany przez funkcję *quotation* cytat o *_id* równym 4.
+widzimy sformatowany przez funkcję show *quotation* cytat o *_id* równym 4.
 
-Możemy też użyć programu *curl* zamiast przeglądarki:
+Wersję HTML cytatu możemy też ściągnąć za pomocą programu *curl*:
 
-    curl http://localhost:4000/lec/_design/default/_show/quotation/4
+    curl -i http://localhost:4000/lec/_design/default/_show/quotation/4
 
 
-## Korzystamy z *couch_docs*
+### Kilka bardziej skomplikowanych funkcji show
+
+Wysyłanie nagłówków:
+
+    :::javascript
+    function(doc, req) {
+      return {
+        body : '<foo>' + doc.quotation + '</foo>',
+        headers : {
+          "Content-Type" : "application/xml",
+          "X-My-Own-Header": "you can set your own headers"
+        }
+      }
+    }
+
+Przekazywanie parametrów do *shows*:
+
+    :::javascript aye.json
+    {
+      "shows" : {
+        "aye" : "function(doc, req) {
+           return 'Aye aye: ' + req.query['q'] + '. ' + doc.quotation;
+        }"
+      }
+    }
+
+W Futonie usuwamy dokument *_design/default* (dlaczego to robimy?),
+następnie zapisujemy funkcję show *aye* w bazie:
+
+     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+       -H "Content-Type: application/json" -d @aye.json
+
+Żądanie z parametrem:
+
+    curl http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
+    => Aye aye, Captain. Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
+
+Odpowiadanie na różne nagłówki *Content-Type* żądania.
+
+    :::json maye.json
+    {
+      "shows" : {
+        "aye" : "function(doc, req) {
+           provides('html', function() {
+             return '<h2>Aye aye: ' + req.query['q'] + '</h2><p>' + doc.quotation + '</p>';
+           });
+           provides('xml', function() {
+             return '<aye><hej>Aye aye: ' + req.query['q'] + '</hej><you>' + doc.quotation + '</you></aye>';
+           });
+        }"
+      }
+    }
+
+Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
+potem zapisujemy funkcję show *maye* w bazie:
+
+     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+       -H "Content-Type: application/json" -d @maye.json
+
+Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accept: application/xml*
+
+    curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
+    curl -v -H 'Accept: application/xml' http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
+
+Pozostałe *mime types* wbudowane w CouchDB znajdzimey w pliku *main.js*:
+
+    :::javascript ./share/server/main.js
+    // Some default types ported from Ruby on Rails
+    // Build list of Mime types for HTTP responses
+    // http://www.iana.org/assignments/media-types/
+    // http://dev.rubyonrails.org/svn/rails/trunk/actionpack/lib/action_controller/mime_types.rb
+
+    registerType("all", "*/*");
+    registerType("text", "text/plain; charset=utf-8", "txt");
+    registerType("html", "text/html; charset=utf-8");
+    registerType("xhtml", "application/xhtml+xml", "xhtml");
+    registerType("xml", "application/xml", "text/xml", "application/x-xml");
+    registerType("js", "text/javascript", "application/javascript", "application/x-javascript");
+    registerType("css", "text/css");
+    registerType("ics", "text/calendar");
+    registerType("csv", "text/csv");
+    registerType("rss", "application/rss+xml");
+    registerType("atom", "application/atom+xml");
+    registerType("yaml", "application/x-yaml", "text/yaml");
+    // just like Rails
+    registerType("multipart_form", "multipart/form-data");
+    registerType("url_encoded_form", "application/x-www-form-urlencoded");
+    // http://www.ietf.org/rfc/rfc4627.txt
+    registerType("json", "application/json", "text/x-json");
+
+Oczywiście możemy też rejestrować swoje typy mime.
+
+### Obiekt *Request*
+
+* `body` - raw post body
+* `cookie` - cookie information passed on from mochiweb
+* `form` - if the request’s *Content-Type* is
+  *application/x-www-form-urlencoded*, a decoded version of the body
+* `info` - same structure as returned by *http://127.0.0.1:5984/db_name/*
+* `path` - any extra path information after routing to the external process
+* `query` - decoded version of the query string parameters.
+* `method` - HTTP request verb
+* `userCtx` - Information about the User
+
+### Obiekt *Response*
+
+* `code` - HTTP response code (default is 200). Note that this must be a
+  number and cannot be a string (no "")
+* `headers` - an object with key-value pairs that specify HTTP headers
+  to send to the client.
+* `json` - an arbitrary JSON object to send the client. Automatically
+  sets the Content-Type header to "application/json"
+* `body` - an arbitrary CLOB to be sent to the client. *Content-Type*
+  header defaults to *text/html*
+* `base64` - arbitrary binary data for the response body, base64-encoded
+
+
+Opis obiektów *Request* oraz *Response* z CouchDB Wiki
+[External Processes](http://wiki.apache.org/couchdb/ExternalProcesses).
+
+Zobacz też opis
+[Querying Options/Parameters](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
+
+
+# Filesystem mapping & node.couchapp.js
 
 Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
-to (dlaczego?). Unikniemy tego stosując techniki „filesystem mapping”.
-Gem *couch_docs* implementuje tę technikę. 
+to (dlaczego?). Unikniemy tego stosując technikę
+o nazwie „filesystem mapping” (mapowania plików).
 
-Tworzymy taki *filesystem mapping*:
+Takie *filesystem mapping* lepiej pokazuje strukturę JSON-ów:
 
     _design/
     `-- default
         |-- shows
             `-- quotation.js
 
-I takiego pliku *quotation.sj*:
+gdzie *quotation.js* zawiera jakiś kod Javascript, na przykład:
 
     :::javascript
-    function(doc, req) { 
-      return '<p>' + doc.quotation + '</p>'; 
+    function(doc, req) {
+      return doc.quotation;
     }
 
-Zanim skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
+Moduł NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+ułatwia co nieco. Instalujemy go tak jak to opisano w pliku README.
+
+
+    git clone git://github.com/mikeal/node.couchapp.js.git
+    cd node.couchapp.js
+    npm link
+
+Sprawdzamy instalację:
+
+    → couchapp
+    couchapp -- utility for creating couchapps
+    Usage:
+      couchapp <command> app.js http://localhost:5984/dbname
+    Commands:
+      push   : Push app once to server.
+      sync   : Push app then watch local files for changes.
+      boiler : Create a boiler project.
+
+Korzystając z przykładu podanego w README powtarzamy przykład z *maye.json*
+opisany powyżej:
+
+    :::javascript maye.js
+    var couchapp = require('couchapp')
+      , path = require('path');
+
+    ddoc = {
+        _id: '_design/default'
+      , views: {}
+      , lists: {}
+      , shows: {}
+    }
+
+    module.exports = ddoc;
+
+    ddoc.shows.aye = function(doc, req) {
+      return {
+        headers: { "Content-Type": "text/html" },
+        body: "<h2>Aye aye: " + req.query["q"] + "</h2>\n<p>" + doc.quotation + "</p>\n"
+      }
+    }
+
+Korzystamy z *couchapp* aby umieścić dokumenty w bazie:
+
+    couchapp push maye.js http://wbzyl:sekret@localhost:4000/lec
+    Preparing.
+    Serializing.
+    PUT http://wbzyl:******@localhost:4000/lec/_design/default
+    Finished push. 2-7068bcbdcec03650a8dee623e5afe1a1
+
+
+
+# TODO: nie skorzystamy z *couch_docs*
+
+Zanim nie skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
 
     :::ruby
     source 'http://rubygems.org'
@@ -78,39 +279,39 @@ Następnie instalujemy gemy:
 
     bundle install --path=$HOME/.gems
 
-Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thor*?).
+Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thora*?).
 
     :::ruby Rakefile
     require 'bundler'
     Bundler.setup
-    
+
     require 'rake'
     require 'rack/mime'
     require 'couchrest'
     require 'couch_docs'
-    
+
     require 'pp'
-    
+
     Database = CouchRest.database!('http://127.0.0.1:4000/lec')
-    
+
     desc "Upload application design documents"
     task :default => [:design] do
       puts "-"*80
       puts "Uploaded design documents into database, please check:",
            " * http://localhost:4000/lec/_design/default/_show/quotation/4"
     end
-    
+
     desc "Upload design documents from _design/default"
     task :design do
       dir = CouchDocs::DesignDirectory.new('_design/default')
       doc = dir.to_hash
       doc.update('_id' => '_design/default', 'language' => 'javascript')
-    
+
       rev = Database.get('_design/default')['_rev'] rescue nil
       doc.update({'_rev' => rev}) if rev
       #pp doc
       #pp doc['shows'].keys
-      
+
       response = Database.save_doc(doc)
       pp response
     end
@@ -132,7 +333,7 @@ Poza tym idea *shows* jest OK?
 
 ## Korzystamy z szablonów Mustache
 
-**TODO:** opisać przykład **couch/show2**. 
+**TODO:** opisać przykład **couch/show2**.
 
 Korzystamy z takiego *filesystem mapping*:
 
@@ -147,13 +348,13 @@ Korzystamy z takiego *filesystem mapping*:
 Funkcja show korzystająca z szablonu Mustache:
 
     :::javascript quotation.js
-    function(doc, req) { 
+    function(doc, req) {
         var mustache = require('templates/mustache');
-    
+
         /* this == design document (JSON) zawierający tę funkcję */
-        var template = this.templates["quotation.html"]; 
+        var template = this.templates["quotation.html"];
         var html = mustache.to_html(template, {quotation: doc.quotation});
-    
+
         return html;
     }
 
@@ -178,29 +379,9 @@ Plik CSS jest załącznikiem. Dodałem go ręcznie w Futonie (**TODO**).
 
 
 
-### Przekazywanie parametrów do *shows*
-
-Zobacz [Query Parameters](http://books.couchdb.org/relax/design-documents/shows)
-oraz [main.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/)
+[main.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/)
 (plik *main.js* powstaje ze sklejenia wszystkich plików w tym katalogu;
 najciekawsze rzeczy są w pliku *render.js*, *views.js*).
 
-Opis obiektów JSON *Request* oraz *Response* znajdziemy na CouchDB Wiki
-[External Processes](http://wiki.apache.org/couchdb/ExternalProcesses).
-
-Dla przykładu, do takiej funkcji *shows*:
-
-    :::javascript
-    {
-      "shows" : {
-        "aye" : "function(doc, req) {
-           return '<h2>Aye aye: ' + req.query['q'] + '</h2><p>' + doc.body + '</p>';
-        }"
-      }
-    }
-
-przekazujemy parametr **q** w żądaniu tak:
-
-    http://localhost:4000/lec/_design/shows/_show/aye/1?q=Captain
-    => Aye aye, Captain
-       Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
+Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
+pliki *show_documents.js*, *list_views.js*.

@@ -1,6 +1,4 @@
-#### {% title("Lists", false) %}
-
-# Lists – potęga znaczników HTML
+#### {% title("Funkcje Lists") %}
 
 Funkcja *getRow()* jest opisana w
 [render.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/render.js?view=markup).
@@ -38,14 +36,28 @@ Teraz poniższe wywołanie zwaraca treść cytatów:
 </pre>
 
 
+# Przykłady
+
+Zaczynamy od klasycznego przykładów: zliczanie słów i generowania przemówień.
+
+
+## TODO: Word count & Markov
+
+Omówić przykład z katalogu *couch/word-count*.
+
+
+## Sinatra & Couchrest
+
+* [A basic CouchDB/Sinatra wiki](http://github.com/benatkin/weaky)
+
+
 ## Więcej przykładów
 
 Pobieramy [źródła CouchDB](http://couchdb.apache.org/community/code.html)
-i w katalogu *share/www/script/test* znajdziemy dużo przykładów:
+i w katalogu *share/www/script/test* znajdziemy dużo prostych przykładów:
 
 * show_documents.js
 * list_views.js
-* …???
 
 Zobacz też:
 

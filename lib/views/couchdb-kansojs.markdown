@@ -1,15 +1,13 @@
 #### {% title "KansoJS framework" %}
 
 <blockquote>
- {%= image_tag "/images/carlos_castaneda.jpg", :alt => "[Carlos Castaneda]" %}
+ {%= image_tag "/images/kanso.jpg", :alt => "[Kanso = Simplicity]" %}
  <p>
-  Niektórzy czarownicy, wyjaśnił, są gawędziarzami.
-  Snucie historii to dla nich nie tylko wysyłanie
-  zwiadowców badających granice ich percepcji, 
-  ale także sposób na osiągnięcie doskonałości,
-  zdobycia mocy i dotarcia do ducha.
- </p>
- <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
+   The second principle, Kanso, relates to basic simplicity and the
+   elimination of the ornate. Things expressing simplicity are by
+   their nature truthful and reserved. Kanso involves a sense of
+   cleanliness, things which are fresh and neat, frank but never
+   over-embellished. Things of Kanso nature are never florid in style.
 </blockquote>
 
 Cytat ze strony projektu o [KansoJS](http://kansojs.org/):

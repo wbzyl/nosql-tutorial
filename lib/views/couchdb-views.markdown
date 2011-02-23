@@ -1,5 +1,17 @@
 #### {% title "Views ≡ Map + Reduce" %}
 
+<blockquote>
+ {%= image_tag "/images/carlos_castaneda.jpg", :alt => "[Carlos Castaneda]" %}
+ <p>
+  Niektórzy czarownicy, wyjaśnił, są gawędziarzami.
+  Snucie historii to dla nich nie tylko wysyłanie
+  zwiadowców badających granice ich percepcji,
+  ale także sposób na osiągnięcie doskonałości,
+  zdobycia mocy i dotarcia do ducha.
+ </p>
+ <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
+</blockquote>
+
 Zapytania SQL, takie jak to:
 
     SELECT name, email, fax FROM contacts
@@ -259,6 +271,67 @@ go z wiersza poleceń:
       {"key": [2010,1,28],  "value": 2},
       {"key": [2010,11,31], "value": 1}
     ]}
+
+
+## Sortowanie – *view collation*
+
+Poniższy przykład, napisany w języku Ruby,
+pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+
+Zaczynamy od instalacji gemów użytych w przykładzie:
+
+    gem install rest-client json
+
+Następnie za pomocą poniższego skryptu tworzymy bazę *collator* (ruby 1.9.2):
+
+    :::ruby collseq.rb
+    require 'restclient'
+    require 'json'
+
+    # jeśli Admin Party!
+    DB="http://127.0.0.1:4000/collator"
+    # w przeciwnym wypadku wpisujemy swoje dane
+    # DB="http://User:Pass@127.0.0.1:4000/collator"
+    RestClient.delete DB rescue nil
+    RestClient.put "#{DB}",""
+    (32..126).each do |c|
+      RestClient.put "#{DB}/#{c.to_s(16)}", {"x"=>c.chr}.to_json
+    end
+
+    RestClient.put "#{DB}/_design/test", <<EOS
+    {
+      "views":{
+        "one":{
+          "map":"function (doc) { emit(doc.x,null); }"
+        }
+      }
+    }
+    EOS
+    puts RestClient.get("#{DB}/_design/test/_view/one")
+
+Kilka zapytań do bazy. Wpisujemy na konsoli:
+
+    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=4
+    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=2\&descending=true
+    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&endkey=\"68\"
+
+W przeglądarce powyższe URL-e wpisujemy bez „cytowania“:
+
+    http://localhost:4000/collator/_all_docs?startkey="64"&limit=4
+    http://localhost:4000/collator/_all_docs?startkey="64"&limit=2&descending=true
+    http://localhost:4000/collator/_all_docs?startkey="64"&endkey="68"
+
+Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola Rubiego.
+Przykład do wpisania na konsoli *irb*:
+
+    :::ruby
+    DB = "http://localhost:4000/lz"
+    RestClient.get DB
+    response = RestClient.get "#{DB}/led-zeppelin-i"
+    response.code
+    response.headers
+    response.cookies
+
 
 ### Ciekawe zapytania
 

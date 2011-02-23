@@ -23,7 +23,7 @@ Zaczynamy od instalacji gemów:
 
     gem install couchrest yajl-ruby
 
-Kilka eksperymentów na konsoli.
+Kilka eksperymentów na konsoli języka Ruby.
 
 
 ### *CouchRest::Database*
@@ -32,17 +32,18 @@ Tworzymy bazę tak:
 
     :::ruby
     require 'couchrest'
-    db = CouchRest.database "http://localhost:4000/cr"
+    db = CouchRest.database("http://localhost:4000/cr")
+    # db = CouchRest.database("http://User:Pass@localhost:4000/cr")
     db.create!
 
-albo tak:
+albo, krócej, tak:
 
     :::ruby
     db = CouchRest.database!("http://localhost:4000/cr")
 
-powyżej jeśli baza już istnieje to polecenie to nic nie robi.
+Polecenie z *!* powyżej nic nie robi jeśli baza już istnieje.
 
-Info o bazie:
+Pobieranie info o bazie:
 
     :::ruby
     db.host ; db.name ; db.root ; db.uri
@@ -56,6 +57,7 @@ a tak usuwamy bazę:
 
     :::ruby
     db.delete!
+
 
 ### Dokumenty
 
@@ -168,69 +170,3 @@ Ale wygodniej jest skorzystać z metody *put_attachment*:
 
 Ale teraz dokument zapisujemy w dwóch etapach: najpier dane JSON,
 a następnie załączniki.
-
-
-# Przykłady
-
-Kilka przykładów…
-
-
-## Word count
-
-TODO: Omówić przykład z katalogu *couch/word-count*.
-
-
-## Sinatra & Couchrest
-
-* [A basic CouchDB/Sinatra wiki](http://github.com/benatkin/weaky)
-
-
-## *View collation* – przykład z *rest-client*
-
-Przykład pochodzi [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
-
-Instalujemy gemy:
-
-    gem install rest-client json
-
-Następnie za pomocą poniższego skryptu tworzymy bazę *collator* (ruby 1.9.2):
-
-    :::ruby collseq.rb
-    require 'restclient'
-    require 'json'
-
-    DB="http://127.0.0.1:4000/collator"
-    RestClient.delete DB rescue nil
-    RestClient.put "#{DB}",""
-    (32..126).each do |c|
-      RestClient.put "#{DB}/#{c.to_s(16)}", {"x"=>c.chr}.to_json
-    end
-
-    RestClient.put "#{DB}/_design/test", <<EOS
-    {
-      "views":{
-        "one":{
-          "map":"function (doc) { emit(doc.x,null); }"
-        }
-      }
-    }
-    EOS
-    puts RestClient.get("#{DB}/_design/test/_view/one")
-
-Kilka zapytań do bazy:
-
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=4
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=2\&descending=true
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&endkey=\"68\"
-
-(W przeglądarce powyższe URL-e wpisujemy bez „cytowania“.)
-
-Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola Rubiego.
-
-    :::ruby
-    DB = "http://localhost:4000/lz"
-    RestClient.get DB
-    response = RestClient.get "#{DB}/led-zeppelin-i"
-    response.code
-    response.headers
-    response.cookies
