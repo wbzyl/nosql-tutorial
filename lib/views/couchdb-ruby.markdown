@@ -41,15 +41,9 @@ albo, krócej, tak:
     :::ruby
     db = CouchRest.database!("http://localhost:4000/cr")
 
-<<<<<<< HEAD
 Polecenie z *!* powyżej nic nie robi jeśli baza już istnieje.
 
-Pobieranie info o bazie:
-=======
-czyli utwórz bazę, ale jeśli baza już istnieje to nic nie rób.
-
 Pobieramy informacje o bazie:
->>>>>>> 9428ccd5f1e0ec70c2f065f46c2255464b2da99f
 
     :::ruby
     db.host ; db.name ; db.root ; db.uri
