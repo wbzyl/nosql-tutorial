@@ -1,0 +1,7 @@
+{
+   "shows" : {
+      "aye" : "function(doc, req) {
+         return 'Aye aye: ' + req.query['q'] + '. ' + doc.quotation + '</p>';
+      }"
+   }
+}
