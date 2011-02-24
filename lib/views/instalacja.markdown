@@ -376,7 +376,10 @@ Sprawdzamy instalację:
 Powinna się wyświetlić wersja (np. `0.2.18`).
 
 
-## UWAGA (22.02.2011) – nie działa z najnowszymi wersjami NPM + KansoJS
+## UWAGA [22.02.2011]
+
+Po instalacji najnowszej wersji NPM (0.3.7) pojawiły się problemy
+z instalacją KansoJS.
 
 Na koniec instalujemy użyteczny (dla nas) moduł KansoJS:
 
@@ -419,12 +422,6 @@ Powinniśmy zobaczyć coś takiego:
 * [Node.js Manual & Documentation](http://nodejs.org/docs/v0.4.1/api/)
 * [Node.js community wiki](https://github.com/ry/node/wiki)
 * [Node.js Tutorial Roundup](http://blogfreakz.com/node/node-js-tutorial-roundup/)
-
-
-
-# FAQ
-
-TODO
 
 
 [json]: http://www.json.org/ "JSON"
