@@ -1,26 +1,31 @@
 #### {% title "Funkcje *Show*" %}
 
-Dlaczego wymyślono [show functions](http://guide.couchdb.org/draft/show.html):
+<blockquote>
+ {%= image_tag "/images/show_functions.jpg", :alt => "[Show Functions]" %}
+</blockquote>
+
+Do czego mogą się przydać [show functions](http://guide.couchdb.org/draft/show.html):
 „There is one important use case that JSON documents don’t cover:
-building plain old HTML web pages.” oraz XML, CSV, etc.
+building plain old HTML web pages.”, nie zapominając o innych formatach
+danych, takich jak XML, CSV, CSS, JSON…
+Innymi słowy – funkcji show będziemy używać do przekształcenia dokumentów
+do innych formatu – zazwyczaj do HTML.
 
-Innymi słowy – funkcji show używamy do pobrania dokument JSON z bazy,
-przekształcenie go do innego formatu i zwrócenie klientowi
-przekształconego tak dokumentu.
-
-W przykładach poniżej będziemy korzystać z bazy *lec*, która zawiera
-osiem cytatów {%= link_to "lec.json", "/couch/show/lec.json" %}
-({%= link_to "wszystkie cytaty", "/doc/json/lec.json" %}):
+W przykładach poniżej skorzystamy z bazy *lec*, która zawiera
+osiem cytatów Stanisława J. Leca (1909–1966)
+{%= link_to "lec.json", "/couch/show/lec.json" %}
+({%= link_to "link do jsona z wszystkimi cytatatami", "/doc/json/lec.json" %}):
 
     :::json
     {
       "_id": "1",
       "created_at": [2010, 0, 1],
-      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
+      "quotation": "Szerzenie niewiedzy o wszechświecie \
+                    musi być także naukowo opracowane.",
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Tworzymy bazę i wrzucamy do niej hurtem wszystkie cytaty:
+Tworzymy bazę *lec* i wrzucamy do niej hurtem wszystkie cytaty:
 
     curl -X PUT  http://User:Pass@127.0.0.1:4000/lec
     curl -X POST -H "Content-Type: application/json" \
@@ -31,8 +36,10 @@ Tworzymy bazę i wrzucamy do niej hurtem wszystkie cytaty:
 
 ## Przykład: HTML
 
-Funkcję show wpisujemy w jakimś design document
-w polu *shows* (uwaga na liczbę mnogą). Oto prosty przykład:
+Funkcje show musimy umieścić w polu *shows* (uwaga: liczbę mnoga)
+w jakimś design document.
+
+Oto prosty przykład:
 
     :::json quotation.json
     {
@@ -40,9 +47,8 @@ w polu *shows* (uwaga na liczbę mnogą). Oto prosty przykład:
         "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
 
-Zapisujemy powyższy kod w pliku *quotation.json*.  Następnie,
-korzystając z programu *curl* zapisujemy go w design document
-**_design/default**:
+Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
+aby zapiszać kod w bazie:
 
      curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
@@ -61,16 +67,18 @@ Teraz po wejściu na stronę:
 
     http://localhost:4000/lec/_design/default/_show/quotation/4
 
-widzimy sformatowany przez funkcję show *quotation* cytat o *_id* równym 4.
+zobaczymy sformatowany przez funkcję *quotation* czwarty cytat:
 
-Wersję HTML cytatu możemy też ściągnąć za pomocą programu *curl*:
+Można też pobrać wersję HTML cytatu za pomocą programu *curl*:
 
-    curl -i http://localhost:4000/lec/_design/default/_show/quotation/4
+    curl -v http://localhost:4000/lec/_design/default/_show/quotation/4
+
+Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
 
-### Kilka bardziej skomplikowanych funkcji show
+## Bardziej skomplikowane funkcje show
 
-Wysyłanie nagłówków:
+Wysyłamy nagłówki:
 
     :::javascript
     function(doc, req) {
@@ -83,7 +91,7 @@ Wysyłanie nagłówków:
       }
     }
 
-Przekazywanie parametrów do *shows*:
+Przekazujemy parametry do funkcji show:
 
     :::javascript aye.json
     {
@@ -122,7 +130,7 @@ Odpowiadanie na różne nagłówki *Content-Type* żądania.
     }
 
 Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
-potem zapisujemy funkcję show *maye* w bazie:
+dopiero potem, zapisujemy funkcję show *aye* w bazie:
 
      curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @maye.json
@@ -132,7 +140,7 @@ Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accep
     curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
     curl -v -H 'Accept: application/xml' http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
 
-Pozostałe *mime types* wbudowane w CouchDB znajdzimey w pliku *main.js*:
+Pozostałe *mime types* wbudowane w CouchDB są zdefiniowane w pliku *main.js*:
 
     :::javascript ./share/server/main.js
     // Some default types ported from Ruby on Rails
@@ -185,7 +193,7 @@ Oczywiście możemy też rejestrować swoje typy mime.
 * `base64` - arbitrary binary data for the response body, base64-encoded
 
 
-Opis obiektów *Request* oraz *Response* z CouchDB Wiki
+Opis obiektów *Request* oraz *Response* przeklikałem z CouchDB Wiki
 [External Processes](http://wiki.apache.org/couchdb/ExternalProcesses).
 
 Zobacz też opis
@@ -194,18 +202,23 @@ Zobacz też opis
 
 # Korzystamy z modułu NodeJS *node.couchapp.js*
 
-Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
-to (dlaczego?).
+Wpisywanie kodu Javascript w postaci napisu, dodawanie takiego napisu
+do pliku JSON, jest jakimś nieporozumieniem programistycznym.
 
-Moduł NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
-ułatwia co nieco. Instalujemy go tak jak to opisano w pliku README.
+Jedyną zaletą takiego podejścia jest to, kązdy potrafi to zrobić.
+Poniżej, do zapisywania w bazie funkcji show
+(a później też funkcji list, filter…),  skorzystamy z modułu
+NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+Wadą tego rozwiązania jest to, że wymaga umiejętności
+programowania w Javascripcie.
 
+Moduł *node.couchapp.js* instalujemy, tak jak to opisano w pliku *README.md*:
 
     git clone git://github.com/mikeal/node.couchapp.js.git
     cd node.couchapp.js
-    npm link
+    npm link .
 
-Sprawdzamy instalację:
+Sprawdzamy instalację modułu próbując uruchomic program *couchapp*:
 
     → couchapp
     couchapp -- utility for creating couchapps
@@ -216,10 +229,10 @@ Sprawdzamy instalację:
       sync   : Push app then watch local files for changes.
       boiler : Create a boiler project.
 
-Korzystając z przykładu podanego w README powtarzamy przykład z *maye.json*
-opisany powyżej:
+Teraz wzorując się na przykładzie z *README.md* kodujemy przykład
+z *maye.json* opisany powyżej:
 
-    :::javascript maye.js
+    :::javascript aye.js
     var couchapp = require('couchapp')
       , path = require('path');
 
@@ -239,9 +252,9 @@ opisany powyżej:
       }
     }
 
-Korzystamy z *couchapp* aby umieścić dokumenty w bazie:
+Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie:
 
-    couchapp push maye.js http://wbzyl:sekret@localhost:4000/lec
+    couchapp push aye.js http://wbzyl:sekret@localhost:4000/lec
     Preparing.
     Serializing.
     PUT http://wbzyl:******@localhost:4000/lec/_design/default
@@ -252,45 +265,45 @@ Powtarzamy żądanie z parametrem::
     curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
 
 
-## Za & przeciw
-
+**Argumenty za a nawet przeciw:**
 Pisanie funkcji *shows* za bardzo przypomina programowanie CGI,
 przez co tutaj rozumiem wpisywanie kodu HTML w kodzie Javascript.
 Przydałyby się jakieś szablony.
 
-Poza tym idea *shows* jest OK?
 
+<blockquote>
+ {%= image_tag "/images/mustache.jpg", :alt => "[Wąsy]" %}
+</blockquote>
 
-## Korzystamy z szablonów Mustache
+## Szablony Mustache
 
-**TODO:** opisać przykład **couch/show2**.
+Będziemy potrzebować modułu *mustache.js* w wersji
+[commonjs](https://github.com/janl/mustache.js/) (na tej stronie
+znajdziemy też kilka przykładów).
 
-Korzystamy z takiego *filesystem mapping*:
+Klonujemy repozytorium *mustache.js*, instalujemy gem z którego korzysta
+program rake i na koniec generujemy moduł:
 
-    _design/
-    `-- default
-        |-- shows
-        |   `-- quotation.js
-        `-- templates
-            |-- mustache.js
-            `-- quotation.html.js
+    gem install rspec -v 1.3.0
+    git clone git://github.com/janl/mustache.js.git
+    cd mustache.js
+    rake commonjs
 
-Funkcja show korzystająca z szablonu Mustache:
+Wygenerowany moduł commonjs jest tutaj: *lib/mustache.js*.
 
-    :::javascript quotation.js
-    function(doc, req) {
-        var mustache = require('templates/mustache');
+Wąsate szablony możemy poćwiczyć na stronie
+[{{ mustache }}](http://mustache.github.com/#demo).
 
-        /* this == design document (JSON) zawierający tę funkcję */
-        var template = this.templates["quotation.html"];
-        var html = mustache.to_html(template, {quotation: doc.quotation});
+Skorzystamy z *filesystem mapping* (co to może oznaczać?):
 
-        return html;
-    }
+    .
+    |-- _attachmenta
+    |   `-- application.css
+    `-- templates
+        |-- mustache           // moduł commonjs
+        `-- quotation.html
 
-**Uwaga:** plik *mustache.js* to „commonjs-compatible mustache.js module”.
-
-Szablon mustache *quotation.js*:
+Plik z wąsatym szablonem *quotation.html.mustache*:
 
     :::html
     <!doctype html>
@@ -301,13 +314,95 @@ Szablon mustache *quotation.js*:
         <title>Cytaty Stanisława J. Leca</title>
       </head>
     <body>
-      <p>{{quotation}}</p>
+      <p>{{ quotation }}</p>
     </body>
     </html>
 
-Plik CSS jest załącznikiem. Dodałem go ręcznie w Futonie (**TODO**).
+Na koniec piszemy plik *lec.js* dla programu *couchapp*:
+
+    :::javascript lec.js
+    var couchapp = require('couchapp')
+      , path = require('path')
+      , fs = require('fs');
+
+    ddoc = {
+        _id: '_design/default'
+      , views: {}
+      , lists: {}
+      , shows: {}
+      , templates: {}
+    }
+    module.exports = ddoc;
+
+    // funkcja show korzystająca z wąsatego szablonu
+    ddoc.shows.quotation = function(doc, req) {
+      var mustache = require('templates/mustache');
+      /* this == design document (JSON) zawierający tę funkcję */
+      var template = this.templates['quotation.html'];
+      var html = mustache.to_html(template, {quotation: doc.quotation});
+      return html;
+    }
+
+    ddoc.templates.mustache = fs.readFileSync('templates/mustache.js', 'UTF-8');
+    ddoc.templates['quotation.html'] = fs.readFileSync('templates/quotation.html.mustache', 'UTF-8');
+
+    couchapp.loadAttachments(ddoc, path.join(__dirname, '_attachments'));
+
+I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *lec*:
+
+    couchapp push lec.js http://wbzyl:sekret@localhost:4000/lec
+
+Na deser oglądamy jak to działa, tak:
+
+    curl -I http://localhost:4000/lec/_design/default/_show/quotation/1
+
+albo w przeglądarce:
+
+    http://localhost:4000/lec/_design/default/_show/quotation/1
+
+Dla porządku (jakiego porządku?), powinnismy skorzystać z jakiegoś
+modułu dla NodeJS, aby zapisać w bazie cytaty.
+
+W tym cleu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
+
+Po sklonowaniu repozytorium *couch-client*, wymieniamy *invalid*
+plik *package.json* na *valid one*:
+
+    :::json
+    { "name": "couch-client"
+    , "description": "A Simple, Fast, and Flexible CouchDB Client"
+    , "tags": ["couchdb","http","database","nosql"]
+    , "version": "0.0.3"
+    , "author": "Tim Caswell <tim@creationix.com>"
+    , "engines": ["node >= 0.2.0"]
+    , "main" : "lib/couch-client"
+    , "directories": { "lib": "lib" }
+    , "modules": { "index": "./lib/couch-client.js" }
+    }
+
+Następnie instalujemy sam moduł, wykonując poniższe polecenie
+w głównym katalogu repozytorium:
+
+    npm link .
+
+Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
+
+    :::javascript populate.js
+    var cc = require('couch-client')('http://wlodek:sekret13@localhost:4000/lec')
+    , fs = require('fs');
+    var text = fs.readFileSync('lec.json', 'UTF-8')
+    //console.log(JSON.parse(text));
+    cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
+        if (err) throw err;
+        console.log("saved %s", JSON.stringify(results));
+    });
+
+Dokumenty zapisujemy hurtem w bazie wykonując na konsoli polecenie:
+
+    node populate
 
 
+## Linki
 
 [main.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/)
 (plik *main.js* powstaje ze sklejenia wszystkich plików w tym katalogu;
@@ -315,83 +410,3 @@ najciekawsze rzeczy są w pliku *render.js*, *views.js*).
 
 Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
 pliki *show_documents.js*, *list_views.js*.
-
-
-
-<!--
-
-# TODO: nie skorzystamy z *couch_docs*
-
-Unikniemy tego stosując technikę
-o nazwie „filesystem mapping” (mapowania plików).
-
-Takie *filesystem mapping* lepiej pokazuje strukturę JSON-ów:
-
-    _design/
-    `-- default
-        |-- shows
-            `-- quotation.js
-
-gdzie *quotation.js* zawiera jakiś kod Javascript, na przykład:
-
-    :::javascript
-    function(doc, req) {
-      return doc.quotation;
-    }
-
-Zanim nie skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
-
-    :::ruby
-    source 'http://rubygems.org'
-    gem 'rake'
-    gem 'rack'
-    gem 'couchrest'
-    gem 'couch_docs'
-
-Następnie instalujemy gemy:
-
-    bundle install --path=$HOME/.gems
-
-Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thora*?).
-
-    :::ruby Rakefile
-    require 'bundler'
-    Bundler.setup
-
-    require 'rake'
-    require 'rack/mime'
-    require 'couchrest'
-    require 'couch_docs'
-
-    require 'pp'
-
-    Database = CouchRest.database!('http://127.0.0.1:4000/lec')
-
-    desc "Upload application design documents"
-    task :default => [:design] do
-      puts "-"*80
-      puts "Uploaded design documents into database, please check:",
-           " * http://localhost:4000/lec/_design/default/_show/quotation/4"
-    end
-
-    desc "Upload design documents from _design/default"
-    task :design do
-      dir = CouchDocs::DesignDirectory.new('_design/default')
-      doc = dir.to_hash
-      doc.update('_id' => '_design/default', 'language' => 'javascript')
-
-      rev = Database.get('_design/default')['_rev'] rescue nil
-      doc.update({'_rev' => rev}) if rev
-      #pp doc
-      #pp doc['shows'].keys
-
-      response = Database.save_doc(doc)
-      pp response
-    end
-
-Teraz, aby przenieść zawartość plików Javascript do bazy wystarczy
-wykonać polecenie:
-
-    rake
-
--->
