@@ -271,42 +271,39 @@ przez co tutaj rozumiem wpisywanie kodu HTML w kodzie Javascript.
 Przydałyby się jakieś szablony.
 
 
+<blockquote>
+ {%= image_tag "/images/mustache.jpg", :alt => "[Wąsy]" %}
+</blockquote>
+
 ## Szablony Mustache
 
-TODO: link do dokumentacji. Szablony dust – podobne
-Jakaś strona do ekperymentowania z Mustache
-[demo](http://mustache.github.com/#demo)
+Będziemy potrzebować modułu *mustache.js* w wersji
+[commonjs](https://github.com/janl/mustache.js/) (na tej stronie
+znajdziemy też kilka przykładów).
 
-Jakiś obrazek.
+Klonujemy repozytorium *mustache.js*, instalujemy gem z którego korzysta
+program rake i na koniec generujemy moduł:
 
-**TODO:** opisać przykład **couch/show2**.
+    gem install rspec -v 1.3.0
+    git clone git://github.com/janl/mustache.js.git
+    cd mustache.js
+    rake commonjs
 
-Korzystamy z takiego *filesystem mapping*:
+Wygenerowany moduł commonjs jest tutaj: *lib/mustache.js*.
 
-    _design/
-    `-- default
-        |-- shows
-        |   `-- quotation.js
-        `-- templates
-            |-- mustache.js
-            `-- quotation.html.js
+Wąsate szablony możemy poćwiczyć na stronie
+[{{ mustache }}](http://mustache.github.com/#demo).
 
-Funkcja show korzystająca z szablonu Mustache:
+Skorzystamy z *filesystem mapping* (co to może oznaczać?):
 
-    :::javascript quotation.js
-    function(doc, req) {
-        var mustache = require('templates/mustache');
+    .
+    |-- _attachmenta
+    |   `-- application.css
+    `-- templates
+        |-- mustache           // moduł commonjs
+        `-- quotation.html
 
-        /* this == design document (JSON) zawierający tę funkcję */
-        var template = this.templates["quotation.html"];
-        var html = mustache.to_html(template, {quotation: doc.quotation});
-
-        return html;
-    }
-
-**Uwaga:** plik *mustache.js* to „commonjs-compatible mustache.js module”.
-
-Szablon mustache *quotation.js*:
+Plik z wąsatym szablonem *quotation.html.mustache*:
 
     :::html
     <!doctype html>
@@ -317,13 +314,95 @@ Szablon mustache *quotation.js*:
         <title>Cytaty Stanisława J. Leca</title>
       </head>
     <body>
-      <p>{{quotation}}</p>
+      <p>{{ quotation }}</p>
     </body>
     </html>
 
-Plik CSS jest załącznikiem. Dodałem go ręcznie w Futonie (**TODO**).
+Na koniec piszemy plik *lec.js* dla programu *couchapp*:
+
+    :::javascript lec.js
+    var couchapp = require('couchapp')
+      , path = require('path')
+      , fs = require('fs');
+
+    ddoc = {
+        _id: '_design/default'
+      , views: {}
+      , lists: {}
+      , shows: {}
+      , templates: {}
+    }
+    module.exports = ddoc;
+
+    // funkcja show korzystająca z wąsatego szablonu
+    ddoc.shows.quotation = function(doc, req) {
+      var mustache = require('templates/mustache');
+      /* this == design document (JSON) zawierający tę funkcję */
+      var template = this.templates['quotation.html'];
+      var html = mustache.to_html(template, {quotation: doc.quotation});
+      return html;
+    }
+
+    ddoc.templates.mustache = fs.readFileSync('templates/mustache.js', 'UTF-8');
+    ddoc.templates['quotation.html'] = fs.readFileSync('templates/quotation.html.mustache', 'UTF-8');
+
+    couchapp.loadAttachments(ddoc, path.join(__dirname, '_attachments'));
+
+I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *lec*:
+
+    couchapp push lec.js http://wbzyl:sekret@localhost:4000/lec
+
+Na deser oglądamy jak to działa, tak:
+
+    curl -I http://localhost:4000/lec/_design/default/_show/quotation/1
+
+albo w przeglądarce:
+
+    http://localhost:4000/lec/_design/default/_show/quotation/1
+
+Dla porządku (jakiego porządku?), powinnismy skorzystać z jakiegoś
+modułu dla NodeJS, aby zapisać w bazie cytaty.
+
+W tym cleu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
+
+Po sklonowaniu repozytorium *couch-client*, wymieniamy *invalid*
+plik *package.json* na *valid one*:
+
+    :::json
+    { "name": "couch-client"
+    , "description": "A Simple, Fast, and Flexible CouchDB Client"
+    , "tags": ["couchdb","http","database","nosql"]
+    , "version": "0.0.3"
+    , "author": "Tim Caswell <tim@creationix.com>"
+    , "engines": ["node >= 0.2.0"]
+    , "main" : "lib/couch-client"
+    , "directories": { "lib": "lib" }
+    , "modules": { "index": "./lib/couch-client.js" }
+    }
+
+Następnie instalujemy sam moduł, wykonując poniższe polecenie
+w głównym katalogu repozytorium:
+
+    npm link .
+
+Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
+
+    :::javascript populate.js
+    var cc = require('couch-client')('http://wlodek:sekret13@localhost:4000/lec')
+    , fs = require('fs');
+    var text = fs.readFileSync('lec.json', 'UTF-8')
+    //console.log(JSON.parse(text));
+    cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
+        if (err) throw err;
+        console.log("saved %s", JSON.stringify(results));
+    });
+
+Dokumenty zapisujemy hurtem w bazie wykonując na konsoli polecenie:
+
+    node populate
 
 
+## Linki
 
 [main.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/)
 (plik *main.js* powstaje ze sklejenia wszystkich plików w tym katalogu;
@@ -331,83 +410,3 @@ najciekawsze rzeczy są w pliku *render.js*, *views.js*).
 
 Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
 pliki *show_documents.js*, *list_views.js*.
-
-
-
-<!--
-
-# TODO: nie skorzystamy z *couch_docs*
-
-Unikniemy tego stosując technikę
-o nazwie „filesystem mapping” (mapowania plików).
-
-Takie *filesystem mapping* lepiej pokazuje strukturę JSON-ów:
-
-    _design/
-    `-- default
-        |-- shows
-            `-- quotation.js
-
-gdzie *quotation.js* zawiera jakiś kod Javascript, na przykład:
-
-    :::javascript
-    function(doc, req) {
-      return doc.quotation;
-    }
-
-Zanim nie skorzystamy z udogodnień *couch_docs*, przygotujemy plik *Gemfile*:
-
-    :::ruby
-    source 'http://rubygems.org'
-    gem 'rake'
-    gem 'rack'
-    gem 'couchrest'
-    gem 'couch_docs'
-
-Następnie instalujemy gemy:
-
-    bundle install --path=$HOME/.gems
-
-Na koniec tworzymy taki plik *Rakefile* (a może tak skorzystać *Thora*?).
-
-    :::ruby Rakefile
-    require 'bundler'
-    Bundler.setup
-
-    require 'rake'
-    require 'rack/mime'
-    require 'couchrest'
-    require 'couch_docs'
-
-    require 'pp'
-
-    Database = CouchRest.database!('http://127.0.0.1:4000/lec')
-
-    desc "Upload application design documents"
-    task :default => [:design] do
-      puts "-"*80
-      puts "Uploaded design documents into database, please check:",
-           " * http://localhost:4000/lec/_design/default/_show/quotation/4"
-    end
-
-    desc "Upload design documents from _design/default"
-    task :design do
-      dir = CouchDocs::DesignDirectory.new('_design/default')
-      doc = dir.to_hash
-      doc.update('_id' => '_design/default', 'language' => 'javascript')
-
-      rev = Database.get('_design/default')['_rev'] rescue nil
-      doc.update({'_rev' => rev}) if rev
-      #pp doc
-      #pp doc['shows'].keys
-
-      response = Database.save_doc(doc)
-      pp response
-    end
-
-Teraz, aby przenieść zawartość plików Javascript do bazy wystarczy
-wykonać polecenie:
-
-    rake
-
--->
