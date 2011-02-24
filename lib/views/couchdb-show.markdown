@@ -1,26 +1,31 @@
 #### {% title "Funkcje *Show*" %}
 
-Dlaczego wymyślono [show functions](http://guide.couchdb.org/draft/show.html):
+<blockquote>
+ {%= image_tag "/images/show_functions.jpg", :alt => "[Show Functions]" %}
+</blockquote>
+
+Do czego mogą się przydać [show functions](http://guide.couchdb.org/draft/show.html):
 „There is one important use case that JSON documents don’t cover:
-building plain old HTML web pages.” oraz XML, CSV, etc.
+building plain old HTML web pages.”, nie zapominając o innych formatach
+danych, takich jak XML, CSV, CSS, JSON…
+Innymi słowy – funkcji show będziemy używać do przekształcenia dokumentów
+do innych formatu – zazwyczaj do HTML.
 
-Innymi słowy – funkcji show używamy do pobrania dokument JSON z bazy,
-przekształcenie go do innego formatu i zwrócenie klientowi
-przekształconego tak dokumentu.
-
-W przykładach poniżej będziemy korzystać z bazy *lec*, która zawiera
-osiem cytatów {%= link_to "lec.json", "/couch/show/lec.json" %}
-({%= link_to "wszystkie cytaty", "/doc/json/lec.json" %}):
+W przykładach poniżej skorzystamy z bazy *lec*, która zawiera
+osiem cytatów Stanisława J. Leca (1909–1966)
+{%= link_to "lec.json", "/couch/show/lec.json" %}
+({%= link_to "link do jsona z wszystkimi cytatatami", "/doc/json/lec.json" %}):
 
     :::json
     {
       "_id": "1",
       "created_at": [2010, 0, 1],
-      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
+      "quotation": "Szerzenie niewiedzy o wszechświecie \
+                    musi być także naukowo opracowane.",
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Tworzymy bazę i wrzucamy do niej hurtem wszystkie cytaty:
+Tworzymy bazę *lec* i wrzucamy do niej hurtem wszystkie cytaty:
 
     curl -X PUT  http://User:Pass@127.0.0.1:4000/lec
     curl -X POST -H "Content-Type: application/json" \
@@ -31,8 +36,10 @@ Tworzymy bazę i wrzucamy do niej hurtem wszystkie cytaty:
 
 ## Przykład: HTML
 
-Funkcję show wpisujemy w jakimś design document
-w polu *shows* (uwaga na liczbę mnogą). Oto prosty przykład:
+Funkcje show musimy umieścić w polu *shows* (uwaga: liczbę mnoga)
+w jakimś design document.
+
+Oto prosty przykład:
 
     :::json quotation.json
     {
@@ -40,9 +47,8 @@ w polu *shows* (uwaga na liczbę mnogą). Oto prosty przykład:
         "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
 
-Zapisujemy powyższy kod w pliku *quotation.json*.  Następnie,
-korzystając z programu *curl* zapisujemy go w design document
-**_design/default**:
+Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
+aby zapiszać kod w bazie:
 
      curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
@@ -61,16 +67,18 @@ Teraz po wejściu na stronę:
 
     http://localhost:4000/lec/_design/default/_show/quotation/4
 
-widzimy sformatowany przez funkcję show *quotation* cytat o *_id* równym 4.
+zobaczymy sformatowany przez funkcję *quotation* czwarty cytat:
 
-Wersję HTML cytatu możemy też ściągnąć za pomocą programu *curl*:
+Można też pobrać wersję HTML cytatu za pomocą programu *curl*:
 
-    curl -i http://localhost:4000/lec/_design/default/_show/quotation/4
+    curl -v http://localhost:4000/lec/_design/default/_show/quotation/4
+
+Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
 
-### Kilka bardziej skomplikowanych funkcji show
+## Bardziej skomplikowane funkcje show
 
-Wysyłanie nagłówków:
+Wysyłamy nagłówki:
 
     :::javascript
     function(doc, req) {
@@ -83,7 +91,7 @@ Wysyłanie nagłówków:
       }
     }
 
-Przekazywanie parametrów do *shows*:
+Przekazujemy parametry do funkcji show:
 
     :::javascript aye.json
     {
@@ -122,7 +130,7 @@ Odpowiadanie na różne nagłówki *Content-Type* żądania.
     }
 
 Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
-potem zapisujemy funkcję show *maye* w bazie:
+dopiero potem, zapisujemy funkcję show *aye* w bazie:
 
      curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @maye.json
@@ -132,7 +140,7 @@ Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accep
     curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
     curl -v -H 'Accept: application/xml' http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
 
-Pozostałe *mime types* wbudowane w CouchDB znajdzimey w pliku *main.js*:
+Pozostałe *mime types* wbudowane w CouchDB są zdefiniowane w pliku *main.js*:
 
     :::javascript ./share/server/main.js
     // Some default types ported from Ruby on Rails
@@ -185,7 +193,7 @@ Oczywiście możemy też rejestrować swoje typy mime.
 * `base64` - arbitrary binary data for the response body, base64-encoded
 
 
-Opis obiektów *Request* oraz *Response* z CouchDB Wiki
+Opis obiektów *Request* oraz *Response* przeklikałem z CouchDB Wiki
 [External Processes](http://wiki.apache.org/couchdb/ExternalProcesses).
 
 Zobacz też opis
@@ -194,18 +202,23 @@ Zobacz też opis
 
 # Korzystamy z modułu NodeJS *node.couchapp.js*
 
-Wpisywanie kodu Javascript w postaci napisu w pliku JSON to nie jest
-to (dlaczego?).
+Wpisywanie kodu Javascript w postaci napisu, dodawanie takiego napisu
+do pliku JSON, jest jakimś nieporozumieniem programistycznym.
 
-Moduł NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
-ułatwia co nieco. Instalujemy go tak jak to opisano w pliku README.
+Jedyną zaletą takiego podejścia jest to, kązdy potrafi to zrobić.
+Poniżej, do zapisywania w bazie funkcji show
+(a później też funkcji list, filter…),  skorzystamy z modułu
+NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+Wadą tego rozwiązania jest to, że wymaga umiejętności
+programowania w Javascripcie.
 
+Moduł *node.couchapp.js* instalujemy, tak jak to opisano w pliku *README.md*:
 
     git clone git://github.com/mikeal/node.couchapp.js.git
     cd node.couchapp.js
-    npm link
+    npm link .
 
-Sprawdzamy instalację:
+Sprawdzamy instalację modułu próbując uruchomic program *couchapp*:
 
     → couchapp
     couchapp -- utility for creating couchapps
@@ -216,10 +229,10 @@ Sprawdzamy instalację:
       sync   : Push app then watch local files for changes.
       boiler : Create a boiler project.
 
-Korzystając z przykładu podanego w README powtarzamy przykład z *maye.json*
-opisany powyżej:
+Teraz wzorując się na przykładzie z *README.md* kodujemy przykład
+z *maye.json* opisany powyżej:
 
-    :::javascript maye.js
+    :::javascript aye.js
     var couchapp = require('couchapp')
       , path = require('path');
 
@@ -239,9 +252,9 @@ opisany powyżej:
       }
     }
 
-Korzystamy z *couchapp* aby umieścić dokumenty w bazie:
+Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie:
 
-    couchapp push maye.js http://wbzyl:sekret@localhost:4000/lec
+    couchapp push aye.js http://wbzyl:sekret@localhost:4000/lec
     Preparing.
     Serializing.
     PUT http://wbzyl:******@localhost:4000/lec/_design/default
@@ -252,16 +265,19 @@ Powtarzamy żądanie z parametrem::
     curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
 
 
-## Za & przeciw
-
+**Argumenty za a nawet przeciw:**
 Pisanie funkcji *shows* za bardzo przypomina programowanie CGI,
 przez co tutaj rozumiem wpisywanie kodu HTML w kodzie Javascript.
 Przydałyby się jakieś szablony.
 
-Poza tym idea *shows* jest OK?
 
+## Szablony Mustache
 
-## Korzystamy z szablonów Mustache
+TODO: link do dokumentacji. Szablony dust – podobne
+Jakaś strona do ekperymentowania z Mustache
+[demo](http://mustache.github.com/#demo)
+
+Jakiś obrazek.
 
 **TODO:** opisać przykład **couch/show2**.
 
