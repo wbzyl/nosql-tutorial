@@ -375,6 +375,9 @@ Sprawdzamy instalację:
 
 Powinna się wyświetlić wersja (np. `0.2.18`).
 
+
+## UWAGA (22.02.2011) – nie działa z najnowszymi wersjami NPM + KansoJS
+
 Na koniec instalujemy użyteczny (dla nas) moduł KansoJS:
 
     git clone git://github.com/caolan/kanso.git
