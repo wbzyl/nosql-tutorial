@@ -31,7 +31,7 @@ Albo uruchamiamy skrypt tak:
 gdzie plik *tracking* zawiera jeden wiersz zawierający oddzielone
 przecinkami słowa poprzedzone tekstem `track=`, na przykład:
 
-    track=html5,jquery,couchdb,mongodb,redis
+    track=html5,elasticsearch,couchdb,mongodb,redis,neo4j,hadoop
 
 Tym razem nasze dane program pobierze z pliku *credentials*, który
 powinien zawierać jeden wiersz w formacie:

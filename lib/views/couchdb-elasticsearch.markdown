@@ -9,34 +9,38 @@
 </blockquote>
 
 * [You know, for Search](http://www.elasticsearch.org/)
+* [Elasticsearch Guide](http://www.elasticsearch.org/guide/): Setup, API, Query, Mapping…
 * [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
 * [CouchDB Integration](https://github.com/elasticsearch/elasticsearch/wiki/Couchdb-integration)
 
 
-## Pierwsze koty za płoty
+## Instalacja
 
 Rozpakowujemy archiwum z ostatnią wersją *elasticsearch*:
 
-    unzip elasticsearch-0.14.4.zip
+    unzip elasticsearch-0.15.0.zip
 
 Instalujemy wtyczkę *river-couchdb*:
 
-    cd elasticsearch-0.14.3
+    cd elasticsearch-0.15.0
     bin/plugin -install river-couchdb
 
 Uruchamiamy *elasticsearch* (korzystamy z domyślnych ustawień – *localhost:9200*):
 
     bin/elasticsearch -f
 
+
+## Podłaczamy Elasticsearch do CouchDB
+
 Następnie podłączamy *elasticsearch* do *change notification* dla bazy
 *nosql* umieszczonej na działającym serwerze CouchDB –
 *http://localhost:4000/nosql/_changes*:
 
-    curl -XPUT 'http://localhost:9200/_river/statuses_internal/_meta' -d @nosql_timeline.json
+    curl -XPUT 'http://localhost:9200/_river/statuses_internal/_meta' -d @twitter_nosql_timeline.json
 
 gdzie plik *nosql_timeline.json* zawiera:
 
-    :::json
+    :::json twitter_nosql_timeline.json
     {
         "type" : "couchdb",
         "couchdb" : {
@@ -46,15 +50,26 @@ gdzie plik *nosql_timeline.json* zawiera:
             "filter" : null
         },
         "index" : {
-            "index" : "statuses",
-            "type" : "nosql_timeline"
+            "index" : "nosql_timeline",
+            "type" : "twitter""
         }
     }
 
-Wyszukiwanie, odpytujemy *elasticsearch*:
 
-    curl -XGET 'http://localhost:9200/statuses/nosql_timeline/_search?q=text:jquery&pretty=true'
-    curl -XGET 'http://localhost:9200/statuses/nosql_timeline/_search?q=user.name:Kozora&pretty=true'
+## Wyszukiwanie – pierwsze koty za płoty
+
+Odpytujemy *elasticsearch*:
+
+    curl -XGET 'http://localhost:9200/nosql_timeline/twitter/_search?q=text:jquery&pretty=true'
+    curl -XGET 'http://localhost:9200/nosql_timeline/twitter/_search?q=user.name:Darcy&pretty=true'
+
+Ale tak, jest dużo lepiej:
+
+    curl -XGET 'http://localhost:9200/nosql_timeline/twitter/_search?q=text:redis&fields=user.name,text&pretty=true'
+
+<blockquote>
+ {%= image_tag "/images/elasticsearch.png", :alt => "[Elasticsearch]" %}
+</blockquote>
 
 Szukamy w polu *text*. W tym polu Twitter zapisuje to co wpisał w tweet
 użytkownik. Oto przykładowy tweet, po konwersji na Ruby hasz,
