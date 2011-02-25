@@ -277,6 +277,10 @@ Przydałyby się jakieś szablony.
 
 ## Szablony Mustache
 
+Na początek cytat
+z [Generating HTML from Javascript shows and lists](http://wiki.apache.org/couchdb/Generating%20HTML%20from%20Javascript%20shows%20and%20lists):
+**You should avoid having code in your template.**
+
 Będziemy potrzebować modułu *mustache.js* w wersji
 [commonjs](https://github.com/janl/mustache.js/) (na tej stronie
 znajdziemy też kilka przykładów).

@@ -217,18 +217,7 @@ przed umieszczeniem w bazie *nosql*:
      :second=>25}
 
 
-# TODO: Wyszukiwanie tekstowe
-
-* [ElasticSearch Documentation](http://www.elasticsearch.com/docs/)
-* Wyszukiwanie tekstowe z Lucene:
-  [Enables full-text searching of CouchDB documents using
-  Lucene](http://github.com/rnewson/couchdb-lucene) plus opis na
-  [wiki](http://wiki.github.com/couchrest/couchrest/couchdb-lucene-support)
-* Karel Minarik, [slingshot](https://github.com/karmi/slingshot) –
-  a rich Ruby API and DSL for the ElasticSearch search engine/database
-
-
-## TODO: Changes
+## CouchDB _changes
 
 [Changes API](http://wiki.apache.org/couchdb/HTTP_database_API#Changes):
 A list of changes made to documents in the database, in the order they
@@ -273,6 +262,13 @@ Zobacz też
       "update_seq": 4
    }
 
-Więcej przykładów:
 
+# Linki
+
+* Wyszukiwanie tekstowe z Lucene (starsze rozwiązanie):
+  [Enables full-text searching of CouchDB documents using
+  Lucene](http://github.com/rnewson/couchdb-lucene) plus opis na
+  [wiki](http://wiki.github.com/couchrest/couchrest/couchdb-lucene-support)
+* Karel Minarik, [slingshot](https://github.com/karmi/slingshot) –
+  a rich Ruby API and DSL for the ElasticSearch search engine/database
 * [Toast](http://github.com/jchris/toast), gałąź **chip**
