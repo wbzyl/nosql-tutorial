@@ -278,7 +278,7 @@ Przydałyby się jakieś szablony.
 ## Szablony Mustache
 
 Na początek cytat
-z [Generating HTML from Javascript shows and lists](http://wiki.apache.org/couchdb/Generating%20HTML%20from%20Javascript%20shows%20and%20lists):
+z [Generating HTML from Javascript shows and lists](http://wiki.apache.org/couchdb/Generating%20HTML%20from%20Javascript%20shows%20and%20lists):<br>
 **You should avoid having code in your template.**
 
 Będziemy potrzebować modułu *mustache.js* w wersji
@@ -286,26 +286,29 @@ Będziemy potrzebować modułu *mustache.js* w wersji
 znajdziemy też kilka przykładów).
 
 Klonujemy repozytorium *mustache.js*, instalujemy gem z którego korzysta
-program rake i na koniec generujemy moduł:
+program rake i na koniec generujemy moduł:
 
     gem install rspec -v 1.3.0
     git clone git://github.com/janl/mustache.js.git
     cd mustache.js
     rake commonjs
 
-Wygenerowany moduł commonjs jest tutaj: *lib/mustache.js*.
+Wygenerowany moduł *mustache.js* znajdziemy w katalogu *lib*.
 
 Wąsate szablony możemy poćwiczyć na stronie
 [{{ mustache }}](http://mustache.github.com/#demo).
 
-Skorzystamy z *filesystem mapping* (co to może oznaczać?):
+To co zamierzam zrobić przedstawię w postaci
+diagramu *filesystem mapping* (co to może oznaczać?)
+dla design document *_design/default*:
 
+    /_design/default
     .
-    |-- _attachmenta
-    |   `-- application.css
+    |-- _attachments
+    |   `-- application.css    // content-type set to text/css
     `-- templates
-        |-- mustache           // moduł commonjs
-        `-- quotation.html
+        |-- mustache           // string mustache.js
+        `-- quotation.html     // string quotation.html.mustache
 
 Plik z wąsatym szablonem *quotation.html.mustache*:
 
