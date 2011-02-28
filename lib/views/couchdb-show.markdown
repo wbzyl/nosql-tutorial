@@ -25,13 +25,18 @@ osiem cytatów Stanisława J. Leca (1909–1966)
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Tworzymy bazę *lec* i wrzucamy do niej hurtem wszystkie cytaty:
+Tworzymy bazę *lec*, tak:
 
-    curl -X PUT  http://User:Pass@127.0.0.1:4000/lec
+    curl -X PUT  http://localhost:4000/lec
+
+chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno byc takie:
+
+    curl -X PUT  http://Admin:Pass@localhost:4000/lec
+
+Następnie wrzucamy do hurtem do bazy wszystkie cytaty:
+
     curl -X POST -H "Content-Type: application/json" \
-      http://127.0.0.1:4000/lec/_bulk_docs -d @lec.json
-
-*Uwaga:* W drugim poleceniu nie podajemy swoich danych.
+      http://localhost:4000/lec/_bulk_docs -d @lec.json
 
 
 ## Przykład: HTML
@@ -50,7 +55,7 @@ Oto prosty przykład:
 Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
 aby zapiszać kod w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
 
 **Uwaga:**: kilka funkcji show wpisujemy w polu *shows* w taki sposób:
@@ -105,13 +110,12 @@ Przekazujemy parametry do funkcji show:
 W Futonie usuwamy dokument *_design/default* (dlaczego to robimy?),
 następnie zapisujemy funkcję show *aye* w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @aye.json
 
 Żądanie z parametrem:
 
     curl http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
-    => Aye aye, Captain. Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
 
 Odpowiadanie na różne nagłówki *Content-Type* żądania.
 
@@ -132,7 +136,7 @@ Odpowiadanie na różne nagłówki *Content-Type* żądania.
 Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
 dopiero potem, zapisujemy funkcję show *aye* w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/lec/_design/default \
        -H "Content-Type: application/json" -d @maye.json
 
 Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accept: application/xml*
@@ -174,7 +178,7 @@ Oczywiście możemy też rejestrować swoje typy mime.
 * `cookie` - cookie information passed on from mochiweb
 * `form` - if the request’s *Content-Type* is
   *application/x-www-form-urlencoded*, a decoded version of the body
-* `info` - same structure as returned by *http://127.0.0.1:5984/db_name/*
+* `info` - same structure as returned by *http://localhost:5984/db_name/*
 * `path` - any extra path information after routing to the external process
 * `query` - decoded version of the query string parameters.
 * `method` - HTTP request verb
@@ -395,10 +399,10 @@ w głównym katalogu repozytorium:
 Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
 
     :::javascript populate.js
-    var cc = require('couch-client')('http://wlodek:sekret@localhost:4000/lec')
+    var cc = require('couch-client')('http://localhost:4000/lec')
     , fs = require('fs');
     var text = fs.readFileSync('lec.json', 'UTF-8')
-    //console.log(JSON.parse(text));
+    // console.log(JSON.parse(text));
     cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
         if (err) throw err;
         console.log("saved %s", JSON.stringify(results));

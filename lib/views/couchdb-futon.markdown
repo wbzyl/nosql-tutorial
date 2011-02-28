@@ -54,7 +54,7 @@ W bazie umieścimy dokumenty z info o fotografiach
       ]
     }
 
-dokumenty zapiszemy hurtem:
+Dokumenty zapiszemy hurtem w bazie:
 
     curl -X POST http://localhost:4000/photos/_bulk_docs -d @photos.json
 
@@ -68,14 +68,15 @@ Albo, umieścimy dokumenty w bazie korzystając z takiego skryptu:
     parser = Yajl::Parser.new
     list = parser.parse(json)
 
-    db = CouchRest.database!("http://127.0.0.1:4000/pictures")
+    db = CouchRest.database!("http://127.0.0.1:4000/photos")
 
     db.bulk_save(list)
     db.documents
 
-Ten link otwieramy w zakładce:
+
+Poniżej będziemy do adresów uri korzystać z różnych opcji zapytań.
+Kompletną listę znajdziemy na Wiki,
 [CouchDB Querying Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
-Za chwilę skorzystamy z argumentów zapytań.
 
 
 ## Widoki tymczasowe
@@ -157,31 +158,38 @@ i widok z dokumentami:
                "tags":["tuna","shark"]}},
     ...
 
-**Uwagi:**
+ale, ustawienie *reduce* na *true*, zwraca:
 
-1. url wstawiamy w cudzysłowy, ponieważ zawiera znak `&` –
-   interpretowany przez powłokę
-2. korzystamy z  *curl* ponieważ w Futon nie umożliwia dodawania
-   dowolnych parametrów do zapytań
+    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=true'
+    {
+      "error": "query_parse_error",
+      "reason": "Query parameter `include_docs` is invalid for reduce views."
+    }
+
+W zasadzie należało tego oczekiwać. Dlaczego?
+
+**Ważna uwaga:**
+
+Poza tym, takie *emit*:
+
+    emit(doc.user, doc.camera);
+
+też nie ma większego sensu. Dlaczego?
 
 Cytat: „We can use the **map function** to generate complex key value pairs
 (**sorted by key**) and then reduce the values corresponding to each
 unique key into either a simple or complex value.
 
-Uruchamiamy domyślną funkcję map. Co ona robi?
 
-Dopisujemy do tej funkcji:
+**Luźne uwagi:**
 
-    :::javascript
-    function(doc) {
-      emit(null, doc);
-      log(doc);
-    }
+1. url wstawiliśmy w cudzysłowy, ponieważ zawiera znak `&` –
+   interpretowany przez powłokę
+2. korzystamy z *curl* ponieważ w Futonie nie można
+   dopisywać dowolnych opcji do zapytań
 
-Podglądamy na terminalu to co wypisuje Logger CouchDB.
-Czy można odgadnąć czym jest argument *doc* tej funkcji?
-(To jest za proste pytanie!)
 
+Kilka prostych przykładów.
 
 ### Sorting pictures by user
 
@@ -236,6 +244,8 @@ Funkcja reduce:
     :::javascript
     _stats
 
+(`_stats` – wbudowana funkcja; napisana w Erlangu – dlatego jest szybka).
+
 Teraz uruchamiamy widok z funkcją *map* i *reduce*.
 
 **BUG:** Aby w tabelce z *Key/Value* pojawiło się okienko do zaznaczenia
@@ -273,7 +283,7 @@ Futon zapisze ten widok w „Design Documents” jako ...?
 Wykonajmy ten widok.
 
 
-## Biblioteka *jquery.couch.js*
+## TODO: Biblioteka *jquery.couch.js*
 
 Futon korzysta z biblioteki *jquery.couch.js* (oraz paru
 innych). Biblioteka ta udostępnia funkcje ułatwiające korzystanie
@@ -281,17 +291,18 @@ z baz danych CouchDB.
 
 Skorzystamy z kilku jej funkcji pisząc widoki/zapytania do bazy
 *sprawdziany*. Kod będziemy wykonywać na konsoli rozszerzenia
-*Firebug* (w Firefoxie, albo na konsoli Javascript w Google Chrome).
+*Firebug* (w Firefoxie, albo na konsoli Javascript w Google Chrome;
+w zakładce z Futonem).
 
 Przed wykonaniem widoku/zapytania łączymy się z bazą:
 
     :::jquery_javascript
-    var db = $.couch.db('sprawdziany')
+    var db = $.couch.db('photos')
 
 Następnie wykonujemy widok, przekazując do niego jeden parametr:
 
     :::jquery_javascript
-    db.view('example/by_login', {
+    db.view('default/by_tag', {
       key: 'agatka',
       success: function (data) {
         console.log(data.rows);
@@ -301,7 +312,7 @@ Następnie wykonujemy widok, przekazując do niego jeden parametr:
 I jeszcze jeden widok/zapytanie do wykonania:
 
     :::jquery_javascript
-    db.view("example/by_login", {
+    db.view("app/by_size", {
       key: 'jacek',
       success: function(data) {
         console.log(data.rows.map(function (o) { return o.value; }));
