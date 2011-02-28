@@ -370,7 +370,7 @@ albo w przeglądarce:
 Dla porządku (jakiego porządku?), powinnismy skorzystać z jakiegoś
 modułu dla NodeJS, aby zapisać w bazie cytaty.
 
-W tym cleu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
+W tym celu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
 
 Po sklonowaniu repozytorium *couch-client*, wymieniamy *invalid*
 plik *package.json* na *valid one*:

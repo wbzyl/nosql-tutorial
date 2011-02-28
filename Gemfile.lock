@@ -46,7 +46,7 @@ GEM
     textpow (0.10.1)
       oniguruma (>= 1.1.0)
       plist (>= 3.0.0)
-    thin (1.2.7)
+    thin (1.2.8)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
