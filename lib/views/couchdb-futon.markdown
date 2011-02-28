@@ -244,7 +244,7 @@ Funkcja reduce:
     :::javascript
     _stats
 
-(`_stats` – wbudowana funkcja; napisana w Erlangu – dlatego jest szybka).
+(`_stats` – funkcja napisana w Erlangu – dlatego jest szybka).
 
 Teraz uruchamiamy widok z funkcją *map* i *reduce*.
 
@@ -268,56 +268,56 @@ Funkcja reduce: j.w.
 (można to zobaczyć w logach).
 
 
+# Programowanie po stronie klienta
 
-## Widoki permanentne
+Do tej pory kodowaliśmy po stronie serwera (ang. *server side programming*).
 
-Zapiszmy poniższy widok jako *by_size*
+Teraz będzie przykład kodowania po stronie klienta (ang. *client side
+programming*). Skorzystamy z biblioteki *jquery.couch.js*
+wykorzystanej w Futonie.
+
+Po stronie klienta, odpytamy widok w bazie *photos*. Kod
+wpiszemy i wykonywamy w Firefoxie na konsoli rozszerzenia *Firebug*.
+(Jeśli korzystamy z Google Chrome to konsoli wbudowanej w tę przeglądarkę.)
+
+Zaczniemy od utworzenia tymczasowego widoku, który po przetestowaniu
+zapiszemy w design document *default* pod nazwą *size_by_tag*:
+
+Funkcja map:
 
     :::javascript
     function(doc) {
-      emit(doc.info.size);
+      for (var name in doc.tags)
+        emit(doc.tags[name], doc.info.size);
     }
 
-Futon zapisze ten widok w „Design Documents” jako ...?
+Funkcja reduce:
 
-Wykonajmy ten widok.
+    _sum
 
-
-## TODO: Biblioteka *jquery.couch.js*
-
-Futon korzysta z biblioteki *jquery.couch.js* (oraz paru
-innych). Biblioteka ta udostępnia funkcje ułatwiające korzystanie
-z baz danych CouchDB.
-
-Skorzystamy z kilku jej funkcji pisząc widoki/zapytania do bazy
-*sprawdziany*. Kod będziemy wykonywać na konsoli rozszerzenia
-*Firebug* (w Firefoxie, albo na konsoli Javascript w Google Chrome;
-w zakładce z Futonem).
-
-Przed wykonaniem widoku/zapytania łączymy się z bazą:
+Po zapisaniu widoku, w zakładce z Futonem otwieramy okno z konsolą,
+gdzie wpisujemy:
 
     :::jquery_javascript
     var db = $.couch.db('photos')
 
-Następnie wykonujemy widok, przekazując do niego jeden parametr:
+Następnie odpytujemy widok:
 
     :::jquery_javascript
-    db.view('default/by_tag', {
-      key: 'agatka',
-      success: function (data) {
-        console.log(data.rows);
-      }
-    })
+    db.view('default/size_by_tag', {
+      success: function(data) {
+        console.log( data.rows.map(function(o){ return o.value; }) );
+    }})
 
-I jeszcze jeden widok/zapytanie do wykonania:
+I jeszcze raz go odpytujemy, ale tym razem mamy zapytanie z jednym
+parametrem, *key*:
 
     :::jquery_javascript
     db.view("app/by_size", {
-      key: 'jacek',
+      key: 'maui',
       success: function(data) {
-        console.log(data.rows.map(function (o) { return o.value; }));
-      }
-    })
+        console.log( data.rows.map(function (o) { return o.value; }) );
+    }})
 
 
 ## Linki
