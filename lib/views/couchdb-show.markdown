@@ -395,7 +395,7 @@ w głównym katalogu repozytorium:
 Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
 
     :::javascript populate.js
-    var cc = require('couch-client')('http://wlodek:sekret13@localhost:4000/lec')
+    var cc = require('couch-client')('http://wlodek:sekret@localhost:4000/lec')
     , fs = require('fs');
     var text = fs.readFileSync('lec.json', 'UTF-8')
     //console.log(JSON.parse(text));
