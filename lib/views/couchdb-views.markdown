@@ -1,17 +1,5 @@
 #### {% title "Views ≡ Map + Reduce" %}
 
-<blockquote>
- {%= image_tag "/images/carlos_castaneda.jpg", :alt => "[Carlos Castaneda]" %}
- <p>
-  Niektórzy czarownicy, wyjaśnił, są gawędziarzami.
-  Snucie historii to dla nich nie tylko wysyłanie
-  zwiadowców badających granice ich percepcji,
-  ale także sposób na osiągnięcie doskonałości,
-  zdobycia mocy i dotarcia do ducha.
- </p>
- <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
-</blockquote>
-
 Zapytania SQL, takie jak to:
 
     SELECT name, email, fax FROM contacts
@@ -30,20 +18,15 @@ temporary views.”
 Widoki są zapisywane w bazie jako specjalne **design documents**.
 Widoki są powielane z zwykłymi dokumentami.
 
+{%= image_tag "/images/couch-mapreduce.png", :alt => "[CouchDB MapReduce]" %}
 
-## „Myśli nieuczesane”
+(Źródło @jrecursive)
 
 Widoki będziemy ćwiczyć na przykładzie dokumentowej bazy danych
-zawierającej kilkanaście aforyzmów Stanisława J. Leca
-oraz Hugo Steinhausa:
+zawierającej aforyzmy Stanisława J. Leca oraz Hugo Steinhausa
+(te same co w rozdziale z *Funkcje Show*).
 
-Aforyzmy wybrałem ze
-[strony wikipedi](http://pl.wikiquote.org/wiki/Stanis%C5%82aw_Jerzy_Lec)
-poświęconej S. J. Lecowi oraz ze
-[strony wikipedi](http://pl.wikiquote.org/wiki/Hugo_Steinhaus) —
-H. Steinhausowi.
-
-Oto przykładowy dokument:
+Dla przypomnienia, format przykładowego dokumentu:
 
     :::json
     {
@@ -55,42 +38,38 @@ Oto przykładowy dokument:
 
 Zaczynamy od utworzenia bazy:
 
-    curl -X PUT http://wbzyl:sekret@127.0.0.1:5984/lec
+    curl -X PUT http://Admin:Pass@127.0.0.1:5984/lec
 
-i sprawdzenia w Futonie czy baza została rzeczywiście utworzona:
+Dokumenty zapiszemy hurtem:
 
-    http://127.0.0.1:5984/_utils
+    curl -X POST -d @ls.json http://127.0.0.1:5984/ls/_bulk_docs
 
-Dokumenty w zapiszemy hurtowo w bazie:
-
-    curl -X POST -d @lec.json http://127.0.0.1:5984/lec/_bulk_docs
-
-Tutaj można pobrać plik {%= link_to "lec.json", "/doc/couchdb/lec.json" %}
-użyty w powyższym poleceniu.
+{%= link_to "Tutaj", "/doc/couchdb/ls.json" %} można pobrać plik *lsj.json* użyty powyżej.
 
 
 ## Widoki w CouchDB API
 
-W CouchDB mamy dwa rodzaje widoków:
+Dla przypomnienia, w CouchDB są dwa rodzaje widoków:
 
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Pierwszy widok który uruchomimy, to **domyślny** widok tymczasowy:
+Pierwszym widokiem, który odpytamy będzie **domyślny** widok tymczasowy:
 
     :::javascript
     function(doc) {
       emit(null, doc);
     }
 
-Znajdziemy go w Futonie po kliknięciu w link do bazy *lec*, a następnie
+Znajdziemy go w Futonie po kliknięciu w link do bazy *ls*, a następnie
 wybranie *Temporary view* z listy rozwijanej *View* (prawy górny róg).
 Widok uruchamiamy klikając w przycisk *Run*.
 
 Widoki tymczasowe generowane są na bieżąco. Ponieważ generowanie
 widoku może trwać długo, więc zwykle korzystamy z widoków
 permanentnych, które generowane są tylko raz, a następnie są tylko
-uaktualniane. Uaktualnienie widoku permanentnego zajmuje mało czasu.
+uaktualniane. Uaktualnienie widoku permanentnego zajmuje mało czasu
+(**ważne**, że mało czasu; dlaczego?)
 
 Utwórzmy nowy widok, podmieniając kod domyślnego widoku na:
 
@@ -107,25 +86,23 @@ Jeśli widok działał, to zamieńmy go na widok permanentny.
 Widok permanentny utworzymy klikając w przycisk *Save As…*
 i wpisując w okienku *Save View As…* **example** i **by_date**:
 
-<pre>Design Document:  _design/<b>example</b>
+<pre>Design Document:  _design/<b>app</b>
       View Name:  <b>by_date</b>
 </pre>
 
-Widoki możemy też wykonywać z wiersza poleceń,
-dla przykładu:
+Widok permanentny możemy odpytać z wiersza poleceń:
 
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_date
+    curl http://127.0.0.1:5984/ls/_design/app/_view/by_date
 
-Ale dla widoków tymczasowych polecenie to jest inne
-(*POST* zamiast *GET*):
+Ale dla widoku tymczasowego polecenie jest inne (*POST* zamiast *GET*):
 
-    curl -X POST http://127.0.0.1:5984/lec/_temp_view \
+    curl -X POST http://127.0.0.1:5984/ls/_temp_view \
       -d '{"map":"function(doc) { emit(null, doc); }"}'
 
 Z linii poleceń możemy też wstawiać do bazy widoki permanentne,
 dla przykładu:
 
-    curl -X PUT http://wbzyl:sekret@127.0.0.1:5984/lec/_design/example -d @views.json
+    curl -X PUT http://Admin:Pass@127.0.0.1:5984/ls/_design/example -d @views.json
 
 gdzie użyty powyżej plik *views.json* ma następującą zawartość:
 
@@ -150,11 +127,11 @@ Zauważmy, że widok może zawierać kilka funkcji *map*.
 
 Uwaga: wcześniej należy usunąć z bazy już istniejący widok *by_date*.
 
-Skorzystajmy z widoku *example*. Zaczynamy od *by_date*:
+Odpytajmy widok *by_date*:
 
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_date
+    curl http://127.0.0.1:5984/ls/_design/app/_view/by_date
 
-W odpowiedzi zwracany jest JSON:
+W odpowiedzi zwracany jest taki JSON:
 
     :::json
     {"total_rows":8,"offset":0,"rows":[
@@ -163,11 +140,11 @@ W odpowiedzi zwracany jest JSON:
     {"id":"5","key":[2010,11,31],"value":"Znasz has\u0142o do swojego wn\u0119trza?"}
     ]}
 
-i *by_body*:
+Teraz odpytajmy widok *by_body*:
 
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_body
+    curl http://127.0.0.1:5984/ls/_design/app/_view/by_body
 
-CouchDB dodaje pole *id* do pól *key* i *value*.
+Zwróćmy uwagę, że CouchDB dodaje pole *id* do pól *key* i *value*.
 Pole *id* przydaje się przy tworzeniu linków do zasobów.
 
 
@@ -213,19 +190,19 @@ TODO: do poleceń poniżej dopisać nowe wersje z urlencode.
 
 **key**: dokument(y) powiązany(e) z kluczem:
 
-    curl http://localhost:5984/lec/_design/example/_view/by_date?key='\[2010,0,1\]'
+    curl http://localhost:5984/ls/_design/app/_view/by_date?key='\[2010,0,1\]'
 
 **startkey**: dokumenty od klucza:
 
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010,0,31\]'
+    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010,0,31\]'
 
 **endkey**: dokumenty do klucza (wyłącznie):
 
-    curl http://localhost:5984/lec/_design/example/_view/by_date?endkey='\[2010,0,31\]'
+    curl http://localhost:5984/ls/_design/app/_view/by_date?endkey='\[2010,0,31\]'
 
 **limit**: co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010,0,31\]'\&limit=2
+    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010,0,31\]'\&limit=2
 
 **skip**: pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
 
@@ -255,14 +232,14 @@ Funkcja reduce:
 Zapiszmy ten widok w **_design/example** jako **count** i wykonajmy
 go z wiersza poleceń:
 
-    curl http://localhost:5984/lec/_design/example/_view/count
+    curl http://localhost:5984/ls/_design/app/_view/count
     {"rows":[
       {"key": null, "value": 8}
     ]}
 
 **group**:
 
-    curl http://localhost:5984/lec/_design/example/_view/count?group=true
+    curl http://localhost:5984/ls/_design/app/_view/count?group=true
     {"rows":[
       {"key": [2009,6,15],  "value": 1},
       {"key": [2010,0,1],   "value": 2},
@@ -338,7 +315,7 @@ Przykład do wpisania na konsoli *irb*:
 **Przykład 1.** Korzystamy z *collation sequence*
 (kolejności zestawiania, schematu uporządkowania).
 
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
+    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":{"summary":"Szerzenie niewiedzy ..."}},
       {"id":"4","key":[2010,0,1],"value":{"summary":"Zdanie to najwi\u0119ksza..."}},
@@ -359,22 +336,22 @@ Przykład do wpisania na konsoli *irb*:
 Zapisujemy ten widok w **_design/example** pod nazwą **ucount**
 (**u** – uniwersalny) i wykonujemy go:
 
-    curl http://localhost:5984/lec/_design/example/_view/ucount?group=true
+    curl http://localhost:5984/ls/_design/app/_view/ucount?group=true
 
 
 **Przykład 3.** Korzystamy z *POST*:
 
     curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/lec/_all_docs
+      http://localhost:5984/ls/_all_docs
     curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/lec/_all_docs?include_docs=true
+      http://localhost:5984/ls/_all_docs?include_docs=true
 
 Albo korzystając z widoku **by_date**:
 
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/lec/_design/example/_view/by_date
+      http://localhost:5984/ls/_design/app/_view/by_date
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/lec/_design/example/_view/by_date?include_docs=true
+      http://localhost:5984/ls/_design/app/_view/by_date?include_docs=true
 
 Na czym polegają różnice w otrzymanych wynikach?
 

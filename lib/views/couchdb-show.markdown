@@ -1,4 +1,4 @@
-#### {% title "Funkcje *Show*" %}
+#### {% title "Funkcje Show" %}
 
 <blockquote>
  {%= image_tag "/images/show_functions.jpg", :alt => "[Show Functions]" %}
@@ -11,10 +11,14 @@ danych, takich jak XML, CSV, CSS, JSON…
 Innymi słowy – funkcji show będziemy używać do przekształcenia dokumentów
 do innych formatu – zazwyczaj do HTML.
 
-W przykładach poniżej skorzystamy z bazy *lec*, która zawiera
-osiem cytatów Stanisława J. Leca (1909–1966)
-{%= link_to "lec.json", "/couch/show/lec.json" %}
-({%= link_to "link do jsona z wszystkimi cytatatami", "/doc/json/lec.json" %}):
+W przykładach poniżej skorzystamy z bazy *ls* zawierającej
+kilka aforyzmów Stanisława J. Leca (1909–1966)
+oraz Hugo D. Steinhausa (1887–1972).
+Aforyzmy te skopiowałem z wikipedi
+[stąd](http://pl.wikiquote.org/wiki/Stanis%C5%82aw_Jerzy_Lec)
+i [stąd](http://pl.wikiquote.org/wiki/Hugo_Steinhaus).
+
+Format przykładowego aforyzmu umieszczonego w bazie:
 
     :::json
     {
@@ -25,13 +29,19 @@ osiem cytatów Stanisława J. Leca (1909–1966)
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Tworzymy bazę *lec* i wrzucamy do niej hurtem wszystkie cytaty:
+Tworzymy bazę *ls*, tak:
 
-    curl -X PUT  http://User:Pass@127.0.0.1:4000/lec
+    curl -X PUT  http://localhost:4000/ls
+
+chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
+
+    curl -X PUT  http://Admin:Pass@localhost:4000/ls
+
+Następnie wrzucamy do hurtem do bazy wszystkie cytaty
+({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/doc/json/ls.json" %}):
+
     curl -X POST -H "Content-Type: application/json" \
-      http://127.0.0.1:4000/lec/_bulk_docs -d @lec.json
-
-*Uwaga:* W drugim poleceniu nie podajemy swoich danych.
+      http://localhost:4000/ls/_bulk_docs -d @ls.json
 
 
 ## Przykład: HTML
@@ -50,7 +60,7 @@ Oto prosty przykład:
 Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
 aby zapiszać kod w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/ls/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
 
 **Uwaga:**: kilka funkcji show wpisujemy w polu *shows* w taki sposób:
@@ -65,13 +75,13 @@ aby zapiszać kod w bazie:
 
 Teraz po wejściu na stronę:
 
-    http://localhost:4000/lec/_design/default/_show/quotation/4
+    http://localhost:4000/ls/_design/default/_show/quotation/4
 
 zobaczymy sformatowany przez funkcję *quotation* czwarty cytat:
 
 Można też pobrać wersję HTML cytatu za pomocą programu *curl*:
 
-    curl -v http://localhost:4000/lec/_design/default/_show/quotation/4
+    curl -v http://localhost:4000/ls/_design/default/_show/quotation/4
 
 Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
@@ -105,13 +115,12 @@ Przekazujemy parametry do funkcji show:
 W Futonie usuwamy dokument *_design/default* (dlaczego to robimy?),
 następnie zapisujemy funkcję show *aye* w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/ls/_design/default \
        -H "Content-Type: application/json" -d @aye.json
 
 Żądanie z parametrem:
 
-    curl http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
-    => Aye aye, Captain. Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
+    curl http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
 
 Odpowiadanie na różne nagłówki *Content-Type* żądania.
 
@@ -132,13 +141,13 @@ Odpowiadanie na różne nagłówki *Content-Type* żądania.
 Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
 dopiero potem, zapisujemy funkcję show *aye* w bazie:
 
-     curl -X PUT http://User:Pass@localhost:4000/lec/_design/default \
+     curl -X PUT http://localhost:4000/ls/_design/default \
        -H "Content-Type: application/json" -d @maye.json
 
 Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accept: application/xml*
 
-    curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
-    curl -v -H 'Accept: application/xml' http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
+    curl -v http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
+    curl -v -H 'Accept: application/xml' http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
 
 Pozostałe *mime types* wbudowane w CouchDB są zdefiniowane w pliku *main.js*:
 
@@ -174,7 +183,7 @@ Oczywiście możemy też rejestrować swoje typy mime.
 * `cookie` - cookie information passed on from mochiweb
 * `form` - if the request’s *Content-Type* is
   *application/x-www-form-urlencoded*, a decoded version of the body
-* `info` - same structure as returned by *http://127.0.0.1:5984/db_name/*
+* `info` - same structure as returned by *http://localhost:5984/db_name/*
 * `path` - any extra path information after routing to the external process
 * `query` - decoded version of the query string parameters.
 * `method` - HTTP request verb
@@ -254,15 +263,15 @@ z *maye.json* opisany powyżej:
 
 Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie:
 
-    couchapp push aye.js http://wbzyl:sekret@localhost:4000/lec
+    couchapp push aye.js http://wbzyl:sekret@localhost:4000/ls
     Preparing.
     Serializing.
-    PUT http://wbzyl:******@localhost:4000/lec/_design/default
+    PUT http://wbzyl:******@localhost:4000/ls/_design/default
     Finished push. 2-7068bcbdcec03650a8dee623e5afe1a1
 
 Powtarzamy żądanie z parametrem::
 
-    curl -v http://localhost:4000/lec/_design/default/_show/aye/1?q=Captain
+    curl -v http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
 
 
 **Argumenty za a nawet przeciw:**
@@ -317,17 +326,17 @@ Plik z wąsatym szablonem *quotation.html.mustache*:
     <html lang=pl>
       <head>
         <meta charset=utf-8>
-        <link rel="stylesheet" href="/lec/_design/default/application.css">
-        <title>Cytaty Stanisława J. Leca</title>
+        <link rel="stylesheet" href="/ls/_design/default/application.css">
+        <title>Cytaty Stanisława J. Leca &  Hugo D. Steinhausa</title>
       </head>
     <body>
       <p>{{ quotation }}</p>
     </body>
     </html>
 
-Na koniec piszemy plik *lec.js* dla programu *couchapp*:
+Na koniec piszemy plik *ls.js* dla programu *couchapp*:
 
-    :::javascript lec.js
+    :::javascript ls.js
     var couchapp = require('couchapp')
       , path = require('path')
       , fs = require('fs');
@@ -355,22 +364,22 @@ Na koniec piszemy plik *lec.js* dla programu *couchapp*:
 
     couchapp.loadAttachments(ddoc, path.join(__dirname, '_attachments'));
 
-I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *lec*:
+I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *ls*:
 
-    couchapp push lec.js http://wbzyl:sekret@localhost:4000/lec
+    couchapp push ls.js http://wbzyl:sekret@localhost:4000/ls
 
 Na deser oglądamy jak to działa, tak:
 
-    curl -I http://localhost:4000/lec/_design/default/_show/quotation/1
+    curl -I http://localhost:4000/ls/_design/default/_show/quotation/1
 
 albo w przeglądarce:
 
-    http://localhost:4000/lec/_design/default/_show/quotation/1
+    http://localhost:4000/ls/_design/default/_show/quotation/1
 
 Dla porządku (jakiego porządku?), powinnismy skorzystać z jakiegoś
 modułu dla NodeJS, aby zapisać w bazie cytaty.
 
-W tym cleu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
+W tym celu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
 
 Po sklonowaniu repozytorium *couch-client*, wymieniamy *invalid*
 plik *package.json* na *valid one*:
@@ -395,10 +404,10 @@ w głównym katalogu repozytorium:
 Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
 
     :::javascript populate.js
-    var cc = require('couch-client')('http://wlodek:sekret13@localhost:4000/lec')
+    var cc = require('couch-client')('http://localhost:4000/ls')
     , fs = require('fs');
-    var text = fs.readFileSync('lec.json', 'UTF-8')
-    //console.log(JSON.parse(text));
+    var text = fs.readFileSync('ls.json', 'UTF-8')
+    // console.log(JSON.parse(text));
     cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
         if (err) throw err;
         console.log("saved %s", JSON.stringify(results));

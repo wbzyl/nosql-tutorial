@@ -10,9 +10,9 @@
  <p class="author">— Sir Arthur Conan Doyle</p>
 </blockquote>
 
-## Ważne informacje
+<!--
 
-[2011.02.15] Coś do poczytania – 
+[2011.02.15] Coś do poczytania –
 [Sapling Learning Blog](http://blog.saplinglearning.com/2011/02/data-mining-6-things-i-learned-from.html).
 A jakie są nasze zwyczaje?
 
@@ -22,7 +22,9 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 [2011.02.16] Termin konsultacji: poniedziałek, g. 15.30, p. 228.
 
-[2011.02.02] Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
+-->
+
+Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
 Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
 (W miarę możliwości należy stosować się do uwag Tima Pope,
@@ -178,7 +180,9 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 Ściągi:
 
 * [CouchDB API Cheatsheet](http://wiki.apache.org/couchdb/API_Cheatsheet),
-  [Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options)
+  [Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options),
+  [The Antepenultimate CouchDB Reference Card](http://blog.fupps.com/2010/04/20/the-antepenultimate-couchdb-reference-card/)
+  (Jan-Piet Mens)
 * [CSS3 Cheat Sheet](http://www.smashingmagazine.com/2009/07/13/css-3-cheat-sheet-pdf/)
 
 
@@ -216,3 +220,6 @@ Różne:
 * John Mettraux. [Rufus-jig](https://github.com/jmettraux/rufus-jig) –
   a HTTP client, greedy with JSON content, GETting conditionally (Ruby gem).
 * [Orbit: A Slick jQuery Image Slider Plugin](http://www.zurb.com/playground/orbit-jquery-image-slider)
+* [nodechat.js – Using node.js, backbone.js, socket.io, and redis to make a real time chat app](http://fzysqr.com/2011/02/28/nodechat-js-using-node-js-backbone-js-socket-io-and-redis-to-make-a-real-time-chat-app/)
+* [backbone-couchdb](http://janmonschke.github.com/backbone-couchdb/)
+  (zob. doc [backbone-couchdb.js](http://janmonschke.github.com/backbone-couchdb/backbone-couchdb.html))
