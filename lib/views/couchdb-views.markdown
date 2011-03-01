@@ -106,7 +106,7 @@ dla przykładu:
 
 gdzie użyty powyżej plik *views.json* ma następującą zawartość:
 
-    :::json
+    :::javascript views.json
     {
       "language": "javascript",
       "views": {
@@ -150,10 +150,10 @@ Pole *id* przydaje się przy tworzeniu linków do zasobów.
 
 ## *Querying Options* w widokach
 
-Argumenty w zapytaniach URI:
-[HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
+Poniżej, dla wygody, umieściłem ściągę
+z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
-Dla żądań GET:
+Żądania GET:
 
 * key=*keyvalue*
 * startkey=*keyvalue*
@@ -170,12 +170,12 @@ Dla żądań GET:
 * startkey_docid=*docid*
 * endkey_docid=*docid*
 
-Dla żądań POST oraz do wbudowanego widoku *_all_docs*:
+Żądania POST oraz do wbudowanego widoku *_all_docs*:
 
 * {"keys": ["key1", "key2", ...]} – tylko wyszczególnione wiersze widoku
 
 
-### Przykłady użycia argumentów w żądaniach
+### Przykłady użycia
 
 Uwaga: parametry zapytań muszą być odpowiedni cytowane/kodowane.
 Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
@@ -250,7 +250,8 @@ go z wiersza poleceń:
     ]}
 
 
-## Sortowanie – *view collation*
+
+# View Collation
 
 Poniższy przykład, napisany w języku Ruby,
 pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
@@ -365,7 +366,8 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API):
 * View Compaction
 
 
-## „Złączenia” w bazach CouchDB
+
+# „Złączenia” w bazach CouchDB
 
 *Przykład:* How you'd go about modeling a simple blogging system with „post” and
 „comment” entities, where any blog post might have many comments.
@@ -375,8 +377,10 @@ Christopher Lenz. [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/c
 W artykule autor omawia trzy sposoby modelowania powiązań
 między postami a komentarzami.
 
+TODO: przykład do [CouchDB JOINs Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
 
-### Sposób 1: komentarze inline
+
+## Sposób 1: komentarze inline
 
 Utworzymy bazę zawierającą kilka takich dokumentów:
 
@@ -418,7 +422,7 @@ the same time, some of them will get a 409 Conflict error on step 3
 (that's optimistic concurrency in action).”
 
 
-### Sposób 2: komentarze w osobnych dokumentach
+## Sposób 2: komentarze w osobnych dokumentach
 
 Utworzymy bazę zawierającą kilka postów postaci:
 
@@ -504,7 +508,7 @@ request to the post document, and a GET request to the view that
 returns all comments for the post.”
 
 
-### Optymizacja: using the power of view collation
+## Optymizacja: using the power of view collation
 
 What we'd probably want then would be a way to join the blog post and
 the various comments together to be able to retrieve them with
