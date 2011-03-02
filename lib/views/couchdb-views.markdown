@@ -78,7 +78,6 @@ W tym celu skorzystam z modułu node *node.couchapp.js*:
 
     ddoc.views.by_date = {
       map: function(doc) {
-        //   key             value
         emit(doc.created_at, doc.quotation.length);
       },
       reduce: "_sum"
