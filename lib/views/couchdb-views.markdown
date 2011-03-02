@@ -63,7 +63,7 @@ Dla przypomnienia, w CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Zaczniemy od zapisania w bazie dwóch widoków: *by_date* i *by_tag*.
+Zaczniemy od zapisania w bazie dwóch widoków: *size_by_date* i *by_tag*.
 W tym celu skorzystam z modułu node *node.couchapp.js*:
 
     :::javascript ls_views.js
@@ -76,7 +76,7 @@ W tym celu skorzystam z modułu node *node.couchapp.js*:
     }
     module.exports = ddoc;
 
-    ddoc.views.by_date = {
+    ddoc.views.size_by_date = {
       map: function(doc) {
         emit(doc.created_at, doc.quotation.length);
       },
@@ -96,7 +96,7 @@ Widok zapisujemy w bazie wykonujac polecenie:
 
 Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
-    curl http://127.0.0.1:4000/ls/_design/app/_view/by_date
+    curl http://127.0.0.1:4000/ls/_design/app/_view/size_by_date
     curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
 
 W odpowiedzi na pierwsze zapytanie dostajemy listę posortowaną po
@@ -174,7 +174,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **key** — dokumenty powiązane z podanym kluczem:
 
-    http://localhost:4000/ls/_design/app/_view/by_date?key=[2010,0,1]&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?key=[2010,0,1]&reduce=false
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":70},
       {"id":"4","key":[2010,0,1],"value":37}
@@ -182,7 +182,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **startkey** — dokumenty od klucza:
 
-    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55},
@@ -193,7 +193,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **endkey** — dokumenty do klucza (wyłącznie):
 
-    http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010,0,31]&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":0,"rows":[
       {"id":"3","key":[2009,6,15],"value":30},
       {"id":"1","key":[2010,0,1],"value":70},
@@ -203,7 +203,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
-    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&limit=2&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55}
@@ -211,7 +211,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza.
 
-    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,1,20]&skip=2&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
     {"total_rows":8,"offset":6,"rows":[
       {"id":"7","key":[2010,1,28],"value":67},
       {"id":"5","key":[2010,11,31],"value":31}
@@ -220,7 +220,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **include_docs** – dołącz dokumenty do odpowiedzi
 (jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
 
-    http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010]&include_docs=true&reduce=false
+    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010]&include_docs=true&reduce=false
     {"total_rows":8,"offset":0,"rows":[
        {"id":"3","key":[2009,6,15],"value":30,
          "doc":{
@@ -234,7 +234,9 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **inclusive_end** – zakres, włącznie.
 
 
-TODO: Uwaga: opcje **group**, **group_level** oraz **reduce** można użyć tylko
+**TODO**
+
+Uwaga: opcje **group**, **group_level** oraz **reduce** można użyć tylko
 z widokami z funkcją *reduce*.
 
 **Przykład widoku z funkcją map i reduce**
@@ -255,7 +257,7 @@ z widokami z funkcją *reduce*.
 
 # View Collation
 
-*Collation* to inaczej kolejność zestawiania, albo schemat uporządkowania.
+*Collation* to kolejność zestawiania, albo schemat uporządkowania.
 
 Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
 
@@ -272,19 +274,13 @@ W Futonie tworzymy bazę *coll*:
       });
     };
 
-Na początek, kilka prostych zapytań. Wpisujemy na konsoli:
+Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
-    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&limit=4
-    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&limit=2\&descending=true
-    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&endkey=\"68\"
+    http://localhost:4000/coll/_all_docs?startkey="64"&limit=4
+    http://localhost:4000/coll/_all_docs?startkey="64"&limit=2&descending=true
+    http://localhost:4000/coll/_all_docs?startkey="64"&endkey="68"
 
-*Uwaga:* W przeglądarce powyższe adresy wpisujemy bez „cytowania“:
-
-    http://localhost:4000/collator/_all_docs?startkey="64"&limit=4
-    http://localhost:4000/collator/_all_docs?startkey="64"&limit=2&descending=true
-    http://localhost:4000/collator/_all_docs?startkey="64"&endkey="68"
-
-Jeśli odpytujemy widok (tymczasowy; konieczne są uprawnienia Admina):
+Jeśli odpytujemy widok (tymczasowy na konsoli; konieczne są uprawnienia Admina):
 
     curl -X POST http://Admin:Pass@localhost:4000/coll/_temp_view \
       -H "Content-Type: application/json" -d '
@@ -300,22 +296,22 @@ Dlatego mówimy *view collation*, a nie *view sorting*.
 
 ## Co wynika z *Collation Specification*?
 
-W [CouchDB Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification)
-opisano jak CouchDB sortuje dokumenty.
+W CouchDB [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification)
+opisano jak sortowane są dokumenty.
 
 TODO: Dodamy, korzystając z node.couchapp.js kilka widoków
 i przyjrzymy się bliżej sortowaniu.
 
 **Przykład 1.** Korzystamy z *collation sequence*
 
-    curl http://localhost:4000/ls/_design/app/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
+    curl http://localhost:4000/ls/_design/app/_view/size_by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":{"summary":"Szerzenie niewiedzy ..."}},
       {"id":"4","key":[2010,0,1],"value":{"summary":"Zdanie to najwi\u0119ksza..."}},
       {"id":"8","key":[2010,0,31],"value":{"summary":"Jedn\u0105 z cech g\u0142upstw..."}}
     ]}
 
-**Przykład 2.** Do widoku **by_date** dodajemy taką oto funkcję reduce:
+**Przykład 2.** Do widoku **size_by_date** dodajemy taką oto funkcję reduce:
 
     :::javascript
     function(keys, values, rereduce) {
@@ -339,12 +335,12 @@ Zapisujemy ten widok w **_design/example** pod nazwą **ucount**
     curl -X POST -d '{"keys":["1","8"]}' \
       http://localhost:4000/ls/_all_docs?include_docs=true
 
-Albo korzystając z widoku **by_date**:
+Albo korzystając z widoku **size_by_date**:
 
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:4000/ls/_design/app/_view/by_date
+      http://localhost:4000/ls/_design/app/_view/size_by_date
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:4000/ls/_design/app/_view/by_date?include_docs=true
+      http://localhost:4000/ls/_design/app/_view/size_by_date?include_docs=true
 
 Na czym polegają różnice w otrzymanych wynikach?
 
