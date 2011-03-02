@@ -24,6 +24,9 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.03.02] Konkurs z nagrodami – [Visualize Your Taxes](http://datavizchallenge.org/).
+Pierwsza nagroda $10K.
+
 Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
 Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
 Repozytorium należy nazwać **nosql**.
