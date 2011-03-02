@@ -173,7 +173,7 @@ takich trików z cytowaniem. Wpisujemy po prostu:
 
 Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedzi:
 
-**key**: dokumenty powiązane z podanym kluczem:
+**key** — dokumenty powiązane z podanym kluczem:
 
     http://localhost:4000/ls/_design/app/_view/by_date?key=[2010,0,1]&reduce=false
     {"total_rows":8,"offset":1,"rows":[
@@ -181,7 +181,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"4","key":[2010,0,1],"value":37}
     ]}
 
-**startkey**: dokumenty od klucza:
+**startkey** — dokumenty od klucza:
 
     http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":3,"rows":[
@@ -192,7 +192,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"5","key":[2010,11,31],"value":31}
     ]}
 
-**endkey**: dokumenty do klucza (wyłącznie):
+**endkey** — dokumenty do klucza (wyłącznie):
 
     http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":0,"rows":[
@@ -202,7 +202,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"8","key":[2010,0,31],"value":34}
     ]}
 
-**limit**: co najwyżej tyle dokumentów zaczynając od podanego klucza:
+**limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
     http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
     {"total_rows":8,"offset":3,"rows":[
@@ -210,7 +210,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"2","key":[2010,1,20],"value":55}
     ]}
 
-**skip**: pomiń podaną liczbę dokumentów zaczynając od podanego klucza.
+**skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza.
 
     http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,1,20]&skip=2&reduce=false
     {"total_rows":8,"offset":6,"rows":[
@@ -218,7 +218,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"5","key":[2010,11,31],"value":31}
     ]}
 
-**include_docs**: dołącz dokumenty do odpowiedzi
+**include_docs** – dołącz dokumenty do odpowiedzi
 (jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
 
     http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010]&include_docs=true&reduce=false
@@ -232,7 +232,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
            "tags":["orze\u0142","dr\u00f3b"]}}
     ]}
 
-**inclusive_end**: zakres – włącznie.
+**inclusive_end** – zakres, włącznie.
 
 
 TODO: Uwaga: opcje **group**, **group_level** oraz **reduce** można użyć tylko
@@ -240,7 +240,7 @@ z widokami z funkcją *reduce*.
 
 **Przykład widoku z funkcją map i reduce**
 
-**group**:
+**group** –
 
     curl http://localhost:4000/ls/_design/app/_view/count?group=true
     {"rows":[
