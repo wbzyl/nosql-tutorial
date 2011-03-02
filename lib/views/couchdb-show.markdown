@@ -242,8 +242,7 @@ Teraz wzorując się na przykładzie z *README.md* kodujemy przykład
 z *maye.json* opisany powyżej:
 
     :::javascript aye.js
-    var couchapp = require('couchapp')
-      , path = require('path');
+    var couchapp = require('couchapp');
 
     ddoc = {
         _id: '_design/default'

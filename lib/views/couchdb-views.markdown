@@ -1,50 +1,59 @@
 #### {% title "Views ≡ Map + Reduce" %}
 
-Zapytania SQL, takie jak to:
+CouchDB jest dokumentową, a nie relacyjną bazą danych. W relacyjnych
+bazach zapisujemy „rekordy”, a w bazach dokumentowych – „obiekty”.
+Obiekty mogą zawierać inne obiekty i tablice. Obiekty bardziej niż
+rekordy nadają się do modelowania złożonych hierarchicznych związków.
 
+CouchDB jest bezschematową bazą danych. W takich bazach
+zapytania SQL, na przykład takie:
+
+    :::sql
     SELECT name, email, fax FROM contacts
 
-nie mają sensu dla dokumentowych baz danych.
+nie mają sensu, ponieważ takie zapytanie zakłada, że wszystkie dokumenty
+*contacts* muszą zawierać pola *name*, *email* i *fax*.
+Dokumenty zapisywane w CouchDB nie muszą być zbudowane według
+jednego schematu.
 
-Dlaczego? Rozważyć wartości NULL. Rekordy w tabelach SQL a dokumenty w
-dokumentowych bazach danych.
-
-W dokumentowych bazach danych zamiast pisać zapytania
-piszemy widoki. Cytat:
-„Views are the primary tool used for querying and reporting on CouchDB
-documents. There are two different kinds of views: permanent and
-temporary views.”
-
-Widoki są zapisywane w bazie jako specjalne **design documents**.
-Widoki są powielane z zwykłymi dokumentami.
+Brak schematu oznacza, że niepotrzebne będą migracje.
+Jest to istotne w wypadku dużych baz, dla których migracje
+są kosztowne, albo niemożliwe.
 
 {%= image_tag "/images/couch-mapreduce.png", :alt => "[CouchDB MapReduce]" %}
+(źródło *@jrecursive*)
 
-(Źródło @jrecursive)
+W dokumentowych bazach danych zamiast zapytań mamy widoki:
+„Views are the primary tool used for querying and reporting on CouchDB
+documents.”
 
-Widoki będziemy ćwiczyć na przykładzie dokumentowej bazy danych
+Widoki zapisujemy w tak zwanych *design documents*. Design documents
+są zwykłymi dokumentami. Tym co je wyróżnia jest identyfikator
+zaczynający się od **_design**, na przykład *_design/app*.
+Widoki są zapisywane w polu *views* dokumentów projektowych.
+
+Widoki przećwiczymy na przykładzie dokumentowej bazy danych
 zawierającej aforyzmy Stanisława J. Leca oraz Hugo Steinhausa
 (te same co w rozdziale z *Funkcje Show*).
-
 Dla przypomnienia, format przykładowego dokumentu:
 
     :::json
     {
       "_id": "1",
       "created_at": [2010, 0, 31],
-      "body": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
-      "tag": ["wiedza","nauka","wszechświat"]
+      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
+      "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Zaczynamy od utworzenia bazy:
+tak tworzymy bazę:
 
     curl -X PUT http://Admin:Pass@127.0.0.1:5984/lec
 
-Dokumenty zapiszemy hurtem:
+a tak zapisujemy hurtem wszystkie cytaty:
 
     curl -X POST -d @ls.json http://127.0.0.1:5984/ls/_bulk_docs
 
-{%= link_to "Tutaj", "/doc/couchdb/ls.json" %} można pobrać plik *lsj.json* użyty powyżej.
+{%= link_to "Tutaj", "/doc/json/ls.json" %} można pobrać plik *ls.json* użyty powyżej.
 
 
 ## Widoki w CouchDB API
@@ -54,102 +63,63 @@ Dla przypomnienia, w CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Pierwszym widokiem, który odpytamy będzie **domyślny** widok tymczasowy:
+Zaczniemy od zapisania w bazie dwóch widoków: *by_date* i *by_tag*.
+W tym celu skorzystam z modułu node *node.couchapp.js*:
 
-    :::javascript
-    function(doc) {
-      emit(null, doc);
+    :::javascript ls_views.js
+    var couchapp = require('couchapp');
+    ddoc = {
+        _id: '_design/app'
+      , views: {}
+      , lists: {}
+      , shows: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.by_date = {
+      map: function(doc) {
+        //   key             value
+        emit(doc.created_at, doc.quotation.length);
+      },
+      reduce: "_sum"
+    }
+    ddoc.views.by_tag = {
+      map: function(doc) {
+        for (var k in doc.tags)
+          emit(doc.tags[k], null);
+      },
+      reduce: "_count"
     }
 
-Znajdziemy go w Futonie po kliknięciu w link do bazy *ls*, a następnie
-wybranie *Temporary view* z listy rozwijanej *View* (prawy górny róg).
-Widok uruchamiamy klikając w przycisk *Run*.
+Widok zapisujemy w bazie wykonujac polecenie:
 
-Widoki tymczasowe generowane są na bieżąco. Ponieważ generowanie
-widoku może trwać długo, więc zwykle korzystamy z widoków
-permanentnych, które generowane są tylko raz, a następnie są tylko
-uaktualniane. Uaktualnienie widoku permanentnego zajmuje mało czasu
-(**ważne**, że mało czasu; dlaczego?)
+    couchapp push ls_views.js http://Admin:Pass@localhost:4000/ls
 
-Utwórzmy nowy widok, podmieniając kod domyślnego widoku na:
+Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
-    :::javascript
-    function(doc) {
-      if(doc.created_at && doc.body) {
-        emit(doc.created_at, {summary:doc.body.substring(0,20) + "..."});
-      }
-    }
+    curl http://127.0.0.1:4000/ls/_design/app/_view/by_date
+    curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
 
-Sprawdźmy, czy widok działa uruchamiając go.
-Jeśli widok działał, to zamieńmy go na widok permanentny.
-
-Widok permanentny utworzymy klikając w przycisk *Save As…*
-i wpisując w okienku *Save View As…* **example** i **by_date**:
-
-<pre>Design Document:  _design/<b>app</b>
-      View Name:  <b>by_date</b>
-</pre>
-
-Widok permanentny możemy odpytać z wiersza poleceń:
-
-    curl http://127.0.0.1:5984/ls/_design/app/_view/by_date
-
-Ale dla widoku tymczasowego polecenie jest inne (*POST* zamiast *GET*):
-
-    curl -X POST http://127.0.0.1:5984/ls/_temp_view \
-      -d '{"map":"function(doc) { emit(null, doc); }"}'
-
-Z linii poleceń możemy też wstawiać do bazy widoki permanentne,
-dla przykładu:
-
-    curl -X PUT http://Admin:Pass@127.0.0.1:5984/ls/_design/example -d @views.json
-
-gdzie użyty powyżej plik *views.json* ma następującą zawartość:
-
-    :::javascript views.json
-    {
-      "language": "javascript",
-      "views": {
-        "by_date": {
-          "map": "function(doc) {
-                     emit(doc.created_at, doc.body);
-                 }"
-        },
-        "by_body": {
-          "map": "function(doc) {
-                      emit(doc.body, doc.created_at);
-                 }"
-        }
-      }
-    }
-
-Zauważmy, że widok może zawierać kilka funkcji *map*.
-
-Uwaga: wcześniej należy usunąć z bazy już istniejący widok *by_date*.
-
-Odpytajmy widok *by_date*:
-
-    curl http://127.0.0.1:5984/ls/_design/app/_view/by_date
-
-W odpowiedzi zwracany jest taki JSON:
+W odpowiedzi na pierwsze zapytanie dostajemy listę posortowaną po
+trójelementowej tablicy z datą:
 
     :::json
-    {"total_rows":8,"offset":0,"rows":[
-    {"id":"3","key":[2009,6,15],"value":"Za du\u017co or\u0142\u00f3w, za ma\u0142o drobiu."},
-    ....
-    {"id":"5","key":[2010,11,31],"value":"Znasz has\u0142o do swojego wn\u0119trza?"}
+    {"rows":[
+    {"key":null,"value":351}
     ]}
 
-Teraz odpytajmy widok *by_body*:
+Drugie zapytanie zwraca:
 
-    curl http://127.0.0.1:5984/ls/_design/app/_view/by_body
-
-Zwróćmy uwagę, że CouchDB dodaje pole *id* do pól *key* i *value*.
-Pole *id* przydaje się przy tworzeniu linków do zasobów.
+    :::json
+    {"rows":[
+      {"key": null, "value": 19}
+    ]}
 
 
 ## *Querying Options* w widokach
 
+Odpytując widoki możemy doprecyzować jakie dokumenty nas interesują,
+dopisując do zapytania *querying options*.
 Poniżej, dla wygody, umieściłem ściągę
 z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
@@ -174,72 +144,105 @@ z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
 * {"keys": ["key1", "key2", ...]} – tylko wyszczególnione wiersze widoku
 
-
-### Przykłady użycia
-
-Uwaga: parametry zapytań muszą być odpowiedni cytowane/kodowane.
+Uwaga: parametry zapytań muszą być odpowiednio cytowane i kodowane.
 Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
-tę uciążliwość. Należy skorzystać z opcji `-G` oraz `--data-urlencode`.
-Przykład:
+tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlencode`.
 
-    curl -X GET http://localhost:5984/books/_design/default/_view/authors -G \
-      --data-urlencode startkey='"j"' --data-urlencode endkey='"j\ufff0"' \
+Dla przykładu, zapytanie:
+
+    curl http://localhost:4000/ls/_design/app/_view/by_tag -G \
+      --data-urlencode startkey='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
 
-TODO: do poleceń poniżej dopisać nowe wersje z urlencode.
+zwraca:
 
-**key**: dokument(y) powiązany(e) z kluczem:
+    :::json
+    {"total_rows":19,"offset":14,"rows":[
+      {"id":"1","key":"wiedza","value":null},
+      {"id":"5","key":"wn\u0119trze","value":null},
+      {"id":"1","key":"wszech\u015bwiat","value":null},
+      {"id":"2","key":"wszyscy","value":null}
+    ]}
 
-    curl http://localhost:5984/ls/_design/app/_view/by_date?key='\[2010,0,1\]'
+Jeśli to zapytanie wpiszemy w przegladarce, to nie musimy stosować
+takich trików z cytowaniem. Wpisujemy po prostu:
+
+    http://localhost:4000/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
+
+(Przeglądarka Chrome sama koduje zapytanie.)
+
+Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedzi:
+
+**key**: dokumenty powiązane z podanym kluczem:
+
+    http://localhost:4000/ls/_design/app/_view/by_date?key=[2010,0,1]&reduce=false
+    {"total_rows":8,"offset":1,"rows":[
+      {"id":"1","key":[2010,0,1],"value":70},
+      {"id":"4","key":[2010,0,1],"value":37}
+    ]}
 
 **startkey**: dokumenty od klucza:
 
-    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010,0,31\]'
+    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
+    {"total_rows":8,"offset":3,"rows":[
+      {"id":"8","key":[2010,0,31],"value":34},
+      {"id":"2","key":[2010,1,20],"value":55},
+      {"id":"6","key":[2010,1,28],"value":27},
+      {"id":"7","key":[2010,1,28],"value":67},
+      {"id":"5","key":[2010,11,31],"value":31}
+    ]}
 
 **endkey**: dokumenty do klucza (wyłącznie):
 
-    curl http://localhost:5984/ls/_design/app/_view/by_date?endkey='\[2010,0,31\]'
+    http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010,0,31]&reduce=false
+    {"total_rows":8,"offset":0,"rows":[
+      {"id":"3","key":[2009,6,15],"value":30},
+      {"id":"1","key":[2010,0,1],"value":70},
+      {"id":"4","key":[2010,0,1],"value":37},
+      {"id":"8","key":[2010,0,31],"value":34}
+    ]}
 
 **limit**: co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
-    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010,0,31\]'\&limit=2
+    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
+    {"total_rows":8,"offset":3,"rows":[
+      {"id":"8","key":[2010,0,31],"value":34},
+      {"id":"2","key":[2010,1,20],"value":55}
+    ]}
 
-**skip**: pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
+**skip**: pomiń podaną liczbę dokumentów zaczynając od podanego klucza.
 
-Zostały jeszcze boolowskie: **include_docs** oraz **inclusive_end**
+    http://localhost:4000/ls/_design/app/_view/by_date?startkey=[2010,1,20]&skip=2&reduce=false
+    {"total_rows":8,"offset":6,"rows":[
+      {"id":"7","key":[2010,1,28],"value":67},
+      {"id":"5","key":[2010,11,31],"value":31}
+    ]}
 
-Uwaga: **group**, **group_level** i **reduce**  można użyć tylko
+**include_docs**: dołącz dokumenty do odpowiedzi
+(jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
+
+    http://localhost:4000/ls/_design/app/_view/by_date?endkey=[2010]&include_docs=true&reduce=false
+    {"total_rows":8,"offset":0,"rows":[
+       {"id":"3","key":[2009,6,15],"value":30,
+         "doc":{
+           "_id":"3",
+           "_rev":"5-c460...",
+           "created_at":[2009,6,15],
+           "quotation":"Za du\u017co or\u0142\u00f3w, za ma\u0142o drobiu.",
+           "tags":["orze\u0142","dr\u00f3b"]}}
+    ]}
+
+**inclusive_end**: zakres – włącznie.
+
+
+TODO: Uwaga: opcje **group**, **group_level** oraz **reduce** można użyć tylko
 z widokami z funkcją *reduce*.
 
 **Przykład widoku z funkcją map i reduce**
 
-Funkcja map:
-
-    :::javascript
-    function(doc) {
-      if(doc.created_at && doc.body) {
-        emit(doc.created_at, 1);
-      }
-    }
-
-Funkcja reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      return sum(values);
-    }
-
-Zapiszmy ten widok w **_design/example** jako **count** i wykonajmy
-go z wiersza poleceń:
-
-    curl http://localhost:5984/ls/_design/app/_view/count
-    {"rows":[
-      {"key": null, "value": 8}
-    ]}
-
 **group**:
 
-    curl http://localhost:5984/ls/_design/app/_view/count?group=true
+    curl http://localhost:4000/ls/_design/app/_view/count?group=true
     {"rows":[
       {"key": [2009,6,15],  "value": 1},
       {"key": [2010,0,1],   "value": 2},
@@ -253,70 +256,60 @@ go z wiersza poleceń:
 
 # View Collation
 
-Poniższy przykład, napisany w języku Ruby,
-pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+*Collation* to inaczej kolejność zestawiania, albo schemat uporządkowania.
 
-Zaczynamy od instalacji gemów użytych w przykładzie:
+Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
 
-    gem install rest-client json
+W Futonie tworzymy bazę *coll*:
 
-Następnie za pomocą poniższego skryptu tworzymy bazę *collator* (ruby 1.9.2):
+    :::javascript collation.js
+    var cc = require('couch-client');
+    var coll = cc("http://localhost:4000/coll");
 
-    :::ruby collseq.rb
-    require 'restclient'
-    require 'json'
+    for (var i=32; i<=126; i++) {
+      coll.save({"x": String.fromCharCode(i)}, function(err, doc) {
+        if (err) throw err;
+        console.log("saved %s", JSON.stringify(doc));
+      });
+    };
 
-    # jeśli Admin Party!
-    DB="http://127.0.0.1:4000/collator"
-    # w przeciwnym wypadku wpisujemy swoje dane
-    # DB="http://User:Pass@127.0.0.1:4000/collator"
-    RestClient.delete DB rescue nil
-    RestClient.put "#{DB}",""
-    (32..126).each do |c|
-      RestClient.put "#{DB}/#{c.to_s(16)}", {"x"=>c.chr}.to_json
-    end
+Na początek, kilka prostych zapytań. Wpisujemy na konsoli:
 
-    RestClient.put "#{DB}/_design/test", <<EOS
-    {
-      "views":{
-        "one":{
-          "map":"function (doc) { emit(doc.x,null); }"
-        }
-      }
-    }
-    EOS
-    puts RestClient.get("#{DB}/_design/test/_view/one")
+    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&limit=4
+    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&limit=2\&descending=true
+    curl -X GET http://localhost:4000/coll/_all_docs?startkey=\"64\"\&endkey=\"68\"
 
-Kilka zapytań do bazy. Wpisujemy na konsoli:
-
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=4
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=2\&descending=true
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&endkey=\"68\"
-
-W przeglądarce powyższe URL-e wpisujemy bez „cytowania“:
+*Uwaga:* W przeglądarce powyższe adresy wpisujemy bez „cytowania“:
 
     http://localhost:4000/collator/_all_docs?startkey="64"&limit=4
     http://localhost:4000/collator/_all_docs?startkey="64"&limit=2&descending=true
     http://localhost:4000/collator/_all_docs?startkey="64"&endkey="68"
 
-Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola Rubiego.
-Przykład do wpisania na konsoli *irb*:
+Jeśli odpytujemy widok (tymczasowy; konieczne są uprawnienia Admina):
 
-    :::ruby
-    DB = "http://localhost:4000/lz"
-    RestClient.get DB
-    response = RestClient.get "#{DB}/led-zeppelin-i"
-    response.code
-    response.headers
-    response.cookies
+    curl -X POST http://Admin:Pass@localhost:4000/coll/_temp_view \
+      -H "Content-Type: application/json" -d '
+    {
+      "map": "function(doc) { emit(doc.x); }"
+    }'
+
+to zwracana lista dokumentów jest posortowana po kluczu (tutaj, po *doc.x*).
+Porządek dokumentów określony jest przez
+[unicode collation algorithm](http://www.unicode.org/reports/tr10/).
+Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-### Ciekawe zapytania
+## Co wynika z *Collation Specification*?
+
+W [CouchDB Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification)
+opisano jak CouchDB sortuje dokumenty.
+
+TODO: Dodamy, korzystając z node.couchapp.js kilka widoków
+i przyjrzymy się bliżej sortowaniu.
 
 **Przykład 1.** Korzystamy z *collation sequence*
-(kolejności zestawiania, schematu uporządkowania).
 
-    curl http://localhost:5984/ls/_design/app/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
+    curl http://localhost:4000/ls/_design/app/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":{"summary":"Szerzenie niewiedzy ..."}},
       {"id":"4","key":[2010,0,1],"value":{"summary":"Zdanie to najwi\u0119ksza..."}},
@@ -337,22 +330,22 @@ Przykład do wpisania na konsoli *irb*:
 Zapisujemy ten widok w **_design/example** pod nazwą **ucount**
 (**u** – uniwersalny) i wykonujemy go:
 
-    curl http://localhost:5984/ls/_design/app/_view/ucount?group=true
+    curl http://localhost:4000/ls/_design/app/_view/ucount?group=true
 
 
 **Przykład 3.** Korzystamy z *POST*:
 
     curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/ls/_all_docs
+      http://localhost:4000/ls/_all_docs
     curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/ls/_all_docs?include_docs=true
+      http://localhost:4000/ls/_all_docs?include_docs=true
 
 Albo korzystając z widoku **by_date**:
 
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/ls/_design/app/_view/by_date
+      http://localhost:4000/ls/_design/app/_view/by_date
     curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/ls/_design/app/_view/by_date?include_docs=true
+      http://localhost:4000/ls/_design/app/_view/by_date?include_docs=true
 
 Na czym polegają różnice w otrzymanych wynikach?
 
@@ -468,11 +461,11 @@ Poniższy widok, wypisuje komentarze zgrupowane po polu *post*:
 Widok ten po zapisaniu jako design document o nazwie **blog**
 i o view name – **by_post** wywołujemy z wiersza poleceń:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post
+    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post
 
 Albo tak, jeśli zamierzamy pobrać wszystkie komentarze do posta "02":
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post?key=\"02\"
+    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post?key=\"02\"
     {"total_rows":7,"offset":2,"rows":[
     {"id":"13","key":"02","value":{"author":"lolek","content":"\u2026"}},
     {"id":"14","key":"02","value":{"author":"bolek","content":"\u2026"}}
@@ -480,7 +473,7 @@ Albo tak, jeśli zamierzamy pobrać wszystkie komentarze do posta "02":
 
 Albo tak:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post?key='"02"'
+    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post?key='"02"'
 
 Ech, to cytowanie w powłoce…
 
@@ -496,7 +489,7 @@ polu *author*:
 
 Po zapisaniu widoku pod nazwą *by_author*, wykonujemy go z wiersza poleceń:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_author
+    curl http://localhost:4000/blog-separate/_design/blog/_view/by_author
 
 Przechowywanie osobno postów i komentarzy do nich też ma wady:
 
@@ -526,12 +519,12 @@ the various comments together to be able to retrieve them with
 Jak to działa? Po zapisaniu widoku jako *\_design/blog/\_view/povc*
 wywołujemy go tak:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?key='\["02",0\]'
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?key='\["02",1\]'
+    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?key='\["02",0\]'
+    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?key='\["02",1\]'
 
 albo tak:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?startkey='\["02"\]'\&endkey='\["03"\]'
+    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?startkey='\["02"\]'\&endkey='\["03"\]'
 
 Ostatnie wywołanie zwraca nam post o *id* równym "02"
 i wszystkie jego komentarze w jednym żądaniu HTTP.
