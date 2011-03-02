@@ -380,23 +380,7 @@ modułu dla NodeJS, aby zapisać w bazie cytaty.
 
 W tym celu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
 
-Po sklonowaniu repozytorium *couch-client*, wymieniamy *invalid*
-plik *package.json* na *valid one*:
-
-    :::json
-    { "name": "couch-client"
-    , "description": "A Simple, Fast, and Flexible CouchDB Client"
-    , "tags": ["couchdb","http","database","nosql"]
-    , "version": "0.0.3"
-    , "author": "Tim Caswell <tim@creationix.com>"
-    , "engines": ["node >= 0.2.0"]
-    , "main" : "lib/couch-client"
-    , "directories": { "lib": "lib" }
-    , "modules": { "index": "./lib/couch-client.js" }
-    }
-
-Następnie instalujemy sam moduł, wykonując poniższe polecenie
-w głównym katalogu repozytorium:
+Sam moduł instalujemy wykonując w głównym katalogu repozytorium polecenie:
 
     npm link .
 
@@ -408,8 +392,8 @@ Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
     var text = fs.readFileSync('ls.json', 'UTF-8')
     // console.log(JSON.parse(text));
     cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
-        if (err) throw err;
-        console.log("saved %s", JSON.stringify(results));
+      if (err) throw err;
+      console.log("saved %s", JSON.stringify(results));
     });
 
 Dokumenty zapisujemy hurtem w bazie wykonując na konsoli polecenie:
