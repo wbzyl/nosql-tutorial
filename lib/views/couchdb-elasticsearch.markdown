@@ -66,6 +66,7 @@ Odpytujemy *elasticsearch*:
 Ale tak, jest dużo lepiej:
 
     curl -XGET 'http://localhost:9200/nosql_timeline/twitter/_search?q=text:redis&fields=user.name,text&pretty=true'
+    curl -XGET 'http://localhost:9200/nosql_timeline/twitter/_search?q=text:redis&fields=user.name,text,retweet_count&pretty=true'
 
 <blockquote>
  {%= image_tag "/images/elasticsearch.png", :alt => "[Elasticsearch]" %}

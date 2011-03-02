@@ -76,6 +76,8 @@ TODO:
 ## MongoDB
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
+1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
+1. {%= link_to "Sharding", "/mongodb-sharding" %}
 
 
 ## Redis
