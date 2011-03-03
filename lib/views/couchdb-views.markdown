@@ -97,47 +97,41 @@ Widok zapisujemy w bazie wykonujac polecenie:
 Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
     curl http://127.0.0.1:4000/ls/_design/app/_view/size_by_date
-    curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
-
-W odpowiedzi na pierwsze zapytanie dostajemy listę posortowaną po
-trójelementowej tablicy z datą:
-
-    :::json
     {"rows":[
-    {"key":null,"value":351}
+      {"key": null, "value": 351}
     ]}
 
-Drugie zapytanie zwraca:
-
-    :::json
+    curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
     {"rows":[
       {"key": null, "value": 19}
     ]}
 
+Co oznaczają te odpowiedzi?
+
 
 ## *Querying Options* w widokach
 
-Odpytując widoki możemy doprecyzować jakie dokumenty nas interesują,
+Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
-Poniżej, dla wygody, umieściłem ściągę
+Poniżej, dla wygody, umieściłem ściągę z opcji
 z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
 Żądania GET:
 
-* key=*keyvalue*
-* startkey=*keyvalue*
-* endkey=*keyvalue*
-* limit=*max row to return*
-* stale=ok
-* descending=true
-* skip=*number of rows to skip*
-* group=true
-* group\_level=*integer*
-* reduce=false
-* include_docs=true
-* inclusive_end=true
-* startkey_docid=*docid*
-* endkey_docid=*docid*
+* `key`=*keyvalue*
+* `startkey`=*keyvalue*
+* `endkey`=*keyvalue*
+* `limit`=*max row to return*
+* `stale`=ok
+* `descending`=true
+* `skip`=*number of rows to skip*
+* `group`=true
+* `group_level`=*integer*
+* `reduce`=false
+* `include_docs`=true
+* `inclusive_end`=true
+* `startkey_docid`=*docid*
+* `endkey_docid`=*docid*
 
 Żądania POST oraz do wbudowanego widoku *_all_docs*:
 
@@ -150,7 +144,7 @@ tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlenc
 Dla przykładu, zapytanie:
 
     curl http://localhost:4000/ls/_design/app/_view/by_tag -G \
-      --data-urlencode startkey='"w"' --data-urlencode endkey='"w\ufff0"' \
+      --data-urlencode startkey`='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
 
 zwraca:
@@ -163,12 +157,12 @@ zwraca:
       {"id":"2","key":"wszyscy","value":null}
     ]}
 
-Jeśli to zapytanie wpiszemy w przegladarce, to nie musimy stosować
+Jeśli to zapytanie wpiszemy w przeglądarce, to nie musimy stosować
 takich trików z cytowaniem. Wpisujemy po prostu:
 
     http://localhost:4000/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
 
-(Przeglądarka Chrome sama koduje zapytanie.)
+(Na przykład przeglądarka Chrome sama koduje zapytanie.)
 
 Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedzi:
 
@@ -231,7 +225,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
            "tags":["orze\u0142","dr\u00f3b"]}}
     ]}
 
-**inclusive_end** – zakres, włącznie.
+**inclusive_end** – jak wyżej, ale włącznie.
 
 Uwaga: opcji **group**, **group_level** oraz **reduce** mają sens tylko
 dla widoków z funkcją *reduce*.
@@ -322,10 +316,10 @@ Dlatego mówimy *view collation*, a nie *view sorting*.
 
 ## Różne rzeczy
 
-Widok **by_tag** zawiera funkcję reduce *_count*, która
-jest zaimplementowana w języku Erlang.
+Widok **by_tag** zawiera funkcję reduce zakodowaną jako *_count*.
+(Funkcja jest zaimplementowana w języku Erlang.)
 
-Poniżej mamy równoważny kod Javascript:
+Poniżej równoważny kod Javascript:
 
     :::javascript
     function(keys, values, rereduce) {
@@ -343,14 +337,14 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 * view compaction
 
 
-# „Złączenia” – czyli co wynika z *Collation Specification*
+# Złączenia – czyli co wynika z *Collation Specification*
 
 Przykłady poniżej pochodzą z artykułu:
 Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
 gdzie autor omawia trzy sposoby modelowania powiązań
 między postami a komentarzami:
 „How you’d go about modeling a simple blogging system with «post» and
-«comment» entities, where any blog post might have many comments.”
+«comments» entities, where any blog post might have many comments.”
 
 Dodatkowo warto zajrzeć do [CouchDB JOINs
 Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
@@ -387,6 +381,7 @@ Dokumenty zapiszemy korzystając z programu *curl*:
 
     curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:4000/blog-1/_bulk_docs
 
+<!--
 
 Do bazy dodamy widok zwracający wszystkie komentarze, posortowane po polu *author*:
 
@@ -397,11 +392,13 @@ Do bazy dodamy widok zwracający wszystkie komentarze, posortowane po polu *auth
       }
     }
 
+-->
+
 Jakie problemy stwarza takie podejście?
 
-Aby dodać komentarz do posta, należy wykonać:
+Odpowiedź: Aby dodać komentarz do posta, należy:
 
-1. pobrać dokument post z bloga-inline
+1. pobrać dokument post z bazy
 2. dodać nowy komentarz do struktury JSON
 3. umieścić uaktualniony dokument w bazie
 
@@ -412,7 +409,7 @@ the same time, some of them will get a 409 Conflict error on step 3
 
 ## Sposób 2: komentarze w osobnych dokumentach
 
-Utworzymy bazę *blog-2* w której zapiszemy poniższe dokumenty:
+Utworzymy bazę *blog-2* w której zapiszemy osobno posty i komentarze:
 
     :::json blog-2-posts.json
     {
@@ -495,6 +492,11 @@ to możemy to zrobic tak:
       {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...sorry..."}}
     ]}
 
+Jeśli teraz pobierzemy post "02", to mamy komplet.
+Dwa żądania HTTP i mamy post i wszystkie do niego komentarze.
+
+<!--
+
 Przeglądanie wszystkich komentarzy posortowanych po polu *author*
 umożliwi nam widok *_design/app/by_author*:
 
@@ -524,12 +526,13 @@ the document. With this second approach, we need two requests: a GET
 request to the post document, and a GET request to the view that
 returns all comments for the post.”
 
+-->
 
-## Using the power of view collation
+### Using the power of view collation
 
-What we'd probably want then would be a way to join the blog post and
+„What we'd probably want then would be a way to join the blog post and
 the various comments together to be able to retrieve them with
-**a single HTTP request**.
+**a single HTTP request**.”
 
 Rozważmy taki widok:
 
@@ -542,8 +545,7 @@ Rozważmy taki widok:
       }
     }
 
-Jak on działa?
-Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
+Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
 
 Teraz odpytajmy ten widok, tak:
 
@@ -600,4 +602,4 @@ albo tak:
     ]}
 
 Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
-i wszystkie jego komentarze w **jednym żądaniu HTTP**.
+i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
