@@ -46,12 +46,18 @@ Opis z bloga C. McMahona, [On _design undocumented](http://caolanmcmahon.com/po
 Przydadzą się też dwie funkcje: *JSON.stringify* i *JSON.parse*
 (*toJSON* to to samo co *JSON.stringify*).
 
+
+Coś prostego [Beauty of Code](http://beauty-of-code.de/2010/07/complex-joins-in-couchdb/),
+[Collating (not reducing) with CouchDB List Functions](http://japhr.blogspot.com/2010/02/collating-not-reducing-with-couchdb.html)
+– a gdzie przykład z reducing?
+
 Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zapytania):
 
     /db/_design/foo/_list/list-name/view-name
     curl -X GET http://localhost:5984/ls/_design/lists/_list/body/all?tag=wiedza
 
 TODO: dodać szablon mustache.
+
 
 
 ## Zliczanie słów & generator przemówień
