@@ -209,7 +209,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"2","key":[2010,1,20],"value":55}
     ]}
 
-**skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza.
+**skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
 
     http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
     {"total_rows":8,"offset":6,"rows":[
@@ -233,35 +233,55 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **inclusive_end** – zakres, włącznie.
 
+Uwaga: opcji **group**, **group_level** oraz **reduce** mają sens tylko
+dla widoków z funkcją *reduce*.
 
-**TODO**
+**group** — grupowanie, działa analogiczne do *GROUP BY* z SQL:
 
-Uwaga: opcje **group**, **group_level** oraz **reduce** można użyć tylko
-z widokami z funkcją *reduce*.
-
-**Przykład widoku z funkcją map i reduce**
-
-**group** –
-
-    curl http://localhost:4000/ls/_design/app/_view/count?group=true
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group=true
     {"rows":[
-      {"key": [2009,6,15],  "value": 1},
-      {"key": [2010,0,1],   "value": 2},
-      {"key": [2010,0,31],  "value": 1},
-      {"key": [2010,1,20],  "value": 1},
-      {"key": [2010,1,28],  "value": 2},
-      {"key": [2010,11,31], "value": 1}
+      {"key":[2009,6,15],"value":30},
+      {"key":[2010,0,1],"value":107},
+      {"key":[2010,0,31],"value":34},
+      {"key":[2010,1,20],"value":55},
+      {"key":[2010,1,28],"value":94},
+      {"key":[2010,11,31],"value":31}
     ]}
 
+**group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=1
+    {"rows":[
+      {"key":[2009],"value":30},
+      {"key":[2010],"value":321}
+    ]}
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=2
+    {"rows":[
+      {"key":[2009,6],"value":30},
+      {"key":[2010,0],"value":141},
+      {"key":[2010,1],"value":149},
+      {"key":[2010,11],"value":31}
+    ]}
 
 
 # View Collation
 
 *Collation* to kolejność zestawiania, albo schemat uporządkowania.
 
+Widoki są zestawiane/sortowane po zawartości pola *key*. Jak działa
+sortowanie zaimplementowanie w CouchDB opisano w [Collaction
+Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+
 Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
 
-W Futonie tworzymy bazę *coll*:
+W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
+
+    { "x": " " }
+    { "x": "!" }
+    ...
+    { "x": "~" }
+
+Skorzystamy z modułu *couch-client* dla NodeJS i ze skryptu:
 
     :::javascript collation.js
     var cc = require('couch-client');
@@ -273,6 +293,12 @@ W Futonie tworzymy bazę *coll*:
         console.log("saved %s", JSON.stringify(doc));
       });
     };
+
+Teraz wystarczy wykonać na konsoli:
+
+    node collation.js
+
+i dokumenty znajdą się w bazie.
 
 Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
@@ -294,24 +320,12 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## Co wynika z *Collation Specification*?
+## Różne rzeczy
 
-W CouchDB [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification)
-opisano jak sortowane są dokumenty.
+Widok **by_tag** zawiera funkcję reduce *_count*, która
+jest zaimplementowana w języku Erlang.
 
-TODO: Dodamy, korzystając z node.couchapp.js kilka widoków
-i przyjrzymy się bliżej sortowaniu.
-
-**Przykład 1.** Korzystamy z *collation sequence*
-
-    curl http://localhost:4000/ls/_design/app/_view/size_by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
-    {"total_rows":8,"offset":1,"rows":[
-      {"id":"1","key":[2010,0,1],"value":{"summary":"Szerzenie niewiedzy ..."}},
-      {"id":"4","key":[2010,0,1],"value":{"summary":"Zdanie to najwi\u0119ksza..."}},
-      {"id":"8","key":[2010,0,31],"value":{"summary":"Jedn\u0105 z cech g\u0142upstw..."}}
-    ]}
-
-**Przykład 2.** Do widoku **size_by_date** dodajemy taką oto funkcję reduce:
+Poniżej mamy równoważny kod Javascript:
 
     :::javascript
     function(keys, values, rereduce) {
@@ -322,71 +336,59 @@ i przyjrzymy się bliżej sortowaniu.
       }
     }
 
-Zapisujemy ten widok w **_design/example** pod nazwą **ucount**
-(**u** – uniwersalny) i wykonujemy go:
+W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
 
-    curl http://localhost:4000/ls/_design/app/_view/ucount?group=true
-
-
-**Przykład 3.** Korzystamy z *POST*:
-
-    curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:4000/ls/_all_docs
-    curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:4000/ls/_all_docs?include_docs=true
-
-Albo korzystając z widoku **size_by_date**:
-
-    curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:4000/ls/_design/app/_view/size_by_date
-    curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:4000/ls/_design/app/_view/size_by_date?include_docs=true
-
-Na czym polegają różnice w otrzymanych wynikach?
+* debugowanie widoków
+* view cleanup
+* view compaction
 
 
-### Różne rzeczy
+# „Złączenia” – czyli co wynika z *Collation Specification*
 
-W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API):
+Przykłady poniżej pochodzą z artykułu:
+Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
+gdzie autor omawia trzy sposoby modelowania powiązań
+między postami a komentarzami:
+„How you’d go about modeling a simple blogging system with «post» and
+«comment» entities, where any blog post might have many comments.”
 
-* Debugowanie widoków
-* View Cleanup
-* View Compaction
-
-
-
-# „Złączenia” w bazach CouchDB
-
-*Przykład:* How you'd go about modeling a simple blogging system with „post” and
-„comment” entities, where any blog post might have many comments.
-
-Przykład ten pochodzi z artykułu:
-Christopher Lenz. [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins).
-W artykule autor omawia trzy sposoby modelowania powiązań
-między postami a komentarzami.
-
-TODO: przykład do [CouchDB JOINs Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
-
+Dodatkowo warto zajrzeć do [CouchDB JOINs
+Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
 
 ## Sposób 1: komentarze inline
 
-Utworzymy bazę zawierającą kilka takich dokumentów:
+Utworzymy bazę *blog-1* zawierającą następujące dokumenty:
 
-    :::json
+    :::json blog-1.json
     {
-      "author": "jacek",
-      "title": "Rails 2",
-      "content": "Bla bla…",
-      "comments": [
-        {"author": "agatka", "content": "…"},
-        {"author": "bolek",  "content": "…"}
+      "docs": [
+        {
+          "author": "jacek",
+          "title": "Refactoring User Name",
+          "content": "Learn how to clean up your code through refactoring.",
+          "comments": [
+            {"author": "agatka", "content": "thanks!"},
+            {"author": "bolek",  "content": "Very very nice idea! Thanks for this post."}
+          ]
+        },
+        {
+          "author": "jacek",
+          "title": "Restricting Access",
+          "content": "You will learn how to lock down the site.",
+          "comments": [
+            {"author": "lolek", "content": "If God would exists it will be you... thanks for the screencast."},
+            {"author": "bolek",  "content": "Fixed...sorry for the spam."}
+          ]
+        }
       ]
     }
 
-Dane do umieścimy w bazie za pomocą skryptu
-{%= link_to 'blog-inline.rb', '/doc/couchdb/blog-inline.rb' %}.
+Dokumenty zapiszemy korzystając z programu *curl*:
 
-Widok zwracający wszystkie komentarze, posortowane po polu *author*:
+    curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:4000/blog-1/_bulk_docs
+
+
+Do bazy dodamy widok zwracający wszystkie komentarze, posortowane po polu *author*:
 
     :::javascript
     function(doc) {
@@ -395,16 +397,14 @@ Widok zwracający wszystkie komentarze, posortowane po polu *author*:
       }
     }
 
-Jakie problemy może dawać takie podejście?
+Jakie problemy stwarza takie podejście?
+
 Aby dodać komentarz do posta, należy wykonać:
 
 1. pobrać dokument post z bloga-inline
 2. dodać nowy komentarz do struktury JSON
 3. umieścić uaktualniony dokument w bazie
 
-W jakim wypadku może to być problematyczne podejście?
-
-To też może być problemem:
 „Now if you have multiple client processes adding comments at roughly
 the same time, some of them will get a 409 Conflict error on step 3
 (that's optimistic concurrency in action).”
@@ -412,39 +412,72 @@ the same time, some of them will get a 409 Conflict error on step 3
 
 ## Sposób 2: komentarze w osobnych dokumentach
 
-Utworzymy bazę zawierającą kilka postów postaci:
+Utworzymy bazę *blog-2* w której zapiszemy poniższe dokumenty:
 
-    :::json
+    :::json blog-2-posts.json
     {
-      "_id": "01",
-      "type": "post",
-      "author": "jacek",
-      "title": "Rails 3",
-      "content": "Bla bla bla …"
+      "docs": [
+        {
+          "_id": "01",
+          "type": "post",
+          "author": "jacek",
+          "title": "Refactoring User Name",
+          "content": "Learn how to clean up your code through refactoring."
+        },
+        {
+          "_id": "02",
+          "type": "post",
+          "author": "jacek",
+          "title": "Restricting Access",
+          "content": "You will learn how to lock down the site."
+        }
+      ]
     }
 
-oraz komentarzy postaci:
+oraz komentarzy:
 
-    :::json
+    :::json blog-2-comments.json
     {
-      "_id": "11",
-      "type": "comment",
-      "post": "01",
-      "author": "agatka",
-      "content": "…"
-    }
-    {
-      "_id": "12",
-      "type": "comment",
-      "post": "01",
-      "author": "bolek",
-      "content": "…"
+      "docs": [
+        {
+          "_id": "11",
+          "type": "comment",
+          "post": "01",
+          "author": "agatka",
+          "content": "thanks!"
+        },
+        {
+          "_id": "12",
+          "type": "comment",
+          "post": "01",
+          "author": "bolek",
+          "content": "Very very nice idea! Thanks for this post."
+        },
+        {
+          "_id": "13",
+          "type": "comment",
+          "post": "02",
+          "author": "lolek",
+          "content": "If God would exists it will be you... thanks for the screencast."
+        },
+        {
+          "_id": "14",
+          "type": "comment",
+          "post": "02",
+          "author": "bolek",
+          "content": "Fixed...sorry for the spam."
+        }
+      ]
     }
 
-Dane do umieścimy w bazie za pomocą skryptu
-{%= link_to 'blog-separate.rb', '/doc/couchdb/blog-separate.rb' %}.
+Dokumenty zapisujemy w bazie:
 
-Poniższy widok, wypisuje komentarze zgrupowane po polu *post*:
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:4000/blog-2/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:4000/blog-2/_bulk_docs
+
+Do bazy dodamy widok **/_design/app/by_post**.
+
+Odpytanie widoku daje komentarze zgrupowane po zawartości pola *post*:
 
     :::javascript
     function(doc) {
@@ -453,27 +486,17 @@ Poniższy widok, wypisuje komentarze zgrupowane po polu *post*:
       }
     }
 
-Widok ten po zapisaniu jako design document o nazwie **blog**
-i o view name – **by_post** wywołujemy z wiersza poleceń:
+Ale jeśli zamierzamy pobrać wszystkie komentarze do posta "02",
+to możemy to zrobic tak:
 
-    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post
-
-Albo tak, jeśli zamierzamy pobrać wszystkie komentarze do posta "02":
-
-    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post?key=\"02\"
-    {"total_rows":7,"offset":2,"rows":[
-    {"id":"13","key":"02","value":{"author":"lolek","content":"\u2026"}},
-    {"id":"14","key":"02","value":{"author":"bolek","content":"\u2026"}}
+    http://localhost:4000/blog-2/_design/app/_view/by_post?key="02"
+    {"total_rows":4,"offset":2,"rows":[
+      {"id":"13","key":"02","value":{"author":"lolek","content":"If God would exists..."}},
+      {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...sorry..."}}
     ]}
 
-Albo tak:
-
-    curl http://localhost:4000/blog-separate/_design/blog/_view/by_post?key='"02"'
-
-Ech, to cytowanie w powłoce…
-
-Przeglądanie wszystkich komentarzy posrtowanych po
-polu *author*:
+Przeglądanie wszystkich komentarzy posortowanych po polu *author*
+umożliwi nam widok *_design/app/by_author*:
 
     :::javascript
     function(doc) {
@@ -482,9 +505,15 @@ polu *author*:
       }
     }
 
-Po zapisaniu widoku pod nazwą *by_author*, wykonujemy go z wiersza poleceń:
+Po zapisaniu widoku pod nazwą *by_author* i odpytaniu dostajemy:
 
-    curl http://localhost:4000/blog-separate/_design/blog/_view/by_author
+    http://localhost:4000/blog-2/_design/app/_view/by_author
+    {"total_rows":4,"offset":0,"rows":[
+      {"id":"11","key":"agatka","value":{"post":"01","content":"thanks..."}},
+      {"id":"12","key":"bolek","value":{"post":"01","content":"Very very nice..."}},
+      {"id":"14","key":"bolek","value":{"post":"02","content":"Fixed...sorry..."}},
+      {"id":"13","key":"lolek","value":{"post":"02","content":"If God would exists..."}}
+    ]}
 
 Przechowywanie osobno postów i komentarzy do nich też ma wady:
 
@@ -496,11 +525,13 @@ request to the post document, and a GET request to the view that
 returns all comments for the post.”
 
 
-## Optymizacja: using the power of view collation
+## Using the power of view collation
 
 What we'd probably want then would be a way to join the blog post and
 the various comments together to be able to retrieve them with
 **a single HTTP request**.
+
+Rozważmy taki widok:
 
     :::javascript
     function(doc) {
@@ -511,15 +542,62 @@ the various comments together to be able to retrieve them with
       }
     }
 
-Jak to działa? Po zapisaniu widoku jako *\_design/blog/\_view/povc*
-wywołujemy go tak:
+Jak on działa?
+Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
 
-    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?key='\["02",0\]'
-    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?key='\["02",1\]'
+Teraz odpytajmy ten widok, tak:
+
+    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",0]
+    {"total_rows":6,"offset":3,"rows":[
+      {"id":"02","key":["02",0],
+       "value":{"_id":"02","_rev":"1-6844...",
+          "type":"post",
+          "author":"jacek",
+          "title":"Restricting Access",
+          "content":"You will learn how to lock down the site."}}
+    ]}
 
 albo tak:
 
-    curl http://localhost:4000/blog-separate/_design/blog/_view/povc?startkey='\["02"\]'\&endkey='\["03"\]'
+    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",1]
+    {"total_rows":6,"offset":4,"rows":[
+      {"id":"13","key":["02",1],
+       "value":{"_id":"13","_rev":"1-15dc...",
+       "type":"comment",
+       "post":"02",
+       "author":"lolek",
+       "content":"If God would exists...."}},
+      {"id":"14","key":["02",1],
+       "value":{"_id":"14","_rev":"1-676a...",
+       "type":"comment",
+       "post":"02",
+       "author":"bolek",
+       "content":"Fixed...sorry..."}}
+    ]}
 
-Ostatnie wywołanie zwraca nam post o *id* równym "02"
-i wszystkie jego komentarze w jednym żądaniu HTTP.
+albo tak:
+
+    http://localhost:4000/blog-2/_design/app/_view/povc?startkey=["02"]&endkey=["03"]
+    {"total_rows":6,"offset":3,"rows":[
+      {"id":"02","key":["02",0],
+       "value":{"_id":"02","_rev":"1-6844...",
+       "type":"post",
+       "author":"jacek",
+       "title":"Restricting Access",
+       "content":"You will learn how to lock down the site."}},
+      {"id":"13","key":["02",1],
+       "value":{"_id":"13","_rev":"1-15dc...",
+       "type":"comment",
+       "post":"02",
+       "author":"lolek",
+       "content":"If God would exists..."}},
+      {"id":"14","key":["02",1],
+       "value":{"_id":"14","_rev":"1-676a...",
+       "type":"comment",
+       "post":"02",
+       "author":"bolek",
+       "content":"Fixed...sorry..."}}
+    ]}
+
+Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
+i wszystkie jego komentarze w **jednym żądaniu HTTP**.
