@@ -1,9 +1,13 @@
 #### {% title("Funkcje Lists") %}
 
-Funkcja *getRow()* jest opisana w
-[render.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/render.js?view=markup).
+„Just as show functions convert documents to arbitrary output formats,
+CouchDB list functions allow you to render the output of view queries
+in any format.”
 
-**Przykład:** Widok *all* zostanie użyty z list function *body* poniżej:
+Dla przykładu, rozważmy widok *all* i funkcje list *body*:
+
+
+TODO: użyć node.couchapp.js:
 
     :::json
     {
@@ -12,36 +16,42 @@ Funkcja *getRow()* jest opisana w
           "map": "function(doc) { emit(null, doc); }"
         }
       },
-      "lists": {
-        "body": "function(head, req) {
-           var row;
-           while (row=getRow()) {
-             send(row.value.body + '\\n');
-           }
-        }"
-      }
-    }
 
-Powyższy obiekt JSON wklejamy do pliku *list.json* i zapisujemy go w bazie *lec*:
+Funkcja list:
 
-    curl -X PUT "http://localhost:5984/lec/_design/lists" \
-       -H "Content-Type: application/json" -d @list.json
+    "lists": {
+      "body": "function(head, req) {
+         log(head); // info o widoku
+         log(req); // już było, ale wkleić poniżej i omówić
+         var row;
+         send( jakiś nagłówek );
+         while (row=getRow()) {
+           send(row.value.body + '\\n');
 
-Teraz poniższe wywołanie zwaraca treść cytatów:
+     }
 
-<pre>curl -X GET http://localhost:5984/lec/_design/lists/_list<b>/body/all</b>
-    => Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.
-       Wszyscy chcą naszego dobra. Nie dajcie go sobie zabrać.
-       ...
-</pre>
+Opis z bloga C. McMahona, [On _design undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented):
+
+* **start** – sets the response headers to send from a list
+  function. These are sent on the first call to *getRow()*. Therefore
+  you cannot call start after *getRow()*, even if you only send data
+  after getting all rows.
+* **send** – sets a chunk of response data to be sent on the next call
+  to *getRow()*, or at the end of the list functions execution.
+* **getRow** – returns the next row from the view or null if there are
+  no more rows. On the first call to get row, the headers set by
+  *start()* are sent, on subsequent calls the data chunks set by *send()*
+  are sent.
+
+Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zapytania):
+
+    /db/_design/foo/_list/list-name/view-name
+    curl -X GET http://localhost:5984/ls/_design/lists/_list/body/all?tag=wiedza
+
+TODO: dodać szablon mustache.
 
 
-# Przykłady
-
-Zaczynamy od klasycznego przykładów: zliczanie słów i generowania przemówień.
-
-
-## TODO: Word count & Markov
+## Zliczanie słów & generator przemówień
 
 Omówić przykład z katalogu *couch/word-count*.
 
@@ -56,9 +66,11 @@ Omówić przykład z katalogu *couch/word-count*.
 Pobieramy [źródła CouchDB](http://couchdb.apache.org/community/code.html)
 i w katalogu *share/www/script/test* znajdziemy dużo prostych przykładów:
 
-* show_documents.js
-* list_views.js
+* *show_documents.js*
+* *list_views.js*
 
 Zobacz też:
 
 * [NOSQL Databases for Web CRUD (CouchDB) - Shows/Views](http://java.dzone.com/articles/nosql-databases-web-crud)
+* [render.js](http://svn.apache.org/viewvc/couchdb/trunk/share/server/render.js?view=markup)
+  (zawiera opis funkcji *getRow()*)
