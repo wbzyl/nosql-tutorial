@@ -534,7 +534,9 @@ returns all comments for the post.”
 the various comments together to be able to retrieve them with
 **a single HTTP request**.”
 
-Rozważmy taki widok:
+Rozważmy taki widok
+(TODO: key *doc* zamienić na *null* i skorzystać z *include_docs=true*;
+jest OK bo nie ma funkcji reduce):
 
     :::javascript
     function(doc) {
