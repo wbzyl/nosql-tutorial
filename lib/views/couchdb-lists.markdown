@@ -43,6 +43,9 @@ Opis z bloga C. McMahona, [On _design undocumented](http://caolanmcmahon.com/po
   *start()* are sent, on subsequent calls the data chunks set by *send()*
   are sent.
 
+Przydadzą się też dwie funkcje: *JSON.stringify* i *JSON.parse*
+(*toJSON* to to samo co *JSON.stringify*).
+
 Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zapytania):
 
     /db/_design/foo/_list/list-name/view-name
