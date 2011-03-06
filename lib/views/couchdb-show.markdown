@@ -262,7 +262,7 @@ z *maye.json* opisany powyżej:
 
 Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie:
 
-    couchapp push aye.js http://wbzyl:sekret@localhost:4000/ls
+    couchapp push aye.js http://User:Pass@localhost:4000/ls
     Preparing.
     Serializing.
     PUT http://wbzyl:******@localhost:4000/ls/_design/default
@@ -326,7 +326,7 @@ Plik z wąsatym szablonem *quotation.html.mustache*:
       <head>
         <meta charset=utf-8>
         <link rel="stylesheet" href="/ls/_design/default/application.css">
-        <title>Cytaty Stanisława J. Leca &  Hugo D. Steinhausa</title>
+        <title>Cytaty Stanisława J. Leca i Hugo D. Steinhausa</title>
       </head>
     <body>
       <p>{{ quotation }}</p>
@@ -365,7 +365,7 @@ Na koniec piszemy plik *ls.js* dla programu *couchapp*:
 
 I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *ls*:
 
-    couchapp push ls.js http://wbzyl:sekret@localhost:4000/ls
+    couchapp push ls.js http://User:Pass@localhost:4000/ls
 
 Na deser oglądamy jak to działa, tak:
 
