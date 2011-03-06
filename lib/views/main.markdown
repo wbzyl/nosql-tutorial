@@ -103,8 +103,9 @@ TODO:
 
 # Referaty
 
-* Elasticsearch – howto wyszukiwania (np. co to są *facets*),
+* Elasticsearch – jak wyszukiwać (np. co to są *facets*),
   import bazy do elasticsearch, połączenie z CouchDB (przykład)
+  (<i>T. Widanka</i>, <i>K. Pluszczewicz</i>, <i>B. Rożek</i>)
 * [Neo4j](http://neo4j.org/) – instalacja na Sigmie, przykład objaśniający
   ideę grafowych baz danych (diagramy, [narzędzie do rysowania](https://cacoo.com/))
   (<i>M. Kaliszuk, M. Kaszałowicz, M. Tupacz, M. Maszkiewicz</i>)
