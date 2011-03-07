@@ -1,18 +1,23 @@
 #### {% title "NodeJS i moduł node.couchapp.js" %}
 
-Wpisując kod Javascript w postaci napisu, korzystając z programu
-curl do zapisywania takich napisów – takie podejście ma tylko jedną
-zaletę, a poza tym same wady.
-Jedyną zaletą takiego podejścia jest to, że każdy potrafi to zrobić.
+Do tej pory, aby umieścić dokument w bazie używaliśmy
+programu *curl*. W przypadku design documents, wymagało
+to od nas uwagi przy zapisywaniu kodu Javascript
+w napisach – trudno jest poprawnie wpisać zagnieżdżone napisy.
 
-Programiści wolą postępować inaczej.
-Poniżej, do zapisywania w bazie funkcji show,
-a później też innych funkcji, skorzystamy z modułu
-NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+Ale takie podejście ma dużą zaletę – takie przykłady łatwo jest
+przeklikać na terminal i uruchomić.
+Jednak gdy sami mamy taki przykład przgotować, lepiej
+jest skorzystać z metody która umożliwia wpisywanie
+kodu bezpośrednio.
+
+Poniżej opisuję jak to można zrobić korzystając z modułu
+NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js).
 Wadą tego rozwiązania jest to, że wymaga umiejętności
-programowania w Javascripcie.
+programowania w Javascripcie.
 
-Moduł *node.couchapp.js* instalujemy, tak jak to opisano w pliku *README.md*:
+Zaczynamy od instalacji modułu według wskazówek
+z pliku [README](https://github.com/mikeal/node.couchapp.js/blob/master/README.md):
 
     git clone git://github.com/mikeal/node.couchapp.js.git
     cd node.couchapp.js
@@ -29,8 +34,10 @@ Sprawdzamy instalację modułu próbując uruchomic program *couchapp*:
       sync   : Push app then watch local files for changes.
       boiler : Create a boiler project.
 
-Teraz wzorując się na przykładzie z *README.md* kodujemy przykład
-z *maye.json* opisany powyżej:
+
+## Przykład użycia
+
+Teraz wzorując się na przykładzie z *README.md* kodujemy przykład z *maye.json*:
 
     :::javascript aye.js
     var couchapp = require('couchapp');
@@ -41,7 +48,6 @@ z *maye.json* opisany powyżej:
       , lists: {}
       , shows: {}
     }
-
     module.exports = ddoc;
 
     ddoc.shows.aye = function(doc, req) {
@@ -51,20 +57,15 @@ z *maye.json* opisany powyżej:
       }
     }
 
-Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie:
+Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazie
+(swoje dane uwierzytelniające wpisujemy tylko gdy zabezpieczyliśmy dostęp do CouchDB hasłem):
 
-    couchapp push aye.js http://User:Pass@localhost:4000/ls
+    couchapp push aye.js http://User:Pass@localhost:5984/ls
     Preparing.
     Serializing.
-    PUT http://wbzyl:******@localhost:4000/ls/_design/default
+    PUT http://wbzyl:******@localhost:5984/ls/_design/default
     Finished push. 2-7068bcbdcec03650a8dee623e5afe1a1
 
-Powtarzamy żądanie z parametrem::
+Sprawdzamy, czy wszystkie polecenia wykonane zostały bez błędu:
 
-    curl -v http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
-
-
-**Argumenty za a nawet przeciw:**
-Pisanie funkcji *shows* za bardzo przypomina programowanie CGI,
-przez co tutaj rozumiem wpisywanie kodu HTML w kodzie Javascript.
-Przydałyby się jakieś szablony.
+    curl -v http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
