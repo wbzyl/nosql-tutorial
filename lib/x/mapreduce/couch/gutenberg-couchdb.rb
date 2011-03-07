@@ -97,13 +97,14 @@ options = OptparseGutenberg.parse(ARGV)
 #pp options
 
 if ARGV.length.odd? || ARGV.length == 0
-  puts "Pomoc: gutenberg.rb --help"
+  puts "Pomoc: ./gutenberg-couchdb.rb --help"
   exit
 end
 
 # the Gutenberg part
 
-gutenberg_files = 'http://www.gutenberg.org/files'
+#gutenberg_files = 'http://www.gutenberg.org/files'
+gutenberg_files = 'http://www.gutenberg.org/cache/epub'
 
 books = Hash[*ARGV]
 
