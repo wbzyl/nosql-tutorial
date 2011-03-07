@@ -1,1 +1,1 @@
-track=elasticsearch,couchdb,mongodb,redis,neo4j,hadoop
+track=elasticsearch,couchbase,couchdb,mongodb,redis,neo4j,hadoop

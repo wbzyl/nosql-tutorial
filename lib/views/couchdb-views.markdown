@@ -1,351 +1,325 @@
 #### {% title "Views ≡ Map + Reduce" %}
 
-<blockquote>
- {%= image_tag "/images/carlos_castaneda.jpg", :alt => "[Carlos Castaneda]" %}
- <p>
-  Niektórzy czarownicy, wyjaśnił, są gawędziarzami.
-  Snucie historii to dla nich nie tylko wysyłanie
-  zwiadowców badających granice ich percepcji,
-  ale także sposób na osiągnięcie doskonałości,
-  zdobycia mocy i dotarcia do ducha.
- </p>
- <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
-</blockquote>
+CouchDB jest dokumentową, a nie relacyjną bazą danych. W relacyjnych
+bazach zapisujemy „rekordy”, a w bazach dokumentowych – „obiekty”.
+Obiekty mogą zawierać inne obiekty i tablice. Obiekty bardziej niż
+rekordy nadają się do modelowania złożonych hierarchicznych związków.
 
-Zapytania SQL, takie jak to:
+CouchDB jest bezschematową bazą danych. W takich bazach
+zapytania SQL, na przykład takie:
 
+    :::sql
     SELECT name, email, fax FROM contacts
 
-nie mają sensu dla dokumentowych baz danych.
+nie mają sensu, ponieważ takie zapytanie zakłada, że wszystkie dokumenty
+*contacts* muszą zawierać pola *name*, *email* i *fax*.
+Dokumenty zapisywane w CouchDB nie muszą być zbudowane według
+jednego schematu.
 
-Dlaczego? Rozważyć wartości NULL. Rekordy w tabelach SQL a dokumenty w
-dokumentowych bazach danych.
+Brak schematu oznacza, że niepotrzebne będą migracje.
+Jest to istotne w wypadku dużych baz, dla których migracje
+są kosztowne, albo niemożliwe.
 
-W dokumentowych bazach danych zamiast pisać zapytania
-piszemy widoki. Cytat:
+{%= image_tag "/images/couch-mapreduce.png", :alt => "[CouchDB MapReduce]" %}
+(źródło *@jrecursive*)
+
+W dokumentowych bazach danych zamiast zapytań mamy widoki:
 „Views are the primary tool used for querying and reporting on CouchDB
-documents. There are two different kinds of views: permanent and
-temporary views.”
+documents.”
 
-Widoki są zapisywane w bazie jako specjalne **design documents**.
-Widoki są powielane z zwykłymi dokumentami.
+Widoki zapisujemy w tak zwanych *design documents*. Design documents
+są zwykłymi dokumentami. Tym co je wyróżnia jest identyfikator
+zaczynający się od **_design**, na przykład *_design/app*.
+Widoki są zapisywane w polu *views* dokumentów projektowych.
 
-
-## „Myśli nieuczesane”
-
-Widoki będziemy ćwiczyć na przykładzie dokumentowej bazy danych
-zawierającej kilkanaście aforyzmów Stanisława J. Leca
-oraz Hugo Steinhausa:
-
-Aforyzmy wybrałem ze
-[strony wikipedi](http://pl.wikiquote.org/wiki/Stanis%C5%82aw_Jerzy_Lec)
-poświęconej S. J. Lecowi oraz ze
-[strony wikipedi](http://pl.wikiquote.org/wiki/Hugo_Steinhaus) —
-H. Steinhausowi.
-
-Oto przykładowy dokument:
+Widoki przećwiczymy na przykładzie dokumentowej bazy danych
+zawierającej aforyzmy Stanisława J. Leca oraz Hugo Steinhausa
+(te same co w rozdziale z *Funkcje Show*).
+Dla przypomnienia, format przykładowego dokumentu:
 
     :::json
     {
       "_id": "1",
       "created_at": [2010, 0, 31],
-      "body": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
-      "tag": ["wiedza","nauka","wszechświat"]
+      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
+      "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Zaczynamy od utworzenia bazy:
+tak tworzymy bazę:
 
-    curl -X PUT http://wbzyl:sekret@127.0.0.1:5984/lec
+    curl -X PUT http://Admin:Pass@127.0.0.1:5984/lec
 
-i sprawdzenia w Futonie czy baza została rzeczywiście utworzona:
+a tak zapisujemy hurtem wszystkie cytaty:
 
-    http://127.0.0.1:5984/_utils
+    curl -X POST -d @ls.json http://127.0.0.1:5984/ls/_bulk_docs
 
-Dokumenty w zapiszemy hurtowo w bazie:
-
-    curl -X POST -d @lec.json http://127.0.0.1:5984/lec/_bulk_docs
-
-Tutaj można pobrać plik {%= link_to "lec.json", "/doc/couchdb/lec.json" %}
-użyty w powyższym poleceniu.
+{%= link_to "Tutaj", "/doc/json/ls.json" %} można pobrać plik *ls.json* użyty powyżej.
 
 
 ## Widoki w CouchDB API
 
-W CouchDB mamy dwa rodzaje widoków:
+Dla przypomnienia, w CouchDB są dwa rodzaje widoków:
 
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Pierwszy widok który uruchomimy, to **domyślny** widok tymczasowy:
+Zaczniemy od zapisania w bazie dwóch widoków: *size_by_date* i *by_tag*.
+W tym celu skorzystam z modułu node *node.couchapp.js*:
 
-    :::javascript
-    function(doc) {
-      emit(null, doc);
+    :::javascript ls_views.js
+    var couchapp = require('couchapp');
+    ddoc = {
+        _id: '_design/app'
+      , views: {}
+      , lists: {}
+      , shows: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.size_by_date = {
+      map: function(doc) {
+        emit(doc.created_at, doc.quotation.length);
+      },
+      reduce: "_sum"
+    }
+    ddoc.views.by_tag = {
+      map: function(doc) {
+        for (var k in doc.tags)
+          emit(doc.tags[k], null);
+      },
+      reduce: "_count"
     }
 
-Znajdziemy go w Futonie po kliknięciu w link do bazy *lec*, a następnie
-wybranie *Temporary view* z listy rozwijanej *View* (prawy górny róg).
-Widok uruchamiamy klikając w przycisk *Run*.
+Widok zapisujemy w bazie wykonujac polecenie:
 
-Widoki tymczasowe generowane są na bieżąco. Ponieważ generowanie
-widoku może trwać długo, więc zwykle korzystamy z widoków
-permanentnych, które generowane są tylko raz, a następnie są tylko
-uaktualniane. Uaktualnienie widoku permanentnego zajmuje mało czasu.
+    couchapp push ls_views.js http://Admin:Pass@localhost:4000/ls
 
-Utwórzmy nowy widok, podmieniając kod domyślnego widoku na:
+Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
-    :::javascript
-    function(doc) {
-      if(doc.created_at && doc.body) {
-        emit(doc.created_at, {summary:doc.body.substring(0,20) + "..."});
-      }
-    }
-
-Sprawdźmy, czy widok działa uruchamiając go.
-Jeśli widok działał, to zamieńmy go na widok permanentny.
-
-Widok permanentny utworzymy klikając w przycisk *Save As…*
-i wpisując w okienku *Save View As…* **example** i **by_date**:
-
-<pre>Design Document:  _design/<b>example</b>
-      View Name:  <b>by_date</b>
-</pre>
-
-Widoki możemy też wykonywać z wiersza poleceń,
-dla przykładu:
-
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_date
-
-Ale dla widoków tymczasowych polecenie to jest inne
-(*POST* zamiast *GET*):
-
-    curl -X POST http://127.0.0.1:5984/lec/_temp_view \
-      -d '{"map":"function(doc) { emit(null, doc); }"}'
-
-Z linii poleceń możemy też wstawiać do bazy widoki permanentne,
-dla przykładu:
-
-    curl -X PUT http://wbzyl:sekret@127.0.0.1:5984/lec/_design/example -d @views.json
-
-gdzie użyty powyżej plik *views.json* ma następującą zawartość:
-
-    :::json
-    {
-      "language": "javascript",
-      "views": {
-        "by_date": {
-          "map": "function(doc) {
-                     emit(doc.created_at, doc.body);
-                 }"
-        },
-        "by_body": {
-          "map": "function(doc) {
-                      emit(doc.body, doc.created_at);
-                 }"
-        }
-      }
-    }
-
-Zauważmy, że widok może zawierać kilka funkcji *map*.
-
-Uwaga: wcześniej należy usunąć z bazy już istniejący widok *by_date*.
-
-Skorzystajmy z widoku *example*. Zaczynamy od *by_date*:
-
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_date
-
-W odpowiedzi zwracany jest JSON:
-
-    :::json
-    {"total_rows":8,"offset":0,"rows":[
-    {"id":"3","key":[2009,6,15],"value":"Za du\u017co or\u0142\u00f3w, za ma\u0142o drobiu."},
-    ....
-    {"id":"5","key":[2010,11,31],"value":"Znasz has\u0142o do swojego wn\u0119trza?"}
+    curl http://127.0.0.1:4000/ls/_design/app/_view/size_by_date
+    {"rows":[
+      {"key": null, "value": 351}
     ]}
 
-i *by_body*:
+    curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
+    {"rows":[
+      {"key": null, "value": 19}
+    ]}
 
-    curl http://127.0.0.1:5984/lec/_design/example/_view/by_body
-
-CouchDB dodaje pole *id* do pól *key* i *value*.
-Pole *id* przydaje się przy tworzeniu linków do zasobów.
+Co oznaczają te odpowiedzi?
 
 
 ## *Querying Options* w widokach
 
-Argumenty w zapytaniach URI:
-[HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
+Odpytując widoki możemy doprecyzować co nas interesuje,
+dopisując do zapytania *querying options*.
+Poniżej, dla wygody, umieściłem ściągę z opcji
+z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
-Dla żądań GET:
+Żądania GET:
 
-* key=*keyvalue*
-* startkey=*keyvalue*
-* endkey=*keyvalue*
-* limit=*max row to return*
-* stale=ok
-* descending=true
-* skip=*number of rows to skip*
-* group=true
-* group\_level=*integer*
-* reduce=false
-* include_docs=true
-* inclusive_end=true
-* startkey_docid=*docid*
-* endkey_docid=*docid*
+* `key`=*keyvalue*
+* `startkey`=*keyvalue*
+* `endkey`=*keyvalue*
+* `limit`=*max row to return*
+* `stale`=ok
+* `descending`=true
+* `skip`=*number of rows to skip*
+* `group`=true
+* `group_level`=*integer*
+* `reduce`=false
+* `include_docs`=true
+* `inclusive_end`=true
+* `startkey_docid`=*docid*
+* `endkey_docid`=*docid*
 
-Dla żądań POST oraz do wbudowanego widoku *_all_docs*:
+Żądania POST oraz do wbudowanego widoku *_all_docs*:
 
 * {"keys": ["key1", "key2", ...]} – tylko wyszczególnione wiersze widoku
 
-
-### Przykłady użycia argumentów w żądaniach
-
-Uwaga: parametry zapytań muszą być odpowiedni cytowane/kodowane.
+Uwaga: parametry zapytań muszą być odpowiednio cytowane i kodowane.
 Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
-tę uciążliwość. Należy skorzystać z opcji `-G` oraz `--data-urlencode`.
-Przykład:
+tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlencode`.
 
-    curl -X GET http://localhost:5984/books/_design/default/_view/authors -G \
-      --data-urlencode startkey='"j"' --data-urlencode endkey='"j\ufff0"' \
+Dla przykładu, zapytanie:
+
+    curl http://localhost:4000/ls/_design/app/_view/by_tag -G \
+      --data-urlencode startkey`='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
 
-TODO: do poleceń poniżej dopisać nowe wersje z urlencode.
+zwraca:
 
-**key**: dokument(y) powiązany(e) z kluczem:
-
-    curl http://localhost:5984/lec/_design/example/_view/by_date?key='\[2010,0,1\]'
-
-**startkey**: dokumenty od klucza:
-
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010,0,31\]'
-
-**endkey**: dokumenty do klucza (wyłącznie):
-
-    curl http://localhost:5984/lec/_design/example/_view/by_date?endkey='\[2010,0,31\]'
-
-**limit**: co najwyżej tyle dokumentów zaczynając od podanego klucza:
-
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010,0,31\]'\&limit=2
-
-**skip**: pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
-
-Zostały jeszcze boolowskie: **include_docs** oraz **inclusive_end**
-
-Uwaga: **group**, **group_level** i **reduce**  można użyć tylko
-z widokami z funkcją *reduce*.
-
-**Przykład widoku z funkcją map i reduce**
-
-Funkcja map:
-
-    :::javascript
-    function(doc) {
-      if(doc.created_at && doc.body) {
-        emit(doc.created_at, 1);
-      }
-    }
-
-Funkcja reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      return sum(values);
-    }
-
-Zapiszmy ten widok w **_design/example** jako **count** i wykonajmy
-go z wiersza poleceń:
-
-    curl http://localhost:5984/lec/_design/example/_view/count
-    {"rows":[
-      {"key": null, "value": 8}
+    :::json
+    {"total_rows":19,"offset":14,"rows":[
+      {"id":"1","key":"wiedza","value":null},
+      {"id":"5","key":"wn\u0119trze","value":null},
+      {"id":"1","key":"wszech\u015bwiat","value":null},
+      {"id":"2","key":"wszyscy","value":null}
     ]}
 
-**group**:
+Jeśli to zapytanie wpiszemy w przeglądarce, to nie musimy stosować
+takich trików z cytowaniem. Wpisujemy po prostu:
 
-    curl http://localhost:5984/lec/_design/example/_view/count?group=true
-    {"rows":[
-      {"key": [2009,6,15],  "value": 1},
-      {"key": [2010,0,1],   "value": 2},
-      {"key": [2010,0,31],  "value": 1},
-      {"key": [2010,1,20],  "value": 1},
-      {"key": [2010,1,28],  "value": 2},
-      {"key": [2010,11,31], "value": 1}
-    ]}
+    http://localhost:4000/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
 
+(Na przykład przeglądarka Chrome sama koduje zapytanie.)
 
-## Sortowanie – *view collation*
+Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedzi:
 
-Poniższy przykład, napisany w języku Ruby,
-pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+**key** — dokumenty powiązane z podanym kluczem:
 
-Zaczynamy od instalacji gemów użytych w przykładzie:
-
-    gem install rest-client json
-
-Następnie za pomocą poniższego skryptu tworzymy bazę *collator* (ruby 1.9.2):
-
-    :::ruby collseq.rb
-    require 'restclient'
-    require 'json'
-
-    # jeśli Admin Party!
-    DB="http://127.0.0.1:4000/collator"
-    # w przeciwnym wypadku wpisujemy swoje dane
-    # DB="http://User:Pass@127.0.0.1:4000/collator"
-    RestClient.delete DB rescue nil
-    RestClient.put "#{DB}",""
-    (32..126).each do |c|
-      RestClient.put "#{DB}/#{c.to_s(16)}", {"x"=>c.chr}.to_json
-    end
-
-    RestClient.put "#{DB}/_design/test", <<EOS
-    {
-      "views":{
-        "one":{
-          "map":"function (doc) { emit(doc.x,null); }"
-        }
-      }
-    }
-    EOS
-    puts RestClient.get("#{DB}/_design/test/_view/one")
-
-Kilka zapytań do bazy. Wpisujemy na konsoli:
-
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=4
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&limit=2\&descending=true
-    curl -X GET http://localhost:4000/collator/_all_docs?startkey=\"64\"\&endkey=\"68\"
-
-W przeglądarce powyższe URL-e wpisujemy bez „cytowania“:
-
-    http://localhost:4000/collator/_all_docs?startkey="64"&limit=4
-    http://localhost:4000/collator/_all_docs?startkey="64"&limit=2&descending=true
-    http://localhost:4000/collator/_all_docs?startkey="64"&endkey="68"
-
-Dokumentacja [rest-client](https://github.com/archiloque/rest-client) + konsola Rubiego.
-Przykład do wpisania na konsoli *irb*:
-
-    :::ruby
-    DB = "http://localhost:4000/lz"
-    RestClient.get DB
-    response = RestClient.get "#{DB}/led-zeppelin-i"
-    response.code
-    response.headers
-    response.cookies
-
-
-### Ciekawe zapytania
-
-**Przykład 1.** Korzystamy z *collation sequence*
-(kolejności zestawiania, schematu uporządkowania).
-
-    curl http://localhost:5984/lec/_design/example/_view/by_date?startkey='\[2010\]'\&endkey='\[2010,1\]'
+    http://localhost:4000/ls/_design/app/_view/size_by_date?key=[2010,0,1]&reduce=false
     {"total_rows":8,"offset":1,"rows":[
-      {"id":"1","key":[2010,0,1],"value":{"summary":"Szerzenie niewiedzy ..."}},
-      {"id":"4","key":[2010,0,1],"value":{"summary":"Zdanie to najwi\u0119ksza..."}},
-      {"id":"8","key":[2010,0,31],"value":{"summary":"Jedn\u0105 z cech g\u0142upstw..."}}
+      {"id":"1","key":[2010,0,1],"value":70},
+      {"id":"4","key":[2010,0,1],"value":37}
     ]}
 
-**Przykład 2.** Do widoku **by_date** dodajemy taką oto funkcję reduce:
+**startkey** — dokumenty od klucza:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&reduce=false
+    {"total_rows":8,"offset":3,"rows":[
+      {"id":"8","key":[2010,0,31],"value":34},
+      {"id":"2","key":[2010,1,20],"value":55},
+      {"id":"6","key":[2010,1,28],"value":27},
+      {"id":"7","key":[2010,1,28],"value":67},
+      {"id":"5","key":[2010,11,31],"value":31}
+    ]}
+
+**endkey** — dokumenty do klucza (wyłącznie):
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010,0,31]&reduce=false
+    {"total_rows":8,"offset":0,"rows":[
+      {"id":"3","key":[2009,6,15],"value":30},
+      {"id":"1","key":[2010,0,1],"value":70},
+      {"id":"4","key":[2010,0,1],"value":37},
+      {"id":"8","key":[2010,0,31],"value":34}
+    ]}
+
+**limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&limit=2&reduce=false
+    {"total_rows":8,"offset":3,"rows":[
+      {"id":"8","key":[2010,0,31],"value":34},
+      {"id":"2","key":[2010,1,20],"value":55}
+    ]}
+
+**skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
+    {"total_rows":8,"offset":6,"rows":[
+      {"id":"7","key":[2010,1,28],"value":67},
+      {"id":"5","key":[2010,11,31],"value":31}
+    ]}
+
+**include_docs** – dołącz dokumenty do odpowiedzi
+(jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010]&include_docs=true&reduce=false
+    {"total_rows":8,"offset":0,"rows":[
+       {"id":"3","key":[2009,6,15],"value":30,
+         "doc":{
+           "_id":"3",
+           "_rev":"5-c460...",
+           "created_at":[2009,6,15],
+           "quotation":"Za du\u017co or\u0142\u00f3w, za ma\u0142o drobiu.",
+           "tags":["orze\u0142","dr\u00f3b"]}}
+    ]}
+
+**inclusive_end** – jak wyżej, ale włącznie.
+
+Uwaga: opcji **group**, **group_level** oraz **reduce** mają sens tylko
+dla widoków z funkcją *reduce*.
+
+**group** — grupowanie, działa analogiczne do *GROUP BY* z SQL:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group=true
+    {"rows":[
+      {"key":[2009,6,15],"value":30},
+      {"key":[2010,0,1],"value":107},
+      {"key":[2010,0,31],"value":34},
+      {"key":[2010,1,20],"value":55},
+      {"key":[2010,1,28],"value":94},
+      {"key":[2010,11,31],"value":31}
+    ]}
+
+**group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
+
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=1
+    {"rows":[
+      {"key":[2009],"value":30},
+      {"key":[2010],"value":321}
+    ]}
+    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=2
+    {"rows":[
+      {"key":[2009,6],"value":30},
+      {"key":[2010,0],"value":141},
+      {"key":[2010,1],"value":149},
+      {"key":[2010,11],"value":31}
+    ]}
+
+
+# View Collation
+
+*Collation* to kolejność zestawiania, albo schemat uporządkowania.
+
+Widoki są zestawiane/sortowane po zawartości pola *key*. Jak działa
+sortowanie zaimplementowanie w CouchDB opisano w [Collaction
+Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+
+Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+
+W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
+
+    { "x": " " }
+    { "x": "!" }
+    ...
+    { "x": "~" }
+
+Skorzystamy z modułu *couch-client* dla NodeJS i ze skryptu:
+
+    :::javascript collation.js
+    var cc = require('couch-client');
+    var coll = cc("http://localhost:4000/coll");
+
+    for (var i=32; i<=126; i++) {
+      coll.save({"x": String.fromCharCode(i)}, function(err, doc) {
+        if (err) throw err;
+        console.log("saved %s", JSON.stringify(doc));
+      });
+    };
+
+Teraz wystarczy wykonać na konsoli:
+
+    node collation.js
+
+i dokumenty znajdą się w bazie.
+
+Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
+
+    http://localhost:4000/coll/_all_docs?startkey="64"&limit=4
+    http://localhost:4000/coll/_all_docs?startkey="64"&limit=2&descending=true
+    http://localhost:4000/coll/_all_docs?startkey="64"&endkey="68"
+
+Jeśli odpytujemy widok (tymczasowy na konsoli; konieczne są uprawnienia Admina):
+
+    curl -X POST http://Admin:Pass@localhost:4000/coll/_temp_view \
+      -H "Content-Type: application/json" -d '
+    {
+      "map": "function(doc) { emit(doc.x); }"
+    }'
+
+to zwracana lista dokumentów jest posortowana po kluczu (tutaj, po *doc.x*).
+Porządek dokumentów określony jest przez
+[unicode collation algorithm](http://www.unicode.org/reports/tr10/).
+Dlatego mówimy *view collation*, a nie *view sorting*.
+
+
+## Różne rzeczy
+
+Widok **by_tag** zawiera funkcję reduce zakodowaną jako *_count*.
+(Funkcja jest zaimplementowana w języku Erlang.)
+
+Poniżej równoważny kod Javascript:
 
     :::javascript
     function(keys, values, rereduce) {
@@ -356,68 +330,60 @@ Przykład do wpisania na konsoli *irb*:
       }
     }
 
-Zapisujemy ten widok w **_design/example** pod nazwą **ucount**
-(**u** – uniwersalny) i wykonujemy go:
+W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
 
-    curl http://localhost:5984/lec/_design/example/_view/ucount?group=true
-
-
-**Przykład 3.** Korzystamy z *POST*:
-
-    curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/lec/_all_docs
-    curl -X POST -d '{"keys":["1","8"]}' \
-      http://localhost:5984/lec/_all_docs?include_docs=true
-
-Albo korzystając z widoku **by_date**:
-
-    curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/lec/_design/example/_view/by_date
-    curl -X POST -d '{"keys":[[2010,0,1],[2010,0,31]]}' \
-      http://localhost:5984/lec/_design/example/_view/by_date?include_docs=true
-
-Na czym polegają różnice w otrzymanych wynikach?
+* debugowanie widoków
+* view cleanup
+* view compaction
 
 
-### Różne rzeczy
+# Złączenia – czyli co wynika z *Collation Specification*
 
-W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API):
+Przykłady poniżej pochodzą z artykułu:
+Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
+gdzie autor omawia trzy sposoby modelowania powiązań
+między postami a komentarzami:
+„How you’d go about modeling a simple blogging system with «post» and
+«comments» entities, where any blog post might have many comments.”
 
-* Debugowanie widoków
-* View Cleanup
-* View Compaction
+Dodatkowo warto zajrzeć do [CouchDB JOINs
+Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
 
+## Sposób 1: komentarze inline
 
-## „Złączenia” w bazach CouchDB
+Utworzymy bazę *blog-1* zawierającą następujące dokumenty:
 
-*Przykład:* How you'd go about modeling a simple blogging system with „post” and
-„comment” entities, where any blog post might have many comments.
-
-Przykład ten pochodzi z artykułu:
-Christopher Lenz. [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins).
-W artykule autor omawia trzy sposoby modelowania powiązań
-między postami a komentarzami.
-
-
-### Sposób 1: komentarze inline
-
-Utworzymy bazę zawierającą kilka takich dokumentów:
-
-    :::json
+    :::json blog-1.json
     {
-      "author": "jacek",
-      "title": "Rails 2",
-      "content": "Bla bla…",
-      "comments": [
-        {"author": "agatka", "content": "…"},
-        {"author": "bolek",  "content": "…"}
+      "docs": [
+        {
+          "author": "jacek",
+          "title": "Refactoring User Name",
+          "content": "Learn how to clean up your code through refactoring.",
+          "comments": [
+            {"author": "agatka", "content": "thanks!"},
+            {"author": "bolek",  "content": "Very very nice idea! Thanks for this post."}
+          ]
+        },
+        {
+          "author": "jacek",
+          "title": "Restricting Access",
+          "content": "You will learn how to lock down the site.",
+          "comments": [
+            {"author": "lolek", "content": "If God would exists it will be you... thanks for the screencast."},
+            {"author": "bolek",  "content": "Fixed...sorry for the spam."}
+          ]
+        }
       ]
     }
 
-Dane do umieścimy w bazie za pomocą skryptu
-{%= link_to 'blog-inline.rb', '/doc/couchdb/blog-inline.rb' %}.
+Dokumenty zapiszemy korzystając z programu *curl*:
 
-Widok zwracający wszystkie komentarze, posortowane po polu *author*:
+    curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:4000/blog-1/_bulk_docs
+
+<!--
+
+Do bazy dodamy widok zwracający wszystkie komentarze, posortowane po polu *author*:
 
     :::javascript
     function(doc) {
@@ -426,56 +392,89 @@ Widok zwracający wszystkie komentarze, posortowane po polu *author*:
       }
     }
 
-Jakie problemy może dawać takie podejście?
-Aby dodać komentarz do posta, należy wykonać:
+-->
 
-1. pobrać dokument post z bloga-inline
+Jakie problemy stwarza takie podejście?
+
+Odpowiedź: Aby dodać komentarz do posta, należy:
+
+1. pobrać dokument post z bazy
 2. dodać nowy komentarz do struktury JSON
 3. umieścić uaktualniony dokument w bazie
 
-W jakim wypadku może to być problematyczne podejście?
-
-To też może być problemem:
 „Now if you have multiple client processes adding comments at roughly
 the same time, some of them will get a 409 Conflict error on step 3
 (that's optimistic concurrency in action).”
 
 
-### Sposób 2: komentarze w osobnych dokumentach
+## Sposób 2: komentarze w osobnych dokumentach
 
-Utworzymy bazę zawierającą kilka postów postaci:
+Utworzymy bazę *blog-2* w której zapiszemy osobno posty i komentarze:
 
-    :::json
+    :::json blog-2-posts.json
     {
-      "_id": "01",
-      "type": "post",
-      "author": "jacek",
-      "title": "Rails 3",
-      "content": "Bla bla bla …"
+      "docs": [
+        {
+          "_id": "01",
+          "type": "post",
+          "author": "jacek",
+          "title": "Refactoring User Name",
+          "content": "Learn how to clean up your code through refactoring."
+        },
+        {
+          "_id": "02",
+          "type": "post",
+          "author": "jacek",
+          "title": "Restricting Access",
+          "content": "You will learn how to lock down the site."
+        }
+      ]
     }
 
-oraz komentarzy postaci:
+oraz komentarzy:
 
-    :::json
+    :::json blog-2-comments.json
     {
-      "_id": "11",
-      "type": "comment",
-      "post": "01",
-      "author": "agatka",
-      "content": "…"
-    }
-    {
-      "_id": "12",
-      "type": "comment",
-      "post": "01",
-      "author": "bolek",
-      "content": "…"
+      "docs": [
+        {
+          "_id": "11",
+          "type": "comment",
+          "post": "01",
+          "author": "agatka",
+          "content": "thanks!"
+        },
+        {
+          "_id": "12",
+          "type": "comment",
+          "post": "01",
+          "author": "bolek",
+          "content": "Very very nice idea! Thanks for this post."
+        },
+        {
+          "_id": "13",
+          "type": "comment",
+          "post": "02",
+          "author": "lolek",
+          "content": "If God would exists it will be you... thanks for the screencast."
+        },
+        {
+          "_id": "14",
+          "type": "comment",
+          "post": "02",
+          "author": "bolek",
+          "content": "Fixed...sorry for the spam."
+        }
+      ]
     }
 
-Dane do umieścimy w bazie za pomocą skryptu
-{%= link_to 'blog-separate.rb', '/doc/couchdb/blog-separate.rb' %}.
+Dokumenty zapisujemy w bazie:
 
-Poniższy widok, wypisuje komentarze zgrupowane po polu *post*:
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:4000/blog-2/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:4000/blog-2/_bulk_docs
+
+Do bazy dodamy widok **/_design/app/by_post**.
+
+Odpytanie widoku daje komentarze zgrupowane po zawartości pola *post*:
 
     :::javascript
     function(doc) {
@@ -484,27 +483,22 @@ Poniższy widok, wypisuje komentarze zgrupowane po polu *post*:
       }
     }
 
-Widok ten po zapisaniu jako design document o nazwie **blog**
-i o view name – **by_post** wywołujemy z wiersza poleceń:
+Ale jeśli zamierzamy pobrać wszystkie komentarze do posta "02",
+to możemy to zrobic tak:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post
-
-Albo tak, jeśli zamierzamy pobrać wszystkie komentarze do posta "02":
-
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post?key=\"02\"
-    {"total_rows":7,"offset":2,"rows":[
-    {"id":"13","key":"02","value":{"author":"lolek","content":"\u2026"}},
-    {"id":"14","key":"02","value":{"author":"bolek","content":"\u2026"}}
+    http://localhost:4000/blog-2/_design/app/_view/by_post?key="02"
+    {"total_rows":4,"offset":2,"rows":[
+      {"id":"13","key":"02","value":{"author":"lolek","content":"If God would exists..."}},
+      {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...sorry..."}}
     ]}
 
-Albo tak:
+Jeśli teraz pobierzemy post "02", to mamy komplet.
+Dwa żądania HTTP i mamy post i wszystkie do niego komentarze.
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_post?key='"02"'
+<!--
 
-Ech, to cytowanie w powłoce…
-
-Przeglądanie wszystkich komentarzy posrtowanych po
-polu *author*:
+Przeglądanie wszystkich komentarzy posortowanych po polu *author*
+umożliwi nam widok *_design/app/by_author*:
 
     :::javascript
     function(doc) {
@@ -513,9 +507,15 @@ polu *author*:
       }
     }
 
-Po zapisaniu widoku pod nazwą *by_author*, wykonujemy go z wiersza poleceń:
+Po zapisaniu widoku pod nazwą *by_author* i odpytaniu dostajemy:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/by_author
+    http://localhost:4000/blog-2/_design/app/_view/by_author
+    {"total_rows":4,"offset":0,"rows":[
+      {"id":"11","key":"agatka","value":{"post":"01","content":"thanks..."}},
+      {"id":"12","key":"bolek","value":{"post":"01","content":"Very very nice..."}},
+      {"id":"14","key":"bolek","value":{"post":"02","content":"Fixed...sorry..."}},
+      {"id":"13","key":"lolek","value":{"post":"02","content":"If God would exists..."}}
+    ]}
 
 Przechowywanie osobno postów i komentarzy do nich też ma wady:
 
@@ -526,12 +526,17 @@ the document. With this second approach, we need two requests: a GET
 request to the post document, and a GET request to the view that
 returns all comments for the post.”
 
+-->
 
-### Optymizacja: using the power of view collation
+### Using the power of view collation
 
-What we'd probably want then would be a way to join the blog post and
+„What we'd probably want then would be a way to join the blog post and
 the various comments together to be able to retrieve them with
-**a single HTTP request**.
+**a single HTTP request**.”
+
+Rozważmy taki widok
+(TODO: key *doc* zamienić na *null* i skorzystać z *include_docs=true*;
+jest OK bo nie ma funkcji reduce):
 
     :::javascript
     function(doc) {
@@ -542,15 +547,61 @@ the various comments together to be able to retrieve them with
       }
     }
 
-Jak to działa? Po zapisaniu widoku jako *\_design/blog/\_view/povc*
-wywołujemy go tak:
+Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?key='\["02",0\]'
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?key='\["02",1\]'
+Teraz odpytajmy ten widok, tak:
+
+    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",0]
+    {"total_rows":6,"offset":3,"rows":[
+      {"id":"02","key":["02",0],
+       "value":{"_id":"02","_rev":"1-6844...",
+          "type":"post",
+          "author":"jacek",
+          "title":"Restricting Access",
+          "content":"You will learn how to lock down the site."}}
+    ]}
 
 albo tak:
 
-    curl http://localhost:5984/blog-separate/_design/blog/_view/povc?startkey='\["02"\]'\&endkey='\["03"\]'
+    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",1]
+    {"total_rows":6,"offset":4,"rows":[
+      {"id":"13","key":["02",1],
+       "value":{"_id":"13","_rev":"1-15dc...",
+       "type":"comment",
+       "post":"02",
+       "author":"lolek",
+       "content":"If God would exists...."}},
+      {"id":"14","key":["02",1],
+       "value":{"_id":"14","_rev":"1-676a...",
+       "type":"comment",
+       "post":"02",
+       "author":"bolek",
+       "content":"Fixed...sorry..."}}
+    ]}
 
-Ostatnie wywołanie zwraca nam post o *id* równym "02"
-i wszystkie jego komentarze w jednym żądaniu HTTP.
+albo tak:
+
+    http://localhost:4000/blog-2/_design/app/_view/povc?startkey=["02"]&endkey=["03"]
+    {"total_rows":6,"offset":3,"rows":[
+      {"id":"02","key":["02",0],
+       "value":{"_id":"02","_rev":"1-6844...",
+       "type":"post",
+       "author":"jacek",
+       "title":"Restricting Access",
+       "content":"You will learn how to lock down the site."}},
+      {"id":"13","key":["02",1],
+       "value":{"_id":"13","_rev":"1-15dc...",
+       "type":"comment",
+       "post":"02",
+       "author":"lolek",
+       "content":"If God would exists..."}},
+      {"id":"14","key":["02",1],
+       "value":{"_id":"14","_rev":"1-676a...",
+       "type":"comment",
+       "post":"02",
+       "author":"bolek",
+       "content":"Fixed...sorry..."}}
+    ]}
+
+Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
+i wszystkie komentarze do niego w **jednym żądaniu HTTP**.

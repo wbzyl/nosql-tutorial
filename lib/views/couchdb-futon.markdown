@@ -119,8 +119,8 @@ A widok tymczasowy podmienimy na:
 i wartości argumentów zostaną zapisane w logach:
 
     :::javascript
-    zztop,6,john,4,john,3,john,2,bob,5,bob,1
-    nikon,nikon,canon,canon,canon,nikon
+    KEYS: zztop,6,john,4,john,3,john,2,bob,5,bob,1
+    VALUES: nikon,nikon,canon,canon,canon,nikon
 
 Zatem, tablica *keys* składa się z:
 
@@ -168,18 +168,10 @@ ale, ustawienie *reduce* na *true*, zwraca:
 
 W zasadzie należało tego oczekiwać. Dlaczego?
 
-**Ważna uwaga:**
-
-Poza tym, takie *emit*:
-
-    emit(doc.user, doc.camera);
-
-też nie ma większego sensu. Dlaczego?
-
-Cytat: „We can use the **map function** to generate complex key value pairs
-(**sorted by key**) and then reduce the values corresponding to each
-unique key into either a simple or complex value.
-
+**Podsumowanie:** „We can use the **map function** to generate complex
+key value pairs (**sorted by key**) and then reduce the values
+corresponding to each unique key into either a simple or complex
+value.
 
 **Luźne uwagi:**
 
