@@ -1,7 +1,5 @@
 #### {% title "Szablony Mustache w CouchDB" %}
 
-## Szablony Mustache w CouchDB
-
 <blockquote>
  {%= image_tag "/images/mustache.jpg", :alt => "[Wąsy]" %}
 </blockquote>
@@ -15,17 +13,17 @@ Będziemy potrzebować modułu *mustache.js* w wersji
 znajdziemy też kilka przykładów).
 
 Klonujemy repozytorium *mustache.js*, instalujemy gem z którego korzysta
-program rake i na koniec generujemy moduł:
+program rake i na koniec generujemy moduł commonjs:
 
     gem install rspec -v 1.3.0
     git clone git://github.com/janl/mustache.js.git
     cd mustache.js
     rake commonjs
 
-Wygenerowany moduł *mustache.js* znajdziemy w katalogu *lib*.
+Wygenerowany moduł *mustache.js* zostanie zapisany w katalogu *lib*.
 
-Wąsate szablony możemy poćwiczyć na stronie
-[{{ mustache }}](http://mustache.github.com/#demo).
+Wąsate szablony możemy ćwiczyćzymy na stronie
+[{{ mustache }}](http://mustache.github.com/#demo).
 
 To co zamierzam zrobić przedstawię w postaci
 diagramu *filesystem mapping* (co to może oznaczać?)
@@ -33,11 +31,11 @@ dla design document *_design/default*:
 
     /_design/default
     .
-    |-- _attachments
-    |   `-- application.css    // content-type set to text/css
-    `-- templates
-        |-- mustache           // string mustache.js
-        `-- quotation.html     // string quotation.html.mustache
+    |-- _attachments                 // zapisujemy z content-type set to text/css
+    |   `-- application.css
+    `-- templates                    // zapisujemy jako napis
+        |-- mustache.js
+        `-- quotation.html.mustache
 
 Plik z wąsatym szablonem *quotation.html.mustache*:
 
@@ -84,39 +82,40 @@ Na koniec piszemy plik *ls.js* dla programu *couchapp*:
 
     couchapp.loadAttachments(ddoc, path.join(__dirname, '_attachments'));
 
-I zapisujemy rzeczy, które umieściliśmy w powyższym pliku w bazie *ls*:
+Wreszcie możemy zapisać wszystko w bazie *ls*:
 
-    couchapp push ls.js http://User:Pass@localhost:4000/ls
+    couchapp push ls.js http://localhost:5984/ls
 
 Na deser oglądamy jak to działa, tak:
 
-    curl -I http://localhost:4000/ls/_design/default/_show/quotation/1
+    curl -I http://localhost:5984/ls/_design/default/_show/quotation/1
 
-albo w przeglądarce:
+albo wpisując w przeglądarce:
 
-    http://localhost:4000/ls/_design/default/_show/quotation/1
+    http://localhost:5984/ls/_design/default/_show/quotation/1
 
-Dla porządku (jakiego porządku?), powinnismy skorzystać z jakiegoś
-modułu dla NodeJS, aby zapisać w bazie cytaty.
 
-W tym celu skorzystamy z modułu [couch-client](https://github.com/creationix/couch-client).
+## Extra bonus
 
-Sam moduł instalujemy wykonując w głównym katalogu repozytorium polecenie:
+Przy okazji warto też wspomnieć o jakimś sposobie zapisywania
+dokumentów w bazie za pomocą NodeJS. Zrobimy to korzystając z modułu
+[couch-client](https://github.com/creationix/couch-client). Moduł
+instalujemy wykonując w głównym katalogu repozytorium polecenie:
 
     npm link .
 
-Do umieszczenia cytatów w bazie wykorzystamy poniższy skrypt:
+Cytaty zapiszemy w bazie za pomocą skryptu:
 
     :::javascript populate.js
-    var cc = require('couch-client')('http://localhost:4000/ls')
+    var cc = require('couch-client')('http://localhost:5984/ls')
     , fs = require('fs');
+
     var text = fs.readFileSync('ls.json', 'UTF-8')
-    // console.log(JSON.parse(text));
     cc.request("POST", cc.uri.pathname + "/_bulk_docs", JSON.parse(text), function (err, results) {
       if (err) throw err;
       console.log("saved %s", JSON.stringify(results));
     });
 
-Dokumenty zapisujemy hurtem w bazie wykonując na konsoli polecenie:
+Teraz dokumenty zapiszemy hurtem w bazie wykonując polecenie:
 
     node populate
