@@ -211,12 +211,14 @@ Zobacz też opis
 
 # Korzystamy z modułu NodeJS *node.couchapp.js*
 
-Wpisywanie kodu Javascript w postaci napisu, dodawanie takiego napisu
-do pliku JSON, jest jakimś nieporozumieniem programistycznym.
+Wpisując kod Javascript w postaci napisu, korzystając z programu
+curl do zapisywania takich napisów – takie podejście ma tylko jedną
+zaletę, a poza tym same wady.
+Jedyną zaletą takiego podejścia jest to, że każdy potrafi to zrobić.
 
-Jedyną zaletą takiego podejścia jest to, kązdy potrafi to zrobić.
-Poniżej, do zapisywania w bazie funkcji show
-(a później też funkcji list, filter…),  skorzystamy z modułu
+Programiści wolą postępować inaczej.
+Poniżej, do zapisywania w bazie funkcji show,
+a później też innych funkcji, skorzystamy z modułu
 NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
 Wadą tego rozwiązania jest to, że wymaga umiejętności
 programowania w Javascripcie.
