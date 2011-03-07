@@ -18,6 +18,11 @@ MongoDB is written in C++ and offers the following features:
 MongoDB is a document-oriented database.
 
 
+## Historia
+
+* [History of MongoDB](http://www.snailinaturtleneck.com/blog/2010/08/23/history-of-mongodb/)
+
+
 ## MapReduce
 
 * [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
