@@ -9,6 +9,8 @@
 # http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
 # http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
 
+require 'rubygems'
+
 require 'optparse'
 require 'ostruct'
 require 'pp'
@@ -130,6 +132,7 @@ end
 # the CouchDB part
 
 database = "http://127.0.0.1:#{options.port}/#{options.database}"
+#database = "http://sigma.ug.edu.pl:#{options.port}/#{options.database}"
 db = CouchRest.database!(database)
 
 if options.recreate
@@ -139,23 +142,30 @@ end
 chunk = 0
 books.keys.each do |book|
   title = book.split('.')[0].gsub('-', ' ')
-  data = IO.readlines(book, "\r\n\r\n")  # DOS?
-
+  #data = IO.readlines(book, "\r\n\r\n")  # DOS?
+  data = IO.readlines(book, "\r\n\r\n")  # Linux?
+  
+  puts "Wczytano apakpitow: "#{data.length}"
+  
   content = data.drop_while do |line|
-    line !~ /^\*\*\* START OF THIS PROJECT GUTENBERG EBOOK /
+    #         *** START OF THIS PROJECT GUTENBERG EBOOK MEMOIRS OF SHERLOCK HOLMES ***
+    line !~ /^\*\*\* ?START OF (THE|THIS) PROJECT GUTENBERG EBOOK /
   end.reverse.drop_while do |line|
-    line !~ /^\*\*\* END OF THIS PROJECT GUTENBERG EBOOK /
+    #          *** END OF THIS PROJECT GUTENBERG EBOOK MEMOIRS OF SHERLOCK HOLMES ***
+    line !~ /^\*\*\* ?END OF (THE|THIS) PROJECT GUTENBERG EBOOK /
   end.reject do |line|
-    line.length < 128 # remove short paragraphs
+    line.length < 64 # remove short paragraphs
   end.collect do |line|
     line.gsub!(/\r?\n/, ' ').chomp!('  ')
   end
 
+  puts "Po usunieciu naglowka i licencji zostalo akapitow: "#{data.length}"
+  
   content.each do |para|
     db.save_doc({
-      :title => title.gsub('-', ' '),
-      :chunk => chunk,
-      :text => para
+       :title => title.gsub('-', ' '),
+       :chunk => chunk,
+       :text => para
     })
     chunk += 1
   end
