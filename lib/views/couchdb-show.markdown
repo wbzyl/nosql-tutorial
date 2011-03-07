@@ -31,22 +31,22 @@ Format przykładowego aforyzmu umieszczonego w bazie:
 
 Tworzymy bazę *ls*, tak:
 
-    curl -X PUT  http://localhost:4000/ls
+    curl -X PUT  http://localhost:5984/ls
 
 chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
 
-    curl -X PUT  http://Admin:Pass@localhost:4000/ls
+    curl -X PUT  http://Admin:Pass@localhost:5984/ls
 
 Następnie wrzucamy do hurtem do bazy wszystkie cytaty
 ({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/doc/json/ls.json" %}):
 
     curl -X POST -H "Content-Type: application/json" \
-      http://localhost:4000/ls/_bulk_docs -d @ls.json
+      http://localhost:5984/ls/_bulk_docs -d @ls.json
 
 
-## Przykład: HTML
+## „HTML Show”
 
-Funkcje show musimy umieścić w polu *shows* (uwaga: liczbę mnoga)
+Funkcje show musimy umieścić w polu *shows* (uwaga: liczba mnoga)
 w jakimś design document.
 
 Oto prosty przykład:
@@ -58,12 +58,13 @@ Oto prosty przykład:
     }
 
 Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
-aby zapiszać kod w bazie:
+aby zapisać kod w bazie:
 
-     curl -X PUT http://localhost:4000/ls/_design/default \
+     curl -X PUT http://localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
 
-**Uwaga:**: kilka funkcji show wpisujemy w polu *shows* w taki sposób:
+**Uwaga:** Jeśli planujemy zapisać kilka funkcji show w design doc,
+to wpisujemy je w pliku w taki sposób:
 
     :::json
     {
@@ -73,15 +74,14 @@ aby zapiszać kod w bazie:
       }
     }
 
-Teraz po wejściu na stronę:
+Po zapisaniu funkcji w bazie, CouchDB użyje ich do sformatowania
+podanego cytatu, dla każdego żądania postaci:
 
-    http://localhost:4000/ls/_design/default/_show/quotation/4
+    http://localhost:5984/ls/_design/default/_show/quotation/4
 
-zobaczymy sformatowany przez funkcję *quotation* czwarty cytat:
+Można też pobrać sformatowaną wersję HTML cytatu za pomocą programu *curl*:
 
-Można też pobrać wersję HTML cytatu za pomocą programu *curl*:
-
-    curl -v http://localhost:4000/ls/_design/default/_show/quotation/4
+    curl -v http://localhost:5984/ls/_design/default/_show/quotation/4
 
 Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
@@ -101,7 +101,7 @@ Wysyłamy nagłówki:
       }
     }
 
-Przekazujemy parametry do funkcji show:
+Odczytujemy opcje wywołania przekazane do funkcji show:
 
     :::javascript aye.json
     {
@@ -112,17 +112,20 @@ Przekazujemy parametry do funkcji show:
       }
     }
 
-W Futonie usuwamy dokument *_design/default* (dlaczego to robimy?),
-następnie zapisujemy funkcję show *aye* w bazie:
+Zapisujemy powyższą funkcję w bazie:
 
-     curl -X PUT http://localhost:4000/ls/_design/default \
+     curl -X PUT http://localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @aye.json
 
-Żądanie z parametrem:
+Przykład żądania z opcją w żądaniu:
 
-    curl http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
+    curl http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
 
-Odpowiadanie na różne nagłówki *Content-Type* żądania.
+
+### Różne reprezentacje dokumentów
+
+Przykład funkcji show renderującej różne reprezentacje dokumentu
+(w poniższym kodzie – HTML albo XML) w zależności od zawartości nagłówka *Content-Type* żądania:
 
     :::json maye.json
     {
@@ -138,18 +141,21 @@ Odpowiadanie na różne nagłówki *Content-Type* żądania.
       }
     }
 
-Tak jak poprzednio, zaczynamy od usunięcia w Futonie dokumentu *_design/default*,
-dopiero potem, zapisujemy funkcję show *aye* w bazie:
+Zapisujemy powyższą funkcję show *aye* w bazie:
 
-     curl -X PUT http://localhost:4000/ls/_design/default \
+     curl -X PUT http://localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @maye.json
 
-Zwykłe żadanie, z domyślnym nagłówkiem *Accept*, oraz z nagłówkiem *Accept: application/xml*
+Dwa przykłady żądań korzystających z tej funkcji show: zwykłe żądanie
+z domyślnym nagłówkiem *Accept* i żądanie z nagłówkiem
+*Accept: application/xml*
 
-    curl -v http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
-    curl -v -H 'Accept: application/xml' http://localhost:4000/ls/_design/default/_show/aye/1?q=Captain
+    curl -v http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
+    curl -v -H 'Accept: application/xml' http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
 
-Pozostałe *mime types* wbudowane w CouchDB są zdefiniowane w pliku *main.js*:
+## Mime types
+
+Kompletna lista *mime types* z pliku *main.js*:
 
     :::javascript ./share/server/main.js
     // Some default types ported from Ruby on Rails

@@ -58,7 +58,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
 1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
-1. {%= link_to "NodeJS & node.couchapp.js", "/node-couchapp" %}
+1. {%= link_to "NodeJS i moduł node.couchapp.js", "/node-couchapp" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
