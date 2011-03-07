@@ -75,6 +75,7 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd couchdb
+    git checkout 1.1.x
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     make
@@ -203,6 +204,7 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd mongo
+    git checkout v1.8
     scons all
     scons --prefix=$HOME/.nosql install
 
