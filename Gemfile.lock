@@ -52,6 +52,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  emk-sinatra-url-for
+  erubis
   nosql-tutorial!
   rack-codehighlighter!
+  rdiscount
   sinatra
+  sinatra-filler
+  sinatra-static-assets
+  ultraviolet
