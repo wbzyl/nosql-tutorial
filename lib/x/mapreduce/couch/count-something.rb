@@ -26,7 +26,7 @@ params = {
   }
 pp db.view('app/wc', params)
 
-puts '--------'
+puts "\n--------"
 
 puts "\nWe scope the query using startkey and endkey params"
 puts "to take advantage of CouchDB's collation ordering."
@@ -40,6 +40,6 @@ pp db.view('app/wc', params)
 
 puts "The url looks like this:"
 puts "\n\thttp://sigma.ug.edu.pl:4000/gutenberg/_design/app/_view/wc?key=[\"very\",\"the skull\"]"
-puts "Lokalna baza?"
+puts "\nLokalna baza?"
 puts "\n\thttp://localhost:4000/gutenberg/_design/app/_view/wc?key=[\"very\",\"the skull\"]"
 puts "\nTry dropping that in your browser..."

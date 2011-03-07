@@ -342,7 +342,7 @@ asynchronous event-driven model”.
 
 Instalacja krok po kroku:
 
-    git clone git://github.com/ry/node.git
+    git clone git://github.com/joyent/node.git
     cd node
     git checkout v0.4.0
     ./configure --prefix=$HOME/.node
