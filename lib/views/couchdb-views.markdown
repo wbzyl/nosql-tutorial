@@ -31,7 +31,7 @@ są kosztowne, albo niemożliwe.
 {%= image_tag "/images/couch-mapreduce.png", :alt => "[CouchDB MapReduce]" %}
 (źródło *@jrecursive*)
 
-W dokumentowych bazach danych zamiast zapytań mamy widoki:
+W CouchDB zamiast zapytań mamy widoki:
 „Views are the primary tool used for querying and reporting on CouchDB
 documents.” Widoki kodujemy zazwyczaj w Javascript albo Erlangu
 (ale możemy je też programowac w Ruby, Pythonie).
@@ -42,10 +42,10 @@ zaczynający się od **_design/**, na przykład *_design/app*.
 Widoki zapisujemy w polu *views* dokumentów projektowych.
 
 
-## Pierwszy przykład
+## Baza *ls*
 
-Widoki przećwiczymy na przykładzie dokumentowej bazy danych
-zawierającej aforyzmy Stanisława J. Leca oraz Hugo Steinhausa
+Widoki przećwiczymy na przykładzie bazy *ls*
+zawierającej kilka aforyzmów Stanisława J. Leca oraz Hugo Steinhausa
 (te same co w rozdziale z *Funkcje Show*).
 Dla przypomnienia, format przykładowego dokumentu:
 
@@ -60,14 +60,32 @@ Dla przypomnienia, format przykładowego dokumentu:
 Samą bazę replikujemy z Sigmy.
 
 
-### Widoki w CouchDB
+## Widok ≈ Map + Reduce (opcjonalne)
 
 W CouchDB są dwa rodzaje widoków:
 
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Zaczniemy od umieszczenia w bazie dwóch widoków: *by_date* i *by_tag*:
+Tymczasowe widoki będziemy tworzyć i odpytywać w Futonie.
+Do tworzenia i zapisywania widoków permanentnych wykorzystamy
+*node.couchapp.js*.
+
+Widok (pierwsze przybliżenie) składa się z dwóch, kolejno
+wykonywanych, funkcji:
+
+* `map(doc)` – funkcja wykonywana jest na każdym dokumencie
+  rezultatem każdego wywołania funkcji powinno być 
+  „do nothing” albo „*emit(key,value)*”
+* `reduce(keys,values,rereduce)` – zaczyna od tzw. „shuffle step”:
+  *keys* i *values* są sortowane i grupowane; po wykonaniu 
+  „shuffle step” argument *rereduce* ustawiany jest na *false*, 
+  *keys* na *null* i funkcja jest wykonywana tyle razy aż *values* 
+  zostaną zredukowane do pojedynczego *value*
+
+Zobacz też przykłady zapytań z *group* i *group_level* poniżej.
+
+Przykład: zapiszemy w bazie dwa widoki: *by_date* i *by_tag*:
 
     :::javascript ls_views.js
     var couchapp = require('couchapp');
@@ -93,15 +111,22 @@ Zaczniemy od umieszczenia w bazie dwóch widoków: *by_date* i *by_tag*:
       reduce: "_count"
     }
 
+Powyżej użyłem funkcji reduce napisanych w języku Erlang
+i dostępnych w widokach pisanych w Javascript.
+W wersji 1.1.x CouchDb są trzy takie funkcje:
 
-**TODO**: `emit(key, value)`? `_count`? Pozostałe wbudowane: `_sum`, `_stats`.
+* `_count` – returns the number of mapped values in the set
+* `_sum` – returns the sum of the set of mapped values
+* `_stats` – returns numerical statistics of the mapped values in the set including the sum, count, min, and max
 
+Później pokażemy jak można te funkcje zaimplementować samemu
+w Javascripcie.
 
-Widok zapisujemy w bazie wykonujac polecenie:
+Widok zapiszemy w bazie wykonujac polecenie:
 
     couchapp push ls_views.js http://localhost:5984/ls
 
-Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
+Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
 
     curl http://localhost:5984/ls/_design/app/_view/by_date
     {"rows":[
@@ -116,7 +141,7 @@ Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 Co oznaczają te odpowiedzi?
 
 
-## Widok + opcje w zapytaniach
+## TODO: Widok + opcje w zapytaniach
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
@@ -268,6 +293,13 @@ dla widoków z funkcją *reduce*.
 ## Canonicla example
 
 Word count.
+
+
+
+
+## Kanoniczny przykład
+
+TODO: word count
 
 
 # View Collation
