@@ -1,7 +1,16 @@
-#### {% title "Views ≡ Map + Reduce" %}
+#### {% title "Widok ≡ Map ► Reduce (opcjonalnie)" %}
+
+Definicja z Wikipedii: „MapReduce jest opatentowaną przez Google
+platformą do przetwarzania równoległego dużych zbiorów danych
+w klastrach komputerów.”
+CouchDB ma swoją wersję platformy MapReduce
+(a MongoDB swoją). Przyjrzyjmy się jak zaimplementowano
+MapReduce w CouchDB.
+
+## Luźne uwagi o SQL i MapReduce
 
 CouchDB jest dokumentową, a nie relacyjną bazą danych. W relacyjnych
-bazach zapisujemy „rekordy”, a w bazach dokumentowych – „obiekty”.
+bazach zapisujemy „rekordy”, w bazach dokumentowych – „obiekty”.
 Obiekty mogą zawierać inne obiekty i tablice. Obiekty bardziej niż
 rekordy nadają się do modelowania złożonych hierarchicznych związków.
 
@@ -15,9 +24,8 @@ nie mają sensu, ponieważ takie zapytanie zakłada, że wszystkie dokumenty
 *contacts* muszą zawierać pola *name*, *email* i *fax*.
 Dokumenty zapisywane w CouchDB nie muszą być zbudowane według
 jednego schematu.
-
-Brak schematu oznacza, że niepotrzebne będą migracje.
-Jest to istotne w wypadku dużych baz, dla których migracje
+*Bonus:* brak schematu oznacza, że niepotrzebne będą migracje,
+co jest istotne w wypadku dużych baz, dla których migracje
 są kosztowne, albo niemożliwe.
 
 {%= image_tag "/images/couch-mapreduce.png", :alt => "[CouchDB MapReduce]" %}
@@ -25,12 +33,16 @@ są kosztowne, albo niemożliwe.
 
 W dokumentowych bazach danych zamiast zapytań mamy widoki:
 „Views are the primary tool used for querying and reporting on CouchDB
-documents.”
+documents.” Widoki kodujemy zazwyczaj w Javascript albo Erlangu
+(ale możemy je też programowac w Ruby, Pythonie).
 
 Widoki zapisujemy w tak zwanych *design documents*. Design documents
 są zwykłymi dokumentami. Tym co je wyróżnia jest identyfikator
-zaczynający się od **_design**, na przykład *_design/app*.
-Widoki są zapisywane w polu *views* dokumentów projektowych.
+zaczynający się od **_design/**, na przykład *_design/app*.
+Widoki zapisujemy w polu *views* dokumentów projektowych.
+
+
+## Pierwszy przykład
 
 Widoki przećwiczymy na przykładzie dokumentowej bazy danych
 zawierającej aforyzmy Stanisława J. Leca oraz Hugo Steinhausa
@@ -47,24 +59,23 @@ Dla przypomnienia, format przykładowego dokumentu:
 
 tak tworzymy bazę:
 
-    curl -X PUT http://Admin:Pass@127.0.0.1:5984/lec
+    curl -X PUT http://localhost:5984/lec
 
 a tak zapisujemy hurtem wszystkie cytaty:
 
-    curl -X POST -d @ls.json http://127.0.0.1:5984/ls/_bulk_docs
+    curl -X POST -d @ls.json http://localhost:5984/ls/_bulk_docs
 
 {%= link_to "Tutaj", "/doc/json/ls.json" %} można pobrać plik *ls.json* użyty powyżej.
 
 
-## Widoki w CouchDB API
+### Widoki w CouchDB
 
-Dla przypomnienia, w CouchDB są dwa rodzaje widoków:
+W CouchDB są dwa rodzaje widoków:
 
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Zaczniemy od zapisania w bazie dwóch widoków: *size_by_date* i *by_tag*.
-W tym celu skorzystam z modułu node *node.couchapp.js*:
+Zaczniemy od umieszczenia w bazie dwóch widoków: *size_by_date* i *by_tag*:
 
     :::javascript ls_views.js
     var couchapp = require('couchapp');
@@ -90,18 +101,20 @@ W tym celu skorzystam z modułu node *node.couchapp.js*:
       reduce: "_count"
     }
 
+**TODO**
+
 Widok zapisujemy w bazie wykonujac polecenie:
 
-    couchapp push ls_views.js http://Admin:Pass@localhost:4000/ls
+    couchapp push ls_views.js http://Admin:Pass@localhost:5984/ls
 
 Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
-    curl http://127.0.0.1:4000/ls/_design/app/_view/size_by_date
+    curl http://localhost:5984/ls/_design/app/_view/size_by_date
     {"rows":[
       {"key": null, "value": 351}
     ]}
 
-    curl http://127.0.0.1:4000/ls/_design/app/_view/by_tag
+    curl http://localhost:5984/ls/_design/app/_view/by_tag
     {"rows":[
       {"key": null, "value": 19}
     ]}
@@ -143,7 +156,7 @@ tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlenc
 
 Dla przykładu, zapytanie:
 
-    curl http://localhost:4000/ls/_design/app/_view/by_tag -G \
+    curl http://localhost:5984/ls/_design/app/_view/by_tag -G \
       --data-urlencode startkey`='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
 
@@ -160,7 +173,7 @@ zwraca:
 Jeśli to zapytanie wpiszemy w przeglądarce, to nie musimy stosować
 takich trików z cytowaniem. Wpisujemy po prostu:
 
-    http://localhost:4000/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
+    http://localhost:5984/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
 
 (Na przykład przeglądarka Chrome sama koduje zapytanie.)
 
@@ -168,7 +181,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **key** — dokumenty powiązane z podanym kluczem:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?key=[2010,0,1]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?key=[2010,0,1]&reduce=false
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":70},
       {"id":"4","key":[2010,0,1],"value":37}
@@ -176,7 +189,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **startkey** — dokumenty od klucza:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55},
@@ -187,7 +200,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **endkey** — dokumenty do klucza (wyłącznie):
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010,0,31]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?endkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":0,"rows":[
       {"id":"3","key":[2009,6,15],"value":30},
       {"id":"1","key":[2010,0,1],"value":70},
@@ -197,7 +210,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&limit=2&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&limit=2&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55}
@@ -205,7 +218,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
     {"total_rows":8,"offset":6,"rows":[
       {"id":"7","key":[2010,1,28],"value":67},
       {"id":"5","key":[2010,11,31],"value":31}
@@ -214,7 +227,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **include_docs** – dołącz dokumenty do odpowiedzi
 (jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?endkey=[2010]&include_docs=true&reduce=false
+    http://localhost:5984/ls/_design/app/_view/size_by_date?endkey=[2010]&include_docs=true&reduce=false
     {"total_rows":8,"offset":0,"rows":[
        {"id":"3","key":[2009,6,15],"value":30,
          "doc":{
@@ -232,7 +245,7 @@ dla widoków z funkcją *reduce*.
 
 **group** — grupowanie, działa analogiczne do *GROUP BY* z SQL:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?group=true
+    http://localhost:5984/ls/_design/app/_view/size_by_date?group=true
     {"rows":[
       {"key":[2009,6,15],"value":30},
       {"key":[2010,0,1],"value":107},
@@ -244,12 +257,12 @@ dla widoków z funkcją *reduce*.
 
 **group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
 
-    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=1
+    http://localhost:5984/ls/_design/app/_view/size_by_date?group_level=1
     {"rows":[
       {"key":[2009],"value":30},
       {"key":[2010],"value":321}
     ]}
-    http://localhost:4000/ls/_design/app/_view/size_by_date?group_level=2
+    http://localhost:5984/ls/_design/app/_view/size_by_date?group_level=2
     {"rows":[
       {"key":[2009,6],"value":30},
       {"key":[2010,0],"value":141},
@@ -279,7 +292,7 @@ Skorzystamy z modułu *couch-client* dla NodeJS i ze skryptu:
 
     :::javascript collation.js
     var cc = require('couch-client');
-    var coll = cc("http://localhost:4000/coll");
+    var coll = cc("http://localhost:5984/coll");
 
     for (var i=32; i<=126; i++) {
       coll.save({"x": String.fromCharCode(i)}, function(err, doc) {
@@ -296,13 +309,13 @@ i dokumenty znajdą się w bazie.
 
 Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
-    http://localhost:4000/coll/_all_docs?startkey="64"&limit=4
-    http://localhost:4000/coll/_all_docs?startkey="64"&limit=2&descending=true
-    http://localhost:4000/coll/_all_docs?startkey="64"&endkey="68"
+    http://localhost:5984/coll/_all_docs?startkey="64"&limit=4
+    http://localhost:5984/coll/_all_docs?startkey="64"&limit=2&descending=true
+    http://localhost:5984/coll/_all_docs?startkey="64"&endkey="68"
 
 Jeśli odpytujemy widok (tymczasowy na konsoli; konieczne są uprawnienia Admina):
 
-    curl -X POST http://Admin:Pass@localhost:4000/coll/_temp_view \
+    curl -X POST http://Admin:Pass@localhost:5984/coll/_temp_view \
       -H "Content-Type: application/json" -d '
     {
       "map": "function(doc) { emit(doc.x); }"
@@ -379,7 +392,7 @@ Utworzymy bazę *blog-1* zawierającą następujące dokumenty:
 
 Dokumenty zapiszemy korzystając z programu *curl*:
 
-    curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:4000/blog-1/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:5984/blog-1/_bulk_docs
 
 <!--
 
@@ -469,8 +482,8 @@ oraz komentarzy:
 
 Dokumenty zapisujemy w bazie:
 
-    curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:4000/blog-2/_bulk_docs
-    curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:4000/blog-2/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:5984/blog-2/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:5984/blog-2/_bulk_docs
 
 Do bazy dodamy widok **/_design/app/by_post**.
 
@@ -486,7 +499,7 @@ Odpytanie widoku daje komentarze zgrupowane po zawartości pola *post*:
 Ale jeśli zamierzamy pobrać wszystkie komentarze do posta "02",
 to możemy to zrobic tak:
 
-    http://localhost:4000/blog-2/_design/app/_view/by_post?key="02"
+    http://localhost:5984/blog-2/_design/app/_view/by_post?key="02"
     {"total_rows":4,"offset":2,"rows":[
       {"id":"13","key":"02","value":{"author":"lolek","content":"If God would exists..."}},
       {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...sorry..."}}
@@ -509,7 +522,7 @@ umożliwi nam widok *_design/app/by_author*:
 
 Po zapisaniu widoku pod nazwą *by_author* i odpytaniu dostajemy:
 
-    http://localhost:4000/blog-2/_design/app/_view/by_author
+    http://localhost:5984/blog-2/_design/app/_view/by_author
     {"total_rows":4,"offset":0,"rows":[
       {"id":"11","key":"agatka","value":{"post":"01","content":"thanks..."}},
       {"id":"12","key":"bolek","value":{"post":"01","content":"Very very nice..."}},
@@ -551,7 +564,7 @@ Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
 
 Teraz odpytajmy ten widok, tak:
 
-    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",0]
+    http://localhost:5984/blog-2/_design/app/_view/povc?key=["02",0]
     {"total_rows":6,"offset":3,"rows":[
       {"id":"02","key":["02",0],
        "value":{"_id":"02","_rev":"1-6844...",
@@ -563,7 +576,7 @@ Teraz odpytajmy ten widok, tak:
 
 albo tak:
 
-    http://localhost:4000/blog-2/_design/app/_view/povc?key=["02",1]
+    http://localhost:5984/blog-2/_design/app/_view/povc?key=["02",1]
     {"total_rows":6,"offset":4,"rows":[
       {"id":"13","key":["02",1],
        "value":{"_id":"13","_rev":"1-15dc...",
@@ -581,7 +594,7 @@ albo tak:
 
 albo tak:
 
-    http://localhost:4000/blog-2/_design/app/_view/povc?startkey=["02"]&endkey=["03"]
+    http://localhost:5984/blog-2/_design/app/_view/povc?startkey=["02"]&endkey=["03"]
     {"total_rows":6,"offset":3,"rows":[
       {"id":"02","key":["02",0],
        "value":{"_id":"02","_rev":"1-6844...",
