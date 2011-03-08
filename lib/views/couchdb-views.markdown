@@ -1,4 +1,4 @@
-#### {% title "Widok ≡ Map ► Reduce (opcjonalnie)" %}
+#### {% title "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)" %}
 
 Definicja z Wikipedii: „MapReduce jest opatentowaną przez Google
 platformą do przetwarzania równoległego dużych zbiorów danych
@@ -67,20 +67,19 @@ W CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Tymczasowe widoki będziemy tworzyć i odpytywać w Futonie.
-Do tworzenia i zapisywania widoków permanentnych wykorzystamy
-*node.couchapp.js*.
+Tymczasowe widoki będziemy pisać i odpytywać w Futonie, a do widoków
+permanentnych wykorzystamy *node.couchapp.js*.
 
-Widok (pierwsze przybliżenie) składa się z dwóch, kolejno
+**Pierwsze przybliżenie.** Widok składa się z dwóch, kolejno
 wykonywanych, funkcji:
 
 * `map(doc)` – funkcja wykonywana jest na każdym dokumencie
-  rezultatem każdego wywołania funkcji powinno być 
+  rezultatem każdego wywołania funkcji powinno być
   „do nothing” albo „*emit(key,value)*”
-* `reduce(keys,values,rereduce)` – zaczyna od tzw. „shuffle step”:
-  *keys* i *values* są sortowane i grupowane; po wykonaniu 
-  „shuffle step” argument *rereduce* ustawiany jest na *false*, 
-  *keys* na *null* i funkcja jest wykonywana tyle razy aż *values* 
+* `reduce(keys,values,rereduce)` – CouchDB zaczyna od tzw. „shuffle step”:
+  *keys* i *values* są sortowane i grupowane; po wykonaniu
+  „shuffle step” argument *rereduce* ustawiany jest na *false*,
+  *keys* na *null* i funkcja jest wykonywana tyle razy aż *values*
   zostaną zredukowane do pojedynczego *value*
 
 Zobacz też przykłady zapytań z *group* i *group_level* poniżej.
@@ -92,8 +91,6 @@ Przykład: zapiszemy w bazie dwa widoki: *by_date* i *by_tag*:
     ddoc = {
         _id: '_design/app'
       , views: {}
-      , lists: {}
-      , shows: {}
     }
     module.exports = ddoc;
 
@@ -115,12 +112,11 @@ Powyżej użyłem funkcji reduce napisanych w języku Erlang
 i dostępnych w widokach pisanych w Javascript.
 W wersji 1.1.x CouchDb są trzy takie funkcje:
 
-* `_count` – returns the number of mapped values in the set
-* `_sum` – returns the sum of the set of mapped values
-* `_stats` – returns numerical statistics of the mapped values in the set including the sum, count, min, and max
+* `_count` – zwraca liczbę „mapped values”
+* `_sum` – zwraca sumę wartości „mapped values”
+* `_stats` – zwraca statystyki „mapped values” (sum, count, min, max, …)
 
-Później pokażemy jak można te funkcje zaimplementować samemu
-w Javascripcie.
+Później pokażemy jak można te funkcje zaimplementować samemu w Javascripcie.
 
 Widok zapiszemy w bazie wykonujac polecenie:
 
@@ -138,17 +134,18 @@ Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
       {"key": null, "value": 19}
     ]}
 
-Co oznaczają te odpowiedzi?
+Co oznaczają te odpowiedzi? Jak konstruujemy te uri?
+Jak zmienią się odpowiedzi, gdy wymienimy funkcję reduce na *_sum*?
 
 
-## TODO: Widok + opcje w zapytaniach
+## Map&#x200a;►Reduce + opcje w zapytaniach
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
 Poniżej, dla wygody, umieściłem ściągę z opcji
 z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
-Żądania GET:
+Dla żądań GET:
 
 * `key`=*keyvalue*
 * `startkey`=*keyvalue*
@@ -165,12 +162,12 @@ z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 * `startkey_docid`=*docid*
 * `endkey_docid`=*docid*
 
-Żądania POST oraz do wbudowanego widoku *_all_docs*:
+Dla żądań POST oraz do wbudowanego widoku *_all_docs*:
 
 * {"keys": ["key1", "key2", ...]} – tylko wyszczególnione wiersze widoku
 
 Uwaga: parametry zapytań muszą być odpowiednio cytowane i kodowane.
-Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
+Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam nieco obejść
 tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlencode`.
 
 Dla przykładu, zapytanie:
@@ -208,13 +205,15 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **startkey** — dokumenty od klucza:
 
-    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
-    {"total_rows":8,"offset":3,"rows":[
-      {"id":"8","key":[2010,0,31],"value":34},
-      {"id":"2","key":[2010,1,20],"value":55},
-      {"id":"6","key":[2010,1,28],"value":27},
-      {"id":"7","key":[2010,1,28],"value":67},
-      {"id":"5","key":[2010,11,31],"value":31}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2011,2]&reduce=false
+    {"total_rows":16,"offset":13,"rows":[
+      {"id":"11","key":[2011,2,10],"value":55},
+      {"id":"12","key":[2011,2,10],"value":89},
+      {"id":"13","key":[2011,2,10],"value":41}
+    ]}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2011,2]&reduce=true
+    {"rows":[
+      {"key":null,"value":185}
     ]}
 
 **endkey** — dokumenty do klucza (wyłącznie):
@@ -230,9 +229,20 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
     http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
-    {"total_rows":8,"offset":3,"rows":[
+    {"total_rows":16,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
-      {"id":"2","key":[2010,1,20],"value":55}
+      {"id":"9","key":[2010,0,31],"value":60}
+    ]}
+
+ale *limit* z *reduce* się nie lubią:
+
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=true
+    {"rows":[
+      {"key":null,"value":651}
+    ]}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]
+    {"rows":[
+      {"key":null,"value":651}
     ]}
 
 **skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
@@ -268,10 +278,14 @@ dla widoków z funkcją *reduce*.
     {"rows":[
       {"key":[2009,6,15],"value":30},
       {"key":[2010,0,1],"value":107},
-      {"key":[2010,0,31],"value":34},
+      {"key":[2010,0,31],"value":94},
       {"key":[2010,1,20],"value":55},
       {"key":[2010,1,28],"value":94},
-      {"key":[2010,11,31],"value":31}
+      {"key":[2010,3,1],"value":103},
+      {"key":[2010,3,4],"value":32},
+      {"key":[2010,11,31],"value":31},
+      {"key":[2011,1,12],"value":57},
+      {"key":[2011,2,10],"value":185}
     ]}
 
 **group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
@@ -279,38 +293,85 @@ dla widoków z funkcją *reduce*.
     http://localhost:5984/ls/_design/app/_view/by_date?group_level=1
     {"rows":[
       {"key":[2009],"value":30},
-      {"key":[2010],"value":321}
+      {"key":[2010],"value":516},
+      {"key":[2011],"value":242}
     ]}
     http://localhost:5984/ls/_design/app/_view/by_date?group_level=2
     {"rows":[
       {"key":[2009,6],"value":30},
-      {"key":[2010,0],"value":141},
+      {"key":[2010,0],"value":201},
       {"key":[2010,1],"value":149},
-      {"key":[2010,11],"value":31}
+      {"key":[2010,3],"value":135},
+      {"key":[2010,11],"value":31},
+      {"key":[2011,1],"value":57},
+      {"key":[2011,2],"value":185}
     ]}
-
-
-## Canonicla example
-
-Word count.
-
-
 
 
 ## Kanoniczny przykład
 
-TODO: word count
+Na Sigmie jest baza *gutenberg* zawierająca ok. 4000
+akapitów z kilkunastu książek pobranych
+z [Files Repository](http://www.gutenberg.org/files/)
+projektu Gutenberg.
+
+Do pobierania tekstu, podziału go na akpity i zapisaniu
+ich w bazie użyto skryptu
+{%= link_to "gutenberg2couchdb.rb", "/mapreduce/couch/gutenberg2couchdb.rb" %}
+({%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}).
+
+A teraz obiecany kanoniczny przykład użycia MapReduce:
+
+    :::javascript wc.js
+    var couchapp = require('couchapp');
+    ddoc = {
+        _id: '_design/app'
+      , views: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.wc = {
+      map: function(doc) {
+        var words = doc.text.toLowerCase().split(/\W+/);
+        for (var i = 0, len = words.length; i < len; i++) {
+            var word = words[i];
+            if (word != '') {
+                emit([word, doc.title], 1);
+            }
+        }
+      },
+      reduce: "_sum"
+    }
+
+Zapisujemy widoki w bazie:
+
+    couchapp push wc.js http://Admin:Pass@localhost:5984/gutenberg
+
+Odpytujemy widok *wc* w Futonie.
+Eksperymentujemy z różnymi ustawieniami **Grouping** oraz **Reduce**.
+
+Jeśli w kodzie widoku zmienimy wiersz z *emit* na:
+
+    :::javascript
+    emit([word, doc.title], 1);
+
+to co to zmienia?
+
+*Uwaga:* Przy pierwszym zapytaniu CouchDB generuje widok.
+Na szybkim komputerze trwa to co najmniej minutę.
 
 
 # View Collation
 
 *Collation* to kolejność zestawiania, albo schemat uporządkowania.
 
-Widoki są zestawiane/sortowane po zawartości pola *key*. Jak działa
-sortowanie zaimplementowanie w CouchDB opisano w [Collaction
-Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+Widoki są zestawiane/sortowane po zawartości pola *key*.
 
-Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+W [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+opisano jak działa sortowanie zaimplementowanie w CouchDB.
+
+Poniższy przykład, który to próbuje wyjaśnić, pochodzi z [CouchDB
+Wiki](http://wiki.apache.org/couchdb/View_collation).
 
 W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
 
@@ -336,7 +397,7 @@ Teraz wystarczy wykonać na konsoli:
 
     node collation.js
 
-i dokumenty znajdą się w bazie.
+i dokumenty znajdą się w bazie.
 
 Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
@@ -358,10 +419,134 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## Różne rzeczy
+<blockquote>
+ <p>
+  Wszystko da się zrozumieć poza miłością i sztuką.
+ </p>
+ <p class="author">[stara mądrość]</p>
+</blockquote>
 
-Widok **by_tag** zawiera funkcję reduce zakodowaną jako *_count*.
-(Funkcja jest zaimplementowana w języku Erlang.)
+## Zrozumieć funkcje Reduce
+
+TODO: Przyjrzymy się na przykładzie tymczasowych widoków.  Jakaś mała i duża
+baza będą potrzebne + zapisywanie tego co się dzieje w logach Coucha.
+
+Funkcja reduce:
+
+    :::javascript
+    function(keys, values, rereduce) {
+      return sum(values);
+    }
+
+Czym są argumenty funkcji reduce?
+
+    :::javascript
+    function(keys, values, rereduce) {
+      log('KEYS: ' + keys);
+      log('VALUES: ' + values);
+      log('REREDUCE: ' + rereduce);
+      return sum(values);
+    }
+
+Wybieramy *Grouping*: exact, level 1, level 2, level 3, level 4.
+Wyjaśnić co oznacza grouping.
+
+Z listy rozwijanej **View** (prawy górny róg) wybieramy **Temporary view**.
+
+Domyślny widok tymczasowy składa się z *Map Function*:
+
+    :::javascript
+    function(doc) {
+      emit(null, doc);
+    }
+
+oraz pustej *Reduce Function*.
+
+    :::javascript
+    function(keys, values, rereduce) {
+    }
+
+**Terminologia:** pierwszy argument funkcji *emit* to
+**key**, a drugi to **value**.
+
+Argument *rereduce* przyjmuje wartość *false* lub *true*.
+Argumenty *keys* i *values* są tablicami. Jakimi?
+Wystarczy, że dopiszemy logowanie do funkcji reduce:
+
+    :::javascript
+    function(keys, values, rereduce) {
+      log('KEYS: ' + keys);
+      log('VALUES: ' + values);
+    }
+
+A widok tymczasowy podmienimy na:
+
+    :::javascript
+    function(doc) {
+      emit(doc.user, doc.camera);
+    }
+
+i wartości argumentów zostaną zapisane w logach:
+
+    :::javascript
+    KEYS: zztop,6,john,4,john,3,john,2,bob,5,bob,1
+    VALUES: nikon,nikon,canon,canon,canon,nikon
+
+Zatem, tablica *keys* składa się z:
+
+    [key1, id1], [key2, id2], ...
+
+gdzie *id1*, to *_id* dokumentu zawierającego klucz *key1*, itd.
+
+Tablica *values*, zawiera odpowiadające kluczom *doc.user* nazwy
+aparatów *doc.camera*.
+
+Widok nie zawiera dokumentów **i dlatego jest mniejszy i szybciej się generuje**.
+Dokumenty możemy zawsze pobrać, ponieważ znamy ich *_id*.
+
+JTZ? Zapiszmy powyższy widok jako *photos/by_user*.
+
+Widok bez dokumentów:
+
+    curl -X GET http://localhost:4000/photos/_design/photos/_view/by_user?reduce=false
+    {"total_rows":6,"offset":0,"rows":[
+      {"id":"1","key":"bob","value":"nikon"},
+    ...
+
+i widok z dokumentami:
+
+    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=false'
+    {"total_rows":6,"offset":0,"rows":[
+      {"id":"1","key":"bob","value":"nikon",
+        "doc":{"_id":"1","_rev":"1-67f5...",
+               "name":"fish.jpg",
+               "created_at":[2010,9,1],
+               "user":"bob",
+               "type":"jpeg",
+               "camera":"nikon",
+               "info":{"width":100,"height":200,"size":12345},
+               "tags":["tuna","shark"]}},
+    ...
+
+ale, ustawienie *reduce* na *true*, zwraca:
+
+    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=true'
+    {
+      "error": "query_parse_error",
+      "reason": "Query parameter `include_docs` is invalid for reduce views."
+    }
+
+W zasadzie należało tego oczekiwać. Dlaczego?
+
+**Podsumowanie:** „We can use the **map function** to generate complex
+key value pairs (**sorted by key**) and then reduce the values
+corresponding to each unique key into either a simple or complex
+value.
+
+
+## Obiecane rzeczy
+
+Widok **by_tag** zawiera funkcję reduce *_count*.
 
 Poniżej równoważny kod Javascript:
 
@@ -374,6 +559,13 @@ Poniżej równoważny kod Javascript:
       }
     }
 
+Kod Javascript równoważny funkcji *_sum*:
+
+    :::javascript
+    function(keys, values, rereduce) {
+      sum(values);
+    }
+
 W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
 
 * debugowanie widoków
@@ -383,7 +575,7 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 
 # Złączenia – czyli co wynika z *Collation Specification*
 
-Przykłady poniżej pochodzą z artykułu:
+Przykłady poniżej pochodzą z artykułu
 Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
 gdzie autor omawia trzy sposoby modelowania powiązań
 między postami a komentarzami:
@@ -649,3 +841,71 @@ albo tak:
 
 Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
 i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
+
+
+# TODO: Programujemy po stronie klienta
+
+**TODO** Skorzystać z Gutenberga.
+
+Do tej pory kodziliśmy po stronie serwera (ang. *server side programming*).
+
+Teraz będzie przykład kodzenia po stronie klienta (ang. *client side
+programming*). Skorzystamy z biblioteki *jquery.couch.js*
+(wykorzystanej w Futonie),
+
+Po stronie klienta, odpytamy widok w bazie *photos*. Kod
+wpiszemy i wykonywamy w Firefoxie na konsoli rozszerzenia *Firebug*.
+(Jeśli korzystamy z Google Chrome to konsoli wbudowanej w tę przeglądarkę.)
+
+Zaczniemy od utworzenia tymczasowego widoku, który po przetestowaniu
+zapiszemy w design document *default* pod nazwą *size_by_tag*:
+
+Funkcja map:
+
+    :::javascript
+    function(doc) {
+      for (var name in doc.tags)
+        emit(doc.tags[name], doc.info.size);
+    }
+
+Funkcja reduce:
+
+    _sum
+
+Po zapisaniu widoku, w zakładce z Futonem otwieramy okno z konsolą,
+gdzie wpisujemy:
+
+    :::jquery_javascript
+    var db = $.couch.db('photos')
+
+Następnie odpytujemy widok:
+
+    :::jquery_javascript
+    db.view('default/size_by_tag', {
+      success: function(data) {
+        console.log( data.rows.map(function(o){ return o.value; }) );
+    }})
+
+I jeszcze raz go odpytujemy, ale tym razem mamy zapytanie z jednym
+parametrem, *key*:
+
+    :::jquery_javascript
+    db.view("app/by_size", {
+      key: 'maui',
+      success: function(data) {
+        console.log( data.rows.map(function (o) { return o.value; }) );
+    }})
+
+
+## Linki
+
+CouchDB stuff:
+
+* [Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html)
+* [Introduction to CouchDB Views](http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views)
+
+Nieco Mongo docs:
+
+* [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
+* [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
+* [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
