@@ -25,9 +25,9 @@ dbname = ARGV.shift
 # jeśli każdy jest adminem – tryb Admin Party!
 uri = "http://127.0.0.1:#{port}/#{dbname}"
 
-puts "\nŁączenie z bazą: #{uri}"
+puts "\nŁączenie z bazą: #{uri}\n"
 
-# utwórz jesli nie istnieje
+# jeśli nie istnieje, to utwórz bazę
 db = CouchRest.database!(uri)
 
 ARGF.each do |json|

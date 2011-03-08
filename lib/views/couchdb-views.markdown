@@ -1,4 +1,4 @@
-#### {% title "Widok ≡ Map ► Reduce (opcjonalnie)" %}
+#### {% title "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)" %}
 
 Definicja z Wikipedii: „MapReduce jest opatentowaną przez Google
 platformą do przetwarzania równoległego dużych zbiorów danych
@@ -67,20 +67,19 @@ W CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Tymczasowe widoki będziemy tworzyć i odpytywać w Futonie.
-Do tworzenia i zapisywania widoków permanentnych wykorzystamy
-*node.couchapp.js*.
+Tymczasowe widoki będziemy pisać i odpytywać w Futonie, a do widoków
+permanentnych wykorzystamy *node.couchapp.js*.
 
-Widok (pierwsze przybliżenie) składa się z dwóch, kolejno
+**Pierwsze przybliżenie.** Widok składa się z dwóch, kolejno
 wykonywanych, funkcji:
 
 * `map(doc)` – funkcja wykonywana jest na każdym dokumencie
-  rezultatem każdego wywołania funkcji powinno być 
+  rezultatem każdego wywołania funkcji powinno być
   „do nothing” albo „*emit(key,value)*”
-* `reduce(keys,values,rereduce)` – zaczyna od tzw. „shuffle step”:
-  *keys* i *values* są sortowane i grupowane; po wykonaniu 
-  „shuffle step” argument *rereduce* ustawiany jest na *false*, 
-  *keys* na *null* i funkcja jest wykonywana tyle razy aż *values* 
+* `reduce(keys,values,rereduce)` – CouchDB zaczyna od tzw. „shuffle step”:
+  *keys* i *values* są sortowane i grupowane; po wykonaniu
+  „shuffle step” argument *rereduce* ustawiany jest na *false*,
+  *keys* na *null* i funkcja jest wykonywana tyle razy aż *values*
   zostaną zredukowane do pojedynczego *value*
 
 Zobacz też przykłady zapytań z *group* i *group_level* poniżej.
@@ -92,8 +91,6 @@ Przykład: zapiszemy w bazie dwa widoki: *by_date* i *by_tag*:
     ddoc = {
         _id: '_design/app'
       , views: {}
-      , lists: {}
-      , shows: {}
     }
     module.exports = ddoc;
 
@@ -115,12 +112,11 @@ Powyżej użyłem funkcji reduce napisanych w języku Erlang
 i dostępnych w widokach pisanych w Javascript.
 W wersji 1.1.x CouchDb są trzy takie funkcje:
 
-* `_count` – returns the number of mapped values in the set
-* `_sum` – returns the sum of the set of mapped values
-* `_stats` – returns numerical statistics of the mapped values in the set including the sum, count, min, and max
+* `_count` – zwraca liczbę „mapped values”
+* `_sum` – zwraca sumę wartości „mapped values”
+* `_stats` – zwraca statystyki „mapped values” (sum, count, min, max, …)
 
-Później pokażemy jak można te funkcje zaimplementować samemu
-w Javascripcie.
+Później pokażemy jak można te funkcje zaimplementować samemu w Javascripcie.
 
 Widok zapiszemy w bazie wykonujac polecenie:
 
@@ -138,17 +134,18 @@ Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
       {"key": null, "value": 19}
     ]}
 
-Co oznaczają te odpowiedzi?
+Co oznaczają te odpowiedzi? Jak konstruujemy te uri?
+Jak zmienią się odpowiedzi, gdy wymienimy funkcję reduce na *_sum*?
 
 
-## TODO: Widok + opcje w zapytaniach
+## Map&#x200a;►Reduce + opcje w zapytaniach
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
 Poniżej, dla wygody, umieściłem ściągę z opcji
 z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 
-Żądania GET:
+Dla żądań GET:
 
 * `key`=*keyvalue*
 * `startkey`=*keyvalue*
@@ -165,12 +162,12 @@ z [HTTP view API](http://wiki.apache.org/couchdb/HTTP_view_API).
 * `startkey_docid`=*docid*
 * `endkey_docid`=*docid*
 
-Żądania POST oraz do wbudowanego widoku *_all_docs*:
+Dla żądań POST oraz do wbudowanego widoku *_all_docs*:
 
 * {"keys": ["key1", "key2", ...]} – tylko wyszczególnione wiersze widoku
 
 Uwaga: parametry zapytań muszą być odpowiednio cytowane i kodowane.
-Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam obejść
+Jest to uciążliwe. Program *curl* od wersji 7.20 pozwala nam nieco obejść
 tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlencode`.
 
 Dla przykładu, zapytanie:
@@ -208,13 +205,15 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **startkey** — dokumenty od klucza:
 
-    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
-    {"total_rows":8,"offset":3,"rows":[
-      {"id":"8","key":[2010,0,31],"value":34},
-      {"id":"2","key":[2010,1,20],"value":55},
-      {"id":"6","key":[2010,1,28],"value":27},
-      {"id":"7","key":[2010,1,28],"value":67},
-      {"id":"5","key":[2010,11,31],"value":31}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2011,2]&reduce=false
+    {"total_rows":16,"offset":13,"rows":[
+      {"id":"11","key":[2011,2,10],"value":55},
+      {"id":"12","key":[2011,2,10],"value":89},
+      {"id":"13","key":[2011,2,10],"value":41}
+    ]}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2011,2]&reduce=true
+    {"rows":[
+      {"key":null,"value":185}
     ]}
 
 **endkey** — dokumenty do klucza (wyłącznie):
@@ -230,9 +229,20 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
     http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
-    {"total_rows":8,"offset":3,"rows":[
+    {"total_rows":16,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
-      {"id":"2","key":[2010,1,20],"value":55}
+      {"id":"9","key":[2010,0,31],"value":60}
+    ]}
+
+ale *limit* z *reduce* się nie lubią:
+
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=true
+    {"rows":[
+      {"key":null,"value":651}
+    ]}
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]
+    {"rows":[
+      {"key":null,"value":651}
     ]}
 
 **skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
@@ -268,10 +278,14 @@ dla widoków z funkcją *reduce*.
     {"rows":[
       {"key":[2009,6,15],"value":30},
       {"key":[2010,0,1],"value":107},
-      {"key":[2010,0,31],"value":34},
+      {"key":[2010,0,31],"value":94},
       {"key":[2010,1,20],"value":55},
       {"key":[2010,1,28],"value":94},
-      {"key":[2010,11,31],"value":31}
+      {"key":[2010,3,1],"value":103},
+      {"key":[2010,3,4],"value":32},
+      {"key":[2010,11,31],"value":31},
+      {"key":[2011,1,12],"value":57},
+      {"key":[2011,2,10],"value":185}
     ]}
 
 **group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
@@ -279,27 +293,29 @@ dla widoków z funkcją *reduce*.
     http://localhost:5984/ls/_design/app/_view/by_date?group_level=1
     {"rows":[
       {"key":[2009],"value":30},
-      {"key":[2010],"value":321}
+      {"key":[2010],"value":516},
+      {"key":[2011],"value":242}
     ]}
     http://localhost:5984/ls/_design/app/_view/by_date?group_level=2
     {"rows":[
       {"key":[2009,6],"value":30},
-      {"key":[2010,0],"value":141},
+      {"key":[2010,0],"value":201},
       {"key":[2010,1],"value":149},
-      {"key":[2010,11],"value":31}
+      {"key":[2010,3],"value":135},
+      {"key":[2010,11],"value":31},
+      {"key":[2011,1],"value":57},
+      {"key":[2011,2],"value":185}
     ]}
-
-
-## Canonicla example
-
-Word count.
-
-
 
 
 ## Kanoniczny przykład
 
-TODO: word count
+Na Sigmie jest baza *gutenberg* zawierająca ok. 4000
+akapitów z kilkunastu książek pobranych
+z [Files Repository – Gutenberg](http://www.gutenberg.org/files/):
+
+Do pobierania tekstu, podziału go na akpity i zapisaniu ich w bazie
+użyto skryptu
 
 
 # View Collation
