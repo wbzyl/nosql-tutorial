@@ -8,23 +8,26 @@ require 'pp'
 
 require 'couchrest'
 
-unless ARGV[2]
-  puts "Usage: read_stream_from_twitter USER:PASS PORT DBNAME\n"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb wbzyl:sekret 4000 nosql"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb wbzyl:sekret 4000 nosql"
+unless ARGV[1]
+  puts "Usage: read_stream_from_twitter PORT DBNAME\n"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb User:Pass 5984 nosql"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb User:Pass 5984 nosql"
   exit(0)
 end
 
-credentials = ARGV.shift
+#credentials = ARGV.shift
 port = ARGV.shift
 dbname = ARGV.shift
 
 # credentials, to User:Pass do servera CouchDB
-uri = "http://#{credentials}@127.0.0.1:#{port}/#{dbname}"
+#uri = "http://#{credentials}@127.0.0.1:#{port}/#{dbname}"
 
 # jeśli każdy jest adminem – tryb Admin Party!
-# uri = "http://127.0.0.1:#{port}/#{dbname}"
+uri = "http://127.0.0.1:#{port}/#{dbname}"
 
+puts "\nŁączenie z bazą: #{uri}"
+
+# utwórz jesli nie istnieje
 db = CouchRest.database!(uri)
 
 ARGF.each do |json|
@@ -47,6 +50,9 @@ ARGF.each do |json|
 
   date = DateTime.parse(hash['created_at'])
   hash['created_on'] ="#{date.year}-#{date.month}-#{date.day}-#{date.hour}-#{date.minute}-#{date.second}"
+
+  # p 44 * '-'
+  # p hash
 
   db.save_doc(hash)
 end
