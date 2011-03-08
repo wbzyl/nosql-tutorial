@@ -419,11 +419,37 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## TODO: Porozmawiajmy jeszcze o funkcjach reduce
+<blockquote>
+ <p>
+  Wszystko da się zrozumieć poza miłością i sztuką.
+ </p>
+ <p class="author">[stara mądrość]</p>
+</blockquote>
 
-Przyjrzymy się na przykładzie tymczasowych widoków.
-Jakaś mała i duża baza będą potrzebne + zapisywanie tego co się dzieje w logach
-Coucha.
+## Zrozumieć funkcje Reduce
+
+TODO: Przyjrzymy się na przykładzie tymczasowych widoków.  Jakaś mała i duża
+baza będą potrzebne + zapisywanie tego co się dzieje w logach Coucha.
+
+Funkcja reduce:
+
+    :::javascript
+    function(keys, values, rereduce) {
+      return sum(values);
+    }
+
+Czym są argumenty funkcji reduce?
+
+    :::javascript
+    function(keys, values, rereduce) {
+      log('KEYS: ' + keys);
+      log('VALUES: ' + values);
+      log('REREDUCE: ' + rereduce);
+      return sum(values);
+    }
+
+Wybieramy *Grouping*: exact, level 1, level 2, level 3, level 4.
+Wyjaśnić co oznacza grouping.
 
 Z listy rozwijanej **View** (prawy górny róg) wybieramy **Temporary view**.
 

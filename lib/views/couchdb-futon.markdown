@@ -1,13 +1,5 @@
 #### {% title "Futon: Map ⇒ Reduce → Rereduce" %}
 
-<blockquote>
- <p>
-  Wszystko da się zrozumieć poza miłością i sztuką.
- </p>
- <p class="author">[stara mądrość]</p>
-</blockquote>
-
-
 Futon, to graficzny interfejs do CouchDB. Futon jest dostępny z takiego uri:
 
     http://127.0.0.1:4000/_utils/
@@ -78,101 +70,6 @@ Poniżej będziemy do adresów uri korzystać z różnych opcji zapytań.
 Kompletną listę znajdziemy na Wiki,
 [CouchDB Querying Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
 
-
-## Widoki tymczasowe
-
-Z listy rozwijanej **View** (prawy górny róg) wybieramy **Temporary view**.
-
-Domyślny widok tymczasowy składa się z *Map Function*:
-
-    :::javascript
-    function(doc) {
-      emit(null, doc);
-    }
-
-oraz pustej *Reduce Function*.
-
-    :::javascript
-    function(keys, values, rereduce) {
-    }
-
-**Terminologia:** pierwszy argument funkcji *emit* to
-**key**, a drugi to **value**.
-
-Argument *rereduce* przyjmuje wartość *false* lub *true*.
-Argumenty *keys* i *values* są tablicami. Jakimi?
-Wystarczy, że dopiszemy logowanie do funkcji reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      log('KEYS: ' + keys);
-      log('VALUES: ' + values);
-    }
-
-A widok tymczasowy podmienimy na:
-
-    :::javascript
-    function(doc) {
-      emit(doc.user, doc.camera);
-    }
-
-i wartości argumentów zostaną zapisane w logach:
-
-    :::javascript
-    KEYS: zztop,6,john,4,john,3,john,2,bob,5,bob,1
-    VALUES: nikon,nikon,canon,canon,canon,nikon
-
-Zatem, tablica *keys* składa się z:
-
-    [key1, id1], [key2, id2], ...
-
-gdzie *id1*, to *_id* dokumentu zawierającego klucz *key1*, itd.
-
-Tablica *values*, zawiera odpowiadające kluczom *doc.user* nazwy
-aparatów *doc.camera*.
-
-Widok nie zawiera dokumentów **i dlatego jest mniejszy i szybciej się generuje**.
-Dokumenty możemy zawsze pobrać, ponieważ znamy ich *_id*.
-
-JTZ? Zapiszmy powyższy widok jako *photos/by_user*.
-
-Widok bez dokumentów:
-
-    curl -X GET http://localhost:4000/photos/_design/photos/_view/by_user?reduce=false
-    {"total_rows":6,"offset":0,"rows":[
-      {"id":"1","key":"bob","value":"nikon"},
-    ...
-
-i widok z dokumentami:
-
-    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=false'
-    {"total_rows":6,"offset":0,"rows":[
-      {"id":"1","key":"bob","value":"nikon",
-        "doc":{"_id":"1","_rev":"1-67f5...",
-               "name":"fish.jpg",
-               "created_at":[2010,9,1],
-               "user":"bob",
-               "type":"jpeg",
-               "camera":"nikon",
-               "info":{"width":100,"height":200,"size":12345},
-               "tags":["tuna","shark"]}},
-    ...
-
-ale, ustawienie *reduce* na *true*, zwraca:
-
-    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=true'
-    {
-      "error": "query_parse_error",
-      "reason": "Query parameter `include_docs` is invalid for reduce views."
-    }
-
-W zasadzie należało tego oczekiwać. Dlaczego?
-
-**Podsumowanie:** „We can use the **map function** to generate complex
-key value pairs (**sorted by key**) and then reduce the values
-corresponding to each unique key into either a simple or complex
-value.
-
 **Luźne uwagi:**
 
 1. url wstawiliśmy w cudzysłowy, ponieważ zawiera znak `&` –
@@ -200,26 +97,6 @@ Funkcja map:
     function(doc) {
       emit(doc.created_at, 1);
     }
-
-Funkcja reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      return sum(values);
-    }
-
-Czym są argumenty funkcji reduce?
-
-    :::javascript
-    function(keys, values, rereduce) {
-      log('KEYS: ' + keys);
-      log('VALUES: ' + values);
-      log('REREDUCE: ' + rereduce);
-      return sum(values);
-    }
-
-Wybieramy *Grouping*: exact, level 1, level 2, level 3, level 4.
-Wyjaśnić co oznacza grouping.
 
 
 ### Total size of all images
