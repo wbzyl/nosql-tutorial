@@ -312,21 +312,66 @@ dla widoków z funkcją *reduce*.
 
 Na Sigmie jest baza *gutenberg* zawierająca ok. 4000
 akapitów z kilkunastu książek pobranych
-z [Files Repository – Gutenberg](http://www.gutenberg.org/files/):
+z [Files Repository](http://www.gutenberg.org/files/)
+projektu Gutenberg.
 
-Do pobierania tekstu, podziału go na akpity i zapisaniu ich w bazie
-użyto skryptu
+Do pobierania tekstu, podziału go na akpity i zapisaniu
+ich w bazie użyto skryptu
+{%= link_to "gutenberg2couchdb.rb", "/mapreduce/couch/gutenberg2couchdb.rb" %}
+({%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}).
+
+A teraz obiecany kanoniczny przykład użycia MapReduce:
+
+    :::javascript wc.js
+    var couchapp = require('couchapp');
+    ddoc = {
+        _id: '_design/app'
+      , views: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.wc = {
+      map: function(doc) {
+        var words = doc.text.toLowerCase().split(/\W+/);
+        for (var i = 0, len = words.length; i < len; i++) {
+            var word = words[i];
+            if (word != '') {
+                emit([word, doc.title], 1);
+            }
+        }
+      },
+      reduce: "_sum"
+    }
+
+Zapisujemy widoki w bazie:
+
+    couchapp push wc.js http://Admin:Pass@localhost:5984/gutenberg
+
+Odpytujemy widok *wc* w Futonie.
+Eksperymentujemy z różnymi ustawieniami **Grouping** oraz **Reduce**.
+
+Jeśli w kodzie widoku zmienimy wiersz z *emit* na:
+
+    :::javascript
+    emit([word, doc.title], 1);
+
+to co to zmienia?
+
+*Uwaga:* Przy pierwszym zapytaniu CouchDB generuje widok.
+Na szybkim komputerze trwa to co najmniej minutę.
 
 
 # View Collation
 
 *Collation* to kolejność zestawiania, albo schemat uporządkowania.
 
-Widoki są zestawiane/sortowane po zawartości pola *key*. Jak działa
-sortowanie zaimplementowanie w CouchDB opisano w [Collaction
-Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+Widoki są zestawiane/sortowane po zawartości pola *key*.
 
-Poniższy przykład pochodzi z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
+W [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
+opisano jak działa sortowanie zaimplementowanie w CouchDB.
+
+Poniższy przykład, który to próbuje wyjaśnić, pochodzi z [CouchDB
+Wiki](http://wiki.apache.org/couchdb/View_collation).
 
 W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
 
@@ -352,7 +397,7 @@ Teraz wystarczy wykonać na konsoli:
 
     node collation.js
 
-i dokumenty znajdą się w bazie.
+i dokumenty znajdą się w bazie.
 
 Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
@@ -374,10 +419,9 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## Różne rzeczy
+## Obiecane rzeczy
 
-Widok **by_tag** zawiera funkcję reduce zakodowaną jako *_count*.
-(Funkcja jest zaimplementowana w języku Erlang.)
+Widok **by_tag** zawiera funkcję reduce *_count*.
 
 Poniżej równoważny kod Javascript:
 
@@ -390,6 +434,13 @@ Poniżej równoważny kod Javascript:
       }
     }
 
+Kod Javascript równoważny funkcji *_sum*:
+
+    :::javascript
+    function(keys, values, rereduce) {
+      sum(values);
+    }
+
 W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
 
 * debugowanie widoków
@@ -399,7 +450,7 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 
 # Złączenia – czyli co wynika z *Collation Specification*
 
-Przykłady poniżej pochodzą z artykułu:
+Przykłady poniżej pochodzą z artykułu
 Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
 gdzie autor omawia trzy sposoby modelowania powiązań
 między postami a komentarzami:
