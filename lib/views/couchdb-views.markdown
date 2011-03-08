@@ -57,15 +57,7 @@ Dla przypomnienia, format przykładowego dokumentu:
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-tak tworzymy bazę:
-
-    curl -X PUT http://localhost:5984/lec
-
-a tak zapisujemy hurtem wszystkie cytaty:
-
-    curl -X POST -d @ls.json http://localhost:5984/ls/_bulk_docs
-
-{%= link_to "Tutaj", "/doc/json/ls.json" %} można pobrać plik *ls.json* użyty powyżej.
+Samą bazę replikujemy z Sigmy.
 
 
 ### Widoki w CouchDB
@@ -75,7 +67,7 @@ W CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Zaczniemy od umieszczenia w bazie dwóch widoków: *size_by_date* i *by_tag*:
+Zaczniemy od umieszczenia w bazie dwóch widoków: *by_date* i *by_tag*:
 
     :::javascript ls_views.js
     var couchapp = require('couchapp');
@@ -87,7 +79,7 @@ Zaczniemy od umieszczenia w bazie dwóch widoków: *size_by_date* i *by_tag*:
     }
     module.exports = ddoc;
 
-    ddoc.views.size_by_date = {
+    ddoc.views.by_date = {
       map: function(doc) {
         emit(doc.created_at, doc.quotation.length);
       },
@@ -101,15 +93,17 @@ Zaczniemy od umieszczenia w bazie dwóch widoków: *size_by_date* i *by_tag*:
       reduce: "_count"
     }
 
-**TODO**
+
+**TODO**: `emit(key, value)`? `_count`? Pozostałe wbudowane: `_sum`, `_stats`.
+
 
 Widok zapisujemy w bazie wykonujac polecenie:
 
-    couchapp push ls_views.js http://Admin:Pass@localhost:5984/ls
+    couchapp push ls_views.js http://localhost:5984/ls
 
 Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 
-    curl http://localhost:5984/ls/_design/app/_view/size_by_date
+    curl http://localhost:5984/ls/_design/app/_view/by_date
     {"rows":[
       {"key": null, "value": 351}
     ]}
@@ -122,7 +116,7 @@ Tyle przygotowań. Teraz odpytajmy oba widoki z linii poleceń:
 Co oznaczają te odpowiedzi?
 
 
-## *Querying Options* w widokach
+## Widok + opcje w zapytaniach
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
@@ -181,7 +175,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **key** — dokumenty powiązane z podanym kluczem:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?key=[2010,0,1]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?key=[2010,0,1]&reduce=false
     {"total_rows":8,"offset":1,"rows":[
       {"id":"1","key":[2010,0,1],"value":70},
       {"id":"4","key":[2010,0,1],"value":37}
@@ -189,7 +183,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **startkey** — dokumenty od klucza:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55},
@@ -200,7 +194,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **endkey** — dokumenty do klucza (wyłącznie):
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?endkey=[2010,0,31]&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?endkey=[2010,0,31]&reduce=false
     {"total_rows":8,"offset":0,"rows":[
       {"id":"3","key":[2009,6,15],"value":30},
       {"id":"1","key":[2010,0,1],"value":70},
@@ -210,7 +204,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **limit** — co najwyżej tyle dokumentów zaczynając od podanego klucza:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,0,31]&limit=2&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=false
     {"total_rows":8,"offset":3,"rows":[
       {"id":"8","key":[2010,0,31],"value":34},
       {"id":"2","key":[2010,1,20],"value":55}
@@ -218,7 +212,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 
 **skip** – pomiń podaną liczbę dokumentów zaczynając od podanego klucza:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?startkey=[2010,1,20]&skip=2&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,1,20]&skip=2&reduce=false
     {"total_rows":8,"offset":6,"rows":[
       {"id":"7","key":[2010,1,28],"value":67},
       {"id":"5","key":[2010,11,31],"value":31}
@@ -227,7 +221,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
 **include_docs** – dołącz dokumenty do odpowiedzi
 (jeśli widok zawiera funkcję reduce, to do zapytania należy dopisać *reduce=false*):
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?endkey=[2010]&include_docs=true&reduce=false
+    http://localhost:5984/ls/_design/app/_view/by_date?endkey=[2010]&include_docs=true&reduce=false
     {"total_rows":8,"offset":0,"rows":[
        {"id":"3","key":[2009,6,15],"value":30,
          "doc":{
@@ -245,7 +239,7 @@ dla widoków z funkcją *reduce*.
 
 **group** — grupowanie, działa analogiczne do *GROUP BY* z SQL:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?group=true
+    http://localhost:5984/ls/_design/app/_view/by_date?group=true
     {"rows":[
       {"key":[2009,6,15],"value":30},
       {"key":[2010,0,1],"value":107},
@@ -257,18 +251,23 @@ dla widoków z funkcją *reduce*.
 
 **group_level** – dwa przykłady powinny wyjaśnić o co chodzi:
 
-    http://localhost:5984/ls/_design/app/_view/size_by_date?group_level=1
+    http://localhost:5984/ls/_design/app/_view/by_date?group_level=1
     {"rows":[
       {"key":[2009],"value":30},
       {"key":[2010],"value":321}
     ]}
-    http://localhost:5984/ls/_design/app/_view/size_by_date?group_level=2
+    http://localhost:5984/ls/_design/app/_view/by_date?group_level=2
     {"rows":[
       {"key":[2009,6],"value":30},
       {"key":[2010,0],"value":141},
       {"key":[2010,1],"value":149},
       {"key":[2010,11],"value":31}
     ]}
+
+
+## Canonicla example
+
+Word count.
 
 
 # View Collation
