@@ -48,7 +48,7 @@ Skrypt *markov.rb* (tylko dla ruby 1.9.2+):
     WORD_MEMOIZER = {}
 
     def probable_follower_for(word)
-      WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word,nil], :endkey=>[word,{}], :group_level=>2)
+      WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word], :endkey=>[word,{}], :group_level=>2)
       row =  @word_memoizer[word]['rows'].sample # get random row (ruby 1.9.2)
       row['key'][1]
     end
@@ -66,7 +66,7 @@ Skrypt *markov.rb* (tylko dla ruby 1.9.2+):
 
 O co chodzi?
 
-    curl http://localhost:5984/gutenberg/_design/wc/_view/markov?startkey=["young",null]&["young",{}]&group_level=2
+    http://localhost:5984/gutenberg/_design/wc/_view/markov?startkey=["young"]&endkey=["young",{}]&group_level=2
       {"rows":[
       {"key":["young","a"],"value":3},
       {"key":["young","accept"],"value":1},
@@ -75,7 +75,7 @@ O co chodzi?
       {"key":["young","alec"],"value":2},
       ...
 
-**Uwaga:** Jak będzie działał progrma jeśli zmienimy powyżej:
+**Uwaga:** Jak będzie działał program jeśli zmienimy powyżej *group_level*:
 
     group_level=3
 

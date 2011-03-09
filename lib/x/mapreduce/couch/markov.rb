@@ -7,7 +7,7 @@ DB = couch.database('gutenberg')
 WORD_MEMOIZER = {}
 
 def probable_follower_for(word)
-  WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word,nil], :endkey=>[word,{}], :group_level=>3)
+  WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word], :endkey=>[word,{}], :group_level=>3)
   row = WORD_MEMOIZER[word]['rows'].sample # get random row (ruby 1.9.2)
   row['key'][1]
 end
