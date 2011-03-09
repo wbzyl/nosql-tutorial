@@ -5,11 +5,12 @@ if RUBY_VERSION < "1.9.0"
   require 'rubygems'
 end
 
-require 'couchrest'
 require 'mongo'
 require 'optparse'
 require 'ostruct'
 require 'pp'
+require 'open-uri'
+require 'yajl'
 
 class OptparseCouch2Mongo
   Version = [0, 0, 1]
@@ -109,36 +110,15 @@ if options.verbose
 end
 
 @mongo = Mongo::Connection.new(options.mongohost, options.mongoport).db(options.mongodatabase).collection(options.mongocollection)
-@couch = CouchRest.database("#{options.couchhost}:#{options.couchport}/#{options.couchdatabase}")
+@records = Yajl::Parser.new.parse(open("http://#{options.couchhost}:#{options.couchport}/#{options.couchdatabase}/_all_docs?include_docs=true").read)
 
-puts "Sprawdzam czy istnieje _design/get" if options.verbose
-
-begin
-  @view = @couch.get("_design/get")
-  @view.destroy
-rescue RestClient::ResourceNotFound
-  # do nothing
-end
-
-@couch.save_doc({
-  "_id" => "_design/get",
-  :views => {
-    :all => {
-      :map => "function(doc){ emit(null, doc) }"
-    }
-  }
-})
-
-puts "Zapisuję widok all do _design/get. To trochę potrwa..." if options.verbose
-
-@records = @couch.view("get/all")
 puts "Rekordow do skopiowania: #{@records["total_rows"]}"
 
 @records["rows"].each_slice(100) { |slice|
   slice.map! { |item|
-    item["value"].delete "_rev"
-    item["value"].delete "chunk"
-    item = item["value"]
+    item["doc"].delete "_rev"
+    item["doc"].delete "chunk"
+    item = item["doc"]
   }
   @mongo.insert(slice)
 }
