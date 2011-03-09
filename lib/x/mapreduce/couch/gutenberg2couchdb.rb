@@ -2,9 +2,26 @@
 # -*- coding: utf-8 -*-
 
 # TODO:
-#  * skrypt działa tylko z ruby 1.9.2
+#  * skrypt działa tylko z ruby 1.9.2 (sprawdzić!)
 #  * zakładam dosowe końce wierszy w pobranych plikach
 #  * bulk save byłoby szybsze
+
+# Przykładowe nagłówki:
+#
+#  preamble:
+#
+#  *** START OF THIS PROJECT GUTENBERG EBOOK THE SIGN OF THE FOUR ***
+#  *** START OF THE PROJECT GUTENBERG EBOOK, THE ADVENTURES OF SHERLOCK HOLMES ***
+#
+#  postamble:
+#
+#  End of Project Gutenberg's The Sign of the Four, by Arthur Conan Doyle
+#  End of the Project Gutenberg EBook of The Defenders, by Philip K. Dick
+#  End of Project Gutenberg's The Mysterious Affair at Styles, by Agatha Christie
+#  *** END OF THIS PROJECT GUTENBERG EBOOK THE SIGN OF THE FOUR ***
+#  *** END OF THE PROJECT GUTENBERG EBOOK, THE ADVENTURES OF SHERLOCK HOLMES ***
+
+# Starsze książki nie mają takich nagłówków, np. William Shakespeare.
 
 # http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
 # http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
@@ -34,6 +51,10 @@ class OptparseGutenberg
     # common options
     options.verbose = false
 
+    # G.K. Chesterton, The Man Who Knew Too Much http://www.gutenberg.org/cache/epub/1720/pg1720.txt
+    # G.K. Chesterton, The Innocence of Father Brown http://www.gutenberg.org/cache/epub/204/pg204.txt
+    # Fyodor Dostoyevsky, The Idiot http://www.gutenberg.org/cache/epub/2638/pg2638.txt
+
     opts = OptionParser.new do |opts|
       opts.banner = "Użycie: gutenberg-couchdb.rb [OPCJE] NAZWA TYTUŁ"
       opts.separator ""
@@ -41,16 +62,20 @@ class OptparseGutenberg
       opts.separator "  Pobierz z http://www.gutenberg.org/files/ plik NAZWA"
       opts.separator "  i zapisz go w bieżącym katalogu pod nazwą TYTUŁ"
       opts.separator "  Następnie wczytaj plik, podziel go na akapity i zapisz je w bazie CouchDB."
-      opts.separator "  (Akapity krótsze niż 128 znaków są pomijane.)"
+      opts.separator "  (Akapity krótsze niż 80 znaków są pomijane.)"
       opts.separator ""
-      opts.separator "  Przykłady:"
+      opts.separator "  Przykłady (książki muszą zawierać PREAMBLE i POSTAMBLE):"
       opts.separator ""
-      opts.separator "    gutenberg-couchdb.rb --recreate -p 4000 the-sign-of-the-four.txt 2097/2097.txt"
-      opts.separator ""
-      opts.separator "    gutenberg-couchdb.rb -p 4000 -v \\"
-      opts.separator "      memoirs-of-sherlock-holmes.txt 834/834.txt\\"
-      opts.separator "      the-return-of-sherlock-holmes.txt 221/221.txt"
-
+      opts.separator "    gutenberg-couchdb.rb --recreate -p 5984 the-sign-of-the-four.txt http://www.gutenberg.org/cache/epub/2097/pg2097.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-innocence-of-father-brown.txt http://www.gutenberg.org/cache/epub/204/pg204.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-idiot.txt http://www.gutenberg.org/cache/epub/2638/pg2638.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 memoirs-of-sherlock-holmes.txt http://www.gutenberg.org/cache/epub/834/pg834.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-return-of-sherlock-holmes.txt http://www.gutenberg.org/cache/epub/108/pg108.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-adventures-of-sherlock-holmes.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 a-study-in-scarlet.txt http://www.gutenberg.org/cache/epub/244/pg244.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 the-sign-of-the-four.txt http://www.gutenberg.org/cache/epub/2097/pg2097.txt"
+      opts.separator "    gutenberg-couchdb.rb -p 5984 war-and-peace.txt http://www.gutenberg.org/cache/epub/2600/pg2600.txt"
       opts.separator "---------------------------------------------------------------"
       opts.separator ""
 
@@ -59,7 +84,7 @@ class OptparseGutenberg
         options.port = n
       end
 
-      opts.on("-d", "--database NAZWA", "nazwa bazy danych w której bedą zapisane akapity") do |name|
+      opts.on("-d", "--database NAZWA", "nazwa bazy danych w której bedą zapisane akapity (gutenberg)") do |name|
         options.database = name
       end
 
@@ -99,34 +124,20 @@ options = OptparseGutenberg.parse(ARGV)
 #pp options
 
 if ARGV.length.odd? || ARGV.length == 0
-  puts "Pomoc: ./gutenberg-couchdb.rb --help"
+  puts "Pomoc: ./gutenberg2couchdb.rb --help"
   exit
 end
 
 # the Gutenberg part
 
-#gutenberg_files = 'http://www.gutenberg.org/files'
-gutenberg_files = 'http://www.gutenberg.org/cache/epub'
-
 books = Hash[*ARGV]
-
-# testing ..
-#books = {
-#  'the-sign-of-the-four.txt' => '2097/2097.txt'
-#  'the-sign-of-the-four.txt' => '2097/2097.txt',
-#  'the-hound-of-the-baskervilles.txt' => '2852/2852.txt',
-#  'the-valley-of-fear.txt' => '3289/3289.txt',
-#  'a-study-in-scarlet.txt' => '244/244.txt',
-#  'memoirs-of-sherlock-holmes.txt' => '834/834.txt',
-#  'the-return-of-sherlock-holmes.txt' => '221/221.txt'
-#}
 
 books.each do |file, url|
   pathfile = File.join(File.dirname(__FILE__), file)
   if options.verbose
-    puts "curl #{gutenberg_files}/#{url} > #{pathfile}"
+    puts "curl #{url} > #{pathfile}"
   end
-  `curl #{gutenberg_files}/#{url} > #{pathfile}` unless File.exists?(pathfile)
+  `curl #{url} > #{pathfile}` unless File.exists?(pathfile)
 end
 
 # the CouchDB part
@@ -142,25 +153,22 @@ end
 chunk = 0
 books.keys.each do |book|
   title = book.split('.')[0].gsub('-', ' ')
-  #data = IO.readlines(book, "\r\n\r\n")  # DOS?
-  data = IO.readlines(book, "\r\n\r\n")  # Linux?
-  
-  puts "Wczytano apakpitow: "#{data.length}"
-  
+  data = IO.readlines(book, "\r\n\r\n")  # DOS?
+
+  puts "#{title} -- wczytano akapitów: #{data.length}"
+
   content = data.drop_while do |line|
-    #         *** START OF THIS PROJECT GUTENBERG EBOOK MEMOIRS OF SHERLOCK HOLMES ***
-    line !~ /^\*\*\* ?START OF (THE|THIS) PROJECT GUTENBERG EBOOK /
+    line !~ /^(\*\*\* ?)?START OF (THE|THIS) PROJECT/i
   end.reverse.drop_while do |line|
-    #          *** END OF THIS PROJECT GUTENBERG EBOOK MEMOIRS OF SHERLOCK HOLMES ***
-    line !~ /^\*\*\* ?END OF (THE|THIS) PROJECT GUTENBERG EBOOK /
+    line !~ /^(\*\*\* ?)?END OF (THE |THIS )?PROJECT GUTENBERG/i
   end.reject do |line|
-    line.length < 64 # remove short paragraphs
+    line.length < 80 # remove short paragraphs
   end.collect do |line|
     line.gsub!(/\r?\n/, ' ').chomp!('  ')
   end
 
-  puts "Po usunieciu naglowka i licencji zostalo akapitow: "#{data.length}"
-  
+  puts "po usunięciu PRE i POSTAMBLE zostalo akapitów: #{content.length}"
+
   content.each do |para|
     db.save_doc({
        :title => title.gsub('-', ' '),
@@ -168,11 +176,6 @@ books.keys.each do |book|
        :text => para
     })
     chunk += 1
-  end
-
-  if options.verbose
-    puts "title: #{title}"
-    puts "total para so far: #{chunk}"
   end
 
 end
