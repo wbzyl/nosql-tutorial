@@ -36,17 +36,15 @@ class OptparseCouch2Mongo
     @opts = OptionParser.new do |opts|
       opts.banner = "Użycie: #{$0} [OPCJE]"
       opts.separator ""
-      opts.separator "---------------------------------------------------------------"
+      opts.separator "------------------------------------------------------------------------------"
       opts.separator " Skrypt kopiuje bazę danych z CouchDB do MongoDB"
       opts.separator ""
       opts.separator " Przykłady:"
       opts.separator ""
-      opts.separator " #{$0} -p 5984 -d qq"
+      opts.separator " #{$0} -v -p 5984 -o 27017 -d rock -c rock"
       opts.separator ""
-      opts.separator " #{$0} -p 5984 -v \\"
-      opts.separator "   -d qq -a 192.168.0.1 -o 13000 -m foo -c bar -j 192.168.0.2"
-
-      opts.separator "---------------------------------------------------------------"
+      opts.separator " #{$0} -v -p 5984 -o 27017 -d ksiazki -c ksiazki -a 192.168.0.1 -j 192.168.0.2"
+      opts.separator "------------------------------------------------------------------------------"
       opts.separator ""
 
       opts.on("-p", "--portc N", Numeric, "port na którym uruchomiono CouchDB (domyślnie: 5984)") do |n|
