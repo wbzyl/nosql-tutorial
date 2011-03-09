@@ -10,8 +10,10 @@ require 'couchrest'
 
 unless ARGV[1]
   puts "Usage: read_stream_from_twitter PORT DBNAME\n"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb User:Pass 5984 nosql"
-  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb User:Pass 5984 nosql"
+#  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb User:Pass 5984 nosql"
+#  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb User:Pass 5984 nosql"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -uUser | read_stream_from_twitter.rb 5984 nosql"
+  puts "Example: curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials | read_stream_from_twitter.rb 5984 nosql"
   exit(0)
 end
 
