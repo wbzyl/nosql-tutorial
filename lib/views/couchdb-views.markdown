@@ -823,55 +823,51 @@ Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
 i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
 
 
-# TODO: Programujemy po stronie klienta
-
-**TODO** Skorzystać z Gutenberga.
+# *Rock* – programujemy po stronie klienta
 
 Do tej pory kodziliśmy po stronie serwera (ang. *server side programming*).
+Poniżej będzie przykład kodzenia po stronie klienta (ang. *client side programming*),
+gdzie skorzystamy z biblioteki *jquery.couch.js* (wykorzystanej też w Futonie).
 
-Teraz będzie przykład kodzenia po stronie klienta (ang. *client side
-programming*). Skorzystamy z biblioteki *jquery.couch.js*
-(wykorzystanej w Futonie),
+Zaczniemy od utworzenia tymczasowego widoku, który po przetestowaniu,
+zapiszemy w design document *test* pod nazwą *connection*:
 
-Po stronie klienta, odpytamy widok w bazie *photos*. Kod
-wpiszemy i wykonywamy w Firefoxie na konsoli rozszerzenia *Firebug*.
-(Jeśli korzystamy z Google Chrome to konsoli wbudowanej w tę przeglądarkę.)
-
-Zaczniemy od utworzenia tymczasowego widoku, który po przetestowaniu
-zapiszemy w design document *default* pod nazwą *size_by_tag*:
-
-Funkcja map:
+Funkcja map do wklejenia w *temporary view*:
 
     :::javascript
     function(doc) {
-      for (var name in doc.tags)
-        emit(doc.tags[name], doc.info.size);
+      for (var who in doc.similar)
+        emit(doc.id, doc.similar[who]);
     }
 
-Funkcja reduce:
+Po zapisaniu widoku w bazie, odpytujemy go w przeglądarce:
 
-    _sum
+    http://localhost:5984/rock/_design/test/_view/connection
 
-Po zapisaniu widoku, w zakładce z Futonem otwieramy okno z konsolą,
+Poniższy kod wpiszemy i wykonywamy w Firefoxie
+na konsoli rozszerzenia *Firebug*, czyli wykonamy go **po stronie klienta**.
+(Jeśli korzystamy z Google Chrome to kod wykonujemy na konsoli
+wbudowanej w tę przeglądarkę.)
+
+W przeglądarce, w zakładce z Futonem otwieramy okno z konsolą,
 gdzie wpisujemy:
 
     :::jquery_javascript
-    var db = $.couch.db('photos')
+    var db = $.couch.db('rock')
 
-Następnie odpytujemy widok:
+Następnie wpsiujemy i wykonujemy na konsoli:
 
     :::jquery_javascript
-    db.view('default/size_by_tag', {
+    db.view('test/connection', {
       success: function(data) {
         console.log( data.rows.map(function(o){ return o.value; }) );
     }})
 
-I jeszcze raz go odpytujemy, ale tym razem mamy zapytanie z jednym
-parametrem, *key*:
+I jeszcze raz na konsoli, tym razem zapytanie z jednym parametrem:
 
     :::jquery_javascript
-    db.view("app/by_size", {
-      key: 'maui',
+    db.view("test/connection", {
+      key: 'jimmypage',
       success: function(data) {
         console.log( data.rows.map(function (o) { return o.value; }) );
     }})
