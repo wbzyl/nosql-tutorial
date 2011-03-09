@@ -1,32 +1,34 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-# TODO:
 #  * skrypt działa tylko z ruby 1.9.2 (sprawdzić!)
 #  * zakładam dosowe końce wierszy w pobranych plikach
 #  * bulk save byłoby szybsze
 
-# Przykładowe nagłówki:
+# Przykładowe nagłówki książek w bazie Gutenberg.
 #
 #  preamble:
 #
-#  *** START OF THIS PROJECT GUTENBERG EBOOK THE SIGN OF THE FOUR ***
-#  *** START OF THE PROJECT GUTENBERG EBOOK, THE ADVENTURES OF SHERLOCK HOLMES ***
+#  *** START OF THIS PROJECT GUTENBERG
+#  *** START OF THE PROJECT GUTENBERG
 #
 #  postamble:
 #
-#  End of Project Gutenberg's The Sign of the Four, by Arthur Conan Doyle
-#  End of the Project Gutenberg EBook of The Defenders, by Philip K. Dick
-#  End of Project Gutenberg's The Mysterious Affair at Styles, by Agatha Christie
-#  *** END OF THIS PROJECT GUTENBERG EBOOK THE SIGN OF THE FOUR ***
-#  *** END OF THE PROJECT GUTENBERG EBOOK, THE ADVENTURES OF SHERLOCK HOLMES ***
+#  End of Project Gutenberg's
+#  End of the Project Gutenberg
+#  End of Project Gutenberg's
+#  *** END OF THIS PROJECT GUTENBERG
+#  *** END OF THE PROJECT GUTENBERG
 
 # Starsze książki nie mają takich nagłówków, np. William Shakespeare.
+# Skrypt wtedy nie działa.
 
 # http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
 # http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
 
-require 'rubygems'
+if RUBY_VERSION < "1.9.0"
+  require 'rubygems'
+end
 
 require 'optparse'
 require 'ostruct'
