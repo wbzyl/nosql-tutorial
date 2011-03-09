@@ -310,7 +310,7 @@ dla widoków z funkcją *reduce*.
 
 ## Kanoniczny przykład
 
-Na Sigmie jest baza *gutenberg* zawierająca ok. 4000
+Na Sigmie jest baza *gutenberg* zawierająca ok. 22&#x200a;000
 akapitów z kilkunastu książek pobranych
 z [Files Repository](http://www.gutenberg.org/files/)
 projektu Gutenberg.

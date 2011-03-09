@@ -113,10 +113,12 @@ end
 
 puts "Sprawdzam czy istnieje _design/get" if options.verbose
 
-#@view = @couch.get("_design/get")
-#if not @view.nil?
-#  @view.destroy
-#end
+begin
+  @view = @couch.get("_design/get")
+  @view.destroy
+rescue RestClient::ResourceNotFound
+  # do nothing
+end
 
 @couch.save_doc({
   "_id" => "_design/get",
