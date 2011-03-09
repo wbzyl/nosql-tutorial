@@ -61,6 +61,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "NodeJS i moduł node.couchapp.js", "/node-couchapp" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
+1. {%= link_to "Generator przemówień", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
@@ -193,6 +194,13 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * [CSS3 Cheat Sheet](http://www.smashingmagazine.com/2009/07/13/css-3-cheat-sheet-pdf/)
 
 
+<blockquote>
+ <p>
+  If you live to please the others, everyone will love you, except yourself.
+ </p>
+ <p class="author">– Paul Coelho</p>
+</blockquote>
+
 Różne:
 
 * [Cloudant](https://cloudant.com/#!/solutions/cloud)
@@ -231,3 +239,4 @@ Różne:
 * [backbone-couchdb](http://janmonschke.github.com/backbone-couchdb/)
   (zob. doc [backbone-couchdb.js](http://janmonschke.github.com/backbone-couchdb/backbone-couchdb.html))
 * Paul Joseph Davis, [New CouchDB Externals API](http://davispj.com/2010/09/26/new-couchdb-externals-api.html)
+* [Grapevine](https://github.com/benbjohnson/grapevine) – trending topics for stuff you care about
