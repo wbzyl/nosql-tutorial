@@ -61,6 +61,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "NodeJS i moduł node.couchapp.js", "/node-couchapp" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
+1. {%= link_to "Generator przemówień", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
