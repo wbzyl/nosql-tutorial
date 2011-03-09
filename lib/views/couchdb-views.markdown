@@ -419,131 +419,6 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-<blockquote>
- <p>
-  Wszystko da się zrozumieć poza miłością i sztuką.
- </p>
- <p class="author">[stara mądrość]</p>
-</blockquote>
-
-## Zrozumieć funkcje Reduce
-
-TODO: Przyjrzymy się na przykładzie tymczasowych widoków.  Jakaś mała i duża
-baza będą potrzebne + zapisywanie tego co się dzieje w logach Coucha.
-
-Funkcja reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      return sum(values);
-    }
-
-Czym są argumenty funkcji reduce?
-
-    :::javascript
-    function(keys, values, rereduce) {
-      log('KEYS: ' + keys);
-      log('VALUES: ' + values);
-      log('REREDUCE: ' + rereduce);
-      return sum(values);
-    }
-
-Wybieramy *Grouping*: exact, level 1, level 2, level 3, level 4.
-Wyjaśnić co oznacza grouping.
-
-Z listy rozwijanej **View** (prawy górny róg) wybieramy **Temporary view**.
-
-Domyślny widok tymczasowy składa się z *Map Function*:
-
-    :::javascript
-    function(doc) {
-      emit(null, doc);
-    }
-
-oraz pustej *Reduce Function*.
-
-    :::javascript
-    function(keys, values, rereduce) {
-    }
-
-**Terminologia:** pierwszy argument funkcji *emit* to
-**key**, a drugi to **value**.
-
-Argument *rereduce* przyjmuje wartość *false* lub *true*.
-Argumenty *keys* i *values* są tablicami. Jakimi?
-Wystarczy, że dopiszemy logowanie do funkcji reduce:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      log('KEYS: ' + keys);
-      log('VALUES: ' + values);
-    }
-
-A widok tymczasowy podmienimy na:
-
-    :::javascript
-    function(doc) {
-      emit(doc.user, doc.camera);
-    }
-
-i wartości argumentów zostaną zapisane w logach:
-
-    :::javascript
-    KEYS: zztop,6,john,4,john,3,john,2,bob,5,bob,1
-    VALUES: nikon,nikon,canon,canon,canon,nikon
-
-Zatem, tablica *keys* składa się z:
-
-    [key1, id1], [key2, id2], ...
-
-gdzie *id1*, to *_id* dokumentu zawierającego klucz *key1*, itd.
-
-Tablica *values*, zawiera odpowiadające kluczom *doc.user* nazwy
-aparatów *doc.camera*.
-
-Widok nie zawiera dokumentów **i dlatego jest mniejszy i szybciej się generuje**.
-Dokumenty możemy zawsze pobrać, ponieważ znamy ich *_id*.
-
-JTZ? Zapiszmy powyższy widok jako *photos/by_user*.
-
-Widok bez dokumentów:
-
-    curl -X GET http://localhost:4000/photos/_design/photos/_view/by_user?reduce=false
-    {"total_rows":6,"offset":0,"rows":[
-      {"id":"1","key":"bob","value":"nikon"},
-    ...
-
-i widok z dokumentami:
-
-    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=false'
-    {"total_rows":6,"offset":0,"rows":[
-      {"id":"1","key":"bob","value":"nikon",
-        "doc":{"_id":"1","_rev":"1-67f5...",
-               "name":"fish.jpg",
-               "created_at":[2010,9,1],
-               "user":"bob",
-               "type":"jpeg",
-               "camera":"nikon",
-               "info":{"width":100,"height":200,"size":12345},
-               "tags":["tuna","shark"]}},
-    ...
-
-ale, ustawienie *reduce* na *true*, zwraca:
-
-    curl -X GET 'http://localhost:4000/photos/_design/photos/_view/by_user?include_docs=true&reduce=true'
-    {
-      "error": "query_parse_error",
-      "reason": "Query parameter `include_docs` is invalid for reduce views."
-    }
-
-W zasadzie należało tego oczekiwać. Dlaczego?
-
-**Podsumowanie:** „We can use the **map function** to generate complex
-key value pairs (**sorted by key**) and then reduce the values
-corresponding to each unique key into either a simple or complex
-value.
-
-
 ## Obiecane rzeczy
 
 Widok **by_tag** zawiera funkcję reduce *_count*.
@@ -571,6 +446,111 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 * debugowanie widoków
 * view cleanup
 * view compaction
+
+
+<blockquote>
+ <p>
+  Wszystko da się zrozumieć poza miłością i sztuką.
+ </p>
+ <p class="author">[stara mądrość]</p>
+</blockquote>
+
+## Zrozumieć funkcje Reduce
+
+Najłatwiej zrozumieć o co chodzi parze Map & Reduce przyglądając
+się temu co jest zapisywane w logach CouchDB.
+
+### Marketdata
+
+W bazie *marketdata* zapiszemy następujący widok:
+
+    :::javascript marketdata.js
+    var couchapp = require('couchapp');
+
+    ddoc = {
+        _id: '_design/test'
+      , views: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.total = {
+      map: function(doc) {
+        emit([doc.volume, doc.price], doc.volume * doc.price);
+      },
+      reduce: function(keys, values, rereduce) {
+        log('REREDUCE: ' + rereduce);
+        log('KEYS: ' + keys);
+        log('VALUES: ' + values);
+        return sum(values);
+      }
+    }
+
+Tak go zapiszemy w bazie:
+
+    couchapp push marketdata.js http://localhost:5984/marketdata
+
+a tak go odpytamy:
+
+    curl http://localhost:5984/marketdata/_design/test/_view/total
+
+Po wciśnięciu enter, natychmiat przechodzimy na konsolę, gdzie
+uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
+
+Zwróćmy uwagę, że *couchdb* dopisał do tablicy *keys*
+z własnej inicjatywy *id* przetwarzanego dokumentu:
+
+    [key1, id1], [key2, id2], ...
+
+Innymi słowy, *id1*, to *_id* dokumentu zawierającego klucz *key1*,
+*id2*, to *_id* dokumentu – *key1*, itd.
+Jeśli dopiszemy do zapytania *rereduce=false*, to możemy użyć
+listy *keys* do utworzenia linku do dokumentu.
+
+Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
+
+
+### Movies
+
+W bazie *movies* zapiszemy następujący widok:
+
+    :::javascript movies.js
+    var couchapp = require('couchapp');
+
+    ddoc = {
+        _id: '_design/test'
+      , views: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.rating_avg = {
+      map: function(doc) {
+        emit(doc.rating, {"count": 1, "rating_total": doc.rating});
+      },
+      reduce: function(keys, values, rereduce) {
+        log('REREDUCE: ' + rereduce);
+        log('KEYS: ' + keys);
+        // log('VALUES: ' + values); => [object Object],[object Object],...
+        var count = 0;
+        values.forEach(function(element) { count += element.count; });
+        var rating = 0;
+        values.forEach(function(element) { rating += element.rating_total; });
+        return {"count": count, "rating_total": rating};
+      }
+    }
+
+Tak go zapiszemy w bazie:
+
+    couchapp push movies.js http://localhost:5984/movies
+
+a tak go odpytamy:
+
+    curl http://localhost:5984/movies/_design/test/_view/rating_avg
+
+Po wciśnięciu enter, natychmiat przechodzimy na konsolę, gdzie
+uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
+
+Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
+
 
 
 # Złączenia – czyli co wynika z *Collation Specification*
