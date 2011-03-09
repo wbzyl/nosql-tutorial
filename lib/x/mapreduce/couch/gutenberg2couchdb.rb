@@ -1,37 +1,40 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-#  * skrypt działa tylko z ruby 1.9.2 (sprawdzić!)
-#  * zakładam dosowe końce wierszy w pobranych plikach
-#  * bulk save byłoby szybsze
-
-# Przykładowe nagłówki książek w bazie Gutenberg.
+#  Luźne uwagi odnośnie implementacji:
 #
-#  preamble:
+#  * W bazie Gutenberg wszystkie pliki, które przeglądałem mają DOSowe
+#    końce końce wierszy. W skrypcie ustawiłem to „na sztywno”.
+#  * Polecenie „bulk save” byłoby szybsze.
+#  * Przykładowe nagłówki książek w bazie Gutenberg
 #
-#  *** START OF THIS PROJECT GUTENBERG
-#  *** START OF THE PROJECT GUTENBERG
+#      preamble:
 #
-#  postamble:
+#        *** START OF THIS PROJECT GUTENBERG
+#        *** START OF THE PROJECT GUTENBERG
 #
-#  End of Project Gutenberg's
-#  End of the Project Gutenberg
-#  End of Project Gutenberg's
-#  *** END OF THIS PROJECT GUTENBERG
-#  *** END OF THE PROJECT GUTENBERG
-
-# Starsze książki nie mają takich nagłówków, np. William Shakespeare.
-# Skrypt wtedy nie działa.
-
-# http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
-# http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
+#      postamble:
+#
+#        End of Project Gutenberg's
+#        End of the Project Gutenberg
+#        End of Project Gutenberg's
+#        *** END OF THIS PROJECT GUTENBERG
+#        *** END OF THE PROJECT GUTENBERG
+#
+#    Skrypt szuka tylko takich nagłówków.
+#    Starsze książki nie mają takich nagłówków, np. William Shakespeare.
+#    albo mają inne – wtedy skrypt nie działa.
 
 if RUBY_VERSION < "1.9.0"
   require 'rubygems'
 end
 
+# http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
+# http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
+
 require 'optparse'
 require 'ostruct'
+
 require 'pp'
 
 require 'couchrest'
@@ -52,10 +55,6 @@ class OptparseGutenberg
 
     # common options
     options.verbose = false
-
-    # G.K. Chesterton, The Man Who Knew Too Much http://www.gutenberg.org/cache/epub/1720/pg1720.txt
-    # G.K. Chesterton, The Innocence of Father Brown http://www.gutenberg.org/cache/epub/204/pg204.txt
-    # Fyodor Dostoyevsky, The Idiot http://www.gutenberg.org/cache/epub/2638/pg2638.txt
 
     opts = OptionParser.new do |opts|
       opts.banner = "Użycie: #{$0} [OPCJE] NAZWA TYTUŁ"
