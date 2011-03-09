@@ -31,13 +31,23 @@ Typowe zastosowania dokumentowych baz danych to:
  <p class="author">[The Tao of Programming 4.1]</p>
 </blockquote>
 
-1\. Przygotować przykład korzystający
-z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
-Więcej dokumentacji – [Mozilla Developer Network](https://developer.mozilla.org/en-US/).
+1\. Baza (CouchDB) „książki” zawiera dokumenty z informacjami o książkach,
+na przykład:
 
-Przykład aplikacji offline korzystającej z HTML5 localStorage, np. Offline Apps
-[Part 1](http://railscasts.com/episodes/247) & [Part 2](http://railscasts.com/episodes/248).
+    :::javascript
+    {
+      "_id": "3194d86ab7cb2c1465fa5fea901f4c55",
+      "_rev": "1-2724eb06ca15197e71e13e1b46b75aee",
+      "isbn": "1844571696",
+      "isbn13": "",
+      "book_id": "100_shakespeare_films_a01"
+    }
+    // http://sigma.ug.edu.pl:5984/ksiazki/3194d86ab7cb2c1465fa5fea901f4c55
 
+Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
+
+Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
+Niektóre pola są puste. Uwzględnić to w rachunkach.
 
 2\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
@@ -47,11 +57,17 @@ Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
     curl http://stream.twitter.com/1/statuses/sample.json -u<user>:<password> | mongoimport -c twitter_live
 
 Zamiast twittera użyć YQL. Przygotować przykład.
+Link do dokumentacji – [YQL Guide](http://developer.yahoo.com/yql/guide/index.html).
 
-[YQL Guide](http://developer.yahoo.com/yql/guide/index.html).
 
-Using & Creating YQL Open Data Tables. Jak? Przykłady.
+## TODO
 
+1\. Przygotować przykład korzystający
+z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
+Więcej dokumentacji – [Mozilla Developer Network](https://developer.mozilla.org/en-US/).
+
+Przykład aplikacji offline korzystającej z HTML5 localStorage, np. Offline Apps
+[Part 1](http://railscasts.com/episodes/247) & [Part 2](http://railscasts.com/episodes/248).
 
 3\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
 is a web service that enables you to do interactive analysis of
