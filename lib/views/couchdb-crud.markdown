@@ -59,11 +59,11 @@ Informacje o zespole skopiowałem ze strony A. Reisner’a
 
 Zaczynamy od utworzenia bazy:
 
-    curl -X PUT http://127.0.0.1:4000/lz/
+    curl -X PUT http://127.0.0.1:5984/lz/
 
 **Uwagi:**
 
-1. Przykładowy numer portu *4000* należy zmienić na taki jaki mamy
+1. Przykładowy numer portu *5984* należy zmienić na taki jaki mamy
   ustawiony w swojej konfiguracji CouchDB.
 2. W przykładach numer rewizji wpisany w fomacie **?-XXXX**
   należy wstawić prawdziwy numer rewizji dokumentu.
@@ -74,7 +74,7 @@ Zaczynamy od utworzenia bazy:
 Dodajemy dane pierwszego albumu:
 
     :::shell-unix-generic
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i \
       --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
 
@@ -86,13 +86,13 @@ o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
 *Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
 
     :::shell-unix-generic
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
     {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
 
 Obrazek, dopiero co zapisany w bazie, pobieramy korzystając z takiego uri:
 
-    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg
+    curl -X GET http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg
 
 Uwagi:
 
@@ -106,7 +106,7 @@ możemy skorzystać z funkcji *use UUID generated document ID*
 (co oznacza, że skorzystamy z *POST* zamiast *PUT*):
 
     :::shell-unix-generic
-    curl -X POST http://localhost:4000/lz  -H "Content-Type: application/json" \
+    curl -X POST http://localhost:5984/lz  -H "Content-Type: application/json" \
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
 
@@ -120,7 +120,7 @@ Dodawanie pojedynczo rekordów do bazy jest męczące.
 [HTTP Bulk Document API](http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API)
 ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
 
-    curl -X POST -H "Content-Type: application/json" --data @lz.json http://127.0.0.1:4000/lz/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" --data @lz.json http://127.0.0.1:5984/lz/_bulk_docs
 
 gdzie w pliku *lz.json* wpisujemy:
 
@@ -198,14 +198,14 @@ Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev
 Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
 
     :::shell-unix-generic
-    curl -X GET http://localhost:4000/lz/_all_docs
+    curl -X GET http://localhost:5984/lz/_all_docs
       {"total_rows":3, "offset":0,
        "rows":[
          {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
          {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
          {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
       ]}
-    curl -X GET http://localhost:4000/lz/_all_docs?include_docs=true
+    curl -X GET http://localhost:5984/lz/_all_docs?include_docs=true
       {"total_rows":3, "offset":0,
        "rows":[
          {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"4-b6b2..."},
@@ -226,19 +226,19 @@ Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery 
 
 Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
 
-    curl -X PUT http://127.0.0.1:4000/lz/076c... \
+    curl -X PUT http://127.0.0.1:5984/lz/076c... \
        --data '{"_rev":"1-XXXX","songs":["The Song Remains The Same"]}'
 
 Załącznik dodajemy w taki sposób (korzystamy z rewizji wypisanych powyżej):
 
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin.jpg
 
 Dodajemy okładki do albumu II oraz III:
 
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-ii.jpg
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
 
 W zasadzie, załączniki wygodniej dodawać w Futonie!
@@ -251,21 +251,21 @@ drivera do bazy CouchDB w tym języku.
 Jeśli będziemy chcieli usunąć dokument z „led-zeppelin-i” z bazy,
 to wystarczy wykonać polecenie:
 
-    curl -X DELETE http://127.0.0.1:4000/lz/led-zeppelin-i?rev=2-XXXX
+    curl -X DELETE http://127.0.0.1:5984/lz/led-zeppelin-i?rev=2-XXXX
 
 
 ### Get
 
 Pobieramy dokument:
 
-    curl -X GET http://127.0.0.1:4000/lz/led-zeppelin-i
+    curl -X GET http://127.0.0.1:5984/lz/led-zeppelin-i
 
 
 ### Copy
 
 Kopiujemy dokument z *led-zeppelin-i*:
 
-    curl -X COPY http://127.0.0.1:4000/lz/led-zeppelin-i -H "Destination: mothership"
+    curl -X COPY http://127.0.0.1:5984/lz/led-zeppelin-i -H "Destination: mothership"
 
 Czy można użyć kopiowania do czegoś sensownego?
 
@@ -285,12 +285,12 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-i*:
 
 za pomocą polecenia:
 
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-i/index.html?rev=2-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/index.html?rev=2-XXXX \
       -H "Content-Type: text/html" --data @i.html
 
 i po wpisaniu w przeglądarce:
 
-    http://localhost:4000/lz/led-zeppelin-i/index.html
+    http://localhost:5984/lz/led-zeppelin-i/index.html
 
 widzimy stronę z obrazkiem. Dziwne, nieprawdaż.
 
@@ -326,12 +326,12 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-ii*:
 
 Polecenie:
 
-    curl -X PUT http://127.0.0.1:4000/lz/led-zeppelin-ii/index.html?rev=8-XXXX \
+    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-ii/index.html?rev=8-XXXX \
       -H "Content-Type: text/html" --data @ii.html
 
 Teraz po wejściu na stronę:
 
-    http://localhost:4000/lz/led-zeppelin-ii/index.html
+    http://localhost:5984/lz/led-zeppelin-ii/index.html
 
 mamy pod okładką listę utworów. To jest naprawdę pokrętne!
 
