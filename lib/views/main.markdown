@@ -201,7 +201,7 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
  <p class="author">– Paul Coelho</p>
 </blockquote>
 
-Różne:
+# Niesklasyfikowany misz masz
 
 * [Cloudant](https://cloudant.com/#!/solutions/cloud)
 * [CouchOne](http://www.couchone.com/get)
