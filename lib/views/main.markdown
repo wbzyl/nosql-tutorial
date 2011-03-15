@@ -157,7 +157,7 @@ Twitter:
 
 Google:
 
-* [Books Ngram Viewer](http://ngrams.googlelabs.com/)
+* [Books Ngram Viewer](http://ngrams.googlelabs.com/) ([datasets](http://ngrams.googlelabs.com/datasets))
 
 Amazon public datasets:
 
