@@ -1,5 +1,16 @@
 #### {% title "Oswajamy MongoDB" %}
 
+<blockquote>
+ {%= image_tag "/images/datacharmer.gif", :alt => "[Data Charmer]" %}
+ <p>
+   Data seem sometimes to have their own life and will, and they
+   refuse to behave as we wish. Then, you need a firm hand to tame
+   the wild data and turn them into quiet and obeying pets.
+ </p>
+ <p class="author">— <a href="http://datacharmer.blogspot.com/">The Data Charmer</a></p>
+</blockquote>
+
+
 MongoDB can be thought of as the goodness that erupts when a
 traditional key-value store collides with a relational database
 management system, mixing their essences into something that’s not

@@ -130,6 +130,19 @@ TODO:
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
 
 
+<blockquote>
+ {%= image_tag "/images/google-bigtable.jpg", :alt => "[Google Big Table]" %}
+ <p>
+   Perhaps when it comes to natural language processing and related
+   fields, we’re doomed to complex theories that will never have the
+   elegance of physics equations. But if that’s so, we should stop
+   acting as if our goal is to author extremely elegant theories, and
+   instead embrace complexity and make use of the best ally we have:
+   the unreasonable effectiveness of data.
+ </p>
+ <p class="author">— <a href="http://research.google.com/pubs/archive/35179.pdf">A. Halevy, P. Norvig, F. Pereira</a></p>
+</blockquote>
+
 # Databases in the wild
 
 Infochimps – find the world's data:
