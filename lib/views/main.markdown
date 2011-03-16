@@ -24,6 +24,16 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.03.16] 28.03. zapraszam na prezentację „Narzędzia do wizualizacji baz danych”.
+Pozostałe prezentacje odbędą się według harmonogramu poniżej.
+Grupy powinny materiały pomocnicze do prezentacji i same prezentacje umieścić
+w specjalnie w tym celu przygotowanych repozytoriach (zlinkowanych z tytułami prezentacji niżej):
+
+* 28.03. — [Narzędzia do wizualizacji baz danych](https://github.com/nosql/data-visualisation-tools)
+* 04.04. — [Jak działa Hadoop?](https://github.com/nosql/hadoop-about)
+* 11.04. — [Wyszukiwanie z Elasticsearch](https://github.com/nosql/elasticsearch-about)
+* 18.04. — [Oswajanie Neo4j](https://github.com/nosql/neo4j-about)
+
 [2011.03.02] Konkurs z nagrodami – [Visualize Your Taxes](http://datavizchallenge.org/).
 Pierwsza nagroda $10K.
 
@@ -103,7 +113,7 @@ TODO:
 *  {%= link_to "Zadania", "/zadania" %}
 
 
-# Referaty
+# Prezentacje
 
 * Elasticsearch – jak wyszukiwać (np. co to są *facets*),
   import bazy do elasticsearch, połączenie z CouchDB (przykład)
