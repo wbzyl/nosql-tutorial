@@ -173,7 +173,7 @@ tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlenc
 Dla przykładu, zapytanie:
 
     curl http://localhost:5984/ls/_design/app/_view/by_tag -G \
-      --data-urlencode startkey`='"w"' --data-urlencode endkey='"w\ufff0"' \
+      --data-urlencode startkey='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
 
 zwraca:

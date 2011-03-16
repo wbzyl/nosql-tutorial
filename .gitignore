@@ -8,4 +8,3 @@ pkg
 *.sqlite3
 lib/tmp/**/*
 Gemfile.lock
-
