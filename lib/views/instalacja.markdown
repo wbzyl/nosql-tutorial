@@ -47,6 +47,7 @@ skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*):
 * *redis.sh*
 
 
+
 ## Uwagi o instalacji programów na *Sigmie*
 
 1. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
@@ -64,7 +65,16 @@ działać.
 **Dlatego, wszystkie polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**
 
 
-# Każdy leży na swojej *CouchDB* (czyli sofie)
+<blockquote>
+ {%= image_tag "/images/benjamin_franklin.jpg", :alt => "[Benjamin Franklin]" %}
+ <p>
+   Ktoś mnie zapytał: „Jaki może być pożytek z balonu?”
+   Odpowiedziałem: <b>A jaki jest pożytek z nowo narodzonego dziecka?</b>
+ </p>
+ <p class="author">— Benjamin Franklin (1706–1790)</p>
+</blockquote>
+
+# Każdy leży na swojej *CouchDB*
 
 Z serwera *github.com* klonujemy repozytorium CouchDB:
 
@@ -81,7 +91,8 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
     make
     make install
 
-*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej:
+*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
+podać ścieżkę do plików nagłówkowych:
 
     ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
 
