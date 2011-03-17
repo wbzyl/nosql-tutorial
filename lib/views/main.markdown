@@ -183,7 +183,8 @@ Newspapers:
 
 Movies:
 
-* [](ftp://ftp.fu-berlin.de/pub/misc/movies/database/) (<i>Marian Smolinski</i>)
+* [The Internet Movie Database](ftp://ftp.fu-berlin.de/pub/misc/movies/database/) –
+  [info](ftp://ftp.fu-berlin.de/pub/misc/movies/database/tools/README) (<i>Marian Smolinski</i>)
 
 [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
 (denormalizacja, konwersja na UTF-8).
