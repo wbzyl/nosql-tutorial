@@ -5,6 +5,7 @@ if RUBY_VERSION < "1.9.0"
   require 'rubygems'
 end
 
+require 'date'
 require 'couchrest'
 require 'pp'
 
@@ -16,11 +17,17 @@ out = CouchRest.database!("http://127.0.0.1:5984/nosql-slimmed")
 pager.all_docs do |slice|
   chunk = slice.map do |element|
     doc = db.get(element["id"])
+
+    date = DateTime.parse(doc['created_at'])
+    created_on =[date.year, date.month, date.day, date.hour, date.minute, date.second]
     {
       "_id" => doc["_id"],
       "text" => doc["text"],
-      :lang => doc["user"]["lang"],
-      :screen_name => doc["user"]["screen_name"]
+      "entities" => doc["entities"],
+      :screen_name => doc["user"]["screen_name"],
+      "lang" => doc["user"]["lang"],
+      "created_at" => doc["created_at"],
+      "created_on" => created_on
     }
   end
   out.bulk_save(chunk)
