@@ -49,10 +49,9 @@ Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
 Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
 Niektóre pola są puste. Uwzględnić to w rachunkach.
 
-2\. Wizualizacja danych.
 
-Przykładowe rozwiązanie:
-
+2\. Wizualizacja przykładowych danych.
+Przykładowe można przedstawiłem w „Generator przemówień i inne zastosowania…”.
 
 
 3\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
