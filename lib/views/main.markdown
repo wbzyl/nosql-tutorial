@@ -71,7 +71,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "NodeJS i moduł node.couchapp.js", "/node-couchapp" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
-1. {%= link_to "Generator przemówień", "/couchdb-gp" %}
+1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
@@ -211,6 +211,7 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 
 Ściągi:
 
+* [Couchbase HTTP API Reference](http://techzone.couchbase.com/sites/default/files/uploads/all/documentation/couchbase-api.html)
 * [CouchDB API Cheatsheet](http://wiki.apache.org/couchdb/API_Cheatsheet),
   [Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options),
   [The Antepenultimate CouchDB Reference Card](http://blog.fupps.com/2010/04/20/the-antepenultimate-couchdb-reference-card/)
