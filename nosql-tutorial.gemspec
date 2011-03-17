@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "nosql-tutorial"
 
   s.add_runtime_dependency 'sinatra'
+  s.add_runtime_dependency 'rack', '1.2.1'
   s.add_runtime_dependency 'rdiscount'
   s.add_runtime_dependency 'erubis'
 
