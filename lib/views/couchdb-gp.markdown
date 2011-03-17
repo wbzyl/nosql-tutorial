@@ -232,7 +232,6 @@ tweets per hour. Taki widok powinien wystarczyć. Funkcja map:
 
 oraz wbudowana funkcja reduce *_count*.
 
-
 Rezultaty z grouping level 4:
 
     [2011, 3, 17, 20] – 255
@@ -248,7 +247,7 @@ W tym celu, z text każdego tweeta wyciągnę, kto jest cytowany
     RT @name
     via @name
 
-i_przez kogo: *user.screen_name*.
+i przez kogo: *user.screen_name*.
 
 Teraz skorzystam z *node.couchapp.js*:
 
@@ -279,24 +278,25 @@ Wrzucamy widok do bazy:
     couchapp push sun.js http://localhost:5984/nosql-slimmed
 
 Uruchamiamy widok w Futonie. Dostajęmy ok. 3800 wyników.
-Zgodnie z oczekiwaniem.
+Bez niespodzianek – takich liczb się spodziewałem..
+Sprawdzam, kilka rzeczy wielokrotnie retweeted.
 
-Sprawdzam, kilka wyników. Tego gościa znam **@tenderlove**:
-
-Przeglądarka:
+Tego gościa znam **@tenderlove**. Na liczniku ma 20.
+Aby się dowiedzieć o co chodzi wpisuję w przeglądarce:
 
     http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=["@tenderlove"]&endkey=["@tenderlove",{}]&reduce=false
 
-Wiersz poleceń:
+A teraz to samo, ale z wiersza poleceń:
 
-   curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\[%22@tenderlove%22\]&endkey=\[%22@tenderlove%22,\{\}\]&reduce=false'
-   curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\["@tenderlove"\]&endkey=\["@tenderlove",\{\}\]&reduce=false'
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\[%22@tenderlove%22\]&endkey=\[%22@tenderlove%22,\{\}\]&reduce=false'
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\["@tenderlove"\]&endkey=\["@tenderlove",\{\}\]&reduce=false'
 
-Ciekawe! Tokyo:
+Instant gratification! Dowiaduje się ciekawych rzeczy! Rails & Tokyo po tsunami:
 
-    RT @tenderlove: Looks like ruby / rails is used for emergency gas shutoff systems at Tokyo Gas: http://slidesha.re/hFsGY5
+    RT @tenderlove: Looks like ruby / rails is used for emergency gas shutoff
+      systems at Tokyo Gas: http://slidesha.re/hFsGY5
 
-Przy okazji „rails routing quiz”:
+Przy okazji wyhaczyłem „rails routing quiz”:
 
     https://gist.github.com/871699
 
@@ -313,4 +313,8 @@ Prosty skrypt:
 Teraz, coś co było 110 razy retweeded:
 
     ./check.sh sstephenson
-    RT @sstephenson: Rails 3.1 should ship with jQuery as its default JavaScript library
+    RT @sstephenson: Rails 3.1 should ship with jQuery
+      as its default JavaScript library
+
+
+**TODO:** list function, sortowanie, odfiltrowanie rzeczy raz/kilkukrotnie(?) cytowanych.
