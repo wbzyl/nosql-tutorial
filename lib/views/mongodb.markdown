@@ -10,6 +10,7 @@
  <p class="author">— <a href="http://datacharmer.blogspot.com/">The Data Charmer</a></p>
 </blockquote>
 
+MongoDB is a document-oriented database.
 
 MongoDB can be thought of as the goodness that erupts when a
 traditional key-value store collides with a relational database
@@ -22,11 +23,17 @@ MongoDB is written in C++ and offers the following features:
 * Dynamic queries
 * Full index support, including on inner objects and embedded arrays
 * Query profiling
-* Replication and fail-over support
 * Efficient storage of binary data including large objects (e.g. photos and videos)
+
+Argument za MongoDB:
+
+* Replication and fail-over support
 * Auto-sharding for cloud-level scalability (currently in alpha)
 
-MongoDB is a document-oriented database.
+Ale teraz mamy rozproszony system i nowe problemy:
+
+* [Availability in Globally Distributed Storage Systems](http://research.google.com/pubs/pub36737.html)
+  ([pdf](http://research.google.com/pubs/archive/36737.pdf))
 
 
 ## Historia

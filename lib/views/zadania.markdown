@@ -49,7 +49,13 @@ Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
 Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
 Niektóre pola są puste. Uwzględnić to w rachunkach.
 
-2\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
+2\. Wizualizacja danych.
+
+Przykładowe rozwiązanie:
+
+
+
+3\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
 
 [streaming twitter into mongodb](http://eliothorowitz.com/post/459890033/streaming-twitter-into-mongodb):
