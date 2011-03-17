@@ -239,7 +239,7 @@ Rezultaty z grouping level 4:
     [2011, 3, 17, 19] – 291
     [2011, 3, 17, 18] – 209
 
-Co daje 4–5 tweets na minutę, czyli dwa razy mniej niż pierwsze oszczowanie.
+Co daje 4–5 tweets na minutę, czyli dwa razy mniej niż pierwsze oszacowanie.
 Pozostaje około 2000 tweets do codziennej lektury.
 
 OK. Najwyższa pora aby przyjrzeć się, które tweets są najczęściej cytowane.
