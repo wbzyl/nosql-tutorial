@@ -325,47 +325,46 @@ A teraz to samo, ale z wiersza poleceń:
     curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\[%22@tenderlove%22\]&endkey=\[%22@tenderlove%22,\{\}\]&reduce=false'
     curl 'http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\["@tenderlove"\]&endkey=\["@tenderlove",\{\}\]&reduce=false'
 
-Instant gratification! Dowiaduje się ciekawych rzeczy! Rails & Tokyo po tsunami:
+…no i dowiaduję się ciekawych rzeczy:
 
     RT @tenderlove: Looks like ruby / rails is used for emergency gas shutoff
       systems at Tokyo Gas: http://slidesha.re/hFsGY5
 
-Przy okazji wyhaczyłem „rails routing quiz”:
+Przy okazji znalazłem zajmujący „rails routing quiz”:
 
     https://gist.github.com/871699
 
-Prosty skrypt:
-
-    ./check.sh tenderlove
-
-Źródło:
+Ten prosty skrypt:
 
     :::shell-unix-generic check.sh
     #!/bin/bash
     curl http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\\[\"@$1\"\\]\&endkey=\\[\"@$1\",\\{\\}\\]\&reduce=false
 
-Teraz, ktoś cytowany najwięcej razy (też go znam; to autor
-biblioteki *Prototype*), na liczniku – 110:
+powinien ułatwić przeglądanie. Teraz wystarczy wpisać na konsoli:
+
+    ./check.sh tenderlove
+
+Ktoś cytowany najwięcej razy, też go kojarzę – to autor biblioteki *Prototype*), na liczniku – 110:
 
     ./check.sh sstephenson
     "RT @sstephenson: Rails 3.1 should ship with jQuery as its default JavaScript library
     "RT @sstephenson: Rails 3.1 should ship with jQuery as its default JavaScript library
     ... i tak 110 razy ten sam tekst ...
 
-Następny jest Ryan Bates (jego wszyscy znają), na liczniku – 41:
+Drugie miejsce na liście cytowań z wynikiem 41 zajmuje Ryan Bates (wszyscy go znają):
 
     ./check.sh sstephenson
     "Woohoo!! jQuery will be default in Rails 3.1. (via @rbates)"
     "RT @rbates: Woohoo!! jQuery will be default in Rails 3.1."
     ... i tak 41 razy ...
 
-A teraz inny schemat. Ten gość jest cytowany przez różne osoby, na liczniku – 19:
+Na koniec inny schemat cytowań – ziteapp jest cytowany przez różne osoby:
 
     ./check.sh ziteapp
     ["@ziteapp","_wee_"],"value":"jQuery on Rails http://t.co/RALsAap ...
     ["@ziteapp","chrismarin"],"value":"How to Deploy a Rails app to EC2 ...
     ["@ziteapp","shimdh"],"value":"jQuery on Rails http://t.co/I3PZX2n ...
-    ... większość tekstów jest różna ...
+    ... większość z 19 tekstów jest różna ...
 
 
 ## Podsumowanie
