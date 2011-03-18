@@ -35,8 +35,18 @@ Widok *markow*:
       reduce: "_count"
     }
 
-Skrypt *markov.rb* (tylko dla ruby 1.9.2+):
+Co generuje ten widok?
 
+    http://localhost:5984/gutenberg/_design/wc/_view/markov?startkey=["young"]&endkey=["young",{}]&group_level=2
+      {"rows":[
+      {"key":["young","a"],"value":3},
+      {"key":["young","accept"],"value":1},
+      {"key":["young","adair"],"value":4},
+      {"key":["young","aide"],"value":1},
+      {"key":["young","alec"],"value":2},
+      ...
+
+Skrypt *markov.rb* (tylko dla Ruby 1.9.2):
 
     :::ruby markov.rb
     #!/usr/bin/env ruby
@@ -49,7 +59,7 @@ Skrypt *markov.rb* (tylko dla ruby 1.9.2+):
 
     def probable_follower_for(word)
       WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word], :endkey=>[word,{}], :group_level=>2)
-      row =  @word_memoizer[word]['rows'].sample # get random row (ruby 1.9.2)
+      row = WORD_MEMOIZER[word]['rows'].sample # get random row (Ruby 1.9.2)
       row['key'][1]
     end
 
@@ -63,17 +73,6 @@ Skrypt *markov.rb* (tylko dla ruby 1.9.2+):
       counter += 1
     end
     print "\n"
-
-O co chodzi?
-
-    http://localhost:5984/gutenberg/_design/wc/_view/markov?startkey=["young"]&endkey=["young",{}]&group_level=2
-      {"rows":[
-      {"key":["young","a"],"value":3},
-      {"key":["young","accept"],"value":1},
-      {"key":["young","adair"],"value":4},
-      {"key":["young","aide"],"value":1},
-      {"key":["young","alec"],"value":2},
-      ...
 
 **Uwaga:** Jak będzie działał program jeśli zmienimy powyżej *group_level*:
 
@@ -107,54 +106,77 @@ Program uruchamiamy z wiersza poleceń, dla przykładu:
 
 # Twitter – wizualizacja statusów
 
-[Kontekst](http://stephenslighthouse.com/2011/03/15/twitter-stats/):
+Liczba dnia: 572,000 – liczba kont utworzonych 12.03.2011 na *twitter.com*.
 
-Liczba dnia: 572,000 – liczba kont utworzonych 12.03.2011.
-
-Liczba tweets wysyłanych jedengo dnia:
+Liczba tweets wysyłanych jednego dnia:
 
 * 50,000,000 – w lutym 2010 roku
 * 140,000,000 – w lutym 2011 roku
 
-Co oznacza, że w każdej sekundzie jest wysyłanych około 1620 tweets.
+([źródło](http://stephenslighthouse.com/2011/03/15/twitter-stats/))
 
-Mnie interesują takie klimaty:
+Innymi słowy, w każdej sekundzie wysyłanych jest mniej więcej 1620 tweets.
+
+
+## Przeglądanie 10 a 10,000 tweets
+
+Codziennie z rana przeglądam to co się ostatnio wydarzyło:
+czy ukazała się nowa wersja którejś z baz,
+modułów, bibliotek itp. W tym celu „zaprzyjaźniłem się”
+(tak to się nazywa na Twitterze) z autorami narzędzi
+z których korzystam na codzień.
+Wymaga to ode mnie przeczytania maksymalnie kilkunastu
+tweets i przejrzenia kilku stron.
+
+Ostatnio spróbowałem określić swoje zainteresowania za pomocą
+słów kluczowych. Oto one:
 
     :::javascript tracking
     track=infochimps,elasticsearch,couchbase,couchdb,\
       mongodb,redis,neo4j,hadoop,cassandra,nodejs,\
       github_js,github_rb,rails
 
-Tweets zawierające jedno z tych słów zbieram korzystając
-z [POST statuses/filter](https://dev.twitter.com/doc/post/statuses/filter) API.
-Szczegóły są takie:
+Twitter umożliwia, przy pomocy
+[POST statuses/filter](https://dev.twitter.com/doc/post/statuses/filter) API,
+zbieranie (*harvesting*) statusów zawierających jedno z tych słów.
+
+To polecenie:
 
     curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K credentials
 
-gdzie plik *credentials* zawiera jedną linijkę:
+wypisuje na *stdout* pobrane tweets. Plik *credentials* użyty powyżej zawiera:
 
     user = Login:Password
 
-Moje tweety spływają w tempie około 10 na minutę. W tym samym czasie,
-wszystkich wysłanych tweets jest około 100,000 (60*1600=96,000).
-Liczby te oznaczają, że interesujące mnie rzeczy może zawierać jeden
+Moje statuses/tweets spływają w tempie około 10 na minutę. W tym samym czasie,
+wszystkich wysłanych tweets jest około 100,000 (60\*1600=96,000).
+Oznacza to, że interesujące mnie rzeczy zawiera mniej więcej jeden
 tweet na 10,000.
 
-W ciągu jednego dnia moge zebrać w przybliżeniu 15,000 tweets.
-W pobranych tweetach będzie też sporo śmieci.
-zwłaszcza w tweetach z Cassandrą i Rails.
-Pytanie jak je odsiać?
+W ciągu jednego dnia moge zebrać w przybliżeniu 15,000
+(10\*60*24=14,400) tweets. Oczywiście w pobranych tweets będzie sporo
+śmieci.  Zwłaszcza w tweetach z Cassandrą i Rails.
 
-Wydaje się mi, że kilkukrotnie retweeted tweets, mogą być warte
-obejrzenia. Po przejrzeniu kilkudziesięciu tweets,
-można zaobserwować następujący wzór:
+Zakładając, że przejrzenie jedenego tweet zajmuje 1–2 sekundy,
+przeglądnięcie wszystkich zebranych w jeden dzień, zajęłoby mi około
+3–6 godzin plus godzina ekstra na prześledzenie tych interesujących.
+Dlatego przeglądanie wszystkich tweets nie wchodzi w grę.
+
+Czy można sobie jakoś poradzić z tym nadmiarem informacji?
+Po krótkim zastanowieniu się, doszedłem do wniosku,
+że wielokrotnie retweeted tweets, mogą być warte obejrzenia
+i poczytania.
+
+Jak wyglądają retweeted tweets?
+Przejrzałem kilkudziesiąt z nich i moją uwagę
+zwrócił powtarzający się schemat:
 
     'bout time! RT @rbates @dhh: Rails 3.1 will ship with jQuery...
     ...a real time chat app" http://t.co/GkzQgwp (via @dalmaer)
     ...Cassandra Wilson - Harvest Moon http://t.co/GguTS9v via @youtube
     Is on the phone with Cassandra - via http://truecaller.com
 
-Powyżej skorzystałem ze wspomagania ze strony takiego widoku tymczasowego:
+Aby się bliżej temu przyjrzeć skorzystałem następującego widoku:
 
     :::javascript
     function(doc) {
@@ -162,23 +184,28 @@ Powyżej skorzystałem ze wspomagania ze strony takiego widoku tymczasowego:
         emit(doc.text, null);
     }
 
-Widok ten usuwa ok. 80% tweets. Zostaje 20% retweeded tweets.
-Nie jest źle! Na razie zgromadziłem ok. 20 tys. tweets.
-Oznacza, to że trzba będzie się bliżej przyjrzeć 4 tys.
-z nich.
+Widok ten usuwa ok. 3/4 tweets. Zostaje 1/4.
 
-Ponieważ tweets zajmują już 50 MB, co przekłada się na czas wykonywania
-widoków, więc przed dalszymi ekperymentami postanowiłem
-je „odchudzić”. Po przyjrzeniu się pojedynczemu tweet,
-postanowiłem, że z każdego tweet zostawię tylko:
+Na razie zgromadziłem ok. 20 tys. tweets.
+Oznacza to, że pozostaje z grubsza 5 tys. do przejrzenia.
+Ciągle jest tego za dużo.
+
+
+## Odchudzanie danych
+
+Ponieważ zgromadzone dane zajmują 60 MB, co przekłada się na czas
+wykonywania widoków, więc aby skrócić ten czas, postanowiłem
+„odchudzić” dane.
+
+Po przyjrzeniu się pojedynczemu tweet, postanowiłem, że z każdego
+tweet zostawię tylko:
 
     _id
     created_at
     entities
-    entities
     text
     user.screen_name
-    lang
+    user.lang
 
 oraz dorzucę tablicę z datą w formacie:
 
@@ -190,18 +217,15 @@ wykorzystałem następujący skrypt:
     :::ruby massage-tweets.rb
     #!/usr/bin/env ruby
     # -*- coding: utf-8 -*-
-
     if RUBY_VERSION < "1.9.0"
       require 'rubygems'
     end
-
     require 'date'
     require 'couchrest'
     require 'pp'
 
     db = CouchRest.database("http://127.0.0.1:5984/nosql")
     pager = CouchRest::Pager.new(db)
-
     out = CouchRest.database!("http://127.0.0.1:5984/nosql-slimmed")
 
     pager.all_docs do |slice|
@@ -214,7 +238,7 @@ wykorzystałem następujący skrypt:
           "_id" => doc["_id"],
           "text" => doc["text"],
           "entities" => doc["entities"],
-          :screen_name => doc["user"]["screen_name"],
+          "screen_name" => doc["user"]["screen_name"],
           "lang" => doc["user"]["lang"],
           "created_at" => doc["created_at"],
           "created_on" => created_on
@@ -224,15 +248,15 @@ wykorzystałem następujący skrypt:
     end
 
 Teraz możemy się bliżej przyjrzeć tweets. Na początek, dokładniejsze oszacowanie
-tweets per hour. Taki widok powinien wystarczyć. Funkcja map:
+tweets per hour. Taki widok powinien wystarczyć, z funkcja map:
 
     function(doc) {
         emit(doc.created_on, null);
     }
 
-oraz wbudowana funkcja reduce *_count*.
+oraz wbudowaną funkcją reduce *_count*.
 
-Rezultaty z grouping level 4:
+Rezultaty z zaznaczonym grouping level 4:
 
     [2011, 3, 17, 20] – 255
     [2011, 3, 17, 19] – 291
@@ -240,6 +264,10 @@ Rezultaty z grouping level 4:
 
 Co daje 4–5 tweets na minutę, czyli dwa razy mniej niż pierwsze oszacowanie.
 Pozostaje około 2000 tweets do codziennej lektury.
+Ciągle jest tego za dużo.
+
+
+## Nowe widoki
 
 OK. Najwyższa pora aby przyjrzeć się, które tweets są najczęściej cytowane.
 W tym celu, z text każdego tweeta wyciągnę, kto jest cytowany
@@ -247,7 +275,7 @@ W tym celu, z text każdego tweeta wyciągnę, kto jest cytowany
     RT @name
     via @name
 
-i przez kogo: *user.screen_name*.
+i przez kogo, pole *user.screen_name* (a nie *user.name* – jak mogło by się wydawać).
 
 Teraz skorzystam z *node.couchapp.js*:
 
