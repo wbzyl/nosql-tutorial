@@ -369,7 +369,6 @@ Na koniec inny schemat cytowań – ziteapp jest cytowany przez różne osoby:
 
 ## Podsumowanie
 
-Powyższy widok, z *group_level=1* zwraca 1749 wyników.
+Widok *sun* powyżej, z *group_level=1* zwraca 1749 wyników.
 Po usunięciu tweets cytowanych raz, dwa lub trzy razy zostaje 140 wyników.
-
 
