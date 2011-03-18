@@ -128,8 +128,7 @@ z których korzystam na codzień.
 Wymaga to ode mnie przeczytania maksymalnie kilkunastu
 tweets i przejrzenia kilku stron.
 
-Ostatnio spróbowałem określić swoje zainteresowania za pomocą
-słów kluczowych. Oto one:
+Ostatnio spróbowałem określić swoje zainteresowania w kilku słowach. Oto one:
 
     :::javascript tracking
     track=infochimps,elasticsearch,couchbase,couchdb,\
@@ -269,15 +268,19 @@ Ciągle jest tego za dużo.
 
 ## Nowe widoki
 
-OK. Najwyższa pora aby przyjrzeć się, które tweets są najczęściej cytowane.
-W tym celu, z text każdego tweeta wyciągnę, kto jest cytowany
+Najwyższa pora aby przyjrzeć się najczęściej cytowanym autorom.
+W tym celu, z pola *text* każdego tweeta wyciągnę *@name* występujące
+w kontekście:
 
     RT @name
     via @name
 
-i przez kogo, pole *user.screen_name* (a nie *user.name* – jak mogło by się wydawać).
+Dodatkowo dodam do widoku pole *user.screen_name*,
+czyli login użytkownika, który retweeted tweet
+(a nie *user.name* – czyli imię i nazwisko).
 
-Teraz skorzystam z *node.couchapp.js*:
+Widok zapiszę w bazie za pomocą programu *couchapp* dla NodeJS.
+Tak programujemy widok w Javascript:
 
     :::javascript sun.js
     var couchapp = require('couchapp');
@@ -292,25 +295,28 @@ Teraz skorzystam z *node.couchapp.js*:
       map: function(doc) {
         var retweeted = /\b(via|RT)\s*(@\w+)/ig;
         // w tej wersji tylko pierwsze dopasowanie
-        // dodać toLowerCase() na match[2]
         var match = retweeted.exec(doc.text);
         if (match != null) {
-          emit([match[2], doc.screen_name], doc.text);
+          emit([match[2].toLowerCase(), doc.screen_name], doc.text);
         };
       },
       reduce: "_count"
     }
 
-Wrzucamy widok do bazy:
+A tak zapisujemy go w bazie:
 
     couchapp push sun.js http://localhost:5984/nosql-slimmed
 
-Uruchamiamy widok w Futonie. Dostajęmy ok. 3800 wyników.
-Bez niespodzianek – takich liczb się spodziewałem..
-Sprawdzam, kilka rzeczy wielokrotnie retweeted.
+Widok uruchamiamy w Futonie. Widok zawiera powyżej 4000 wyników.
+Tym razem bez niespodzianek. Tego oczekiwałem.
 
-Tego gościa znam **@tenderlove**. Na liczniku ma 20.
-Aby się dowiedzieć o co chodzi wpisuję w przeglądarce:
+Przeglądam wyniki z zaznaczonym grupowaniem na *level 1*.
+Większość autorów jest raz cytowana (*retweeted*).
+
+Sprawdzam, kilka rzeczy wielokrotnie cytowanych.
+
+**@tenderlove** – tego gościa znam – na liczniku ma 20 cytowań.
+Aby się dowiedzieć „o co chodzi” wpisuję w przeglądarce:
 
     http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=["@tenderlove"]&endkey=["@tenderlove",{}]&reduce=false
 
@@ -338,11 +344,33 @@ Prosty skrypt:
     #!/bin/bash
     curl http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\\[\"@$1\"\\]\&endkey=\\[\"@$1\",\\{\\}\\]\&reduce=false
 
-Teraz, coś co było 110 razy retweeded:
+Teraz, ktoś cytowany najwięcej razy (też go znam; to autor
+biblioteki *Prototype*), na liczniku – 110:
 
     ./check.sh sstephenson
-    RT @sstephenson: Rails 3.1 should ship with jQuery
-      as its default JavaScript library
+    "RT @sstephenson: Rails 3.1 should ship with jQuery as its default JavaScript library
+    "RT @sstephenson: Rails 3.1 should ship with jQuery as its default JavaScript library
+    ... i tak 110 razy ten sam tekst ...
+
+Następny jest Ryan Bates (jego wszyscy znają), na liczniku – 41:
+
+    ./check.sh sstephenson
+    "Woohoo!! jQuery will be default in Rails 3.1. (via @rbates)"
+    "RT @rbates: Woohoo!! jQuery will be default in Rails 3.1."
+    ... i tak 41 razy ...
+
+A teraz inny schemat. Ten gość jest cytowany przez różne osoby, na liczniku – 19:
+
+    ./check.sh ziteapp
+    ["@ziteapp","_wee_"],"value":"jQuery on Rails http://t.co/RALsAap ...
+    ["@ziteapp","chrismarin"],"value":"How to Deploy a Rails app to EC2 ...
+    ["@ziteapp","shimdh"],"value":"jQuery on Rails http://t.co/I3PZX2n ...
+    ... większość tekstów jest różna ...
 
 
-**TODO:** list function, sortowanie, odfiltrowanie rzeczy raz/kilkukrotnie(?) cytowanych.
+## Podsumowanie
+
+Powyższy widok, z *group_level=1* zwraca 1749 wyników.
+Po usunięciu tweets cytowanych raz, dwa lub trzy razy zostaje 140 wyników.
+
+
