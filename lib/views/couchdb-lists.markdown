@@ -13,6 +13,7 @@ Dorzucić:
 * [On _designs undocumented](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/on__designs_undocumented/uid%3D738)
 * [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/commonjs_modules_in_couchdb)
 * [View Snippets](http://wiki.apache.org/couchdb/View_Snippets)
+* [CouchDB: Using List Functions to sort Map/Reduce-Results by Value](http://geekiriki.blogspot.com/2010/08/couchdb-using-list-functions-to-sort.html)
 
 Dodać coś o programowaniu list po stronie klienta.
 
