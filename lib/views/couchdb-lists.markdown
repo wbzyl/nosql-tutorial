@@ -56,11 +56,12 @@ Widoki będziemy zapisywać w bazie za pomocą Node.Couchapp:
       var row;
       start({
         "headers": {
-          "Content-Type": "text/html"
+          "Content-Type": "text/plain"
          }
       });
       while(row = getRow()) {
         send(row.value);
+        send("\n");
       }
     }
 
@@ -168,28 +169,128 @@ zawsze zaczynać od widoku.
 Przykłady:
 
 * sortowanie
-* filtrowanie: opcje zapytań cutoff=3 – cytowane częściej niż trzy razy
+* filtrowanie: opcje zapytań *cutoff=3* – cytowane częściej niż trzy razy
 * szablony mustache
-* plain/text + kod programu dla circo z pakietu Graphvix)
+* plain/text + kod programu dla circo (z pakietu Graphvix)
 
 
+## Sortowanie po *values*
+
+Widoki są sortowane według *keys*.
+Aby wygenerować listę posortowaną po liczbie cytowań, należy ją posortować
+według *values*. W tym celu wystarczy zapamiętać wszystkie wiersze
+widoku w tablicy, następnie je posortować za pomocą funkcji *sort*
+i na koniec przesłać za pomocą *send*:
+
+    :::javascript
+    ddoc.lists.all = function(head, req) {
+      var row;
+      var rows = [];
+      start({
+        "headers": {
+          "Content-Type": "text/plain"
+         }
+      });
+      while(row = getRow()) {
+        rows.push(row);
+      };
+      rows.sort(function(a, b) {
+        return b.value - a.value;
+      });
+      rows.map(function(row) {
+        send(JSON.stringify(row));
+      });
+    }
+
+Teraz wykonanie polecenia:
+
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/all/sun?group_level=1'
+
+daje widok posortowany malejąco według listy cytowań.
+
+Niestety, teraz polecenie:
+
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/all/sun?group_level=1&limit=2'
+      {"key":["@_felipera"],"value":5}
+      {"key":["@_brooklynemm"],"value":1}
+
+jak widac, nie działa zgodnie z oczekiwaniem.
 
 
+## Filtrowanie – dodajemy *cutoff=N*
 
-# TODO
+Query option *cutoff=4* ma zwracać listę tweets cytowanych co najmniej cztery razy.
+Coś takiego można zaimplementować w taki sposób:
 
-Dorzucić:
+    :::javascript
+    ddoc.lists.all = function(head, req) {
+      var row;
+      var rows = [];
+      var cutoff = req.query["cutoff"] || 1;
+      start({
+        "headers": {
+          "Content-Type": "text/plain"
+         }
+      });
+      while(row = getRow()) {
+        if (row.value >= cutoff) {
+          rows.push(row);
+        };
+      };
+      rows.sort(function(a, b) {
+        return b.value - a.value;
+      }).map(function(row) {
+        send(JSON.stringify(row));
+      });
+    }
+
+Teraz sprawdzamy, kto był najczęściej cytowany:
+
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/all/sun?group_level=1&cutoff=40'
+      {"key":["@dhh"],"value":376}
+      {"key":["@mongodb"],"value":201}
+      {"key":["@sstephenson"],"value":110}
+      {"key":["@ryah"],"value":90}
+      {"key":["@hipsterhacker"],"value":57}
+      {"key":["@rbates"],"value":41}
+
+Jak sprawdzić, za pomocą funkcji listowych, dlaczego ci użytkownicy byli tak
+często cytowani.
+
+Bez funkcji listowych *quick & dirty solution* – korzystamy ze skryptu:
+
+    :::shell-unix-generic check.sh
+    #!/bin/bash
+    curl http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\\[\"@$1\"\\]\&endkey=\\[\"@$1\",\\{\\}\\]\&reduce=false
+
+w taki sposób:
+
+    ./check dhh
+    ./check mongodb
+
+Czy są jakieś niespodzianki?
+
+
+## Strona HTML – szablony Mustache
+
+TODO: *application.css*, html5 boiler code
+
+TODO: Graphviz output z szablonów Mustache
+
+
+## Programowanie po stronie klienta
+
+TODO: umieścić na stronie z mustache linki + ajax
+albo generuj kod dla Graphviz: taki / inny
+
+
+## Trochę niesklasyfikowanych linków
 
 * [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/commonjs_modules_in_couchdb)
 * [View Snippets](http://wiki.apache.org/couchdb/View_Snippets)
 * [CouchDB: Using List Functions to sort Map/Reduce-Results by Value](http://geekiriki.blogspot.com/2010/08/couchdb-using-list-functions-to-sort.html)
-
-Dodać coś o programowaniu list po stronie klienta.
-
-Coś prostego [Beauty of Code](http://beauty-of-code.de/2010/07/complex-joins-in-couchdb/),
-[Collating (not reducing) with CouchDB List Functions](http://japhr.blogspot.com/2010/02/collating-not-reducing-with-couchdb.html)
-– a gdzie przykład z reducing?
-
-Jeszcze jeden link:
-
 * [NOSQL Databases for Web CRUD (CouchDB) - Shows/Views](http://java.dzone.com/articles/nosql-databases-web-crud)
+
+Na koniec coś pięknego?
+
+* [Beauty of Code](http://beauty-of-code.de/2010/07/complex-joins-in-couchdb/)
