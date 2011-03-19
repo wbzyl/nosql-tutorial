@@ -370,7 +370,11 @@ Na koniec inny schemat cytowań – ziteapp jest cytowany przez różne osoby:
 ## Podsumowanie
 
 Widok *sun* powyżej, z *group_level=1* zwraca 1749 wyników.
-Po usunięciu tweets cytowanych raz, dwa lub trzy razy zostaje 140 wyników.
+Ale po usunięciu tweets cytowanych raz, dwa lub trzy razy zostaje 140 wyników.
+Niestety odfiltrowania niepotrzebnych rzeczy nie da zrobić za pomocą widoku.
 
-Pytanie: jak to zrobić w widoku?
+Fajnie by było wygenerować listę posortowaną po liczbie cytowań.
+Tego też nie da się zrobić za pomocą widoku!
 
+Do takich rzeczy potrzebujemy innego mechanizmu.
+W CouchDB do tych rzeczy możemy wykorzystać *list functions*.
