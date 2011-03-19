@@ -1,12 +1,44 @@
-#### {% title("Funkcje Lists") %}
+#### {% title "Funkcje listowe" %}
 
-„Just as show functions convert documents to arbitrary output formats,
-CouchDB list functions allow you to render the output of view queries
-in any format.”
+Do czego będziemy używać tych funkcji:
+„Just as show functions convert documents to arbitrary output formats,
+CouchDB list functions allow you to render
+**the output of *view queries* in any format.**”
 
-Użyteczne linki. Zacząć od prostej modyfikacji przykładu:
+Prosty przykład znajdziemy tutaj.
 
 * [Formatting with Show and List](http://wiki.apache.org/couchdb/Formatting_with_Show_and_List)
+
+Tak wygląda ta prosta funkcja listowa:
+
+    :::javascript
+    function(head, req) {
+      var row;
+      start({
+        "headers": {
+          "Content-Type": "text/html"
+         }
+      });
+      while(row = getRow()) {
+        send(row.value);
+      }
+    }
+
+
+Funkcje listowe konwertują widoki, dlatego aby wypróbować tę funkcję
+potrzebujemy jeszcze jakiejś bazy z widokiem, na przykład bazy *ls*
+z widokiem:
+
+    :::javascript
+    function(doc) {
+      emit(null, doc);
+    }
+
+
+Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zapytania):
+
+    /db/_design/foo/_list/list-name/view-name
+    curl -X GET http://localhost:5984/ls/_design/lists/_list/body/all?tag=wiedza
 
 Dorzucić:
 
@@ -24,14 +56,6 @@ pisać funkcję list pod konkretny widok. Dlatego zaczynamy od widoku.
 
 TODO: użyć node.couchapp.js (co będzie jak dodamy funkcję reduce):
 
-    :::json
-    {
-      "views": {
-        "all": {
-          "map": "function(doc) { emit(null, doc); }"
-        }
-      },
-
 Funkcja list:
 
     "lists": {
@@ -45,19 +69,6 @@ Funkcja list:
 
      }
 
-Inny przykład (z wiki):
-
-    function(head, req) {
-      var row;
-      start({
-        "headers": {
-          "Content-Type": "text/html"
-         }
-      });
-      while(row = getRow()) {
-        send(row.value);
-      }
-    }
 
 Przykład wykonania: jak / curl / przeglądarka.
 
@@ -82,10 +93,6 @@ Coś prostego [Beauty of Code](http://beauty-of-code.de/2010/07/complex-joins-in
 [Collating (not reducing) with CouchDB List Functions](http://japhr.blogspot.com/2010/02/collating-not-reducing-with-couchdb.html)
 – a gdzie przykład z reducing?
 
-Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zapytania):
-
-    /db/_design/foo/_list/list-name/view-name
-    curl -X GET http://localhost:5984/ls/_design/lists/_list/body/all?tag=wiedza
 
 TODO: dodać szablon mustache.
 
