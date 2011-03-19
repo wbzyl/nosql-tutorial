@@ -4,10 +4,24 @@
 CouchDB list functions allow you to render the output of view queries
 in any format.”
 
+Użyteczne linki. Zacząć od prostej modyfikacji przykładu:
+
+* [Formatting with Show and List](http://wiki.apache.org/couchdb/Formatting_with_Show_and_List)
+
+Dorzucić:
+
+* [On _designs undocumented](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/on__designs_undocumented/uid%3D738)
+* [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/commonjs_modules_in_couchdb)
+* [View Snippets](http://wiki.apache.org/couchdb/View_Snippets)
+
+Dodać coś o programowaniu list po stronie klienta.
+
 Dla przykładu, rozważmy widok *all* i funkcje list *body*:
 
+Zależność między: list a view – jeden do wielu; ale w przykładach ponizej będziemy
+pisać funkcję list pod konkretny widok. Dlatego zaczynamy od widoku.
 
-TODO: użyć node.couchapp.js:
+TODO: użyć node.couchapp.js (co będzie jak dodamy funkcję reduce):
 
     :::json
     {
@@ -22,13 +36,30 @@ Funkcja list:
     "lists": {
       "body": "function(head, req) {
          log(head); // info o widoku
-         log(req); // już było, ale wkleić poniżej i omówić
-         var row;
+         log(req);  // już było, ale wkleić poniżej i omówić
+         var row;   // czym jest row?
          send( jakiś nagłówek );
          while (row=getRow()) {
            send(row.value.body + '\\n');
 
      }
+
+Inny przykład (z wiki):
+
+    function(head, req) {
+      var row;
+      start({
+        "headers": {
+          "Content-Type": "text/html"
+         }
+      });
+      while(row = getRow()) {
+        send(row.value);
+      }
+    }
+
+Przykład wykonania: jak / curl / przeglądarka.
+
 
 Opis z bloga C. McMahona, [On _design undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented):
 
@@ -43,8 +74,7 @@ Opis z bloga C. McMahona, [On _design undocumented](http://caolanmcmahon.com/po
   *start()* are sent, on subsequent calls the data chunks set by *send()*
   are sent.
 
-Przydadzą się też dwie funkcje: *JSON.stringify* i *JSON.parse*
-(*toJSON* to to samo co *JSON.stringify*).
+Przydadzą się też dwie funkcje: *JSON.stringify* i *JSON.parse*.
 
 
 Coś prostego [Beauty of Code](http://beauty-of-code.de/2010/07/complex-joins-in-couchdb/),
@@ -58,11 +88,6 @@ Poniższe wywołanie zwraca treść cytatów (coś lepszego, dorzucić opcje zap
 
 TODO: dodać szablon mustache.
 
-
-
-## Zliczanie słów & generator przemówień
-
-Omówić przykład z katalogu *couch/word-count*.
 
 
 ## Sinatra & Couchrest

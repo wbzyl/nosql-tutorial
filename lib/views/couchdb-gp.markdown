@@ -373,3 +373,4 @@ Widok *sun* powyżej, z *group_level=1* zwraca 1749 wyników.
 Po usunięciu tweets cytowanych raz, dwa lub trzy razy zostaje 140 wyników.
 
 Pytanie: jak to zrobić w widoku?
+
