@@ -17,7 +17,15 @@ Skorzystamy z bazy *nosql-slimmed*. Oto przykładowy dokument z tej bazy:
       "text":"@JustinBieber my friend cassandra said hi (: and asked me if you can RT this :D",
       "entities":{
         "urls":[],
-        "user_mentions":[{"indices":[0,13],"name":"Justin Bieber","screen_name":"justinbieber","id":27260086,"id_str":"27260086"}],
+        "user_mentions":[
+          {
+            "indices":[0,13],
+            "name":"Justin Bieber",
+            "screen_name":"justinbieber",
+            "id":27260086,
+            "id_str":"27260086"
+          }
+         ],
         "hashtags":[]},
       "screen_name":"eliyahhhxD",
       "lang":"en",
@@ -27,7 +35,7 @@ Skorzystamy z bazy *nosql-slimmed*. Oto przykładowy dokument z tej bazy:
 
 Prosty przykład funkcji listowej znajdziemy
 na Wiki, [Formatting with Show and List](http://wiki.apache.org/couchdb/Formatting_with_Show_and_List).
-Użyjemy jej w kodzie poniżej.
+Użyjemy jej, na początek/aby od czegoś zacząć, w kodzie poniżej.
 
 Widoki będziemy zapisywać w bazie za pomocą Node.Couchapp:
 
@@ -70,11 +78,11 @@ Aby zapisać powyższy widok i funkcję list w bazie należy wykonać na konsol
     couchapp push sun.js http://localhost:5984/nosql-slimmed
 
 
-## Zmienne head, req i row
+### Co zawierają zmienne *head*, *req* i *row*
 
 Jeśli do kodu funkcji *all* dopiszemy
 
-    log(head); log(req); log(row);
+    log(head); log(req); log(JSON.strinify(row));
 
 to w logach będziemy mogli podejrzeć jaką wartość nadaje tym zmiennym
 CouchDB. I tak po wykonaniu polecenia:
@@ -108,6 +116,7 @@ w logach znajdziemy, że *head* to:
 
 a *row* to:
 
+    :::javascript
     {
       "id":"47402480702730240",
       "key": ["@_brooklynemm","StephSideris"],
@@ -118,7 +127,7 @@ To co znajdziemy w logach zależy od zapytania. Jeśli je wymienimy na:
 
     curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/all/sun?group=true'
 
-to *row*:
+to tym razem *row* będzie zawierać:
 
     {
       "key":["@_brooklynemm","StephSideris"],
@@ -160,18 +169,18 @@ W kodzie poniżej przydadzą się dwie funkcje: *JSON.stringify* i *JSON.parse
 
 # Twitter
 
-To będzie długi rozdział.
+Zależność między list a view, to jeden do wielu.
 
-Zależność między: list a view – jeden do wielu; ale w przykładach ponizej będziemy
-pisać funkcję list pod konkretny widok. Dlatego pisanie kodu będziemy
-zawsze zaczynać od widoku.
+W przykładach poniżej będziemy
+pisać funkcję list pod konkretny widok.
+Dlatego pisanie kodu będziemy zawsze zaczynać od widoku.
 
-Przykłady:
+Lista przykładów:
 
-* sortowanie
-* filtrowanie: opcje zapytań *cutoff=3* – cytowane częściej niż trzy razy
-* szablony mustache
+* sortowanie po *values*
+* filtrowanie rekordów: opcje zapytań *cutoff=3* – cytowane częściej niż trzy razy
 * plain/text + kod programu dla circo (z pakietu Graphvix)
+* szablony mustache
 
 
 ## Sortowanie po *values*
@@ -214,7 +223,9 @@ Niestety, teraz polecenie:
       {"key":["@_felipera"],"value":5}
       {"key":["@_brooklynemm"],"value":1}
 
-jak widac, nie działa zgodnie z oczekiwaniem.
+jak widac, nie działa zgodnie z oczekiwaniem – sortowanie & limit nie składają się
+się w tej kolejności (ale, najpierw mamy limit a następnie sortowanie).
+Czy można to jakoś naprawić?
 
 
 ## Filtrowanie – dodajemy *cutoff=N*
@@ -255,7 +266,7 @@ Teraz sprawdzamy, kto był najczęściej cytowany:
       {"key":["@rbates"],"value":41}
 
 Jak sprawdzić, za pomocą funkcji listowych, dlaczego ci użytkownicy byli tak
-często cytowani.
+często cytowani?
 
 Bez funkcji listowych *quick & dirty solution* – korzystamy ze skryptu:
 
@@ -288,13 +299,15 @@ Za pomocą funkcji listowej wygeneruję program :
       "@jsconfit" -> "UrbanDEV" [tweet_id=49367585552207872];
     }
 
-Po zapisaniu danych w pliku *nosql_tweets.gv*:
+Po zapisaniu design doc w bazie, a następnie danych w pliku *nosql_tweets.gv*:
 
+    couchapp push circo.js http://localhost:5984/nosql-slimmed
     curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/circo/sun?limit=100' > nosql-tweets.gv
 
 będziemy mogli wygenerować obrazek z grafem:
 
-    circo -Tpng -Onosql_tweets nosql_tweets.gv
+    circo -v -Tpng -Onosql-tweets nosql-tweets.gv
+
 
 ### Piszemy widok + funkcję listową
 
@@ -351,7 +364,7 @@ Wystarczy prosta modyfikacja kodu powyżej:
       send("}\n");
     }
 
-Niestety, całego grafu nie można wyrenderować:
+Niestety, całego grafu (tzn. bez opcji *limit*) nie można wyrenderować:
 
     curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/circo/sun' > nosql-tweets.gv
     circo -Tpng -Onosql-tweets nosql-tweets.gv
@@ -360,7 +373,8 @@ Niestety, całego grafu nie można wyrenderować:
     Segmentation fault (core dumped)
 
 Jak odfiltrować dane?
-Zmodyfikować [Retrieve the top N tags](http://wiki.apache.org/couchdb/View_Snippets#Retrieve_the_top_N_tags)?
+Jeśli zmodyfikujemy widok,
+zob. [Retrieve the top N tags](http://wiki.apache.org/couchdb/View_Snippets#Retrieve_the_top_N_tags):
 
     :::javascript circo.js
     ddoc.views.graph = {
@@ -389,7 +403,7 @@ Zmodyfikować [Retrieve the top N tags](http://wiki.apache.org/couchdb/View_Snip
       }
     }
 
-Niestety, teraz CouchDB wycina najczęściej cytowanych autorów:
+To teraz, niestety (**sprawdzić!**), CouchDB wycina najczęściej cytowanych autorów:
 
     :::json
     {"key":["@addthis"],"value":null},
@@ -404,7 +418,8 @@ Niestety, teraz CouchDB wycina najczęściej cytowanych autorów:
     {"key":["@techcrunch"],"value":null},
     {"key":["@vmische"],"value":null},
 
-Najwyższa pora przejść na MongoDB!
+Czyli mamy znowu problem! Najwyższa pora przejść na MongoDB!
+Albo, raz jeszcze przemyśleć, o co tak naprawdę nam chodzi.
 
 
 ## Strona HTML – szablony Mustache
@@ -412,11 +427,15 @@ Najwyższa pora przejść na MongoDB!
 Napiszemy funkcję listową pod ten widok:
 
     :::javascript tweets.js
-    var couchapp = require('couchapp');
+    var couchapp = require('couchapp')
+      , path = require('path')
+      , fs = require('fs');
     ddoc = {
       _id: '_design/test'
       , views: {}
       , lists: {}
+      , shows: {}
+      , templates: {}
     }
     module.exports = ddoc;
 
@@ -436,7 +455,7 @@ z akapitów:
     :::html
     <p>RT <b>@_brooklynemm</b> <a href="tweet_id">StephSideris</a></p>
 
-Funkcja generująca ten kod:
+Funkcja listowa generująca ten kod:
 
     :::javascript tweets.js
     ddoc.lists.tweets = function(head, req) {
@@ -486,12 +505,12 @@ Następnie piszemy (też prosty) szablon Mustache:
       </head>
     <body>
       {{#rows}}
-      <p>RT <b>{{ author }}</b> <a href='http://localhost:5984/nosql-slimmed/{{ id }}'>{{ tweeterer }}</a></p>
+      <p>RT <b>{{author}}</b> <a href='http://localhost:5984/nosql-slimmed/{{id}}'>{{tweeterer}}</a></p>
       {{/rows}}
     </body>
     </html>
 
-Na koniec, funkcja listowa do powyższego szablonu:
+Na koniec, zmieniona, funkcja listowa do powyższego szablonu:
 
     :::javascript tweets.js
     ddoc.lists.tweets = function(head, req) {
@@ -521,14 +540,28 @@ Na koniec, funkcja listowa do powyższego szablonu:
 
     couchapp.loadAttachments(ddoc, path.join(__dirname, 'attachments'));
 
+Sprawdzamy jak to działa:
+
+    couchapp push tweets.js http://localhost:5984/nosql-slimmed
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=2'
+
+Albo wchodzimy na stronę:
+
+    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=16
+    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=16&skip=100
+    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=8&startkey=["@dhh"]
+    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?startkey=["@dhh"]&endkey=["@dhh",{}]
+
+Co zostało jeszcze do zrobienia?
+
 
 ## Programowanie po stronie klienta
 
 TODO: umieścić na stronie z mustache linki + ajax
-albo generuj kod dla Graphviz: taki / inny
+albo generuj kod dla Graphviz.
 
 
-## Trochę niesklasyfikowanych linków
+# Trochę niesklasyfikowanych linków
 
 * [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb#/posts/commonjs_modules_in_couchdb)
 * [View Snippets](http://wiki.apache.org/couchdb/View_Snippets)
