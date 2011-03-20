@@ -271,11 +271,145 @@ w taki sposób:
 Czy są jakieś niespodzianki?
 
 
+## Graphviz output
+
+[Graphviz](http://www.graphviz.org/) to język do wizualizacji danych w postaci grafów.
+Do rysowania grafu używamy jedenej z „layout engines”:
+**dot**, **neato**, **fdb**, **sfdp**, **twopi** lub **circo**.
+Do wizualizacji tweets użyjemy maszynki **circo** (dlaczego? to się za
+chwilę okaże).
+
+Za pomocą funkcji listowej wygeneruję program :
+
+    :::dot tweets.gv
+    strict digraph {
+      "@JustinBieber" -> "eliyahhhxD" [tweet_id=45577472607125504];
+      ...
+      "@jsconfit" -> "UrbanDEV" [tweet_id=49367585552207872];
+    }
+
+Po zapisaniu danych w pliku *nosql_tweets.gv*:
+
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/circo/sun?limit=100' > nosql-tweets.gv
+
+będziemy mogli wygenerować obrazek z grafem:
+
+    circo -Tpng -Onosql_tweets nosql_tweets.gv
+
+### Piszemy widok + funkcję listową
+
+Wystarczy prosta modyfikacja kodu powyżej:
+
+    :::javascript circo.js
+    var couchapp = require('couchapp');
+    ddoc = {
+      _id: '_design/test'
+      , views: {}
+      , lists: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.graph = {
+      map: function(doc) {
+        var retweeted = /\b(via|RT)\s*(@\w+)/ig;
+        var match = retweeted.exec(doc.text);
+        if (match != null) {
+          emit([match[2].toLowerCase(), doc.screen_name], null);
+        };
+      },
+      reduce: function(keys, values, rereduce) {
+        var retwitters = [];
+
+        if (!rereduce) {
+          keys.map(function(key) {
+              // [["@tapajos","dirceu"],"45880323204067328"]
+              retwitters.push(key[0][1]);
+          });
+        } else {
+          values.map(function(o) {
+              //if (value.retwitters.length < 32) {
+              retwitters.push(o.retwitters[0]);
+              //};
+          });
+        };
+        return retwitters;
+      }
+    }
+
+    ddoc.lists.circo = function(head, req) {
+      var row;
+      start({
+        "headers": {
+          "Content-Type": "text/plain"
+        }
+      });
+      send("strict digraph {\n");
+      while(row = getRow()) {
+        // "@JustinBieber" -> "eliyahhhxD" [tweet_id=45577472607125504];
+        send('"' + row.key[0] + '"' + " -> " + '"' + row.key[1] + '"' + " [tweet_id=" + row.id + "];\n");
+      };
+      send("}\n");
+    }
+
+Niestety, całego grafu nie można wyrenderować:
+
+    curl 'http://localhost:5984/nosql-slimmed/_design/test/_list/circo/sun' > nosql-tweets.gv
+    circo -Tpng -Onosql-tweets nosql-tweets.gv
+    circo: graph is too large for cairo-renderer bitmaps. Scaling by 0.0256786 to fit
+    circo: failure to create cairo surface: out of memory
+    Segmentation fault (core dumped)
+
+Jak odfiltrować dane?
+Zmodyfikować [Retrieve the top N tags](http://wiki.apache.org/couchdb/View_Snippets#Retrieve_the_top_N_tags)?
+
+    :::javascript circo.js
+    ddoc.views.graph = {
+      map: function(doc) {
+        var retweeted = /\b(via|RT)\s*(@\w+)/ig;
+        var match = retweeted.exec(doc.text);
+        if (match != null) {
+          emit([match[2].toLowerCase(), doc.screen_name], null);
+        };
+      },
+      reduce: function(keys, values, rereduce) {
+        var retwitters = [];
+
+        if (!rereduce) {
+          keys.map(function(key) {
+              retwitters.push(key[0][1]);
+          });
+        } else {
+          values.map(function(o) {
+              //if (value.retwitters.length < 32) {
+              retwitters.push(o.retwitters[0]);
+              //};
+          });
+        };
+        return retwitters;
+      }
+    }
+
+Niestety, teraz CouchDB wycina najczęściej cytowanych autorów:
+
+    :::json
+    {"key":["@addthis"],"value":null},
+    {"key":["@dhh"],"value":null},
+    {"key":["@hipsterhacker"],"value":null},
+    {"key":["@jchris"],"value":null},
+    {"key":["@mongodb"],"value":null},
+    {"key":["@railsforzombies"],"value":null},
+    {"key":["@rbates"],"value":null},
+    {"key":["@ryah"],"value":null},
+    {"key":["@sstephenson"],"value":null},
+    {"key":["@techcrunch"],"value":null},
+    {"key":["@vmische"],"value":null},
+
+Najwyższa pora przejść na MongoDB!
+
+
 ## Strona HTML – szablony Mustache
 
 TODO: *application.css*, html5 boiler code
-
-TODO: Graphviz output z szablonów Mustache
 
 
 ## Programowanie po stronie klienta
