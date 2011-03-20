@@ -473,7 +473,7 @@ Funkcja listowa generująca ten kod:
 
 Po wejściu na stronę:
 
-    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=20
+    http://localhost:5984/nosql-slimmed/_design/test/_list/all/cloud?limit=20
 
 powinniśmy zobaczyć rezultat dotychczasowego kodowania.
 
