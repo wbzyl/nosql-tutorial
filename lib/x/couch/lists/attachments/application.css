@@ -1,0 +1,11 @@
+html {
+  background-color: #7812B7; /* full of mysteries */
+}
+
+body {
+  background-color: white;
+  width: 600px;
+  margin: 1em auto;
+  padding: 1em;
+  color: #444;
+}

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang=pl>
+  <head>
+    <meta charset=utf-8>
+    <link rel="stylesheet" href="/nosql-slimmed/_design/test/application.css">
+    <title>Recent Tweets</title>
+  </head>
+<body>
+
+  {{#rows}}
+  <p>RT <b>{{ author }}</b> <a href='http://localhost:5984/nosql-slimmed/{{ id }}'>{{ tweeterer }}</a></p>
+  {{/rows}}
+
+</body>
+</html>

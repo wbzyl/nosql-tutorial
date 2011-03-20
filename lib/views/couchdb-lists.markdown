@@ -409,7 +409,117 @@ Najwyższa pora przejść na MongoDB!
 
 ## Strona HTML – szablony Mustache
 
-TODO: *application.css*, html5 boiler code
+Napiszemy funkcję listową pod ten widok:
+
+    :::javascript tweets.js
+    var couchapp = require('couchapp');
+    ddoc = {
+      _id: '_design/test'
+      , views: {}
+      , lists: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.views.cloud = {
+      map: function(doc) {
+        var retweeted = /\b(via|RT)\s*(@\w+)/ig;
+        var match = retweeted.exec(doc.text);
+        if (match != null) {
+          emit([match[2].toLowerCase(), doc.screen_name], null);
+        };
+      }
+    }
+
+Dokument generowany przez funkcję listową będzie się składał
+z akapitów:
+
+    :::html
+    <p>RT <b>@_brooklynemm</b> <a href="tweet_id">StephSideris</a></p>
+
+Funkcja generująca ten kod:
+
+    :::javascript tweets.js
+    ddoc.lists.tweets = function(head, req) {
+      var row;
+      start({
+        "headers": {
+          "Content-Type": "text/html"
+        }
+      });
+      while(row = getRow()) {
+        // send(JSON.stringify(row));
+        send("<p>RT <b>" + row.key[0] + "</b> <a href='http://localhost:5984/nosql-slimmed/" + row.id +"'>" + row.key[1] + "</a></p>\n");
+      };
+    }
+
+Po wejściu na stronę:
+
+    http://localhost:5984/nosql-slimmed/_design/test/_list/tweets/cloud?limit=20
+
+powinniśmy zobaczyć rezultat dotychczasowego kodowania.
+
+
+### Mustache
+
+Zaczynamy od prostego arkusza CSS:
+
+    :::css attachments/application.css
+    html {
+      background-color: #7812B7; /* full of mysteries */
+    }
+    body {
+      width: 600px;
+      margin: 1em auto;
+      padding: 1em;
+      color: #444;
+    }
+
+Następnie piszemy (też prosty) szablon Mustache:
+
+    :::html templates/tweet.html.mustache
+    <!doctype html>
+    <html lang=pl>
+      <head>
+        <meta charset=utf-8>
+        <link rel="stylesheet" href="/nosql-slimmed/_design/test/application.css">
+        <title>Recent Tweets</title>
+      </head>
+    <body>
+      {{#rows}}
+      <p>RT <b>{{ author }}</b> <a href='http://localhost:5984/nosql-slimmed/{{ id }}'>{{ tweeterer }}</a></p>
+      {{/rows}}
+    </body>
+    </html>
+
+Na koniec, funkcja listowa do powyższego szablonu:
+
+    :::javascript tweets.js
+    ddoc.lists.tweets = function(head, req) {
+      var mustache = require('templates/mustache');
+      var template = this.templates['tweet.html'];
+
+      var row;
+      var rows = [];
+      start({
+        "headers": {
+          "Content-Type": "text/html"
+        }
+      });
+      while(row = getRow()) {
+        // {"id":"47402480702730240","key":["@_brooklynemm","StephSideris"]
+        rows.push({id: row["id"], author: row.key[0] , tweeterer: row.key[1]});
+      };
+
+      var view = {rows: rows};
+      var html = mustache.to_html(template, view);
+      return html;
+    }
+
+    ddoc.templates.mustache = fs.readFileSync('templates/mustache.js', 'UTF-8');
+    ddoc.templates['tweet.html'] = fs.readFileSync('templates/tweet.html.mustache', 'UTF-8');
+
+
+    couchapp.loadAttachments(ddoc, path.join(__dirname, 'attachments'));
 
 
 ## Programowanie po stronie klienta
