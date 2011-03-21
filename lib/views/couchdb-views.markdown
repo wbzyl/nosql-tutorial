@@ -872,6 +872,9 @@ I jeszcze raz na konsoli, tym razem zapytanie z jednym parametrem:
         console.log( data.rows.map(function (o) { return o.value; }) );
     }})
 
+Zobacz też Caolan McMahon,
+[Writing for node and the browser](http://caolanmcmahon.com/posts/writing_for_node_and_the_browser#/posts/writing_for_node_and_the_browser)
+
 
 ## Linki
 
