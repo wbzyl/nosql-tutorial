@@ -82,7 +82,7 @@ Aby zapisać powyższy widok i funkcję list w bazie należy wykonać na konsol
 
 Jeśli do kodu funkcji *all* dopiszemy
 
-    log(head); log(req); log(JSON.strinify(row));
+    log(head); log(req); log(JSON.stringify(row));
 
 to w logach będziemy mogli podejrzeć jaką wartość nadaje tym zmiennym
 CouchDB. I tak po wykonaniu polecenia:
