@@ -20,6 +20,10 @@ Tak uruchamiamy ten serwer:
 
 Co ten serwer robi?
 
+Więcej przykładów?
+
+* [OSButler](http://blog.osbutler.com/categories/node-by-example/)
+
 
 ## Instalacja systemu *Node* oraz modułu *Socket.IO-node*
 
