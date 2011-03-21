@@ -271,3 +271,4 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * Paul Joseph Davis, [New CouchDB Externals API](http://davispj.com/2010/09/26/new-couchdb-externals-api.html)
 * [Grapevine](https://github.com/benbjohnson/grapevine) – trending topics for stuff you care about
 * [Getting Started with CouchDB](http://net.tutsplus.com/tutorials/getting-started-with-couchdb/) – tutorial
+* [Open Data Manual](http://opendatamanual.org/) – discusses legal, social and technical aspects of open data

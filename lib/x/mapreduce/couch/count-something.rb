@@ -4,7 +4,9 @@
 require 'couchrest'
 require 'pp'
 
-couch = CouchRest.new("http://sigma.ug.edu.pl:5984")
+#couch = CouchRest.new("http://sigma.ug.edu.pl:5984")
+
+couch = CouchRest.new("http://localhost:5984")
 db = couch.database('gutenberg')
 
 puts "Now that we've parsed all those books into CouchDB,"
@@ -39,7 +41,7 @@ params = {
 }
 pp db.view('app/wc', params)
 
-puts ""
-puts "The url looks like this:"
-puts "\n\thttp://localhost:5984/gutenberg/_design/app/_view/wc?key=[\"very\",\"the skull\"]"
-puts "\nTry dropping that in your browser..."
+#puts ""
+#puts "The url looks like this:"
+#puts "\n\thttp://localhost:5984/gutenberg/_design/app/_view/wc?key=[\"youth\",\"the idiot\"]"
+#puts "\nTry dropping that in your browser..."
