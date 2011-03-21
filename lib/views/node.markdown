@@ -1,8 +1,10 @@
 #### {% title "Node.JS" %}
 
-Co to jest [Node.JS]()?
+* Co to jest [Node.JS](http://nodejs.org/)?
+* Tutorial – [Mastering Node](http://visionmedia.github.com/masteringnode/)
+* [API v0.4.3](http://nodejs.org/docs/v0.4.3/api/)
 
-Przykładowy serwer www napisany w Node wyglada tak:
+Program „hello world” dla NodeJS, to prosty serwer www:
 
     :::javascript server.js
     var http = require('http');
@@ -12,7 +14,7 @@ Przykładowy serwer www napisany w Node wyglada tak:
     }).listen(8124, "127.0.0.1");
     console.log('Server running at http://127.0.0.1:8124/');
 
-Uruchamiamy serwer:
+Tak uruchamiamy ten serwer:
 
     node server.js
 
