@@ -24,6 +24,9 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.03.21] [Source Code Visualisation](http://www.youtube.com/watch?v=T5RrEVAzdM4). Polecam!
+
+
 [2011.03.16] 28.03. zapraszam na prezentację „Narzędzia do wizualizacji baz danych”.
 Pozostałe prezentacje odbędą się według harmonogramu poniżej.
 Grupy powinny materiały pomocnicze do prezentacji i same prezentacje umieścić
