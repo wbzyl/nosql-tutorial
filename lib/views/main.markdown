@@ -24,6 +24,10 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.03.24] [Geocouch](https://github.com/couchbase/geocouch) – GeoCouch, a spatial index for CouchDB.
+Teraz Geocouch jest wtyczką/rozszerzeniem do CouchDB.
+Instalacja jest banalnie prosta. Warto dodać je do swojego servera CouchDB.
+
 [2011.03.22] [5 Criteria to Compare Data Marketplaces](http://nosql.mypopescu.com/post/4020294957/5-criteria-to-compare-data-marketplaces).
 Nie masz jeszcze swoich danych. Zajrzyj tutaj – [Factual](http://www.factual.com/)
 i tutaj – [Freebase](http://www.freebase.com/).
