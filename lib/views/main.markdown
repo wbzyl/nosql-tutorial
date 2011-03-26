@@ -25,8 +25,8 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 -->
 
 [2011.03.22] [5 Criteria to Compare Data Marketplaces](http://nosql.mypopescu.com/post/4020294957/5-criteria-to-compare-data-marketplaces).
-Nie masz jeszcze swoich danych. Zajrzyj tutaj – [Factual](http://www.factual.com/)
-i tutaj – [Freebase](http://www.freebase.com/).
+Nie masz jeszcze swoich danych. Zajrzyj tutaj → [Factual](http://www.factual.com/)
+i tutaj → [Freebase](http://www.freebase.com/).
 
 [2011.03.21] [Source Code Visualisation](http://www.youtube.com/watch?v=T5RrEVAzdM4). Polecam!
 Warto samemu obejrzeć co się działo w repozytoriach CouchDB i MongoDB.
