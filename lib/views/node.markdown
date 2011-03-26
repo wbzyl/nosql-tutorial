@@ -25,26 +25,20 @@ Więcej przykładów?
 * [OSButler](http://blog.osbutler.com/categories/node-by-example/)
 
 
-## Instalacja systemu *Node* oraz modułu *Socket.IO-node*
+### Instalacja modułu *Socket.IO-node*
 
-Klonujemy repozytoria ze źródłami:
+Korzystamy z NPM:
 
-    git://github.com/ry/node.git
-    cd node
-    ./configure --prefix=$HOME/node
-    make
-    make doc
-    make install
-    mkdir $HOME/.node_modules
-    cd $HOME/.node_modules
-    git clone git://github.com/LearnBoost/Socket.IO-node.git socket.io
+    npm install socket.io
 
-Uwagi: (1) katalog *$HOME/.node_modules* jest w ścieżkach z *LOAD_PATH*
-programu *node* (2) dodajemy katalog *$HOME/.node/bin* do zmiennej
-*PATH*.
+Albo, klonujemy repozytorium:
+
+    git clone git://github.com/LearnBoost/Socket.IO-node.git socket.io --recursive
+    cd socket.io
+    npm link .
 
 
-## Chat
+## Chat korzystający z websockets
 
 Program *chat* to program „hello world” dla websockets.
 
@@ -89,8 +83,7 @@ Serwer *server.js* („2in1” – serwer www + serwer dla websocket):
 
     server.listen(8080);
 
-    // socket.io, I choose you
-    // simplest chat application ever
+    // socket.io, I choose you simplest chat application ever
     var io = io.listen(server)
       , buffer = [];  // storage for recent messages
 
