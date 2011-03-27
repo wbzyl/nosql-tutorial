@@ -48,7 +48,10 @@ IO.foreach(filename) do |line|
   next unless (md = line.match(regex))
   #puts "#{md.length}: #{md[1]} / #{md[2]} / #{md[3]} : #{md[4]} : #{md[5]} : #{md[6]}"
 
-  batch.push( {:ping => [md[3].to_i, months[md[2]], md[1].to_i, md[4].to_i, md[5].to_i, md[6].to_i] })
+  batch.push( {
+    :_id => Digest::MD5.hexdigest(rand.to_s + line),
+    :ping => [md[3].to_i, months[md[2]], md[1].to_i, md[4].to_i, md[5].to_i, md[6].to_i] }
+  )
   if total == batch_size
     db.bulk_save(batch)
     total = 0
