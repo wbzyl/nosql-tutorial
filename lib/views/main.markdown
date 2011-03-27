@@ -29,8 +29,8 @@ Teraz Geocouch jest wtyczką/rozszerzeniem do CouchDB.
 Instalacja jest banalnie prosta. Warto dodać je do swojego servera CouchDB.
 
 [2011.03.22] [5 Criteria to Compare Data Marketplaces](http://nosql.mypopescu.com/post/4020294957/5-criteria-to-compare-data-marketplaces).
-Nie masz jeszcze swoich danych. Zajrzyj tutaj – [Factual](http://www.factual.com/)
-i tutaj – [Freebase](http://www.freebase.com/).
+Nie masz jeszcze swoich danych. Zajrzyj tutaj → [Factual](http://www.factual.com/)
+i tutaj → [Freebase](http://www.freebase.com/).
 
 [2011.03.21] [Source Code Visualisation](http://www.youtube.com/watch?v=T5RrEVAzdM4). Polecam!
 Warto samemu obejrzeć co się działo w repozytoriach CouchDB i MongoDB.
@@ -255,7 +255,6 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
   [Modeling Life and Data](http://www.geopense.net/distrib/cassandra-life-science.pdf)
 * [ACID Transactions Are Overrated](http://infogrid.org/blog/2010/08/acid-transactions-are-overrated/)
 * [A demo Rails app that shows of loose_change and geocouch](https://github.com/joshuamiller/loose_change_demo)
-* [Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
 * [PDX API](http://www.pdxapi.com/) – is a JSON API that provides
   access to geographic and real time data from Portland;
   [aplikacja CouchApp + narzędzia do konwersji danych](https://github.com/maxogden/PDXAPI)
@@ -280,3 +279,4 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * [Grapevine](https://github.com/benbjohnson/grapevine) – trending topics for stuff you care about
 * [Getting Started with CouchDB](http://net.tutsplus.com/tutorials/getting-started-with-couchdb/) – tutorial
 * [Open Data Manual](http://opendatamanual.org/) – discusses legal, social and technical aspects of open data
+* [Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
