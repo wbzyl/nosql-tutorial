@@ -48,6 +48,23 @@ Ale teraz mamy rozproszony system i nowe problemy:
 * [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
 * [Journaling / Durability](http://www.mongodb.org/display/DOCS/Journaling)
 
+K. Banker, MongoDB Aggregation:
+
+
+* [Counting and Grouping](http://kylebanker.com/blog/2009/11/mongodb-count-group/)
+* [Grouping Elaborated](http://kylebanker.com/blog/2009/11/mongodb-advanced-grouping/)
+* [Map-Reduce Basics](http://kylebanker.com/blog/2009/12/mongodb-map-reduce-basics/)
+
+
+Przykłady:
+
+* [MapReduce Example Programs](http://holumbus.fh-wedel.de/trac/wiki/MapReduceExamples) –
+ proste grafiki pokazujące o co chodzi w mapreduce
+* [map-reduce using mongoid](https://willj.net/2010/07/12/map-reduce-using-mongoid/)
+* [MapReduce and K-Means Clustering](http://blog.data-miners.com/2008/02/mapreduce-and-k-means-clustering.html) –
+ tylko dla MongoDB
+
+
 ## Różne
 
 * [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)
