@@ -3,8 +3,6 @@
 
 require 'digest/md5'
 
-#require 'yajl'
-
 require 'date'
 require 'pp'
 
