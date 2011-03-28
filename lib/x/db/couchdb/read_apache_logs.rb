@@ -3,7 +3,7 @@
 
 require 'digest/md5'
 
-require 'yajl'
+#require 'yajl'
 
 require 'date'
 require 'pp'
@@ -38,10 +38,12 @@ months = {"Jan" => 1, "Feb" => 2, "Mar" => 3,
   "Oct" => 10, "Nov" => 11, "Dec" => 12}
 
 total = 0
-batch_size = 1000
+batch_size = 20000
 batch = []
 
 regex = /^(\d{2})\/(\w{3})\/(\d{4}):(\d{2}):(\d{2}):(\d{2}) \+\d{4}/
+
+# Array.new(20000) { Hash.new }
 
 IO.foreach(filename) do |line|
   # czasami w pobieranym strumieniu zapląta się dziwny wiersz
@@ -54,6 +56,7 @@ IO.foreach(filename) do |line|
   )
   if total == batch_size
     db.bulk_save(batch)
+    batch = []
     total = 0
   end
 
