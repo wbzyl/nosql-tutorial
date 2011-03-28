@@ -12,7 +12,7 @@ require 'couchrest'
 
 unless ARGV[1]
   puts "Usage: #{$0} FILENAME DBNAME\n"
-  puts "Example: #{$0} apache-logs http://localhost:5984/logs-2011"
+  puts "Example: #{$0} apache-logs http://localhost:5984/logs-time-logs"
   puts "  where logs conists of lines:"
   puts "      20/Mar/2011:01:18:16 +0100"
   puts "      20/Mar/2011:01:18:44 +0100"
@@ -38,12 +38,12 @@ months = {"Jan" => 1, "Feb" => 2, "Mar" => 3,
   "Oct" => 10, "Nov" => 11, "Dec" => 12}
 
 total = 0
-batch_size = 20000
+batch_size = 1000
 batch = []
 
 regex = /^(\d{2})\/(\w{3})\/(\d{4}):(\d{2}):(\d{2}):(\d{2}) \+\d{4}/
 
-# Array.new(20000) { Hash.new }
+# Array.new(1000) { Hash.new } – dla większych paczek CouchDB się zapycha
 
 IO.foreach(filename) do |line|
   # czasami w pobieranym strumieniu zapląta się dziwny wiersz
@@ -56,7 +56,7 @@ IO.foreach(filename) do |line|
   )
   if total == batch_size
     db.bulk_save(batch)
-    batch = []
+    batch = []  # bez tego nie działa
     total = 0
   end
 
