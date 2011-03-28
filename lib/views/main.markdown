@@ -24,6 +24,10 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+<iframe width="640" height="385" src="http://cdn.livestream.com/embed/gigaombigdata?layout=4&clip=pla_770fb9d2-5ee0-4094-946f-09c3a2c4431e&color=0xe7e7e7&autoPlay=false&mute=false&iconColorOver=0x888888&iconColor=0x777777&allowchat=true" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe><div style="font-size:11px;padding-top:10px;text-align:center;width:640px">Watch <a href=http://www.livestream.com/?utm_source=lsplayer&amp;utm_medium=embed&amp;utm_campaign=footerlinks title=live streaming video>live streaming video</a> from <a href=http://www.livestream.com/gigaombigdata?utm_source=lsplayer&amp;utm_medium=embed&amp;utm_campaign=footerlinks title=Watch gigaombigdata at livestream.com>gigaombigdata</a> at livestream.com</div>
+
+[2011.03.28] The Many Faces of MapReduce…
+
 [2011.03.24] [Geocouch](https://github.com/couchbase/geocouch) – GeoCouch, a spatial index for CouchDB.
 Teraz Geocouch jest wtyczką/rozszerzeniem do CouchDB.
 Instalacja jest banalnie prosta. Warto dodać je do swojego servera CouchDB.
