@@ -39,7 +39,7 @@ Ale teraz mamy rozproszony system i nowe problemy:
 ## Samouczki, ściągi itp.
 
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
-
+* Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek
 
 
 ## Historia
