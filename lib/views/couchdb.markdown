@@ -94,6 +94,7 @@ używając swojego ulubionego języka programowania.
 * [CouchDB HTTP API Reference](http://docs.couchone.com/couchdb-api/index.html)
 * [couch.js](http://www.couch.io/page/library-couch-js)
 * [jquery.couch.js](http://www.couch.io/page/library-jquery-couch-js)
+* [BrowserCouch Tutorial](http://hg.toolness.com/browser-couch/raw-file/blog-post/tutorial.html)
 * [CouchApp.org: Simple JavaScript Applications with CouchDB](http://couchapp.org/page/index) –
   utilities to make standalone CouchDB application development simple
 * [Nginx As a Reverse Proxy](http://wiki.apache.org/couchdb/Nginx_As_a_Reverse_Proxy)
