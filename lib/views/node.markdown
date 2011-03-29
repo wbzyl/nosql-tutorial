@@ -1,7 +1,7 @@
 #### {% title "Node.JS" %}
 
 * Co to jest [Node.JS](http://nodejs.org/)?
-* Tutorial – [Mastering Node](http://visionmedia.github.com/masteringnode/)
+* [Mastering NodeJS](http://visionmedia.github.com/masteringnode/) – open source Node eBook
 * [API v0.4.3](http://nodejs.org/docs/v0.4.3/api/)
 
 Program „hello world” dla NodeJS, to prosty serwer www:
