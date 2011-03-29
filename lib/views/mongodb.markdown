@@ -36,6 +36,12 @@ Ale teraz mamy rozproszony system i nowe problemy:
   ([pdf](http://research.google.com/pubs/archive/36737.pdf))
 
 
+## Samouczki, ściągi itp.
+
+* Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
+
+
+
 ## Historia
 
 * [History of MongoDB](http://www.snailinaturtleneck.com/blog/2010/08/23/history-of-mongodb/)
