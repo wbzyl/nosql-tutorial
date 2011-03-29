@@ -120,6 +120,7 @@ Pozostałe linki:
   [A small application to demonstrate basic CouchDB features](http://github.com/karmi/couchdb-showcase)
 * Jesse Hallett. [Database Queries
   the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
+* Steve Krenzel. [Finding Friends](http://stevekrenzel.com/articles/finding-friends)
 
 
 [couchdb wiki]: http://wiki.apache.org/couchdb/ "Couchdb Wiki"
