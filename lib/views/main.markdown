@@ -83,7 +83,7 @@ Javascript, Ruby, Perl, Python, Scala
    (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
    stanowiła zasadniczą część <b>umiejętności zawodowych</b>
    chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
-   <b>zmiana paradygmatu</b>. (<i>S. Snow</i>, Operations without pain, 2005.)
+   <b>zmiana paradygmatu</b>.<br>(<i>S. Snow</i>, Operations without pain, 2005.)
  </p>
 </blockquote>
 
