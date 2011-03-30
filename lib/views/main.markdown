@@ -65,6 +65,29 @@ Javascript, Ruby, Perl, Python, Scala
 (zob. też [top languages](https://github.com/languages)).
 
 
+<blockquote>
+ {%= image_tag "/images/anesthesia.jpg", :alt => "[Humphry Davy – laughing gas experiments]" %}
+ <h2>Ząb mądrości Davy’ego</h2>
+ <p>
+   Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego
+   przestał go boleć ząb mądrości. Niestety, nie wyciągnął
+   logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
+   Przez następne dwa pokolenia ludzie cierpieli na stołach
+   operacyjnych. Znieczulenie poraz pierwszy zastosował
+   dentysta Horace Wells dopiero w 1884 roku.
+ </p>
+ <p>
+   Niektórzy uczeni twierdzą, że było to zarówno kulturalne jak i technologiczne
+   zahamowanie. W końcu XVIII wieku nie dopuszczano nawet myśli
+   o operacji bez bólu. Umiejętność radzenia sobie z bólem pacjenta
+   (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
+   stanowiła zasadniczą część <b>umiejętności zawodowych</b>
+   chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
+   <b>zmiana paradygmatu</b>. (<i>S. Snow</i>, Operations without pain, 2005.)
+ </p>
+</blockquote>
+
+
 ## Co to jest „NoSQL”
 
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo

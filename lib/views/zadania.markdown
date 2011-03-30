@@ -65,7 +65,18 @@ Zamiast twittera użyć YQL. Przygotować przykład.
 Link do dokumentacji – [YQL Guide](http://developer.yahoo.com/yql/guide/index.html).
 
 
-## TODO
+
+<blockquote>
+ {%= image_tag "/images/davy_lecture.jpg", :alt => "[Humphry Davy lecture]" %}
+ <p>
+  Gromadzenie danych wymaga więcej trudu niż dowodzenie ich słuszności;
+  ale jedna dobra wizualizacja
+  ma większą wartość niż pomysłowość nawet takiego mózgu, jaki miał Newton.
+ </p>
+ <p class="author">– Humphry Davy (1778–1829)</p>
+</blockquote>
+
+## Wizualizacje
 
 1\. Przygotować przykład korzystający
 z [IndexedDB in Firefox 4](http://hacks.mozilla.org/2011/01/indexeddb-in-firefox-4/).
