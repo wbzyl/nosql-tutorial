@@ -66,7 +66,7 @@ Javascript, Ruby, Perl, Python, Scala
 
 
 <blockquote>
- {%= image_tag "/images/anesthesia.jpg", :alt => "[Humphry Davy – laughing gas experiments]" %}
+ {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
  <h2>Ząb mądrości Davy’ego</h2>
  <p>
    Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego

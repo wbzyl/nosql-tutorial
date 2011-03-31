@@ -460,11 +460,11 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 Najłatwiej zrozumieć o co chodzi parze Map & Reduce przyglądając
 się temu co jest zapisywane w logach CouchDB.
 
-### Marketdata
+### Bazy na Twitterze
 
-W bazie *marketdata* zapiszemy następujący widok:
+Następujący widok:
 
-    :::javascript marketdata.js
+    :::javascript total.js
     var couchapp = require('couchapp');
 
     ddoc = {
@@ -475,29 +475,31 @@ W bazie *marketdata* zapiszemy następujący widok:
 
     ddoc.views.total = {
       map: function(doc) {
-        emit([doc.volume, doc.price], doc.volume * doc.price);
+        emit(doc.user.screen_name, 1);
       },
       reduce: function(keys, values, rereduce) {
+        log('----');
         log('REREDUCE: ' + rereduce);
-        log('KEYS: ' + keys);
-        log('VALUES: ' + values);
+        log('KEYS: ' + JSON.stringify(keys));
+        log('VALUES: ' + JSON.stringify(values));
         return sum(values);
       }
     }
 
-Tak go zapiszemy w bazie:
+zapiszmy w bazie *statuses* (podzbiór bazy *nosql*):
 
-    couchapp push marketdata.js http://localhost:5984/marketdata
+    couchapp push total.js http://localhost:5984/nosql
 
-a tak go odpytamy:
+Teraz go odpytajmy w ten sposób
 
-    curl http://localhost:5984/marketdata/_design/test/_view/total
+    curl 'http://localhost:5984/nosql/_design/test/_view/total?group=true'
 
-Po wciśnięciu enter, natychmiat przechodzimy na konsolę, gdzie
+Po wciśnięciu *Enter*, natychmiat przechodzimy na konsolę, gdzie
 uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
+Tutaj może być pomocne wciskanie na zmianę Ctrl+S i Ctrl+Q.
 
-Zwróćmy uwagę, że *couchdb* dopisał do tablicy *keys*
-z własnej inicjatywy *id* przetwarzanego dokumentu:
+Zwróćmy uwagę, że *couchdb*, z własnej inicjatywy, dopisał do tablicy
+*keys* *id* przetwarzanego dokumentu:
 
     [key1, id1], [key2, id2], ...
 
