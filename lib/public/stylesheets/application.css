@@ -251,3 +251,8 @@ thead th {
 tbody tr:nth-child(even) td, tbody tr.even td {
   background: #F5E7FA;
 }
+
+object {
+  display: block;
+  margin: 0 auto 1em auto;;
+}

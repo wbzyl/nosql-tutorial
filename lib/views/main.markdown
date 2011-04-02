@@ -24,9 +24,17 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+<!--
 <iframe width="640" height="385" src="http://cdn.livestream.com/embed/gigaombigdata?layout=4&clip=pla_770fb9d2-5ee0-4094-946f-09c3a2c4431e&color=0xe7e7e7&autoPlay=false&mute=false&iconColorOver=0x888888&iconColor=0x777777&allowchat=true" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe><div style="font-size:11px;padding-top:10px;text-align:center;width:640px">Watch <a href=http://www.livestream.com/?utm_source=lsplayer&amp;utm_medium=embed&amp;utm_campaign=footerlinks title=live streaming video>live streaming video</a> from <a href=http://www.livestream.com/gigaombigdata?utm_source=lsplayer&amp;utm_medium=embed&amp;utm_campaign=footerlinks title=Watch gigaombigdata at livestream.com>gigaombigdata</a> at livestream.com</div>
 
 [2011.03.28] The Many Faces of MapReduce…
+
+-->
+
+<object width="446" height="326"><param name="movie" value="http://video.ted.com/assets/player/swf/EmbedPlayer.swf"></param><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always"/><param name="wmode" value="transparent"></param><param name="bgColor" value="#ffffff"></param> <param name="flashvars" value="vu=http://video.ted.com/talks/dynamic/DebRoy_2011-medium.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DebRoy-2011.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=1092&lang=&introDuration=15330&adDuration=4000&postAdDuration=830&adKeys=talk=deb_roy_the_birth_of_a_word;year=2011;theme=a_taste_of_ted2011;theme=new_on_ted_com;theme=words_about_words;theme=how_we_learn;event=TED2011;&preAdTag=tconf.ted/embed;tile=1;sz=512x288;" /><embed src="http://video.ted.com/assets/player/swf/EmbedPlayer.swf" pluginspace="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent" bgColor="#ffffff" width="446" height="326" allowFullScreen="true" allowScriptAccess="always" flashvars="vu=http://video.ted.com/talks/dynamic/DebRoy_2011-medium.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DebRoy-2011.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=1092&lang=&introDuration=15330&adDuration=4000&postAdDuration=830&adKeys=talk=deb_roy_the_birth_of_a_word;year=2011;theme=a_taste_of_ted2011;theme=new_on_ted_com;theme=words_about_words;theme=how_we_learn;event=TED2011;"></embed></object>
+
+[2011.04.02] D. Roy, The birth of a word
+(the future of data science, extreme data analysis, brilliant visualization)
 
 [2011.03.24] [Geocouch](https://github.com/couchbase/geocouch) – GeoCouch, a spatial index for CouchDB.
 Teraz Geocouch jest wtyczką/rozszerzeniem do CouchDB.
