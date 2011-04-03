@@ -274,10 +274,9 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
  <p class="author">– Paul Coelho</p>
 </blockquote>
 
+
 # Niesklasyfikowany misz masz
 
-* [Cloudant](https://cloudant.com/#!/solutions/cloud)
-* [CouchOne](http://www.couchone.com/get)
 * Susan Potter. Why proponents of marriage equality should love graph databases,
   [Part 1: A Reply to „The Database Engineering
   Perspective”](http://geek.susanpotter.net/2010/03/why-proponents-of-marriage-equality.html)
@@ -315,3 +314,7 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * [Getting Started with CouchDB](http://net.tutsplus.com/tutorials/getting-started-with-couchdb/) – tutorial
 * [Open Data Manual](http://opendatamanual.org/) – discusses legal, social and technical aspects of open data
 * [Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
+* [MapReduce: A Flexible Data Processing Tool](http://cacm.acm.org/magazines/2010/1/55744-mapreduce-a-flexible-data-processing-tool/fulltext)
+* Joe Hellerstein. [We Lose](http://db.cs.berkeley.edu/jmh/talks/hpts2001-we-lose.pdf) – z 2001 roku!
+* [MapReduce: A major step backwards](http://databasecolumn.vertica.com/database-innovation/mapreduce-a-major-step-backwards/) –
+  47 interesujących komentarzy
