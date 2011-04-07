@@ -189,8 +189,9 @@ TODO:
 * {%= link_to "Redis", "/redis-databases" %}
 
 
-# Wizualizacje danych
+# Narzędzia do wizualizacji & wizualizacje danych
 
+* [Processing.js](http://processingjs.org/)
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
 
 
