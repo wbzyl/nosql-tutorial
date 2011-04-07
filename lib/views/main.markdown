@@ -31,6 +31,9 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+
+[1011.04.07] [How NoSQL Is Helping Allay Seattle’s Radiation Fears](http://www.nytimes.com/external/gigaom/2011/03/31/31gigaom-how-nosql-is-helping-allay-seattles-radiation-fea-40912.html?partner=rss&emc=rss), [Fukushima from Afar](http://blog.cloudant.com/fukushima/) (Mike Miller, 02.04.2011)
+
 [2011.04.04] Następny konkurs.
 [The goal of the prize is to develop a predictive algorithm that can identify patients who will be admitted to the hospital within the next year, using historical claims data](http://www.heritagehealthprize.com/c/hhp). Są interesujące dane do pobrania.
 

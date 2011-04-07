@@ -24,6 +24,10 @@
   font-style: normal;
 }
 
+strong {
+  font-family: sans-serif;
+}
+
 /* links, images */
 
 a {

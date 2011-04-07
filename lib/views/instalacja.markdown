@@ -69,7 +69,7 @@ działać.
  {%= image_tag "/images/benjamin_franklin.jpg", :alt => "[Benjamin Franklin]" %}
  <p>
    Ktoś mnie zapytał: „Jaki może być pożytek z balonu?”
-   Odpowiedziałem: <b>A jaki jest pożytek z nowo narodzonego dziecka?</b>
+   Odpowiedziałem: A jaki jest pożytek z nowo narodzonego dziecka?
  </p>
  <p class="author">— Benjamin Franklin (1706–1790)</p>
 </blockquote>
