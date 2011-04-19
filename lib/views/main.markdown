@@ -68,8 +68,8 @@ w specjalnie w tym celu przygotowanych repozytoriach (zlinkowanych z tytułam
 
 * 28.03. — [Narzędzia do wizualizacji baz danych](https://github.com/nosql/data-visualisation-tools)
 * 04.04. — [Jak działa Hadoop?](https://github.com/nosql/hadoop-about)
-* 18.04. — [Wyszukiwanie z Elasticsearch](https://github.com/nosql/elasticsearch-about)
-* 09.05. — [Oswajanie Neo4j](https://github.com/nosql/neo4j-about)
+* 09.05. — [Wyszukiwanie z Elasticsearch](https://github.com/nosql/elasticsearch-about) (kontynuacja)
+* 16.05. — [Oswajanie Neo4j](https://github.com/nosql/neo4j-about)
 
 [2011.03.02] Konkurs z nagrodami – [Visualize Your Taxes](http://datavizchallenge.org/).
 Pierwsza nagroda $10K.
