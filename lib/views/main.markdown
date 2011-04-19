@@ -36,6 +36,8 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.04.19] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
+
 [2011.04.18] [This Tech Bubble Is Different](http://www.businessweek.com/print/magazine/content/11_17/b4225060960537.htm) –
 z historii „big data”: Facebook, Cloudera
 
