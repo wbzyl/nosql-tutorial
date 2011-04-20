@@ -40,10 +40,10 @@ i wybieramy bazy, które nas interesują:
 
 Piszemy prosty skrypt w bashu replikujące te bazy:
 
-    :::shell-unix-generic couchdb-replicate-sigma.sh
+    :::shell-unix-generic couchdb-replicate-from-sigma.sh
     #!/bin/bash
-    for i in "$@" 
-    do 
+    for i in "$@"
+    do
       sigma=http://sigma.ug.edu.pl:5984/$i
       echo "replicate: $sigma -> $i"
       curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
@@ -52,4 +52,6 @@ Piszemy prosty skrypt w bashu replikujące te bazy:
 
 Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
 
-    ./couchdb-replicate-sigma.sh gutenberg ksiazki ls movies nosql nyt-obama rock
+    ./couchdb-replicate-from-sigma.sh apache-time-logs blog-1 blog-2 chromium coll \
+      googlemaps gutenberg imdb ksiazki ls lz marketdata marketproduct michiganstudent \
+      movies nosql nosql-slimmed nyt-obama photos photos-mr rock sales_download_5 tax ufo
