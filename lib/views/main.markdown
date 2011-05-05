@@ -337,3 +337,8 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * Joe Hellerstein. [We Lose](http://db.cs.berkeley.edu/jmh/talks/hpts2001-we-lose.pdf) – z 2001 roku!
 * [MapReduce: A major step backwards](http://databasecolumn.vertica.com/database-innovation/mapreduce-a-major-step-backwards/) –
   47 interesujących komentarzy
+
+### Prezentacje
+
+* Max Ogden,
+  [Build the Civic Web with GeoCouch!](http://max.couchone.com/where/_design/presentation/_rewrite)
