@@ -1,20 +1,17 @@
-# encoding: UTF-8
-
-require 'yajl/version' # dziwne?
+# -*- coding: utf-8 -*-
+require 'rubygems'
 require 'yajl/http_stream'
-
 require 'mongo'
 
-unless keywords = ARGV[0]
-  puts "\nUsage: ruby from_twitter_to_mongodb_bulk_insert.rb KEYWORD\n\n"
+unless keyword = ARGV[0]
+  puts "\nUsage: ruby #{$0} KEYWORD\n\n"
   exit(0)
 end
 
-db = Mongo::Connection.new("localhost", 9000).db("twitter")
-coll = db.collection("mongo")
+db = Mongo::Connection.new("localhost", 27017).db("twitter")
+coll = db.collection(keyword)
 
-hash = Yajl::HttpStream.get("http://search.twitter.com/search.json?&lang=en&rpp=100&q=#{keywords}")
-
+hash = Yajl::HttpStream.get("http://search.twitter.com/search.json?&lang=en&rpp=100&q=#{keyword}")
 coll.insert(hash["results"])
 
-puts coll.count()
+puts "Liczba rekordów zapisanych w bazie 'twitter' w kolekcji '#{keyword}': #{coll.count()}"
