@@ -36,6 +36,9 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 
 -->
 
+[2011.05.05] Osoby, które jeszcze nie rozliczyły się ze swoich baz i widoków
+proszę o przygotowanie ich na laboratorium 9.05.2011.
+
 [2011.04.19] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public),
 [Kaggle](http://www.kaggle.com/) – a platform for data prediction competitions that allows
 organizations to post their data and have it scrutinized by the world's best data scientists
