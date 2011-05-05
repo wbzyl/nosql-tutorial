@@ -5,7 +5,7 @@ Poniżej umieściłem opisy jak zapisać w MongoDB dane pobrane z internetu.
 **TODO:** MongoDB ⇔ CouchDB ⇔ Redis
 
 
-## TODO (sparawdzić i poprawić):  Twitter Tracking & Ruby
+## TODO:  Twitter Tracking & Ruby
 
 Najpierw pobieramy trochę przykładowych danych:
 
@@ -74,9 +74,9 @@ Sprawdzamy co się zaimportowało na konsoli:
 
 Aby zapisać dane ze strumienia do CouchDB można skorzystać z *mongoexport*.
 
-Ale lepszym rozwiązaniem jest
-{%= link_to "save_jsons_stream_to_couchdb.rb", "/ruby/json/save_jsons_stream_to_couchdb.rb" %},
-gdzie troszkę podrasowujemy JSON-y zanim zapiszemy je w bazie:
+Inne rozwiązanie zaimplementowałem tutaj:
+{%= link_to "save_jsons_stream_to_couchdb.rb", "/ruby/json/save_jsons_stream_to_couchdb.rb" %}.
+Przed zapisaniem w bazie danych z Twittera, zmieniamy troszkę oryginalne JSON-y:
 
     curl -d @tracking http://stream.twitter.com/1/statuses/filter.json -K twitter.conf |
       ruby save_jsons_stream_to_couchdb.rb nosql

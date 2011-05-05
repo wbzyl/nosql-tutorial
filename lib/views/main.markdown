@@ -151,8 +151,14 @@ TODO:
 ## MongoDB
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
+1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
+1. {%= link_to "JTZ – bazy danych, "/mongodb-databases" %}
+
+
+<!--
 1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
 1. {%= link_to "Sharding", "/mongodb-sharding" %}
+-->
 
 
 ## Redis

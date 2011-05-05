@@ -11,9 +11,6 @@
 {%= stylesheet_link_tag "/stylesheets/ie.css" %}
 <![endif]-->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-{%= javascript_script_tag "/javascripts/application.js" %}
-
 {%= output_filler_for(:head) -%}
 
 <title>{%= filler_for?(:title) ? "WB@NOSQL//" + output_filler_for(:title) : "WB@NOSQL" %}</title>
@@ -45,6 +42,11 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 </script>
+
+<!--
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+{%= javascript_script_tag "/javascripts/application.js" %}
+-->
 
 </body>
 </html>
