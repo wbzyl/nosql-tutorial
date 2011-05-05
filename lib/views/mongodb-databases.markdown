@@ -1,4 +1,4 @@
-#### {% title "Bazy danych dla MongoDB" %}
+#### {% title "Tworzymy kolekcje MongoDB" %}
 
 Poniżej umieściłem opisy jak zapisać w MongoDB dane pobrane z CouchDB
 i Twittera..
