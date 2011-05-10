@@ -166,6 +166,35 @@ Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
 
 
+## Gdzie są moje bazy?
+
+Standardowo, CouchDB, tworzy nowe bazy w katalogu */var/lib/couchdb*.
+Oczywiście, na Sigmie nie mamy praw do zapisywania w tym katalogu.
+Dlatego bazy przenosimy na swoje konto, na przykład
+do katalogu *$HOME/.couch/var/lib/couchdb*:
+
+    mkdir $HOME/.couch/var/lib/couchdb -p
+
+i informujemy swoją CouchDB o tej zmianie, dopisując na początku
+pliku *local.ini*:
+
+    :::ini ~/.nosql/etc/couchdb/local.ini
+    [couchdb]
+    database_dir = /var/lib/couchdb
+    view_index_dir = /var/lib/couchdb
+
+Na moim koncie na sigmie, mam takie bazy:
+
+    razem 4047240
+    -rw-rw-r--. 1 wbzyl wbzyl 2629685354 04-20 15:45 apache-time-logs.couch
+    -rw-rw-r--. 1 wbzyl wbzyl    6512740 04-20 15:46 chromium.couch
+    -rw-rw-r--. 1 wbzyl wbzyl   48316516 04-20 15:49 gutenberg.couch
+    -rw-rw-r--. 1 wbzyl wbzyl    1577060 04-20 15:49 imdb.couch
+    ...
+
+Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego? Coś trzeba będzie z tym zrobić.
+
+
 ## Linki
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
@@ -225,21 +254,20 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
 
     :::shell-unix-generic
-    mongo.sh server XXXXX
-        Tue Dec 28 ... MongoDB starting : pid=25909 port=XXXXX dbpath=.../.nosql/var/lib/mongodb ...
+    mkdir $HOME/.mongo/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
+    mongod --dbpath=$HOME/.mongo/var/lib/mongodb --port 16000
+        Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
         Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
         Tue Dec 28 ... sys info: Linux localhost.localdomain ...
-        Tue Dec 28 ... [initandlisten] waiting for connections on port XXXXX
-        Tue Dec 28 ... [websvr] web admin interface listening on port XXXXX+1000
-
-gdzie jest unikatowym numerem portu przydzielonym w trakcie zajęć.
+        Tue Dec 28 ... [initandlisten] waiting for connections on port 16000
+        Tue Dec 28 ... [websvr] web admin interface listening on port 16000+1000
 
 Następnie uruchamiamy powłokę *mongo*:
 
     :::shell-unix-generic
-    mongo.sh shell XXXXX
-        MongoDB shell version: 1...
-        connecting to: 127.0.0.1:XXXXX/test
+    mongo --port 16000
+      MongoDB shell version: 1.9.1
+      connecting to: 127.0.0.1:16000/test
     help
 	db.help()                    help on db methods
 	db.mycoll.help()             help on collection methods
@@ -250,6 +278,83 @@ Następnie uruchamiamy powłokę *mongo*:
     db.blog.insert(post)
     db.blog.find()
         { "_id" : ObjectId("4d1b168bc4846bb508a713f2"), "title" : "hello world" }
+
+
+Więcej prostych przykładów:
+
+* [Example showing that MongoDB uses native units for regular 2d queries, and radians for spherical 2d queries](https://gist.github.com/964262)
+* TODO
+
+
+## Gdzie są moje bazy?
+
+Podobnie, jak to zrobiliśmy dla CouchDB, przeniesiemy bazy MongoDB
+na swoje konto, na przykład do katalogu *$HOME/.mongo/var/lib/mongodb*:
+
+    mkdir $HOME/.mongo/var/lib/mongodb -p
+
+Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
+Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając
+serwer *mongod* (i powłokę *mongo*) za pomocą prostego skryptu:
+
+    mongo.sh
+    mongo.sh server
+    mongo.sh server 16000
+    mongo.sh shell
+    mongo.sh shell 16000
+
+Oto ten skrypt:
+
+    :::shell-unix-generic mongo.sh
+    #! /bin/bash
+    function usageexit() {
+        echo "Usage:  $(basename $0) server|shell [PORT]" >&2
+        exit 1
+    }
+    dbpath=$HOME/.mongo/var/lib/mongodb
+    type=$1
+    port=$2
+    shift ; shift
+    : ${type:="server"}
+    : ${port:=27017}
+    case $type in
+        server)
+            mongod --config $HOME/bin/mongodb.config --dbpath $dbpath --port $port "$@"
+            ;;
+        shell)
+            mongo --port $port "$@"
+            ;;
+        *)
+            usageexit
+            ;;
+    esac
+
+Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*:
+
+    :::ini
+    # bind_ip=0.0.0.0
+    journal=true # wymaga extra > 0.5GB
+    rest=true
+    cpu=true
+    directoryperdb=true
+    jsonp=true
+    nssize=2
+    smallfiles=true
+    objcheck=true
+    syncdelay=4
+
+Journal i bazy MongoDB zajmują sporo miejsca na dysku:
+
+    ls -l ~/.mongo/var/lib/mongodb/journal/
+    -rw-------. 1 wbzyl wbzyl 134217728 05-10 12:36 prealloc.0
+    -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.1
+    -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.2
+    ls -l ~/.mongo/var/lib/mongodb/twitter/
+    drwxrwxr-x. 2 wbzyl wbzyl     4096 05-10 12:01 _tmp
+    -rw-------. 1 wbzyl wbzyl 16777216 05-10 12:36 twitter.0
+    -rw-------. 1 wbzyl wbzyl 33554432 05-10 12:01 twitter.1
+    -rw-------. 1 wbzyl wbzyl  2097152 05-10 12:36 twitter.ns
+    ...
 
 
 ## Linki

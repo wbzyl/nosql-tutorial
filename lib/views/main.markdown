@@ -155,7 +155,8 @@ TODO:
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
-1. {%= link_to "Tworzymy kolekcje MongoDB", "/mongodb-databases" %}
+1. {%= link_to "Tworzymy kolekcje", "/mongodb-databases" %}
+1. {%= link_to "MapReduce", "/mongodb-mapreduce" %}
 
 
 <!--

@@ -76,7 +76,6 @@ Sprawdzamy na konsoli co ciekawego zaimportowaliśmy:
     db.mongodb.find( {}, {_id: 0, text: 1} )
 
 
-
 ## Korzystamy ze strumieniowego API Twittera
 
 Większe ilości danych pobieramy z Twitera korzystając
@@ -104,5 +103,6 @@ Sprawdzamy co się zaimportowało na konsoli:
 
     :::javascript
     use nosql
-    db.getLastError()  # flush records?
+    # fsync before returning, or wait for journal commit if running with --journal
+    db.getLastError({ fsync:true })
     db.nosql.find({}, {_id: 0, text: 1}).limit(8)
