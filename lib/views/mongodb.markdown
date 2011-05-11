@@ -42,6 +42,8 @@ Na koniec lektura, [Comparing MongoDB and CouchDB](http://www.mongodb.org/displa
 
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
 * Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek
+* Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html)
+  i dłuższy samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
 
 
 ## Historia
