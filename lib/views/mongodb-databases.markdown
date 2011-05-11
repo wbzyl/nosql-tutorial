@@ -106,3 +106,78 @@ Sprawdzamy co się zaimportowało na konsoli:
     # fsync before returning, or wait for journal commit if running with --journal
     db.getLastError({ fsync:true })
     db.nosql.find({}, {_id: 0, text: 1}).limit(8)
+
+
+## Baza z pliku CSV
+
+CSV, *Comma Separated Values* –  wartości rozdzielone przecinkami,
+to format przechowywania danych. Zawartość takiego pliku łatwo
+jest przenieść do MongoDB.
+
+W pliku {%= link_to 'goog.csv', '/doc/data/goog.csv' %} są dane
+akcji GOOG:
+
+    :::csv
+    Date,Open,High,Low,Close,Volume,Adj Close
+    2010-05-05,500.98,515.72,500.47,509.76,4566900,509.76
+    2010-05-04,526.52,526.74,504.21,506.37,6076300,506.37
+    ... + 1435 wierszy ...
+    2004-08-19,100.00,104.06,95.96,100.34,22351900,100.34
+
+Umieścimy te dane w bazie *stock* w kolekcji *goog* za pomocą
+programu *mongoimport*:
+
+    mongoimport --db stock --collection goog --type csv --file goog.csv --headerline
+
+Wadą tego rozwiązania jest to daty zostają zapisane
+jako napisy. Dlaczego to jest wada?
+
+Napis na datę zamienimy korzystając z prostego skryptu:
+
+    :::javascript goog_fix_Date.js
+    var cursor = db.goog.find( {$query: {}, $snapshot: true} )
+    while (cursor.hasNext()) {
+      var doc = cursor.next();
+      var ms = Date.parse(ISODate(doc.Date));
+      doc.Date = new Date(ms);
+      db.goog.save(doc);
+    }
+
+Po uruchomieniu tego skryptu w powłoce *mongo*:
+
+    mongo goog_fix_Date.js
+
+zapytania z datą powinny zwracać poprawne odpowiedzi:
+
+    :::javascript
+    start = new Date(2008, 1, 31)
+    db.goog.find({Date: {$gt: start}}).sort({Date: 1})
+
+
+### Korzystamy z gemu *mongo*
+
+Zamiast poprawiać dane w bazie, możemy od razu umieścić je
+w poprawnym formacie w bazie:
+
+    :::ruby csv2mongo.rb
+    require 'csv'
+    require 'mongo'
+    require 'time'
+
+    quotes  = CSV.read "goog.csv"
+
+    # Date,Open,High,Low,Close,Volume,Adj Close
+    # 2010-05-05,500.98,515.72,500.47,509.76,4566900,509.76
+
+    header = quotes.shift
+    h = header.map &:downcase
+
+    coll = Mongo::Connection.new("localhost", 27017).db("stock").collection("goog")
+
+    quotes.each do |row|
+      d = Time.utc *row.shift.split("-").map(&:to_i)  # na razie, zamiast Date, musi być UTC Time
+      r = row.map &:to_f                              # skonwertuj strings na floats
+      r.unshift d
+      doc = Hash[ [h, r].transpose ]
+      coll.insert doc
+    end

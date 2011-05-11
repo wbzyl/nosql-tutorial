@@ -35,6 +35,8 @@ Ale teraz mamy rozproszony system i nowe problemy:
 * [Availability in Globally Distributed Storage Systems](http://research.google.com/pubs/pub36737.html)
   ([pdf](http://research.google.com/pubs/archive/36737.pdf))
 
+Na koniec lektura, [Comparing MongoDB and CouchDB](http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB).
+
 
 ## Samouczki, ściągi itp.
 

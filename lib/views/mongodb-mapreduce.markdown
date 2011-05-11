@@ -6,8 +6,13 @@
 
 Ketrina Yim, Sally Ahn, Dan Garcia. „Computer Science Illustrated”. MapReduce:
 
-* <a href="http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf">An Example: Distributed Word Count</a>
-* <a href="http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf">Parallelism and Functional Programming</a>
-* <a href="http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf">The wordcount in Code</a>
+* [An Example: Distributed Word Count](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf)
+* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
+* [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
+
+
+## Zaczynamy
+
+**TODO**
 
 Steve Krenzel. [Finding Friends](http://stevekrenzel.com/articles/finding-friends)

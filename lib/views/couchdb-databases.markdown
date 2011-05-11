@@ -112,11 +112,3 @@ Przykładowy dokument po zamianie na hasz:
      :in_reply_to_screen_name=>nil,
      :id=>37605234549194752,
      :in_reply_to_status_id_str=>nil}
-
-
-## TODO: Word Count
-
-* {%= link_to 'gutenberg-couchdb.rb', '/couch/word-count/gutenberg-couchdb.rb' %}
-* zapełniamy bazę akapitami z książek A. C. Doyla
-* instalujemy gem [couch_docs](https://github.com/eee-c/couch_docs)
-* wykonujemy *rake*
