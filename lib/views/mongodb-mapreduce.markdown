@@ -17,17 +17,45 @@ Podstawowa dokumentacja:
 * [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
 * [Troubleshooting MapReduce](http://www.mongodb.org/display/DOCS/Troubleshooting+MapReduce)
 * [A Look At MongoDB 1.8's MapReduce Changes](http://blog.evilmonkeylabs.com/2011/01/27/MongoDB-1_8-MapReduce/)
+* Źródła MongoDB: [mr1](https://github.com/mongodb/mongo/blob/master/jstests/mr1.js),
+  [mr2](https://github.com/mongodb/mongo/blob/master/jstests/mr2.js)
 
+Przykłady z internetu:
 
-## Zaczynamy
-
-* Steve Krenzel. [Finding Friends](http://stevekrenzel.com/articles/finding-friends)
-* [MongoDB MapReduce Command](http://jonathanhui.com/mongodb-mapreduce)
 * K. Banker. [A Cookbook for MongoDB](http://cookbook.mongodb.org/index.html) –
   kilka przykładów z MapReduce
-* [MongoDB Aggregation III: Map-Reduce Basics](http://kylebanker.com/blog/2009/12/mongodb-map-reduce-basics/)
 * [Yet another MongoDB Map Reduce tutorial](http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/) –
   fajne ilustracje
 * [Malware, MongoDB and Map/Reduce : A New Analyst Approach](http://blog.9bplus.com/malware-mongodb-and-mapreduce-a-new-analyst-a)
 
-**TODO**
+## Zaczynamy
+
+Pierwszy przykład:
+
+    :::javascript
+    db.mr.drop();
+
+    db.mr.insert({_id: 1, tags: ['ą', 'ć', 'ę']});
+    db.mr.insert({_id: 2, tags: ['']});
+    db.mr.insert({_id: 3, tags: []});
+    db.mr.insert({_id: 4, tags: ['ć', 'ę', 'ł']});
+    db.mr.insert({_id: 5, tags: ['ą', 'a']});
+
+    m = function() {
+      this.tags.forEach(function(tag) {
+        emit(tag, {count: 1});
+      });
+    };
+
+    r = function(key, values) {
+      var total = 0;
+      values.forEach(function(value) {
+        total += value.count;
+      });
+      return {count: total};
+    };
+
+    res = db.mr.mapReduce(m, r, {out: "mr.tc"});
+
+    printjson(res);
+    print("==>> To display results run: db.mr.tc.find()");

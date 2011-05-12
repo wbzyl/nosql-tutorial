@@ -181,3 +181,46 @@ w poprawnym formacie w bazie:
       doc = Hash[ [h, r].transpose ]
       coll.insert doc
     end
+
+
+## GeoBytes
+
+Na stronie [GeoBytes](http://geobytes.com/) pod linkiem
+[GeoWorldMap](http://geobytes.com/GeoWorldMap) znajdziemy
+archiwum zawierające pliki w formacie CSV (w kodowaniu Latin 1?).
+
+Dla przykładu kilka wierszy z pliku  *cities.txt*:
+
+    :::csv
+    "CityId","CountryID","RegionID","City","Latitude","Longitude","TimeZone","DmaId","Code"
+    4660,197,3284,"Gdansk","54.35","18.667","+01:00",0,"GDAN"
+    15033,197,3284,"Gdañsk","54.35","18.667","+01:00",0,"GDAÑ" #  a to po co?
+    4661,197,3284,"Gdynia","54.5","18.55","+01:00",0,"GDYN"
+
+oraz z pliku *countries.txt*:
+
+    :::csv
+    "CountryId","Country","FIPS104","ISO2","ISO3","ISON","Internet","Capital","MapReference",\
+       "NationalitySingular","NationalityPlural","Currency","CurrencyCode","Population","Title","Comment"
+    197,"Poland","PL","PL","POL","616","PL","Warsaw ","Europe ",\
+       "Polish","Poles","Zloty","PLN",38633912,"Poland",""
+
+*TODO* Zaimportować dane do bazy *wm* do kolekcji *cities* oraz *countries*.
+Za pomocą *database references* (*DBRef*) zamienić *CountryID*
+nazwą kraju. Przykładowe DBRef:
+
+    {"$ref" : "countries", "$id" : 197}
+
+Przy okazji usunąć *CityId*, *RegionID*, *DmaID*.
+Zamienić pola *Latitude* oraz *Longitude* na:
+
+    { loc : { long : 54.5, lat: 18.35 } }
+
+Następnie dodać index:
+
+    db.places.ensureIndex( { loc : "2d" } )
+
+*TODO* Przykładowe zapytania? Dokumentacja:
+
+* [Geospatial Indexing](http://www.mongodb.org/display/DOCS/Geospatial+Indexing)
+* [5 minute interactive MongoDB Geospatial Tutorial](http://mongly.com/geo/index)
