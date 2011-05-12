@@ -89,7 +89,6 @@ Javascript, Ruby, Perl, Python, Scala
 
 
 <blockquote>
- {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
  <h2>Ząb mądrości Davy’ego</h2>
  <p>
    Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego
@@ -109,7 +108,6 @@ Javascript, Ruby, Perl, Python, Scala
    <b>zmiana paradygmatu</b>.<br>(<i>S. Snow</i>, Operations without pain, 2005.)
  </p>
 </blockquote>
-
 
 ## Co to jest „NoSQL”
 
@@ -165,6 +163,14 @@ TODO:
 -->
 
 
+<blockquote>
+ {%= image_tag "/images/redis_logo.jpg", :alt => "[Redis logo]" %}
+ <p>
+   Redis is a collection of data structures exposed over the network
+ </p>
+ <p class="author">[Anonymous]</p>
+</blockquote>
+
 ## Redis
 
 1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
@@ -182,6 +188,10 @@ TODO:
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
+
+<blockquote>
+ {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
+</blockquote>
 
 # Prezentacje
 
@@ -338,6 +348,8 @@ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/b
 * [Open Data Manual](http://opendatamanual.org/) – discusses legal, social and technical aspects of open data
 * [Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
 * [MapReduce: A Flexible Data Processing Tool](http://cacm.acm.org/magazines/2010/1/55744-mapreduce-a-flexible-data-processing-tool/fulltext)
+* [MongoDB Powering MTV’s Web Properties](http://blog.mongodb.org/post/5360007734/mongodb-powering-mtvs-web-properties)
+
 
 ### Prezentacje
 
