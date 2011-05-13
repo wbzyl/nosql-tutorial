@@ -19,9 +19,7 @@ programowania w Javascripcie.
 Zaczynamy od instalacji modułu według wskazówek
 z pliku [README](https://github.com/mikeal/node.couchapp.js/blob/master/README.md):
 
-    git clone git://github.com/mikeal/node.couchapp.js.git
-    cd node.couchapp.js
-    npm link .
+    npm install couchapp
 
 Sprawdzamy instalację modułu próbując uruchomic program *couchapp*:
 

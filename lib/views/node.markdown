@@ -29,13 +29,9 @@ Więcej przykładów?
 
 Korzystamy z NPM:
 
+    npm search socket.io
+    socket.io   The cross-browser WebSocket     =rauchg
     npm install socket.io
-
-Albo, klonujemy repozytorium:
-
-    git clone git://github.com/LearnBoost/Socket.IO-node.git socket.io --recursive
-    cd socket.io
-    npm link .
 
 
 ## Chat korzystający z websockets

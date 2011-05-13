@@ -102,7 +102,7 @@ dokumentów w bazie za pomocą NodeJS. Zrobimy to korzystając z modułu
 [couch-client](https://github.com/creationix/couch-client). Moduł
 instalujemy wykonując w głównym katalogu repozytorium polecenie:
 
-    npm link .
+    npm mustache
 
 Cytaty zapiszemy w bazie za pomocą skryptu:
 
