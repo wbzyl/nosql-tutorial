@@ -12,6 +12,7 @@
 * [Elasticsearch Guide](http://www.elasticsearch.org/guide/): Setup, API, Query, Mapping…
 * [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
 * [CouchDB Integration](https://github.com/elasticsearch/elasticsearch/wiki/Couchdb-integration)
+* [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
 
 
 ## Instalacja
