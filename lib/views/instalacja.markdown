@@ -581,7 +581,7 @@ powinniśmy zobaczyć coś takiego:
 
 Zaczynamy od wyszukiwarki:
 
-    npm search kanso
+    npm search couchapp
       couchapp   Utilities for building CouchDB applications.   =mikeal
       ...
 
