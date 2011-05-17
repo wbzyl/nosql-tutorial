@@ -96,7 +96,8 @@ używając swojego ulubionego języka programowania.
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
   [CouchDB: The Definitive Guide][couchdb]
-* [CouchDB HTTP API Reference](http://docs.couchone.com/couchdb-api/index.html)
+* Jan Lehnardt. [What’s new in CouchDB 1.0 — Part 4: Security’n stuff: Users, Authentication, Authorisation and Permissions](http://blog.couchbase.com/whats-new-in-couchdb-1-0-part-4-securityn-stuff)
+* **LINK** [CouchDB HTTP API Reference](http://docs.couchone.com/couchdb-api/index.html)
 * [couch.js](http://www.couch.io/page/library-couch-js)
 * [jquery.couch.js](http://www.couch.io/page/library-jquery-couch-js)
 * [BrowserCouch Tutorial](http://hg.toolness.com/browser-couch/raw-file/blog-post/tutorial.html)
