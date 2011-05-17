@@ -67,3 +67,78 @@ Po wpisaniu powyższego kodu w pliku *aye.js*, zapisujemy funkcję show w bazi
 Sprawdzamy, czy wszystkie polecenia wykonane zostały bez błędu:
 
     curl -v http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
+
+
+## GeoCouch
+
+Przykład z funkcją listową z pliku *README*.
+
+Dane:
+
+    :::json geo.json
+    {
+      "docs": [
+         {
+           "_id": "oakland",
+           "loc": [-122.270833, 37.804444]
+         },
+         {
+           "_id": "augsburg",
+           "loc": [10.898333, 48.371667]
+         },
+         {
+           "_id": "namibia",
+           "loc": [17.15, -22.566667]
+         },
+         {
+           "_id": "australia",
+           "loc": [135, -25]
+         },
+         {
+           "_id": "brasilia",
+           "loc": [-52.95, -10.65]
+         }
+      ]
+    }
+
+Tworzymy bazę *places* i zapiujemy w niej dane z JSON-a:
+
+    curl -X POST -H "Content-Type: application/json" --data @geo.json http://127.0.0.1:5984/places/_bulk_docs
+
+Plik dla *couchapp*:
+
+    :::javascript geo.js
+    var couchapp = require('couchapp');
+
+    ddoc = {
+      _id: '_design/default'
+      , views:   {}
+      , lists:   {}
+      , shows:   {}
+      , spatial: {}
+    }
+
+    ddoc.spatial.points = function(doc) {
+      if (doc.loc) {
+        emit({type: "Point", coordinates: [doc.loc[0], doc.loc[1]]}, [doc._id, doc.loc]);
+      };
+    };
+
+    ddoc.lists.wkt = function(head, req) {
+      var row;
+      while (row = getRow()) {
+        send("POINT(" + row.value[1] + ")\n");
+      };
+    };
+
+    module.exports = ddoc;
+
+Zapisujemy funkcje w bazie *places*:
+
+    couchapp push geo.js http://localhost:5984/places
+
+Kilka zapytań:
+
+    curl -X GET 'http://localhost:5984/places/_design/default/_spatial/points?bbox=0,0,180,90'
+    curl -X GET 'http://localhost:5984/places/_design/default/_spatial/points?bbox=110,-60,-30,15&plane_bounds=-180,-90,180,90'
+    curl -X GET 'http://localhost:5984/places/_design/default/_spatial/_list/wkt/points?bbox=-180,-90,180,90'
