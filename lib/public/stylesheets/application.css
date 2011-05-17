@@ -247,6 +247,7 @@ code {
 table caption {
   padding-left: 1em;
   margin-bottom: 0.5ex;
+  text-align: right;
 }
 
 thead th {
@@ -257,7 +258,7 @@ tbody tr:nth-child(even) td, tbody tr.even td {
   background: #F5E7FA;
 }
 
-table, object {
+object {
   display: block;
   margin: 0 auto 1em auto;;
 }

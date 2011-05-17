@@ -13,37 +13,57 @@
 **Uwaga:** Poniżej podano **orientacyjne**
 godziny rozpoczęcia prezentacji.
 
-<table class="span-24" summary="harmonogram">
+<table summary="harmonogram">
   <colgroup>
-    <col class="span-16">
-    <col class="span-8">
+    <col width=180>
+    <col>
   </colgroup>
   <caption><em>Harmonogram prezentacji</em></caption>
-  <thead>
-  </thead>
 
 <tbody>
 
  <tr>
- <td>10:30–10:50 <b>(23.05)</b></td>
- <td><i>M^3</i>, UFO</td>
- </tr>
+ <td>
+ <td><b>23 maja</b>
 
  <tr>
- <td></td>
- <td></td>
- </tr>
+ <td>10:30–10:50
+ <td><i>M^3</i>, UFO
 
  <tr>
- <td>10:30–10:50 <b>(30.05)</b></td>
- <td><i>DBMS</i>, Comic Vine</td>
- </tr>
+ <td>10:50–11:10
+ <td>
+
  <tr>
- <td>10:50–11:10 <b>(30.05)</b></td>
- <td><i>Izi Development</i>, Tajemnice UFO</td>
- </tr>
+ <td>11:10–11:30
+ <td>
+
+ <tr>
+ <td>11:10–11:50
+ <td>
+
+ <tr>
+ <td>
+ <td><b>30 maja</b>
+
+ <tr>
+ <td>10:30–10:50
+ <td><i>DBMS</i>, Comic Vine
+
+ <tr>
+ <td>10:50–11:10
+ <td><i>Izi Development</i>, Tajemnice UFO
+
+ <tr>
+ <td>11:10–11:30
+ <td>
+
+ <tr>
+ <td>11:10–11:50
+ <td>
 
 </tbody>
+
 </table>
 
 
