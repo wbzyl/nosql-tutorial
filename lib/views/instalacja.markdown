@@ -13,7 +13,7 @@ Logujemy się na *Sigmie* i sprawdzamy, korzystając z polecenia
     ssh sigma
     quota
 
-Jeśli wolnego miejsca jest mniej niż ok. 100 MB, to niestety musimy
+Jeśli wolnego miejsca jest mniej niż ok. 200 MB, to niestety musimy
 usunąć zbędne rzeczy.  Tutaj może być pomocne wykonanie polecenia,
 wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
 
@@ -51,13 +51,26 @@ skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*):
 ## Uwagi o instalacji programów na *Sigmie*
 
 1. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
-są tworzone dowiązania symboliczne do plików poza katalogiem */home*
-(ale można je utworzyć ręcznie?).
+są tworzone dowiązania symboliczne do plików poza katalogiem */home*.
+Powoduje to masę probelmów z instalacją gemów.
 
-2. Program konfigurujący nie sprawdza, czy linki symboliczne zostały
-zostały poprawnie utworzone.
+Przed zalogowaniem się na Sigmę:
 
-Na przykład, w trakcie konfiguracji CouchDB program *bootstrap*
+    rpm -qa | grep sqlite3
+    sqlite3-3.7.3-1.i686
+
+Po zalogowaniu:
+
+    ssh sigma
+    rpm -qa | grep sqlite3
+    sqlite3-3.7.3-1.i686
+    sqlite3-devel-3.7.3-1.i686
+
+
+2. Program konfigurujący *bootstrap* nie sprawdza,
+czy linki symboliczne zostały zostały poprawnie utworzone.
+
+Na przykład, w trakcie konfiguracji CouchDB *bootstrap*
 próbuje utworzyć linki symboliczne do katalogu */usr*. Dlatego
 kompilacja zakończy się błędem albo po instalacji, programy nie będą
 działać.
@@ -85,11 +98,14 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd couchdb
-    git checkout 1.1.x
+    git checkout 1.0.3  # ostatnia stabilna wersja (maj 2011)
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     make
     make install
+
+Oczywiście możemy też „live on the edge”. Niestety na ostatniej
+wersji nie działa rozszerzenie Geocouch.
 
 *Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
 podać ścieżkę do plików nagłówkowych:
@@ -126,24 +142,28 @@ Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
 Ale można postąpić tak jak to opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
 
+
 ## Testujemy instalację
 
 Uruchamiamy serwer:
 
     couchdb
-        Apache CouchDB 1.2.0aa18429b-git (LogLevel=info) is starting.
-        Apache CouchDB has started. Time to relax.
-        [info] [<0.31.0>] Apache CouchDB has started on http://0.0.0.0:XXXXX/
+      Apache CouchDB 1.0.3 (LogLevel=info) is starting.
+      Apache CouchDB has started. Time to relax.
+      [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:XXXXX/
+
+*Uwaga:* Poniżej, zamiast *XXXXX* będę wpisywał *5984* – domyślny port
+na którym uruchamia się CouchDB.
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
     :::shell-unix-generic
-    curl http://127.0.0.1:XXXXX
-        {"couchdb":"Welcome","version":"1.2.0aa18429b-git"}
+    curl http://127.0.0.1:5984
+      {"couchdb":"Welcome","version":"1.0.3"}
 
 Następnie wchodzimy na stronę:
 
-    http://127.0.0.1:XXXX/_utils/
+    http://127.0.0.1:5984/_utils/
 
 gdzie dostępny jest *Futon*, czyli narzędzie do administracji bazami
 danych zarządzanymi przez CouchDB.
@@ -152,15 +172,15 @@ Informacje o bazach i serwerze można uzyskać kilkając w odpowiednie zakładk
 *Futona*, albo korzystając programu *curl*:
 
     :::shell-unix-generic
-    curl -X GET http://127.0.0.1:XXXXX/_all_dbs
-    curl -X GET http://127.0.0.1:XXXXX/_config
+    curl -X GET http://127.0.0.1:5984/_all_dbs
+    curl -X GET http://127.0.0.1:5984/_config
 
 W odpowiedzi na każde żądanie HTTP (*request*), dostajemy
 odpowiedź HTTP (*response*) w formacie [JSON][json].
 
 Jeśli skorzystamy z opcji *-v*, to *curl* wypisze szczegóły tego co robi:
 
-    curl -vX POST http://127.0.0.1:XXXXX/_config
+    curl -vX POST http://127.0.0.1:5984/_config
 
 Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
@@ -171,28 +191,61 @@ Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 Standardowo, CouchDB, tworzy nowe bazy w katalogu */var/lib/couchdb*.
 Oczywiście, na Sigmie nie mamy praw do zapisywania w tym katalogu.
 Dlatego bazy przenosimy na swoje konto, na przykład
-do katalogu *$HOME/.couch/var/lib/couchdb*:
+do katalogu *$HOME/.data/var/lib/couchdb*:
 
-    mkdir $HOME/.couch/var/lib/couchdb -p
+    mkdir $HOME/.data/var/lib/couchdb -p
 
-i informujemy swoją CouchDB o tej zmianie, dopisując na początku
-pliku *local.ini*:
+i informujemy swoją CouchDB o tej zmianie, dopisując (całą ścieżkę)
+na początku pliku *local.ini*, na przykład
 
     :::ini ~/.nosql/etc/couchdb/local.ini
     [couchdb]
-    database_dir = /var/lib/couchdb
-    view_index_dir = /var/lib/couchdb
+    database_dir = /home/wbzyl/.data/var/lib/couchdb
+    view_index_dir = /home/wbzyl/.data//var/lib/couchdb
 
 Na moim koncie na sigmie, mam takie bazy:
 
     razem 4047240
-    -rw-rw-r--. 1 wbzyl wbzyl 2629685354 04-20 15:45 apache-time-logs.couch
-    -rw-rw-r--. 1 wbzyl wbzyl    6512740 04-20 15:46 chromium.couch
-    -rw-rw-r--. 1 wbzyl wbzyl   48316516 04-20 15:49 gutenberg.couch
-    -rw-rw-r--. 1 wbzyl wbzyl    1577060 04-20 15:49 imdb.couch
+    -rw-rw-r--. 1 wbzyl wbzyl 2629685354  apache-time-logs.couch
+    -rw-rw-r--. 1 wbzyl wbzyl  376643684  nosql.couch
+    -rw-rw-r--. 1 wbzyl wbzyl   48316516  gutenberg.couch
+    -rw-rw-r--. 1 wbzyl wbzyl    6512740  chromium.couch
+    -rw-rw-r--. 1 wbzyl wbzyl    1577060  imdb.couch
     ...
 
 Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego? Coś trzeba będzie z tym zrobić.
+
+
+## Instalujemy rozszerzenie GeoCouch
+
+Zaczynamy od sklonowania rozszerzenia i *cd* do katalogu repozytorium:
+
+    git clone git://github.com/couchbase/geocouch.git
+    cd geocouch
+
+Następnie ustawiamy wartość zmiennej *COUCH_SRC*, tak aby wskazywała
+na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*
+i uruchamiamy *make*:
+
+    :::shell-unix-generic
+    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.0.3/include
+    make
+
+Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
+do odpowiednich katalogów:
+
+    cp etc/couchdb/local.d/geocouch.ini $HOME/.nosql/etc/couchdb/local.d/
+    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.0.3/ebin/
+
+Na koniec sprawdzamy czy geolokacja działa.
+W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
+polecenia z sekcji *Using GeoCouch* pliku
+[README.md](https://github.com/couchbase/geocouch).
+
+Więcej informacji o *Geocouch*:
+
+* [GeoCouch: Bulk Insertion](http://blog.couchbase.com/geocouch-bulk-insertion)
+
 
 
 ## Linki

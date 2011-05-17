@@ -46,6 +46,11 @@ kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-
 * Przejście z XML na JSON, Javascript językiem zapytań – sierpień 2007
 * [Map/Reduce][map-reduce] – luty 2008
 * Wychodzi wersja 0.11 (ostatnia przed wersją 1.0) – kwiecień 2010
+* CouchDB + Membase = [Couchbase](http://blog.couchbase.com/hello-couchbase) – luty 2011;
+  zob. też „white paper“ –
+  [NoSQL Database Technology](http://www.couchbase.com/sites/default/files/uploads/all/whitepapers/NoSQL-Whitepaper.pdf)
+* Ostatnia stabilna wersja 1.0.3 – kwiecień 2011
+* [Free CouchDB hosting](http://www.iriscouch.com/) – kwiecień 2011
 
 
 ## REST API dla CouchDB

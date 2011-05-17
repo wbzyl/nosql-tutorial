@@ -46,7 +46,13 @@ godziny rozpoczęcia prezentacji.
 </tbody>
 </table>
 
+
 ## Ważne uwagi
+
+[2011.05.16] Dokumentacja z *http://www.couchone.com* została przeniesiona
+na [Iris Couch](http://blog.couchbase.com/).
+*TODO:* uaktualnić linki z sekcji *Replikacja*, *Mustache*, *Instalacja*
+oraz *Walidacja*.
 
 [2011.05.05] Osoby, które jeszcze nie rozliczyły się ze swoich baz i widoków
 proszę o przygotowanie ich na laboratorium 9.05.2011.
