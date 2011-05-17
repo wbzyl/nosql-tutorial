@@ -13,16 +13,12 @@
 **Uwaga:** Poniżej podano **orientacyjne**
 godziny rozpoczęcia prezentacji.
 
-<table class="span-24" summary="harmonogram">
-  <colgroup>
-    <col class="span-16">
-    <col class="span-8">
-  </colgroup>
-  <caption><em>Harmonogram prezentacji</em></caption>
-  <thead>
-  </thead>
+<table class="span-20" summary="harmonogram">
+<caption><em>Harmonogram prezentacji</em></caption>
 
 <tbody>
+<col width="40%">
+<col width="60%">
 
  <tr>
  <td>10:30–10:50 <b>(23.05)</b></td>
@@ -50,7 +46,7 @@ godziny rozpoczęcia prezentacji.
 ## Ważne uwagi
 
 [2011.05.16] Dokumentacja z *http://www.couchone.com* została przeniesiona
-na [Iris Couch](http://blog.couchbase.com/).
+na [Couchbase Blog](http://blog.couchbase.com/).
 *TODO:* uaktualnić linki z sekcji *Replikacja*, *Mustache*, *Instalacja*
 oraz *Walidacja*.
 
