@@ -47,7 +47,7 @@ godziny rozpoczęcia prezentacji.
   <td><i>Izi Development</i>, Tajemnice UFO
  <tr>
   <td>11:10–11:30
-  <td>
+  <td><i>googlemaniacs</i>, Zastosowanie Google Maps API
  <tr>
   <td>11:10–11:50
   <td>
@@ -174,7 +174,7 @@ TODO:
 # Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
-*  {%= link_to "Środowisko: NodeJS, NPM, edytor", "/srodowisko" %}
+*  {%= link_to "Środowisko: NodeJS, NPM", "/srodowisko" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
 
