@@ -26,7 +26,7 @@ Oba moduły instalujemy globalnie:
     npm install -g cradle
 
 
-## Couchapp
+## Moduł Couchapp
 
 Teraz wzorując się na przykładzie z *README.md* kodujemy przykład z *maye.json*:
 
@@ -137,9 +137,9 @@ Kilka zapytań:
     curl -X GET 'http://localhost:5984/places/_design/default/_spatial/_list/wkt/points?bbox=-180,-90,180,90'
 
 
-## Cradle
+## Moduł Cradle + CSV
 
-TODO:
+TODO: skleić CSV z Cradle.
 
     :::javascript readcsv.js
     var csv = require('csv');
@@ -246,5 +246,10 @@ programu dla Cradle:
 
 Zob. [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009)
 
+
+## Moduł CouchClient
+
 **TODO:** sprawdzić czy zapytania GEO działają
 z [couch-client](https://github.com/creationix/couch-client).
+
+
