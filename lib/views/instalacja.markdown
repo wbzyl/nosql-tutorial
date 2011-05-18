@@ -98,14 +98,15 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd couchdb
-    git checkout 1.0.3  # ostatnia stabilna wersja (maj 2011)
+    git checkout 1.0.3    # ostatnia stabilna wersja (maj 2011)
+    # git checkout 1.1.0  # też działa z GeoCouch
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     make
     make install
 
-Oczywiście możemy też „live on the edge”. Niestety na ostatniej
-wersji nie działa rozszerzenie Geocouch.
+Oczywiście możemy też „live on the edge”. Niestety rozszerzenie Geocouch
+nie działa z wersją „edge” CouchDB.
 
 *Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
 podać ścieżkę do plików nagłówkowych:
