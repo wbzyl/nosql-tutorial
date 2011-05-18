@@ -169,12 +169,12 @@ TODO:
 
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
-1. {%= link_to "Dostęp do CouchDB via NodeJS", "/couchdb-nodejs" %}
 
 
 # Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
+*  {%= link_to "Środowisko: NodeJS, NPM, edytor", "/srodowisko" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
 
