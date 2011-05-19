@@ -1,0 +1,4 @@
+"CountryId","Country","FIPS104","ISO2","ISO3","ISON","Internet","Capital","MapReference","NationalitySingular","NationalityPlural","Currency","CurrencyCode","Population","Title","Comment"
+197,"Poland","PL","PL","POL","616","PL","Warsaw ","Europe ","Polish","Poles","Zloty","PLN",38633912,"Poland",""
+253,"United Kingdom","UK","GB","GBR","826","UK","London ","Europe ","British","Britons","Pound Sterling","GBP",59647790,"The United Kingdom","ISO includes Guernsey, Isle of Man, Jersey"
+254,"United States","US","US","USA","840","US","Washington, DC ","North America ","American","Americans","US Dollar","USD",278058881,"The United States",""
