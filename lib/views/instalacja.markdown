@@ -98,15 +98,14 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::shell-unix-generic
     cd couchdb
-    git checkout 1.0.3    # ostatnia stabilna wersja (maj 2011)
-    # git checkout 1.1.0  # też działa z GeoCouch
+    git checkout 1.1.0  # ta wersja działa z GeoCouch
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     make
     make install
 
-Oczywiście możemy też „live on the edge”. Niestety rozszerzenie Geocouch
-nie działa z wersją „edge” CouchDB.
+Oczywiście możemy też „live on the edge”. Niestety (18.05.2011)
+rozszerzenie Geocouch nie działa z wersją „edge” CouchDB.
 
 *Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
 podać ścieżkę do plików nagłówkowych:
@@ -149,7 +148,7 @@ w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01
 Uruchamiamy serwer:
 
     couchdb
-      Apache CouchDB 1.0.3 (LogLevel=info) is starting.
+      Apache CouchDB 1.1.0 (LogLevel=info) is starting.
       Apache CouchDB has started. Time to relax.
       [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:XXXXX/
 
@@ -160,7 +159,7 @@ Sprawdzamy, czy instalacja przebiegła bez błędów:
 
     :::shell-unix-generic
     curl http://127.0.0.1:5984
-      {"couchdb":"Welcome","version":"1.0.3"}
+      {"couchdb":"Welcome","version":"1.1.0"}
 
 Następnie wchodzimy na stronę:
 
@@ -229,14 +228,14 @@ na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*
 i uruchamiamy *make*:
 
     :::shell-unix-generic
-    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.0.3/include
+    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.0/include
     make
 
 Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
 do odpowiednich katalogów:
 
     cp etc/couchdb/local.d/geocouch.ini $HOME/.nosql/etc/couchdb/local.d/
-    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.0.3/ebin/
+    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.0/ebin/
 
 Na koniec sprawdzamy czy geolokacja działa.
 W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
@@ -245,8 +244,9 @@ polecenia z sekcji *Using GeoCouch* pliku
 
 Więcej informacji o *Geocouch*:
 
+* [Welcome to the world of GeoCouch](https://github.com/couchbase/geocouch)
 * [GeoCouch: Bulk Insertion](http://blog.couchbase.com/geocouch-bulk-insertion)
-
+* GeoJSON: [Geometry Objects](http://geojson.org/geojson-spec.html#geometry-objects)
 
 
 ## Linki

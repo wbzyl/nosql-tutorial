@@ -1,29 +1,75 @@
-#### {% title "NodeJS & Couchapp + Cradle + CouchClient" %}
+#### {% title "NodeJS ← Couchapp + CouchClient + Cradle" %}
 
-Do tej pory, aby umieścić dokument w bazie używaliśmy
-programu *curl*. W przypadku design documents, wymagało
-to od nas uwagi przy zapisywaniu kodu Javascript
-w napisach – trudno jest poprawnie wpisać zagnieżdżone napisy.
+Do tej pory, do umieszczenia dokumentu w bazie CouchDB
+używaliśmy programu *curl*. W wypadku design documents,
+oznaczało to że kod JavaScript wpisywany jako string
+musiał być odpowiednio „quoted”.
 
-Ale takie podejście ma dużą zaletę – takie przykłady łatwo jest
+Takie podejście ma dużą zaletę – przykłady łatwo jest
 przeklikać na terminal i uruchomić.
-Jednak gdy sami mamy taki przykład przgotować, lepiej
-jest skorzystać z metody która umożliwia wpisywanie
-kodu bezpośrednio.
+Jednak gdy sami mamy taki przykład wpisać, lepiej
+jest skorzystać z metody która umożliwi wpisywanie
+kodu JavaScript jako kodu a nie napisu.
 
 Poniżej opisuję jak to można zrobić korzystając z modułu
-NodeJS [node.couchapp.js](https://github.com/mikeal/node.couchapp.js).
-Wadą tego rozwiązania jest to, że wymaga umiejętności
-programowania w Javascripcie.
+[couchapp](https://github.com/mikeal/node.couchapp.js).
 
-Moduł Couchapp nie nadaje się do odpytywania bazy CouchDB, ani do
-zapisywania w niej dokumentów. Zamiast niego skorzystamy z modułu
-Cradle.
+Niestety, Couchapp nie nadaje się do odpytywania bazy CouchDB, ani do
+zapisywania w niej dokumentów.
 
-Oba moduły instalujemy globalnie:
+Dlatego do zapisywania dokumentów będziemy korzystać z modułów
+CouchClient i Cradle. Oba moduły instalujemy globalnie:
 
     npm install -g couchapp
+    npm install -g couch-client
     npm install -g cradle
+
+Sprawdzamy jakie mamy moduły są zainstalowane:
+
+    npm ls -g
+
+
+## Umieszczanie dokumentów w bazie
+
+Zajmiemy się następującymi przypadkami:
+
+* dane są zapisane w formacie JSON, gotowe do umieszczenia
+  hurtem w bazie, na przykład
+  {%= link_to "places.json", "/node/db/places.json" %}
+  ({%= link_to "źródło", "/doc/node/db/places.json" %})
+* dane są zapisane w pliku w formacie CSV, gdzie pierwszy
+  wiersz zawiera nazwy pól, na przykład
+  {%= link_to "cities.csv", "/node/db/cities.csv" %}
+  ({%= link_to "źródło", "/doc/node/db/cities.csv" %})
+
+
+### JSON
+
+Argumenty wywołania:
+
+    :::javascript bulk_doc.js
+    console.time('total-time');
+
+    var cc = require('couch-client')('http://localhost:5984/' + dbname)
+    , fs = require('fs');
+
+    var filename = argv[0];
+    var dbname = argv[1];
+
+    var text = fs.readFileSync(filename, 'UTF-8');
+    var json = JSON.parse(text);
+
+    cc.request("POST", cc.uri.pathname + "/_bulk_docs", json, function(err, results) {
+      if (err) throw err;
+    });
+
+    console.timeEnd('total-time');
+
+
+
+### CSV
+
+Skrypt: ?
 
 
 ## Moduł Couchapp
