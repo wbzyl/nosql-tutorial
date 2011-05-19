@@ -181,43 +181,16 @@ Na konie sprawdzamy, czy funkcja show została zapisana w bazie:
     curl -v http://localhost:5984/aye/_design/default/_show/aye/x?q=Captain
 
 
-### Rozszerzenie GeoCouch
+## Przykład użycia rozszerzenia GeoCouch
 
-Przykład z funkcją listową z pliku *README*.
+Przerobimy przykład z funkcją spatial
+z [README](https://github.com/couchbase/geocouch).
 
-Dane:
+Współrzędne kilku punktów na mapie już umieściliśmy w bazie:
+{%= link_to "places.json", "/node/db/places.json" %}.
 
-    :::json geo.json
-    {
-      "docs": [
-         {
-           "_id": "oakland",
-           "loc": [-122.270833, 37.804444]
-         },
-         {
-           "_id": "augsburg",
-           "loc": [10.898333, 48.371667]
-         },
-         {
-           "_id": "namibia",
-           "loc": [17.15, -22.566667]
-         },
-         {
-           "_id": "australia",
-           "loc": [135, -25]
-         },
-         {
-           "_id": "brasilia",
-           "loc": [-52.95, -10.65]
-         }
-      ]
-    }
-
-Tworzymy bazę *places* i zapiujemy w niej dane z JSON-a:
-
-    curl -X POST -H "Content-Type: application/json" --data @geo.json http://127.0.0.1:5984/places/_bulk_docs
-
-Plik dla *couchapp*:
+Do zapisania funkcji spatial oraz funkcji listowej użyjemy poniższego
+skryptu:
 
     :::javascript geo.js
     var couchapp = require('couchapp');
@@ -232,143 +205,33 @@ Plik dla *couchapp*:
 
     ddoc.spatial.points = function(doc) {
       if (doc.loc) {
-        emit({type: "Point", coordinates: [doc.loc[0], doc.loc[1]]}, [doc._id, doc.loc]);
+        emit({
+            type: "Point",
+            coordinates: [doc.loc[0], doc.loc[1]]
+          },
+          [doc._id, doc.loc]);
       };
     };
 
     ddoc.lists.wkt = function(head, req) {
       var row;
       while (row = getRow()) {
+        log(JSON.stringify(row));
         send("POINT(" + row.value[1] + ")\n");
       };
     };
 
     module.exports = ddoc;
 
-Zapisujemy funkcje w bazie *places*:
+Zapisujemy obie funkcje w bazie *places* jako design documents:
 
     couchapp push geo.js http://localhost:5984/places
 
-Kilka zapytań:
+Teraz możemy odpytać bazę:
 
     curl -X GET 'http://localhost:5984/places/_design/default/_spatial/points?bbox=0,0,180,90'
     curl -X GET 'http://localhost:5984/places/_design/default/_spatial/points?bbox=110,-60,-30,15&plane_bounds=-180,-90,180,90'
     curl -X GET 'http://localhost:5984/places/_design/default/_spatial/_list/wkt/points?bbox=-180,-90,180,90'
 
 
-## Moduł Cradle + CSV
-
-TODO: skleić CSV z Cradle.
-
-    :::javascript readcsv.js
-    var csv = require('csv');
-
-    process.stdin.resume();
-
-    csv()
-      .fromStream(process.stdin, { columns: true })
-      .transform(function(data){
-        delete data.CityId;
-        delete data.RegionID;
-        delete data.DmaId;
-        delete data.Code;
-        return data;
-      })
-      .on('data',function(data,index){
-        console.log('#'+index+' '+JSON.stringify(data));
-      })
-      .on('end',function(count){
-        console.log('Number of lines: '+count);
-      })
-      .on('error',function(error){
-        console.log(error.message);
-      });
-
-Użycie:
-
-    node readcsv.js < cities.txt
-
-Plik:
-
-    :::csv cities.txt
-    "CityId","CountryID","RegionID","City","Latitude","Longitude","TimeZone","DmaId","Code"
-    42231,1,833,"Herat","34.333","62.2","+04:30",0,"HERA"
-    5976,1,835,"Kabul","34.517","69.183","+04:50",0,"KABU"
-    42230,1,852,"Mazar-e Sharif","36.7","67.1","+4:30",0,"MSHA"
-    42412,2,983,"Korce","40.6162","20.7779","+01:00",0,"KORC"
-
-Dodajemy coś do bazyy *places*:
-
-    :::javascript places.js
-    var cradle = require('cradle');
-    var db = new(cradle.Connection)('http://localhost', 5984).database('places');
-
-    db.get('augsburg', function (err, doc) {
-      console.log(JSON.stringify(doc));
-    });
-
-    db.merge('augsburg', {
-      region: 'Bavaria'
-    }, function (err, res) {
-      if (err) {
-        // Handle error
-      } else {
-        // Handle success
-      }
-    });
-
-    db.save('krakow', {
-      loc: [50.083, 19.917],
-      region: 'małopolska'
-    }, function(err, res) {
-      if (err) {
-        console.log('Error when saving krakow');
-      } else {
-        console.log('Saved krakow');
-      }
-    });
-
-    db.save('gdynia', {
-      loc: [54.5, 18.55]
-    }, function(err, res) {
-      // Handle response
-    });
-
-    db.save('warsaw', {
-      loc: [52.25, 21.00]
-    }, function(err, res) {
-      // Handle response
-    });
-
-Użycie:
-
-    node places.js
-
-
-**Nie działają zapytania GEO**: zamienić na zwykłe zapytanie do bazy *ls*.
-
-Odpytywanie bazy za pomocą programu *curl*:
-
-    curl -X GET 'http://localhost:5984/places/_design/default/_spatial/points?bbox=0,0,180,90'
-
-programu dla Cradle:
-
-    :::javascript query.js
-    var cradle = require('cradle');
-    var db = new(cradle.Connection)('http://localhost', 5984).database('places');
-    db.view('default/_spatial/points', {'bbox': '0,0,180,90'}, function (err, res) {
-        res.forEach(function (row) {
-            sys.puts(row.name + " is on the " +
-                     row.force + " side of the force.");
-        });
-    });
-
-Zob. [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009)
-
-
-## Moduł CouchClient
-
-**TODO:** sprawdzić czy zapytania GEO działają
-z [couch-client](https://github.com/creationix/couch-client).
-
-
+Zobacz też [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009)
