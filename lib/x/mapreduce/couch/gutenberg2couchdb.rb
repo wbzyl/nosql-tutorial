@@ -25,9 +25,7 @@
 #    Starsze książki nie mają takich nagłówków, np. William Shakespeare.
 #    albo mają inne – wtedy skrypt nie działa.
 
-if RUBY_VERSION < "1.9.0"
-  require 'rubygems'
-end
+require 'rubygems' unless defined? Gem
 
 # http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
 # http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
