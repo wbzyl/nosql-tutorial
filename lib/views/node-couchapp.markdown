@@ -18,7 +18,9 @@ Niestety, Couchapp nie nadaje się do odpytywania bazy CouchDB, ani do
 zapisywania w niej dokumentów.
 
 Dlatego do zapisywania dokumentów będziemy korzystać z modułów
-CouchClient i Cradle. Oba moduły instalujemy globalnie:
+[CouchClient](https://github.com/creationix/couch-client)
+i [Cradle](https://github.com/cloudhead/cradle).
+Oba moduły instalujemy globalnie:
 
     npm install -g couchapp
     npm install -g couch-client
@@ -49,6 +51,7 @@ Do zapisania danych z pliku *places.json* do bazy CouchDB
 użyjemy prostego skryptu:
 
     :::javascript bulk_doc.js
+
     var argv = process.argv.splice(2);
     var filename = argv[0];
     var dbname = argv[1];
@@ -181,10 +184,10 @@ Na konie sprawdzamy, czy funkcja show została zapisana w bazie:
     curl -v http://localhost:5984/aye/_design/default/_show/aye/x?q=Captain
 
 
-## Przykład użycia rozszerzenia GeoCouch
+### Przykład użycia rozszerzenia GeoCouch
 
 Przerobimy przykład z funkcją spatial
-z [README](https://github.com/couchbase/geocouch).
+z [GeoCouch](https://github.com/couchbase/geocouch).
 Współrzędne kilku punktów na mapie już umieściliśmy w bazie:
 {%= link_to "places.json", "/node/db/places.json" %}.
 
