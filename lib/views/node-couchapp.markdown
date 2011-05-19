@@ -185,7 +185,6 @@ Na konie sprawdzamy, czy funkcja show została zapisana w bazie:
 
 Przerobimy przykład z funkcją spatial
 z [README](https://github.com/couchbase/geocouch).
-
 Współrzędne kilku punktów na mapie już umieściliśmy w bazie:
 {%= link_to "places.json", "/node/db/places.json" %}.
 
@@ -202,6 +201,7 @@ skryptu:
       , shows:   {}
       , spatial: {}
     }
+    module.exports = ddoc;
 
     ddoc.spatial.points = function(doc) {
       if (doc.loc) {
@@ -209,7 +209,7 @@ skryptu:
             type: "Point",
             coordinates: [doc.loc[0], doc.loc[1]]
           },
-          [doc._id, doc.loc]);
+             [doc._id, doc.loc]);
       };
     };
 
@@ -221,7 +221,7 @@ skryptu:
       };
     };
 
-    module.exports = ddoc;
+**Uwaga:** Funkcje spatial używają tej samej funkcji *emit* co widoki.
 
 Zapisujemy obie funkcje w bazie *places* jako design documents:
 
@@ -234,4 +234,4 @@ Teraz możemy odpytać bazę:
     curl -X GET 'http://localhost:5984/places/_design/default/_spatial/_list/wkt/points?bbox=-180,-90,180,90'
 
 
-Zobacz też [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009)
+Zobacz też [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009).
