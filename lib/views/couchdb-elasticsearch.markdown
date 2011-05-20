@@ -22,7 +22,7 @@ Rozpakowujemy archiwum z ostatnią wersją *elasticsearch*:
 
     unzip elasticsearch-0.16.1.zip
 
-Instalujemy wtyczkę *river-couchdb*:
+Instalujemy wtyczkę *river-couchdb:*
 
     cd elasticsearch-0.16.1
     bin/plugin -install river-couchdb
