@@ -22,11 +22,6 @@ Replikujemy bazę *lz*:
 A teraz replikujemy – między sobą – swoje bazy danych.
 Na razie do replikacji wykorzystamy Futona.
 
-Teraz kolej na lekturę [New Features in Replication](http://blog.couchone.com/post/468392274):
-
-* [Change Notifications](http://guide.couchdb.org/draft/notifications.html)
-* Filters
-
 
 ## Replikujemy bazy z CouchDB na Sigmie
 
@@ -34,11 +29,11 @@ Zaczynamy od pobrania listy z nazwami baz:
 
     curl http://sigma.ug.edu.pl:5984/_all_dbs
 
-i wybieramy bazy, które nas interesują:
+i wybieramy bazy, które nas interesują, na przykład:
 
-    gutenberg ksiazki ls movies nosql nyt-obama rock
+    gutenberg ksiazki ls
 
-Piszemy prosty skrypt w bashu replikujące te bazy:
+Oczywiście do replikacji użyjemy prostego skryptu:
 
     :::shell-unix-generic couchdb-replicate-from-sigma.sh
     #!/bin/bash
@@ -52,6 +47,4 @@ Piszemy prosty skrypt w bashu replikujące te bazy:
 
 Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
 
-    ./couchdb-replicate-from-sigma.sh apache-time-logs blog-1 blog-2 chromium coll \
-      googlemaps gutenberg imdb ksiazki ls lz marketdata marketproduct michiganstudent \
-      movies nosql nosql-slimmed nyt-obama photos photos-mr rock sales_download_5 tax ufo
+    ./couchdb-replicate-from-sigma.sh gutenberg ksiazki ls
