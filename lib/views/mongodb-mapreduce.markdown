@@ -63,7 +63,57 @@ Pierwsze koty za płoty:
 
 ### Counting tags
 
-To samo co powyżej, ale dla bazy zwierającej kilkanaście cytatów
-H. Steinhausa i S. J. Leca.
+Czyli to samo co powyżej, ale prościej i dla bazy zwierającej
+kilkanaście cytatów H. Steinhausa i S. J. Leca. Zaczynamy od
+skopiowania bazy *ls* z CouchDB do *MongoDB*.
+Skorzystamy ze skryptu
+{%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}:
 
-Zaczynamy od skopiowania bazy *ls* z CouchDB do *MongoDB*:
+    couchrest2mongo.rb --help
+    couchrest2mongo.rb -d ls -m mapreduce -c ls
+
+Czyli tworzymy na MongoDB bazę *mapreduce*, gdzie kopiujemy zawartość bazy
+*ls* z CouchDB do kolekcji *ls*. Następnie sprawdzamy na konsoli
+*mongo* co się skopiowało:
+
+    :::javascript
+    use mapreduce
+      switched to db mapreduce
+    show collections
+      ls
+    db.ls.findOne()
+
+Funkcję map, funkcję reduce oraz wywołanie *mapReduce*
+wpiszemy w pliku *ls_count_tags.js*:
+
+    :::javascript ls_count_tags.js
+    m = function() {
+      if (!this.tags) return;
+      this.tags.forEach(function(tag) {
+        emit(tag, 1);
+      });
+    };
+    r = function(key, values) {
+      var total = 0;
+      values.forEach(function(count) {
+        total += count;
+      });
+      return total;
+    };
+    // results = db.ls.mapReduce(m, r, {out : "ls.tags"});
+    results = db.runCommand({
+      mapreduce: "ls",
+      map: m,
+      reduce: r,
+      out: "ls.tags"
+    });
+    printjson(results);
+
+Powyższy program uruchamiamy w terminalu:
+
+    mongo --shell mapreduce ls_count_tags.js
+
+Następnie na konsoli *mongo* wpisujemy:
+
+    show collections
+    db.ls.tags.find({_id: 'nauka'})
