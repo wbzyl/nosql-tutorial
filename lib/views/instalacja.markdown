@@ -345,7 +345,7 @@ Więcej prostych przykładów:
 Podobnie, jak to zrobiliśmy dla CouchDB, przeniesiemy bazy MongoDB
 na swoje konto, na przykład do katalogu *$HOME/.mongo/var/lib/mongodb*:
 
-    mkdir $HOME/.mongo/var/lib/mongodb -p
+    mkdir $HOME/.data/var/lib/mongodb -p
 
 Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
 Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając
@@ -365,7 +365,7 @@ Oto ten skrypt:
         echo "Usage:  $(basename $0) server|shell [PORT]" >&2
         exit 1
     }
-    dbpath=$HOME/.mongo/var/lib/mongodb
+    dbpath=$HOME/.data/var/lib/mongodb
     type=$1
     port=$2
     shift ; shift

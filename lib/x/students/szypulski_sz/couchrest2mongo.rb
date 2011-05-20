@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-if RUBY_VERSION < "1.9.0"
-  require 'rubygems'
-end
+require 'rubygems' unless defined? Gem
 
 require 'couchrest'
 require 'mongo'
@@ -23,15 +21,15 @@ class OptparseCouch2Mongo
     options = OpenStruct.new
     options.couchport = 5984
     options.couchdatabase = "gutenberg"
-    options.couchhost = "localhost"   
- 
+    options.couchhost = "localhost"
+
     options.mongoport = 27017
     options.mongodatabase = "couch"
     options.mongocollection = "gutenberg"
     options.mongohost = "localhost"
 
     options.verbose = false
-    
+
     @opts = OptionParser.new do |opts|
       opts.banner = "Użycie: #{$0} [OPCJE]"
       opts.separator ""
@@ -51,8 +49,8 @@ class OptparseCouch2Mongo
       opts.on("-p", "--portc N", Numeric, "port na którym uruchomiono CouchDB (domyślnie: 5984)") do |n|
         options.couchport = n
       end
-     
-      opts.on("-d", "--databasec NAZWA", "nazwa bazy danych CouchDB w której sa zapisane dane (domyślnie: gutenberg)") do |name| 
+
+      opts.on("-d", "--databasec NAZWA", "nazwa bazy danych CouchDB w której sa zapisane dane (domyślnie: gutenberg)") do |name|
         options.couchdatabase = name
       end
 
@@ -72,7 +70,7 @@ class OptparseCouch2Mongo
         options.mongocollection = cname
       end
 
-      opts.on("-j", "--hostnamem ADRES", "nazwa hosta/adres serwera na którym umieszczona jest baza MongoDB (domyślnie: localhost)") do |host| 
+      opts.on("-j", "--hostnamem ADRES", "nazwa hosta/adres serwera na którym umieszczona jest baza MongoDB (domyślnie: localhost)") do |host|
         options.mongohost = host
       end
 

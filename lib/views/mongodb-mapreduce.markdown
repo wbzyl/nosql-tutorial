@@ -30,7 +30,7 @@ Przykłady z internetu:
 
 ## Zaczynamy
 
-Pierwszy przykład:
+Pierwsze koty za płoty:
 
     :::javascript
     db.mr.drop();
@@ -59,3 +59,11 @@ Pierwszy przykład:
 
     printjson(res);
     print("==>> To display results run: db.mr.tc.find()");
+
+
+### Counting tags
+
+To samo co powyżej, ale dla bazy zwierającej kilkanaście cytatów
+H. Steinhausa i S. J. Leca.
+
+Zaczynamy od skopiowania bazy *ls* z CouchDB do *MongoDB*:
