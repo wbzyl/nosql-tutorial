@@ -9,15 +9,15 @@ Tworzymy plik *hello.js* o następującej zawartości:
     var Mustache = require('./mustache')
       , util = require('util')
       , fs = require('fs');
-    
+
     var view = {
-      name: "Joe", 
+      name: "Joe",
       say_hello: function(){ return "hello" }
     };
     var template = fs.readFileSync('./hello.mustache', 'utf-8');
 
     var html = Mustache.to_html(template, view);
-    
+
     util.puts(html);
 
 Następnie piszemy szablon *hello.mustache*:
@@ -29,7 +29,7 @@ I sprawdzamy na konsoli jak renderuje się ten szablon:
     node hello.js  # rozszerzenie .js można pominąć
 
 
-Przeglądamy pozostałe przykłady ze strony [mustache.js](http://blog.couchone.com/post/622014913/mustache-js):
+Przeglądamy pozostałe przykłady ze strony [mustache.js](http://blog.couchbase.com/mustache-js):
 
 * {%= link_to "02.js", "/node/mustache/02.js" %}
 * {%= link_to "03.js", "/node/mustache/03.js" %}
