@@ -1,5 +1,4 @@
 .bundle
-.rvmrc
 log
 pkg
 *~
@@ -8,3 +7,4 @@ pkg
 *.sqlite3
 lib/tmp/**/*
 Gemfile.lock
+vendor
