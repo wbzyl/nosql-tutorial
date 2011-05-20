@@ -11,19 +11,20 @@
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Elasticsearch Guide](http://www.elasticsearch.org/guide/): Setup, API, Query, Mapping…
 * [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
-* [CouchDB Integration](https://github.com/elasticsearch/elasticsearch/wiki/Couchdb-integration)
+* [CouchDB River](http://www.elasticsearch.org/guide/reference/river/couchdb.html)
 * [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
+* [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
 
 
 ## Instalacja
 
 Rozpakowujemy archiwum z ostatnią wersją *elasticsearch*:
 
-    unzip elasticsearch-0.15.0.zip
+    unzip elasticsearch-0.16.1.zip
 
 Instalujemy wtyczkę *river-couchdb*:
 
-    cd elasticsearch-0.15.0
+    cd elasticsearch-0.16.1
     bin/plugin -install river-couchdb
 
 Uruchamiamy *elasticsearch* (korzystamy z domyślnych ustawień – *localhost:9200*):
@@ -31,30 +32,38 @@ Uruchamiamy *elasticsearch* (korzystamy z domyślnych ustawień – *localhost:9
     bin/elasticsearch -f
 
 
-## Podłaczamy Elasticsearch do CouchDB
+## Podłączamy Elasticsearch do CouchDB
 
-Następnie podłączamy *elasticsearch* do *change notification* dla bazy
+Następnie podłączamy *elasticsearch* do *change notification* CouchDB dla bazy
 *nosql* umieszczonej na działającym serwerze CouchDB –
-*http://localhost:4000/nosql/_changes*:
+*http://localhost:5984/nosql/_changes*:
 
-    curl -XPUT 'http://localhost:9200/_river/statuses_internal/_meta' -d @twitter_nosql_timeline.json
+    curl -XPUT 'http://localhost:9200/_river/statuses_internal/_meta' -d @couchdb_nosql.json
+    {"ok":true,"_index":"_river","_type":"statuses_internal","_id":"_meta","_version":1}
 
-gdzie plik *nosql_timeline.json* zawiera:
+gdzie powyżej użyto pliku z następującą zawartością:
 
-    :::json twitter_nosql_timeline.json
+    :::json couchdb_nosql.json
     {
         "type" : "couchdb",
         "couchdb" : {
             "host" : "localhost",
-            "port" : 4000,
+            "port" : 5984,
             "db" : "nosql",
             "filter" : null
         },
         "index" : {
             "index" : "nosql_timeline",
-            "type" : "twitter""
+            "type" : "twitter",
+            "bulk_size" : "100",
+            "bulk_timeout" : "10ms"
         }
     }
+
+Składnia zapytań:
+
+<pre>http://localhost:9200/<b> index </b>/<b> type </b>/_search?...
+</pre>
 
 
 ## Wyszukiwanie – pierwsze koty za płoty
