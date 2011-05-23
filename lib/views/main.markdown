@@ -23,33 +23,30 @@ godziny rozpoczęcia prezentacji.
 <tbody>
  <tr>
   <td>
-  <td><b>23 maja</b>
- <tr>
-  <td>10:30–10:50
-  <td><i>M^3</i>, UFO
- <tr>
-  <td>10:50–11:10
-  <td>
- <tr>
-  <td>11:10–11:30
-  <td>
- <tr>
-  <td>11:10–11:50
-  <td>
- <tr>
-  <td>
   <td><b>30 maja</b>
  <tr>
-  <td>10:30–10:50
+  <td>10:30–10:40
+  <td><i>M^3</i>, UFO
+ <tr>
+  <td>10:40–10:50
   <td><i>DBMS</i>, Comic Vine
  <tr>
-  <td>10:50–11:10
+  <td>10:50–11:00
+  <td>
+ <tr>
+  <td>11:00–11:10
+  <td>
+ <tr>
+  <td>11:10–11:20
+  <td>
+ <tr>
+  <td>11:20–11:30
   <td><i>Izi Development</i>, Tajemnice UFO
  <tr>
-  <td>11:10–11:30
+  <td>11:30–11:40
   <td><i>Google Maniacs</i>, Zastosowanie Google Maps API
  <tr>
-  <td>11:10–11:50
+  <td>11:40–11:50
   <td><i>Polej</i>, Projekt Mussic
 </tbody>
 
