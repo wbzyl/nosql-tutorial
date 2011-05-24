@@ -117,3 +117,8 @@ Następnie na konsoli *mongo* wpisujemy:
 
     show collections
     db.ls.tags.find({_id: 'nauka'})
+
+
+## Global variables in mapreduce
+
+[The Mongo Database](https://github.com/mongodb/mongo/blob/master/jstests/mr5.js)
