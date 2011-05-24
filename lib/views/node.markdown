@@ -1,10 +1,18 @@
-#### {% title "Node.JS" %}
+#### {% title "NodeJS" %}
 
-* Co to jest [Node.JS](http://nodejs.org/)?
+Na początek kilka użytecznych linków:
+
+* [NodeJS](http://nodejs.org/):
+  - [Wiki](https://github.com/joyent/node/wiki)
+  - [NodeJS Manual & Documentation](http://nodejs.org/docs/latest/api/index.html)
+* [Felix’s Node.js Guide](http://nodeguide.com/):
+  - [Felix's Node.js Beginners Guide](http://nodeguide.com/beginner.html) –
+  debugging NodeJS applications
+  - [Felix’s Node.js Convincing the boss guide](http://nodeguide.com/convincing_the_boss.html)
 * [Mastering NodeJS](http://visionmedia.github.com/masteringnode/) – open source Node eBook
-* [API v0.4.3](http://nodejs.org/docs/v0.4.3/api/)
+* [OSButler](http://blog.osbutler.com/categories/node-by-example/)
 
-Program „hello world” dla NodeJS, to prosty serwer www:
+Program „hello world” dla NodeJS, to prosty serwer WWW:
 
     :::javascript server.js
     var http = require('http');
@@ -20,23 +28,17 @@ Tak uruchamiamy ten serwer:
 
 Co ten serwer robi?
 
-Więcej przykładów?
-
-* [OSButler](http://blog.osbutler.com/categories/node-by-example/)
 
 
-### Instalacja modułu *Socket.IO-node*
+## TODO *Socket.IO-node*
 
 Korzystamy z NPM:
 
     npm search socket.io
     socket.io   The cross-browser WebSocket     =rauchg
-    npm install socket.io
+    npm install -g socket.io
 
-
-## Chat korzystający z websockets
-
-Program *chat* to program „hello world” dla websockets.
+Przykład: program *chat* to program „hello world” dla websockets.
 
 Serwer *server.js* („2in1” – serwer www + serwer dla websocket):
 

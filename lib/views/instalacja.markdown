@@ -124,7 +124,7 @@ Powyżej zamiast *XXXXX* wpisujemy numer portu przydzielony na zajęciach.
 
 Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
 
-    :::ini ~/.node/etc/couchdb/local.ini
+    :::ini ~/.nosql/etc/couchdb/local.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
     ; dlatego zamiast *example.com* poniżej,
     ; powinno zadziałać coś takiego i coś takiego:

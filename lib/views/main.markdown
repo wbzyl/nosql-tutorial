@@ -162,17 +162,18 @@ TODO:
 1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
 
 
-## Różne rzeczy
-
-1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
-1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
-
-
 # Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
 *  {%= link_to "Środowisko: NodeJS, NPM", "/srodowisko" %}
 *  {%= link_to "Zadania", "/zadania" %}
+
+
+## Różne rzeczy
+
+1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
+1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
+1. {%= link_to "NodeJS", "/node" %}
 
 
 <blockquote>

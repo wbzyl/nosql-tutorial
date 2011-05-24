@@ -6,7 +6,7 @@ Instalacja krok po kroku:
 
     git clone git://github.com/joyent/node.git
     cd node
-    git checkout v0.4.7
+    git checkout v0.4.8
     ./configure --prefix=$HOME/.node
     make
     make install
@@ -24,7 +24,7 @@ Teraz sprawdzamy czy zainstalowała się wersja stabilna:
 
     cd
     node -v
-    v0.4.7
+    v0.4.8
 
 Po instalcji NodeJS zabieramy się za instalację narzędzia
 [NPM](http://npmjs.org/) – a package manager for node:
