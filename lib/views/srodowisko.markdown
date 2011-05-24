@@ -20,14 +20,14 @@ W tym celu dopisujemy w pliku *~/.bashrc*:
 
 następnie przelogowujemy się (wtedy zostaną wczytane nowe ustawienia *PATH*).
 
-Teraz sprawdzamy czy zainstalowała się wersja stabilna:
+Sprawdzamy co się zainstalowało:
 
     cd
     node -v
     v0.4.8
 
-Po instalcji NodeJS zabieramy się za instalację narzędzia
-[NPM](http://npmjs.org/) – a package manager for node:
+OK. Teraz kolej na instalację narzędzia [NPM](http://npmjs.org/)
+– a package manager for node:
 
     curl http://npmjs.org/install.sh | sh
 
