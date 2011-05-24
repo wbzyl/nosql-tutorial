@@ -1,5 +1,8 @@
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-require 'rubygems'
+
+require 'rubygems' unless defined? Gem
+
 require 'yajl/http_stream'
 require 'mongo'
 

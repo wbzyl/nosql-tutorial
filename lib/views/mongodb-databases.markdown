@@ -1,14 +1,13 @@
 #### {% title "Tworzymy kolekcje MongoDB" %}
 
-Poniżej umieściłem opisy jak zapisać w MongoDB dane pobrane z CouchDB
-i Twittera..
-
 **TODO:** Dodać przykład z bazą Redis oraz skrypty dla: MongoDB ⇔ CouchDB ⇔ Redis
 
 
 ## Kopiowanie bazy z CouchDB do MongoDB
 
-Korzystamy ze skryptu *couch2mongo.rb* (katalog *lib/x* w repozytorium):
+Skorzystamy ze skryptu {%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}
+aby skopiować dane z bazy *gutenberg* z CouchDB do kolekcji *gutenberg*
+w bazie *test*:
 
     ruby couch2mongo.rb --help
     ruby couch2mongo.rb -p 5984 -o 27017 -d gutenberg -m test -c gutenberg
@@ -39,11 +38,47 @@ Uruchamiamy powłokę MongoDB i sprawdzamy co się skopiowało:
         "ok" : 1
     }
 
-Albo, prostsze rozwiązanie:
+
+## Kopiowanie akapitów z ksiązki do bazy MongoDB
+
+Można też to zrobić bez pośrednictwa CouchDB.
+W tym celu skorzystamy ze skryptu
+{%= link_to "gutenberg2mongo.rb", "/db/mongodb/gutenberg2mongo.rb" %}
+({%= link_to "źródło", "/doc/scripts/gutenberg2mongo.rb" %}):
+
+    ./gutenberg2mongo.rb --help
+    ./gutenberg2mongo.rb the-innocence-of-father-brown.txt http://www.gutenberg.org/cache/epub/204/pg204.txt --verbose
+
+Sprawdzamy na konsoli *mongo* co się zaimportowało:
+
+    :::javascript
+    use gutenberg
+    db.books.find( {count : 64}, {_id: 0, paragraph: 1} )
+      { "paragraph" : "\"I mean the parcel the gentleman left--the clergyman gentleman.\"" }
+
+Albo to samo, ale w przeglądarce:
+
+    http://127.0.0.1:28017/gutenberg/books/?limit=1&skip=64
+
+Zobacz [HTTP Interface](http://www.mongodb.org/display/DOCS/Http+Interface).
+
+
+## Kopiowanie statusów z Twittera
+
+Statusy skopiujemy za pomocą skryptu
+{%= link_to "twitter2mongo.rb", "/doc/scripts/twitter2mongo.rb" %}
+napisanego w języku Ruby.
+
+Zaczynamy od instalacji użytych w skrypcie gemów (oraz gemów od nich zależnych):
+
+    gem install mongo mongo_ext yajl-ruby
+
+Oto skrypt:
 
     :::ruby twitter2mongo.rb
     # -*- coding: utf-8 -*-
-    require 'rubygems'
+    require 'rubygems' unless defined? Gem
+
     require 'yajl/http_stream'
     require 'mongo'
 
@@ -68,7 +103,7 @@ Albo, prostsze rozwiązanie:
 
 Uruchamiamy skrypt:
 
-    ruby twitter2mongo mongodb
+    ruby twitter2mongo.rb mongodb
 
 Sprawdzamy na konsoli co ciekawego zaimportowaliśmy:
 

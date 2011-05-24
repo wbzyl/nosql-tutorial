@@ -332,16 +332,20 @@ A teraz obiecany kanoniczny przykład użycia MapReduce:
 
     ddoc.views.wc = {
       map: function(doc) {
-        var words = doc.text.toLowerCase().split(/\W+/);
-        for (var i = 0, len = words.length; i < len; i++) {
-            var word = words[i];
-            if (word != '') {
-                emit([word, doc.title], 1);
-            }
-        }
+        var words = doc.text.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g);
+        words.forEach(function(word) {
+          emit([word, doc.title], 1);
+        });
       },
       reduce: "_sum"
     }
+
+**Uwaga:** zakres `\u00C0-\u01fF` obejmuje następujące litery
+z [Unicode 6.0 Character Code Charts](http://www.unicode.org/charts/):
+
+* [Latin-1 Suplement](http://www.unicode.org/charts/PDF/U0080.pdf)
+* [Latin Extended-A](http://www.unicode.org/charts/PDF/U0100.pdf)
+  (tutaj są polskie diakrytyki).
 
 Zapisujemy widoki w bazie:
 
