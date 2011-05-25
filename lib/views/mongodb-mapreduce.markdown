@@ -119,14 +119,23 @@ Następnie na konsoli *mongo* wpisujemy:
     db.ls.tags.find({_id: 'nauka'})
 
 
-## TODO Global variables in mapreduce
+## Korzystamy ze „zmiennych globalnych”
 
-Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest męczące.
-Powłoka *mongo* ma wbudowanych kilka użytecznych funkcji
+Na dłuższą metę sprawdzanie wyników na konsoli jest męczące.
+W skrypcie poniżej użyjemy wbudowanej w powłokę *mongo* funkcji
+*assert* do sprawdzania wyników.
 
-MapReduce może korzystać
+Od czasu do czasu, przyjrzymy się bliżej zwracanym JSON-om
+wypisując ich zawartość na konsoli za pomocą funkcji *printjson*.
+Przyda się też metoda *convertToSingleObject* zamieniająca
+wynik zwracany przez *mapReduce* na obiekt zawierający
+wynik obliczeń.
 
-    :::javascript
+Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
+w_kodzie JavaScript w funkcji *map* i *reduce*. Zmienne umieszczone
+w „scope” są **tylko do odczytu**.
+
+    :::javascript scope.js
     t = db.scope;
     t.drop();
 
@@ -137,7 +146,7 @@ MapReduce może korzystać
 
     m = function() {
       this.tags.forEach(function(tag) {
-        emit(tag , xx);
+        emit(tag , xx); // zmienna globalna
       });
     };
 
@@ -149,7 +158,7 @@ MapReduce może korzystać
       return total;
     };
 
-    res = t.mapReduce( m , r , { scope : { xx : 2 }, out : "mr4.out" } );
+    res = t.mapReduce( m, r, {scope: {xx: 2}, out: "scope.out"} );
     z = res.convertToSingleObject()
 
     printjson(res);
@@ -160,3 +169,4 @@ MapReduce może korzystać
     assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
 
     res.drop();
+    t.drop();
