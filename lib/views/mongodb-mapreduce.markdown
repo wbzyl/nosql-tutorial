@@ -125,11 +125,11 @@ Na dłuższą metę sprawdzanie wyników na konsoli jest męczące.
 W skrypcie poniżej użyjemy wbudowanej w powłokę *mongo* funkcji
 *assert* do sprawdzania wyników.
 
-Od czasu do czasu, przyjrzymy się bliżej zwracanym JSON-om
-wypisując ich zawartość na konsoli za pomocą funkcji *printjson*.
-Przyda się też metoda *convertToSingleObject* zamieniająca
-wynik zwracany przez *mapReduce* na obiekt zawierający
-wynik obliczeń.
+W kodzie poniżej, przyjrzymy się blizej kilku JSON-om
+wypisując ich zawartość na konsolę (za pomocą funkcji *printjson*).
+Skorzystamy też z metody *convertToSingleObject* zamieniającej
+JSON zwracany przez *mapReduce* na JSON zawierający
+wynik obliczeń mapreduce.
 
 Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
 w_kodzie JavaScript w funkcji *map* i *reduce*. Zmienne umieszczone
