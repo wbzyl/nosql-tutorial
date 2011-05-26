@@ -132,8 +132,9 @@ JSON zwracany przez *mapReduce* na JSON zawierający
 wynik obliczeń mapreduce.
 
 Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
-w_kodzie JavaScript w funkcji *map* i *reduce*. Zmienne umieszczone
-w „scope” są **tylko do odczytu**.
+w_kodzie JavaScript w funkcjach użytych w *mapReduce*.
+Zmienna *xx* zdefiniowana przez *scope* jest w zasięgu tych funkcji.
+Zmienne umieszczone w „scope” są **tylko do odczytu**.
 
     :::javascript scope.js
     t = db.scope;
@@ -146,7 +147,7 @@ w „scope” są **tylko do odczytu**.
 
     m = function() {
       this.tags.forEach(function(tag) {
-        emit(tag , xx); // zmienna globalna
+        emit(tag , xx); // zmiennej xx można też użyć w funkcji r poniżej
       });
     };
 
@@ -170,3 +171,8 @@ w „scope” są **tylko do odczytu**.
 
     res.drop();
     t.drop();
+
+
+## Dwuprzebiegowe MapReduce
+
+[Counting Unique Items with Map-Reduce](http://cookbook.mongodb.org/patterns/unique_items_map_reduce/).
