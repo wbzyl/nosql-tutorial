@@ -12,6 +12,10 @@ rozrysowały ideę mapreduce:
 * [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
 * [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
 
+Zobacz też Matthew Johnson,
+[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf).
+
+
 Podstawowa dokumentacja:
 
 * [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
@@ -171,6 +175,48 @@ Zmienne umieszczone w „scope” są **tylko do odczytu**.
 
     res.drop();
     t.drop();
+
+
+## „Pivot data”
+
+W kolekcji *rock.names* zapisane są dokumenty w formacie:
+
+    :::json
+    {
+      name: "King Crimson",
+      tag: [ "progressiverock", "rock", "psychedelic" ]
+    }
+
+Z tej kolekcji chcemy utworzyć kolekcję *rock.tags* zawierającą
+dokumenty w formacie:
+
+    :::json
+    {
+      tag: "psychedelic",
+      name: [ "King Crimson", "Pink Floyd", "Cream", ... ]
+    }
+
+
+### Przygotowujemy kolekcję *rock.names*
+
+Kopiujemy bazę *rock* z CouchDB do MonggDB (korzystamy z gotowego skryptu):
+
+    ./couchrest2mongo.rb -d rock -m mapreduce -c rock
+
+Następnie na konsoli tworzymy kolekcję *rock.names*:
+
+    :::javascript
+    var cursor = db.rock.find({}, {name: 1, tags: 1, _id: 0})
+    while (cursor.hasNext()) {
+     var doc = cursor.next();
+     db.rock.names.insert(doc);
+    };
+
+
+### Kolej na MapReduce
+
+TODO
+
 
 
 ## Dwuprzebiegowe MapReduce
