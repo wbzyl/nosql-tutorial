@@ -199,11 +199,13 @@ dokumenty w formacie:
 
 ### Przygotowujemy kolekcję *rock.names*
 
-Kopiujemy bazę *rock* z CouchDB do MonggDB (korzystamy z gotowego skryptu):
+Kopiujemy bazę *rock* z CouchDB do MonggDB
+(link {%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}):
 
     ./couchrest2mongo.rb -d rock -m mapreduce -c rock
 
-Następnie na konsoli tworzymy kolekcję *rock.names*:
+Ponieważ kolekcja *rock* zawiera zbędne dla nas w tej chwili pola,
+usuniemy je. W tym celu na konsoli *mongo* wykonujemy poniższy kod:
 
     :::javascript
     var cursor = db.rock.find({}, {name: 1, tags: 1, _id: 0})
@@ -212,11 +214,64 @@ Następnie na konsoli tworzymy kolekcję *rock.names*:
      db.rock.names.insert(doc);
     };
 
+Nowe dokumenty zapisujemy w kolekcji *rock.names*.
+
 
 ### Kolej na MapReduce
 
-TODO
+W kodzie poniżej argument *value* nie może być tablicą.
+Dlaczego? Takie jest ograniczenie w wersji 1.9 MongoDB.
+Dlatego w kodzie wstawiliśmy tablicę do obiektu.
 
+    :::javascript pivot.js
+    m = function() {
+      var value = { names: [ this.name ] };
+      this.tags.forEach(function(tag) {
+        emit(tag, value);
+      });
+    };
+
+    r = function(key, values) {
+      var list = { names: [] };
+      values.forEach(function(x) {
+        list.names = x.names.concat(list.names);
+      });
+      return list;
+    };
+
+    f = function(key, value) {
+      return value.names;
+    };
+
+    db.pivot.drop();
+
+    db.rock.names.mapReduce(m, r, { finalize: f, out: "pivot" });
+
+    printjson(db.pivot.findOne());
+
+Po wykonaniu powyższego kodu w kolekcji *pivot* zostały
+zapisane rekordy w formacie:
+
+    :::json
+    { "_id" : "00s",  "value" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+
+a miały mieć format:
+
+    :::json
+    { "tag" : "00s",  "names" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+
+Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
+
+    :::javascript
+    var cursor = db.pivot.find({})
+    while (cursor.hasNext()) {
+     var doc = cursor.next();
+     var ddoc = {};
+     ddoc.tag = doc._id;
+     ddoc.names = doc.value;
+     db.rock.tags.insert(ddoc);
+    };
+    db.pivot.drop();
 
 
 ## Dwuprzebiegowe MapReduce
