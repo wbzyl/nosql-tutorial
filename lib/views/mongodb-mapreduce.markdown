@@ -259,7 +259,7 @@ a miały mieć format:
 Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
 
     :::javascript
-    var cursor = db.pivot.find({})
+    var cursor = db.pivot.find();
     while (cursor.hasNext()) {
      var doc = cursor.next();
      var ddoc = {};
@@ -267,9 +267,19 @@ Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
      ddoc.names = doc.value;
      db.rock.tags.insert(ddoc);
     };
+
+albo zamiast pary metod *hasNext* i *next* skorzystamy z metody *forEach*:
+
+    :::javascript
+    db.pivot.find().forEach(function(doc) {
+      var ddoc = {};
+      ddoc.tag = doc._id;
+      ddoc.names = doc.value;
+      db.rock.tags.insert(ddoc);
+    });
     db.pivot.drop();
 
-Przy okazji usuwamy niepotrzebną już kolekcję *pivot*.
+Przy okazji usuwamy już niepotrzebną kolekcję *pivot*.
 
 
 ## Dwuprzebiegowe MapReduce
