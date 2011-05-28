@@ -214,7 +214,7 @@ usuniemy je. W tym celu na konsoli *mongo* wykonujemy poniższy kod:
      db.rock.names.insert(doc);
     };
 
-Nowe dokumenty zapisujemy w kolekcji *rock.names*.
+Uwaga: nowe dokumenty zapisujemy w kolekcji *rock.names*.
 
 
 ### Kolej na MapReduce
@@ -230,7 +230,6 @@ Dlatego w kodzie wstawiliśmy tablicę do obiektu.
         emit(tag, value);
       });
     };
-
     r = function(key, values) {
       var list = { names: [] };
       values.forEach(function(x) {
@@ -238,15 +237,12 @@ Dlatego w kodzie wstawiliśmy tablicę do obiektu.
       });
       return list;
     };
-
     f = function(key, value) {
       return value.names;
     };
 
     db.pivot.drop();
-
     db.rock.names.mapReduce(m, r, { finalize: f, out: "pivot" });
-
     printjson(db.pivot.findOne());
 
 Po wykonaniu powyższego kodu w kolekcji *pivot* zostały
@@ -272,6 +268,8 @@ Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
      db.rock.tags.insert(ddoc);
     };
     db.pivot.drop();
+
+Przy okazji usuwamy niepotrzebną już kolekcję *pivot*.
 
 
 ## Dwuprzebiegowe MapReduce
