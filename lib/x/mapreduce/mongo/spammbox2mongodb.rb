@@ -1,5 +1,8 @@
 # -*- coding: utf-8  -*-
 
+# verbose: print to stdderr / użyć Ruby Logger
+# cat xxx | mongoimport  <-- ze stdin a nie ze stderr
+
 require 'mail'
 require 'iconv'
 require 'faker'
@@ -94,4 +97,4 @@ File.foreach('Filtered') do |box|
   # puts mail.header['X-Original-To'].to_s
 end
 
-puts "Total emails: #{total_emails}"
+#puts "Total emails: #{total_emails}"
