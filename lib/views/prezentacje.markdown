@@ -1,6 +1,72 @@
 #### {% title "Prezentacje 2011" %}
 
-# Prezentacje
+# Prezentacje 2011
+
+**Uwaga:** Poniżej podano **orientacyjne**
+godziny rozpoczęcia prezentacji.
+
+<table summary="harmonogram">
+  <colgroup>
+    <col width=180>
+    <col>
+  </colgroup>
+  <caption><em>Harmonogram prezentacji</em></caption>
+
+<tbody>
+ <tr>
+  <td>
+  <td><b>30 maja</b>
+ <tr>
+  <td>10:30–10:40
+  <td><i>M^3</i>, UFO
+ <tr>
+  <td>10:40–10:50
+  <td><i>DBMS</i>, Comic Vine
+ <tr>
+  <td>10:50–11:00
+  <td>
+ <tr>
+  <td>11:00–11:10
+  <td>
+ <tr>
+  <td>11:10–11:20
+  <td>
+ <tr>
+  <td>11:20–11:30
+  <td><i>Izi Development</i>, Tajemnice UFO
+ <tr>
+  <td>11:30–11:40
+  <td><i>Google Maniacs</i>, Zastosowanie Google Maps API
+ <tr>
+  <td>11:40–11:50
+  <td><i>Polej</i>, Projekt Mussic
+</tbody>
+
+</table>
+
+
+## Ważne uwagi
+
+[2011.05.16] Dokumentacja z *http://www.couchone.com* została przeniesiona
+na [Couchbase Blog](http://blog.couchbase.com/).
+*TODO:* uaktualnić linki z sekcji *Replikacja*, *Mustache*, *Instalacja*
+oraz *Walidacja*.
+
+[2011.05.05] Osoby, które jeszcze nie rozliczyły się ze swoich baz i widoków
+proszę o przygotowanie ich na laboratorium 9.05.2011.
+
+Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
+Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
+Repozytorium należy nazwać **nosql**.
+(W miarę możliwości należy stosować się do uwag Tima Pope,
+[A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).)
+
+Implementacje należy przygotować w jednym z języków:
+Javascript, Ruby, Perl, Python, Scala
+(zob. też [top languages](https://github.com/languages)).
+
+
+# Prezentacje 2010
 
 **Uwaga:** Poniżej podano **orientacyjne**
 godziny rozpoczęcia prezentacji.
@@ -67,7 +133,7 @@ Jeśli pojawią się jakieś problemy proszę o maila.
 -->
 
 
-<!-- 
+<!--
 [2011.04.19] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public),
 [Kaggle](http://www.kaggle.com/) – a platform for data prediction competitions that allows
 organizations to post their data and have it scrutinized by the world's best data scientists

@@ -14,7 +14,8 @@
 * [CouchDB River](http://www.elasticsearch.org/guide/reference/river/couchdb.html)
 * [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
 * [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
-
+* [Your Data, Your Search, ElasticSearch](http://www.slideshare.net/karmi/your-data-your-search-elasticsearch-euruko-2011) (Euruko 2011),
+([Template for generating a no-frills Rails application with support for ElasticSearch full-text search via the Tire gem](https://gist.github.com/951343))
 
 ## Instalacja
 

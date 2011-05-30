@@ -10,90 +10,11 @@
  <p class="author">— Sir Arthur Conan Doyle</p>
 </blockquote>
 
-**Uwaga:** Poniżej podano **orientacyjne**
-godziny rozpoczęcia prezentacji.
-
-<table summary="harmonogram">
-  <colgroup>
-    <col width=180>
-    <col>
-  </colgroup>
-  <caption><em>Harmonogram prezentacji</em></caption>
-
-<tbody>
- <tr>
-  <td>
-  <td><b>30 maja</b>
- <tr>
-  <td>10:30–10:40
-  <td><i>M^3</i>, UFO
- <tr>
-  <td>10:40–10:50
-  <td><i>DBMS</i>, Comic Vine
- <tr>
-  <td>10:50–11:00
-  <td>
- <tr>
-  <td>11:00–11:10
-  <td>
- <tr>
-  <td>11:10–11:20
-  <td>
- <tr>
-  <td>11:20–11:30
-  <td><i>Izi Development</i>, Tajemnice UFO
- <tr>
-  <td>11:30–11:40
-  <td><i>Google Maniacs</i>, Zastosowanie Google Maps API
- <tr>
-  <td>11:40–11:50
-  <td><i>Polej</i>, Projekt Mussic
-</tbody>
-
-</table>
+[30.05.2011] Egzamin, I termin: 21.06.2011, godz. 12.00, p. 228.
 
 
-## Ważne uwagi
-
-[2011.05.16] Dokumentacja z *http://www.couchone.com* została przeniesiona
-na [Couchbase Blog](http://blog.couchbase.com/).
-*TODO:* uaktualnić linki z sekcji *Replikacja*, *Mustache*, *Instalacja*
-oraz *Walidacja*.
-
-[2011.05.05] Osoby, które jeszcze nie rozliczyły się ze swoich baz i widoków
-proszę o przygotowanie ich na laboratorium 9.05.2011.
-
-Wszystkie prace przygotowywane w ramach zajęć muszą działać na *Sigmie*.
-Dla prac należy założyć „free” repozytorium na serwerze *github.com*.
-Repozytorium należy nazwać **nosql**.
-(W miarę możliwości należy stosować się do uwag Tima Pope,
-[A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).)
-
-Implementacje należy przygotować w jednym z języków:
-Javascript, Ruby, Perl, Python, Scala
-(zob. też [top languages](https://github.com/languages)).
-
-
-<blockquote>
- <h2>Ząb mądrości Davy’ego</h2>
- <p>
-   Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego
-   przestał go boleć ząb mądrości. Niestety, nie wyciągnął
-   logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
-   Przez następne dwa pokolenia ludzie cierpieli na stołach
-   operacyjnych. Znieczulenie poraz pierwszy zastosował
-   dentysta Horace Wells dopiero w 1884 roku.
- </p>
- <p>
-   Niektórzy uczeni twierdzą, że było to zarówno kulturalne jak i technologiczne
-   zahamowanie. W końcu XVIII wieku nie dopuszczano nawet myśli
-   o operacji bez bólu. Umiejętność radzenia sobie z bólem pacjenta
-   (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
-   stanowiła zasadniczą część <b>umiejętności zawodowych</b>
-   chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
-   <b>zmiana paradygmatu</b>.<br>(<i>S. Snow</i>, Operations without pain, 2005.)
- </p>
-</blockquote>
+<!--
+-->
 
 ## Co to jest „NoSQL”
 
@@ -135,6 +56,27 @@ TODO:
 
 -->
 
+<blockquote>
+ <h2>Ząb mądrości Davy’ego</h2>
+ <p>
+   Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego
+   przestał go boleć ząb mądrości. Niestety, nie wyciągnął
+   logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
+   Przez następne dwa pokolenia ludzie cierpieli na stołach
+   operacyjnych. Znieczulenie poraz pierwszy zastosował
+   dentysta Horace Wells dopiero w 1884 roku.
+ </p>
+ <p>
+   Niektórzy uczeni twierdzą, że było to zarówno kulturalne jak i technologiczne
+   zahamowanie. W końcu XVIII wieku nie dopuszczano nawet myśli
+   o operacji bez bólu. Umiejętność radzenia sobie z bólem pacjenta
+   (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
+   stanowiła zasadniczą część <b>umiejętności zawodowych</b>
+   chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
+   <b>zmiana paradygmatu</b>.<br>(<i>S. Snow</i>, Operations without pain, 2005.)
+ </p>
+</blockquote>
+
 ## MongoDB
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
@@ -147,15 +89,6 @@ TODO:
 1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
 1. {%= link_to "Sharding", "/mongodb-sharding" %}
 -->
-
-
-<blockquote>
- {%= image_tag "/images/redis_logo.jpg", :alt => "[Redis logo]" %}
- <p>
-   Redis is a collection of data structures exposed over the network
- </p>
- <p class="author">[Anonymous]</p>
-</blockquote>
 
 ## Redis
 
