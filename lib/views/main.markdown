@@ -104,14 +104,14 @@ TODO:
 
 ## Różne rzeczy
 
+<blockquote>
+ {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
+</blockquote>
+
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "NodeJS", "/node" %}
 
-
-<blockquote>
- {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
-</blockquote>
 
 # Prezentacje
 
@@ -128,6 +128,21 @@ TODO:
   przykłady tylko dla JSONów (<em>M. Rusajczyk, M. Pętlicki, M. Smolinski</em>)
 
 
+<blockquote>
+ <p>
+  In the relational databases world the data modeling process was
+  mainly a single step activity: <b>design the schema based on
+  normalization rules</b>. In the NoSQL world, designing the schema means
+  <b>analyzing data access patterns</b>.
+  Differently put the question shifted
+  from <b>how do I store data</b> to
+  <b>how will I access data</b>.
+  </p>
+  <p class="author">
+  [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
+  </p>
+</blockquote>
+
 # Przykładowe bazy danych
 
 * {%= link_to "CouchDB", "/couchdb-databases" %}
@@ -135,7 +150,7 @@ TODO:
 * {%= link_to "Redis", "/redis-databases" %}
 
 
-# Narzędzia do wizualizacji & wizualizacje danych
+# Wizualizacje danych
 
 * [Processing.js](http://processingjs.org/)
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
