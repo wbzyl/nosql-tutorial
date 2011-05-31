@@ -27,18 +27,13 @@ Podstawowa dokumentacja:
 
 ## Jak działa MapReduce?
 
-TODO: drugi łatwiejszy wariant z assert.
-
 Pierwsze koty za płoty:
 
     :::javascript
-    db.mr.drop();
+    db.mapreduce.drop();
 
-    db.mr.insert({_id: 1, tags: ['ą', 'ć', 'ę']});
-    db.mr.insert({_id: 2, tags: ['']});
-    db.mr.insert({_id: 3, tags: []});
-    db.mr.insert({_id: 4, tags: ['ć', 'ę', 'ł']});
-    db.mr.insert({_id: 5, tags: ['ą', 'a']});
+    db.mr.insert({_id: 1, : ['ą', 'ć', 'ę']});
+    db.mr.insert({_id: 2, tags: ['ć', 'ę', 'ł']});
 
     m = function() {
       this.tags.forEach(function(tag) {

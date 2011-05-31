@@ -17,10 +17,12 @@ Druga metoda jest łatwiejsza w użyciu; na przykład:
 
 kopiuje bazę *books* z podanego serwera.
 
-Oczywiście przed kopiowaniem należy uruchomić MongoDB na Tao (*Fedora 15*):
+Oczywiście przed kopiowaniem należy uruchomić MongoDB na Tao:
 
     sudo systemctl start mongod.service
     sudo systemctl status mongod.service
+
+Zob. Fedora 15 [SysVinit to Systemd Cheatsheet](http://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet).
 
 
 ## Jak to działa w Ruby?
