@@ -29,6 +29,7 @@ require 'rubygems' unless defined? Gem
 
 require 'optparse'
 require 'ostruct'
+require 'net/http'
 
 require 'mongo'
 
@@ -131,14 +132,27 @@ end
 
 books = Hash[*ARGV]
 
+# url = URI.parse('http://www.example.com/index.html')
+# res = Net::HTTP.start(url.host, url.port) do |http|
+#   http.get('/index.html')
+# end
+# puts res.body
+# puts res.code  # == "200"
+
+# File.open(local_filename, 'w') {|f| f.write(doc) }
+
 books.each do |file, url|
   pathfile = File.join(File.dirname(__FILE__), file)
+
+  puts pathfile
+
   if options.verbose
     puts "curl #{url} > #{pathfile}"
   end
   `curl #{url} > #{pathfile}` unless File.exists?(pathfile)
 end
 
+__END__
 
 # the MongoDB part
 

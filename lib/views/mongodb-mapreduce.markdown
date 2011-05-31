@@ -4,16 +4,15 @@
  {%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
 </blockquote>
 
-Kanoniczne przykłady (Matthew Johnson.
+Przykłady za Matthew Johnson,
 [Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf)):
 
 * Word Count
 * Pivot Data
 * Spam
 
-Na początek kilka ilustracji. Oto jak
-Ketrina Yim, Sally Ahn, Dan Garcia. „Computer Science Illustrated”
-rozrysowały ideę mapreduce:
+Przykład „Word Count” rozrysowany przez Ketrinę Yim, Sally Ahn, Dan Garcia,
+[Computer Science Illustrated](http://csillustrated.berkeley.edu/):
 
 * [An Example: Distributed Word Count](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf)
 * [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
@@ -29,88 +28,69 @@ Podstawowa dokumentacja:
 
 Pierwsze koty za płoty:
 
-    :::javascript
-    db.mapreduce.drop();
-
-    db.mr.insert({_id: 1, : ['ą', 'ć', 'ę']});
-    db.mr.insert({_id: 2, tags: ['ć', 'ę', 'ł']});
+    :::javascript wc.js
+    db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
+    db.books.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
 
     m = function() {
-      this.tags.forEach(function(tag) {
-        emit(tag, {count: 1});
-      });
-    };
-
-    r = function(key, values) {
-      var total = 0;
-      values.forEach(function(value) {
-        total += value.count;
-      });
-      return {count: total};
-    };
-
-    res = db.mr.mapReduce(m, r, {out: "mr.tc"});
-
-    printjson(res);
-    print("==>> To display results run: db.mr.tc.find()");
-
-
-### Counting tags
-
-Czyli to samo co powyżej, ale prościej i dla bazy zwierającej
-kilkanaście cytatów H. Steinhausa i S. J. Leca. Zaczynamy od
-skopiowania bazy *ls* z CouchDB do *MongoDB*.
-Skorzystamy ze skryptu
-{%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}:
-
-    couchrest2mongo.rb --help
-    couchrest2mongo.rb -d ls -m mapreduce -c ls
-
-Czyli tworzymy na MongoDB bazę *mapreduce*, gdzie kopiujemy zawartość bazy
-*ls* z CouchDB do kolekcji *ls*. Następnie sprawdzamy na konsoli
-*mongo* co się skopiowało:
-
-    :::javascript
-    use mapreduce
-      switched to db mapreduce
-    show collections
-      ls
-    db.ls.findOne()
-
-Funkcję map, funkcję reduce oraz wywołanie *mapReduce*
-wpiszemy w pliku *ls_count_tags.js*:
-
-    :::javascript ls_count_tags.js
-    m = function() {
-      if (!this.tags) return;
-      this.tags.forEach(function(tag) {
-        emit(tag, 1);
+      this.content.match(/[a-z]+/g).forEach(function(word) {
+        emit(word, 1);
       });
     };
     r = function(key, values) {
-      var total = 0;
+      var value = 0;
       values.forEach(function(count) {
-        total += count;
+        value += count;
       });
-      return total;
+      return value;
     };
-    // results = db.ls.mapReduce(m, r, {out : "ls.tags"});
-    results = db.runCommand({
-      mapreduce: "ls",
-      map: m,
-      reduce: r,
-      out: "ls.tags"
-    });
-    printjson(results);
 
-Powyższy program uruchamiamy w terminalu:
+    db.books.mapReduce(m, r, {out: "wc"});
+    print("☯ To display results run: db.wc.find()");  // dlaczego tak?
 
-    mongo --shell mapreduce ls_count_tags.js
+Program *wc.js* uruchamiamy na konsoli *mongo*:
 
-Następnie na konsoli *mongo* wpisujemy:
+    mongo wc.js --shell
 
-    show collections
-    db.ls.tags.find({_id: 'nauka'})
+gdzie sprawdzamy co wyliczyło mapreduce:
+
+    :::javascript
+    db.wc.find()
+      { "_id" : "be", "value" : 2 }
+      { "_id" : "not", "value" : 1 }
+      { "_id" : "or", "value" : 1 }
+      { "_id" : "to", "value" : 3 }
+      { "_id" : "wit", "value" : 1 }
+
+    db.wc.find().sort({value: -1})
+      { "_id" : "to", "value" : 3 }
+      { "_id" : "be", "value" : 2 }
+      { "_id" : "not", "value" : 1 }
+      { "_id" : "or", "value" : 1 }
+      { "_id" : "wit", "value" : 1 }
+
+Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest uciążliwe.
+W skryptach poprawność wyników będziemy sprawdzać
+za pomocą wbudowanej funkcji *assert*. W tym celu zmienimy
+dwie ostatnie linijki skryptu *wc.js*:
+
+    res = db.books.mapReduce(m, r, {out: "wc"});
+    z = res.convertToSingleObject();
+    //  z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
+    assert.eq( 2 , z.be, "liczba wystąpień 'be'" );
+    assert.eq( 1 , z.not, "liczba wystąpień 'not'" );
+    assert.eq( 1 , z.or, "liczba wystąpień 'or'" );
+    assert.eq( 3 , z.to, "liczba wystąpień 'to'" );
+    assert.eq( 2 , z.wit, "liczba wystąpień 'wit'" );
+
+Na koniec sprzątamy po skrypcie:
+
+    :::javascript
+    db.books.drop();
+    db.wc.drop();
+
+Zobacz też implementację metody
+[convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
 
 
 ## Word Count
