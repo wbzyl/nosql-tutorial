@@ -1,38 +1,33 @@
-#### {% title "MapReduce" %}
+#### {% title "MapReduce w przykładach" %}
 
 <blockquote>
  {%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
 </blockquote>
+
+Kanoniczne przykłady (Matthew Johnson.
+[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf)):
+
+* Word Count
+* Pivot Data
+* Spam
 
 Na początek kilka ilustracji. Oto jak
 Ketrina Yim, Sally Ahn, Dan Garcia. „Computer Science Illustrated”
 rozrysowały ideę mapreduce:
 
 * [An Example: Distributed Word Count](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf)
-* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
 * [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
-
-Zobacz też Matthew Johnson,
-[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf).
-
+* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
 
 Podstawowa dokumentacja:
 
 * [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
 * [Troubleshooting MapReduce](http://www.mongodb.org/display/DOCS/Troubleshooting+MapReduce)
-* [A Look At MongoDB 1.8's MapReduce Changes](http://blog.evilmonkeylabs.com/2011/01/27/MongoDB-1_8-MapReduce/)
-* Źródła MongoDB: [mr1](https://github.com/mongodb/mongo/blob/master/jstests/mr1.js),
-  [mr2](https://github.com/mongodb/mongo/blob/master/jstests/mr2.js)
 
-Przykłady z internetu:
 
-* K. Banker. [A Cookbook for MongoDB](http://cookbook.mongodb.org/index.html) –
-  kilka przykładów z MapReduce
-* [Yet another MongoDB Map Reduce tutorial](http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/) –
-  fajne ilustracje
-* [Malware, MongoDB and Map/Reduce : A New Analyst Approach](http://blog.9bplus.com/malware-mongodb-and-mapreduce-a-new-analyst-a)
+## Jak działa MapReduce?
 
-## Zaczynamy
+TODO: drugi łatwiejszy wariant z assert.
 
 Pierwsze koty za płoty:
 
@@ -123,61 +118,14 @@ Następnie na konsoli *mongo* wpisujemy:
     db.ls.tags.find({_id: 'nauka'})
 
 
-## Korzystamy ze „zmiennych globalnych”
+## Word Count
 
-Na dłuższą metę sprawdzanie wyników na konsoli jest męczące.
-W skrypcie poniżej użyjemy wbudowanej w powłokę *mongo* funkcji
-*assert* do sprawdzania wyników.
-
-W kodzie poniżej, przyjrzymy się blizej kilku JSON-om
-wypisując ich zawartość na konsolę (za pomocą funkcji *printjson*).
-Skorzystamy też z metody *convertToSingleObject* zamieniającej
-JSON zwracany przez *mapReduce* na JSON zawierający
-wynik obliczeń mapreduce.
-
-Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
-w_kodzie JavaScript w funkcjach użytych w *mapReduce*.
-Zmienna *xx* zdefiniowana przez *scope* jest w zasięgu tych funkcji.
-Zmienne umieszczone w „scope” są **tylko do odczytu**.
-
-    :::javascript scope.js
-    t = db.scope;
-    t.drop();
-
-    t.save( { tags : [ "a" , "b" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
-    t.save( { tags : [ "c" , "a" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
-
-    m = function() {
-      this.tags.forEach(function(tag) {
-        emit(tag , xx); // zmiennej xx można też użyć w funkcji r poniżej
-      });
-    };
-
-    r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
-      });
-      return total;
-    };
-
-    res = t.mapReduce( m, r, {scope: {xx: 2}, out: "scope.out"} );
-    z = res.convertToSingleObject()
-
-    printjson(res);
-    printjson(z);
-
-    assert.eq( 4 , z.a, "liczbie wystąpień 'a' × 2" );
-    assert.eq( 6 , z.b, "liczbie wystąpień 'b' × 2" );
-    assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
-
-    res.drop();
-    t.drop();
+**TODO**
 
 
-## „Pivot data”
+## Pivot Data
+
+TODO: wrzucić kolekcję na Tao: mapreduce/rock.
 
 W kolekcji *rock.names* zapisane są dokumenty w formacie:
 
@@ -282,6 +230,6 @@ albo zamiast pary metod *hasNext* i *next* skorzystamy z metody *forEach*:
 Przy okazji usuwamy już niepotrzebną kolekcję *pivot*.
 
 
-## Dwuprzebiegowe MapReduce
+## SPAM
 
-[Counting Unique Items with Map-Reduce](http://cookbook.mongodb.org/patterns/unique_items_map_reduce/).
+O co chodzi w tym przykładzie?

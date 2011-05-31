@@ -13,9 +13,6 @@
 [30.05.2011] Egzamin, I termin: 21.06.2011, godz. 12.00, p. 228.
 
 
-<!--
--->
-
 ## Co to jest „NoSQL”
 
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
@@ -81,8 +78,10 @@ TODO:
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
-1. {%= link_to "Tworzymy kolekcje", "/mongodb-databases" %}
-1. {%= link_to "MapReduce", "/mongodb-mapreduce" %}
+1. {%= link_to "Bazy danych & kolekcje", "/mongodb-databases" %}
+1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
+1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
+1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
 
 <!--
