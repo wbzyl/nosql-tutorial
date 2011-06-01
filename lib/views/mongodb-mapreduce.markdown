@@ -95,19 +95,31 @@ Zobacz też implementację metody
 
 ## Crazy MapReduce
 
-Dlaczego otrzymujemy różne wyniki?
+Tworzymy taką *crazy* collection:
 
-    :::javascript crazy.js
+    :::javascript insert_data.js
     for (var i = 0; i < 10; i++)
       db.crazy.insert( { x: Math.random() } );
 
-Dopisujemy takie MapReduce:
+Uruchomimy na niej poniższe MapReduce:
 
     :::javascript crazy.js
-    f = function() {
+    m = function() {
+       emit("answer", this.x);
     };
-    r = function() {
+    r = function(key, values) {
+      var value = values.shift();
+      values.forEach(function(x, i) {
+        value += x/(i+2);
+      });
+      return value;
     };
+
+    res = db.crazy.mapReduce(m, r, { out: {inline: 1} });
+    printjson(res);
+
+Co jest nie tak z tym MapReduce?
+Czy zawsze wyliczana jest ta sama liczba?
 
 
 ## Word Count
