@@ -93,6 +93,23 @@ Zobacz też implementację metody
 [convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
 
 
+## Crazy MapReduce
+
+Dlaczego otrzymujemy różne wyniki?
+
+    :::javascript crazy.js
+    for (var i = 0; i < 10; i++)
+      db.crazy.insert( { x: Math.random() } );
+
+Dopisujemy takie MapReduce:
+
+    :::javascript crazy.js
+    f = function() {
+    };
+    r = function() {
+    };
+
+
 ## Word Count
 
 Zaczynamy od zapisania w bazie *test* w kolekcji *chesterton*

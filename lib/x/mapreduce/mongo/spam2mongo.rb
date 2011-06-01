@@ -38,7 +38,11 @@ File.foreach('Filtered') do |box|
 
   mail = Mail.read_from_string(ic.iconv('From ' + box))
 
-  date = ic.conv(mail.header['Date'].to_s)
+  begin
+    date = ic.conv(mail.header['Date'].to_s)
+  rescue
+    date = ""
+  end
 
   subject = ic.conv(mail.header['Subject'].to_s).gsub(marcin, "root")
   subject.gsub!(/marian/, "root")
@@ -48,7 +52,7 @@ File.foreach('Filtered') do |box|
   spam_status = ic.conv(mail.header['X-Spam-Status'].to_s)
   spam_report = ic.conv(mail.header['X-Spam-Report'].to_s)
 
-  from = mail.header['From'].to_s
+  from = ic.iconv(mail.header['From'].to_s)
   from.gsub!(marcin, username_from)
 
   if date.empty? || subject.empty? || spam_flag.empty? || spam_level.empty? || spam_status.empty? #|| spam_report.empty? || from.empty?
