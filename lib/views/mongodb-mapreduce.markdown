@@ -95,56 +95,99 @@ Zobacz też implementację metody
 
 ## Word Count
 
-**TODO**
+Zaczynamy od zapisania w bazie *test* w kolekcji *chesterton*
+(976) akapitów z książki G.K. Chestertona, „The Man Who Knew Too Much”.
 
+    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
+       http://www.gutenberg.org/cache/epub/1720/pg1720.txt -v -d test -c chesterton
 
-## Pivot Data
-
-TODO: wrzucić kolekcję na Tao: mapreduce/rock.
-
-W kolekcji *rock.names* zapisane są dokumenty w formacie:
-
-    :::json
-    {
-      name: "King Crimson",
-      tag: [ "progressiverock", "rock", "psychedelic" ]
-    }
-
-Z tej kolekcji chcemy utworzyć kolekcję *rock.tags* zawierającą
-dokumenty w formacie:
-
-    :::json
-    {
-      tag: "psychedelic",
-      name: [ "King Crimson", "Pink Floyd", "Cream", ... ]
-    }
-
-
-### Przygotowujemy kolekcję *rock.names*
-
-Kopiujemy bazę *rock* z CouchDB do MonggDB
-(link {%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}):
-
-    ./couchrest2mongo.rb -d rock -m mapreduce -c rock
-
-Ponieważ kolekcja *rock* zawiera zbędne dla nas w tej chwili pola,
-usuniemy je. W tym celu na konsoli *mongo* wykonujemy poniższy kod:
+Przykładowy dokument z kolekcji *chesterton*:
 
     :::javascript
-    var cursor = db.rock.find({}, {name: 1, tags: 1, _id: 0})
-    while (cursor.hasNext()) {
-     var doc = cursor.next();
-     db.rock.names.insert(doc);
+    {
+      "_id" : ObjectId("4de5e745e138230694000054"),
+      "paragraph" : "And he carried off the two rifles without casting a glance at the stranger...",
+      "count" : 83,
+      "title" : "the man who knew too much"
+    }
+
+Poniższe MapReduce różni się *wc.js* tylko tym, że w wyrażeniu
+regularnym użytym w metodzie *match* dodano litery z Latin-1,
+polskie diakrytyki (i nieco innych liter):
+
+    :::javascript chesterton.js
+    m = function() {
+      this.paragraph.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g).forEach(function(word) {
+        emit(word, 1);
+      });
     };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+    res = db.chesterton.mapReduce(m, r, {finalize: f, out: "wc"});
+    printjson(res);
 
-Uwaga: nowe dokumenty zapisujemy w kolekcji *rock.names*.
+Uruchamiamy powyższe MapReduce. Po wykonaniu kodu (kilka sekund)
+sprawdzamy co się wyliczyło:
+
+    db.wc.find().sort({value: -1})
+      { "_id" : "the", "value" : 3840 }
+      { "_id" : "a", "value" : 1941 }
+      { "_id" : "and", "value" : 1873 }
+      { "_id" : "of", "value" : 1833 }
+      { "_id" : "to", "value" : 1295 }
+      { "_id" : "he", "value" : 1174 }
+      { "_id" : "in", "value" : 1099 }
+      { "_id" : "it", "value" : 970 }
 
 
-### Kolej na MapReduce
+## „Pivot Data” na przykładzie kolekcji *Rock*
+
+Zaczynamy od przeniesienia bazy *rock* z CouchDB do MongoDB.
+W tym celu, w bazie CouchDB zapiszemy widok i funkcję listową
+({%= link_to "kod", "/db/mongodb/rock.js" %}
+i {%= link_to "źródło", "/doc/scripts/rock.js" %}) generującą –
+po jednym w wierszu – dokumenty przekonwertowane na format JSON.
+Następnie odpytamy funkcję listową zapomocą programu *curl*.
+Otrzymane JSON-y zapiszemy w kolekcji *rock* korzystając
+z programu *mongoimport*.
+
+Przykładowy dokument z kolekcji *rock*:
+
+    :::javascript
+    db.rock.findOne({name: 'Led Zeppelin'})
+    {
+       "_id" : "ledzeppelin",
+       "name" : "Led Zeppelin",
+       "tags" : [
+           "classicrock", "rock", "hardrock",
+           "70s", "progressiverock", "blues",
+           "ledzeppelin", "british", "bluesrock", "heavymetal"
+       ]
+    }
+
+Z dokumentów chcemy utworzyć kolekcję *genres* zawierającą
+dokumenty w takim formacie:
+
+    :::javascript
+    {
+      _id: ObjectId(),
+      tag: "classicrock",
+      names: [ "Led Zeppelin", ... ]
+    }
+
+### MapReduce
 
 W kodzie poniżej argument *value* nie może być tablicą.
-Dlaczego? Takie jest ograniczenie w wersji 1.9 MongoDB.
-Dlatego w kodzie wstawiliśmy tablicę do obiektu.
+Dlaczego? Odpowiedź: Takie ograniczenie jest w wersji 1.9 MongoDB.
+Może to się zmienić w kolejnej wersji MongoDB.
+
+To ograniczenie, utrudnia nieco kodowanie.
+Aby je obejść wstawiamy tablicę do obiektu *value*:
 
     :::javascript pivot.js
     m = function() {
@@ -161,25 +204,39 @@ Dlatego w kodzie wstawiliśmy tablicę do obiektu.
       return list;
     };
     f = function(key, value) {
-      return value.names;
+      return value.names;  // a to po co? kto wie?
     };
 
-    db.pivot.drop();
-    db.rock.names.mapReduce(m, r, { finalize: f, out: "pivot" });
+    db.rock.mapReduce(m, r, { finalize: f, out: "pivot" });
+
+
+### Sprawdzamy wyniki
+
+Po wykonaniu na konsoli *mongo* powyższego MapReduce,
+w kolekcji *pivot* znajdziemy dokumenty w formacie:
+
+    :::javascript
     printjson(db.pivot.findOne());
-
-Po wykonaniu powyższego kodu w kolekcji *pivot* zostały
-zapisane rekordy w formacie:
-
-    :::json
-    { "_id" : "00s",  "value" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+      {
+         "_id" : "00s",
+         "value" : [
+              "Queen + Paul Rodgers",
+              "Izzy Stradlin",
+              "Gilby Clarke"
+         ]
+      }
 
 a miały mieć format:
 
-    :::json
-    { "tag" : "00s",  "names" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+    :::javascript
+    {
+      _id: ObjectId(),
+      tag: "00s",
+      names: [ "Queen + Paul Rodgers", "Izzy Stradlin" ]
+    }
 
-Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
+Nazwy pól zmienimy w pętli. Dokument z nowymi nazwami pól
+zapiszemy w kolekcji *genre*:
 
     :::javascript
     var cursor = db.pivot.find();
@@ -188,21 +245,24 @@ Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
      var ddoc = {};
      ddoc.tag = doc._id;
      ddoc.names = doc.value;
-     db.rock.tags.insert(ddoc);
+     db.genre.insert(ddoc);
     };
 
-albo zamiast pary metod *hasNext* i *next* skorzystamy z metody *forEach*:
+Albo, to samo, tylko zamiast pary metod *hasNext* i *next* skorzystamy
+z metody *forEach*:
 
     :::javascript
     db.pivot.find().forEach(function(doc) {
       var ddoc = {};
       ddoc.tag = doc._id;
       ddoc.names = doc.value;
-      db.rock.tags.insert(ddoc);
+      db.genre.insert(ddoc);
     });
-    db.pivot.drop();
 
-Przy okazji usuwamy już niepotrzebną kolekcję *pivot*.
+i usuwamy niepotrzebną już kolekcję *pivot*.
+
+    :::javascript
+    db.pivot.drop();
 
 
 ## SPAM
