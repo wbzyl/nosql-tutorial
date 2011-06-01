@@ -35,12 +35,14 @@ total_emails = 0
 
 File.foreach('Filtered') do |box|
   total_emails += 1
+  puts "Email \##{total_emails}"
 
   mail = Mail.read_from_string(ic.iconv('From ' + box))
-
+  date = ic.conv(mail.header['Date'].to_s)
   begin
-    date = ic.conv(mail.header['Date'].to_s)
+    t = Time.parse(date)
   rescue
+    puts "\tInvalid Date: [#{date}]"
     date = ""
   end
 
@@ -58,8 +60,8 @@ File.foreach('Filtered') do |box|
   if date.empty? || subject.empty? || spam_flag.empty? || spam_level.empty? || spam_status.empty? #|| spam_report.empty? || from.empty?
     # do nothing
   else
-    t = Time.parse(date)
     doc['Date'] = Time.utc t.year, t.month, t.day, t.hour, t.min, t.sec
+
     doc['Subject'] = subject
 
     doc['X-Spam-Flag'] = spam_flag
@@ -70,15 +72,9 @@ File.foreach('Filtered') do |box|
     doc['X-Spam-Tests'] = spam_tests
     logger.warn "No spam tests" if spam_tests.empty?
 
-    #logger.info "Email \##{total_emails}"
-    puts "\##{total_emails}"
-
-    logger.warn spam_report
-
     doc['X-Spam-Report'] = {}
     spam_tests.each do |test|
       report = spam_report.match(x_spam_report + test)
-      logger.warn "TEST: #{test}"
       doc['X-Spam-Report'][test] = report[1]
     end
 
@@ -89,9 +85,9 @@ File.foreach('Filtered') do |box|
       doc['From'] = from
     end
 
-  end
+    coll.insert doc
 
-  coll.insert doc
+  end
 
   doc = {}
 
