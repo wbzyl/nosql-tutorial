@@ -41,6 +41,7 @@ File.foreach('Filtered') do |box|
   date = ic.conv(mail.header['Date'].to_s)
   begin
     t = Time.parse(date)
+    # puts "\tValid Date: [#{date}]"
   rescue
     puts "\tInvalid Date: [#{date}]"
     date = ""
@@ -57,10 +58,10 @@ File.foreach('Filtered') do |box|
   from = ic.iconv(mail.header['From'].to_s)
   from.gsub!(marcin, username_from)
 
-  if date.empty? || subject.empty? || spam_flag.empty? || spam_level.empty? || spam_status.empty? #|| spam_report.empty? || from.empty?
+  if subject.empty? || spam_flag.empty? || spam_level.empty? || spam_status.empty? #|| spam_report.empty? || from.empty?
     # do nothing
   else
-    doc['Date'] = Time.utc t.year, t.month, t.day, t.hour, t.min, t.sec
+    doc['Date'] = Time.utc(t.year, t.month, t.day, t.hour, t.min, t.sec) unless date.empty?
 
     doc['Subject'] = subject
 
