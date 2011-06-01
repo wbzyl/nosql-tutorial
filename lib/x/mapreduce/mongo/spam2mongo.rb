@@ -35,33 +35,34 @@ total_emails = 0
 
 File.foreach('Filtered') do |box|
   total_emails += 1
-  puts "Email \##{total_emails}"
+  #puts "Email \##{total_emails}"
 
-  mail = Mail.read_from_string(ic.iconv('From ' + box))
-  date = ic.conv(mail.header['Date'].to_s)
   begin
-    t = Time.parse(date)
-    # puts "\tValid Date: [#{date}]"
+    mail = Mail.read_from_string(ic.iconv('From ' + box))
+    date = ic.conv(mail.header['Date'].to_s)
+
+    subject = ic.conv(mail.header['Subject'].to_s).gsub(marcin, "root")
+    subject.gsub!(/marian/, "root")
+
+    spam_flag = ic.iconv(mail.header['X-Spam-Flag'].to_s)
+    spam_level = ic.iconv(mail.header['X-Spam-Level'].to_s)
+    spam_status = ic.conv(mail.header['X-Spam-Status'].to_s)
+    spam_report = ic.conv(mail.header['X-Spam-Report'].to_s)
+
+    from = ic.iconv(mail.header['From'].to_s)
+    from.gsub!(marcin, username_from)
   rescue
-    puts "\tInvalid Date: [#{date}]"
-    date = ""
+    puts "Email \##{total_emails}: invalid email"
+    date = subject = spam_flag = spam_level = spam_status= spam_report = from = ""
   end
 
-  subject = ic.conv(mail.header['Subject'].to_s).gsub(marcin, "root")
-  subject.gsub!(/marian/, "root")
-
-  spam_flag = ic.iconv(mail.header['X-Spam-Flag'].to_s)
-  spam_level = ic.iconv(mail.header['X-Spam-Level'].to_s)
-  spam_status = ic.conv(mail.header['X-Spam-Status'].to_s)
-  spam_report = ic.conv(mail.header['X-Spam-Report'].to_s)
-
-  from = ic.iconv(mail.header['From'].to_s)
-  from.gsub!(marcin, username_from)
-
-  if subject.empty? || spam_flag.empty? || spam_level.empty? || spam_status.empty? #|| spam_report.empty? || from.empty?
+  if spam_flag.empty? || spam_level.empty? || spam_status.empty? || spam_report.empty? || from.empty?
     # do nothing
   else
-    doc['Date'] = Time.utc(t.year, t.month, t.day, t.hour, t.min, t.sec) unless date.empty?
+    unless date.empty?
+      t = Time.parse(date)
+      doc['Date'] = Time.utc(t.year, t.month, t.day, t.hour, t.min, t.sec)
+    end
 
     doc['Subject'] = subject
 
