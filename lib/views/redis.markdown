@@ -25,6 +25,11 @@
 Zob. też [Object-Hash Mapping for Redis] [ohm].
 
 
+## Sinatra + Redis
+
+* [Sinatra with Redis on Cloud Foundry](http://nosql.mypopescu.com/post/5929530437/sinatra-with-redis-on-cloud-foundry)
+
+
 [redis]: http://www.engineyard.com/blog/2009/key-value-stores-for-ruby-part-4-to-redis-or-not-to-redis/ "Redis or not…"
 [ohm]: http://ohm.keyvalue.org/ "Object-Hash Mapping for Redis"
 [redis-or-not]: http://www.engineyard.com/blog/2009/key-value-stores-for-ruby-part-4-to-redis-or-not-to-redis/ "Redis orn not…"
