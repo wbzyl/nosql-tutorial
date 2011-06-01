@@ -202,15 +202,16 @@ Movies:
 * [The Internet Movie Database](ftp://ftp.fu-berlin.de/pub/misc/movies/database/) –
   [info](ftp://ftp.fu-berlin.de/pub/misc/movies/database/tools/README) (<i>Marian Smolinski</i>)
 
-[Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
-(denormalizacja, konwersja na UTF-8).
+Różne:
 
-[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
-
-[PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
-zob. też [Code for America](http://codeforamerica.org/),
-[Max Ogden on twitter](http://twitter.com/#!/maxogden)
-oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
+* [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
+ (denormalizacja, konwersja na UTF-8)
+* Social Security Online, [Popular Baby Names](http://www.ssa.gov/OACT/babynames/limits.html)
+* [Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB
+* [PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
+ zob. też [Code for America](http://codeforamerica.org/),
+ [Max Ogden on twitter](http://twitter.com/#!/maxogden)
+ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
 
 
 # Linki
