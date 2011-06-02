@@ -342,17 +342,18 @@ nagłówkiem. Tak wygląda typowy nagłówek:
     Date: Tue, 30 Mar 2010 17:23:03 +0700
     MIME-Version: 1.0
 
-Jak widać ta wiadomość została oznaczona jako spam,
+Wiadomość ta została oznaczona jako spam
 na podstawie ocen z nagłowka X-Spam-Report.
-Powyżej zostały użyte tylko cztery oceny.
-Oceny wystawiono na podstawie czterech testów:
+Powyżej zostały użyte tylko cztery oceny
+wystawione na podstawie czterech testów:
 *BAYES_99*, *HELO_LOCALHOST*, *HTML_MESSAGE*,
 *RAZOR2_CF_RANGE_E4_51_100*.
-Testów jest więcej. Więcej informacji:
+Testów jest więcej. Jakie i ile opisane jest tutaj:
 
     perldoc Mail::SpamAssassin::Conf
 
-Na Tao w kolekcji *spam* zapisałem ok. 50,000 takich nagłówków.
+Na serwerze Tao w kolekcji *spam* zapisałem
+ok. 50,000 takich nagłówków.
 Oto typowy dokument z tej kolekcji:
 
     {
