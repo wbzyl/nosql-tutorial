@@ -65,15 +65,11 @@ Zobacz [HTTP Interface](http://www.mongodb.org/display/DOCS/Http+Interface).
 
 ## Kopiowanie statusów z Twittera
 
-Statusy skopiujemy za pomocą skryptu
-{%= link_to "twitter2mongo.rb", "/doc/scripts/twitter2mongo.rb" %}
-napisanego w języku Ruby.
+Skrypt napiszemy w języku Ruby. Zaczniemy od instalacji użytych w skrypcie gemów:
 
-Zaczynamy od instalacji użytych w skrypcie gemów (oraz gemów od nich zależnych):
+    gem install mongo mongo_ext yajl-ruby term-ansicolor
 
-    gem install mongo mongo_ext yajl-ruby
-
-Oto skrypt:
+Oto kod:
 
     :::ruby twitter2mongo.rb
     # -*- coding: utf-8 -*-
@@ -109,6 +105,11 @@ Sprawdzamy na konsoli co ciekawego zaimportowaliśmy:
 
     use twitter
     db.mongodb.find( {}, {_id: 0, text: 1} )
+
+Link do nowej wersji skryptu:
+{%= link_to "kod", "/db/mongodb/twitter2mongo.rb" %},
+{%= link_to "źródło", "/doc/scripts/twitter2mongo.rb" %}.
+
 
 
 ## Korzystamy ze strumieniowego API Twittera
