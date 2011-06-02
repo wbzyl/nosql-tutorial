@@ -221,6 +221,24 @@ w poprawnym formacie w bazie:
 
 ## GeoBytes
 
+**TODO**
+
+Opisać skrypty z katalogu *node/db*.
+
+Zaimportować dane do bazy *wm* do kolekcji *cities* oraz *countries*.
+Za pomocą *database references* (*DBRef*) zamienić *CountryID*
+nazwą kraju. Przykładowe DBRef:
+
+    {"$ref" : "countries", "$id" : 197}
+
+Przy okazji usunąć *CityId*, *RegionID*, *DmaID*.
+Zamienić pola *Latitude* oraz *Longitude* na:
+
+    { loc : { long : 54.5, lat: 18.35 } }
+
+**END**
+
+
 Na stronie [GeoBytes](http://geobytes.com/) pod linkiem
 [GeoWorldMap](http://geobytes.com/GeoWorldMap) znajdziemy
 archiwum zawierające pliki w formacie CSV (w kodowaniu Latin 1?).
@@ -241,20 +259,10 @@ oraz z pliku *countries.txt*:
     197,"Poland","PL","PL","POL","616","PL","Warsaw ","Europe ",\
        "Polish","Poles","Zloty","PLN",38633912,"Poland",""
 
-*TODO* Zaimportować dane do bazy *wm* do kolekcji *cities* oraz *countries*.
-Za pomocą *database references* (*DBRef*) zamienić *CountryID*
-nazwą kraju. Przykładowe DBRef:
-
-    {"$ref" : "countries", "$id" : 197}
-
-Przy okazji usunąć *CityId*, *RegionID*, *DmaID*.
-Zamienić pola *Latitude* oraz *Longitude* na:
-
-    { loc : { long : 54.5, lat: 18.35 } }
-
-Następnie dodać index:
+Pozostaje dodać index, inaczej zapytania geo nie będa działać:
 
     db.places.ensureIndex( { loc : "2d" } )
+
 
 *TODO* Przykładowe zapytania? Dokumentacja:
 
