@@ -469,3 +469,33 @@ Oto wyniki:
       { "name" : "RAZOR2_CHECK", "total" : 14772 }
       { "name" : "RAZOR2_CF_RANGE_51_100", "total" : 14392 }
       ... top 14 ...
+
+
+### Spamerzy
+
+Pierwsze podejście: skąd jest wysyłane najwięcej emaili z takim
+samym tematem?
+
+Tematy — Top 13:
+
+    :::javascript
+    db.spam.subjects.find().sort({value: -1})
+      { "_id" : "Undelivered Mail Returned to Sender", "value" : 703 }
+      { "_id" : "hello", "value" : 684 }
+      { "_id" : "hi!", "value" : 336 }
+      { "_id" : "International Real Estate Consulting Company needs local representation", "value" : 189 }
+      { "_id" : "International Real Estate Consulting", "value" : 178 }
+      { "_id" : "Re:", "value" : 161 }
+      { "_id" : "Fw:", "value" : 159 }
+      { "_id" : "Fwd:", "value" : 156 }
+      { "_id" : "From International Real Estate Consulting", "value" : 153 }
+      { "_id" : "from international company", "value" : 152 }
+      { "_id" : "setting for your mailbox root.univ.gda.pl are changed", "value" : 110 }
+      { "_id" : "hi", "value" : 89 }
+      { "_id" : "Your wife photos attached", "value" : 88 }
+      ... top 13 ...
+
+Kto to rozsyła – Spamerzy ?
+
+    :::javascript
+    ?
