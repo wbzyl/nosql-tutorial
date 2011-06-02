@@ -1,9 +1,9 @@
 #### {% title "MapReduce Cookbook" %}
 
-Większość przykładów pochodzi z:
+Przykłady z repozytorium *Mongo* oraz ze strony:
 
 * K. Banker. [A Cookbook for MongoDB](http://cookbook.mongodb.org/index.html) –
-  kilka przykładów z MapReduce
+  zawiera kilka przykładów z MapReduce
 
 Google o MongoDB MapReduce:
 
@@ -14,36 +14,22 @@ Google o MongoDB MapReduce:
 
 ## Korzystamy ze „zmiennych globalnych”
 
-Na dłuższą metę sprawdzanie wyników na konsoli jest męczące.
-W skrypcie poniżej użyjemy wbudowanej w powłokę *mongo* funkcji
-*assert* do sprawdzania wyników.
-
-W kodzie poniżej, przyjrzymy się blizej kilku JSON-om
-wypisując ich zawartość na konsolę (za pomocą funkcji *printjson*).
-Skorzystamy też z metody *convertToSingleObject* zamieniającej
-JSON zwracany przez *mapReduce* na JSON zawierający
-wynik obliczeń mapreduce.
-
-Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
-w_kodzie JavaScript w funkcjach użytych w *mapReduce*.
-Zmienna *xx* zdefiniowana przez *scope* jest w zasięgu tych funkcji.
-Zmienne umieszczone w „scope” są **tylko do odczytu**.
+Zmienna *xx* zdefiniowana poniżej w *scope* jest w zasięgu funkcji
+map, reduce i finalize.
+Zmienne umieszczone w *scope* są **tylko do odczytu**.
 
     :::javascript scope.js
-    t = db.scope;
+    t = db.letters;
     t.drop();
 
-    t.save( { tags : [ "a" , "b" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
-    t.save( { tags : [ "c" , "a" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
+    t.save( { tags : [ "a" , "b" ] } ); t.save( { tags : [ "b" , "c" ] } );
+    t.save( { tags : [ "c" , "a" ] } ); t.save( { tags : [ "b" , "c" ] } );
 
     m = function() {
       this.tags.forEach(function(tag) {
-        emit(tag , xx); // zmiennej xx można też użyć w funkcji r poniżej
+        emit(tag , xx);
       });
     };
-
     r = function(key, values) {
       var total = 0;
       values.forEach(function(count) {
@@ -52,7 +38,7 @@ Zmienne umieszczone w „scope” są **tylko do odczytu**.
       return total;
     };
 
-    res = t.mapReduce( m, r, {scope: {xx: 2}, out: "scope.out"} );
+    res = t.mapReduce( m, r, {scope: {xx: 2}, out: "letters.out"} );
     z = res.convertToSingleObject()
 
     printjson(res);
@@ -62,30 +48,43 @@ Zmienne umieszczone w „scope” są **tylko do odczytu**.
     assert.eq( 6 , z.b, "liczbie wystąpień 'b' × 2" );
     assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
 
-    res.drop();
+    res.drop();  // to samo co db.scope.out.drop() ?
     t.drop();
 
+Skrypt wykonujemy na konsoli *mongo*:
 
-## Assert
+    mongo scope.js
 
-**TODO** Debugging: (1) map, (2) reduce
 
-Pierwsze koty za płoty:
+## Debugging MapReduce
 
-    :::javascript
-    db.mr.drop();
+Jeśli funkcja map nie działa, to możemy ją wykonać poza MapReduce
+przedfiniowując funkcję *emit* i korzystając z metody *apply*. Łatwiej
+jest przetestować funkcję reduce.
 
-    db.mr.insert({_id: 1, tags: ['ą', 'ć', 'ę']});
-    db.mr.insert({_id: 2, tags: ['']});
-    db.mr.insert({_id: 3, tags: []});
-    db.mr.insert({_id: 4, tags: ['ć', 'ę', 'ł']});
-    db.mr.insert({_id: 5, tags: ['ą', 'a']});
+    :::javascript debugging.js
+    t = db.map; t.drop();
+    t.insert({_id: 1, tags: ['ą', 'ć', 'ć', 'ł']});
+    t.insert({_id: 2, tags: ['ł', 'ń', 'ą']});
 
     m = function() {
       this.tags.forEach(function(tag) {
         emit(tag, {count: 1});
       });
     };
+
+    function emit(key, value) {
+      print("emit( " + key + ", " + tojson(value) + " )");
+    };
+
+    print('MAP: test one doc')
+    x = t.findOne();
+    m.apply(x);  // call our map function, client side, with 'x' as 'this'
+
+    print('MAP: test multiple docs:')
+    t.find().forEach(function(doc) {
+      m.apply(doc);
+    });
 
     r = function(key, values) {
       var total = 0;
@@ -95,69 +94,11 @@ Pierwsze koty za płoty:
       return {count: total};
     };
 
-    res = db.mr.mapReduce(m, r, {out: "mr.tc"});
+    print("REDUCE: r('a', [ {count: 2}, {count: 4}, {count: 2} ])")
+    printjson(r('a', [ {count: 2}, {count: 4}, {count: 2} ]));
 
+    print("REDUCE: r('a', [ {count: 2}, r('a', [{count: 4}, {count: 2}]) ])")
+    printjson(r('a', [ {count: 2}, r('a', [{count: 4}, {count: 2}]) ]));
+
+    res = t.mapReduce(m, r, {out: "map.lc"});
     printjson(res);
-    print("==>> To display results run: db.mr.tc.find()");
-
-
-### Counting tags
-
-Czyli to samo co powyżej, ale prościej i dla bazy zwierającej
-kilkanaście cytatów H. Steinhausa i S. J. Leca. Zaczynamy od
-skopiowania bazy *ls* z CouchDB do *MongoDB*.
-Skorzystamy ze skryptu
-{%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}:
-
-    couchrest2mongo.rb --help
-    couchrest2mongo.rb -d ls -m mapreduce -c ls
-
-Czyli tworzymy na MongoDB bazę *mapreduce*, gdzie kopiujemy zawartość bazy
-*ls* z CouchDB do kolekcji *ls*. Następnie sprawdzamy na konsoli
-*mongo* co się skopiowało:
-
-    :::javascript
-    use mapreduce
-      switched to db mapreduce
-    show collections
-      ls
-    db.ls.findOne()
-
-Funkcję map, funkcję reduce oraz wywołanie *mapReduce*
-wpiszemy w pliku *ls_count_tags.js*:
-
-    :::javascript ls_count_tags.js
-    m = function() {
-      if (!this.tags) return;
-      this.tags.forEach(function(tag) {
-        emit(tag, 1);
-      });
-    };
-    r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
-      });
-      return total;
-    };
-    // results = db.ls.mapReduce(m, r, {out : "ls.tags"});
-    results = db.runCommand({
-      mapreduce: "ls",
-      map: m,
-      reduce: r,
-      out: "ls.tags"
-    });
-    printjson(results);
-
-Powyższy program uruchamiamy w terminalu:
-
-    mongo --shell mapreduce ls_count_tags.js
-
-Następnie na konsoli *mongo* wpisujemy:
-
-    show collections
-    db.ls.tags.find({_id: 'nauka'})
-
-## Dwuprzebiegowe MapReduce
-
-[Counting Unique Items with Map-Reduce](http://cookbook.mongodb.org/patterns/unique_items_map_reduce/)?
