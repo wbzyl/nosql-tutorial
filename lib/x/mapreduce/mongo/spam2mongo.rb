@@ -77,7 +77,7 @@ File.foreach('Filtered') do |box|
     doc['X-Spam-Report'] = {}
     spam_tests.each do |test|
       report = spam_report.match(x_spam_report + test)
-      doc['X-Spam-Report'][test] = report[1]
+      doc['X-Spam-Report'][test] = report[1].to_f
     end
 
     if data = /([^<]+)\s+<([^>]+)>/.match(from)

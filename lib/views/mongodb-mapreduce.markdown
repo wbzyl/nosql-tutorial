@@ -26,7 +26,7 @@ Podstawowa dokumentacja:
 
 ## Jak działa MapReduce?
 
-Pierwsze koty za płoty:
+Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
 
     :::javascript wc.js
     db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
@@ -91,6 +91,25 @@ Na koniec sprzątamy po skrypcie:
 
 Zobacz też implementację metody
 [convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
+
+
+## Dlaczego mapReduce
+
+Te liczby powinny dużo wyjaśnić:
+
+{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
+
+Dla przypomnienia: 1 ns = 10^-9 s.
+
+Przy okazji: 10^9 cykli na sekundę to 1 GHz,
+na przebycie 1 m światło potrzebuje ok. 3.33 ns, 1 miesiąc
+to ok. 2.5·10^6 s, a 1 rok – 10^9 s.
+
+Jakiś przykład: sumowanie odwrotności liczb:
+
+* wszystkie liczby są w RAM
+* liczby pobieramy po jednej z kolekcji,
+  umieszczonej gdzieś w chmurze
 
 
 ## Crazy MapReduce
@@ -296,4 +315,156 @@ i usuwamy niepotrzebną już kolekcję *pivot*.
 
 ## SPAM
 
-O co chodzi w tym przykładzie?
+Na Sigmę przychodzi dużo poczty. Treść emaila jest poprzedzona
+nagłówkiem. Tak wygląda typowy nagłówek:
+
+    From astronomerspp9506@qip.ru  Tue Mar 30 12:23:07 2010
+    Return-Path: <astronomerspp9506@qip.ru>
+    X-Spam-Flag: YES
+    X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on delta.inf.ug.edu.pl
+    X-Spam-Level: **************
+    X-Spam-Status: Yes, score=8.9 required=3.5 tests=BAYES_99,HELO_LOCALHOST,
+            HTML_MESSAGE,RAZOR2_CF_RANGE_51_100
+            autolearn=spam version=3.2.5
+    X-Spam-Report:
+            *  3.5 BAYES_99 BODY: Bayesian spam probability is 99 to 100%
+            *      [score: 1.0000]
+            *  3.9 HELO_LOCALHOST HELO_LOCALHOST
+            *  0.0 HTML_MESSAGE BODY: HTML included in message
+            *  1.5 RAZOR2_CF_RANGE_E4_51_100 Razor2 gives engine 4 confidence level
+            *      above 50%
+    X-Original-To: root@manta.univ.gda.pl
+    Delivered-To: adm@inf.ug.edu.pl
+    From: =?koi8-r?B?8sHE1dbOwdEg68HU0Q==?=
+            <astronomerspp9506@qip.ru>
+    To: <demonek@manta.univ.gda.pl>
+    Subject: =?koi8-r?B?7/P1/eXz9Pfs8eXtIPDl8uXl+uQ=?=
+    Date: Tue, 30 Mar 2010 17:23:03 +0700
+    MIME-Version: 1.0
+
+Jak widać ta wiadomość została oznaczona jako spam,
+na podstawie ocen z nagłowka X-Spam-Report.
+Powyżej zostały użyte tylko cztery oceny.
+Oceny wystawiono na podstawie czterech testów:
+*BAYES_99*, *HELO_LOCALHOST*, *HTML_MESSAGE*,
+*RAZOR2_CF_RANGE_E4_51_100*.
+Testów jest więcej. Więcej informacji:
+
+    perldoc Mail::SpamAssassin::Conf
+
+Na Tao w kolekcji *spam* zapisałem ok. 50,000 takich nagłówków.
+Oto typowy dokument z tej kolekcji:
+
+    {
+        "_id" : ObjectId("4de74979c4c18a0859000001"),
+        "Date" : ISODate("2010-03-30T11:58:46Z"),
+        "Subject" : "СДАМ ОФИС В АРЕНДУ. СОБСТВЕННИК.",
+        "X-Spam-Flag" : "YES",
+        "X-Spam-Level" : "**********",
+        "X-Spam-Status" : "Yes, score=7.0 required=3.5",
+        "X-Spam-Tests" : [
+                "BAYES_99",
+                "HELO_DYNAMIC_SPLIT_IP"
+        ],
+        "X-Spam-Report" : {
+                "BAYES_99" : 3.5,
+                "HELO_DYNAMIC_SPLIT_IP" : 3.5
+        },
+        "From-Text" : "\"\\\"Лада \"",
+        "From" : "insolventst7@arsoft.ru"
+    }
+
+Za pomocą prostego skryptu możemy wylistować nazwy
+wszystkich użytych testów i ile razy były użyte:
+
+    :::javascript spam-tests.js
+    var cursor = db.spam.find();
+    var test = {};
+
+    while (cursor.hasNext()) {
+      var doc = cursor.next();
+      doc['X-Spam-Tests'].forEach(function(name) {
+        if (test[name] === undefined) {
+          test[name] = 1;
+        } else {
+          test[name] += 1;
+        };
+      });
+    };
+
+Teraz możemy podejrzeć ile razy został użyty
+każdy z testów. W tym celu zapiszemy
+hasz *test* w bazie:
+
+    :::javascript spam-tests.js
+    db.spam.tests.drop();
+    for (c in test) {
+      db.spam.tests.insert({ name: c,  count: test[c] });
+    };
+
+Teraz pobierzemy listę dokumentów posortowaną malejąco
+po *count*:
+
+    mongo mapreduce spam-tests.js --shell
+
+i na konsoli wykonujemy:
+
+    db.spam.tests.find(null, {_id: 0}).sort({count: -1});
+      { "name" : "BAYES_99", "count" : 48390 }
+      { "name" : "RCVD_IN_PBL", "count" : 36425 }
+      { "name" : "HTML_MESSAGE", "count" : 32267 }
+      { "name" : "RDNS_NONE", "count" : 31992 }
+      { "name" : "RCVD_IN_XBL", "count" : 31869 }
+      { "name" : "RAZOR2_CHECK", "count" : 29544 }
+      { "name" : "RAZOR2_CF_RANGE_51_100", "count" : 28784 }
+      { "name" : "RCVD_IN_BL_SPAMCOP_NET", "count" : 23815 }
+      { "name" : "RAZOR2_CF_RANGE_E8_51_100", "count" : 23502 }
+      { "name" : "URIBL_BLACK", "count" : 21581 }
+      ... top 10 ...
+
+Wszystkich testów jest 410. Tak to można wyliczyć:
+
+    var a = [];
+    for (c in test) a.push(c);
+    a.length;
+
+Zakończymy wstępne rozpoznanie spamu policzeniem sumy punktów
+przyznanych w każdym teście:
+
+    :::javascript spam-tests.js
+    for (name in test) {
+      test[name] = 0;
+    };
+
+    var cursor = db.spam.find();
+    while (cursor.hasNext()) {
+      var doc = cursor.next();
+      var report = doc['X-Spam-Report'];
+      for (name in report) {
+        test[name] += report[name];
+      });
+    };
+
+    db.spam.report.drop();
+    for (name in test) {
+      db.spam.report.insert({ name: name,  total: test[name] });
+    };
+
+Oto wyniki:
+
+    db.spam.report.find(null, {_id: 0}).sort({total: -1});
+      { "name" : "BAYES_99", "total" : 169365 }
+      { "name" : "RCVD_IN_XBL", "total" : 95607 }
+      { "name" : "RCVD_IN_BL_SPAMCOP_NET", "total" : 47630 }
+      { "name" : "URIBL_BLACK", "total" : 43162 }
+      { "name" : "RAZOR2_CF_RANGE_E8_51_100", "total" : 35253 }
+      { "name" : "RCVD_IN_PBL", "total" : 32782.5 }
+      { "name" : "URIBL_WS_SURBL", "total" : 25630.5 }
+      { "name" : "MIME_HTML_ONLY", "total" : 25533 }
+      { "name" : "URIBL_JP_SURBL", "total" : 25216.5 }
+      { "name" : "URIBL_SBL", "total" : 22689 }
+      { "name" : "URIBL_AB_SURBL", "total" : 21483.3 }
+      { "name" : "RAZOR2_CF_RANGE_E4_51_100", "total" : 15412.5 }
+      { "name" : "RAZOR2_CHECK", "total" : 14772 }
+      { "name" : "RAZOR2_CF_RANGE_51_100", "total" : 14392 }
+      ... top 14 ...
