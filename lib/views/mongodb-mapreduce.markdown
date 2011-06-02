@@ -497,5 +497,51 @@ Tematy — Top 13:
 
 Kto to rozsyła – Spamerzy ?
 
+    :::javascript spamers.js
+    var cursor =  db.spam.subjects.find().sort({value: -1}).limit(13);
+    // -> scope
+    var subject = {};
+    cursor.forEach(function(doc) {
+      subject[doc._id] = doc.value;
+    });
+
+    m = function() {
+      var s = this['Subject'];
+      if (subject[s]) {
+        emit(this['From'], 1);
+      };
+    };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+
+    res = db.spam.mapReduce(m, r, {out: "spammers", scope: {subject: subject}});
+    printjson(res);
+
+*Uwaga:* skrypt korzysta ze zmiennej *subject*.
+Po umieszczeniu zmiennej w **scope** jest ona dostępna
+w funkcjach map, reduce i finalize.
+
+Wykonujemy skrypt:
+
+    mongo mapreduce spamers.js --shell
+
+i sprawdzamy wyniki:
+
     :::javascript
-    ?
+    db.spammers.find().sort({value: -1})
+      { "_id" : "MAILER-DAEMON@inf.ug.edu.pl (Mail Delivery System)", "value" : 702 }
+      { "_id" : "nina.univ.gda.pl", "value" : 570 }
+      { "_id" : "mailer-daemon@math.univ.gda.pl", "value" : 238 }
+      { "_id" : "mailer-daemon@manta.univ.gda.pl", "value" : 228 }
+      { "_id" : "adm@manta.univ.gda.pl", "value" : 221 }
+      { "_id" : "nina@math.univ.gda.pl", "value" : 215 }
+      { "_id" : "root@math.univ.gda.pl", "value" : 79 }
+      { "_id" : "support@manta.univ.gda.pl", "value" : 4 }
+      { "_id" : "viteev@mail.ru", "value" : 3 }
+
+Wnioski nasuwają się same. Jakie?
