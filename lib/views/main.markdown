@@ -157,6 +157,7 @@ TODO:
 * [Highcharts JS](http://www.highcharts.com/)
 * [d3.js](http://mbostock.github.com/d3/) –
   data-driven documents
+* [Circos](http://circos.ca/) – circular visualization
 * [Protovis](http://vis.stanford.edu/protovis/)
 * [Processing.js](http://processingjs.org/)
 * [PhiloGL](http://senchalabs.github.com/philogl/) –
@@ -171,7 +172,17 @@ Przykłady:
   InfoVis Toolkit (Google’s Data Visualization Challenge)
 * [Graph Operations](http://thejit.org/static/v20/Jit/Examples/ForceDirected/example2.html) –
   InfoVis Toolkit
+* [As Lost Ends, Creators Explain How They Did It, What’s Going On](http://www.wired.com/magazine/2010/04/ff_lost/5/) –
+  Circos
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
+* [Scatterplot Matrix](http://mbostock.github.com/d3/ex/splom.html) – d3.js
+* [D3 Tutorials](http://www.janwillemtulp.com/category/d3/) – d3.js
+* [Parallel Coordinates](http://vis.stanford.edu/protovis/ex/cars.html) – Protovis
+
+
+Różne:
+
+* [Colorbrewer](http://colorbrewer2.org/) – color advice for maps
 
 
 <blockquote>
