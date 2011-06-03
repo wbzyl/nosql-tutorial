@@ -150,9 +150,27 @@ TODO:
 * {%= link_to "Redis", "/redis-databases" %}
 
 
-# Wizualizacje danych
+# Wizualizacje – biblioteki i przykłady
 
+* [JavaScript InfoVis Toolkit](http://thejit.org/) –
+ interactive data visualizations for the web (grafy)
+* [Highcharts JS](http://www.highcharts.com/)
+* [d3.js](http://mbostock.github.com/d3/) –
+  data-driven documents
+* [Protovis](http://vis.stanford.edu/protovis/)
 * [Processing.js](http://processingjs.org/)
+* [PhiloGL](http://senchalabs.github.com/philogl/) –
+  A WebGL Framework for Data Visualization, Creative Coding and Game Development
+* [dygraphs](http://dygraphs.com/)
+
+
+Przykłady:
+
+* [Fizz](http://fizz.bloom.io/) – Processing.js (Twitter)
+* [US Budget spending](http://blog.thejit.org/assets/dataviz/index.html) –
+  InfoVis Toolkit (Google’s Data Visualization Challenge)
+* [Graph Operations](http://thejit.org/static/v20/Jit/Examples/ForceDirected/example2.html) –
+  InfoVis Toolkit
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
 
 
