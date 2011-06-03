@@ -159,6 +159,8 @@ TODO:
 * [d3.js](http://mbostock.github.com/d3/) –
   data-driven documents
 * [Circos](http://circos.ca/) – circular visualization
+* [Raphaël—JavaScript Library](http://raphaeljs.com/) –
+  simplify work with vector graphics on the web
 * [Protovis](http://vis.stanford.edu/protovis/) –
   graphical toolkit, designed for visualization
 * [Processing.js](http://processingjs.org/) –
