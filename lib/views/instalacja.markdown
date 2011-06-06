@@ -216,6 +216,30 @@ Na moim koncie na sigmie, mam takie bazy:
 Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego? Coś trzeba będzie z tym zrobić.
 
 
+## Logrotate
+
+Logi z czasem też zajmują dużo miejsca.
+
+Albo korzystamy z crona. W tym celu w katalogu */etc/logrotate.d/*
+umieszczamy plik *couchdb* o następującej zawartości:
+
+    /home/wbzyl/.data/var/log/couchdb/*.log {
+       weekly
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+    }
+
+I to wszystko. Dlaczego to zadziała? Odpowiedź znajdziemy
+w pliku */etc/logrotate.conf*:
+
+    # RPM packages drop log rotation information into this directory
+    include /etc/logrotate.d
+
+
 ## Instalujemy rozszerzenie GeoCouch
 
 Zaczynamy od sklonowania rozszerzenia i *cd* do katalogu repozytorium:
@@ -397,6 +421,9 @@ Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*
     objcheck=true
     syncdelay=4
 
+
+## Logrotate
+
 Journal i bazy MongoDB zajmują sporo miejsca na dysku:
 
     ls -l ~/.mongo/var/lib/mongodb/journal/
@@ -409,6 +436,31 @@ Journal i bazy MongoDB zajmują sporo miejsca na dysku:
     -rw-------. 1 wbzyl wbzyl 33554432 05-10 12:01 twitter.1
     -rw-------. 1 wbzyl wbzyl  2097152 05-10 12:36 twitter.ns
     ...
+
+Logi z czasem też. Dlatego od czasu do czasu wykonujemy:
+
+    mongo
+    use admin
+    db.runCommand("logRotate");
+
+Albo korzystamy z crona. W tym celu w katalogu */etc/logrotate.d/*
+umieszczamy plik *mongodb* o następującej zawartości:
+
+    /home/wbzyl/.data/var/log/mongodb/*.log {
+       weekly
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+    }
+
+I to wszystko. Dlaczego to zadziała? Odpowiedź znajdziemy
+w pliku */etc/logrotate.conf*:
+
+    # RPM packages drop log rotation information into this directory
+    include /etc/logrotate.d
 
 
 ## Linki
