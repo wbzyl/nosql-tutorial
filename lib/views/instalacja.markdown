@@ -219,8 +219,8 @@ Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego? Coś trzeba będzie z tym zrobić.
 ## Logrotate
 
 Logi z czasem też zajmują dużo miejsca.
-
-Albo korzystamy z crona. W tym celu w katalogu */etc/logrotate.d/*
+Dlatego należy je rotować za pomocą *logrotate*.
+W tym celu w katalogu */etc/logrotate.d/*
 umieszczamy plik *couchdb* o następującej zawartości:
 
     /home/wbzyl/.data/var/log/couchdb/*.log {
@@ -443,7 +443,8 @@ Logi z czasem też. Dlatego od czasu do czasu wykonujemy:
     use admin
     db.runCommand("logRotate");
 
-Albo korzystamy z crona. W tym celu w katalogu */etc/logrotate.d/*
+Wygodniej jest rotować pliki log za pomocą *logrotate*.
+W tym celu w katalogu */etc/logrotate.d/*
 umieszczamy plik *mongodb* o następującej zawartości:
 
     /home/wbzyl/.data/var/log/mongodb/*.log {
