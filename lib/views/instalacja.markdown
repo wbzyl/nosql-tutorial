@@ -233,11 +233,8 @@ umieszczamy plik *couchdb* o następującej zawartości:
        missingok
     }
 
-I to wszystko. Dlaczego to zadziała? Odpowiedź znajdziemy
-w pliku */etc/logrotate.conf*:
-
-    # RPM packages drop log rotation information into this directory
-    include /etc/logrotate.d
+I to wszystko. Dlaczego to zadziała? Polecam lekturę
+[Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/)
 
 
 ## Instalujemy rozszerzenie GeoCouch
