@@ -1,227 +1,241 @@
-#### {% title "MapReduce" %}
+#### {% title "MapReduce w przykładach" %}
 
 <blockquote>
  {%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
 </blockquote>
 
-Na początek kilka ilustracji. Oto jak
-Ketrina Yim, Sally Ahn, Dan Garcia. „Computer Science Illustrated”
-rozrysowały ideę mapreduce:
+Przykłady za Matthew Johnson,
+[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf)):
+
+* Word Count
+* Pivot Data
+* Spam
+
+Przykład „Word Count” rozrysowany przez Ketrinę Yim, Sally Ahn, Dan Garcia,
+[Computer Science Illustrated](http://csillustrated.berkeley.edu/):
 
 * [An Example: Distributed Word Count](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf)
-* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
 * [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
-
-Zobacz też Matthew Johnson,
-[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf).
-
+* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
 
 Podstawowa dokumentacja:
 
 * [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
 * [Troubleshooting MapReduce](http://www.mongodb.org/display/DOCS/Troubleshooting+MapReduce)
-* [A Look At MongoDB 1.8's MapReduce Changes](http://blog.evilmonkeylabs.com/2011/01/27/MongoDB-1_8-MapReduce/)
-* Źródła MongoDB: [mr1](https://github.com/mongodb/mongo/blob/master/jstests/mr1.js),
-  [mr2](https://github.com/mongodb/mongo/blob/master/jstests/mr2.js)
 
-Przykłady z internetu:
 
-* K. Banker. [A Cookbook for MongoDB](http://cookbook.mongodb.org/index.html) –
-  kilka przykładów z MapReduce
-* [Yet another MongoDB Map Reduce tutorial](http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/) –
-  fajne ilustracje
-* [Malware, MongoDB and Map/Reduce : A New Analyst Approach](http://blog.9bplus.com/malware-mongodb-and-mapreduce-a-new-analyst-a)
+## Jak działa MapReduce?
 
-## Zaczynamy
+Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
 
-Pierwsze koty za płoty:
+    :::javascript wc.js
+    db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
+    db.books.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
+
+    m = function() {
+      this.content.match(/[a-z]+/g).forEach(function(word) {
+        emit(word, 1);
+      });
+    };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+
+    db.books.mapReduce(m, r, {out: "wc"});
+    print("☯ To display results run: db.wc.find()");  // dlaczego tak?
+
+Program *wc.js* uruchamiamy na konsoli *mongo*:
+
+    mongo wc.js --shell
+
+gdzie sprawdzamy co wyliczyło mapreduce:
 
     :::javascript
-    db.mr.drop();
+    db.wc.find()
+      { "_id" : "be", "value" : 2 }
+      { "_id" : "not", "value" : 1 }
+      { "_id" : "or", "value" : 1 }
+      { "_id" : "to", "value" : 3 }
+      { "_id" : "wit", "value" : 1 }
 
-    db.mr.insert({_id: 1, tags: ['ą', 'ć', 'ę']});
-    db.mr.insert({_id: 2, tags: ['']});
-    db.mr.insert({_id: 3, tags: []});
-    db.mr.insert({_id: 4, tags: ['ć', 'ę', 'ł']});
-    db.mr.insert({_id: 5, tags: ['ą', 'a']});
+    db.wc.find().sort({value: -1})
+      { "_id" : "to", "value" : 3 }
+      { "_id" : "be", "value" : 2 }
+      { "_id" : "not", "value" : 1 }
+      { "_id" : "or", "value" : 1 }
+      { "_id" : "wit", "value" : 1 }
 
-    m = function() {
-      this.tags.forEach(function(tag) {
-        emit(tag, {count: 1});
-      });
-    };
+Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest uciążliwe.
+W skryptach poprawność wyników będziemy sprawdzać
+za pomocą wbudowanej funkcji *assert*. W tym celu zmienimy
+dwie ostatnie linijki skryptu *wc.js*:
 
-    r = function(key, values) {
-      var total = 0;
-      values.forEach(function(value) {
-        total += value.count;
-      });
-      return {count: total};
-    };
+    res = db.books.mapReduce(m, r, {out: "wc"});
+    z = res.convertToSingleObject();
+    //  z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
+    assert.eq( 2 , z.be, "liczba wystąpień 'be'" );
+    assert.eq( 1 , z.not, "liczba wystąpień 'not'" );
+    assert.eq( 1 , z.or, "liczba wystąpień 'or'" );
+    assert.eq( 3 , z.to, "liczba wystąpień 'to'" );
+    assert.eq( 2 , z.wit, "liczba wystąpień 'wit'" );
 
-    res = db.mr.mapReduce(m, r, {out: "mr.tc"});
-
-    printjson(res);
-    print("==>> To display results run: db.mr.tc.find()");
-
-
-### Counting tags
-
-Czyli to samo co powyżej, ale prościej i dla bazy zwierającej
-kilkanaście cytatów H. Steinhausa i S. J. Leca. Zaczynamy od
-skopiowania bazy *ls* z CouchDB do *MongoDB*.
-Skorzystamy ze skryptu
-{%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}:
-
-    couchrest2mongo.rb --help
-    couchrest2mongo.rb -d ls -m mapreduce -c ls
-
-Czyli tworzymy na MongoDB bazę *mapreduce*, gdzie kopiujemy zawartość bazy
-*ls* z CouchDB do kolekcji *ls*. Następnie sprawdzamy na konsoli
-*mongo* co się skopiowało:
+Na koniec sprzątamy po skrypcie:
 
     :::javascript
-    use mapreduce
-      switched to db mapreduce
-    show collections
-      ls
-    db.ls.findOne()
+    db.books.drop();
+    db.wc.drop();
 
-Funkcję map, funkcję reduce oraz wywołanie *mapReduce*
-wpiszemy w pliku *ls_count_tags.js*:
+Zobacz też implementację metody
+[convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
 
-    :::javascript ls_count_tags.js
+
+## Dlaczego mapReduce
+
+Te liczby powinny dużo wyjaśnić:
+
+{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
+
+Dla przypomnienia: 1 ns = 10^-9 s.
+
+Przy okazji: 10^9 cykli na sekundę to 1 GHz,
+na przebycie 1 m światło potrzebuje ok. 3.33 ns, 1 miesiąc
+to ok. 2.5·10^6 s, a 1 rok – 10^9 s.
+
+Jakiś przykład: sumowanie odwrotności liczb:
+
+* wszystkie liczby są w RAM
+* liczby pobieramy po jednej z kolekcji,
+  umieszczonej gdzieś w chmurze
+
+
+## Crazy MapReduce
+
+Tworzymy taką *crazy* collection:
+
+    :::javascript insert_data.js
+    for (var i = 0; i < 10; i++)
+      db.crazy.insert( { x: Math.random() } );
+
+Uruchomimy na niej poniższe MapReduce:
+
+    :::javascript crazy.js
     m = function() {
-      if (!this.tags) return;
-      this.tags.forEach(function(tag) {
-        emit(tag, 1);
-      });
+       emit("answer", this.x);
     };
     r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
+      var value = values.shift();
+      values.forEach(function(x, i) {
+        value += x/(i+2);
       });
-      return total;
-    };
-    // results = db.ls.mapReduce(m, r, {out : "ls.tags"});
-    results = db.runCommand({
-      mapreduce: "ls",
-      map: m,
-      reduce: r,
-      out: "ls.tags"
-    });
-    printjson(results);
-
-Powyższy program uruchamiamy w terminalu:
-
-    mongo --shell mapreduce ls_count_tags.js
-
-Następnie na konsoli *mongo* wpisujemy:
-
-    show collections
-    db.ls.tags.find({_id: 'nauka'})
-
-
-## Korzystamy ze „zmiennych globalnych”
-
-Na dłuższą metę sprawdzanie wyników na konsoli jest męczące.
-W skrypcie poniżej użyjemy wbudowanej w powłokę *mongo* funkcji
-*assert* do sprawdzania wyników.
-
-W kodzie poniżej, przyjrzymy się blizej kilku JSON-om
-wypisując ich zawartość na konsolę (za pomocą funkcji *printjson*).
-Skorzystamy też z metody *convertToSingleObject* zamieniającej
-JSON zwracany przez *mapReduce* na JSON zawierający
-wynik obliczeń mapreduce.
-
-Z wartości zmiennej *xx* zdefiniowanej poniżej możemy korzystać
-w_kodzie JavaScript w funkcjach użytych w *mapReduce*.
-Zmienna *xx* zdefiniowana przez *scope* jest w zasięgu tych funkcji.
-Zmienne umieszczone w „scope” są **tylko do odczytu**.
-
-    :::javascript scope.js
-    t = db.scope;
-    t.drop();
-
-    t.save( { tags : [ "a" , "b" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
-    t.save( { tags : [ "c" , "a" ] } );
-    t.save( { tags : [ "b" , "c" ] } );
-
-    m = function() {
-      this.tags.forEach(function(tag) {
-        emit(tag , xx); // zmiennej xx można też użyć w funkcji r poniżej
-      });
+      return value;
     };
 
-    r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
-      });
-      return total;
-    };
-
-    res = t.mapReduce( m, r, {scope: {xx: 2}, out: "scope.out"} );
-    z = res.convertToSingleObject()
-
+    res = db.crazy.mapReduce(m, r, { out: {inline: 1} });
     printjson(res);
-    printjson(z);
 
-    assert.eq( 4 , z.a, "liczbie wystąpień 'a' × 2" );
-    assert.eq( 6 , z.b, "liczbie wystąpień 'b' × 2" );
-    assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
-
-    res.drop();
-    t.drop();
+Co jest nie tak z tym MapReduce?
+Czy zawsze wyliczana jest ta sama liczba?
 
 
-## „Pivot data”
+## Word Count
 
-W kolekcji *rock.names* zapisane są dokumenty w formacie:
+Zaczynamy od zapisania w bazie *test* w kolekcji *chesterton*
+(976) akapitów z książki G.K. Chestertona, „The Man Who Knew Too Much”.
 
-    :::json
+    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
+       http://www.gutenberg.org/cache/epub/1720/pg1720.txt -v -d test -c chesterton
+
+Przykładowy dokument z kolekcji *chesterton*:
+
+    :::javascript
     {
-      name: "King Crimson",
-      tag: [ "progressiverock", "rock", "psychedelic" ]
+      "_id" : ObjectId("4de5e745e138230694000054"),
+      "paragraph" : "And he carried off the two rifles without casting a glance at the stranger...",
+      "count" : 83,
+      "title" : "the man who knew too much"
     }
 
-Z tej kolekcji chcemy utworzyć kolekcję *rock.tags* zawierającą
-dokumenty w formacie:
+Poniższe MapReduce różni się *wc.js* tylko tym, że w wyrażeniu
+regularnym użytym w metodzie *match* dodano litery z Latin-1,
+polskie diakrytyki (i nieco innych liter):
 
-    :::json
-    {
-      tag: "psychedelic",
-      name: [ "King Crimson", "Pink Floyd", "Cream", ... ]
-    }
+    :::javascript chesterton.js
+    m = function() {
+      this.paragraph.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g).forEach(function(word) {
+        emit(word, 1);
+      });
+    };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+    res = db.chesterton.mapReduce(m, r, {finalize: f, out: "wc"});
+    printjson(res);
+
+Uruchamiamy powyższe MapReduce. Po wykonaniu kodu (kilka sekund)
+sprawdzamy co się wyliczyło:
+
+    db.wc.find().sort({value: -1})
+      { "_id" : "the", "value" : 3840 }
+      { "_id" : "a", "value" : 1941 }
+      { "_id" : "and", "value" : 1873 }
+      { "_id" : "of", "value" : 1833 }
+      { "_id" : "to", "value" : 1295 }
+      { "_id" : "he", "value" : 1174 }
+      { "_id" : "in", "value" : 1099 }
+      { "_id" : "it", "value" : 970 }
 
 
-### Przygotowujemy kolekcję *rock.names*
+## „Pivot Data” na przykładzie kolekcji *Rock*
 
-Kopiujemy bazę *rock* z CouchDB do MonggDB
-(link {%= link_to "couchrest2mongo.rb", "/doc/scripts/couchrest2mongo.rb" %}):
+Zaczynamy od przeniesienia bazy *rock* z CouchDB do MongoDB.
+W tym celu, w bazie CouchDB zapiszemy widok i funkcję listową
+({%= link_to "kod", "/db/mongodb/rock.js" %}
+i {%= link_to "źródło", "/doc/scripts/rock.js" %}) generującą –
+po jednym w wierszu – dokumenty przekonwertowane na format JSON.
+Następnie odpytamy funkcję listową zapomocą programu *curl*.
+Otrzymane JSON-y zapiszemy w kolekcji *rock* korzystając
+z programu *mongoimport*.
 
-    ./couchrest2mongo.rb -d rock -m mapreduce -c rock
-
-Ponieważ kolekcja *rock* zawiera zbędne dla nas w tej chwili pola,
-usuniemy je. W tym celu na konsoli *mongo* wykonujemy poniższy kod:
+Przykładowy dokument z kolekcji *rock*:
 
     :::javascript
-    var cursor = db.rock.find({}, {name: 1, tags: 1, _id: 0})
-    while (cursor.hasNext()) {
-     var doc = cursor.next();
-     db.rock.names.insert(doc);
-    };
+    db.rock.findOne({name: 'Led Zeppelin'})
+    {
+       "_id" : "ledzeppelin",
+       "name" : "Led Zeppelin",
+       "tags" : [
+           "classicrock", "rock", "hardrock",
+           "70s", "progressiverock", "blues",
+           "ledzeppelin", "british", "bluesrock", "heavymetal"
+       ]
+    }
 
-Uwaga: nowe dokumenty zapisujemy w kolekcji *rock.names*.
+Z dokumentów chcemy utworzyć kolekcję *genres* zawierającą
+dokumenty w takim formacie:
 
+    :::javascript
+    {
+      _id: ObjectId(),
+      tag: "classicrock",
+      names: [ "Led Zeppelin", ... ]
+    }
 
-### Kolej na MapReduce
+### MapReduce
 
 W kodzie poniżej argument *value* nie może być tablicą.
-Dlaczego? Takie jest ograniczenie w wersji 1.9 MongoDB.
-Dlatego w kodzie wstawiliśmy tablicę do obiektu.
+Dlaczego? Odpowiedź: Takie ograniczenie jest w wersji 1.9 MongoDB.
+Może to się zmienić w kolejnej wersji MongoDB.
+
+To ograniczenie, utrudnia nieco kodowanie.
+Aby je obejść wstawiamy tablicę do obiektu *value*:
 
     :::javascript pivot.js
     m = function() {
@@ -238,25 +252,39 @@ Dlatego w kodzie wstawiliśmy tablicę do obiektu.
       return list;
     };
     f = function(key, value) {
-      return value.names;
+      return value.names;  // a to po co? kto wie?
     };
 
-    db.pivot.drop();
-    db.rock.names.mapReduce(m, r, { finalize: f, out: "pivot" });
+    db.rock.mapReduce(m, r, { finalize: f, out: "pivot" });
+
+
+### Sprawdzamy wyniki
+
+Po wykonaniu na konsoli *mongo* powyższego MapReduce,
+w kolekcji *pivot* znajdziemy dokumenty w formacie:
+
+    :::javascript
     printjson(db.pivot.findOne());
-
-Po wykonaniu powyższego kodu w kolekcji *pivot* zostały
-zapisane rekordy w formacie:
-
-    :::json
-    { "_id" : "00s",  "value" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+      {
+         "_id" : "00s",
+         "value" : [
+              "Queen + Paul Rodgers",
+              "Izzy Stradlin",
+              "Gilby Clarke"
+         ]
+      }
 
 a miały mieć format:
 
-    :::json
-    { "tag" : "00s",  "names" : [ "Queen + Paul Rodgers", "Izzy Stradlin", "Gilby Clarke"  ] }
+    :::javascript
+    {
+      _id: ObjectId(),
+      tag: "00s",
+      names: [ "Queen + Paul Rodgers", "Izzy Stradlin" ]
+    }
 
-Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
+Nazwy pól zmienimy w pętli. Dokument z nowymi nazwami pól
+zapiszemy w kolekcji *genre*:
 
     :::javascript
     var cursor = db.pivot.find();
@@ -265,23 +293,255 @@ Nazwy pól zamienimy przepisując zmienione dokumenty do kolekcji *rock.tags*:
      var ddoc = {};
      ddoc.tag = doc._id;
      ddoc.names = doc.value;
-     db.rock.tags.insert(ddoc);
+     db.genre.insert(ddoc);
     };
 
-albo zamiast pary metod *hasNext* i *next* skorzystamy z metody *forEach*:
+Albo, to samo, tylko zamiast pary metod *hasNext* i *next* skorzystamy
+z metody *forEach*:
 
     :::javascript
     db.pivot.find().forEach(function(doc) {
       var ddoc = {};
       ddoc.tag = doc._id;
       ddoc.names = doc.value;
-      db.rock.tags.insert(ddoc);
+      db.genre.insert(ddoc);
     });
+
+i usuwamy niepotrzebną już kolekcję *pivot*.
+
+    :::javascript
     db.pivot.drop();
 
-Przy okazji usuwamy już niepotrzebną kolekcję *pivot*.
+
+## SPAM
+
+Na Sigmę przychodzi dużo poczty. Treść emaila jest poprzedzona
+nagłówkiem. Tak wygląda typowy nagłówek:
+
+    From astronomerspp9506@qip.ru  Tue Mar 30 12:23:07 2010
+    Return-Path: <astronomerspp9506@qip.ru>
+    X-Spam-Flag: YES
+    X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on delta.inf.ug.edu.pl
+    X-Spam-Level: **************
+    X-Spam-Status: Yes, score=8.9 required=3.5 tests=BAYES_99,HELO_LOCALHOST,
+            HTML_MESSAGE,RAZOR2_CF_RANGE_51_100
+            autolearn=spam version=3.2.5
+    X-Spam-Report:
+            *  3.5 BAYES_99 BODY: Bayesian spam probability is 99 to 100%
+            *      [score: 1.0000]
+            *  3.9 HELO_LOCALHOST HELO_LOCALHOST
+            *  0.0 HTML_MESSAGE BODY: HTML included in message
+            *  1.5 RAZOR2_CF_RANGE_E4_51_100 Razor2 gives engine 4 confidence level
+            *      above 50%
+    X-Original-To: root@manta.univ.gda.pl
+    Delivered-To: adm@inf.ug.edu.pl
+    From: =?koi8-r?B?8sHE1dbOwdEg68HU0Q==?=
+            <astronomerspp9506@qip.ru>
+    To: <demonek@manta.univ.gda.pl>
+    Subject: =?koi8-r?B?7/P1/eXz9Pfs8eXtIPDl8uXl+uQ=?=
+    Date: Tue, 30 Mar 2010 17:23:03 +0700
+    MIME-Version: 1.0
+
+Wiadomość ta została oznaczona jako spam
+na podstawie ocen z nagłowka X-Spam-Report.
+Powyżej zostały użyte tylko cztery oceny
+wystawione na podstawie czterech testów:
+*BAYES_99*, *HELO_LOCALHOST*, *HTML_MESSAGE*,
+*RAZOR2_CF_RANGE_E4_51_100*.
+Testów jest więcej. Jakie i ile opisane jest tutaj:
+
+    perldoc Mail::SpamAssassin::Conf
+
+Na serwerze Tao w kolekcji *spam* zapisałem
+ok. 50,000 takich nagłówków.
+Oto typowy dokument z tej kolekcji:
+
+    {
+        "_id" : ObjectId("4de74979c4c18a0859000001"),
+        "Date" : ISODate("2010-03-30T11:58:46Z"),
+        "Subject" : "СДАМ ОФИС В АРЕНДУ. СОБСТВЕННИК.",
+        "X-Spam-Flag" : "YES",
+        "X-Spam-Level" : "**********",
+        "X-Spam-Status" : "Yes, score=7.0 required=3.5",
+        "X-Spam-Tests" : [
+                "BAYES_99",
+                "HELO_DYNAMIC_SPLIT_IP"
+        ],
+        "X-Spam-Report" : {
+                "BAYES_99" : 3.5,
+                "HELO_DYNAMIC_SPLIT_IP" : 3.5
+        },
+        "From-Text" : "\"\\\"Лада \"",
+        "From" : "insolventst7@arsoft.ru"
+    }
+
+Za pomocą prostego skryptu możemy wylistować nazwy
+wszystkich użytych testów i ile razy były użyte:
+
+    :::javascript spam-tests.js
+    var cursor = db.spam.find();
+    var test = {};
+
+    while (cursor.hasNext()) {
+      var doc = cursor.next();
+      doc['X-Spam-Tests'].forEach(function(name) {
+        if (test[name] === undefined) {
+          test[name] = 1;
+        } else {
+          test[name] += 1;
+        };
+      });
+    };
+
+Teraz możemy podejrzeć ile razy został użyty
+każdy z testów. W tym celu zapiszemy
+hasz *test* w bazie:
+
+    :::javascript spam-tests.js
+    db.spam.tests.drop();
+    for (c in test) {
+      db.spam.tests.insert({ name: c,  count: test[c] });
+    };
+
+Teraz pobierzemy listę dokumentów posortowaną malejąco
+po *count*:
+
+    mongo mapreduce spam-tests.js --shell
+
+i na konsoli wykonujemy:
+
+    db.spam.tests.find(null, {_id: 0}).sort({count: -1});
+      { "name" : "BAYES_99", "count" : 48390 }
+      { "name" : "RCVD_IN_PBL", "count" : 36425 }
+      { "name" : "HTML_MESSAGE", "count" : 32267 }
+      { "name" : "RDNS_NONE", "count" : 31992 }
+      { "name" : "RCVD_IN_XBL", "count" : 31869 }
+      { "name" : "RAZOR2_CHECK", "count" : 29544 }
+      { "name" : "RAZOR2_CF_RANGE_51_100", "count" : 28784 }
+      { "name" : "RCVD_IN_BL_SPAMCOP_NET", "count" : 23815 }
+      { "name" : "RAZOR2_CF_RANGE_E8_51_100", "count" : 23502 }
+      { "name" : "URIBL_BLACK", "count" : 21581 }
+      ... top 10 ...
+
+Wszystkich testów jest 410. Tak to można wyliczyć:
+
+    var a = [];
+    for (c in test) a.push(c);
+    a.length;
+
+Zakończymy wstępne rozpoznanie spamu policzeniem sumy punktów
+przyznanych w każdym teście:
+
+    :::javascript spam-tests.js
+    for (name in test) {
+      test[name] = 0;
+    };
+
+    var cursor = db.spam.find();
+    while (cursor.hasNext()) {
+      var doc = cursor.next();
+      var report = doc['X-Spam-Report'];
+      for (name in report) {
+        test[name] += report[name];
+      });
+    };
+
+    db.spam.report.drop();
+    for (name in test) {
+      db.spam.report.insert({ name: name,  total: test[name] });
+    };
+
+Oto wyniki:
+
+    db.spam.report.find(null, {_id: 0}).sort({total: -1});
+      { "name" : "BAYES_99", "total" : 169365 }
+      { "name" : "RCVD_IN_XBL", "total" : 95607 }
+      { "name" : "RCVD_IN_BL_SPAMCOP_NET", "total" : 47630 }
+      { "name" : "URIBL_BLACK", "total" : 43162 }
+      { "name" : "RAZOR2_CF_RANGE_E8_51_100", "total" : 35253 }
+      { "name" : "RCVD_IN_PBL", "total" : 32782.5 }
+      { "name" : "URIBL_WS_SURBL", "total" : 25630.5 }
+      { "name" : "MIME_HTML_ONLY", "total" : 25533 }
+      { "name" : "URIBL_JP_SURBL", "total" : 25216.5 }
+      { "name" : "URIBL_SBL", "total" : 22689 }
+      { "name" : "URIBL_AB_SURBL", "total" : 21483.3 }
+      { "name" : "RAZOR2_CF_RANGE_E4_51_100", "total" : 15412.5 }
+      { "name" : "RAZOR2_CHECK", "total" : 14772 }
+      { "name" : "RAZOR2_CF_RANGE_51_100", "total" : 14392 }
+      ... top 14 ...
 
 
-## Dwuprzebiegowe MapReduce
+### Spamerzy
 
-[Counting Unique Items with Map-Reduce](http://cookbook.mongodb.org/patterns/unique_items_map_reduce/).
+Pierwsze podejście: skąd jest wysyłane najwięcej emaili z takim
+samym tematem?
+
+Tematy — Top 13:
+
+    :::javascript
+    db.spam.subjects.find().sort({value: -1})
+      { "_id" : "Undelivered Mail Returned to Sender", "value" : 703 }
+      { "_id" : "hello", "value" : 684 }
+      { "_id" : "hi!", "value" : 336 }
+      { "_id" : "International Real Estate Consulting Company needs local representation", "value" : 189 }
+      { "_id" : "International Real Estate Consulting", "value" : 178 }
+      { "_id" : "Re:", "value" : 161 }
+      { "_id" : "Fw:", "value" : 159 }
+      { "_id" : "Fwd:", "value" : 156 }
+      { "_id" : "From International Real Estate Consulting", "value" : 153 }
+      { "_id" : "from international company", "value" : 152 }
+      { "_id" : "setting for your mailbox root.univ.gda.pl are changed", "value" : 110 }
+      { "_id" : "hi", "value" : 89 }
+      { "_id" : "Your wife photos attached", "value" : 88 }
+      ... top 13 ...
+
+Kto to rozsyła – Spamerzy ?
+
+    :::javascript spamers.js
+    var cursor =  db.spam.subjects.find().sort({value: -1}).limit(13);
+    // -> scope
+    var subject = {};
+    cursor.forEach(function(doc) {
+      subject[doc._id] = doc.value;
+    });
+
+    m = function() {
+      var s = this['Subject'];
+      if (subject[s]) {
+        emit(this['From'], 1);
+      };
+    };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+
+    res = db.spam.mapReduce(m, r, {out: "spammers", scope: {subject: subject}});
+    printjson(res);
+
+*Uwaga:* skrypt korzysta ze zmiennej *subject*.
+Po umieszczeniu zmiennej w **scope** jest ona dostępna
+w funkcjach map, reduce i finalize.
+
+Wykonujemy skrypt:
+
+    mongo mapreduce spamers.js --shell
+
+i sprawdzamy wyniki:
+
+    :::javascript
+    db.spammers.find().sort({value: -1})
+      { "_id" : "MAILER-DAEMON@inf.ug.edu.pl (Mail Delivery System)", "value" : 702 }
+      { "_id" : "nina.univ.gda.pl", "value" : 570 }
+      { "_id" : "mailer-daemon@math.univ.gda.pl", "value" : 238 }
+      { "_id" : "mailer-daemon@manta.univ.gda.pl", "value" : 228 }
+      { "_id" : "adm@manta.univ.gda.pl", "value" : 221 }
+      { "_id" : "nina@math.univ.gda.pl", "value" : 215 }
+      { "_id" : "root@math.univ.gda.pl", "value" : 79 }
+      { "_id" : "support@manta.univ.gda.pl", "value" : 4 }
+      { "_id" : "viteev@mail.ru", "value" : 3 }
+
+Wnioski nasuwają się same. Jakie?

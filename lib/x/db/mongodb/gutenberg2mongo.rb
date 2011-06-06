@@ -30,6 +30,15 @@ require 'rubygems' unless defined? Gem
 require 'optparse'
 require 'ostruct'
 
+# http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
+require 'net/http'
+
+# http://www.ruby-doc.org/ruby-1.9/classes/Logger.html
+require 'logger'
+
+logger = Logger.new(STDERR)
+logger.level = Logger::WARN  # set the default level
+
 require 'mongo'
 
 class OptparseGutenberg
@@ -51,20 +60,20 @@ class OptparseGutenberg
     options.verbose = false
 
     opts = OptionParser.new do |opts|
-      opts.banner = "Użycie: #{$0} [OPCJE] NAZWA TYTUŁ"
+      opts.banner = "Użycie: #{$0} [OPCJE] NAZWA URL"
+      opts.separator "---------------------------------------------------------------------------------------"
+      opts.separator "  Pobierz z serwera gutenberg.org z URL plik i zapisz go w bieżącym katalogu jako NAZWA"
+      opts.separator "  Następnie wczytaj ten plik i po podzieleniu go na akapity"
+      opts.separator "  zapisz akapity bazie (default: gutenberg) w kolekcji (default: books)."
+      opts.separator "  Akapity krótsze niż 44 znaki są pomijane."
       opts.separator ""
-      opts.separator "---------------------------------------------------------------"
-      opts.separator "  Pobierz z http://www.gutenberg.org/files/ plik NAZWA"
-      opts.separator "  i zapisz go w bieżącym katalogu pod nazwą TYTUŁ"
-      opts.separator "  Następnie wczytaj ten plik, podziel go na akapity"
-      opts.separator "  i zapisz w bazie (gutenberg) w kolekcji (books)."
-      opts.separator "  (Akapity krótsze niż 44 znaki są pomijane.)"
+      opts.separator "  Uwaga: Pobierane pliki muszą zawierać PREAMBLE i POSTAMBLE."
       opts.separator ""
-      opts.separator "  Przykłady (książki muszą zawierać PREAMBLE i POSTAMBLE):"
+      opts.separator "  Przykłady:"
       opts.separator ""
-      opts.separator "    #{$0} --recreate -p 5984 the-sign-of-the-four.txt http://www.gutenberg.org/cache/epub/2097/pg2097.txt"
-      opts.separator "    #{$0} -p 5984 the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt"
-      opts.separator "    #{$0} the-innocence-of-father-brown.txt http://www.gutenberg.org/cache/epub/204/pg204.txt"
+      opts.separator "    #{$0} the-sign-of-the-four.txt http://www.gutenberg.org/cache/epub/2097/pg2097.txt -r -v"
+      opts.separator "    #{$0} the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt -v"
+      opts.separator "    #{$0} the-innocence-of-father-brown.txt http://www.gutenberg.org/cache/epub/204/pg204.txt -v"
       opts.separator "    #{$0} the-idiot.txt http://www.gutenberg.org/cache/epub/2638/pg2638.txt"
       opts.separator "    #{$0} memoirs-of-sherlock-holmes.txt http://www.gutenberg.org/cache/epub/834/pg834.txt"
       opts.separator "    #{$0} the-return-of-sherlock-holmes.txt http://www.gutenberg.org/cache/epub/108/pg108.txt"
@@ -72,7 +81,7 @@ class OptparseGutenberg
       opts.separator "    #{$0} a-study-in-scarlet.txt http://www.gutenberg.org/cache/epub/244/pg244.txt"
       opts.separator "    #{$0} the-sign-of-the-four.txt http://www.gutenberg.org/cache/epub/2097/pg2097.txt"
       opts.separator "    #{$0} war-and-peace.txt http://www.gutenberg.org/cache/epub/2600/pg2600.txt"
-      opts.separator "---------------------------------------------------------------"
+      opts.separator "---------------------------------------------------------------------------------------"
       opts.separator ""
 
       # cast 'port' argument to a Numeric
@@ -89,7 +98,7 @@ class OptparseGutenberg
       end
 
       # boolean switch
-      opts.on("--recreate", "drop database NAZWA") do |r|
+      opts.on("-r", "--recreate", "drop database NAZWA") do |r|
         options.recreate = r
       end
 
@@ -127,18 +136,27 @@ if ARGV.length.odd? || ARGV.length == 0
   exit
 end
 
+logger.level = Logger::INFO if options.verbose
+
 # the Gutenberg part
 
 books = Hash[*ARGV]
 
-books.each do |file, url|
-  pathfile = File.join(File.dirname(__FILE__), file)
-  if options.verbose
-    puts "curl #{url} > #{pathfile}"
+books.each do |filename, uri|
+  unless File.exists?(filename)
+    url = URI.parse(uri)
+    req = Net::HTTP::Get.new(url.path)
+    logger.info "connecting to gutenberg.org.."
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    logger.info "done: #{res.code}"
+    logger.info "writing to #{filename}"
+    File.open(filename, 'w') do |f|
+      f.write(res.body)
+    end
   end
-  `curl #{url} > #{pathfile}` unless File.exists?(pathfile)
 end
-
 
 # the MongoDB part
 
@@ -158,7 +176,7 @@ books.keys.each do |book|
   title = book.split('.')[0].gsub('-', ' ') # usuwamy .txt suffix z nazwy pliku
   data = IO.readlines(book, "\r\n\r\n")     # pliki z dosowymi końcami wierszy
 
-  puts "#{title} -- wczytano akapitów: #{data.length}"
+  logger.info "wczytano akapitów: #{data.length}"
 
   content = data.drop_while do |line|
     line !~ /^(\*\*\* ?)?START OF (THE|THIS) PROJECT/i
@@ -170,7 +188,7 @@ books.keys.each do |book|
     line.gsub!(/\r?\n/, ' ').chomp!('  ')
   end.reverse[1..-2]
 
-  puts "po usunięciu PRE i POSTAMBLE zostalo akapitów: #{content.length}"
+  logger.info "po usunięciu PRE i POSTAMBLE zapisano w bazie akapitów: #{content.length}"
 
   content.each do |para|
     coll.insert({
@@ -181,10 +199,10 @@ books.keys.each do |book|
     count += 1
   end
 
+  logger.warn "no paragrpahs found: check if PREAMBLE and POSTAMBLE exists" if content.length == 0
+
 end
 
-if options.verbose
-  puts "MongoDB database: #{options.database}"
-  puts "paragraphs written to collection #{options.collection}: #{count}"
-  puts "total documents in collection #{options.collection}: #{coll.count}"
-end
+logger.info "MongoDB:"
+logger.info "\t  database: #{options.database}"
+logger.info "\tcollection: #{options.collection} (\##{coll.count})"

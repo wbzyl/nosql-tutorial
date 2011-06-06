@@ -65,15 +65,11 @@ Zobacz [HTTP Interface](http://www.mongodb.org/display/DOCS/Http+Interface).
 
 ## Kopiowanie statusów z Twittera
 
-Statusy skopiujemy za pomocą skryptu
-{%= link_to "twitter2mongo.rb", "/doc/scripts/twitter2mongo.rb" %}
-napisanego w języku Ruby.
+Skrypt napiszemy w języku Ruby. Zaczniemy od instalacji użytych w skrypcie gemów:
 
-Zaczynamy od instalacji użytych w skrypcie gemów (oraz gemów od nich zależnych):
+    gem install mongo mongo_ext yajl-ruby term-ansicolor
 
-    gem install mongo mongo_ext yajl-ruby
-
-Oto skrypt:
+Oto kod:
 
     :::ruby twitter2mongo.rb
     # -*- coding: utf-8 -*-
@@ -109,6 +105,11 @@ Sprawdzamy na konsoli co ciekawego zaimportowaliśmy:
 
     use twitter
     db.mongodb.find( {}, {_id: 0, text: 1} )
+
+Link do nowej wersji skryptu:
+{%= link_to "kod", "/db/mongodb/twitter2mongo.rb" %},
+{%= link_to "źródło", "/doc/scripts/twitter2mongo.rb" %}.
+
 
 
 ## Korzystamy ze strumieniowego API Twittera
@@ -220,6 +221,24 @@ w poprawnym formacie w bazie:
 
 ## GeoBytes
 
+**TODO**
+
+Opisać skrypty z katalogu *node/db*.
+
+Zaimportować dane do bazy *wm* do kolekcji *cities* oraz *countries*.
+Za pomocą *database references* (*DBRef*) zamienić *CountryID*
+nazwą kraju. Przykładowe DBRef:
+
+    {"$ref" : "countries", "$id" : 197}
+
+Przy okazji usunąć *CityId*, *RegionID*, *DmaID*.
+Zamienić pola *Latitude* oraz *Longitude* na:
+
+    { loc : { long : 54.5, lat: 18.35 } }
+
+**END**
+
+
 Na stronie [GeoBytes](http://geobytes.com/) pod linkiem
 [GeoWorldMap](http://geobytes.com/GeoWorldMap) znajdziemy
 archiwum zawierające pliki w formacie CSV (w kodowaniu Latin 1?).
@@ -240,20 +259,10 @@ oraz z pliku *countries.txt*:
     197,"Poland","PL","PL","POL","616","PL","Warsaw ","Europe ",\
        "Polish","Poles","Zloty","PLN",38633912,"Poland",""
 
-*TODO* Zaimportować dane do bazy *wm* do kolekcji *cities* oraz *countries*.
-Za pomocą *database references* (*DBRef*) zamienić *CountryID*
-nazwą kraju. Przykładowe DBRef:
-
-    {"$ref" : "countries", "$id" : 197}
-
-Przy okazji usunąć *CityId*, *RegionID*, *DmaID*.
-Zamienić pola *Latitude* oraz *Longitude* na:
-
-    { loc : { long : 54.5, lat: 18.35 } }
-
-Następnie dodać index:
+Pozostaje dodać index, inaczej zapytania geo nie będa działać:
 
     db.places.ensureIndex( { loc : "2d" } )
+
 
 *TODO* Przykładowe zapytania? Dokumentacja:
 

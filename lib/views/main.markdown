@@ -13,9 +13,6 @@
 [30.05.2011] Egzamin, I termin: 21.06.2011, godz. 12.00, p. 228.
 
 
-<!--
--->
-
 ## Co to jest „NoSQL”
 
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
@@ -81,8 +78,10 @@ TODO:
 
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
-1. {%= link_to "Tworzymy kolekcje", "/mongodb-databases" %}
-1. {%= link_to "MapReduce", "/mongodb-mapreduce" %}
+1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
+1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
+1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
+1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
 
 <!--
@@ -95,7 +94,7 @@ TODO:
 1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
 
 
-# Laboratorium
+## Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
 *  {%= link_to "Środowisko: NodeJS, NPM", "/srodowisko" %}
@@ -104,13 +103,31 @@ TODO:
 
 ## Różne rzeczy
 
-<blockquote>
- {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
-</blockquote>
-
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "NodeJS", "/node" %}
+
+<blockquote>
+ <p>
+  In the relational databases world the data modeling process was
+  mainly a single step activity: <b>design the schema based on
+  normalization rules</b>. In the NoSQL world, designing the schema means
+  <b>analyzing data access patterns</b>.
+  Differently put the question shifted
+  from <b>how do I store data</b> to
+  <b>how will I access data</b>.
+  </p>
+  <p class="author">
+  [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
+  </p>
+</blockquote>
+
+
+## Przykładowe bazy danych
+
+* {%= link_to "Bazy CouchDB", "/couchdb-databases" %}
+* {%= link_to "Kolekcje MongoDB", "/mongodb-databases" %}
+* {%= link_to "Redis", "/redis-databases" %}
 
 
 # Prezentacje
@@ -129,31 +146,51 @@ TODO:
 
 
 <blockquote>
- <p>
-  In the relational databases world the data modeling process was
-  mainly a single step activity: <b>design the schema based on
-  normalization rules</b>. In the NoSQL world, designing the schema means
-  <b>analyzing data access patterns</b>.
-  Differently put the question shifted
-  from <b>how do I store data</b> to
-  <b>how will I access data</b>.
-  </p>
-  <p class="author">
-  [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
-  </p>
+ {%= image_tag "/images/s-mountain-range-visualisation.png", :alt => "[wizualizacja]" %}
 </blockquote>
 
-# Przykładowe bazy danych
+# Wizualizacje – biblioteki i przykłady
 
-* {%= link_to "CouchDB", "/couchdb-databases" %}
-* {%= link_to "MongoDB", "/mongodb-databases" %}
-* {%= link_to "Redis", "/redis-databases" %}
+* [JavaScript InfoVis Toolkit](http://thejit.org/) –
+ interactive data visualizations for the web (grafy)
+* [Highcharts JS](http://www.highcharts.com/) –
+  charting library offering an easy way of adding interactive charts
+  to web sities or web apps
+* [d3.js](http://mbostock.github.com/d3/) –
+  data-driven documents
+* [Circos](http://circos.ca/) – circular visualization
+* [Raphaël—JavaScript Library](http://raphaeljs.com/) –
+  simplify work with vector graphics on the web
+* [Protovis](http://vis.stanford.edu/protovis/) –
+  graphical toolkit, designed for visualization
+* [Processing.js](http://processingjs.org/) –
+  data visualizations, digital art, interactive animations,
+  educational graphs, video games
+* [PhiloGL](http://senchalabs.github.com/philogl/) –
+  a WebGL Framework for Data Visualization, Creative Coding and Game Development
+* [dygraphs](http://dygraphs.com/) –
+  produces interactive, zoomable charts of time series
 
 
-# Wizualizacje danych
+Przykłady:
 
-* [Processing.js](http://processingjs.org/)
+* [Fizz](http://fizz.bloom.io/) – Processing.js (Twitter)
+* [US Budget spending](http://blog.thejit.org/assets/dataviz/index.html) –
+  InfoVis Toolkit (Google’s Data Visualization Challenge)
+* [Graph Operations](http://thejit.org/static/v20/Jit/Examples/ForceDirected/example2.html) –
+  InfoVis Toolkit
+* [As Lost Ends, Creators Explain How They Did It, What’s Going On](http://www.wired.com/magazine/2010/04/ff_lost/5/) –
+  Circos
 * [Strata Conference | Twitter Analysis](http://strataconf.nexalogy.com/)
+* [Scatterplot Matrix](http://mbostock.github.com/d3/ex/splom.html) – d3.js
+* [D3 Tutorials](http://www.janwillemtulp.com/category/d3/) – d3.js
+* [Parallel Coordinates](http://vis.stanford.edu/protovis/ex/cars.html) – Protovis
+* [Stanford Dissertation Browser](http://nlp.stanford.edu/projects/dissertations/browser.html)
+
+
+Różne:
+
+* [Colorbrewer](http://colorbrewer2.org/) – color advice for maps
 
 
 <blockquote>
@@ -202,15 +239,16 @@ Movies:
 * [The Internet Movie Database](ftp://ftp.fu-berlin.de/pub/misc/movies/database/) –
   [info](ftp://ftp.fu-berlin.de/pub/misc/movies/database/tools/README) (<i>Marian Smolinski</i>)
 
-[Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
-(denormalizacja, konwersja na UTF-8).
+Różne:
 
-[Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB.
-
-[PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
-zob. też [Code for America](http://codeforamerica.org/),
-[Max Ogden on twitter](http://twitter.com/#!/maxogden)
-oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
+* [Geobytes](http://geobytes.com/) – GeoWorldMap w formacie CSV
+ (denormalizacja, konwersja na UTF-8)
+* Social Security Online, [Popular Baby Names](http://www.ssa.gov/OACT/babynames/limits.html)
+* [Enron Email Dataset](http://www.cs.cmu.edu/~enron/) – ok. 400MB
+* [PDX API](http://www.pdxapi.com/) i [CivicApps](http://www.civicapps.org/);
+ zob. też [Code for America](http://codeforamerica.org/),
+ [Max Ogden on twitter](http://twitter.com/#!/maxogden)
+ oraz E. Knuth [bulk loading shapefiles into postgis](http://iknuth.com/2010/05/bulk-loading-shapefiles-into-postgis/).
 
 
 # Linki
