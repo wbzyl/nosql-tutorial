@@ -457,11 +457,8 @@ umieszczamy plik *mongodb* o następującej zawartości:
        missingok
     }
 
-I to wszystko. Dlaczego to zadziała? Odpowiedź znajdziemy
-w pliku */etc/logrotate.conf*:
-
-    # RPM packages drop log rotation information into this directory
-    include /etc/logrotate.d
+I to wszystko! Logi z ostatniego tygodnia będą
+kompresowane w osobnym pliku.
 
 
 ## Linki
