@@ -233,7 +233,11 @@ umieszczamy plik *couchdb* o następującej zawartości:
        missingok
     }
 
-I to wszystko. Dlaczego to zadziała? Polecam lekturę
+Sprawdamy czy to zadziała:
+
+    logrotate -d couchdb
+
+I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/)
 
 
