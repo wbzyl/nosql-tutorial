@@ -233,12 +233,19 @@ umieszczamy plik *couchdb* o następującej zawartości:
        missingok
     }
 
-Sprawdamy czy to zadziała:
+Sprawdamy jak to będzie działać:
 
-    logrotate -d couchdb
+    logrotate -d /etc/logrotate.d/couchdb
+      ...
+      Handling 1 logs
+
+      rotating pattern: $HOME/.data/var/log/couchdb/*.log  weekly (10 rotations)
+      empty log files are not rotated, old logs are removed
+      considering log $HOME/.data/var/log/couchdb/couch.log
+        log does not need rotating
 
 I to wszystko. Na koniec polecam lekturę
-[Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/)
+[Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
 
 
 ## Instalujemy rozszerzenie GeoCouch
