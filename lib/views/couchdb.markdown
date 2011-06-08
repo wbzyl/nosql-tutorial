@@ -51,6 +51,7 @@ kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-
   [NoSQL Database Technology](http://www.couchbase.com/sites/default/files/uploads/all/whitepapers/NoSQL-Whitepaper.pdf)
 * Ostatnia stabilna wersja 1.0.3 – kwiecień 2011
 * [Free CouchDB hosting](http://www.iriscouch.com/) – kwiecień 2011
+* [CouchDB Release 1.1 Feature Guide](http://docs.couchbase.org/couchdb-release-1.1/) – czerwiec 2011
 
 
 ## REST API dla CouchDB
