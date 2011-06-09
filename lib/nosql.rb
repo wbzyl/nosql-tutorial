@@ -77,20 +77,21 @@ module WB
       if File.exists?(@filename) && File.readable?(@filename)
         content = "<h1>#{filename}</h1>"
         content += "<pre><code>:::#{lang}\n#{escape_html(File.read @filename)}</code></pre>"
+        #content += "<pre><code>:::#{lang}\n#{File.read(@filename)}</code></pre>"
       else
         content = "<h2>oops! couldn't find <em>#{filename}</em></h2>"
       end
 
+      puts content
+
       erb content, :layout => :code
     end
-    
+
     error do
       e = request.env['sinatra.error']
       Kernel.puts e.backtrace.join("\n")
       'Application Error'
     end
 
-    # each Sinatra::Base subclass has its own private middleware stack:
-    # use Rack::Lint
   end
 end
