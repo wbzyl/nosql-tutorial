@@ -82,8 +82,6 @@ module WB
         content = "<h2>oops! couldn't find <em>#{filename}</em></h2>"
       end
 
-      puts content
-
       erb content, :layout => :code
     end
 
