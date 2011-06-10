@@ -352,6 +352,9 @@ Testów jest więcej. Jakie i ile opisane jest tutaj:
 
     perldoc Mail::SpamAssassin::Conf
 
+Kompletna lista testów SpamAssassin’a v3.3.x jest na wiki
+[Tests Performed: v3.3.x](http://spamassassin.apache.org/tests_3_3_x.html).
+
 Na serwerze Tao w kolekcji *spam* zapisałem
 ok. 50,000 takich nagłówków.
 Oto typowy dokument z tej kolekcji:
