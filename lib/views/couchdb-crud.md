@@ -73,7 +73,7 @@ Zaczynamy od utworzenia bazy:
 
 Dodajemy dane pierwszego albumu:
 
-    :::shell-unix-generic
+    :::text
     curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i \
       --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
@@ -85,7 +85,7 @@ o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
 
 *Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
 
-    :::shell-unix-generic
+    :::text
     curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
     {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
@@ -105,7 +105,7 @@ przy zapisywaniu załącznika w bazie.
 możemy skorzystać z funkcji *use UUID generated document ID*
 (co oznacza, że skorzystamy z *POST* zamiast *PUT*):
 
-    :::shell-unix-generic
+    :::text
     curl -X POST http://localhost:5984/lz  -H "Content-Type: application/json" \
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
@@ -197,7 +197,7 @@ Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev
 
 Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
 
-    :::shell-unix-generic
+    :::text
     curl -X GET http://localhost:5984/lz/_all_docs
       {"total_rows":3, "offset":0,
        "rows":[

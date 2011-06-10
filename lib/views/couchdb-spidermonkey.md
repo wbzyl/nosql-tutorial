@@ -769,7 +769,7 @@ w pliku *jquote.js*.
 
 Do uruchamiania testów wykorzystamy prosty skrypt *run.sh*:
 
-    :::shell-unix-generic
+    :::text
     #!/bin/bash
     js -f jquote.js -f tests.js $*
 

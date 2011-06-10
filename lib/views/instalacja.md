@@ -22,7 +22,7 @@ wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
 Dopiero teraz pobieramy paczkę z programami, którą rozpakowujemy
 w katalogu domowym:
 
-    :::shell-unix-generic
+    :::text
     cd ~
     git clone git://sigma.ug.edu.pl/~wbzyl/nosql
     tar zxf nosql/nosql-2011-02-15.tar.gz
@@ -32,7 +32,7 @@ Archiwum powinno się rozpakować do katalogu *~/.nosql*.
 Instalację kończymy dodając do zmiennej *PATH* katalog *$HOME/.nosql/bin*.
 W tym celu dopisujemy w pliku *~/.bashrc*:
 
-    :::shell-unix-generic
+    :::text
     export PATH=$HOME/.nosql/bin:$PATH
 
 Teraz wypadałoby wczytać nowe ustawienia ścieżki. W tym celu
@@ -91,12 +91,12 @@ działać.
 
 Z serwera *github.com* klonujemy repozytorium CouchDB:
 
-    :::shell-unix-generic
+    :::text
     git clone git://github.com/apache/couchdb.git
 
 Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
-    :::shell-unix-generic
+    :::text
     cd couchdb
     git checkout 1.1.0  # ta wersja działa z GeoCouch
     ./bootstrap
@@ -157,7 +157,7 @@ na którym uruchamia się CouchDB.
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
-    :::shell-unix-generic
+    :::text
     curl http://127.0.0.1:5984
       {"couchdb":"Welcome","version":"1.1.0"}
 
@@ -171,7 +171,7 @@ danych zarządzanymi przez CouchDB.
 Informacje o bazach i serwerze można uzyskać kilkając w odpowiednie zakładki
 *Futona*, albo korzystając programu *curl*:
 
-    :::shell-unix-generic
+    :::text
     curl -X GET http://127.0.0.1:5984/_all_dbs
     curl -X GET http://127.0.0.1:5984/_config
 
@@ -259,7 +259,7 @@ Następnie ustawiamy wartość zmiennej *COUCH_SRC*, tak aby wskazywała
 na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*
 i uruchamiamy *make*:
 
-    :::shell-unix-generic
+    :::text
     export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.0/include
     make
 
@@ -323,12 +323,12 @@ biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
 
 Z serwera *github.com* klonujemy repozytorium:
 
-    :::shell-unix-generic
+    :::text
     git://github.com/mongodb/mongo.git
 
 Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
-    :::shell-unix-generic
+    :::text
     cd mongo
     git checkout v1.8
     scons all
@@ -339,7 +339,7 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
 Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
 
-    :::shell-unix-generic
+    :::text
     mkdir $HOME/.mongo/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
     mongod --dbpath=$HOME/.mongo/var/lib/mongodb --port 16000
         Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
@@ -350,7 +350,7 @@ Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
 
 Następnie uruchamiamy powłokę *mongo*:
 
-    :::shell-unix-generic
+    :::text
     mongo --port 16000
       MongoDB shell version: 1.9.1
       connecting to: 127.0.0.1:16000/test
@@ -391,7 +391,7 @@ serwer *mongod* (i powłokę *mongo*) za pomocą prostego skryptu:
 
 Oto ten skrypt:
 
-    :::shell-unix-generic mongo.sh
+    :::text mongo.sh
     #! /bin/bash
     function usageexit() {
         echo "Usage:  $(basename $0) server|shell [PORT]" >&2
@@ -497,12 +497,12 @@ MongoDB & Ruby:
 
 Z serwera *github.com* klonujemy repozytorium:
 
-    :::shell-unix-generic
+    :::text
     git clone git://github.com/antirez/redis.git
 
 Następnie przechodzimy do katalogu *redis*, gdzie wykonujemy polecenia:
 
-    :::shell-unix-generic
+    :::text
     cd redis
     git checkout 2.2
     make
@@ -526,7 +526,7 @@ adres dla *bind*:
 
 Uruchamiamy serwer, korzystając ze skryptu *redis.sh*:
 
-    :::shell-unix-generic
+    :::text
     redis.sh server 16000
         [26787] 28 Dec ... * Server started, Redis version 2.1.8
         [26787] 28 Dec ... * The server is now ready to accept connections on port 12000

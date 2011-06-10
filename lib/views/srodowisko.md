@@ -15,7 +15,7 @@ Instalacja krok po kroku:
 Instalację NodeJS kończymy dodając do zmiennej *PATH* katalog *$HOME/.node/bin*.
 W tym celu dopisujemy w pliku *~/.bashrc*:
 
-    :::shell-unix-generic
+    :::text
     export PATH=$HOME/.node/bin:$PATH
 
 następnie przelogowujemy się (wtedy zostaną wczytane nowe ustawienia *PATH*).
@@ -90,7 +90,7 @@ Oznacza to, że moduł/biblioteka *couchapp* nie jest w ścieżce
 wyszukiwania *node*. Z tego co wypisał *npm* przy instalacji
 *couchapp* wynika, że po wykonaniu poniższego polecenia:
 
-    :::shell-unix-generic
+    :::text
     export NODE_PATH=$HOME/.node/lib/node_modules
 
 moduł *couchapp* znajdzie się w ścieżce.

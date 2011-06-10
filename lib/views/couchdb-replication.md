@@ -2,7 +2,7 @@
 
 Replikujemy bazę *lz*:
 
-    :::shell-unix-generic
+    :::text
     curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
       -d '{"source":"http://sigma.ug.edu.pl:5984/lz","target":"lz","create_target":true}'
     {"ok":true,"session_id":"fb84...",
@@ -35,7 +35,7 @@ i wybieramy bazy, które nas interesują, na przykład:
 
 Oczywiście do replikacji użyjemy prostego skryptu:
 
-    :::shell-unix-generic couchdb-replicate-from-sigma.sh
+    :::text couchdb-replicate-from-sigma.sh
     #!/bin/bash
     for i in "$@"
     do

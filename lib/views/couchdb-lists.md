@@ -270,7 +270,7 @@ często cytowani?
 
 Bez funkcji listowych *quick & dirty solution* – korzystamy ze skryptu:
 
-    :::shell-unix-generic check.sh
+    :::text check.sh
     #!/bin/bash
     curl http://localhost:5984/nosql-slimmed/_design/test/_view/sun?startkey=\\[\"@$1\"\\]\&endkey=\\[\"@$1\",\\{\\}\\]\&reduce=false
 
