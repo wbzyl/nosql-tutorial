@@ -13,6 +13,8 @@ Co jest ciekawego w CouchDB opisuje Daniel Alexiuc w artykule
 (pod mylącym tytułem) [Enterprise Web Application Architecture 2.0 and
 kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-architecture.html).
 
+Przypowieść o CouchDB,
+[The Parable of CouchDB](http://www.iriscouch.com/blog/2011/06/the-parable-of-couchdb)
 
 <blockquote>
  <h2>Kot pewnego guru</h2>
