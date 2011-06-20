@@ -115,7 +115,7 @@ podać ścieżkę do plików nagłówkowych:
 
 Instalację kończymy, edytując pliku *local.ini*, sekcję *httpd*:
 
-    :::ini ~/.nosql/etc/couchdb/local.ini
+    :::plain ~/.nosql/etc/couchdb/local.ini
     [httpd]
     port = XXXXX
     bind_address = 0.0.0.0
@@ -124,7 +124,7 @@ Powyżej zamiast *XXXXX* wpisujemy numer portu przydzielony na zajęciach.
 
 Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
 
-    :::ini ~/.nosql/etc/couchdb/local.ini
+    :::plain ~/.nosql/etc/couchdb/local.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
     ; dlatego zamiast *example.com* poniżej,
     ; powinno zadziałać coś takiego i coś takiego:
@@ -198,7 +198,7 @@ do katalogu *$HOME/.data/var/lib/couchdb*:
 i informujemy swoją CouchDB o tej zmianie, dopisując (całą ścieżkę)
 na początku pliku *local.ini*, na przykład
 
-    :::ini ~/.nosql/etc/couchdb/local.ini
+    :::plain ~/.nosql/etc/couchdb/local.ini
     [couchdb]
     database_dir = /home/wbzyl/.data/var/lib/couchdb
     view_index_dir = /home/wbzyl/.data//var/lib/couchdb
@@ -417,7 +417,7 @@ Oto ten skrypt:
 
 Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*:
 
-    :::ini
+    :::plain
     # bind_ip=0.0.0.0
     journal=true # wymaga extra > 0.5GB
     rest=true
@@ -512,7 +512,7 @@ Następnie przechodzimy do katalogu *redis*, gdzie wykonujemy polecenia:
 Na koniec edytujemy plik *redis.conf*, gdzie wpisujemy swoje dane i zmieniamy
 adres dla *bind*:
 
-    :::ssh-config  ~/.nosql/etc/redis.conf
+    :::plain  ~/.nosql/etc/redis.conf
     # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
     # default. You can specify a custom pid file location here.
     pidfile /home/wbzyl/.nosql/var/run/redis.pid

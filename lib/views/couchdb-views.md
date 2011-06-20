@@ -858,12 +858,12 @@ wbudowanej w tę przeglądarkę.)
 W przeglądarce, w zakładce z Futonem otwieramy okno z konsolą,
 gdzie wpisujemy:
 
-    :::jquery_javascript
+    :::javascript
     var db = $.couch.db('rock')
 
 Następnie wpsiujemy i wykonujemy na konsoli:
 
-    :::jquery_javascript
+    :::javascript
     db.view('test/connection', {
       success: function(data) {
         console.log( data.rows.map(function(o){ return o.value; }) );
@@ -871,7 +871,7 @@ Następnie wpsiujemy i wykonujemy na konsoli:
 
 I jeszcze raz na konsoli, tym razem zapytanie z jednym parametrem:
 
-    :::jquery_javascript
+    :::javascript
     db.view("test/connection", {
       key: 'jimmypage',
       success: function(data) {

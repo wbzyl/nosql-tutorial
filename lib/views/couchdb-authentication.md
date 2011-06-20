@@ -23,7 +23,7 @@ you only get one id.
 
 Example Code:
 
-    :::jquery_javascript
+    :::javascript
     $("#hide_foo").hide("slow");
 
 That's all it takes. You only get one div in each example for now. Have fun!
@@ -41,7 +41,7 @@ At it's simplest an Evently widget is a set of events connected to a single DOM 
 
 JavaScript:
 
-    :::jquery_javascript
+    :::javascript
     $("#hello").evently({
       _init : {
         mustache : "<p>Hello world</p>",
@@ -53,7 +53,7 @@ JavaScript:
 
 You can also do some more interesting things:
 
-    :::jquery_javascript
+    :::javascript
     $("#heyjane").evently({
       _init : {
         mustache : '<p>Hello <a href="#jane">Jane</a>, <a href="#joan">Joan</a> (pick one)</p>',
@@ -95,7 +95,7 @@ When we let CouchApp package our evently apps we get to work on them in individu
 
 Let's do a little Ajax. We'll just load the version of the CouchDB instance we happen to be serving our HTML from:
 
-    :::jquery_javascript
+    :::javascript
     $("#ajax").evently({
       _init : {
         mustache : '<p>Loading CouchDB server info.</p>',
@@ -147,7 +147,7 @@ CouchApp provides a mechanism for mapping between individual files and JSON stru
 
 It will appear within your CouchApp design document as:
 
-    :::jquery_javascript
+    :::javascript
     {
       _init : {
         mustache : "contents of mustache.html",
@@ -195,7 +195,7 @@ Evently understands CouchDB in a couple of very simple ways. If you know CouchDB
 
 Watch out, you're dangerous! Evently allows you to make any old asyncronous action you want, with the `widget.async` member. The callback is the first argument to the `async` function. Check it out:
 
-    :::jquery_javascript
+    :::javascript
     $("#async").evently({
       _init : {
         mustache : "<p>How many databases on the local host?</p><p>Answer: {{number_of_dbs}}</p><p>Other stuff: {{args}}</p><p>More: {{allArgs}}</p>",
@@ -225,7 +225,7 @@ Watch out, you're dangerous! Evently allows you to make any old asyncronous acti
 
 The simplest use of CouchApp in the browser is to get access to information about the database you are running in.
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app) {
       $("#dbinfo").evently({
         _init : {
@@ -239,7 +239,7 @@ Yay couchapp.
 
 The `$.couch.app()` function also loads the current design document so that it is available for templates etc. That is how the words you are reading were loaded. This file is included in the CouchApp application library. Let's look at the design doc:
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app) {
       $("#ddoc").evently({
         _init : {
@@ -273,7 +273,7 @@ The page you are on has a URL hash of `#/topic/pathbinder` right now. You can fo
 
 ### A simple example
 
-    :::jquery_javascript
+    :::javascript
     $("#basic_path").html('<p><a href="#/foo">click for foo</a></p>');
     $("#basic_path").bind("foo", function() {
       $(this).html("<p>you went to foo</p>");
@@ -286,7 +286,7 @@ This code sets up the `#basic_path` div with some initial content, including a l
 
 Pathbinder was inspired by the path handling in [Sammy.js](http://github.com/aq/sammy.js). Like Sammy, you can use it to pull parameters from the URL-hash. This page can be linked [using a path that has "pathbinder" as a parameter](#/topic/pathbinder). Let's explore how you can pull parameters out of a path.
 
-    :::jquery_javascript
+    :::javascript
     $("#param_path").html('<p><a href="#/foo/super">click for super foo</a></p>');
     $("#param_path").bind("foo", function(e, params) {
       $(this).html("<p>you went to foo - "+params.id+"</p>");
@@ -299,7 +299,7 @@ When you click the link to super foo, you'll see the param is passed through the
 
 It should be no suprise that Pathbinder and Evently play well together. The gist of it is that Evently looks for a key called `path` and if it finds it, uses Pathbinder to connect that event handler to the path. Let's try it out:
 
-    :::jquery_javascript
+    :::javascript
     $("#evently_path").evently({
       _init : {
         path : '/index',
@@ -328,7 +328,7 @@ It is easy to install. To use the account widget, just define a `div` in your pa
 
 Here's the most basic usage:
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app){
       $("#basic_account").evently(app.ddoc.vendor.couchapp.evently.account);
     });
@@ -339,7 +339,7 @@ Run this example and try signing up, and logging in and out. This code is part o
 
 First lets look more closely at the account widget (click Run to see the code we're about to discuss, it will appear in the sidebar -- the example code below is just used for loading and displaying the account widget source code).
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app){
       $("#account_widget_code").evently({
         _init : {
@@ -360,7 +360,7 @@ The top level keys are the most important: `loggedIn`, `loggedOut`, `adminParty`
 
 The `_init` event is special, in that Evently will automatically trigger it when the widget is created. Here is the code for the account widget's `_init` event handler.
 
-    :::jquery_javascript
+    :::javascript
     function() {
       var elem = $(this);
       $.couch.session({
@@ -405,7 +405,7 @@ Let's see what happens during signup. We'll skip showing the whole handler (it s
 
 When the `signupForm` event is triggered, a mustache template draws the form. Then the selectors are run, assigning this function to the form's submit event:
 
-    :::jquery_javascript
+    :::javascript
     function(e) {
       var name = $('input[name=name]', this).val(),
         pass = $('input[name=password]', this).val();
@@ -419,7 +419,7 @@ This handler is as simple as possible, all it does is use jQuery to pull the use
 
 Here is the `doSignup` handler:
 
-    :::jquery_javascript
+    :::javascript
     function(e, name, pass) {
       var elem = $(this);
       $.couch.signup({
@@ -437,7 +437,7 @@ Again, all the complex signup logic (encrypting passwords, etc) is pushed to the
 
 The code for `doLogin` isn't much different, just take the name and password, and call a jquery.couch.js library function with it.
 
-    :::jquery_javascript
+    :::javascript
     function(e, name, pass) {
       var elem = $(this);
       $.couch.login({
@@ -455,7 +455,7 @@ The last thing that `doLogin` does is trigger `_init`, so we come full circle! T
 
 Evently widgets are built out of JSON objects, which makes it easy to replace bits and pieces of them without having to mess with the entire widget. We'll start by customizing what users see when they are logged in.
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app){
       var customizedWidget = $.extend(true, {}, app.ddoc.vendor.couchapp.evently.account, {
         loggedIn : {
@@ -470,7 +470,7 @@ Take a moment to run this example code and login to see how our custom template 
 
 Here's another quick one:
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app){
       var customizedWidget = $.extend(true, {}, app.ddoc.vendor.couchapp.evently.account, {
         loggedOut : {
@@ -486,7 +486,7 @@ For a deeper reference on what the various parts of an Evently widget are named,
 
 First, lets create a basic widget. This one just has an `_init` handler and a handler called `loggedIn`. There is nothing in this widget definition that will trigger `loggedIn`, unless something else triggers it, there's no way it will run.
 
-    :::jquery_javascript
+    :::javascript
     $("#link_target").evently({
       _init : {
         mustache : "<p>Not much to see here</p>"
@@ -503,7 +503,7 @@ Be sure to run the above example code before the next one, otherwise there won't
 
 This next block of code demonstrates how to link two widgets together. First we create a normal account widget on the `#link_source` element, then we tell Evently to connect it to the `#link_target` element. Now whenever the `loggedIn` evenr is triggered on the source, it will be triggered on the target.
 
-    :::jquery_javascript
+    :::javascript
     $.couch.app(function(app){
       $("#link_source").evently(app.ddoc.vendor.couchapp.evently.account);
       // link the source to the target, for the loggedIn event

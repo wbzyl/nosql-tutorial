@@ -149,7 +149,7 @@ Zmieniamy co trzeba w pliku *couchapp.json*:
 Najciekawsza jest zawartość pliku
 **vendor/couchapp/_attachments/jquery.couchapp.js**:
 
-    :::jquery_javascript
+    :::javascript
     // Usage: The passed in function is called when the page is ready.
     // CouchApp passes in the app object, which takes care of linking to
     // the proper database, and provides access to the CouchApp helpers.
@@ -174,7 +174,7 @@ oraz funkcję *$.couch*.
 
 Dla przykładu, implementacja *db.view* wygląda tak:
 
-    :::jquery_javascript
+    :::javascript
     (function($) {
         $.couch = $.couch || {};
         ...
@@ -385,7 +385,7 @@ A tak działa widok *get_tasks* uruchomiony z wiersza poleceń:
 
 **Ważne:** Przekazywanie *quering options*:
 
-    :::jquery_javascript
+    :::javascript
     app.view('get_tasks', { descending: true, success: function(json) {
 
 Tak jak to widać powyżej, opcje dopisujemy w drugim argumencie

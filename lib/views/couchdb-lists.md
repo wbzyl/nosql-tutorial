@@ -292,7 +292,7 @@ chwilę okaże).
 
 Za pomocą funkcji listowej wygeneruję program :
 
-    :::dot tweets.gv
+    :::plain tweets.gv
     strict digraph {
       "@JustinBieber" -> "eliyahhhxD" [tweet_id=45577472607125504];
       ...
