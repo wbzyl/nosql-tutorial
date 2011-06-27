@@ -39,6 +39,8 @@ Warto przeczytać:
 
 ## Samouczki, ściągi itp.
 
+* Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb)
+  etykietowane znacznikiem *mongodb*
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
 * Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek
 * Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html)
@@ -77,3 +79,4 @@ Przykłady:
 ## Różne
 
 * [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)
+* [MongoDB & Mongoid – RubyJax February 2010](http://vimeo.com/9864311) – screencast, 1h22min
