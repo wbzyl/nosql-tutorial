@@ -9,8 +9,16 @@ Na początek kilka użytecznych linków:
   - [Felix's Node.js Beginners Guide](http://nodeguide.com/beginner.html) –
   debugging NodeJS applications
   - [Felix’s Node.js Convincing the boss guide](http://nodeguide.com/convincing_the_boss.html)
+* Mark Cotton:
+  - [A Javascript Blog With CouchDB and Node.js](http://nosql.mypopescu.com/post/6895944936/a-javascript-blog-with-couchdb-and-node-js)
+  (dwa screencasty: 5 + 4 minut)
+
+Różne rzeczy:
+
 * [Mastering NodeJS](http://visionmedia.github.com/masteringnode/) – open source Node eBook
 * [OSButler](http://blog.osbutler.com/categories/node-by-example/)
+
+## „hello world” z NodeJS
 
 Program „hello world” dla NodeJS, to prosty serwer WWW:
 
@@ -26,11 +34,12 @@ Tak uruchamiamy ten serwer:
 
     node server.js
 
-Co ten serwer robi?
+Jak łączymy się z tym serwerem?
 
 
+## *Socket.IO-node*
 
-## TODO *Socket.IO-node*
+**TODO: Czy to jeszcze działa z ostarnią wersją NodeJS?**
 
 Korzystamy z NPM:
 
