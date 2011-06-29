@@ -79,7 +79,7 @@ TODO:
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
-1. {%= link_to "MongoDB i Rails3", "/mongodb-rails3" %}
+1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
 1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}

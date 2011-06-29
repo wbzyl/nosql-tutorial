@@ -1,4 +1,4 @@
-#### {% title "MongoDB i Rails3" %}
+#### {% title "Rails3 i MongoDB" %}
 
 * [MongoDB & Mongoid – RubyJax February 2010](http://vimeo.com/9864311) – screencast, 1h22min
 * [MongoDB Data Modeling and Rails](http://www.mongodb.org/display/DOCS/MongoDB+Data+Modeling+and+Rails)
