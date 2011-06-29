@@ -79,4 +79,3 @@ Przykłady:
 ## Różne
 
 * [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)
-* [MongoDB & Mongoid – RubyJax February 2010](http://vimeo.com/9864311) – screencast, 1h22min
