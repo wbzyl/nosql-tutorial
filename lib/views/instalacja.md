@@ -331,7 +331,9 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
     :::text
     cd mongo
     git checkout v1.8
-    scons all
+    scons              # use spider monkey
+    # scons all
+    scons --usev8      # or build all binaries with v8
     scons --prefix=$HOME/.nosql install
 
 
