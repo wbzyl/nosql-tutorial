@@ -330,11 +330,18 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::text
     cd mongo
-    git checkout v1.8
-    scons              # use spider monkey
-    # scons all
+    git checkout v1.8.2
+    scons all
     scons --usev8      # or build all binaries with v8
     scons --prefix=$HOME/.nosql install
+
+Albo, wersja mongo >= 1.9.1,
+przechodzimy z domyślnej biblioteki Javascript „spider monkey” (Firefox)
+na „v8” (Chrome):
+
+    cd mongo
+    scons --usev8 all                            # build all binaries with v8
+    scons --usev8 --prefix=$HOME/.nosql install
 
 
 ## Testujemy instalację
