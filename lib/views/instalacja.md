@@ -336,12 +336,15 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
     scons --prefix=$HOME/.nosql install
 
 Albo, wersja mongo >= 1.9.1,
-przechodzimy z domyślnej biblioteki Javascript „spider monkey” (Firefox)
-na „v8” (Chrome):
+przechodzimy z domyślnej Javascript Engine „Spider Monkey” (Firefox)
+na „V8” (Chrome):
 
     cd mongo
     scons --usev8 all                            # build all binaries with v8
     scons --usev8 --prefix=$HOME/.nosql install
+
+Oczywiście, V8 musimy wcześniej zainstalować w systemie
+(np. w Fedorze instalujemy v8 oraz v8-devel).
 
 
 ## Testujemy instalację
