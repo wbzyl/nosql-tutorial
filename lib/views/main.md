@@ -272,6 +272,7 @@ Różne:
   [The Antepenultimate CouchDB Reference Card](http://blog.fupps.com/2010/04/20/the-antepenultimate-couchdb-reference-card/)
   (Jan-Piet Mens)
 * [CSS3 Cheat Sheet](http://www.smashingmagazine.com/2009/07/13/css-3-cheat-sheet-pdf/)
+* [What every programer should know about time](http://unix4lyfe.org/time/)
 
 
 <blockquote>
