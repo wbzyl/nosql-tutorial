@@ -218,6 +218,7 @@ Infochimps – find the world's data:
 Twitter:
 
 * [How Tweet It Is!: Library Acquires Entire Twitter Archive](http://blogs.loc.gov/loc/2010/04/how-tweet-it-is-library-acquires-entire-twitter-archive/)
+* [Topsy](http://corp.topsy.com/developers/api/) – realtime search for the social web
 
 Google:
 
