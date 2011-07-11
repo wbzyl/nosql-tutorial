@@ -332,7 +332,6 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
     cd mongo
     git checkout v1.8.2
     scons all
-    scons --usev8      # or build all binaries with v8
     scons --prefix=$HOME/.nosql install
 
 Albo, wersja mongo >= 1.9.1,
