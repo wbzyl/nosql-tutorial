@@ -342,8 +342,8 @@ na „V8” (Chrome):
     scons --usev8 all                            # build all binaries with v8
     scons --usev8 --prefix=$HOME/.nosql install
 
-Powyżej zakładam, że biblioteka V8 jest zainstalowana w systemie.
-(Fedora – pakiety *v8* i *v8-devel*).
+Zakładam, że biblioteka V8 jest zainstalowana w systemie.
+(Fedora – instalujemy pakiety *v8* i *v8-devel*.)
 
 
 ## Testujemy instalację
