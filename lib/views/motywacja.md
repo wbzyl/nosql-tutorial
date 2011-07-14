@@ -49,6 +49,11 @@ poprzednia sesja. **Istnieje wiele sposobów takiego
 skomplikowanych.**
 
 
+## Why NoSQL?
+
+* [Post-relational data management for interactive software systems](http://www.couchbase.com/why-nosql/nosql-database)
+
+
 ## What Does Big Data Mean to Infrastructure Professionals?
 
 Cytat z [Ten “Big Data” Realities and What They Mean to You](http://wikibon.org/blog/ten-%E2%80%9Cbig-data%E2%80%9D-realities-and-what-they-mean-to-you/):

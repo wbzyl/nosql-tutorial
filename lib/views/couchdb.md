@@ -38,6 +38,24 @@ Przypowieść o CouchDB,
   w należytym odprawianiu nabożeństwa.
 </blockquote>
 
+## Dlaczego CouchDB?
+
+* Master-master replication to provide a base network for
+  interoperability and distribution of the data, without any need for
+  a centralized configuration or pre-designed network architecture.
+* Simple, standard API interfaces, utilizing HTTP as much as possible
+* JSON data structures
+* Map/Reduce type analytic capability
+* Flexible architecture
+* Open source
+* Scalable / supports large datasets
+* Minimal administration requirements
+* Modern technology, utilizing modern standards
+
+Źródło:
+[The US Departments of Education and Defense use CouchDB as part of their Learning Registry Research Program](http://www.couchbase.com/case-studies/learningregistry)
+
+
 ## Trochę faktów z historii CouchDB
 
 * [Damien Katz](http://damienkatz.net/) – autor
