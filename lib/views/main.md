@@ -105,7 +105,7 @@ TODO:
 ## Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
-*  {%= link_to "Środowisko: NodeJS, NPM", "/srodowisko" %}
+*  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
 
