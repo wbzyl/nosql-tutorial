@@ -120,6 +120,7 @@ używając swojego ulubionego języka programowania.
 * [CouchApp.org: Simple JavaScript Applications with CouchDB](http://couchapp.org/page/index) –
   utilities to make standalone CouchDB application development simple
 * [Nginx As a Reverse Proxy](http://wiki.apache.org/couchdb/Nginx_As_a_Reverse_Proxy)
+* [Relaxed.tv](http://relaxed.tv/) – CouchDB Movietime!
 
 Cykl artykułów, Jan Lehnardt. *What’s new in CouchDB*:
 
