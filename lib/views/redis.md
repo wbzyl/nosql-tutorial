@@ -12,7 +12,8 @@
  <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
 </blockquote>
 
-[To Redis or Not To Redis?] [redis-or-not]
+* [To Redis or Not To Redis?] [redis-or-not]
+* [Is CouchDB The Anti-Redis?](http://ai.mee.nu/is_couchdb_the_anti-redis?utm_source=NoSQL+Weekly+List&utm_campaign=92fe997cef-NoSQL_Weekly_Issue_37_Aug_11_2011&utm_medium=email)
 
 [Redis] [redis] is key/value store:
 
