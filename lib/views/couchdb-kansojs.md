@@ -21,6 +21,11 @@ Cytat ze strony projektu o [KansoJS](http://kansojs.org/):
 
 Na stronie projektu znajdziemy też informacje jak zinstalować KansoJS.
 
+Dokumentacja, samouczki…
+
+* [Getting started](http://kansojs.org/guides/getting_started.html)
+* [CouchDB and Kanso](http://icyrock.com/blog/2011/08/couchdb-and-kanso/)
+
 
 ## Aplikacja „Rock Bands of the 70s”
 
@@ -83,10 +88,3 @@ Po tych zmianach rusztowanie aplikacji wygląda tak:
 Dopiero po tych zmianach wdrożymy aplikację:
 
     kanso push http://localhost:4000/rock_bands_70s
-
-
-
-
-## Aplikacja „Todo”
-
-TODO (ojejku zapętliłem się!)
