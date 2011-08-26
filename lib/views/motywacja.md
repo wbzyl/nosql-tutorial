@@ -85,6 +85,10 @@ Cytat z [Ten “Big Data” Realities and What They Mean to You](http://wikibon
   exploit it is going to change your business, social and personal
   life; permanently.
 
+[The Potential Of Big Data](http://columnfivemedia.com/work-items/get-satisfaction-infographic-the-potential-of-big-data/) –
+infographic which shows how big data has the potential to become the next
+frontier for innovation, competition and profit.
+
 
 ## CAP Theorem
 
