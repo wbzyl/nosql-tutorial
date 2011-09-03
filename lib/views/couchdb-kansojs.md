@@ -25,6 +25,12 @@ Dokumentacja, samouczki…
 
 * [Getting started](http://kansojs.org/guides/getting_started.html)
 * [CouchDB and Kanso](http://icyrock.com/blog/2011/08/couchdb-and-kanso/)
+* [Kanso-CRUD](https://github.com/descartes1/Kanso-CRUD)
+
+
+# TODO
+
+Notatki do starej wersji. Ukatualnić do nowej wersji Kanso.
 
 
 ## Aplikacja „Rock Bands of the 70s”
