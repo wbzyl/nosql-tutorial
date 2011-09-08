@@ -29,33 +29,59 @@ Co powinniśmy wiedzieć o bazach danych:
   bgcolor="#ffffff" wmode="transparent" quality="high">
 </embed>
 
-* *Twitter:* RT @textwise:
-  [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410)
-  <– 95% of that 1800 exabytes is considered unstructured data.
-  [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf).
-* *New York Times:*
-  Wpisy na blogach lepiej jest przechowywać jako dokumenty.
-  Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
-  wpisów.
 * *Rozproszone systemy:*
   Twitter users generate more than 12 terabytes of data every day.
   Even if Twitter used the fastest disk drives,
   it would take more than 40
   hours to record this information.
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
+* *Twitter:* RT @textwise:
+  [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410)
+  <– 95% of that 1800 exabytes is considered unstructured data.
+  Przykłady:
+  - [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
+  - [Wordnik](http://www.wordnik.com/)
+* *New York Times:*
+  Wpisy na blogach lepiej jest przechowywać jako dokumenty.
+  Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
+  wpisów.
+* *Platforma obliczeniowa MapReduce:*
+  [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 * *VISA:* Some of the datasets are enormous: for example, when Visa was
   looking to process two years' worth of credit card transaction s –
   some 70 billion of them, – they turned to a NoSQL solution and were
   able to cut their processing time from a solid month using
   traditional relational solutions to just 13 minutes.
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
-* *Platforma obliczeniowa MapReduce:*
-  [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 
 Przykład pokazujący o co chodzi w podpunkcie z *VISA* powyżej:
 
-* [Importing CSV Files to PostgreSQL Databases](http://www.ensode.net/postgresql_csv_import.html)
-* Importing CSV Files to MongoDB Databases
+[Importing CSV Files to PostgreSQL Databases](http://www.ensode.net/postgresql_csv_import.html)
+
+    :::sql
+    drop table apache;
+
+    create table apache
+    (
+      -- id int primary key,
+      -- time bigint,
+      time text,
+      hostname text,
+      client text,
+      request text,
+      status text,
+      responsesize text,
+      useragent text
+    );
+    \copy apache from 'apache.csv' with csv
+    select count(*) from apache;
+    select hostname,client,request from apache limit 10;
+
+
+Importing CSV Files to MongoDB Databases
+
+    :::shell
+    mongoimport --db test --collection apache --type csv --file apache.filtered.2011.09.03.csv --headerline
 
 
 ## MongoDB w kwadrans
