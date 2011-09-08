@@ -21,6 +21,7 @@ Co powinniśmy wiedzieć o bazach danych:
 
 ## Dlaczego potrzebujemy nierelacyjnych baz?
 
+<!-- http://www.emc.com/leadership/programs/digital-universe.htm -->
 <embed pluginspage="http://www.macromedia.com/go/getflashplayer"
   src="{%= to('EMCTicker2010Web.swf') %}"
   width="674" height="258"
@@ -31,6 +32,7 @@ Co powinniśmy wiedzieć o bazach danych:
 * *Twitter:* RT @textwise:
   [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410)
   <– 95% of that 1800 exabytes is considered unstructured data.
+  [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf).
 * *New York Times:*
   Wpisy na blogach lepiej jest przechowywać jako dokumenty.
   Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
