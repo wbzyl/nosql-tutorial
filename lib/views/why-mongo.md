@@ -56,9 +56,9 @@ Co powinniśmy wiedzieć o bazach danych:
 
 Przykład pokazujący o co chodzi w podpunkcie z *VISA* powyżej:
 
-[Importing CSV Files to PostgreSQL Databases](http://www.ensode.net/postgresql_csv_import.html)
+PostgreSQL:
 
-    :::sql
+    :::sql apache.sql
     drop table apache;
 
     create table apache
@@ -82,6 +82,16 @@ Importing CSV Files to MongoDB Databases
 
     :::shell
     mongoimport --db test --collection apache --type csv --file apache.filtered.2011.09.03.csv --headerline
+    mongo
+
+Teraz w powłoce mongo wykonujemy:
+
+    :::javascript
+    db.apache.count()
+    DBQuery.shellBatchSize = 4
+    db.apache.find({request: /sinatra/})
+    db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1})
+    db.apache.find({request: /sinatra/}).skip(100).limit(10)
 
 
 ## MongoDB w kwadrans
