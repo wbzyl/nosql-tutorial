@@ -1,4 +1,4 @@
-#### {% title "Why MongoDB? (Starbienino, 22.09.2011)" %}
+#### {% title "Dlaczego MongoDB? (Starbienino, 22.09.2011)" %}
 
 <blockquote>
  <p>
