@@ -21,9 +21,16 @@ Co powinniśmy wiedzieć o bazach danych:
 
 ## Dlaczego potrzebujemy nierelacyjnych baz?
 
+<embed pluginspage="http://www.macromedia.com/go/getflashplayer"
+  src="{%= to('EMCTicker2010Web.swf') %}"
+  width="674" height="258"
+  type="application/x-shockwave-flash"
+  bgcolor="#ffffff" wmode="transparent" quality="high">
+</embed>
+
 * *Twitter:* RT @textwise:
   [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410)
-  <– "95% of that 1800 exabytes is considered unstructured data.
+  <– 95% of that 1800 exabytes is considered unstructured data.
 * *New York Times:*
   Wpisy na blogach lepiej jest przechowywać jako dokumenty.
   Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
