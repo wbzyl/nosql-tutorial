@@ -14,7 +14,7 @@
 Co powinniśmy wiedzieć o bazach danych:
 
 * rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
-* replikacja
+* konfiguracja master-slave, replikacja, *replica sets*
 * sharding
 * obliczenia MapReduce
 
@@ -28,6 +28,8 @@ Co powinniśmy wiedzieć o bazach danych:
   type="application/x-shockwave-flash"
   bgcolor="#ffffff" wmode="transparent" quality="high">
 </embed>
+
+1,5 zetabyte = 1 500 exabytes = 1 500 000 petabytes = 1 500 000 000 terabytes
 
 * *Rozproszone systemy:*
   Twitter users generate more than 12 terabytes of data every day.
@@ -48,23 +50,23 @@ Co powinniśmy wiedzieć o bazach danych:
 * *Platforma obliczeniowa MapReduce:*
   [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 * *VISA:* Some of the datasets are enormous: for example, when Visa was
-  looking to process two years' worth of credit card transaction s –
-  some 70 billion of them, – they turned to a NoSQL solution and were
+  looking to process two years' worth of credit card transactions —
+  some 70 billion of them, — they turned to a NoSQL solution and were
   able to cut their processing time from a solid month using
   traditional relational solutions to just 13 minutes.
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
-Przykład pokazujący o co chodzi w podpunkcie z *VISA* powyżej:
 
-PostgreSQL:
+### Powtórka z PostgreSQL
+
+Dla przypomnienia, oraz porównania z MongoDB,
+podałem poniżej kilka poleceń SQL:
 
     :::sql apache.sql
-    drop table apache;
+    DROP TABLE apache;
 
-    create table apache
+    CREATE TABLE apache
     (
-      -- id int primary key,
-      -- time bigint,
       time text,
       hostname text,
       client text,
@@ -74,27 +76,38 @@ PostgreSQL:
       useragent text
     );
     \copy apache from 'apache.csv' with csv
-    select count(*) from apache;
+    CREATE INDEX apache_hostname ON apache (hostname);
+    ALTER TABLE apache DROP COLUMN time;
+    SELECT count(*) FROM apache;
+
     SELECT hostname,client,request FROM apache LIMIT 10;
     ALTER TABLE apache ADD COLUMN header text;
-    ALTER TABLE apache DROP COLUMN time;
     SELECT pg_database_size('wbzyl');
     SELECT pg_size_pretty(pg_total_relation_size('apache'));
 
-Importing CSV Files to MongoDB Databases
+
+### To samo w MongoDB
+
+Importujemy dane z pliku JSON do bazy *apache* MongoDB,
+następnie uruchamiamy powłokę mongo:
 
     :::shell
-    mongoimport --db test --collection apache --type csv --file apache.filtered.2011.09.03.csv --headerline
+    mongoimport --db test --collection apache --type json \
+      --file apache.filtered.2011.09.09.json --headerline
     mongo
 
-Teraz w powłoce mongo wykonujemy:
+W powłoce mongo sprawdzamy co się zaimportowało:
 
     :::javascript
-    db.apache.count()
     DBQuery.shellBatchSize = 4
-    db.apache.find({request: /sinatra/})
+
+    db.apache.count()
+    db.apache.findOne()
+    db.apache.find({request: /sinatra/}).skip(20).limit(2)
     db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1})
-    db.apache.find({request: /sinatra/}).skip(100).limit(10)
+
+    db.stats()
+    db.apache.stats()
 
 **Zadanie:** Pobrać dane z Open Library ([Bulk Download](http://openlibrary.org/data)) —
 „has a lot of catalog records, over 20 million editions and some 6 million authors.”
