@@ -75,8 +75,11 @@ PostgreSQL:
     );
     \copy apache from 'apache.csv' with csv
     select count(*) from apache;
-    select hostname,client,request from apache limit 10;
-
+    SELECT hostname,client,request FROM apache LIMIT 10;
+    ALTER TABLE apache ADD COLUMN header text;
+    ALTER TABLE apache DROP COLUMN time;
+    SELECT pg_database_size('wbzyl');
+    SELECT pg_size_pretty(pg_total_relation_size('apache'));
 
 Importing CSV Files to MongoDB Databases
 
@@ -92,6 +95,16 @@ Teraz w powłoce mongo wykonujemy:
     db.apache.find({request: /sinatra/})
     db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1})
     db.apache.find({request: /sinatra/}).skip(100).limit(10)
+
+**Zadanie:** Pobrać dane z Open Library ([Bulk Download](http://openlibrary.org/data)) —
+„has a lot of catalog records, over 20 million editions and some 6 million authors.”
+Zaimportować dane do bazy PostgreSQL i MongoDB.<br>
+*Wskazówka:* [Importing a large dataset into a database](http://stackoverflow.com/questions/2449166/importing-a-large-dataset-into-a-database),
+[MongoHydrator](https://github.com/gregspurrier/mongo_hydrator)
+— „makes expanding embedded MongoDB IDs into embedded subdocuments quick and easy”.
+
+Zobacz też
+[Converting from UNIX timestamp to PostgreSQL timestamp or date](http://www.postgresonline.com/journal/archives/3-Converting-from-Unix-Timestamp-to-PostgreSQL-Timestamp-or-Date.html).
 
 
 ## MongoDB w kwadrans
