@@ -116,6 +116,11 @@ Przykładowe zapytania:
     db.apache.find({request: /sinatra/}).explain()
     db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1}).limit(2)
 
+Pozostałe polecenia powłoki *mongo*:
+
+* [dbshell Reference](http://www.mongodb.org/display/DOCS/dbshell+Reference)
+* [Overview - The MongoDB Interactive Shell](http://www.mongodb.org/display/DOCS/Overview+-+The+MongoDB+Interactive+Shell)
+
 **Zadanie:** Pobrać dane z Open Library ([Bulk Download](http://openlibrary.org/data)) —
 „has a lot of catalog records, over 20 million editions and some 6 million authors.”
 Zaimportować dane do bazy PostgreSQL i MongoDB.<br>
@@ -131,7 +136,7 @@ Zobacz też
 
 Przykład:
 
-    gem install twitter
+    gem install mongo bson_ext twitter
     irb
 
 Kod:
@@ -139,11 +144,14 @@ Kod:
     :::ruby
     require 'twitter'
     a = Twitter::Search.new.containing("rails").fetch ; nil
+    a.class
     a[0].text
 
-Dokumentacja źródłowa gemu Twitter:
+Dokumentacja źródłowa:
 
-* [Twitter RDOC](http://rdoc.info/gems/twitter/1.6.2/Twitter/Search)
+* [Twitter](http://rdoc.info/gems/twitter/1.6.2/Twitter/Search)
+* [MongoDb Ruby driver](http://rdoc.info/github/mongodb/mongo-ruby-driver/master/file/README.md)
+* [Object IDs](http://www.mongodb.org/display/DOCS/Object+IDs)
 
 
 ## Kiedy korzystać z MongoDB?
