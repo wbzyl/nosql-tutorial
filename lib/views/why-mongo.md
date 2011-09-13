@@ -96,18 +96,25 @@ następnie uruchamiamy powłokę mongo:
       --file apache.filtered.2011.09.09.json --headerline
     mongo
 
-W powłoce mongo sprawdzamy co się zaimportowało:
+gdzie sprawdzamy co się zaimportowało:
 
     :::javascript
-    DBQuery.shellBatchSize = 4
-
-    db.apache.count()
-    db.apache.findOne()
-    db.apache.find({request: /sinatra/}).skip(20).limit(2)
-    db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1})
-
     db.stats()
     db.apache.stats()
+    db.apache.count()
+    db.apache.findOne()
+
+Teraz, aby przyspieszyć wyszukiwanie, generujemy indeksy:
+
+    db.apache.ensureIndex({hostname: 1})
+    db.apache.ensureIndex({request: 1})
+
+Przykładowe zapytania:
+
+    :::javascript
+    db.apache.find({request: /sinatra/}).skip(20).limit(2)
+    db.apache.find({request: /sinatra/}).explain()
+    db.apache.find({request: /sinatra/}, {_id: 0, request: 1, useragent: 1}).limit(2)
 
 **Zadanie:** Pobrać dane z Open Library ([Bulk Download](http://openlibrary.org/data)) —
 „has a lot of catalog records, over 20 million editions and some 6 million authors.”
@@ -180,6 +187,7 @@ Dokumentacja źródłowa gemu Twitter:
 * [Handy resources for learning MongoDB](http://mongly.com/)
 * [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
 * [MongoDB in Three Minutes](http://kylebanker.com/blog/2009/11/mongodb-in-three-minutes/)
+* Roger Bodamer, [Building Web Applications with MongoDB: An Introduction](http://www.10gen.com/presentation/mongosf-2011/building-web-applications-mongodb-introduction)
 * [How to process a million songs in 20 minutes](http://musicmachinery.com/2011/09/04/how-to-process-a-million-songs-in-20-minutes/) ([Million Song Dataset ](http://labrosa.ee.columbia.edu/millionsong/))
 
 
