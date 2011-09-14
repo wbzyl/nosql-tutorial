@@ -261,3 +261,7 @@ object {
   display: block;
   margin: 0 auto 1em auto;;
 }
+
+.center {
+  text-align: center;
+}

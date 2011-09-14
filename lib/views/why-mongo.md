@@ -1,4 +1,4 @@
-#### {% title "Dlaczego MongoDB? (Starbienino, 22.09.2011)" %}
+#### {% title "Dlaczego MapReduce?" %}
 
 <blockquote>
  <p>
@@ -11,16 +11,6 @@
  <p class="author">— Douglas Rushkoff</p>
 </blockquote>
 
-Co powinniśmy wiedzieć o bazach danych:
-
-* rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
-* konfiguracja master-slave, replikacja, *replica sets*
-* sharding
-* obliczenia MapReduce
-
-
-## Dlaczego potrzebujemy nierelacyjnych baz?
-
 <!-- http://www.emc.com/leadership/programs/digital-universe.htm -->
 <embed pluginspage="http://www.macromedia.com/go/getflashplayer"
   src="{%= to('EMCTicker2010Web.swf') %}"
@@ -29,7 +19,7 @@ Co powinniśmy wiedzieć o bazach danych:
   bgcolor="#ffffff" wmode="transparent" quality="high">
 </embed>
 
-1,5 zetabyte = 1 500 exabytes = 1 500 000 petabytes = 1 500 000 000 terabytes
+1,5 zetabytes = 1 500 exabytes = 1 500 000 petabytes = 1 500 000 000 terabytes
 
 * *Rozproszone systemy:*
   Twitter users generate more than 12 terabytes of data every day.
@@ -57,24 +47,44 @@ Co powinniśmy wiedzieć o bazach danych:
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
 
+## Instytut Informatyki Information Growth Ticker
+
+Łącznie w ciągu semestru akademickiego maszyny generują 500 MB
+logów dziennie, co sprowadza się do 20 milionów linii tekstu,
+czyli ponad 800 tysięcy na godzinę, prawie 14 tysięcy
+w ciągu każdej minuty, 231 operacji na sekundę.
+
+Należy pamiętać, że są to operacje uśrednione z 24 godzin, większość
+akcji jest generowana między godziną 8 a 16 ze szczytem przypadającym
+na przedział między godzinami 12 a 14, gdy ilość generowanych
+informacji przekracza kilka tysięcy w ciągu sekundy.
+
+**Źródło:** Ze wstępu pracy magisterskiej Szymona
+
+
+
+## Co powinniśmy wiedzieć o bazach danych?
+
+* Rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
+* Konfiguracja master-slave, replikacja, *replica sets*
+* Sharding
+* Obliczenia MapReduce
+
+
 ### Powtórka z PostgreSQL
 
-Dla przypomnienia, oraz porównania z MongoDB,
-podałem poniżej kilka poleceń SQL:
+Dla przypomnienia, kilka poleceń:
 
     :::sql apache.sql
     DROP TABLE apache;
-
-    CREATE TABLE apache
-    (
+    CREATE TABLE apache (
       time text,
       hostname text,
       client text,
       request text,
       status text,
       responsesize text,
-      useragent text
-    );
+      useragent text );
     \copy apache from 'apache.csv' with csv
     CREATE INDEX apache_hostname ON apache (hostname);
     ALTER TABLE apache DROP COLUMN time;
@@ -86,7 +96,7 @@ podałem poniżej kilka poleceń SQL:
     SELECT pg_size_pretty(pg_total_relation_size('apache'));
 
 
-### To samo w MongoDB
+### To samo w bazie MongoDB
 
 Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
@@ -132,7 +142,26 @@ Zobacz też
 [Converting from UNIX timestamp to PostgreSQL timestamp or date](http://www.postgresonline.com/journal/archives/3-Converting-from-Unix-Timestamp-to-PostgreSQL-Timestamp-or-Date.html).
 
 
-## MongoDB w kwadrans
+## PostgreSQL v. MongoDB
+
+<p class="center">
+<strong>PostgreSQL    &harr;    MongoDB</strong><br>
+tabelka    &harr;    collection<br>
+wiersz    &harr;    dokument JSON<br>
+indeks    &harr;    indeks<br>
+join    &harr;    embedded document<br>
+partition    &harr;    shard<br></p>
+
+
+<blockquote>
+ <p>
+  Wszechświat jet tak bogaty, jak się nam wydaje,
+  a nie tak bezbarwny, jakim zwykle ukazuje go nauka.
+ </p>
+ <p class="author">— Julian Barbour</p>
+</blockquote>
+
+# MongoDB w kwadrans
 
 Przykład:
 
@@ -155,8 +184,6 @@ Dokumentacja źródłowa:
 
 
 ## Kiedy korzystać z MongoDB?
-
-[Przykłady użycia](http://www.mongodb.org/display/DOCS/Use+Cases):
 
 * Archiving and event logging
 * Document and Content Management Systems - as a document-oriented
@@ -186,6 +213,7 @@ Dokumentacja źródłowa:
   "ALTER TABLE" style operations.
 * Real-time stats/analytics
 
+Źródło: [Use cases](http://www.mongodb.org/display/DOCS/Use+Cases).
 
 
 ### Warto kliknąć
