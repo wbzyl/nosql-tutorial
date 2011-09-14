@@ -21,18 +21,18 @@
 
 1,5 zetabytes = 1 500 exabytes = 1 500 000 petabytes = 1 500 000 000 terabytes
 
+* *Twitter:* RT @textwise:
+  [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410):
+  95% z tych 1800 exabajtów to „unstructured data”:
+  - zalew informacji: „szukanie igły w stogu siana” – gdzie zapisałem ten dokument;
+  to samo pytanie po 10 latach lub przeszukujemy miliony katalogów;
+  - profilaktyka: deduplikacja danych?
 * *Rozproszone systemy:*
   Twitter users generate more than 12 terabytes of data every day.
   Even if Twitter used the fastest disk drives,
   it would take more than 40
   hours to record this information.
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
-* *Twitter:* RT @textwise:
-  [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410)
-  <– 95% of that 1800 exabytes is considered unstructured data.
-  Przykłady:
-  - [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
-  - [Wordnik](http://www.wordnik.com/)
 * *New York Times:*
   Wpisy na blogach lepiej jest przechowywać jako dokumenty.
   Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
@@ -45,6 +45,8 @@
   able to cut their processing time from a solid month using
   traditional relational solutions to just 13 minutes.
   [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
+
+*Źródła:* [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
 
 
 ## Instytut Informatyki Information Growth Ticker
@@ -71,21 +73,22 @@ informacji przekracza kilka tysięcy w ciągu sekundy.
 * Obliczenia MapReduce
 
 
-### Powtórka z PostgreSQL
+## Powtórka z PostgreSQL
 
 Dla przypomnienia, kilka poleceń:
 
     :::sql apache.sql
-    DROP TABLE apache;
+    -- DROP TABLE apache;
     CREATE TABLE apache (
-      time text,
-      hostname text,
-      client text,
-      request text,
-      status text,
-      responsesize text,
-      useragent text );
-    \copy apache from 'apache.csv' with csv
+          time text,
+          hostname text,
+          client text,
+          request text,
+          status text,
+          responsesize text,
+          useragent text );
+    \copy apache from 'apache.filtered.2011.09.03.csv' with csv header
+
     CREATE INDEX apache_hostname ON apache (hostname);
     ALTER TABLE apache DROP COLUMN time;
     SELECT count(*) FROM apache;
@@ -95,14 +98,20 @@ Dla przypomnienia, kilka poleceń:
     SELECT pg_database_size('wbzyl');
     SELECT pg_size_pretty(pg_total_relation_size('apache'));
 
+Zapisujemy wszystkie polecenia w pliku *apache.sql* i uruchamiamy
+powłokę PostgreSQL *psql*, gdzie wykonujemy wszystkie te polecenia:
 
-### To samo w bazie MongoDB
+    :::sql
+    \i apache.sql
+
+
+## To samo w bazie MongoDB
 
 Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
 
     :::shell
-    mongoimport --db test --collection apache --type json \
+    mongoimport --db test --collection apache --drop --type json \
       --file apache.filtered.2011.09.09.json --headerline
     mongo
 
@@ -119,7 +128,7 @@ Teraz, aby przyspieszyć wyszukiwanie, generujemy indeksy:
     db.apache.ensureIndex({hostname: 1})
     db.apache.ensureIndex({request: 1})
 
-Przykładowe zapytania:
+Na koniec wykonujemy przykładowe zapytania:
 
     :::javascript
     db.apache.find({request: /sinatra/}).skip(20).limit(2)
@@ -170,11 +179,48 @@ Przykład:
 
 Kod:
 
-    :::ruby
+    :::ruby update-tweetsArchive.rb
+    require 'mongo'
     require 'twitter'
-    a = Twitter::Search.new.containing("rails").fetch ; nil
-    a.class
-    a[0].text
+
+    TAGS = ["mongodb", "ruby"]
+
+    connection = Mongo::Connection.new
+    db         = connection['test']
+
+    Tweets     = db['tweetsArchive']
+
+    def save_tweets_for(term)
+      tweets_found = 0
+      Twitter::Search.new.containing(term).each do |tweet|
+        tweets_found += 1
+        # Tweets.save(tweet, :safe => true)
+        Tweets.save(tweet)
+      end
+      tweets_found
+    end
+
+    Tweets.create_index([['id', 1]], :unique => true)
+
+    TAGS.each do |tag|
+      tweets_found = 0
+      puts "Starting Twitter search for '#{tag}'..."
+      tweets_found = save_tweets_for(tag)
+      print "#{tweets_found} tweets saved.\n\n"
+    end
+
+Zapisujemy interesujące nas tweets w bazie *test*
+w kolekcji *tweetsArchive*:
+
+    ruby update-tweetsArchive.rb
+
+A na konsoli *mongo* sprawdzimy co ciekawego
+dzieje się na Twitterze:
+
+    :::javascript
+    var cursor = db.tweetsArchive.find()
+    cursor.forEach(function(tweet) { printjson(tweet); })
+    cursor.forEach(function(tweet) { print(tweet.text); })
 
 Dokumentacja źródłowa:
 
@@ -213,7 +259,11 @@ Dokumentacja źródłowa:
   "ALTER TABLE" style operations.
 * Real-time stats/analytics
 
-Źródło: [Use cases](http://www.mongodb.org/display/DOCS/Use+Cases).
+[Use cases](http://www.mongodb.org/display/DOCS/Use+Cases):
+
+- [Wordnik](http://www.wordnik.com/)
+- [Scrabb.ly is now Word^2!](http://scrabb.ly/)
+- [Disney](http://www.disney.pl/)
 
 
 ### Warto kliknąć
