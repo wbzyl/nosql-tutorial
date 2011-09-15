@@ -277,6 +277,12 @@ Dokumentacja źródłowa:
 * [How to process a million songs in 20 minutes](http://musicmachinery.com/2011/09/04/how-to-process-a-million-songs-in-20-minutes/) ([Million Song Dataset ](http://labrosa.ee.columbia.edu/millionsong/))
 
 
+<blockquote>
+ {%= image_tag "/images/ralph_waldo_emerson.jpg", :alt => "[Ralph Waldo Emerson]" %}
+ <p>I hate quotations. Tell me what you know.</p>
+ <p class="author">— Ralph Waldo Emerson</p>
+</blockquote>
+
 ## MapReduce
 
 [Zliczanie słów](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf),
