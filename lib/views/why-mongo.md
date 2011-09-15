@@ -194,12 +194,17 @@ Kod:
       tweets_found = 0
       Twitter::Search.new.containing(term).each do |tweet|
         tweets_found += 1
+        # request a response from the server to ensure that NO errors have occurred
         # Tweets.save(tweet, :safe => true)
+
+        # update if exists; insert if new
         Tweets.save(tweet)
       end
       tweets_found
     end
 
+    # guarantee that no documents are inserted whose values
+    # for the indexed keys match those of an existing document
     Tweets.create_index([['id', 1]], :unique => true)
 
     TAGS.each do |tag|
