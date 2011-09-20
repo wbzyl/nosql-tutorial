@@ -320,8 +320,19 @@ Dokumentacja źródłowa:
  <p class="author">— Ralph Waldo Emerson</p>
 </blockquote>
 
+## MapReduce w MongoDB
 
-## Przykład „hello world”
+Obliczenia MapReduce są wykonywane w trzech krokach:
+
+1. **map** – wykonywana jest funkcja *map* na każdym dokumencie z kolekcji;
+  funkcja map nic nie wylicza; ale może wywołać, być może kilkakrotnie, funkcję *emit(key, value)*
+2. **shuffle step** – *keys* are grouped and arrays of emitted *values* are created for each *key*
+3. **reduce** – wykonywana jest funkcja *reduce*, która dla danego *key* redukuje tablicę *values*
+  do jednego elementu; element ten wraz kluczem jest zwracany do „shuffle step”,
+  aż dla każdego klucza tablica *values* będzie zawierać jeden element
+
+
+## Przykład „hello world” dla MapReduce
 
 [Zliczanie słów](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf),
 czyli przykład „hello world” dla MapReduce opisałem tutaj:
