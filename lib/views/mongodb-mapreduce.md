@@ -74,6 +74,7 @@ W skryptach poprawność wyników będziemy sprawdzać
 za pomocą wbudowanej funkcji *assert*. W tym celu zmienimy
 dwie ostatnie linijki skryptu *wc.js*:
 
+    :::javascript
     res = db.books.mapReduce(m, r, {out: "wc"});
     z = res.convertToSingleObject();
     //  z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
@@ -95,15 +96,16 @@ Zobacz też implementację metody
 
 ## Dlaczego mapReduce
 
-Te liczby powinny dużo wyjaśnić:
+Te liczby powinny coś wyjaśnić (dla przypomnienia 1 ns = 10^-9 s):
 
 {%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
 
-Dla przypomnienia: 1 ns = 10^-9 s.
+Przy okazji:
 
-Przy okazji: 10^9 cykli na sekundę to 1 GHz,
-na przebycie 1 m światło potrzebuje ok. 3.33 ns, 1 miesiąc
-to ok. 2.5·10^6 s, a 1 rok – 10^9 s.
+* 10^9 cykli na sekundę to 1 GHz
+* na przebycie 1 m światło potrzebuje ok. 3.33 ns
+* 1 miesiąc to ok. 2,5 · 10^6 s
+* 1 rok to ok. 10^9 s.
 
 Jakiś przykład: sumowanie odwrotności liczb:
 
@@ -129,7 +131,7 @@ Uruchomimy na niej poniższe MapReduce:
     r = function(key, values) {
       var value = values.shift();
       values.forEach(function(x, i) {
-        value += x/(i+2);
+        value += x / (i + 2);
       });
       return value;
     };
@@ -182,6 +184,7 @@ polskie diakrytyki (i nieco innych liter):
 Uruchamiamy powyższe MapReduce. Po wykonaniu kodu (kilka sekund)
 sprawdzamy co się wyliczyło:
 
+    :::javascript
     db.wc.find().sort({value: -1})
       { "_id" : "the", "value" : 3840 }
       { "_id" : "a", "value" : 1941 }

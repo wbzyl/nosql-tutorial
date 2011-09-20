@@ -24,19 +24,18 @@
 * *Twitter:* RT @textwise:
   [Taming the Unstructured Data Beast](https://twitter.com/#!/theideaworks/status/10992528410):
   95% z tych 1800 exabajtów to „unstructured data”:
-  - zalew informacji: „szukanie igły w stogu siana” – gdzie zapisałem ten dokument;
-  to samo pytanie po 10 latach lub przeszukujemy miliony katalogów;
-  - profilaktyka: deduplikacja danych?
-* *Rozproszone systemy:*
+  - *New York Times:* Wpisy na blogach lepiej jest przechowywać jako dokumenty.
+  Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding wpisów.
+* Zalew informacji
+  – „szukanie igły w stogu siana”, gdzie zapisałem **ten** dokument
+  - to samo pytanie po 10 latach
+  - przeszukiwanie milionów katalogów, po to aby odszukać wiele kopii tego samego pliku
+  (profilaktyka – deduplikacja danych?)
+* *Rozproszone systemy danych:*
   Twitter users generate more than 12 terabytes of data every day.
   Even if Twitter used the fastest disk drives,
-  it would take more than 40
-  hours to record this information.
-  [NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
-* *New York Times:*
-  Wpisy na blogach lepiej jest przechowywać jako dokumenty.
-  Unikamy w ten sposób kosztownych *joins*. Możliwy też jest sharding
-  wpisów.
+  it would take more than 40 hours to record this information
+  ([NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data))
 * *Platforma obliczeniowa MapReduce:*
   [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 * *VISA:* Some of the datasets are enormous: for example, when Visa was
@@ -51,7 +50,7 @@
 
 ## Instytut Informatyki Information Growth Ticker
 
-Łącznie w ciągu semestru akademickiego maszyny generują 500 MB
+W ciągu semestru akademickiego maszyny generują 500 MB
 logów dziennie, co sprowadza się do 20 milionów linii tekstu,
 czyli ponad 800 tysięcy na godzinę, prawie 14 tysięcy
 w ciągu każdej minuty, 231 operacji na sekundę.
@@ -64,6 +63,31 @@ informacji przekracza kilka tysięcy w ciągu sekundy.
 **Źródło:** Ze wstępu pracy magisterskiej Szymona
 
 
+## Jak przetwarzać te ogromne dane?
+
+Co nam zapewnia *platforma obliczeniowa MapReduce*:
+
+* automatic parallelization and distribution
+* fault-tolerance
+* I/O scheduling
+* status and monitoring
+
+Źródło: [Large Scale Data Processing](http://labs.google.com/papers/mapreduce-osdi04-slides/index-auto-0002.html)
+
+To samo całym zdaniem:
+„Programs written in this functional style are automatically
+parallelized and executed on a large cluster of commodity
+machines. The run-time system takes care of the details of
+partitioning the input data, scheduling the program's execution across
+a set of machines, handling machine failures, and managing the
+required inter-machine communication. This allows programmers without
+any experience with parallel and distributed systems to easily utilize
+the resources of a large distributed system.”
+
+Jeffrey Dean, Sanjay Ghemawa.
+[MapReduce: Simplied Data Processing on Large Clusters](http://static.googleusercontent.com/external_content/untrusted_dlcp/labs.google.com/pl//papers/mapreduce-osdi04.pdf)
+– klasyczny artykuł z Google.
+
 
 ## Co powinniśmy wiedzieć o bazach danych?
 
@@ -71,6 +95,13 @@ informacji przekracza kilka tysięcy w ciągu sekundy.
 * Konfiguracja master-slave, replikacja, *replica sets*
 * Sharding
 * Obliczenia MapReduce
+
+
+# W poszukiwaniu platformy MapReduce
+
+Niektóre bazy danych mają zaimplementowane MapReduce. Dla przykładu
+Hadoop, CouchDB oraz MongoDB. My przyjrzymy się implementacji
+w MongoDB.
 
 
 ## Powtórka z PostgreSQL
@@ -170,14 +201,14 @@ partition    &harr;    shard<br></p>
  <p class="author">— Julian Barbour</p>
 </blockquote>
 
-# MongoDB w kwadrans
+## MongoDB w kwadrans
 
-Przykład:
+Przykład z Twitterem & Ruby. Zaczynamy od instalacji gemów:
 
     gem install mongo bson_ext twitter
     irb
 
-Kod:
+Prosty skrypt w Ruby:
 
     :::ruby update-tweetsArchive.rb
     require 'mongo'
@@ -269,9 +300,10 @@ Dokumentacja źródłowa:
 - [Wordnik](http://www.wordnik.com/)
 - [Scrabb.ly is now Word^2!](http://scrabb.ly/)
 - [Disney](http://www.disney.pl/)
+- [Foursquare](https://foursquare.com/)
 
 
-### Warto kliknąć
+## Warto kliknąć
 
 {%= image_tag "/images/panther.jpg", :alt => "Roaring panther" %}
 
@@ -288,7 +320,10 @@ Dokumentacja źródłowa:
  <p class="author">— Ralph Waldo Emerson</p>
 </blockquote>
 
-## MapReduce
+
+## Przykład „hello world”
 
 [Zliczanie słów](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf),
-czyli przykład „hello world” dla MapReduce.
+czyli przykład „hello world” dla MapReduce opisałem tutaj:
+
+* {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
