@@ -116,6 +116,7 @@ używając swojego ulubionego języka programowania.
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
   [CouchDB: The Definitive Guide][couchdb]
+* [CouchDB jQuery Plugin Reference](http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/)
 * [BrowserCouch Tutorial](http://hg.toolness.com/browser-couch/raw-file/blog-post/tutorial.html)
 * [CouchApp.org: Simple JavaScript Applications with CouchDB](http://couchapp.org/page/index) –
   utilities to make standalone CouchDB application development simple

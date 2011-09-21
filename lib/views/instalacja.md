@@ -351,8 +351,8 @@ Zakładam, że biblioteka V8 jest zainstalowana w systemie.
 Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
 
     :::text
-    mkdir $HOME/.mongo/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
-    mongod --dbpath=$HOME/.mongo/var/lib/mongodb --port 16000
+    mkdir $HOME/.data/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
+    mongod --dbpath=$HOME/.data/var/lib/mongodb --port 16000
         Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
         Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
         Tue Dec 28 ... sys info: Linux localhost.localdomain ...
@@ -386,7 +386,7 @@ Więcej prostych przykładów:
 ## Gdzie są moje bazy?
 
 Podobnie, jak to zrobiliśmy dla CouchDB, przeniesiemy bazy MongoDB
-na swoje konto, na przykład do katalogu *$HOME/.mongo/var/lib/mongodb*:
+na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
 
     mkdir $HOME/.data/var/lib/mongodb -p
 
@@ -445,11 +445,11 @@ Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*
 
 Journal i bazy MongoDB zajmują sporo miejsca na dysku:
 
-    ls -l ~/.mongo/var/lib/mongodb/journal/
+    ls -l ~/.data/var/lib/mongodb/journal/
     -rw-------. 1 wbzyl wbzyl 134217728 05-10 12:36 prealloc.0
     -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.1
     -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.2
-    ls -l ~/.mongo/var/lib/mongodb/twitter/
+    ls -l ~/.data/var/lib/mongodb/twitter/
     drwxrwxr-x. 2 wbzyl wbzyl     4096 05-10 12:01 _tmp
     -rw-------. 1 wbzyl wbzyl 16777216 05-10 12:36 twitter.0
     -rw-------. 1 wbzyl wbzyl 33554432 05-10 12:01 twitter.1
