@@ -30,14 +30,12 @@
   – „szukanie igły w stogu siana”, gdzie zapisałem **ten** dokument
   - to samo pytanie po 10 latach
   - przeszukiwanie milionów katalogów, po to aby odszukać wiele kopii tego samego pliku
-  (profilaktyka – deduplikacja danych?)
+  (profilaktyka – deduplikacja danych? wyszukiwarka google dla prywatnych danych? co z danymi w chmurze?)
 * *Rozproszone systemy danych:*
   Twitter users generate more than 12 terabytes of data every day.
   Even if Twitter used the fastest disk drives,
   it would take more than 40 hours to record this information
   ([NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data))
-* *Platforma obliczeniowa MapReduce:*
-  [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 * *VISA:* Some of the datasets are enormous: for example, when Visa was
   looking to process two years' worth of credit card transactions —
   some 70 billion of them, — they turned to a NoSQL solution and were
@@ -58,18 +56,16 @@
 
 *Good news:* same problem with 1000 machines, < 3 hours
 
-*Bad news:* programming work
+*Bad news I* (programming work):
 
-– communication and coordination
-– recovering from machine failure
-– status reporting
-– debugging
-– optimization
-– locality
+* communication and coordination
+* recovering from machine failure
+* status reporting
+* debugging, optimization, etc.
 
 *Bad news II:*
 
-- repeat for every problem you want to solve
+* repeat for every problem you want to solve
 
 Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
 
@@ -122,9 +118,11 @@ required inter-machine communication. This allows programmers without
 any experience with parallel and distributed systems to easily utilize
 the resources of a large distributed system.”
 
-Jeffrey Dean, Sanjay Ghemawa.
-[MapReduce: Simplied Data Processing on Large Clusters](http://static.googleusercontent.com/external_content/untrusted_dlcp/labs.google.com/pl//papers/mapreduce-osdi04.pdf)
-– klasyczny artykuł z Google.
+**TL;DR:**
+
+* Jeffrey Dean, Sanjay Ghemawa.
+[MapReduce: Simplied Data Processing on Large Clusters](http://static.googleusercontent.com/external_content/untrusted_dlcp/labs.google.com/pl//papers/mapreduce-osdi04.pdf) – klasyczny artykuł z Google.
+* [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 
 
 ## Powtórka z PostgreSQL
