@@ -178,11 +178,30 @@ polskie diakrytyki (i nieco innych liter):
       });
       return value;
     };
-    res = db.chesterton.mapReduce(m, r, {finalize: f, out: "wc"});
+    res = db.chesterton.mapReduce(m, r, {out: "wc"});
     printjson(res);
 
-Uruchamiamy powyższe MapReduce. Po wykonaniu kodu (kilka sekund)
-sprawdzamy co się wyliczyło:
+Uruchamiamy powyższe MapReduce:
+
+    mongo wc.js --shell
+
+Po wykonaniu kodu (kilka sekund), *printjson* wypisuje
+na konsoli coś takiego:
+
+    :::javascript
+    {
+      "result" : "wc",
+      "timeMillis" : 1139,
+      "counts" : {
+        "input" : 976,
+        "emit" : 60573,
+         "reduce" : 3264,
+         "output" : 6323
+      },
+      "ok" : 1,
+    }
+
+Na koniec sprawdzamy co się wyliczyło:
 
     :::javascript
     db.wc.find().sort({value: -1})
