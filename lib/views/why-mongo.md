@@ -92,9 +92,11 @@ Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
 
     :::shell
+    mongo
+    db.createCollection('apache', { autoIndexId: false })  // bez indeksu na _id
+
     mongoimport --db test --collection apache --type json \
       --file apache.filtered.2011.09.09.json --headerline
-    mongo
 
 W powłoce mongo sprawdzamy co się zaimportowało:
 
