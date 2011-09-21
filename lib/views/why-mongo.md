@@ -53,7 +53,23 @@
 - one computer can read 30-35 MB/sec from disk
 - ~four months to read the web pages
 - ~1,000 hard drives just to store the web pages
-- even more to do something with the data
+
+**Even more to do something with the data.**
+
+*Good news:* same problem with 1000 machines, < 3 hours
+
+*Bad news:* programming work
+
+– communication and coordination
+– recovering from machine failure
+– status reporting
+– debugging
+– optimization
+– locality
+
+*Bad news II:*
+
+- repeat for every problem you want to solve
 
 Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
 
