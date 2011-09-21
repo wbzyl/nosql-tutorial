@@ -47,6 +47,16 @@
 
 *Źródła:* [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
 
+## Lots of data w Google
+
+- example: 20+ billion web pages x 20KB = **400+ terabytes**
+- one computer can read 30-35 MB/sec from disk
+- ~four months to read the web pages
+- ~1,000 hard drives just to store the web pages
+- even more to do something with the data
+
+Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
+
 
 ## Instytut Informatyki Information Growth Ticker
 
