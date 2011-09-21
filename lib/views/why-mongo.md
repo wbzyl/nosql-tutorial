@@ -63,9 +63,21 @@ informacji przekracza kilka tysięcy w ciągu sekundy.
 **Źródło:** Ze wstępu pracy magisterskiej Szymona
 
 
-## Jak przetwarzać te ogromne dane?
+# Co powinniśmy wiedzieć o bazach danych?
 
-Co nam zapewnia *platforma obliczeniowa MapReduce*:
+* Rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
+* Konfiguracja master-slave, replikacja, *replica sets*
+* Sharding
+* Obliczenia MapReduce
+
+
+# W poszukiwaniu platformy MapReduce
+
+Niektóre bazy danych mają zaimplementowane MapReduce. Dla przykładu
+Hadoop, CouchDB oraz MongoDB. My przyjrzymy się implementacji
+w MongoDB.
+
+Co powinna nam zapewnić *platforma obliczeniowa MapReduce*:
 
 * automatic parallelization and distribution
 * fault-tolerance
@@ -89,24 +101,11 @@ Jeffrey Dean, Sanjay Ghemawa.
 – klasyczny artykuł z Google.
 
 
-## Co powinniśmy wiedzieć o bazach danych?
-
-* Rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
-* Konfiguracja master-slave, replikacja, *replica sets*
-* Sharding
-* Obliczenia MapReduce
-
-
-# W poszukiwaniu platformy MapReduce
-
-Niektóre bazy danych mają zaimplementowane MapReduce. Dla przykładu
-Hadoop, CouchDB oraz MongoDB. My przyjrzymy się implementacji
-w MongoDB.
-
-
 ## Powtórka z PostgreSQL
 
-Dla przypomnienia, kilka poleceń:
+Które funkcjonalności MapReduce implementuje PostgreSQL?
+
+Wykonanie tych kilku poleceń powinno odświeżyć nam pamięć:
 
     :::sql apache.sql
     -- DROP TABLE apache;
@@ -137,6 +136,8 @@ powłokę PostgreSQL *psql*, gdzie wykonujemy wszystkie te polecenia:
 
 
 ## To samo w bazie MongoDB
+
+Które funkcjonalności MapReduce implementuje MongoDB?
 
 Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
@@ -303,7 +304,7 @@ Dokumentacja źródłowa:
 [Use cases](http://www.mongodb.org/display/DOCS/Use+Cases):
 
 - [Wordnik](http://www.wordnik.com/)
-- [Scrabb.ly is now Word^2!](http://scrabb.ly/)
+- [Scrabb.ly is now Word^2 !](http://scrabb.ly/)
 - [Disney](http://www.disney.pl/)
 - [Foursquare](https://foursquare.com/)
 
