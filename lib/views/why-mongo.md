@@ -58,7 +58,7 @@
 Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
 
 
-## Instytut Informatyki Information Growth Ticker
+## Zalew danych w Instytucie Informatyki UG
 
 W ciągu semestru akademickiego maszyny generują 500 MB
 logów dziennie, co sprowadza się do 20 milionów linii tekstu,
