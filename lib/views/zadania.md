@@ -51,10 +51,13 @@ Niektóre pola są puste. Uwzględnić to w rachunkach.
 
 
 2\. Wizualizacja przykładowych danych.
-Przykładowe można przedstawiłem w „Generator przemówień i inne zastosowania…”.
+Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania…”.
 
+3\. [Anagram Finder](http://www.anagramfinder.net/).
+Dokumentacja [Anagram Finder: A Do-It-Yourself Little Big Data Project](http://www.databonanza.com/2011/09/anagram-finder-do-it-yourself-little.html). Napisać coś takiego w CouchDB? MongoDB?
+Która baza się bardziej nadaje do tego zadania.
 
-3\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
+4\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
 
 [streaming twitter into mongodb](http://eliothorowitz.com/post/459890033/streaming-twitter-into-mongodb):
