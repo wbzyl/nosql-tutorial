@@ -45,7 +45,8 @@
 
 *Źródła:* [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
 
-## Lots of data w Google
+
+## Taming Data in Google
 
 - example: 20+ billion web pages x 20KB = **400+ terabytes**
 - one computer can read 30-35 MB/sec from disk
@@ -70,7 +71,7 @@
 Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
 
 
-## Zalew danych w Instytucie Informatyki UG
+## Oswajanie danych w Instytucie Informatyki UG
 
 W ciągu semestru akademickiego maszyny generują 500 MB
 logów dziennie, co sprowadza się do 20 milionów linii tekstu,
@@ -82,8 +83,9 @@ akcji jest generowana między godziną 8 a 16 ze szczytem przypadającym
 na przedział między godzinami 12 a 14, gdy ilość generowanych
 informacji przekracza kilka tysięcy w ciągu sekundy.
 
-**Źródło:** Ze wstępu pracy magisterskiej Szymona
+**Źródło:** Ze wstępu pracy magisterskiej Szymona Szypulskiego
 
+<!--
 
 # Co powinniśmy wiedzieć o bazach danych?
 
@@ -92,6 +94,7 @@ informacji przekracza kilka tysięcy w ciągu sekundy.
 * Sharding
 * Obliczenia MapReduce
 
+-->
 
 # W poszukiwaniu platformy MapReduce
 
@@ -159,9 +162,7 @@ powłokę PostgreSQL *psql*, gdzie wykonujemy wszystkie te polecenia:
     \i apache.sql
 
 
-## To samo w bazie MongoDB
-
-Które funkcjonalności MapReduce implementuje MongoDB?
+## Poczuć MongoDB…
 
 Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
@@ -357,6 +358,8 @@ Dokumentacja źródłowa:
 </blockquote>
 
 ## MapReduce w MongoDB
+
+Które funkcjonalności MapReduce implementuje MongoDB?
 
 Obliczenia MapReduce są wykonywane w trzech krokach:
 
