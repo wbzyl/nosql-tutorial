@@ -49,13 +49,11 @@ Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
 Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
 Niektóre pola są puste. Uwzględnić to w rachunkach.
 
-
 2\. Wizualizacja przykładowych danych.
 Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania…”.
 
 3\. [Anagram Finder](http://www.anagramfinder.net/).
 Dokumentacja [Anagram Finder: A Do-It-Yourself Little Big Data Project](http://www.databonanza.com/2011/09/anagram-finder-do-it-yourself-little.html). Napisać coś takiego w CouchDB? MongoDB?
-Która baza się bardziej nadaje do tego zadania.
 
 4\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
@@ -66,7 +64,6 @@ Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
 
 Zamiast twittera użyć YQL. Przygotować przykład.
 Link do dokumentacji – [YQL Guide](http://developer.yahoo.com/yql/guide/index.html).
-
 
 
 <blockquote>
