@@ -212,6 +212,12 @@ Zobacz też
 [Converting from UNIX timestamp to PostgreSQL timestamp or date](http://www.postgresonline.com/journal/archives/3-Converting-from-Unix-Timestamp-to-PostgreSQL-Timestamp-or-Date.html).
 
 
+<blockquote>
+ <p>A DBA walks into a NOSQL bar,
+   but turns and leaves because he couldn't find a table.
+ </p>
+</blockquote>
+
 ## PostgreSQL v. MongoDB
 
 <p class="center">
