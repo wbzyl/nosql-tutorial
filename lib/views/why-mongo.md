@@ -30,14 +30,12 @@
   – „szukanie igły w stogu siana”, gdzie zapisałem **ten** dokument
   - to samo pytanie po 10 latach
   - przeszukiwanie milionów katalogów, po to aby odszukać wiele kopii tego samego pliku
-  (profilaktyka – deduplikacja danych?)
+  (profilaktyka – deduplikacja danych? wyszukiwarka google dla prywatnych danych? co z danymi w chmurze?)
 * *Rozproszone systemy danych:*
   Twitter users generate more than 12 terabytes of data every day.
   Even if Twitter used the fastest disk drives,
   it would take more than 40 hours to record this information
   ([NoSQL: Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data))
-* *Platforma obliczeniowa MapReduce:*
-  [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 * *VISA:* Some of the datasets are enormous: for example, when Visa was
   looking to process two years' worth of credit card transactions —
   some 70 billion of them, — they turned to a NoSQL solution and were
@@ -48,7 +46,32 @@
 *Źródła:* [IDC EMC Digital Universe](http://www.emc.com/collateral/about/news/idc-emc-digital-universe-2011-infographic.pdf)
 
 
-## Instytut Informatyki Information Growth Ticker
+## Taming Data in Google
+
+- example: 20+ billion web pages x 20KB = **400+ terabytes**
+- one computer can read 30-35 MB/sec from disk
+- ~four months to read the web pages
+- ~1,000 hard drives just to store the web pages
+
+**Even more to do something with the data.**
+
+*Good news:* same problem with 1000 machines, < 3 hours
+
+*Bad news I* (programming work):
+
+* communication and coordination
+* recovering from machine failure
+* status reporting
+* debugging, optimization, etc.
+
+*Bad news II:*
+
+* repeat for every problem you want to solve
+
+Źródło: Jeff Dean, [Experiences with MapReduce, an Abstraction for Large-Scale Computation](http://www.cs.virginia.edu/~pact2006/program/mapreduce-pact06-keynote.pdf)
+
+
+## Oswajanie danych w Instytucie Informatyki UG
 
 W ciągu semestru akademickiego maszyny generują 500 MB
 logów dziennie, co sprowadza się do 20 milionów linii tekstu,
@@ -60,12 +83,26 @@ akcji jest generowana między godziną 8 a 16 ze szczytem przypadającym
 na przedział między godzinami 12 a 14, gdy ilość generowanych
 informacji przekracza kilka tysięcy w ciągu sekundy.
 
-**Źródło:** Ze wstępu pracy magisterskiej Szymona
+**Źródło:** Ze wstępu pracy magisterskiej Szymona Szypulskiego
 
+<!--
 
-## Jak przetwarzać te ogromne dane?
+# Co powinniśmy wiedzieć o bazach danych?
 
-Co nam zapewnia *platforma obliczeniowa MapReduce*:
+* Rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
+* Konfiguracja master-slave, replikacja, *replica sets*
+* Sharding
+* Obliczenia MapReduce
+
+-->
+
+# W poszukiwaniu platformy MapReduce
+
+Niektóre bazy danych mają zaimplementowane MapReduce. Dla przykładu
+Hadoop, CouchDB oraz MongoDB. My przyjrzymy się implementacji
+w MongoDB.
+
+Co powinna nam zapewnić *platforma obliczeniowa MapReduce*:
 
 * automatic parallelization and distribution
 * fault-tolerance
@@ -84,29 +121,18 @@ required inter-machine communication. This allows programmers without
 any experience with parallel and distributed systems to easily utilize
 the resources of a large distributed system.”
 
-Jeffrey Dean, Sanjay Ghemawa.
-[MapReduce: Simplied Data Processing on Large Clusters](http://static.googleusercontent.com/external_content/untrusted_dlcp/labs.google.com/pl//papers/mapreduce-osdi04.pdf)
-– klasyczny artykuł z Google.
+**TL;DR:**
 
-
-## Co powinniśmy wiedzieć o bazach danych?
-
-* Rodzaje baz: relacyjne, dokumentowe, klucz-wartość, grafowe, kolumnowe
-* Konfiguracja master-slave, replikacja, *replica sets*
-* Sharding
-* Obliczenia MapReduce
-
-
-# W poszukiwaniu platformy MapReduce
-
-Niektóre bazy danych mają zaimplementowane MapReduce. Dla przykładu
-Hadoop, CouchDB oraz MongoDB. My przyjrzymy się implementacji
-w MongoDB.
+* Jeffrey Dean, Sanjay Ghemawa.
+[MapReduce: Simplied Data Processing on Large Clusters](http://static.googleusercontent.com/external_content/untrusted_dlcp/labs.google.com/pl//papers/mapreduce-osdi04.pdf) – klasyczny artykuł z Google.
+* [Facebook has the world's largest Hadoop cluster!](http://hadoopblog.blogspot.com/2010/05/facebook-has-worlds-largest-hadoop.html)
 
 
 ## Powtórka z PostgreSQL
 
-Dla przypomnienia, kilka poleceń:
+Które funkcjonalności MapReduce implementuje PostgreSQL?
+
+Wykonanie tych kilku poleceń powinno odświeżyć nam pamięć:
 
     :::sql apache.sql
     -- DROP TABLE apache;
@@ -136,7 +162,7 @@ powłokę PostgreSQL *psql*, gdzie wykonujemy wszystkie te polecenia:
     \i apache.sql
 
 
-## To samo w bazie MongoDB
+## Poczuć MongoDB…
 
 Importujemy dane z pliku JSON do bazy *apache* MongoDB,
 następnie uruchamiamy powłokę mongo:
@@ -146,7 +172,12 @@ następnie uruchamiamy powłokę mongo:
       --file apache.filtered.2011.09.09.json --headerline
     mongo
 
-gdzie sprawdzamy co się zaimportowało:
+Jeśli indeks nie będzie nam potrzebny, to wcześniej należało wykonać
+
+    :::javascript
+    db.createCollection('apache', { autoIndexId: false })  // bez indeksu na _id
+
+W powłoce sprawdzamy co się zaimportowało:
 
     :::javascript
     db.stats()
@@ -181,6 +212,12 @@ Zaimportować dane do bazy PostgreSQL i MongoDB.<br>
 Zobacz też
 [Converting from UNIX timestamp to PostgreSQL timestamp or date](http://www.postgresonline.com/journal/archives/3-Converting-from-Unix-Timestamp-to-PostgreSQL-Timestamp-or-Date.html).
 
+
+<blockquote>
+ <p>A DBA walks into a NOSQL bar,
+   but turns and leaves because he couldn't find a table.
+ </p>
+</blockquote>
 
 ## PostgreSQL v. MongoDB
 
@@ -298,7 +335,7 @@ Dokumentacja źródłowa:
 [Use cases](http://www.mongodb.org/display/DOCS/Use+Cases):
 
 - [Wordnik](http://www.wordnik.com/)
-- [Scrabb.ly is now Word^2!](http://scrabb.ly/)
+- [Scrabb.ly is now Word^2 !](http://scrabb.ly/)
 - [Disney](http://www.disney.pl/)
 - [Foursquare](https://foursquare.com/)
 
@@ -321,6 +358,8 @@ Dokumentacja źródłowa:
 </blockquote>
 
 ## MapReduce w MongoDB
+
+Które funkcjonalności MapReduce implementuje MongoDB?
 
 Obliczenia MapReduce są wykonywane w trzech krokach:
 

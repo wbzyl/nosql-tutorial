@@ -183,7 +183,7 @@ polskie diakrytyki (i nieco innych liter):
 
 Uruchamiamy powyższe MapReduce:
 
-    mongo wc.js --shell
+    mongo chesterton.js --shell
 
 Po wykonaniu kodu (kilka sekund), *printjson* wypisuje
 na konsoli coś takiego:
