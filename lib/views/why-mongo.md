@@ -169,15 +169,20 @@ następnie uruchamiamy powłokę mongo:
 
     :::shell
     mongoimport --db test --collection apache --drop --type json \
-      --file apache.filtered.2011.09.09.json --headerline
-    mongo
+      --file apache.filtered.2011.09.09.json
 
-Jeśli indeks nie będzie nam potrzebny, to wcześniej należało wykonać
+**Uwaga:** polecenie importujące dane z pliku w formacie CSV wyglada
+podobnie:
+
+    mongoimport --db test --collection apache --drop --type csv \
+      --file apache.filtered.2011.09.09.csv --headerline
+
+Jeśli indeks nie będzie nam potrzebny, to wcześniej należałoby wykonać:
 
     :::javascript
     db.createCollection('apache', { autoIndexId: false })  // bez indeksu na _id
 
-W powłoce sprawdzamy co się zaimportowało:
+Uruchamiamy powłokę *mongo*, gdzie sprawdzamy co się zaimportowało:
 
     :::javascript
     db.stats()

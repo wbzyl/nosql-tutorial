@@ -67,7 +67,8 @@ Na razie tyle o domknięciach wyrażeń.
 
 Zaczynamy tutaj:
 
-* [Working with Arrays](https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Working_with_Arrays)
+* [Array Object](https://developer.mozilla.org/en/JavaScript/Guide/Predefined_Core_Objects)
+  (*Predefined Core Objects*)
 
 Nowe iteratory:
 
