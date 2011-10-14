@@ -144,7 +144,7 @@ Pozostałe linki:
   [Modules/1.0](http://wiki.commonjs.org/wiki/Modules/1.0)
   (przykładowa implementacja –  D. Flanagan,
   [A module loader with simple dependency management](http://www.davidflanagan.com/2009/11/a-module-loader.html))
-* [GeoCouch: The future is now](http://vmx.cx/cgi-bin/blog/index.cgi/geocouch-the-future-is-now:2010-05-03:en,CouchDB,Python,Erlang,geo)
+* [GeoCouch: The future is now](http://vmx.cx/cgi-bin/blog/index.cgi/geocouch-the-future-is-now:2010-05-03:en,CouchDB,Python,Erlang,geo) ([Geo Demo](http://vmx.iriscouch.com/blocks/_design/geodemo/index.html))
 * [What’s wrong with Ruby libraries for CouchDB?](http://gist.github.com/503660)
 * [A gentle introduction to CouchDB for relational practitioners](http://www.xaprb.com/blog/2010/09/07/a-gentle-introduction-to-couchdb-for-relational-practitioners/)
 * Karel Minarik.

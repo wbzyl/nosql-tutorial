@@ -288,9 +288,11 @@ Różne:
 * [Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
 * [MapReduce: A Flexible Data Processing Tool](http://cacm.acm.org/magazines/2010/1/55744-mapreduce-a-flexible-data-processing-tool/fulltext)
 * [MongoDB Powering MTV’s Web Properties](http://blog.mongodb.org/post/5360007734/mongodb-powering-mtvs-web-properties)
+* Amy Balliett.
+  [The Do’s And Don’ts Of Infographic Design](http://www.smashingmagazine.com/2011/10/14/the-dos-and-donts-of-infographic-design/)
 
 
-### Prezentacje
+### Prezentacje, demo
 
 * Max Ogden,
   [Build the Civic Web with GeoCouch!](http://max.couchone.com/where/_design/presentation/_rewrite)
