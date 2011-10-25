@@ -13,10 +13,10 @@ module WB
     register Sinatra::StaticAssets
 
     # disable overriding public and views dirs
-    set :app_file, __FILE__
-    set :static, true
+    settings.app_file = __FILE__
+    settings.static = true
 
-    set :erubis, :pattern => '\{% %\}', :trim => true
+    set :erb, :pattern => '\{% %\}', :trim => true
     set :markdown, :layout => false
 
     # the middleware stack can be used internally as well. I'm using it for
@@ -28,11 +28,11 @@ module WB
     helpers Sinatra::Filler
 
     get '/' do
-      erubis(markdown(:main))
+      erb(markdown(:main))
     end
 
     get '/:section' do
-      erubis(markdown(:"#{params[:section]}"))
+      erb(markdown(:"#{params[:section]}"))
     end
 
     # kod programu:

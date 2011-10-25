@@ -1,11 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 $:.push File.expand_path("../lib", __FILE__)
-require "version"
 
 Gem::Specification.new do |s|
   s.name        = "nosql-tutorial"
-  s.version     = Nosql::Tutorial::VERSION
+  s.version     = "1.0.0"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Włodek Bzyl"]
   s.email       = ["matwb@ug.edu.pl"]
