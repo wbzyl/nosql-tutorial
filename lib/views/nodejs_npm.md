@@ -9,6 +9,16 @@
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
 
+Na dobry początek kilka odsyłaczy:
+
+* [The Node Beginner Book](http://www.nodebeginner.org/)
+* [Node.js](http://nodejs.org/)
+* [Node.js Manual & Documentation](http://nodejs.org/docs/latest/)
+* [Node Package Manager](http://npmjs.org/)
+
+
+## Instalacja
+
 Instalujemy NodeJS:
 
     :::bash
@@ -206,8 +216,6 @@ powinniśmy zobaczyć coś takiego:
 
 ## Różności
 
-* [Node.js](http://nodejs.org/)
-* [Node.js Manual & Documentation](http://nodejs.org/docs/latest/)
 * [Nodejitsu Docs](http://docs.nodejitsu.com/)
 * [Node.js community wiki](https://github.com/ry/node/wiki)
 * [Node.js Tutorial Roundup](http://blogfreakz.com/node/node-js-tutorial-roundup/)
