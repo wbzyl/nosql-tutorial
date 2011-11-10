@@ -564,6 +564,9 @@ w [﻿A fifteen minutes introduction to Redis data types](http://redis.io/topic
 
 * [Redis IO](http://redis.io/)
 * [Try Redis](http://try.redis-db.com/)
+* Karl Seguin. *Redis: Zero to Master in 30 minutes*,
+  [Part 1](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/),
+  [Part 2](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-2/)
 * [Redis Clients](http://redis.io/clients)
 * [Ohm] [ohm]
 * [The Redis Cookbook](http://rediscookbook.org/)
