@@ -4,55 +4,57 @@
  {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
 </blockquote>
 
-Zanim zainstalujemy paczkę z programami których będziemy używać na zajęciach,
-sprawdzamy, czy mamy wystarczająco dużo miejsca na *Sigmie*.
+W Google pod hasłem **NoSQL** znajdziemy linki do nowych
+technologii będących alternatywą dla relacyjnych baz danych
+takich jak PostgreSQL czy MySQL. Na wykładach zostaną
+przedstawione bazy:
 
-Logujemy się na *Sigmie* i sprawdzamy, korzystając z polecenia
-*quota*, swoje limity dyskowe i zużycie miejsca na dysku:
+* CouchDB – baza dokumentowa
+* MongoDB – baza dokumentowa
+* Redis – baz klucz–wartość
+* Neo4j – baz grafowa
 
-    ssh sigma
+Przed instalacją systemów baz danych powinniśmy sprawdzić, czy mamy
+wystarczająco dużo miejsca na swoim koncie na *Sigmie*. W tym celu
+logujemy się na *Sigmie*, gdzie wykonujemy polecenie:
+
     quota
 
-Jeśli wolnego miejsca jest mniej niż ok. 200 MB, to niestety musimy
-usunąć zbędne rzeczy.  Tutaj może być pomocne wykonanie polecenia,
+Polecenie to wypisze nasze limity dyskowe.
+Jeśli mamy mniej niż ok. 200 MB do dyspozycji, to musimy
+zacząć od usunięcia zbędnych rzeczy.
+Tutaj może być pomocne wykonanie polecenia,
 wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
 
     du -m ~ | sort -k1nr | head
 
-Dopiero teraz pobieramy paczkę z programami, którą rozpakowujemy
-w katalogu domowym:
+**Post Installation.** Całą instalację zakończymy dodając
+do ścieżek wyszukiwania *PATH* ścieżki do zainstalowanych programów.
+W tym celu dopiszemy w pliku *~/.bashrc*:
 
     :::text
-    cd ~
-    git clone git://sigma.ug.edu.pl/~wbzyl/nosql
-    tar zxf nosql/nosql-2011-02-15.tar.gz
+    export PATH=$HOME/.nosql/couchdb/build/bin/:$HOME/.nosql/bin:$PATH
 
-Archiwum powinno się rozpakować do katalogu *~/.nosql*.
-
-Instalację kończymy dodając do zmiennej *PATH* katalog *$HOME/.nosql/bin*.
-W tym celu dopisujemy w pliku *~/.bashrc*:
-
-    :::text
-    export PATH=$HOME/.nosql/bin:$PATH
-
-Teraz wypadałoby wczytać nowe ustawienia ścieżki. W tym celu
+Teraz wypadałoby wczytać nowe ustawienia. W tym celu
 albo się przelogowujemy (zalecane podejście) albo wykonujemy polecenie:
 
     source ~/.bashrc
 
-Do uruchamiania demonów kontaktujących nas z bazami przygotowałem dwa
-skrypty (po instalacji oba powinny się znaleźć w katalogu *~/.nosql/bin*):
+Danych powinniśmy zapisywać w innym katalogu (dlaczego?).
+Ja trzymam dane w katalogu *$HOME/.data*.
+Domyślne ustawienia SBD są inne, dlatego demony kontaktujące nas z bazami
+uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
+Same skrypty są tutaj:
 
-* *mongo.sh*
-* *redis.sh*
-
+* dla [MongoDB](https://gist.github.com/1373583)
+* dla [Redisa](https://gist.github.com/1373594)
 
 
 ## Uwagi o instalacji programów na *Sigmie*
 
 1. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
 są tworzone dowiązania symboliczne do plików poza katalogiem */home*.
-Powoduje to masę probelmów z instalacją gemów.
+Powoduje to masę problemów z instalacją gemów.
 
 Przed zalogowaniem się na Sigmę:
 
@@ -68,14 +70,14 @@ Po zalogowaniu:
 
 
 2. Program konfigurujący *bootstrap* nie sprawdza,
-czy linki symboliczne zostały zostały poprawnie utworzone.
+czy linki symboliczne zostały poprawnie utworzone.
 
 Na przykład, w trakcie konfiguracji CouchDB *bootstrap*
 próbuje utworzyć linki symboliczne do katalogu */usr*. Dlatego
 kompilacja zakończy się błędem albo po instalacji, programy nie będą
 działać.
 
-**Dlatego, wszystkie polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**
+**Dlatego, wszystkie poniższe polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**
 
 
 <blockquote>
@@ -89,40 +91,54 @@ działać.
 
 # Każdy leży na swojej *CouchDB*
 
-Z serwera *github.com* klonujemy repozytorium CouchDB:
+Poniżej są przedstawione dwa sposoby instalacji – szybka i tradycyjna.
 
-    :::text
-    git clone git://github.com/apache/couchdb.git
+## Szybka instalacja
 
-Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
+Zaletą tej instalacji jest automatyczna instalacja rozszerzenie GeoCouch
+Nie musimy go ręcznie doinstalowywać!
 
-    :::text
-    cd couchdb
-    git checkout 1.1.0  # ta wersja działa z GeoCouch
-    ./bootstrap
-    ./configure --prefix=$HOME/.nosql
-    make
-    make install
+Zaczynamy od wejścia na Gituba na stronę *CouchBase*
+z [CouchDB Manifest](https://github.com/couchbase/couchdb-manifest).
+Postępujemy tak jak to opisano w *README*:
 
-Oczywiście możemy też „live on the edge”. Niestety (18.05.2011)
-rozszerzenie Geocouch nie działa z wersją „edge” CouchDB.
+    :::bash
+    git clone https://code.google.com/p/git-repo/
+    mkdir couchd
+    ../git-repo/repo init -u git://github.com/couchbase/couchdb-manifest.git
+    ../git-repo/repo sync
 
-*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
-podać ścieżkę do plików nagłówkowych:
+(Więcej informacji o [Repo](http://source.android.com/source/version-control.html).)
 
-    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
+Następnie wykonujemy polecenie:
 
+    :::bash
+    rake
 
-Instalację kończymy, edytując pliku *local.ini*, sekcję *httpd*:
+Gdzieś po kwadransie kompilacja systemu *CouchDB* powinna się zakończyć.
+Wynik kompilacji znajdziemy w katalogu *build*.
 
-    :::plain ~/.nosql/etc/couchdb/local.ini
+Kończymy instalację edytując w pliku *local.ini* sekcję z *httpd*:
+
+    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
     [httpd]
-    port = XXXXX
+    port = 5984
     bind_address = 0.0.0.0
 
-Powyżej zamiast *XXXXX* wpisujemy numer portu przydzielony na zajęciach.
+(Powyżej zamiast domyślnego numeru portu *5984* wpisujemy numer przydzielony na zajęciach.)
 
-Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
+Oraz zmieniając domyślne ustawienia z sekcji *couchdb* (bazy do *.data/*):
+
+    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
+    [couchdb]
+    database_dir = /home/wbzyl/.data/var/lib/couchdb
+    view_index_dir = /home/wbzyl/.data/var/lib/couchdb
+    # os_process_timeout = 5000 ; 5 seconds. for view and external servers.
+    # delayed_commits = true ; set this to false to ensure an fsync before 201 Created is returned
+
+(Oczywiście zamiast */home/wbzyl/* wstawiamy ścieżkę do swojego katalogu domowego.)
+
+Częścią z hostami wirtualnymi zajmiemy się później:
 
     :::plain ~/.nosql/etc/couchdb/local.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
@@ -139,7 +155,7 @@ Wirtualnymi hostami zajmiemy się później, tę część na razie pomijamy:
     ; [vhosts]
     ; example.com:4000 = /database/
 
-Ale można postąpić tak jak to opisano
+Alternatywny sposób konfiguracji hostów wirtualnych opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
 
 
@@ -248,7 +264,37 @@ I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
 
 
+
+## Tradycyjna instalacja
+
+Zaczynamy od sklonowania repozytorium CouchDB:
+
+    :::bash
+    git clone git://github.com/couchbase/couchdb.git
+
+Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
+
+    :::text
+    cd couchdb
+    git checkout couchbase_1.2.0                     # czy ta wersja działa z GeoCouch? TODO
+    ./bootstrap
+    ./configure --prefix=$HOME/.nosql/couchdb/build  # dobrze? TODO
+    make
+    make install
+
+Oczywiście możemy też „live on the edge”. Niestety (18.05.2011)
+rozszerzenie Geocouch nie działa z wersją „edge” CouchDB.
+
+*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
+podać ścieżkę do plików nagłówkowych:
+
+    ./configure --prefix=$HOME/.nosql/couchdb/build/bin --with-erlang=/usr/lib64/erlang/usr/include
+
+
 ## Instalujemy rozszerzenie GeoCouch
+
+Niestety gałąź **couchbase_1.2.0** nie zawiera tego rozszerzenia.
+Musimy je ręcznie doinstalować.
 
 Zaczynamy od sklonowania rozszerzenia i *cd* do katalogu repozytorium:
 
@@ -323,12 +369,12 @@ biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
 
 Z serwera *github.com* klonujemy repozytorium:
 
-    :::text
+    :::bash
     git://github.com/mongodb/mongo.git
 
 Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
-    :::text
+    :::bash
     cd mongo
     git checkout v1.8.2
     scons all
@@ -338,21 +384,26 @@ Albo, wersja mongo >= 1.9.1,
 przechodzimy z domyślnej Javascript Engine „Spider Monkey” (Firefox)
 na „V8” (Chrome):
 
+    :::bash
     cd mongo
     scons --usev8 all                            # build all binaries with v8
     scons --usev8 --prefix=$HOME/.nosql install
 
 Zakładam, że biblioteka V8 jest zainstalowana w systemie.
-(Fedora – instalujemy pakiety *v8* i *v8-devel*.)
+
+Fedora – instalujemy pakiety *v8* i *v8-devel*, do pobrania stąd:
+
+    :::bash
+    wget ftp://rpmfind.net/linux/fedora/development/rawhide/source/SRPMS/v8-3.3.10-4.fc17.src.rpm
 
 
 ## Testujemy instalację
 
 Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
 
-    :::text
+    :::bash
     mkdir $HOME/.data/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
-    mongod --dbpath=$HOME/.data/var/lib/mongodb --port 16000
+    mongod --dbpath=$HOME/.data/var/lib/mongodb --port
         Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
         Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
         Tue Dec 28 ... sys info: Linux localhost.localdomain ...
