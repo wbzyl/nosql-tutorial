@@ -52,7 +52,7 @@ Same skrypty są tutaj:
 
 ## Uwagi o instalacji programów na *Sigmie*
 
-1. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
+1\. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
 są tworzone dowiązania symboliczne do plików poza katalogiem */home*.
 Powoduje to masę problemów z instalacją gemów.
 
@@ -69,7 +69,7 @@ Po zalogowaniu:
     sqlite3-devel-3.7.3-1.i686
 
 
-2. Program konfigurujący *bootstrap* nie sprawdza,
+2\. Program konfigurujący *bootstrap* nie sprawdza,
 czy linki symboliczne zostały poprawnie utworzone.
 
 Na przykład, w trakcie konfiguracji CouchDB *bootstrap*
@@ -108,7 +108,7 @@ Postępujemy tak jak to opisano w *README*:
     ../git-repo/repo init -u git://github.com/couchbase/couchdb-manifest.git
     ../git-repo/repo sync
 
-(Więcej informacji o [Repo](http://source.android.com/source/version-control.html).)
+(Więcej informacji o programie [Repo](http://source.android.com/source/version-control.html).)
 
 Następnie wykonujemy polecenie:
 
@@ -127,7 +127,7 @@ Kończymy instalację edytując w pliku *local.ini* sekcję z *httpd*:
 
 (Powyżej zamiast domyślnego numeru portu *5984* wpisujemy numer przydzielony na zajęciach.)
 
-Oraz zmieniając domyślne ustawienia z sekcji *couchdb* (bazy do *.data/*):
+Oraz zmieniając domyślne ustawienia z sekcji *couchdb* (bazy do *.data/*) oraz *log*:
 
     :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
     [couchdb]
@@ -135,6 +135,9 @@ Oraz zmieniając domyślne ustawienia z sekcji *couchdb* (bazy do *.data/*):
     view_index_dir = /home/wbzyl/.data/var/lib/couchdb
     # os_process_timeout = 5000 ; 5 seconds. for view and external servers.
     # delayed_commits = true ; set this to false to ensure an fsync before 201 Created is returned
+
+    [log]
+    file = /home/wbzyl/.data/var/log/couchdb/couch.log
 
 (Oczywiście zamiast */home/wbzyl/* wstawiamy ścieżkę do swojego katalogu domowego.)
 
@@ -164,18 +167,15 @@ w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01
 Uruchamiamy serwer:
 
     couchdb
-      Apache CouchDB 1.1.0 (LogLevel=info) is starting.
+      Apache CouchDB 1.1.2 (LogLevel=info) is starting.
       Apache CouchDB has started. Time to relax.
-      [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:XXXXX/
-
-*Uwaga:* Poniżej, zamiast *XXXXX* będę wpisywał *5984* – domyślny port
-na którym uruchamia się CouchDB.
+      [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:5984/
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
     :::text
     curl http://127.0.0.1:5984
-      {"couchdb":"Welcome","version":"1.1.0"}
+      {"couchdb":"Welcome","version":"1.1.2"}
 
 Następnie wchodzimy na stronę:
 
@@ -204,23 +204,25 @@ Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 
 ## Gdzie są moje bazy?
 
-Standardowo, CouchDB, tworzy nowe bazy w katalogu */var/lib/couchdb*.
-Oczywiście, na Sigmie nie mamy praw do zapisywania w tym katalogu.
-Dlatego bazy przenosimy na swoje konto, na przykład
-do katalogu *$HOME/.data/var/lib/couchdb*:
+Skompilowany CouchDB będzie zapisywał rekordy
+do baz gdzieś w katalogu *$HOME/.nosql/couchdb/build/etc/...*.
 
-    mkdir $HOME/.data/var/lib/couchdb -p
+Ponieważ chcemy trzymać bazy poza katalogiem z implementacją więc
+musimy zmienić tę lokalizację. Na przykład na taką:
 
-i informujemy swoją CouchDB o tej zmianie, dopisując (całą ścieżkę)
-na początku pliku *local.ini*, na przykład
+    $HOME/.data/var/lib/couchdb -p
 
-    :::plain ~/.nosql/etc/couchdb/local.ini
+tworzymy ten katalog i informujemy CouchDB o tej zmianie, dopisując na
+w pliku *local.ini*:
+
+    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
     [couchdb]
     database_dir = /home/wbzyl/.data/var/lib/couchdb
-    view_index_dir = /home/wbzyl/.data//var/lib/couchdb
+    view_index_dir = /home/wbzyl/.data/var/lib/couchdb
 
-Na moim koncie na sigmie, mam takie bazy:
+Oto moje kilka moich baz:
 
+    ls -l ~/.data/var/lib/couchdb
     razem 4047240
     -rw-rw-r--. 1 wbzyl wbzyl 2629685354  apache-time-logs.couch
     -rw-rw-r--. 1 wbzyl wbzyl  376643684  nosql.couch
@@ -229,7 +231,7 @@ Na moim koncie na sigmie, mam takie bazy:
     -rw-rw-r--. 1 wbzyl wbzyl    1577060  imdb.couch
     ...
 
-Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego? Coś trzeba będzie z tym zrobić.
+Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego?
 
 
 ## Logrotate
@@ -252,17 +254,20 @@ umieszczamy plik *couchdb* o następującej zawartości:
 Sprawdamy jak to będzie działać:
 
     logrotate -d /etc/logrotate.d/couchdb
-      ...
+
+      reading config file /etc/logrotate.d/couchdb
+      reading config info for /home/wbzyl/.data/var/log/couchdb/*.log
+
       Handling 1 logs
 
-      rotating pattern: $HOME/.data/var/log/couchdb/*.log  weekly (10 rotations)
+      rotating pattern: /home/wbzyl/.nosql/couchdb/build/var/log/couchdb/*.log  weekly (10 rotations)
       empty log files are not rotated, old logs are removed
-      considering log $HOME/.data/var/log/couchdb/couch.log
+      considering log /home/wbzyl/.nosql/couchdb/build/var/log/couchdb/couch.log
         log does not need rotating
+
 
 I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
-
 
 
 ## Tradycyjna instalacja
@@ -276,7 +281,7 @@ Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
     :::text
     cd couchdb
-    git checkout couchbase_1.2.0                     # czy ta wersja działa z GeoCouch? TODO
+    git checkout couchbase_1.2.0
     ./bootstrap
     ./configure --prefix=$HOME/.nosql/couchdb/build  # dobrze? TODO
     make
@@ -443,45 +448,15 @@ na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
 
 Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
 Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając
-serwer *mongod* (i powłokę *mongo*) za pomocą prostego skryptu:
+serwer *mongod* (i powłokę *mongo*) za pomocą prostego skryptu *mongo.sh*:
 
     mongo.sh
-    mongo.sh server
-    mongo.sh server 16000
-    mongo.sh shell
-    mongo.sh shell 16000
-
-Oto ten skrypt:
-
-    :::text mongo.sh
-    #! /bin/bash
-    function usageexit() {
-        echo "Usage:  $(basename $0) server|shell [PORT]" >&2
-        exit 1
-    }
-    dbpath=$HOME/.data/var/lib/mongodb
-    type=$1
-    port=$2
-    shift ; shift
-    : ${type:="server"}
-    : ${port:=27017}
-    case $type in
-        server)
-            mongod --config $HOME/bin/mongodb.config --dbpath $dbpath --port $port "$@"
-            ;;
-        shell)
-            mongo --port $port "$@"
-            ;;
-        *)
-            usageexit
-            ;;
-    esac
+    mongo.sh 16000
 
 Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*:
 
     :::plain
-    # bind_ip=0.0.0.0
-    journal=true # wymaga extra > 0.5GB
+    journal=true        # wymaga extra 0.5 GB miejsca na dysku
     rest=true
     cpu=true
     directoryperdb=true
@@ -490,6 +465,10 @@ Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*
     smallfiles=true
     objcheck=true
     syncdelay=4
+    logpath=/home/wbzyl/.nosql/var/log/mongodb/mongo.log
+    pidfilepath=/home/wbzyl/.data/var/run/mongodb.pid
+
+(Oczywiście powyżej wpisujemy ścieżkę do swoich logów.)
 
 
 ## Logrotate
@@ -517,18 +496,26 @@ Wygodniej jest rotować pliki log za pomocą *logrotate*.
 W tym celu w katalogu */etc/logrotate.d/*
 umieszczamy plik *mongodb* o następującej zawartości:
 
-    /home/wbzyl/.data/var/log/mongodb/*.log {
-       weekly
-       rotate 10
-       copytruncate
-       delaycompress
-       compress
-       notifempty
-       missingok
+    /home/wbzyl/.nosql/var/log/mongodb/*.log {
+        weekly
+        rotate 4
+        copytruncate
+        delaycompress
+        compress
+        notifempty
+        missingok
+        postrotate
+          /bin/kill -USR1 `cat /home/wbzyl/.data/var/run/mongodb.pid 2>/dev/null` 2> /dev/null|| true
+        endscript
     }
 
-I to wszystko! Logi z ostatniego tygodnia będą
-kompresowane w osobnym pliku.
+**TODO:** PID czy LOCK?
+
+Sprawdzamy jak to będzie działać:
+
+    logrotate -d /etc/logrotate.d/mongodb
+
+I to wszystko!
 
 
 ## Linki
@@ -566,49 +553,72 @@ Następnie przechodzimy do katalogu *redis*, gdzie wykonujemy polecenia:
 
     :::text
     cd redis
-    git checkout 2.2
+    git checkout 2.4.2
     make
     make PREFIX=$HOME/.nosql install
-    make test  # nie działa na Sigmie (brak tclsh8.5)
+    make test                          # nie działa na Sigmie (brak tclsh8.5)
 
 Na koniec edytujemy plik *redis.conf*, gdzie wpisujemy swoje dane i zmieniamy
 adres dla *bind*:
 
-    :::plain  ~/.nosql/etc/redis.conf
-    # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
-    # default. You can specify a custom pid file location here.
-    pidfile /home/wbzyl/.nosql/var/run/redis.pid
-
-    # If you want you can bind a single interface, if the bind option is not
-    # specified all the interfaces will listen for incoming connections.
+    :::plain  ~/.data/etc/redis.conf
+    port 6379
+    #
+    pidfile /home/wbzyl/.data/var/run/redis.pid   # mkdir -p ~/.nosql/var/run/
+    #
     bind 0.0.0.0
+    #
+    # The filename where to dump the DB
+    dbfilename dump.rdb
+    #
+    # The DB will be written inside this directory, with the filename specified
+    # above using the 'dbfilename' configuration directive.
+    #
+    # Also the Append Only File will be created inside this directory.
+    #
+    dir /home/wbzyl/.data/var/lib/redis
+    #
+    # Specify the log file name. Also 'stdout' can be used to force
+    # Redis to log on the standard output. Note that if you use standard
+    # output for logging but daemonize, logs will be sent to /dev/null
+    logfile /home/wbzyl/.data/var/log/redis/redis.log
 
 
 ## Testujemy instalację
 
 Uruchamiamy serwer, korzystając ze skryptu *redis.sh*:
 
-    :::text
-    redis.sh server 16000
+    :::bash
+    redis.sh
         [26787] 28 Dec ... * Server started, Redis version 2.1.8
-        [26787] 28 Dec ... * The server is now ready to accept connections on port 12000
+        [26787] 28 Dec ... * The server is now ready to accept connections on port 6379
         [26787] 28 Dec ... - 0 clients connected (0 slaves), 790448 bytes in use
 
 W innym terminalu wpisujemy:
 
-    redis-cli -p 16000  set mykey "hello world"
+    :::bash
+    redis-cli -p 6379  set mykey "hello world"
         OK
-    redis-cli -p 16000 get mykey
+    redis-cli -p 6379 get mykey
         hello world
 
 Albo przechodzimy bezpośrednio do powłoki (klienta) wykonując polecenie:
 
-    redis.sh shell 16000
-    set mykey "hello world"
-    get mykey
+    :::bash
+    redis-cli
+      set mykey "hello world"
+      get mykey
 
 Więcej poleceń jest opisanych
 w [﻿A fifteen minutes introduction to Redis data types](http://redis.io/topics/data-types-intro).
+
+Przykład K. Minarika [Redis Twitter example](https://github.com/karmi/redis_twitter_example) –
+an executable tutorial showcasing Twitter „lookalike” in Redis.
+
+
+## Logrotate
+
+**TODO**
 
 
 ## Linki
