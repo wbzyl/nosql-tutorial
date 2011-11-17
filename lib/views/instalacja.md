@@ -47,7 +47,7 @@ uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
 * dla [MongoDB](https://gist.github.com/1373583)
-* dla [Redisa](https://gist.github.com/1373594)
+* dla [Redisa](https://gist.github.com/1374681)
 
 
 ## Uwagi o instalacji programów na *Sigmie*
