@@ -708,6 +708,26 @@ Skrypt *redis* do poprawki:
 
 ## TODO: Logrotate
 
+*redis.conf*:
+
+    # Specify the log file name. Also 'stdout' can be used to force
+    # Redis to log on the standard output. Note that if you use standard
+    # output for logging but daemonize, logs will be sent to /dev/null
+    # logfile /var/log/redis/redis.log
+    logfile /home/wbzyl/.data/var/log/redis/redis.log
+
+Czy coś takiego wystarczy?
+
+    /home/wbzyl/.data/var/log/redis/*.log {
+        weekly
+        rotate 10
+        copytruncate
+        delaycompress
+        compress
+        notifempty
+        missingok
+    }
+
 
 ## Linki
 
