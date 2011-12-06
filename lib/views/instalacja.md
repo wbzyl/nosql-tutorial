@@ -293,7 +293,7 @@ rozszerzenie Geocouch nie działa z wersją „edge” CouchDB.
 *Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
 podać ścieżkę do plików nagłówkowych:
 
-    ./configure --prefix=$HOME/.nosql/couchdb/build/bin --with-erlang=/usr/lib64/erlang/usr/include
+    ./configure --prefix=$HOME/.nosql/couchdb/build --with-erlang=/usr/lib64/erlang/usr/include
 
 
 ## Instalujemy rozszerzenie GeoCouch
