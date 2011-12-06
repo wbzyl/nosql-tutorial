@@ -93,9 +93,10 @@ działać.
 
 Poniżej są przedstawione dwa sposoby instalacji – szybka i tradycyjna.
 
+<!--
 [2011.12.06] CouchDB nie kompiluje się z biblioteką *SpiderMonkey*
 w wersji 1.8.5-17. Na razie można użyć *js-1.70-13.fc15.src.rpm*.
-
+-->
 
 ## Szybka instalacja
 
