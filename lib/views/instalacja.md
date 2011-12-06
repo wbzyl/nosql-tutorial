@@ -109,7 +109,7 @@ Postępujemy tak jak to opisano w *README*:
 
     :::bash
     git clone https://code.google.com/p/git-repo/
-    mkdir couchd
+    mkdir couchdb
     ../git-repo/repo init -u git://github.com/couchbase/couchdb-manifest.git
     ../git-repo/repo sync
 
