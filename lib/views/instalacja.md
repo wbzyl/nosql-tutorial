@@ -404,7 +404,7 @@ Zakładam, że biblioteka V8 jest zainstalowana w systemie.
 Fedora – instalujemy pakiety *v8* i *v8-devel*, do pobrania stąd:
 
     :::bash
-    wget ftp://rpmfind.net/linux/fedora/development/rawhide/source/SRPMS/v8-3.3.10-4.fc17.src.rpm
+    wget ftp://rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v8-3.3.10-4.fc17.src.rpm
 
 
 ## Testujemy instalację
