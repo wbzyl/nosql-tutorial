@@ -1,1 +1,9 @@
-06.mustache
+{{#a_object}}
+<h1>{{title}}</h1>
+<p>{{description}}</p>
+<ul>
+  {{#a_list}}
+    <li>{{label}}</li>
+  {{/a_list}}
+</ul>
+{{/a_object}}

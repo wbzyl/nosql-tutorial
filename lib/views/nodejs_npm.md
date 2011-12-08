@@ -76,7 +76,7 @@ Trzy przykładowe instalacje:
 
 Instalujemy globalnie ostatnią stabilną wersję:
 
-    npm install -g coffee-scrip
+    npm install -g coffee-script
       ~/.node/bin/coffee -> ~/.node/lib/node_modules/coffee-script/bin/coffee
       ~/.node/bin/cake -> ~/.node/lib/node_modules/coffee-script/bin/cake
       coffee-script@1.1.1 ~/.node/lib/node_modules/coffee-script
