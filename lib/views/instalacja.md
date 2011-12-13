@@ -91,40 +91,34 @@ działać.
 
 # Każdy leży na swojej *CouchDB*
 
-Poniżej są przedstawione dwa sposoby instalacji – szybka i tradycyjna.
-
-<!--
 [2011.12.06] CouchDB nie kompiluje się z biblioteką *SpiderMonkey*
 w wersji 1.8.5-17. Na razie można użyć *js-1.70-13.fc15.src.rpm*.
--->
 
-## Nieaktualne od 01.2012: Szybka instalacja
-
-Zobacz sekcja
 [Looking Ahead to 2012](http://blog.couchbase.com/couchbase-2011-year-review).
 
-Zaletą tej instalacji jest automatyczna instalacja rozszerzenie GeoCouch
-Nie musimy go ręcznie doinstalowywać!
-
-Zaczynamy od wejścia na Gituba na stronę *CouchBase*
-z [CouchDB Manifest](https://github.com/couchbase/couchdb-manifest).
-Postępujemy tak jak to opisano w *README*:
+Zaczynamy od sklonowania repozytorium CouchDB:
 
     :::bash
-    git clone https://code.google.com/p/git-repo/
-    mkdir couchdb
-    ../git-repo/repo init -u git://github.com/couchbase/couchdb-manifest.git
-    ../git-repo/repo sync
+    git clone http://git-wip-us.apache.org/repos/asf/couchdb.git
 
-(Więcej informacji o programie [Repo](http://source.android.com/source/version-control.html).)
+Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
 
-Następnie wykonujemy polecenie:
+    :::text
+    cd couchdb
+    git tag
+    git checkout 1.1.1
+    ./bootstrap
+    ./configure --prefix=$HOME/.nosql
+    make
+    make install
 
-    :::bash
-    rake
+*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
+podać ścieżkę do plików nagłówkowych:
 
-Gdzieś po kwadransie kompilacja systemu *CouchDB* powinna się zakończyć.
-Wynik kompilacji znajdziemy w katalogu *build*.
+    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
+
+
+## Post-install
 
 Kończymy instalację edytując w pliku *local.ini* sekcję z *httpd*:
 
@@ -175,7 +169,7 @@ w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01
 Uruchamiamy serwer:
 
     couchdb
-      Apache CouchDB 1.1.2 (LogLevel=info) is starting.
+      Apache CouchDB 1.1.1 (LogLevel=info) is starting.
       Apache CouchDB has started. Time to relax.
       [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:5984/
 
@@ -277,37 +271,7 @@ Sprawdamy jak to będzie działać:
 I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
 
-
-## Tradycyjna instalacja
-
-Zaczynamy od sklonowania repozytorium CouchDB:
-
-    :::bash
-    git clone git://github.com/couchbase/couchdb.git
-
-Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
-
-    :::text
-    cd couchdb
-    git checkout couchbase_1.2.0
-    ./bootstrap
-    ./configure --prefix=$HOME/.nosql/couchdb/build  # dobrze? TODO
-    make
-    make install
-
-Oczywiście możemy też „live on the edge”. Niestety (18.05.2011)
-rozszerzenie Geocouch nie działa z wersją „edge” CouchDB.
-
-*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
-podać ścieżkę do plików nagłówkowych:
-
-    ./configure --prefix=$HOME/.nosql/couchdb/build --with-erlang=/usr/lib64/erlang/usr/include
-
-
 ## Instalujemy rozszerzenie GeoCouch
-
-Niestety gałąź **couchbase_1.2.0** nie zawiera tego rozszerzenia.
-Musimy je ręcznie doinstalować.
 
 Zaczynamy od sklonowania rozszerzenia i *cd* do katalogu repozytorium:
 
@@ -319,14 +283,14 @@ na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*
 i uruchamiamy *make*:
 
     :::text
-    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.0/include
+    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.1/include
     make
 
 Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
 do odpowiednich katalogów:
 
     cp etc/couchdb/local.d/geocouch.ini $HOME/.nosql/etc/couchdb/local.d/
-    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.0/ebin/
+    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.1/ebin/
 
 Na koniec sprawdzamy czy geolokacja działa.
 W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
@@ -368,10 +332,12 @@ Więcej informacji o *Geocouch*:
 * Jesse Hallett. [Database Queries
   the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
 
+
 ## Sterowniki:
 
 Lista oficjalnych sterowników jest na stronie
 [CouchDB Database Drivers - CouchApp Pages](http://www.couchone.com/page/couchdb-drivers).
+
 
 
 # MongoDB
