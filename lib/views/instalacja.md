@@ -117,6 +117,8 @@ podać ścieżkę do plików nagłówkowych:
 
     ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
 
+Zob. też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
+
 
 ## Post-install
 
