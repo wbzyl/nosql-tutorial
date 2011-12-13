@@ -98,7 +98,10 @@ Poniżej są przedstawione dwa sposoby instalacji – szybka i tradycyjna.
 w wersji 1.8.5-17. Na razie można użyć *js-1.70-13.fc15.src.rpm*.
 -->
 
-## Szybka instalacja
+## Nieaktualne od 01.2012: Szybka instalacja
+
+Zobacz sekcja
+[Looking Ahead to 2012](http://blog.couchbase.com/couchbase-2011-year-review).
 
 Zaletą tej instalacji jest automatyczna instalacja rozszerzenie GeoCouch
 Nie musimy go ręcznie doinstalowywać!
