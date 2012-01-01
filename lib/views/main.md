@@ -147,6 +147,8 @@ TODO:
 
 ## Machine Learning
 
+…czyli komputerowe uczenie się:
+
 * [Intro to Machine Learning in Ruby](http://blog.siyelo.com/machine-learning-in-ruby-statistic-classifica)
 * 0xfe. [K-Means Clustering and Art](http://0xfe.blogspot.com/2011/12/k-means-clustering-and-art.html)
 
