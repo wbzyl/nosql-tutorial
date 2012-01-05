@@ -8,14 +8,15 @@
  <p class="author">[stare powiedzenie]</p>
 </blockquote>
 
-[05.07.2011] Cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data):
-„Some of the datasets are enormous: for example, when Visa was looking
+Na początek polecam lekturę artykułu [Big Data is the Answer — What was the Question?](http://www.saama.com/blog/bid/76211/Big-Data-is-the-Answer-What-was-the-Question)
+oraz zastanowienie się dlaczego niektóre proste rzeczy liczymy miesiącami,
+na przykład „Some of the datasets are enormous: for example, when Visa was looking
 to process two years’ worth of credit card transactions — some 70
 billion of them, — they turned to a NoSQL solution and were able to
 cut their processing time from a solid month using traditional
-relational solutions to just 13 minutes.”
+relational solutions to just 13 minutes.”,
+cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
-[30.05.2011] Egzamin, I termin: 21.06.2011, godz. 12.00, p. 228.
 
 ## Co to jest „NoSQL”
 
