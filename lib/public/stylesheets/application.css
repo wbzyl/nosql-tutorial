@@ -152,9 +152,9 @@ p {
 
 body {
   border-left: 30px solid #E0D1E4;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
-  font-family: Verdana, Tahoma, sans-serif;
+  font-family: Verdana,"DejaVu Sans","Trebuchet MS",sans-serif;
 }
 
 ul, ol {
