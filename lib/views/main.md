@@ -17,8 +17,11 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+[11.01.2012] Interesujące.
+[OpenLogic Announces 2011 Open Source Adoption Trending Report](http://www.openlogic.com/news/press/01.04.12.php)
 
-## Co to jest „NoSQL”
+
+## Co to jest „NoSQL”?
 
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
 Strozzi wprowadził ten termin w 1998 roku. W 2009 roku Eric Evans
