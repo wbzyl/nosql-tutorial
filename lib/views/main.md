@@ -118,7 +118,7 @@ TODO:
 
 ## Laboratorium
 
-*  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis", "/instalacja" %}
+*  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
 *  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 

@@ -811,6 +811,8 @@ W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
 
 Czy są **collation rules for the Polish language**?
 
+ICU User Guide, [Collation Customization](http://userguide.icu-project.org/collation/customization)
+
 
 [json]: http://www.json.org/ "JSON"
 
