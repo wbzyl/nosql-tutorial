@@ -11,8 +11,9 @@ przedstawione bazy:
 
 * CouchDB – baza dokumentowa
 * MongoDB – baza dokumentowa
-* Redis – baz klucz–wartość
-* Neo4j – baz grafowa
+* ElasticSearch – wyszukiwarka
+* Redis – baza klucz–wartość
+* Neo4j – baza grafowa
 
 Przed instalacją systemów baz danych powinniśmy sprawdzić, czy mamy
 wystarczająco dużo miejsca na swoim koncie na *Sigmie*. W tym celu
@@ -29,25 +30,29 @@ wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
     du -m ~ | sort -k1nr | head
 
 **Post Installation.** Całą instalację zakończymy dodając
-do ścieżek wyszukiwania *PATH* ścieżki do zainstalowanych programów.
+do ścieżek wyszukiwania *PATH* ścieżki do zainstalowanych programów
+oraz skryptów.
 W tym celu dopiszemy w pliku *~/.bashrc*:
 
     :::text
-    export PATH=$HOME/.nosql/couchdb/build/bin/:$HOME/.nosql/bin:$PATH
+    export PATH=$HOME/.nosql/bin:$PATH
 
-Teraz wypadałoby wczytać nowe ustawienia. W tym celu
-albo się przelogowujemy (zalecane podejście) albo wykonujemy polecenie:
+Teraz wypadałoby wczytać nowe ustawienia.
+Dlatego przelogowujemy się (zalecane podejście) albo wykonujemy polecenie:
 
     source ~/.bashrc
 
-Danych powinniśmy zapisywać w innym katalogu (dlaczego?).
-Ja trzymam dane w katalogu *$HOME/.data*.
-Domyślne ustawienia SBD są inne, dlatego demony kontaktujące nas z bazami
+Same bazy powinniśmy trzymać poza katalogami, które zostały utworzone
+w czasie instalacji (dlaczego?).
+
+Ja trzymam wszystkie swoje bazy w katalogu *$HOME/.data*.
+Domyślne ustawienia są inne, dlatego demony baz danych
 uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
-* dla [MongoDB](https://gist.github.com/1373583)
-* dla [Redisa](https://gist.github.com/1374681)
+* [MongoDB](https://gist.github.com/1373583)
+* [Redisa](https://gist.github.com/1374681)
+* [ElasticSearch](https://gist.github.com/x)
 
 
 ## Uwagi o instalacji programów na *Sigmie*
@@ -77,7 +82,8 @@ próbuje utworzyć linki symboliczne do katalogu */usr*. Dlatego
 kompilacja zakończy się błędem albo po instalacji, programy nie będą
 działać.
 
-**Dlatego, wszystkie poniższe polecenia należy wykonywać po zalogowaniu się na *Sigmie*.**
+**Dlatego, najpierw logujemy się na *Sigmę*, a dopiero potem
+wykonujemy wszystkie opisane poniżej polecenia.**
 
 
 <blockquote>
@@ -704,7 +710,6 @@ Czy coś takiego wystarczy?
         missingok
     }
 
-
 ## Linki
 
 * [Redis IO](http://redis.io/)
@@ -720,6 +725,91 @@ Czy coś takiego wystarczy?
 * [Real-time Collaborative Editing with Web Sockets,
   Node.js & Redis](http://nosql.mypopescu.com/post/653065773/redis-pub-sub-used-for-real-time-collaborative-web)
 * [To Redis or Not To Redis?] [redis-or-not]
+
+
+# ElasticSearch
+
+Prosta instalacja dla trybu **development**.
+
+Dlaczego taka instalacja:
+*w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
+
+[Pobieramy ostatnią wersję](https://github.com/elasticsearch/elasticsearch/downloads)
+(ok. 16 MB) i rozpakowujemy ją w katalogu *$HOME/.nosql/elasticsearch*.
+Na przykład, dla ostatniej wersji z początku stycznia 2012 możemy postąpić tak:
+
+    :::bash
+    cd $HOME/.nosql/elasticsearch
+    wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.18.7.zip
+    unzip -a elasticsearch-0.18.7.zip
+    rm -f elasticsearch
+    ln -s elasticsearch-0.18.7 elasticsearch
+
+Następnie tworzymy katalogi na logi i indeksy (bazę danych):
+
+    :::bash
+    mkdir -p $HOME/.data/var/log                # logi
+    mkdir -p $HOME/.data/var/lib/elasticsearch  # indeksy
+
+Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
+
+    :::bash elasticsearch.sh
+    #! /bin/bash
+
+    progname=$(basename $0 .sh)
+    configfname=$HOME/.data/etc/elasticsearch.yml
+
+    echo ""
+    echo "---- $configfname"
+    cat $configfname
+    echo "---------------------------------------------------------------------------"
+    echo ""
+
+    $HOME/.nosql/elasticsearch/$progname/bin/elasticsearch -f -Des.config=$configfname
+
+W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
+*elasticsearch.yml*. Oto jego zawartość:
+
+    :::yaml HOME/.data/etc/elasticsearch.yml
+    cluster.name: wlodek
+    # indeksy: http://localhost:9200/<index name>/_status – sprawdzanie statusu
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+    # ścieżki
+    path.data: /home/wbzyl/.data/var/lib/elasticsearch
+    path.logs: /home/wbzyl/.data/var/log/elasticsearch
+
+
+## Testujemy instalację
+
+Zapiszmy coś w indeksach. Przeszukajmy to co zastało zapisane.
+Na koniec usuńmy wszystkie wszystkie dane.
+
+**TODO**
+
+Wszystko działa? Domyślnie ElasticSearch nasłuchuje na porcie 9200.
+
+Możemy postąpić też tak. Instalujemy przeglądarkę webową
+[elasticsearch-head](http://mobz.github.com/elasticsearch-head/),
+i otwieramy ją w domyślnej przeglądarce:
+
+    :::bash
+    cd $HOME/.nosql
+    git clone git://github.com/Aconex/elasticsearch-head.git
+    xdg-open $HOME/.nosql/elasticsearch-head/index.html
+
+
+## Gdzie są moje indeksy
+
+W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
+
+
+## ICU Analysis for ElasticSearch
+
+**TODO:** Dodać opis instalacji
+[ICU Analysis plugin for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-icu).
+
+Czy są **collation rules for the Polish language**?
 
 
 [json]: http://www.json.org/ "JSON"
