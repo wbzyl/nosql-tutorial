@@ -17,11 +17,14 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+[22.01.2012] Brett Kiefer.
+[The Trello Tech Stack](http://blog.fogcreek.com/the-trello-tech-stack/).
+
 [12.01.2012] Kristóf Kovács.
-[Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase vs Membase vs Neo4j comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis)
+[Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase vs Membase vs Neo4j comparison](http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis).
 
 [11.01.2012] Interesujące.
-[OpenLogic Announces 2011 Open Source Adoption Trending Report](http://www.openlogic.com/news/press/01.04.12.php)
+[OpenLogic Announces 2011 Open Source Adoption Trending Report](http://www.openlogic.com/news/press/01.04.12.php).
 
 
 ## Co to jest „NoSQL”?
