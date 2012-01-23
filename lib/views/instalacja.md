@@ -393,14 +393,13 @@ I już!
 
 ## Testujemy instalację
 
-Tworzymy katalog na bazy danych:
+Tworzymy katalogi na swoje bazy i na plik *mongodb.pid*:
 
     :::bash
-    mkdir $HOME/.data/var/lib/mongodb -p  # tutaj będziemy trzymać swoje bazy
-    mkdir $HOME/.data/var/run             # miejsce na plik mongodb.pid
+    mkdir $HOME/.data/var/lib/mongodb -p
+    mkdir $HOME/.data/var/run
 
-Dopiero teraz uruchamiamy demona *mongod*
-(poniżej wpisuję domyślny port):
+Dopiero teraz uruchamiamy demona *mongod* (poniżej wpisuję domyślny port):
 
     :::bash
     mongod --dbpath=$HOME/.data/var/lib/mongodb --port=27017
@@ -412,7 +411,7 @@ Dopiero teraz uruchamiamy demona *mongod*
 
 Uruchamiamy powłokę *mongo*:
 
-    :::text
+    :::bash
     mongo --port 27017
       MongoDB shell version: 1.9.1
       connecting to: 127.0.0.1:27017/test
@@ -431,7 +430,6 @@ W powłoce wpisujemy i wykonujemy kilka poleceń:
     db.blog.find()
       { "_id" : ObjectId("4d1b168bc4846bb508a713f2"), "title" : "hello world" }
 
-
 Teraz możemy przećwiczyć więcej prostych przykładów:
 
 * [Example showing that MongoDB uses native units for regular 2d queries, and radians for spherical 2d queries](https://gist.github.com/964262)
@@ -448,17 +446,15 @@ na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
     mkdir $HOME/.data/var/lib/mongodb -p
 
 Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
-Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając serwer *mongod*
-za pomocą prostego skryptu [mongo.sh](https://gist.github.com/1661990):
+Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając demona
+*mongod* za pomocą prostego skryptu
+[mongod.sh](https://gist.github.com/1662651).
 
-    :::bash
-    mongo.sh
-    mongo.sh 16000
+W skrypcie wpiszemy ścieżkę do pliku konfiguracyjnego *mongodb.conf*,
+w którym dostosujemy opcje do swoich potrzeb:
 
-Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*:
-
-    :::plain
-    journal=true        # wymaga ok. 0.5 GB miejsca na dysku
+    :::plain ~/.data/etc/mongodb.conf
+    journal=true            # wymaga ok. 0.5 GB miejsca na dysku
     rest=true
     cpu=true
     directoryperdb=true
@@ -471,6 +467,12 @@ Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*
     pidfilepath=/home/wbzyl/.data/var/run/mongodb.pid
 
 Oczywiście powyżej wpisujemy **swoje** ścieżki.
+
+Teraz demona uruchamiamy w taki sposób:
+
+    :::bash mongod.sh
+    mongod.sh         # użyj domyślnego portu
+    mongod.sh 16000   # użyj podanego portu
 
 
 ## Logrotate
@@ -852,7 +854,6 @@ ICU User Guide, [Collation Customization](http://userguide.icu-project.org/colla
 
 [document-oriented database]: http://en.wikipedia.org/wiki/Document-oriented_database "Document-oriented database"
 [map-reduce]: http://en.wikipedia.org/wiki/MapReduce "MapReduce"
-
 
 [mongodb-light]: http://www.engineyard.com/blog/2009/mongodb-a-light-in-the-darkness-key-value-stores-part-5/ "A Light in the Darkness"
 [mongodb-blog]: http://blog.mongodb.org/ "MongoDB Blog"
