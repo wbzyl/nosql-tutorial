@@ -784,7 +784,7 @@ W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
     path.data: /home/wbzyl/.data/var/lib/elasticsearch
     path.logs: /home/wbzyl/.data/var/log/elasticsearch
 
-**Uwaga:* na ścieżki wpisane powyżej. *HOME* to niekoniecznie */home/wbzyl*.
+**Uwaga** na ścieżki wpisane powyżej. *HOME* to niekoniecznie */home/wbzyl*.
 Na przykład na sigmie, to */home/inf/wbzyl*.
 
 
