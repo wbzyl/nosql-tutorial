@@ -357,39 +357,55 @@ biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
 Z serwera *github.com* klonujemy repozytorium:
 
     :::bash
-    git://github.com/mongodb/mongo.git
+    git clone git://github.com/mongodb/mongo.git
 
 Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::bash
     cd mongo
-    git checkout v1.8.2
-    scons all
-    scons --prefix=$HOME/.nosql install
-
-Albo, wersja mongo >= 1.9.1,
-przechodzimy z domyślnej Javascript Engine „Spider Monkey” (Firefox)
-na „V8” (Chrome):
-
-    :::bash
-    cd mongo
+    git checkout v2.0.2
     scons --usev8 all                            # build all binaries with v8
     scons --usev8 --prefix=$HOME/.nosql install
 
+Zamiast domyślnej maszyny Javascript o nazwie „Spider Monkey” (Firefox)
+użyjemy – „V8” (Chrome).
+
 Zakładam, że biblioteka V8 jest zainstalowana w systemie.
 
-Fedora – instalujemy pakiety *v8* i *v8-devel*, do pobrania stąd:
+Fedora – kompilujemy pakiety *v8* i *v8-devel*. Zaczynamy od pobrania źródeł:
 
     :::bash
-    wget ftp://rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v8-3.3.10-4.fc17.src.rpm
+    wget ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v/v8-3.3.10-4.fc17.src.rpm
+
+### Instalacja na skróty
+
+Pobieramy paczkę dla naszego systemu ze strony
+[MongoDB Downloads](http://www.mongodb.org/downloads). Przykładowo:
+
+    :::bash
+    wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.0.2.tgz
+
+Odpakowujemy archiwum:
+
+    tar zxvf mongodb-linux-x86_64-2.0.2.tgz
+
+Kopiujemy pliki wykonywalne do odpowiednich katalogów:
+
+    mv mongodb-linux-x86_64-2.0.2/bin $HOME/.nosql/bin
+
+I już!
 
 
 ## Testujemy instalację
 
-Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
+Tworzymy katalog na bazy danych:
 
     :::bash
     mkdir $HOME/.data/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
+
+Dopiero teraz uruchamiamy demona *mongod*:
+
+    :::bash
     mongod --dbpath=$HOME/.data/var/lib/mongodb --port
         Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
         Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
@@ -397,28 +413,34 @@ Najpierw uruchamiamy *serwer* korzystając ze skryptu *mongo.sh*:
         Tue Dec 28 ... [initandlisten] waiting for connections on port 16000
         Tue Dec 28 ... [websvr] web admin interface listening on port 16000+1000
 
-Następnie uruchamiamy powłokę *mongo*:
+Uruchamiamy powłokę *mongo*:
 
     :::text
     mongo --port 16000
       MongoDB shell version: 1.9.1
       connecting to: 127.0.0.1:16000/test
+
+W powłoce wpisujemy i wykonujemy kilka poleceń:
+
+    :::text
     help
-	db.help()                    help on db methods
-	db.mycoll.help()             help on collection methods
+     db.help()                    help on db methods
+     db.mycoll.help()             help on collection methods
         ...
     x = 2 ; y = 2; x + y
-        4
+     4
     post = {"title" : "hello world"}
     db.blog.insert(post)
     db.blog.find()
-        { "_id" : ObjectId("4d1b168bc4846bb508a713f2"), "title" : "hello world" }
+      { "_id" : ObjectId("4d1b168bc4846bb508a713f2"), "title" : "hello world" }
 
 
-Więcej prostych przykładów:
+Teraz możemy przećwiczyć więcej prostych przykładów:
 
 * [Example showing that MongoDB uses native units for regular 2d queries, and radians for spherical 2d queries](https://gist.github.com/964262)
-* TODO
+* [The MongoDB Collection](http://mongly.com/):
+  - [The MongoDB Interactive Tutorial](http://tutorial.mongly.com/tutorial/index)
+  - [Geospatial Interactive Tutorial](http://tutorial.mongly.com/geo/index)
 
 
 ## Gdzie są moje bazy?
@@ -429,16 +451,17 @@ na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
     mkdir $HOME/.data/var/lib/mongodb -p
 
 Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
-Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając
-serwer *mongod* (i powłokę *mongo*) za pomocą prostego skryptu *mongo.sh*:
+Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając serwer *mongod*
+za pomocą prostego skryptu [mongo.sh](https://gist.github.com/1661990):
 
+    :::bash
     mongo.sh
     mongo.sh 16000
 
 Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*:
 
     :::plain
-    journal=true        # wymaga extra 0.5 GB miejsca na dysku
+    journal=true        # wymaga ok. 0.5 GB miejsca na dysku
     rest=true
     cpu=true
     directoryperdb=true
@@ -450,7 +473,7 @@ Pozostałe opcje przekazwywane do *mongod* są wpisane w pliku *mongodb.config*
     logpath=/home/wbzyl/.nosql/var/log/mongodb/mongo.log
     pidfilepath=/home/wbzyl/.data/var/run/mongodb.pid
 
-(Oczywiście powyżej wpisujemy ścieżkę do swoich logów.)
+Oczywiście powyżej wpisujemy **swoje** ścieżki.
 
 
 ## Logrotate
@@ -468,33 +491,34 @@ Journal i bazy MongoDB zajmują sporo miejsca na dysku:
     -rw-------. 1 wbzyl wbzyl  2097152 05-10 12:36 twitter.ns
     ...
 
-Logi z czasem też. Dlatego od czasu do czasu wykonujemy:
+Logi z czasem też. Dlatego od czasu do czasu ręcznie rotujemy logi:
 
+    :::bash
     mongo
     use admin
     db.runCommand("logRotate");
 
-Wygodniej jest rotować pliki log za pomocą *logrotate*.
+Ale wygodniej jest rotować pliki log za pomocą *logrotate*.
 W tym celu w katalogu */etc/logrotate.d/*
 umieszczamy plik *mongodb* o następującej zawartości:
 
-    /home/wbzyl/.nosql/var/log/mongodb/*.log {
-        weekly
-        rotate 4
-        copytruncate
-        delaycompress
-        compress
-        notifempty
-        missingok
-        postrotate
-          /bin/kill -USR1 `cat /home/wbzyl/.data/var/run/mongodb.pid 2>/dev/null` 2> /dev/null|| true
-        endscript
+    /home/wbzyl/.data/var/log/mongodb/*.log {
+      su wbzyl wbzyl
+      daily
+      rotate 4
+      copytruncate
+      delaycompress
+      compress
+      notifempty
+      missingok
+      postrotate
+        /bin/kill -USR1 `cat /home/wbzyl/.data/var/run/mongodb.pid 2>/dev/null` 2> /dev/null || true
+      endscript
     }
 
-**TODO:** PID czy LOCK?
+Powyżej wpisujemy **swoje** dane. Sprawdzamy jak to działa:
 
-Sprawdzamy jak to będzie działać:
-
+    :::bash
     logrotate -d /etc/logrotate.d/mongodb
 
 I to wszystko!
