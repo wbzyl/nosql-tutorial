@@ -731,14 +731,18 @@ Czy coś takiego wystarczy?
 
 Prosta instalacja dla trybu **development**.
 
+Najpierw instalujemy Javę. Na przykład, w Fedorze:
+
+    sudo yum install java-1.6.0-openjdk
+
 Dlaczego taka instalacja:
 *w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
 
 [Pobieramy ostatnią wersję](https://github.com/elasticsearch/elasticsearch/downloads)
-(ok. 16 MB) i rozpakowujemy ją w katalogu *$HOME/.nosql/elasticsearch*.
-Na przykład, dla ostatniej wersji z początku stycznia 2012 możemy postąpić tak:
-
+(ok. 16 MB) i rozpakowujemy ją w katalogu, przykładowo *$HOME/.nosql/elasticsearch*
+:
     :::bash
+    mkdir $HOME/.nosql/elasticsearch
     cd $HOME/.nosql/elasticsearch
     wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.18.7.zip
     unzip -a elasticsearch-0.18.7.zip
@@ -750,6 +754,7 @@ Następnie tworzymy katalogi na logi i indeksy (bazę danych):
     :::bash
     mkdir -p $HOME/.data/var/log                # logi
     mkdir -p $HOME/.data/var/lib/elasticsearch  # indeksy
+    mkdir -p $HOME/.data/etc                    # plik konfiguracyjny
 
 Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
 
@@ -780,14 +785,17 @@ W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
     path.logs: /home/wbzyl/.data/var/log/elasticsearch
 
 
-## Testujemy instalację
+## Testowanie instalacji
+
+Wszystko działa? ElasticSearch nasłuchuje na porcie 9200. Sprawdźmy to:
+
+    :::bash
+    xdg-open http://localhost:9200
 
 Zapiszmy coś w indeksach. Przeszukajmy to co zastało zapisane.
 Na koniec usuńmy wszystkie wszystkie dane.
 
 **TODO**
-
-Wszystko działa? Domyślnie ElasticSearch nasłuchuje na porcie 9200.
 
 Możemy postąpić też tak. Instalujemy przeglądarkę webową
 [elasticsearch-head](http://mobz.github.com/elasticsearch-head/),
@@ -797,6 +805,12 @@ i otwieramy ją w domyślnej przeglądarce:
     cd $HOME/.nosql
     git clone git://github.com/Aconex/elasticsearch-head.git
     xdg-open $HOME/.nosql/elasticsearch-head/index.html
+
+Albo instalujemy przeglądarkę webową jako wtyczkę do Elasticsearch.
+
+    :::bash
+    elasticsearch/bin/plugin -install Aconex/elasticsearch-head
+    xdg-open http://localhost:9200/_plugin/head/
 
 
 ## Gdzie są moje indeksy
