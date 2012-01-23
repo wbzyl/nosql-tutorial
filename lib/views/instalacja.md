@@ -752,7 +752,7 @@ Dlaczego taka instalacja:
 Następnie tworzymy katalogi na logi i indeksy (bazę danych):
 
     :::bash
-    mkdir -p $HOME/.data/var/log                # logi
+    mkdir -p $HOME/.data/var/log/elasticsearch  # logi
     mkdir -p $HOME/.data/var/lib/elasticsearch  # indeksy
     mkdir -p $HOME/.data/etc                    # plik konfiguracyjny
 
