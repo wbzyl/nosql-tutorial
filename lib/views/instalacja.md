@@ -341,18 +341,8 @@ Więcej informacji o *Geocouch*:
   the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
 
 
-## Sterowniki:
-
-Lista oficjalnych sterowników jest na stronie
-[CouchDB Database Drivers - CouchApp Pages](http://www.couchone.com/page/couchdb-drivers).
-
-
 
 # MongoDB
-
-**Uwaga:** Niestety na *Sigmie* poniższa procedura nie zadziała, ponieważ nie jest zainstalowana
-biblioteka *Boost*. Dlatego w archiwum umieściłem pliki z dystrybucji
-[Nightly download](http://www.mongodb.org/downloads).
 
 Z serwera *github.com* klonujemy repozytorium:
 
@@ -363,9 +353,10 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::bash
     cd mongo
-    git checkout v2.0.2
+    git checkout r2.0.2
     scons --usev8 all                            # build all binaries with v8
     scons --usev8 --prefix=$HOME/.nosql install
+    git checkout master
 
 Zamiast domyślnej maszyny Javascript o nazwie „Spider Monkey” (Firefox)
 użyjemy – „V8” (Chrome).
@@ -376,6 +367,10 @@ Fedora – kompilujemy pakiety *v8* i *v8-devel*. Zaczynamy od pobrania źróde
 
     :::bash
     wget ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v/v8-3.3.10-4.fc17.src.rpm
+
+**Uwaga:** Niestety na *Sigmie* powyższa procedura nie działa,
+ponieważ nie jest zainstalowana biblioteka *Boost*.
+
 
 ### Instalacja na skróty
 
@@ -401,24 +396,26 @@ I już!
 Tworzymy katalog na bazy danych:
 
     :::bash
-    mkdir $HOME/.data/var/lib/mongodb -p # tutaj będziemy trzymać swoje bazy
+    mkdir $HOME/.data/var/lib/mongodb -p  # tutaj będziemy trzymać swoje bazy
+    mkdir $HOME/.data/var/run             # miejsce na plik mongodb.pid
 
-Dopiero teraz uruchamiamy demona *mongod*:
+Dopiero teraz uruchamiamy demona *mongod*
+(poniżej wpisuję domyślny port):
 
     :::bash
-    mongod --dbpath=$HOME/.data/var/lib/mongodb --port
-        Tue Dec 28 ... MongoDB starting : pid=25909 port=16000  ...
-        Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
-        Tue Dec 28 ... sys info: Linux localhost.localdomain ...
-        Tue Dec 28 ... [initandlisten] waiting for connections on port 16000
-        Tue Dec 28 ... [websvr] web admin interface listening on port 16000+1000
+    mongod --dbpath=$HOME/.data/var/lib/mongodb --port=27017
+      Tue Dec 28 ... MongoDB starting : pid=25909 port=27017  ...
+      Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
+      Tue Dec 28 ... sys info: Linux localhost.localdomain ...
+      Tue Dec 28 ... [initandlisten] waiting for connections on port 27017
+      Tue Dec 28 ... [websvr] web admin interface listening on port 27017+1000
 
 Uruchamiamy powłokę *mongo*:
 
     :::text
-    mongo --port 16000
+    mongo --port 27017
       MongoDB shell version: 1.9.1
-      connecting to: 127.0.0.1:16000/test
+      connecting to: 127.0.0.1:27017/test
 
 W powłoce wpisujemy i wykonujemy kilka poleceń:
 
@@ -516,7 +513,8 @@ umieszczamy plik *mongodb* o następującej zawartości:
       endscript
     }
 
-Powyżej wpisujemy **swoje** dane. Sprawdzamy jak to działa:
+Oczywiście powyżej w dyrektywie `su` wpisujemy **swoje** dane.
+Sprawdzamy jak to działa:
 
     :::bash
     logrotate -d /etc/logrotate.d/mongodb
@@ -529,18 +527,12 @@ I to wszystko!
 * [MongoDB](http://www.mongodb.org/)
 * [MongoDB DOCS](http://www.mongodb.org/display/DOCS/Home)
 * [MongoDB Blog] [mongodb-blog]
-* [MongoDB: A Light in the Darkness!] [mongodb-light]
-* [Try MongoDB](http://try.mongodb.org/) —
-  A Tiny MongoDB Browser Shell (mini tutorial included).
-  Just enough to scratch the surface
 
 MongoDB & Ruby:
 
 * [Mongoid](http://mongoid.org/) –
   provides an elegant way to persist and query Ruby objects to documents in MongoDB
 * [Ruby driver for MongoDB](http://github.com/mongodb/mongo-ruby-driver)
-* Marek Kołodziejczyk.
-  [Rails + MongoDB resources](http://code-fu.pl/2010/01/17/rails-mongodb-resources.html)
 * Daniel Wertheim.
   - [Simple-MongoDB – Part 1, Getting started](http://daniel.wertheim.se/2010/04/12/simple-mongodb-part-1-getting-started/)
   - [Simple-MongoDB – Part 2, Anonymous types, JSON, Embedded entities
@@ -753,18 +745,16 @@ Czy coś takiego wystarczy?
 
 # ElasticSearch
 
-Prosta instalacja dla trybu **development**.
-
-Najpierw instalujemy Javę. Na przykład, w Fedorze:
+Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
 
     sudo yum install java-1.6.0-openjdk
 
-Dlaczego taka instalacja:
-*w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
+Prosta instalacja dla trybu **development**. Dlaczego taka
+instalacja: *w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
 
 [Pobieramy ostatnią wersję](https://github.com/elasticsearch/elasticsearch/downloads)
-(ok. 16 MB) i rozpakowujemy ją w katalogu, przykładowo *$HOME/.nosql/elasticsearch*
-:
+(ok. 16 MB) i rozpakowujemy ją w katalogu. Na przykład w *$HOME/.nosql/elasticsearch*:
+
     :::bash
     mkdir $HOME/.nosql/elasticsearch
     cd $HOME/.nosql/elasticsearch
@@ -773,7 +763,8 @@ Dlaczego taka instalacja:
     rm -f elasticsearch
     ln -s elasticsearch-0.18.7 elasticsearch
 
-Następnie tworzymy katalogi na logi i indeksy (bazę danych):
+Następnie tworzymy katalogi na logi, indeksy (bazę danych) i pliki
+konfiguracyjne:
 
     :::bash
     mkdir -p $HOME/.data/var/log/elasticsearch  # logi
@@ -784,17 +775,16 @@ Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
 
     :::bash elasticsearch.sh
     #! /bin/bash
-
     progname=$(basename $0 .sh)
-    configfname=$HOME/.data/etc/elasticsearch.yml
+    config=$HOME/.data/etc/elasticsearch.yml
 
     echo ""
-    echo "---- $configfname"
-    cat $configfname
-    echo "---------------------------------------------------------------------------"
+    echo "---- $config"
+    cat $config
+    echo "-----------------------------------------------------------------------"
     echo ""
 
-    $HOME/.nosql/elasticsearch/$progname/bin/elasticsearch -f -Des.config=$configfname
+    $HOME/.nosql/elasticsearch/$progname/bin/elasticsearch -f -Des.config=$config
 
 W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
 *elasticsearch.yml*. Oto jego zawartość:
@@ -809,7 +799,12 @@ W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
     path.logs: /home/wbzyl/.data/var/log/elasticsearch
 
 **Uwaga** na ścieżki wpisane powyżej. *HOME* to niekoniecznie */home/wbzyl*.
-Na przykład na sigmie, to */home/inf/wbzyl*.
+Na przykład na Sigmie to katalog */home/inf/wbzyl*.
+
+
+## Gdzie są moje indeksy
+
+W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
 
 
 ## Testowanie instalacji
@@ -838,11 +833,6 @@ Albo instalujemy przeglądarkę webową jako wtyczkę do Elasticsearch.
     :::bash
     elasticsearch/bin/plugin -install Aconex/elasticsearch-head
     xdg-open http://localhost:9200/_plugin/head/
-
-
-## Gdzie są moje indeksy
-
-W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
 
 
 ## ICU Analysis for ElasticSearch
