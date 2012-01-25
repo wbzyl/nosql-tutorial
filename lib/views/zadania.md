@@ -22,7 +22,14 @@ Typowe zastosowania dokumentowych baz danych to:
 * CRM(?)
 
 
-# Zadania
+## Zaczynamy
+
+A to co za zadanie?
+
+{%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
+
+
+## CouchDB
 
 <blockquote>
  <p>
