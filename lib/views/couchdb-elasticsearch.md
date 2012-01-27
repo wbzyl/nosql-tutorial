@@ -26,8 +26,8 @@ Przykładowa aplikacja:
 
 Instalujemy wtyczkę *river-couchdb:*
 
-    cd elasticsearch
-    bin/plugin -install river-couchdb
+    :::bash
+    elasticsearch/bin/plugin -install river-couchdb
 
 i (re)starujemy *elasticsearch*.
 
@@ -37,6 +37,7 @@ Podłączamy *elasticsearch* do *change notification* CouchDB dla bazy
 *nosql* umieszczonej na działającym serwerze CouchDB –
 *http://localhost:5984/nosql/_changes*:
 
+    :::bash
     curl -XPUT 'http://localhost:9200/_river/statuses_internal/_meta' -d @couchdb_nosql.json
     {"ok":true,"_index":"_river","_type":"statuses_internal","_id":"_meta","_version":1}
 
