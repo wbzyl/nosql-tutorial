@@ -77,6 +77,7 @@ Przypowieść o CouchDB,
 
 Dokumentacja:
 
+* [CouchDB Reference](http://wiki.apache.org/couchdb/Reference)
 * [Couchbase HTTP API Reference](http://www.couchbase.org/sites/default/files/uploads/all/documentation/couchbase-api.html)
 
 CRUD to skrót od pierwszych liter słów:
