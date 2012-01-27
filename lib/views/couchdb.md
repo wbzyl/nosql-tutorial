@@ -75,6 +75,10 @@ Przypowieść o CouchDB,
 
 ## REST API dla CouchDB
 
+Dokumentacja:
+
+* [Couchbase HTTP API Reference](http://www.couchbase.org/sites/default/files/uploads/all/documentation/couchbase-api.html)
+
 CRUD to skrót od pierwszych liter słów:
 Create, Read, Update, Delete.
 
