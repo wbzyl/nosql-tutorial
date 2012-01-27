@@ -17,25 +17,17 @@
 * [Your Data, Your Search, ElasticSearch](http://www.slideshare.net/karmi/your-data-your-search-elasticsearch-euruko-2011) (Euruko 2011),
 ([Template for generating a no-frills Rails application with support for ElasticSearch full-text search via the Tire gem](https://gist.github.com/951343))
 
-## Instalacja
 
-Rozpakowujemy archiwum z ostatnią wersją *elasticsearch*:
-
-    unzip elasticsearch-0.16.1.zip
+## Podłączamy Elasticsearch do CouchDB
 
 Instalujemy wtyczkę *river-couchdb:*
 
     cd elasticsearch-0.16.1
     bin/plugin -install river-couchdb
 
-Uruchamiamy *elasticsearch* (korzystamy z domyślnych ustawień – *localhost:9200*):
+i restarujemy *elasticsearch*.
 
-    bin/elasticsearch -f
-
-
-## Podłączamy Elasticsearch do CouchDB
-
-Następnie podłączamy *elasticsearch* do *change notification* CouchDB dla bazy
+Podłączamy *elasticsearch* do *change notification* CouchDB dla bazy
 *nosql* umieszczonej na działającym serwerze CouchDB –
 *http://localhost:5984/nosql/_changes*:
 
