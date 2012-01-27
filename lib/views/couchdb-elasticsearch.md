@@ -281,6 +281,3 @@ Zobacz też
   [Enables full-text searching of CouchDB documents using
   Lucene](http://github.com/rnewson/couchdb-lucene) plus opis na
   [wiki](http://wiki.github.com/couchrest/couchrest/couchdb-lucene-support)
-* Karel Minarik, [slingshot](https://github.com/karmi/slingshot) –
-  a rich Ruby API and DSL for the ElasticSearch search engine/database
-* [Toast](http://github.com/jchris/toast), gałąź **chip**
