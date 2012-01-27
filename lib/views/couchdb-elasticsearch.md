@@ -8,12 +8,18 @@
  <p class="author">— John Cage (1912–1992)</p>
 </blockquote>
 
-* [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
+Zaczynamy od lektury samouczka:
+
+[CouchDB Integration](http://www.elasticsearch.org/tutorials/2010/08/01/couchb-integration.html)
+
+Więcej o ElasticSearch Rivers:
+
 * [CouchDB River](http://www.elasticsearch.org/guide/reference/river/couchdb.html)
+* [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
+
+Przykładowa aplikacja:
+
 * [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
-* [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
-* [Your Data, Your Search, ElasticSearch](http://www.slideshare.net/karmi/your-data-your-search-elasticsearch-euruko-2011) (Euruko 2011),
-([Template for generating a no-frills Rails application with support for ElasticSearch full-text search via the Tire gem](https://gist.github.com/951343))
 
 
 ## Podłączamy Elasticsearch do CouchDB
