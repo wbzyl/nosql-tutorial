@@ -10,7 +10,7 @@
 
 Zaczynamy od lektury samouczka:
 
-[CouchDB Integration](http://www.elasticsearch.org/tutorials/2010/08/01/couchb-integration.html)
+* [CouchDB Integration](http://www.elasticsearch.org/tutorials/2010/08/01/couchb-integration.html)
 
 Więcej o ElasticSearch Rivers:
 
@@ -29,7 +29,9 @@ Instalujemy wtyczkę *river-couchdb:*
     cd elasticsearch
     bin/plugin -install river-couchdb
 
-i restarujemy *elasticsearch*.
+i (re)starujemy *elasticsearch*.
+
+Tworzymy bazę CouchDB o nazwie **nosql**.
 
 Podłączamy *elasticsearch* do *change notification* CouchDB dla bazy
 *nosql* umieszczonej na działającym serwerze CouchDB –
@@ -57,7 +59,11 @@ gdzie powyżej użyto pliku z następującą zawartością:
         }
     }
 
-Składnia zapytań:
+**TODO:**
+Na koniec wrzucamy trochę statusów do bazy **nosql** CouchDB.
+JTZ? Skorzystać z gotowego skryptu (jest ich kilka w tym repo).
+
+Ściąga. Składnia zapytań do ElasticSearch:
 
 <pre>http://localhost:9200/<b> index </b>/<b> type </b>/_search?...
 </pre>
