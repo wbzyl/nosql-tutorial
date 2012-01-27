@@ -8,8 +8,6 @@
  <p class="author">— John Cage (1912–1992)</p>
 </blockquote>
 
-* [You know, for Search](http://www.elasticsearch.org/)
-* [Elasticsearch Guide](http://www.elasticsearch.org/guide/): Setup, API, Query, Mapping…
 * [Searchable CouchDB](http://www.elasticsearch.com/blog/2010/09/28/the_river_searchable_couchdb.html)
 * [CouchDB River](http://www.elasticsearch.org/guide/reference/river/couchdb.html)
 * [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
@@ -22,7 +20,7 @@
 
 Instalujemy wtyczkę *river-couchdb:*
 
-    cd elasticsearch-0.16.1
+    cd elasticsearch
     bin/plugin -install river-couchdb
 
 i restarujemy *elasticsearch*.

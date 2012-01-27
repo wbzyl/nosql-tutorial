@@ -265,3 +265,14 @@ object {
 .center {
   text-align: center;
 }
+
+/* CodeRay */
+
+.CodeRay .error {
+  font-weight: bold;
+  padding: 0;
+  color: black;
+  background-color: white;
+  border: none;
+  margin-bottom: 0;
+}
