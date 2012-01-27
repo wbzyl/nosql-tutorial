@@ -59,7 +59,6 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 Instalacja, REST API, przykładowa aplikacja Rails:
 [Wyszukiwanie z ElasticSearch](http://wbzyl.inf.ug.edu.pl/rails4/elasticsearch).
-
 Wdrażamy aplikację *EST* na Sigmie.
 
 
