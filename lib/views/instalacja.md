@@ -9,11 +9,14 @@ technologii będących alternatywą dla relacyjnych baz danych
 takich jak PostgreSQL czy MySQL. Na wykładach zostaną
 przedstawione bazy:
 
-* CouchDB – baza dokumentowa
-* MongoDB – baza dokumentowa
 * ElasticSearch – wyszukiwarka
-* Redis – baza klucz–wartość
+* MongoDB – baza dokumentowa
+* CouchDB – baza dokumentowa
+
+oraz bazy:
+
 * Neo4j – baza grafowa
+* Redis – baza klucz–wartość
 
 Przed instalacją systemów baz danych powinniśmy sprawdzić, czy mamy
 wystarczająco dużo miejsca na swoim koncie na *Sigmie*. W tym celu
@@ -28,6 +31,25 @@ Tutaj może być pomocne wykonanie polecenia,
 wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
 
     du -m ~ | sort -k1nr | head
+
+**Zależności:**
+
+Instalujemy silniki JavaScript: *js* i *v8*.
+W Fedorze ściągamy paczki ze źródłami:
+
+    wget ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v/v8-3.3.10-4.fc17.src.rpm
+    ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/j/js-1.8.5-9.fc17.src.rpm
+
+i budujemy pakiety:
+
+    rpmbuild --rebuild v8-3.3.10-4.fc17.src.rpm
+    rpmbuild --rebuild js-1.8.5-9.fc17.src.rpm
+
+(Ostatnie wersje ze stycznia 2012.)
+
+Być może trzeba będzie zainstalować jeszcze zależności, np.
+
+    sudo yum install autoconf213
 
 **Post Installation.** Całą instalację zakończymy dodając
 do ścieżek wyszukiwania *PATH* ścieżki do zainstalowanych programów
@@ -51,13 +73,16 @@ uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
 * [MongoDB](https://gist.github.com/1373583)
+* [ElasticSearch](https://gist.github.com/1687963)
+
+<!--
 * [Redisa](https://gist.github.com/1374681)
-* [ElasticSearch](https://gist.github.com/x)
+-->
 
 
 ## Uwagi o instalacji programów na *Sigmie*
 
-1\. W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
+1\. \[Rails] W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
 są tworzone dowiązania symboliczne do plików poza katalogiem */home*.
 Powoduje to masę problemów z instalacją gemów.
 
@@ -73,8 +98,9 @@ Po zalogowaniu:
     sqlite3-3.7.3-1.i686
     sqlite3-devel-3.7.3-1.i686
 
+Z tego wynika, że instalacja lokalna gemu *sqlite3* się nie powiedzie.
 
-2\. Program konfigurujący *bootstrap* nie sprawdza,
+2\. \[CouchDB] Program konfigurujący *bootstrap* nie sprawdza,
 czy linki symboliczne zostały poprawnie utworzone.
 
 Na przykład, w trakcie konfiguracji CouchDB *bootstrap*
@@ -95,24 +121,22 @@ wykonujemy wszystkie opisane poniżej polecenia.**
  <p class="author">— Benjamin Franklin (1706–1790)</p>
 </blockquote>
 
-# Każdy leży na swojej *CouchDB*
+# Każdy leży na swojej CouchDB
 
-[2011.12.06] CouchDB nie kompiluje się z biblioteką *SpiderMonkey*
-w wersji 1.8.5-17. Na razie można użyć *js-1.70-13.fc15.src.rpm*.
+Będziemy instalować system CouchDB z rozszerzeniem GeoCouch.
 
-[Looking Ahead to 2012](http://blog.couchbase.com/couchbase-2011-year-review).
-
-Zaczynamy od sklonowania repozytorium CouchDB:
+Zaczynamy od sklonowania repozytoriów:
 
     :::bash
     git clone http://git-wip-us.apache.org/repos/asf/couchdb.git
+    git clone git://github.com/couchbase/geocouch.git
 
-Następnie przechodzimy do katalogu *couchdb* i wykonujemy kolejno polecenia:
+Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.2.x:
 
     :::text
     cd couchdb
-    git tag
-    git checkout 1.1.1
+    git branch -a
+    git checkout --track origin/1.2.x
     ./bootstrap
     ./configure --prefix=$HOME/.nosql
     make
@@ -128,30 +152,34 @@ Zob. też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
 
 ## Post-install
 
-Kończymy instalację edytując w pliku *local.ini* sekcję z *httpd*:
+Kończymy instalację tworząc nowy plik *sigma.ini* i wpisując do niego
+następujące rzeczy:
 
-    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
+    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
     [httpd]
     port = 5984
     bind_address = 0.0.0.0
 
-(Powyżej zamiast domyślnego numeru portu *5984* wpisujemy numer przydzielony na zajęciach.)
-
-Oraz zmieniając domyślne ustawienia z sekcji *couchdb* (bazy do *.data/*) oraz *log*:
-
-    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
     [couchdb]
     database_dir = /home/wbzyl/.data/var/lib/couchdb
     view_index_dir = /home/wbzyl/.data/var/lib/couchdb
-    # os_process_timeout = 5000 ; 5 seconds. for view and external servers.
-    # delayed_commits = true ; set this to false to ensure an fsync before 201 Created is returned
 
     [log]
     file = /home/wbzyl/.data/var/log/couchdb/couch.log
 
-(Oczywiście zamiast */home/wbzyl/* wstawiamy ścieżkę do swojego katalogu domowego.)
+Ponieważ katalogi, te nie istnieją, Tworzymy je:
 
-Częścią z hostami wirtualnymi zajmiemy się później:
+    mkdir $HOME/.data/var/lib/couchdb/ -p
+    mkdir $HOME/.data/var/log/couchdb/
+
+**Dwie uwagi**
+
+1. Powyżej zamiast domyślnego numeru portu *5984* wpisujemy numer przydzielony na zajęciach.
+
+2. Oczywiście zamiast */home/wbzyl/* wstawiamy ścieżkę do swojego katalogu domowego
+(albo jakąś inną).
+
+Hostami wirtualnymi zajmiemy się później:
 
     :::plain ~/.nosql/etc/couchdb/local.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
@@ -206,31 +234,68 @@ odpowiedź HTTP (*response*) w formacie [JSON][json].
 
 Jeśli skorzystamy z opcji *-v*, to *curl* wypisze szczegóły tego co robi:
 
-    curl -vX POST http://127.0.0.1:5984/_config
+    curl -vX GET http://127.0.0.1:5984/_config
 
 Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
 
+Często się zdarzało, że nie działał replikator.
+Spróbujmy zreplikować jakąś bazę z serwera *Tao*, na przykład
+
+    http://tao.inf.ug.edu.pl:5984/rock
+
+Następnie replikujemy tę bazę lokalnie.
+
+Replikację możemy wyklikać w *Futonie*, albo użyć programu *curl*:
+
+    :::bash
+    curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
+       -d "{\"source\":\"http://tao.ug.edu.pl:5984/rock\",\"target\":\"rock2012\",\"create_target\":true}
+
+(Celowy błąd w poleceniu powyżej. Dlaczego?)
+
+Uruchamiamy CouchDB via skrypt *couchdb*:
+
+    cd ../etc/rc.d/
+    ./couchdb help
+
+Wcześniej w kodzie skryptu wykomentowujemy kilka wierszy:
+
+    :::bash
+    run_command () {
+        command="$1"
+        if test -n "$COUCHDB_OPTIONS"; then
+            command="$command $COUCHDB_OPTIONS"
+        fi
+        # if test -n "$COUCHDB_USER"; then
+        #     if su $COUCHDB_USER -c "$command"; then
+        #         return $SCRIPT_OK
+        #     else
+        #         return $SCRIPT_ERROR
+        #     fi
+        # else
+            if $command; then
+                return $SCRIPT_OK
+            else
+                return $SCRIPT_ERROR
+            fi
+        # fi
+    }
+
+Czy można się obejść bez tych zmian?
+
 
 ## Gdzie są moje bazy?
 
-Skompilowany CouchDB będzie zapisywał rekordy
-do baz gdzieś w katalogu *$HOME/.nosql/couchdb/build/etc/...*.
+Domyślnie, skompilowany CouchDB będzie zapisywał rekordy
+do baz w katalogu *$HOME/.nosql/var/lib/couchdb/*.
 
-Ponieważ chcemy trzymać bazy poza katalogiem z implementacją więc
-musimy zmienić tę lokalizację. Na przykład na taką:
+My zmieniliśmy tę lokalizację na:
 
-    $HOME/.data/var/lib/couchdb -p
+    :::bash
+    $HOME/.data/var/lib/couchdb
 
-tworzymy ten katalog i informujemy CouchDB o tej zmianie, dopisując na
-w pliku *local.ini*:
-
-    :::plain ~/.nosql/couchdb/build/etc/couchdb/local.ini
-    [couchdb]
-    database_dir = /home/wbzyl/.data/var/lib/couchdb
-    view_index_dir = /home/wbzyl/.data/var/lib/couchdb
-
-Oto moje kilka moich baz:
+Kilka baz z serwera *Tao*:
 
     ls -l ~/.data/var/lib/couchdb
     razem 4047240
@@ -281,24 +346,31 @@ I to wszystko. Na koniec polecam lekturę
 
 ## Instalujemy rozszerzenie GeoCouch
 
-Zaczynamy od sklonowania rozszerzenia i *cd* do katalogu repozytorium:
+Zaczynamy od *cd* do katalogu repozytorium:
 
-    git clone git://github.com/couchbase/geocouch.git
+    :::bash
     cd geocouch
+    git checkout --track origin/couchdb1.2.x
 
 Następnie ustawiamy wartość zmiennej *COUCH_SRC*, tak aby wskazywała
-na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*
+na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*.
 i uruchamiamy *make*:
 
     :::text
-    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.1/include
+    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.2.0a-384a75b-git/include
     make
+
+Ponieważ nazwa tego katalogu, zależy od sumy SHA gałęzi, trzeba to
+wcześniej sprawdzić, przykładowo:
+
+    git log --graph --decorate --pretty=oneline --abbrev-commit | head -1
+    * 384a75b (HEAD, origin/1.2.x, 1.2.x) fix show/list/external requested_path for rewrites
 
 Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
 do odpowiednich katalogów:
 
-    cp etc/couchdb/local.d/geocouch.ini $HOME/.nosql/etc/couchdb/local.d/
-    cp build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.1.1/ebin/
+    cp $HOME/.nosql/geocouch/etc/couchdb/default.d/geocouch.ini $HOME/.nosql/etc/couchdb/default.d/
+    cp $HOME/.nosql/geocouch/build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.2.0a-384a75b-git/ebin/
 
 Na koniec sprawdzamy czy geolokacja działa.
 W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
@@ -308,6 +380,7 @@ polecenia z sekcji *Using GeoCouch* pliku
 Więcej informacji o *Geocouch*:
 
 * [Welcome to the world of GeoCouch](https://github.com/couchbase/geocouch)
+* [GeoCouch Utils](https://github.com/maxogden/geocouch-utils)
 * [GeoCouch: Bulk Insertion](http://blog.couchbase.com/geocouch-bulk-insertion)
 * GeoJSON: [Geometry Objects](http://geojson.org/geojson-spec.html#geometry-objects)
 
