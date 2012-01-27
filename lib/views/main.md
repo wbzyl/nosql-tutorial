@@ -17,6 +17,11 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+
+[26.01.2012] [jSlate](http://jslate.com/) – Dashboarding with no restrictions.
+jSlate is a blank slate where you can track and visualize anything you
+want, in any way you want.
+
 [22.01.2012] Brett Kiefer.
 [The Trello Tech Stack](http://blog.fogcreek.com/the-trello-tech-stack/).
 
@@ -49,6 +54,14 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
  </p>
  <p class="author">— Sir Arthur Conan Doyle</p>
 </blockquote>
+
+## ElasticSearch
+
+Instalacja, REST API, przykładowa aplikacja Rails:
+[Wyszukiwanie z ElasticSearch](http://wbzyl.inf.ug.edu.pl/rails4/elasticsearch).
+
+Wdrażamy aplikację *EST* na Sigmie.
+
 
 ## CouchDB
 
