@@ -72,7 +72,7 @@ Domyślne ustawienia są inne, dlatego demony baz danych
 uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
-* [MongoDB](https://gist.github.com/1373583)
+* [MongoDB](xxx) – TODO: uaktualnić
 * [ElasticSearch](https://gist.github.com/1687963)
 
 <!--
