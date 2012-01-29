@@ -181,7 +181,7 @@ Ponieważ katalogi, te nie istnieją, Tworzymy je:
 
 Hostami wirtualnymi zajmiemy się później:
 
-    :::plain ~/.nosql/etc/couchdb/local.ini
+    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
     ; dlatego zamiast *example.com* poniżej,
     ; powinno zadziałać coś takiego i coś takiego:
