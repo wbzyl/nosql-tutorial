@@ -199,6 +199,16 @@ Hostami wirtualnymi zajmiemy się później:
 Alternatywny sposób konfiguracji hostów wirtualnych opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
 
+3. Ja uruchamiam server CouchDB, korzystając ze skryptu
+o takiej zawartości:
+
+    :::bash
+    #! /bin/bash
+    couchdb -A $HOME/.data/etc/couchdb/local.d
+
+a plik *sigma.ini* umieszczam w powyższym katalogu.
+Dlaczego tak postępuję?
+
 
 ## Testujemy instalację
 
