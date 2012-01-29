@@ -250,7 +250,7 @@ Replikację możemy wyklikać w *Futonie*, albo użyć programu *curl*:
 
     :::bash
     curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-       -d "{\"source\":\"http://tao.ug.edu.pl:5984/rock\",\"target\":\"rock2012\",\"create_target\":true}
+       -d "{\"source\":\"http://tao.ug.edu.pl:5984/rock\",\"target\":\"rock2012\",\"create_target\":true}"
 
 (Celowy błąd w poleceniu powyżej. Dlaczego?)
 
