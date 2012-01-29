@@ -256,19 +256,25 @@ Spróbujmy zreplikować jakąś bazę z serwera *Tao*, na przykład
 
 Następnie replikujemy tę bazę lokalnie.
 
-Replikację możemy wyklikać w *Futonie*, albo użyć programu *curl*:
+Replikację możemy wyklikać w zakładce Replication *Futona*:
+
+    :::json
+    {"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}
+
+albo za pomocą programu *curl*:
 
     :::bash
-    # {"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}
+
     curl -X POST http://127.0.0.1:5984/_replicate -H 'Content-Type: application/json' \
        -d '{"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
 
-Uruchamiamy CouchDB via skrypt *couchdb*:
+Możemy też uruchamiać CouchDB via skrypt *etc/rc.d/couchdb*:
 
-    cd ../etc/rc.d/
     ./couchdb help
 
-Wcześniej w kodzie skryptu wykomentowujemy kilka wierszy:
+Wcześniej w kodzie skryptu wykomentowujemy kilka wierszy
+(możemy też dopisać do `COUCHDB_OPTIONS` opcję
+`-A $HOME/.data/etc/couchdb/local.d`):
 
     :::bash
     run_command () {
@@ -291,7 +297,7 @@ Wcześniej w kodzie skryptu wykomentowujemy kilka wierszy:
         # fi
     }
 
-Czy można się obejść bez tych zmian?
+Czy można się obejść bez wykomentowywania tego kodu?
 
 
 ## Gdzie są moje bazy?
