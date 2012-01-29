@@ -249,10 +249,9 @@ Następnie replikujemy tę bazę lokalnie.
 Replikację możemy wyklikać w *Futonie*, albo użyć programu *curl*:
 
     :::bash
-    curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-       -d "{\"source\":\"http://wbzyl.ug.edu.pl:5984/rock\",\"target\":\"rock2012\",\"create_target\":true}"
-
-(Celowy błąd w poleceniu powyżej. Dlaczego?)
+    # {"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}
+    curl -X POST http://127.0.0.1:5984/_replicate -H 'Content-Type: application/json' \
+       -d '{"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
 
 Uruchamiamy CouchDB via skrypt *couchdb*:
 
