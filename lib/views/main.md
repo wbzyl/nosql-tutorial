@@ -32,6 +32,16 @@ want, in any way you want.
 [OpenLogic Announces 2011 Open Source Adoption Trending Report](http://www.openlogic.com/news/press/01.04.12.php).
 
 
+<blockquote>
+ {%= image_tag "/images/conan_doyle.jpg", :alt => "[Sir Arthur Conan Doyle]" %}
+ <p>
+   I never guess. It is a capital mistake to theorize before one has
+   data. Insensibly one begins to twist facts to suit theories, instead
+   of theories to suit facts.
+ </p>
+ <p class="author">— Sir Arthur Conan Doyle</p>
+</blockquote>
+
 ## Co to jest „NoSQL”?
 
 Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
@@ -45,16 +55,6 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
 
 
-<blockquote>
- {%= image_tag "/images/conan_doyle.jpg", :alt => "[Sir Arthur Conan Doyle]" %}
- <p>
-   I never guess. It is a capital mistake to theorize before one has
-   data. Insensibly one begins to twist facts to suit theories, instead
-   of theories to suit facts.
- </p>
- <p class="author">— Sir Arthur Conan Doyle</p>
-</blockquote>
-
 ## ElasticSearch
 
 Instalacja, REST API, przykładowa aplikacja Rails:
@@ -62,31 +62,19 @@ Instalacja, REST API, przykładowa aplikacja Rails:
 Wdrażamy aplikację „EST” na Sigmie.
 
 
-## CouchDB
+## MongoDB
 
-1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
-1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
-1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
-1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
-1. {%= link_to "Funkcje Show", "/couchdb-show" %}
-1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
-1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
-1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
-1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
-1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
-1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
-1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
-1. {%= link_to "Walidacja", "/couchdb-validation" %}
+1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
+1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
+1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
+1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
+1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
+1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
+1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
 <!--
-
-TODO:
-
-1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
-1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
-1. {%= link_to "Apache", "/couchdb-apache" %}
-
+1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
+1. {%= link_to "Sharding", "/mongodb-sharding" %}
 -->
 
 <blockquote>
@@ -110,21 +98,31 @@ TODO:
  <p class=""author">— S. Snow, Operations without pain</p>
 </blockquote>
 
-## MongoDB
+## CouchDB
 
-1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
-1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
-1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
-1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
-1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
-1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
-1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
-
+1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
+1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
+1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
+1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
+1. {%= link_to "Funkcje Show", "/couchdb-show" %}
+1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
+1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
+1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
+1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
+1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
+1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
+1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
+1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
+1. {%= link_to "Walidacja", "/couchdb-validation" %}
 
 <!--
-1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
-1. {%= link_to "Sharding", "/mongodb-sharding" %}
+
+1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
+1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
+1. {%= link_to "Apache", "/couchdb-apache" %}
+
 -->
+
 
 ## Redis
 
