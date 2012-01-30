@@ -11,7 +11,7 @@ Na początek kilka użytecznych linków:
   - [Felix’s Node.js Convincing the boss guide](http://nodeguide.com/convincing_the_boss.html)
 * Mark Cotton:
   - [A Javascript Blog With CouchDB and Node.js](http://nosql.mypopescu.com/post/6895944936/a-javascript-blog-with-couchdb-and-node-js)
-  (dwa screencasty: 5 + 4 minut)
+  (dwa screencasty; razem 9 min.)
 
 Różne rzeczy:
 

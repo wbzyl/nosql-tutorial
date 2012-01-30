@@ -13,8 +13,7 @@ Na dobry początek kilka odsyłaczy:
 
 * [The Node Beginner Book](http://www.nodebeginner.org/)
 * [Node.js](http://nodejs.org/)
-* [Node.js Manual & Documentation](http://nodejs.org/docs/latest/)
-* [Node Package Manager](http://npmjs.org/)
+* NPM – [Node Package Manager](http://npmjs.org/)
 
 
 ## Instalacja
@@ -26,14 +25,14 @@ Instalujemy NodeJS:
     cd node
     git tag
       ...
-      v0.4.10
+      v0.6.9  # = major.minor.patch
       ...
-      v0.5.2
+      v0.7.1
 
-Wybieramy ostatnią stabilną wersję:
+Wybieramy ostatnią stabilną wersję (parzysty numer 'minor'):
 
     :::bash
-    git checkout v0.4.10
+    git checkout v0.6.9
     ./configure --prefix=$HOME/.node
     make && make install
     git checkout master
@@ -49,7 +48,7 @@ i sprawdzamy co się zainstalowało:
 
     cd
     node -v
-      v0.4.10
+      v0.6.9
 
 
 ## Instalacja NPM
@@ -59,8 +58,15 @@ Teraz kolej na instalację narzędzia [NPM](http://npmjs.org/)
 
     curl http://npmjs.org/install.sh | sh
       ...
-      ~/.node/bin/npm -> /home/wbzyl/.node/lib/node_modules/npm/bin/npm.js
-      npm@1.0.22 /home/wbzyl/.node/lib/node_modules/npm
+      Napisany przez John Gilmore i Jay Fenlason
+      install npm@1.1
+      fetching: http://registry.npmjs.org/npm/-/npm-1.1.0-3.tgz
+      0.6.9
+      1.1.0-3
+      cleanup prefix=/home/wbzyl/.node
+      ~/.node/bin/npm -> /home/wbzyl/.node/lib/node_modules/npm/bin/npm-cli.js
+      npm@1.1.0-3 /home/wbzyl/.node/lib/node_modules/npm
+      It worked
 
 
 ## Moduły NodeJS
@@ -76,15 +82,22 @@ Trzy przykładowe instalacje:
 
 Instalujemy globalnie ostatnią stabilną wersję:
 
+    :::bash
     npm install -g coffee-script
-      ~/.node/bin/coffee -> ~/.node/lib/node_modules/coffee-script/bin/coffee
-      ~/.node/bin/cake -> ~/.node/lib/node_modules/coffee-script/bin/cake
-      coffee-script@1.1.1 ~/.node/lib/node_modules/coffee-script
+      /home/wbzyl/.node/bin/coffee -> /home/wbzyl/.node/lib/node_modules/coffee-script/bin/coffee
+      /home/wbzyl/.node/bin/cake -> /home/wbzyl/.node/lib/node_modules/coffee-script/bin/cake
+      coffee-script@1.2.0 /home/wbzyl/.node/lib/node_modules/coffee-script
+
+Powyżej zostały wypisane ścieżki do zainstalowanych bibliotek.
+Musimy je dodpisać do *NODE_PATH*:
+
+    :::bash ~/.bash_profile
+    export NODE_PATH=$HOME/.node/lib/node_modules
 
 Sprawdzamy czy coś poszło nie tak:
 
+    :::bash
     coffee --version
-      CoffeeScript version 1.1.1
 
 Pozostałe jeszcze jedna rzecz do zrobienia. Biblioteki NodeJS
 instalowane przez NPM muszą być w *NODE_PATH*.
@@ -92,14 +105,9 @@ Sprawdzamy gdzie NPM instaluje biblioteki:
 
     npm ls -g
       ~/.node/lib
-      ├── coffee-script@1.1.1
-      └─┬ npm@1.0.22
+      ├── coffee-script@1.2.0
+      └─┬ npm@1.1.0-3
         ├── ...
-
-Oznacza to, że powinniśmy dodać do *NODE_PATH*:
-
-    :::bash ~/.bash_profile
-    export NODE_PATH=$HOME/.node/lib/node_modules
 
 Ponownie się przelogowujemy i sprawdzamy czy wszystko jest OK.
 Uruchamiamy *node* REPL (*read-eval-print loop* – pętla
@@ -109,7 +117,7 @@ wczytaj-wykonaj-wypisz), gdzie wpisujemy:
 
 Powiniśmy zobaczyć coś takiego:
 
-      { VERSION: '1.1.1',
+      { VERSION: '1.2.0',
         RESERVED:
          [ 'case',
            ...
@@ -121,9 +129,9 @@ Powiniśmy zobaczyć coś takiego:
     npm link
 
 Powyżej instalujemy CoffeeScript z gałęzi *master*.
-Aby wrócić do wersji, na przykład 1.1.1, wykonujemy:
+Aby wrócić do wersji, na przykład 1.2.0, wykonujemy:
 
-    npm install -g coffee-script@1.1.1
+    npm install -g coffee-script@1.2.0
 
 Usuwamy moduł, tak:
 
@@ -141,10 +149,10 @@ Użyjemy wyszukiwarki programu *npm*:
 Wybieramy moduł *couchapp* i instalujemy go *globalnie* (dlaczego?):
 
     npm install -g couchapp
-      ~/.node/bin/couchapp -> ~/.node/lib/node_modules/couchapp/bin.js
-      request@2.0.1 ~/.node/lib/node_modules/couchapp/node_modules/request
-      watch@0.3.2 ~/.node/lib/node_modules/couchapp/node_modules/watch
-      couchapp@0.8.0 ~/.node/lib/node_modules/couchapp
+      /home/wbzyl/.node/bin/couchapp -> /home/wbzyl/.node/lib/node_modules/couchapp/bin.js
+      watch@0.5.0 /home/wbzyl/.node/lib/node_modules/couchapp/node_modules/watch
+      request@2.9.100 /home/wbzyl/.node/lib/node_modules/couchapp/node_modules/request
+      couchapp@0.9.0 /home/wbzyl/.node/lib/node_modules/couchapp
 
 Program *couchapp* został zainstalowany
 w katalogu *$HOME/.node/bin/*, który wcześniej umieściliśmy
@@ -184,16 +192,13 @@ moduł *couchapp* znajdzie się w ścieżce.
 Korzystając z *npm* wyszukujemy Kanso:
 
     npm search kanso
-    kanso  The surprisingly simple way to write CouchApps       =caolan
-    ...
+      kanso  The surprisingly simple way to write CouchApps
+      kanso-utils  NPM package which provides some common utility functions used by build-steps in Kanso packages
 
-Instalujemy *Kanso* **globalnie**:
+Instalujemy oba pakiety **globalnie**:
 
     npm install -g kanso
-      .../.node/bin/kanso -> .../.node/lib/node_modules/kanso/bin/kanso
-      mime@1.1.0 .../.node/lib/node_modules/kanso/node_modules/mime
-      async@0.1.6 .../.node/lib/node_modules/kanso/node_modules/async
-      ...
+    npm install -g kanso-utils
 
 Sprawdzamy, instalację. Po wywołaniu:
 
@@ -204,14 +209,22 @@ powinniśmy zobaczyć coś takiego:
     Usage: kanso COMMAND [ARGS]
 
     Available commands:
-      push         Upload a project to a CouchDB instance
-      show         Load a project and output resulting JSON
-      create       Create a new project skeleton
-      pushdata     Push a file or directory of JSON files to DB
-      pushadmin    Upload the kanso admin app to a CouchDB instance
-      autopush     Upload a project, then watch files for changes
-      uuids        Returns UUIDs generated by a CouchDB instance
-      help         Show help specific to a command
+      help           Show help specific to a command
+      push           Load a project and push to a CouchDB database
+      upload         Upload a file or directory of JSON files to DB
+      show           Load a project and output resulting JSON
+      createdb       Create a new CouchDB database
+      deletedb       Delete a CouchDB database
+      listdb         List databases on a CouchDB instance
+      replicate      Exchange data between databases
+      transform      Performs tranformations on JSON files
+      uuids          Returns UUIDs generated by a CouchDB instance
+      pack           Pack a package into a .tar.gz file
+      publish        Publish a package to a repository
+      unpublish      Remove a published package from a repository
+      install        Installs a package and its dependencies
+      clear-cache    Removes packages from the local cache
+      ls             Builds a project and reports a list of its exports
 
 
 ## Różności
