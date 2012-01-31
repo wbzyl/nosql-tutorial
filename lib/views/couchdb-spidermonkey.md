@@ -21,12 +21,13 @@ po ostatnim wydaniu specyfikacji ECMA-262:
 * [New in JavaScript 1.8.0](https://developer.mozilla.org/en/New_in_JavaScript_1.8)
   (Firefox 3)
 * [New in JavaScript 1.8.1](https://developer.mozilla.org/En/New_in_JavaScript_1.8.1)
-  (Firefox 3.5.4 + xulrunner 1.9.1)
+  (Firefox 3.5.4)
+* [New in JavaScript 1.8.5](https://developer.mozilla.org/En/New_in_JavaScript_1.8.5)
+  (Firefox 4)
 
 W wersji 1.8.1 dodano do języka:
 
 * [native JSON](https://developer.mozilla.org/En/Using_native_JSON)
-* [isPrototypeOf](http://ejohn.org/blog/objectgetprototypeof/)
 
 W wersjach wcześniejszych dodano kilka użytecznych metod do klasy Array,
 oraz domknięcia wyrażeń (*expression closures*), które uczytelniają kod.

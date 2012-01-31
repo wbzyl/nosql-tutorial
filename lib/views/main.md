@@ -67,15 +67,19 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
-1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
-1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
+1. {%= link_to "Mongo – Ruby driver", "/mongo" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
+*TODO:* Sharding, Replica Sets.
+
 <!--
+1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
+1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
 1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
 1. {%= link_to "Sharding", "/mongodb-sharding" %}
 -->
+
 
 <blockquote>
  <p>
