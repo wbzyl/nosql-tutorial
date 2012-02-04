@@ -17,6 +17,9 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+[4.02.2012] [Udacity](http://www.udacity.com/) – kurs online
+[Building a Search Engine](http://www.udacity.com/cs#101).
+Kurs „Building Web Applications” planowany jest w tym roku.
 
 [26.01.2012] [jSlate](http://jslate.com/) – Dashboarding with no restrictions.
 jSlate is a blank slate where you can track and visualize anything you
