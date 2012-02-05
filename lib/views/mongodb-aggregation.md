@@ -34,25 +34,28 @@ Przechodzimy na konsolę Mongo:
     :::bash terminal
     mongo gutenberg
 
-Proste agregacje *count* i *distinct* wraz
-z rzutowaniem i sortowaniem:
+Zliczanie z *count* i *distinct*:
 
     :::js
     db.dostojewski.count()
-    db.dostojewski.find({}, {_id: 0}).sort({word: 1}).limit(20)
-    db.dostojewski.find({}, {_id: 0}).sort({word: -1}).limit(20)
-    db.dostojewski.find({}).sort({word: 1}).skip(32060).limit(10)
-    db.dostojewski.find({letters: "x"}, {_id: 0})  # it – iterate over result set
-    db.dostojewski.find({word: /^x/}, {_id: 0}).sort({word: -1}).limit(20)
+    db.dostojewski.distinct("word").sort()
+    db.dostojewski.distinct("letters").sort()
 
-Zapytania z: zakresami; set operators: $in, $nin, $all;
-tablice, $where
+
+Proste zapytania z rzutowaniem i sortowaniem:
+
+    :::js
+    db.dostojewski.find({}, {word: 1, _id: 0}).sort({word: 1}).limit(20)
+    db.dostojewski.find({}, {_id: 0}).sort({word: -1}).skip(32060).limit(10)
+    db.dostojewski.find({word: /^x/}, {_id: 0}).sort({word: -1}).limit(20)
+    db.dostojewski.find({letters: "x"}, {_id: 0})     # it – iterate over result set
+    db.dostojewski.find({"letters.2": "x"}, {_id: 0})
+
+Zapytania z: zakresami; set operators: $in, $nin, $all; $where
 
     :::js
     db.dostojewski.find({"letters.2": "x"}, {_id: 0})
 
-    db.dostojewski.distinct("letters").sort()
-    db.dostojewski.distinct("word").sort()
 
 Indeksy:
 
