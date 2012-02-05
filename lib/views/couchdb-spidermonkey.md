@@ -29,6 +29,8 @@ W wersji 1.8.1 dodano do języka:
 
 * [native JSON](https://developer.mozilla.org/En/Using_native_JSON)
 
+Zobacz też [ECMA 5 Mozilla Features Implemented in V8](https://github.com/joyent/node/wiki/ECMA-5-Mozilla-Features-Implemented-in-V8).
+
 W wersjach wcześniejszych dodano kilka użytecznych metod do klasy Array,
 oraz domknięcia wyrażeń (*expression closures*), które uczytelniają kod.
 
