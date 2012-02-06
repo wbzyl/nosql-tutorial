@@ -76,10 +76,14 @@ Zadanie dodatkowe: Który zestaw liter powtarza się najczęściej?
 
     var totals = res.map(function(x) { return x.count });
     // Math.max.apply(null, totals);
+
+    // TODO
+    var totals_filtered = totals.filter(callback)
+      // creates a new array with all of the elements of this array
+      // for which the provided filtering function returns true
+
     var numeric = function(a, b) { return (a - b); };
     totals.sort(numeric);
-
-Dodać przykład z $keyf.
 
 
 ## Zadanie 1
@@ -88,7 +92,27 @@ Dodać przykład z $keyf.
 
 ## Zadanie 5
 
-Przyda się?
+Przykład z keyf?
+
+*keyf* – a JavaScript function that, when applied to a document, generates a key
+for that document. This is useful when the key for grouping needs to be calculated.
+Use this instead of key to specify a key that is not a single/multiple existing fields.
+
+For instance if you wanted to group a result set by the day of the week
+each document was created on but didn’t actually store that value, then you
+could use a key function to generate the key:
+
+    :::js
+    function(doc) {
+      return {day: doc.created_at.getDay();
+    }
+
+This function will generate keys like this one:
+
+    :::json
+    {day: 1}
+
+Przyda się? Do generowania *keyf*?
 
     :::js
     word.split("").filter(function(c) { return /[aeiou]/.test(c); })
