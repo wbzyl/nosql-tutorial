@@ -16,15 +16,16 @@ Dokumenty te utworzymy z angielskiej wersji tekstu powieści
 z serwisu [Free eBooks by Project Gutenberg](http://www.gutenberg.org/ebooks/2638).
 
 Kolekcję nazwiemy *dostojewski*.
-Do zapisania danych w kolekcji użyję skryptu *aggregation.rb*.
+Do zapisania danych w kolekcji użyjemy prostego skryptu w Ruby
+{%= link_to "aggregation.rb", "db/mongodb/aggregation.rb" %}.
 
-Wynik działania skryptu *aggregation.rb*:
-
-    I, [2012-02-05T15:59:16.545996 #428]  INFO -- : wczytano akapitów: 5261
-    I, [2012-02-05T16:00:06.768103 #428]  INFO -- : MongoDB:
-    I, [2012-02-05T16:00:06.768214 #428]  INFO -- : 	  database: gutenberg
-    I, [2012-02-05T16:00:06.768273 #428]  INFO -- : 	collection: dostojewski
-    I, [2012-02-05T16:00:06.768842 #428]  INFO -- : 	     count: 243732
+    :::bash terminal
+    ruby aggregation.rb
+      I, [2012-02-06T15:52:48.870545 #11067]  INFO -- : wczytano akapitów: 5261
+      I, [2012-02-06T15:53:40.449740 #11067]  INFO -- : MongoDB:
+      I, [2012-02-06T15:53:40.449854 #11067]  INFO -- : 	  database: gutenberg
+      I, [2012-02-06T15:53:40.449919 #11067]  INFO -- : 	collection: dostojewski
+      I, [2012-02-06T15:53:40.450483 #11067]  INFO -- : 	     count: 243731
 
 
 ## Język zapytań MongoDB

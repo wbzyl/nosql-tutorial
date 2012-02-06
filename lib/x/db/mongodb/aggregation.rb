@@ -29,7 +29,7 @@ data = IO.readlines(book, "")  # paragraph mode
 logger.info "wczytano akapitów: #{data.length}"
 
 data.each_with_index do |para, n|
-  words = para.gsub(/[!?;:"'().,]/,"").gsub("--"," ").downcase.split(/\s+/)
+  words = para.gsub(/[!?;:"'().,\[\]*]/,"").gsub("--"," ").downcase.split(/\s+/)
   words.each do |word|
     letters = word.split("").sort.uniq
     coll.insert({
