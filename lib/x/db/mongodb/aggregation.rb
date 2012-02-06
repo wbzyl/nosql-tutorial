@@ -8,6 +8,9 @@ logger.level = Logger::INFO  # set the default level: INFO, WARN
 
 require 'mongo'
 
+# English stopwords from Tracker, http://projects.gnome.org/tracker/
+stopwords = 'tracker-stopwords.en'
+
 #book = '103.txt'
 book = 'Dostoevsky_Feodor-The_Idiot.txt'
 
@@ -21,23 +24,26 @@ db = connection.db(dbname)
 
 coll = db.collection(collection)
 
-data = IO.readlines(book, "")  # paragraph mode
+stop = IO.read(stopwords).split("\n")
+logger.info "liczba wczytanych stopwords: #{stop.length}"
 
-# puts "#{data[8]}"
-# puts "#{data[10]}"
-
-logger.info "wczytano akapitów: #{data.length}"
+data = IO.readlines(book, "") # paragraph mode
+logger.info "liczba wczytanych akapitów: #{data.length}"
 
 data.each_with_index do |para, n|
   words = para.gsub(/[!?;:"'().,\[\]*]/,"").gsub("--"," ").downcase.split(/\s+/)
   words.each do |word|
-    letters = word.split("").sort.uniq
-    coll.insert({
-      word: word,
-      para: n,
-      letters: letters
-    })
-    logger.debug "word: #{word}, para: #{n}, letters: #{letters}\n"
+    if stop.include?(word)
+      logger.debug "skipped stopword: #{word}"
+    else
+      letters = word.split("").sort.uniq
+      coll.insert({
+        word: word,
+        para: n,
+        letters: letters
+      })
+      logger.debug "word: #{word}, para: #{n}, letters: #{letters}\n"
+    end
   end
 end
 

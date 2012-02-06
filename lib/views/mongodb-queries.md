@@ -24,11 +24,14 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu w Ruby
 
     :::bash terminal
     ruby aggregation.rb
-      I, [2012-02-06T15:52:48.870545 #11067]  INFO -- : wczytano akapitów: 5261
-      I, [2012-02-06T15:53:40.449740 #11067]  INFO -- : MongoDB:
-      I, [2012-02-06T15:53:40.449854 #11067]  INFO -- : 	  database: gutenberg
-      I, [2012-02-06T15:53:40.449919 #11067]  INFO -- : 	collection: dostojewski
-      I, [2012-02-06T15:53:40.450483 #11067]  INFO -- : 	     count: 243731
+      I, [2012-02-06T20:34:56.602793 #32687]  INFO -- : liczba wczytanych stopwords: 742
+      I, [2012-02-06T20:34:56.620884 #32687]  INFO -- : liczba wczytanych akapitów: 5261
+      I, [2012-02-06T20:35:25.147644 #32687]  INFO -- : MongoDB:
+      I, [2012-02-06T20:35:25.147754 #32687]  INFO -- : 	  database: gutenberg
+      I, [2012-02-06T20:35:25.147812 #32687]  INFO -- : 	collection: dostojewski
+      I, [2012-02-06T20:35:25.148334 #32687]  INFO -- : 	     count: 80399
+
+W książce jest 243731 słów. Zatem liczba „stopwords” to 163332 (ok. 67%).
 
 
 ## Język zapytań MongoDB
