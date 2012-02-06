@@ -71,7 +71,8 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "Mongo – Ruby driver", "/mongo" %}
-1. {%= link_to "Agregacja", "/mongodb-aggregation" %}
+1. {%= link_to "Język zapytań", "/mongodb-queries" %}
+1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
