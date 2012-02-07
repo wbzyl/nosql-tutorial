@@ -6,31 +6,28 @@ Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących)
 * [Aggregation Framework](http://www.mongodb.org/display/DOCS/Aggregation+Framework)
 
 
-## Grupowanie
+## Zadania na grupowanie
 
-Zadania na grupowanie?
-
-1\. Ile jest słów zawierających daną literę?
-
-2\. Ile jest akapitów zawierających daną literę?
-
-3\. Ile jest akapitów zawierających dane słowo?
-
-4\. Dla danego zestawu liter, ile słów można z nich utworzyć.
-
-W każdym przypadku ograniczamy się do słów z książki
+W każdym zadaniu ograniczamy się do słów z książki
 „Idiota” F. Dostojewskiego.
 
-5\. W języku angielskim jest pięć samogłosek: a, e, i, o, u.
-Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
+Zadanie 1. Ile jest słów zawierających daną literę?
 
+Zadanie 2. Ile jest akapitów zawierających daną literę?
+
+Zadanie 3. Ile jest akapitów zawierających dane słowo?
+
+Zadanie 4. Dla danego zestawu liter, ile słów można z nich utworzyć.
+
+Zadanie 5. W języku angielskim jest pięć samogłosek: a, e, i, o, u.
+Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
 
 ## Funkcja agregująca *group*
 
-Zaczynamy od prostego przykładu:
+Jak działa funkcja *group* wyjaśnimy na prostym przykładzie:
 
     :::js
     db.dostojewski.group({
@@ -67,27 +64,57 @@ Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
 
 Zadanie dodatkowe: Który zestaw liter powtarza się najczęściej?
 
-    :::js
+    :::js group.js
     var res = db.dostojewski.group({
       key: {letters: true}
       , initial: {count: 0}
       , reduce: function(doc, out){ out.count++; }
     } );
 
-    var totals = res.map(function(x) { return x.count });
-    // Math.max.apply(null, totals);
+    // var totals = res.map(function(x) { return x.count });
+    // print("Max frequency: " + Math.max.apply(null, totals));
 
-    // TODO
-    var totals_filtered = totals.filter(callback)
-      // creates a new array with all of the elements of this array
-      // for which the provided filtering function returns true
+    var numeric = function(a, b){ return (b - a); };
+    var top10 = totals.sort(numeric).slice(0, 9);
+    print("Top 10 frequencies: " + top10);
+    // Top 10: 1786,512,499,462,454,447,438,374,361
 
-    var numeric = function(a, b) { return (a - b); };
-    totals.sort(numeric);
+    db.results.drop();
+
+    // There is no bulk insertion for the MongoDB shell versions prior to 2.1.0
+    // res.forEach(function(obj) { db.results.insert(obj) });
+
+    db.results.insert(res);
+
+    var obj = db.results.findOne({ count: 512 });
+    db.dostojewski.find({ letters: obj.letters });
+
+Skrypt *group.js* uruchamiamy w następujący sposób:
+
+    :::bash
+    mongo --shell gutenberg group.js
+
+albo tak:
+
+    :::bash
+    mongo --shell gutenberg
+    > load('group.js')
 
 
-## Zadanie 1
+W pliku *src/mongo/shell/utils.js* zdefiniowano
+wiele użytecznych funkcji, na przykład:
 
+    :::js
+    Array.unique([1, 4, 2, 1, 4]);  //=> [1, 4, 2]
+    Array.contains([1, 4, 2], 2);   //=> true
+    Array.sum([1, 1, 2]);           //=> 4
+    printjson({a: 1, b: "x"});
+    db.results.find({count: {$gt: 300}}).forEach(function(o) { printjson(o.letters); });
+
+
+## Zadanie 1, 2, 3, 4
+
+**TODO**
 
 
 ## Zadanie 5
