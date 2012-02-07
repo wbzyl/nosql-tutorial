@@ -8,8 +8,8 @@ Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących)
 
 ## Zadania na grupowanie
 
-W każdym zadaniu ograniczamy się do słów z książki
-„Idiota” F. Dostojewskiego.
+W każdym zadaniu ograniczamy się do wszystkich słów, ale bez
+„stopwords”, z książki „Idiota” F. Dostojewskiego.
 
 Zadanie 1. Ile jest słów zawierających daną literę?
 
@@ -27,7 +27,10 @@ samogłosek, itd.
 
 ## Funkcja agregująca *group*
 
-Jak działa funkcja *group* wyjaśnimy na prostym przykładzie:
+Jak działa funkcja *group* wyjaśnimy na trzech prostych przykładach.
+
+Grupowanie po atrybucie *para*: dla każdego akapitu, liczba słów,
+liczba liter oraz średnia długość słowa dla słów tego akapitu.
 
     :::js
     db.dostojewski.group({
@@ -62,7 +65,13 @@ Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
       "letters": ["g", "i", "m", "n", "o", "r"]     # sorted and unique
     }
 
-Zadanie dodatkowe: Który zestaw liter powtarza się najczęściej?
+Grupowanie po atrybucie *word*: dla każdego słowa, jego licznik wystąpień
+
+    :::js
+    TODO:
+
+Grupowanie po atrybucie *letters*: dla każdego zestawu liter,
+jego licznik wystąpień
 
     :::js group.js
     var res = db.dostojewski.group({
