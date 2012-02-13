@@ -29,8 +29,9 @@ want, in any way you want.
 [dokumentacja](http://mbostock.github.com/d3/api/),
 [przykłady](http://mbostock.github.com/d3/ex/).
 
-New York Times [Developer Network](http://developer.nytimes.com/) —
-zawiera przykłady tzw. faceted search.
+New York Times [Developer Network](http://developer.nytimes.com/);
+przykłady z [faceted search.](http://developer.nytimes.com/docs/article_search_api#h3-facets).
+
 [New York Times Infographics ](http://www.smallmeans.com/new-york-times-infographics/);
 zob. też [about](http://www.smallmeans.com/about/).
 
