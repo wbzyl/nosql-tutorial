@@ -21,9 +21,18 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 [Building a Search Engine](http://www.udacity.com/cs#101).
 Kurs „Building Web Applications” planowany jest w tym roku.
 
-[26.01.2012] [jSlate](http://jslate.com/) – Dashboarding with no restrictions.
+[26.01.2012] [jSlate](http://jslate.com/) – dashboarding with no restrictions.
 jSlate is a blank slate where you can track and visualize anything you
 want, in any way you want.
+
+[Data-Driven Documents](http://mbostock.github.com/d3/) z [d3.js](https://github.com/mbostock/d3):
+[dokumentacja](http://mbostock.github.com/d3/api/),
+[przykłady](http://mbostock.github.com/d3/ex/).
+
+New York Times [Developer Network](http://developer.nytimes.com/) —
+zawiera przykłady tzw. faceted search.
+[New York Times Infographics ](http://www.smallmeans.com/new-york-times-infographics/);
+zob. też [about](http://www.smallmeans.com/about/).
 
 [22.01.2012] Brett Kiefer.
 [The Trello Tech Stack](http://blog.fogcreek.com/the-trello-tech-stack/).
