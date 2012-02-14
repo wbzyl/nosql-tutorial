@@ -170,7 +170,7 @@ następujące rzeczy:
 Ponieważ katalogi, te nie istnieją, Tworzymy je:
 
     mkdir $HOME/.data/var/lib/couchdb/ -p
-    mkdir $HOME/.data/var/log/couchdb/
+    mkdir $HOME/.data/var/log/couchdb/ -p
 
 **Dwie uwagi**
 
