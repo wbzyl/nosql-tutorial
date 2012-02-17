@@ -82,6 +82,11 @@ Dane z katastrofami zawierają następujące pola:
 </tbody>
 </table>
 
+Na Infochimps znajdziemy dużo interesujących danych, na przykład:
+
+* [The First Billion Digits of Pi](http://www.infochimps.com/datasets/the-first-billion-digits-of-pi)
+* [Word List - 350,000+ Simple English Words (Excel readable)](http://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable)
+
 
 <h2 class="clear">CouchDB</h2>
 
