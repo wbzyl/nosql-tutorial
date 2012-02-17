@@ -21,15 +21,69 @@ Typowe zastosowania dokumentowych baz danych to:
 * Help/Reference Desk
 * CRM(?)
 
+Typowe zastosowania baz klucz-wartość to:
 
-## Zaczynamy
+* …
 
-A to co za zadanie?
+Typowe zastosowania grafowych baz danych to:
+
+* …
+
+
+## A to co za zadanie?
 
 {%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
 
+Zaczynamy od pobrania danych o pojawieniach się UFO w USA
+oraz o katastrofach:
 
-## CouchDB
+    git clone git://sigma.ug.edu.pl/~wbzyl/infochimps.git
+
+Dane pochodzą z serwisu [Infochimps](http://www.infochimps.com/).
+Dane o UFO zostały „cleaned up”. Dane są zapisane w formacie TSV.
+
+Zapisać dane w jednej z baz: Elasticsearch albo MongoDB, albo CouchDB.
+Następnie wyeksportować z tej bazy dane do pliku w formacie JSON.
+Na koniec zapisać dane w formacie w JSON w pozostałych dwóch bazach.
+
+### Krótkie informacje o danych
+
+Dane o UFO zawierają następujące pola:
+
+    DateOccurred, DateReported, Location, ShortDescription,
+    Duration, LongDescription, USCity, USState, YearMonth
+
+Dane z katastrofami zawierają następujące pola:
+
+<table>
+<colgroup>
+  <col width="150px">
+  <col width="450px">
+</colgroup>
+<tbody>
+<tr><th>Start      <td>The date which the disaster began
+<tr><th>End        <td>The date which the disaster ended
+<tr><th>Country    <td>Country(ies) in which the disaster has occurred
+<tr><th>Location   <td>A sub-location classification if available
+<tr><th>Type       <td>The type of disaster according to pre-defined classification
+                   (Geophysical, Meteorological, Hydrological, Climatological, Biological)
+<tr><th>Sub_Type   <td>Further classification of the type of disaster
+<tr><th>Name       <td>The name of the disaster if available
+<tr><th>Killed     <td>Persons confirmed as dead and persons missing and presumed dead
+                   (official figures when available)
+<tr><th>Affected   <td>Total of people injured, homeless, and affected. Where
+                   affected means people requiring immediate assistance during a period
+                   of emergency;it can also include displaced or evacuated people
+<tr><th>Cost       <td>Several institutions have developed methodologies to quantify
+                   these losses in their specific domain. However, there is no standard
+                   procedure to determine a global figure for economic impact. Estimated
+                   damage are given (000’)
+<tr><th>Id         <td>A unique identifier for the disaster
+</tbody>
+</table>
+
+
+<h2 class="clear">CouchDB</h2>
 
 <blockquote>
  <p>
@@ -56,13 +110,21 @@ Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
 Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
 Niektóre pola są puste. Uwzględnić to w rachunkach.
 
-2\. Wizualizacja przykładowych danych.
+
+## Przykładowe wizualizacje
+
+* [twistori](http://twistori.com/#i_wish)
+
+
+# TODO
+
+1\. Wizualizacja przykładowych danych.
 Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania…”.
 
-3\. [Anagram Finder](http://www.anagramfinder.net/).
+2\. [Anagram Finder](http://www.anagramfinder.net/).
 Dokumentacja [Anagram Finder: A Do-It-Yourself Little Big Data Project](http://www.databonanza.com/2011/09/anagram-finder-do-it-yourself-little.html). Napisać coś takiego w CouchDB? MongoDB?
 
-4\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
+2\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
 
 [streaming twitter into mongodb](http://eliothorowitz.com/post/459890033/streaming-twitter-into-mongodb):
@@ -100,12 +162,6 @@ in a SQL dialect.
 
 4\. [Building a Twitter Filter With Sinatra, Redis, and
 TweetStream](http://www.digitalhobbit.com/2009/11/08/building-a-twitter-filter-with-sinatra-redis-and-tweetstream/).
-
-Przykłady:
-
-* [cursebird](http://cursebird.com/)
-* [twistori](http://twistori.com/#i_wish)
-* [twatcher](http://twatcher.com/)
 
 Linki:
 
