@@ -150,6 +150,7 @@ Przykłady:
 * [D3 Tutorials](http://www.janwillemtulp.com/category/d3/) – d3.js
 * [Parallel Coordinates](http://vis.stanford.edu/protovis/ex/cars.html) – Protovis
 * [Stanford Dissertation Browser](http://nlp.stanford.edu/projects/dissertations/browser.html)
+* [Twistori](http://twistori.com/#i_wish)
 
 
 Różne:

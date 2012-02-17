@@ -100,7 +100,7 @@ Na Infochimps znajdziemy dużo interesujących danych, na przykład:
 1\. Baza (CouchDB) „książki” zawiera dokumenty z informacjami o książkach,
 na przykład:
 
-    :::javascript
+    :::javascript books
     {
       "_id": "3194d86ab7cb2c1465fa5fea901f4c55",
       "_rev": "1-2724eb06ca15197e71e13e1b46b75aee",
@@ -108,17 +108,16 @@ na przykład:
       "isbn13": "",
       "book_id": "100_shakespeare_films_a01"
     }
-    // http://sigma.ug.edu.pl:5984/ksiazki/3194d86ab7cb2c1465fa5fea901f4c55
+
+Bazę *books* oraz inne bazy można przeglądać (oraz replikować)
+w trakcie zajęć pod adresem:
+
+     http://wbzyl.inf.ug.edu.pl:5984/_utils/
 
 Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
 
 Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
 Niektóre pola są puste. Uwzględnić to w rachunkach.
-
-
-## Przykładowe wizualizacje
-
-* [twistori](http://twistori.com/#i_wish)
 
 
 # TODO
