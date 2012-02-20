@@ -73,9 +73,20 @@ Teraz kolej na instalację narzędzia [NPM](http://npmjs.org/)
 
 Trzy przykładowe instalacje:
 
-* CoffeScript
+* CoffeeScript
 * CouchApp
 * Kanso
+
+Użyteczne moduły:
+
+* [Cradle](https://github.com/cloudhead/cradle) – a high-level CouchDB client for NodeJS
+* [EJS](https://github.com/visionmedia/ejs) – embedded JavaScript templates for node;
+  Express compliant
+* [Express](https://github.com/visionmedia/express) – Sinatra inspired web development
+  framework for NodeJS; insanely fast, flexible, and simple
+
+Przykładowa aplikacja [Express & Google Maps](https://github.com/wbzyl/example_geohash_to_location)
+(fork repo [Micka Thompsona](https://github.com/dthompson/example_geohash_to_location)).
 
 
 ### CoffeScript
