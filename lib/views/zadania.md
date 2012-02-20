@@ -72,7 +72,7 @@ Skrypt ten jest zmienioną wersją skryptu D. Thompsona:
     for(p in flickr.photos.photo) {
       photo = flickr.photos.photo[p];
       photo.geometry = {"type": "Point", "coordinates": [photo.longitude, photo.latitude]};
-      photo.image_url_small =
+      photo.image_url_medium =
         "http://farm"+photo.farm+".static.flickr.com/"+photo.server+"/"+photo.id+"_"+photo.secret+"_m.jpg";
 
       db.save(photo.id, photo, function(er, ok) {
