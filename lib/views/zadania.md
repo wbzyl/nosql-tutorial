@@ -56,7 +56,7 @@ wykonujemy:
     :::bash terminal
     node import.js
 
-Skrypt ten jest nieco zmienioną wersją skryptu D. Thompsona:
+Skrypt ten jest zmienioną wersją skryptu D. Thompsona:
 
     :::js import.js
     var cradle = require("cradle")
