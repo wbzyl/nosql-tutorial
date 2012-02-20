@@ -34,8 +34,10 @@ Typowe zastosowania grafowych baz danych to:
 
 {%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
 
-Zaczynamy od pobrania danych o pojawieniach się UFO w USA
-oraz o katastrofach:
+Zaczynamy od pobrania danych w formacie TSV o pojawieniach się UFO w USA,
+dane o katastrofach, oraz danych tekstowych ze stacji meteo na lotnisku w Rębiechowie
+i danych w formacie [GPX](http://www.topografix.com/GPX/1/0/gpx.xsd)
+z wycieczki w okolicach Zakopanego:
 
     git clone git://sigma.ug.edu.pl/~wbzyl/infochimps.git
 
