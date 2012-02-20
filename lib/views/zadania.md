@@ -37,7 +37,8 @@ Typowe zastosowania grafowych baz danych to:
 Zaczynamy od pobrania danych w formacie TSV o pojawieniach się UFO w USA,
 dane o katastrofach, oraz danych tekstowych ze stacji meteo na lotnisku w Rębiechowie
 i danych w formacie [GPX](http://www.topografix.com/GPX/1/0/gpx.xsd)
-z wycieczki w okolicach Zakopanego:
+z wycieczki w okolicach Zakopanego, dane w formacie JSON zawierający uri zdjęć
+ze współrzędnymi GEO:
 
     git clone git://sigma.ug.edu.pl/~wbzyl/infochimps.git
 
@@ -48,7 +49,42 @@ Zapisać dane w jednej z baz: Elasticsearch albo MongoDB, albo CouchDB.
 Następnie wyeksportować z tej bazy dane do pliku w formacie JSON.
 Na koniec zapisać dane w formacie w JSON w pozostałych dwóch bazach.
 
-### Krótkie informacje o danych
+W repozytorium jest też skrypt importujący dane *flickr_search.json*
+do bazy CouchDB. Najpierw tworzymy w Futonie bazę *tatry*, a następnie
+wykonujemy:
+
+    :::bash terminal
+    node import.js
+
+Skrypt ten jest nieco zmienioną wersją skryptu D. Thompsona:
+
+    :::js import.js
+    var cradle = require("cradle")
+    , util = require("util")
+    , fs = require("fs");
+
+    var connection = new(cradle.Connection)("localhost", 5984);
+    var db = connection.database('tatry');
+
+    data = fs.readFileSync("flickr_search.json", "utf-8");
+    flickr = JSON.parse(data);
+
+    for(p in flickr.photos.photo) {
+      photo = flickr.photos.photo[p];
+      photo.geometry = {"type": "Point", "coordinates": [photo.longitude, photo.latitude]};
+      photo.image_url_small =
+        "http://farm"+photo.farm+".static.flickr.com/"+photo.server+"/"+photo.id+"_"+photo.secret+"_m.jpg";
+
+      db.save(photo.id, photo, function(er, ok) {
+        if (er) {
+          util.puts("Error: " + er);
+          return;
+        }
+      });
+    }
+
+
+### Nieco informacji o danych
 
 Dane o UFO zawierają następujące pola:
 
