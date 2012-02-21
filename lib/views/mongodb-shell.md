@@ -197,7 +197,7 @@ Pobrać ze strony [MongoDB Quick Reference Cards](http://www.10gen.com/reference
 
 1\. Na przykładzie przykładowej kolekcji *Animals* przerobić polecenia z tej ściągi.
 
-2.\ Wejść na stronę [Handy resources for learning MongoDB](http://mongly.com).
+2\. Wejść na stronę [Handy resources for learning MongoDB](http://mongly.com).
 Kliknąć w „The MongoDB Interactive Tutorial”. Przejść cały samouczek.
 
 3\. Cursors. Queries, limits, skips. Przejrzeć [dokumentację](http://www.mongodb.org/display/DOCS/Home).
