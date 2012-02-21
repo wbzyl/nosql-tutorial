@@ -7,8 +7,8 @@
 
 Zanim uruchomimy powłokę, musimy uruchomić serwer:
 
-    mongo.sh server 27017
-    mongo.sh shell 27017
+    mongod.sh 27017
+    mongo --port 27017
       MongoDB shell version: 1.9.0
       connecting to: 127.0.0.1:27017/test
     >
@@ -156,7 +156,7 @@ Importujemy JSON-y do bazy:
 
 Sprawdzamy w powłoce co się zaimportowało:
 
-    $ mongo.sh shell 27017
+    $ mongo --port 27017
     db.animals.find()
     { "_id" : ObjectId("4dc2a101a558cc3ecba98584"), "name" : "Maksiu", "email" : "maxymilian@psy.pl", "dob" : ISODate("2000-01-31T00:00:00Z") }
     { "_id" : ObjectId("4dc2a3f4a558cc3ecba98588"), "name" : "Cwaniak", "email" : "scooby@dogs.com", "dob" : ISODate("2006-06-05T23:00:00Z") }

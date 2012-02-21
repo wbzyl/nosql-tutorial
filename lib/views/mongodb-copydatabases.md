@@ -23,12 +23,3 @@ Oczywiście przed kopiowaniem należy uruchomić MongoDB na Tao:
     sudo systemctl status mongod.service
 
 Zob. Fedora 15 [SysVinit to Systemd Cheatsheet](http://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet).
-
-
-## Jak to działa w Ruby?
-
-Potrzebujemy drivera:
-
-    gem install mongo mongo_ext
-
-**TODO**
