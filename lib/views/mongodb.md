@@ -25,17 +25,6 @@ MongoDB is written in C++ and offers the following features:
 * Query profiling
 * Efficient storage of binary data including large objects (e.g. photos and videos)
 
-Dlaczego MongoDB:
-
-* [MongoDB: An Introduction](http://www.slideshare.net/cwestin63/mongodb-an-introduction-june2011) –
-  the whys of non-relational databases
-* [Availability in Globally Distributed Storage Systems](http://research.google.com/pubs/pub36737.html)
-  ([pdf](http://research.google.com/pubs/archive/36737.pdf))
-
-Warto przeczytać:
-
-* [Comparing MongoDB and CouchDB](http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB).
-
 
 ## Samouczki, ściągi itp.
 
@@ -57,10 +46,8 @@ Warto przeczytać:
 * [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
 * [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
 * [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
-* [Journaling / Durability](http://www.mongodb.org/display/DOCS/Journaling)
 
 K. Banker, MongoDB Aggregation:
-
 
 * [Counting and Grouping](http://kylebanker.com/blog/2009/11/mongodb-count-group/)
 * [Grouping Elaborated](http://kylebanker.com/blog/2009/11/mongodb-advanced-grouping/)
