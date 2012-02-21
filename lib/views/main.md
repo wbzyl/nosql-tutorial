@@ -20,7 +20,7 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 [20.02.2012] Rzeczy do zreferowania na wykładach:
 
 * Hadoop
-* Baza grafowa Neo4j
+* Baza grafowa Neo4j (2 referaty)
 * Konfiguracja MongoDB (sharding, replica sets)
 * ElasticSearch / Konfiguracja ElasticSearch
 
