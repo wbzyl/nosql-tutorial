@@ -5,11 +5,7 @@
 * [mongo](https://github.com/mongodb/mongo-ruby-driver)
 * [samouczek](http://api.mongodb.org/ruby/current/)
 
-Instalacja:
+Instalacja drivera mongo:
 
     :::bash
     gem install mongo bson_ext
-
-## Zaczynamy
-
-**TODO**

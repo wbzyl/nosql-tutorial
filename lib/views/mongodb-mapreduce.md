@@ -94,7 +94,7 @@ Zobacz też implementację metody
 [convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
 
 
-## Dlaczego mapReduce
+## Dlaczego MapReduce
 
 Te liczby powinny coś wyjaśnić (dla przypomnienia 1 ns = 10^-9 s):
 
