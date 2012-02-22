@@ -32,7 +32,7 @@ Konsola mongo jest interpreterem języka Javascript:
 Możemy na konsoli wpisać kod funkcji:
 
     :::js
-    function factorial(n) {
+    function factorial(n) { 
       if (n <= 1) return 1;
       return n * factorial(n - 1);
     }

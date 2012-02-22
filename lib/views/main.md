@@ -3,7 +3,7 @@
 <blockquote>
  {%= image_tag "/images/data_perspective.jpg", :alt => "[data perspective]" %}
  <p>
-   Jeśli coś widzisz źle, zmień perspektywę.
+   Jeśli coś widzisz źle, to zmień perspektywę.
  </p>
  <p class="author">[stare powiedzenie]</p>
 </blockquote>
@@ -106,7 +106,7 @@ Wdrażamy aplikację „EST” na Sigmie.
 
 <blockquote>
  <p>
-   Humphry Davy zauważył, że gdy był wpływem działania gazu rozweselającego
+   Humphry Davy zauważył, że gdy był pod wpływem działania gazu rozweselającego
    przestał go boleć ząb mądrości. Niestety, nie wyciągnął
    logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
    Przez następne dwa pokolenia ludzie cierpieli na stołach
