@@ -1,4 +1,4 @@
-#### {% title "Oswajamy MongoDB" %}
+#### {% title "Co to jest MongoDB?" %}
 
 <blockquote>
  {%= image_tag "/images/datacharmer.gif", :alt => "[Data Charmer]" %}

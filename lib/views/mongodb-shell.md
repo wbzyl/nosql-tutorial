@@ -1,22 +1,25 @@
-#### {% title "MongoDB shell" %}
+#### {% title "Interaktywna powłoka mongo" %}
 
 <blockquote>
  {%= image_tag "/images/mongo-tree.jpg", :alt => "[Mongo tree]" %}
  <p class="author">mongo tree (orzech czarny)</p>
 </blockquote>
 
-Zanim uruchomimy powłokę, musimy uruchomić serwer:
+„The MongoDB interactive shell” to po polsku „powłoka (konsola ?) mongo”.
 
+Przed wejściem na *konsolę mongo*, musimy uruchomić serwer *mongod*:
+
+    :::bash terminal
     mongod.sh 27017
     mongo --port 27017
       MongoDB shell version: 1.9.0
       connecting to: 127.0.0.1:27017/test
     >
 
-Powyżej serwer nasłuchuje na domyślnym porcie 27017.
+Domyślnie serwer nasłuchuje na porcie 27017.
 Oczywiście możemy wybrać inny port.
 
-Połoka MongoDB jest interpreterem języka Javascript:
+Konsola mongo jest interpreterem języka Javascript:
 
     > 2+2
     4
@@ -26,42 +29,43 @@ Połoka MongoDB jest interpreterem języka Javascript:
     512
     >
 
-Możemy napisać funkcję i ją wykonać:
+Możemy na konsoli wpisać kod funkcji:
 
-    > function factorial(n) {
-    ... if (n <= 1) return 1;
-    ... return n * factorial(n - 1);
-    ... }
-    >
+    :::js
+    function factorial(n) {
+      if (n <= 1) return 1;
+      return n * factorial(n - 1);
+    }
 
-(wielokropek `...` jest wypisywany przez powłokę)
+i następnie ją wykonać:
 
-    > factorial(10)
+    :::js
+    factorial(10)
     3628800
 
 Pomoc możemy uzyskać na kilka sposobów. Na początek
 wpiszemy `help`:
 
-    > help
-	db.help()                    help on db methods
-	db.mycoll.help()             help on collection methods
-	rs.help()                    help on replica set methods
-	help admin                   administrative help
-	help connect                 connecting to a db help
-	help keys                    key shortcuts
-	help misc                    misc things to know
-	help mr                      mapreduce
+    help
+      db.help()                    help on db methods
+      db.mycoll.help()             help on collection methods
+      rs.help()                    help on replica set methods
+      help admin                   administrative help
+      help connect                 connecting to a db help
+      help keys                    key shortcuts
+      help misc                    misc things to know
+      help mr                      mapreduce
 
-	show dbs                     show database names
-	show collections             show collections in current database
-	show users                   show users in current database
-	show profile                 show most recent system.profile entries with time >= 1ms
-	use <db_name>                set current database
-	db.foo.find()                list objects in collection foo
-	db.foo.find({ a : 1 })       list objects in foo where a == 1
-	it                           result of the last line evaluated; use to further iterate
-	DBQuery.shellBatchSize = x   set default number of items to display on shell
-	exit                         quit the mongo shell
+      show dbs                     show database names
+      show collections             show collections in current database
+      show users                   show users in current database
+      show profile                 show most recent system.profile entries with time >= 1ms
+      use <db_name>                set current database
+      db.foo.find()                list objects in collection foo
+      db.foo.find({ a : 1 })       list objects in foo where a == 1
+      it                           result of the last line evaluated; use to further iterate
+      DBQuery.shellBatchSize = x   set default number of items to display on shell
+      exit                         quit the mongo shell
 
 Na razie jesteśmy podłączeni do bazy *test*.
 Oznacza to, że zmienna *db* wskazuje na bazę *test*.
@@ -107,7 +111,7 @@ Uwaga: w przykładach poniżej pomijam znak zachęty `>`.
     contact.name = "Batman"
     delete contact.email
     contact.emails = ["burek@psy.pl", "batman@dogs.pl"]
-    db.dog.update( {name: "Batman"}, contact )  // raczej replace
+    db.dogs.update( {name: "Burek"}, contact )  // raczej replace
 
 Do update korzystamy z tzw. *modifiers*:
 
@@ -147,7 +151,7 @@ wpisujemy obiekty, **po jednym w wierszu**:
     { "name": "Cwaniak",  "email": "scooby@dogs.com",    "dob": { "$date": 1149548400000 } }
     { "name": "Bazylek",  "email": "bazyl@koty.pl",      "dob": { "$date": 1119567600000 } }
     { "name": "Benek",    "email": "benus@koty.pl",      "dob": { "$date": 1149548400000 } }
-    { "name": "Behemoth", "email": "behemotek@cats.com", "dob": { "$date": 1220223600000 } }
+    { "name": "Behemoth", "email": "behemotek@cats.ru",  "dob": { "$date": 1220223600000 } }
     { "name": "Profesor", "email": "profi@cats.com",     "dob": { "$date": 1220223600000 } }
 
 Importujemy JSON-y do bazy:

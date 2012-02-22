@@ -85,8 +85,8 @@ Wdrażamy aplikację „EST” na Sigmie.
 
 ## MongoDB
 
-1. {%= link_to "Oswajamy MongoDB", "/mongodb" %}
-1. {%= link_to "Powłoka MongoDB", "/mongodb-shell" %}
+1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
+1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "Mongo – Ruby driver", "/mongo" %}
 1. {%= link_to "Język zapytań", "/mongodb-queries" %}
