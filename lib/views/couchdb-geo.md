@@ -170,7 +170,7 @@ Oto wynik:
         image_url_medium: "http://farm8.static.flickr.com/7064/6912045953_2ef3dbeb20_m.jpg"
     }
 
-Po przekilkaniu powyższego url zobaczymy fajne zdjęcie.
+Po przeklikaniu powyższego url zobaczymy fajne zdjęcie.
 A na stronie:
 
     http://www.flickr.com/services/api/explore/flickr.places.getInfo
