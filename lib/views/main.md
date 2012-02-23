@@ -94,8 +94,6 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 
-*TODO:* Sharding, Replica Sets.
-
 <!--
 1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
 1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
@@ -133,6 +131,7 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
+1. {%= link_to "GeoCouch", "/couchdb-geo" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
 1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
