@@ -106,11 +106,11 @@ Wdrażamy aplikację „EST” na Sigmie.
 
 <blockquote>
  <p>
-   Humphry Davy zauważył, że gdy był pod wpływem działania gazu rozweselającego
+   Humphry Davy zauważył, że gdy był pod wpływem gazu rozweselającego,
    przestał go boleć ząb mądrości. Niestety, nie wyciągnął
    logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
    Przez następne dwa pokolenia ludzie cierpieli na stołach
-   operacyjnych. Znieczulenie poraz pierwszy zastosował
+   operacyjnych. Znieczulenie po raz pierwszy zastosował
    dentysta Horace Wells dopiero w 1884 roku.
  </p>
  <p>
@@ -120,7 +120,7 @@ Wdrażamy aplikację „EST” na Sigmie.
    (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
    stanowiła zasadniczą część <b>umiejętności zawodowych</b>
    chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
-   <b>zmiana paradygmatu</b>
+   <b>zmiana paradygmatu</b>.
  </p>
  <p class=""author">— S. Snow, Operations without pain</p>
 </blockquote>
