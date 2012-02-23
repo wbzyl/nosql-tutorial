@@ -360,3 +360,46 @@ A na stronie:
     http://www.flickr.com/services/api/explore/flickr.places.getInfo
 
 możemy przeklikać *place_id*, aby dowiedzieć się co to za miejsce.
+
+Spatial view:
+
+    :::js flickr.js
+    var couchapp = require('couchapp');
+
+    ddoc = {
+      _id: '_design/photos'
+      , views:   {}
+      , lists:   {}
+      , shows:   {}
+      , spatial: {}
+    }
+    module.exports = ddoc;
+
+    ddoc.spatial.points = function(doc) {
+      if (doc.title) {
+        emit(doc.geometry, {title: doc.title, image: doc.image_url_medium});
+      };
+    };
+
+Przykładowe zapytanie:
+
+    :::bash
+    http://localhost:5984/tatry/_design/photos/_spatial/points?bbox=0,0,180,90&limit=2
+
+Dopisujemy funkcję listową:
+
+    :::js
+    ddoc.lists.wkt = function(head, req) {
+      var row;
+      start({
+        "headers": { "Content-Type": "text/html" }
+      });
+      while (row = getRow()) {
+        // log(JSON.stringify(row));
+        send("<p><a href='" + row.value.image + "'>" + row.value.title + "</a>\n" );
+      };
+    };
+
+Przykładowe zapytanie:
+
+    http://localhost:5984/tatry/_design/photos/_spatial/_list/wkt/points?bbox=0,0,180,90
