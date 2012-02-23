@@ -1,0 +1,5 @@
+{
+    "spatial": {
+        "points":  "function(doc) {\n if (doc.loc) {\n emit({\n type: \"Point\",\n coordinates: [doc.loc[0], doc.loc[1]]\n }, [doc._id, doc.loc]);\n }};"
+    }
+}
