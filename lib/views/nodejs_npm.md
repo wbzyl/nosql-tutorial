@@ -32,7 +32,7 @@ Instalujemy NodeJS:
       ...
       v0.7.1
 
-Wybieramy ostatnią stabilną wersję (parzysty numer 'minor'):
+Wybieramy ostatnią stabilną wersję (parzysty numer ‚minor’):
 
     :::bash
     git checkout v0.6.9

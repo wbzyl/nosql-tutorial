@@ -1,5 +1,9 @@
 #### {% title "GeoCouch" %}
 
+<blockquote>
+ {%= image_tag "/images/playing_geohash.jpg", :alt => "[Playing Geohash]" %}
+</blockquote>
+
 Zaczniemy od prostego przykładu z funkcją *spatial*
 dla [GeoCouch](https://github.com/couchbase/geocouch).
 
@@ -12,7 +16,8 @@ i zapisania w niej współrzędnych kilku miejsc.
 Dane zapiszemy hurtem w bazie:
 
     :::bash
-    curl -X POST -H "Content-Type: application/json" --data @places.json http://localhost:5984/places/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" \
+      --data @places.json http://localhost:5984/places/_bulk_docs
 
 Link do użytego powyżej pliku {%= link_to "places.json", "/node/db/places.json" %}.
 
