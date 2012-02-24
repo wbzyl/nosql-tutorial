@@ -30,6 +30,15 @@ Typowe zastosowania grafowych baz danych to:
 * …
 
 
+<blockquote>
+ {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
+ <p>
+  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
+  Napisz najprawdziwsze zdanie, jakie znasz.
+ </p>
+ <p class="author">— Ernest Hemingway</p>
+</blockquote>
+
 ## A to co za zadanie?
 
 {%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}

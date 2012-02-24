@@ -1,12 +1,15 @@
 #### {% title "NodeJS i NPM" %}
 
 <blockquote>
- {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
+ {%= image_tag "/images/oil-paint.jpg", :alt => "[oil paint]" %}
  <p>
-  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
-  Napisz najprawdziwsze zdanie, jakie znasz.
+   Keep in mind that it is also very easy to hold a paintbrush in
+   your hand, and swirl oil based paint on a canvas. Unfortunately,
+   Rembrandts and Degas only come around every once in a while. The
+   mechanics of software development are easy to learn, but incredibly
+   difficult to master.
  </p>
- <p class="author">— Ernest Hemingway</p>
+ <p class="author">— Steve Brownlee</p>
 </blockquote>
 
 Na dobry początek kilka odsyłaczy:

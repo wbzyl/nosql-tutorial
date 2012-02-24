@@ -1,11 +1,12 @@
 # Bazy NoSQL
 
 <blockquote>
- {%= image_tag "/images/data_perspective.jpg", :alt => "[data perspective]" %}
+ {%= image_tag "/images/alan-kay.jpg", :alt => "[Alan Kay]" %}
  <p>
-   Jeśli coś widzisz źle, to zmień perspektywę.
+   Once you have something that grows faster than education grows,
+   you’re always going to get a pop culture.
  </p>
- <p class="author">[stare powiedzenie]</p>
+ <p class="author">– Alan Kay</p>
 </blockquote>
 
 Na początek polecam lekturę artykułu [Big Data is the Answer — What was the Question?](http://www.saama.com/blog/bid/76211/Big-Data-is-the-Answer-What-was-the-Question)
@@ -199,16 +200,26 @@ Wdrażamy aplikację „EST” na Sigmie.
 * 0xfe. [K-Means Clustering and Art](http://0xfe.blogspot.com/2011/12/k-means-clustering-and-art.html)
 
 
+<blockquote>
+ {%= image_tag "/images/data_perspective.jpg", :alt => "[data perspective]" %}
+ <p>
+   Jeśli coś widzisz źle, to zmień perspektywę.
+ </p>
+ <p class="author">[stare powiedzenie]</p>
+</blockquote>
+
 # Wasze prezentacje
 
 * Elasticsearch –
-  import bazy do elasticsearch, połączenie z CouchDB
+  import bazy do elasticsearch, połączenie z CouchDB i MongoDB,
+  wyszukiwanie fasetowe
   (<i>T. Widanka</i>, <i>K. Pluszczewicz</i>, <i>B. Rożek</i>)
 * [Neo4j](http://neo4j.org/) – instalacja na Sigmie, przykład objaśniający
   ideę grafowych baz danych (diagramy, [narzędzie do rysowania](https://cacoo.com/))
   (<i>M. Kaliszuk, M. Kaszałowicz, M. Tupacz, M. Maszkiewicz</i>)
-* [Hadoop](http://hadoop.apache.org/) – instalacja na Sigmie, przykład objaśniający jak to działa (diagramy),
+* [Hadoop](http://hadoop.apache.org/) – instalacja na Sigmie,
+  przykład objaśniający jak to działa (diagramy),
   do czego można użyć hadoopa, hadoop mapreduce w przykładach
   (<i>Sz. Szypulski, M. Chadaj, B. Drzazgowski, D. Zmitrowicz</i>)
-* Narzędzia do wizualizacji baz danych – zacząć od projektu [Simile](http://simile.mit.edu/),
-  przykłady tylko dla JSONów (<em>M. Rusajczyk, M. Pętlicki, M. Smolinski</em>)
+* Narzędzia do wizualizacji baz danych
+  (<em>M. Rusajczyk, M. Pętlicki, M. Smolinski</em>)
