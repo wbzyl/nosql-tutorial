@@ -4,6 +4,11 @@
  {%= image_tag "/images/playing_geohash.jpg", :alt => "[Playing Geohash]" %}
 </blockquote>
 
+[2012.02.24] Być może, też użyteczne poza Pythonowym *CouchApps*:
+
+* [Helper Functions for GeoCouch](https://github.com/maxogden/geocouch-utils)
+
+
 Zaczniemy od prostego przykładu z funkcją *spatial*
 dla [GeoCouch](https://github.com/couchbase/geocouch).
 
@@ -17,7 +22,7 @@ Dane zapiszemy hurtem w bazie:
 
     :::bash
     curl -X POST -H "Content-Type: application/json" \
-      --data @places.json http://localhost:5984/places/_bulk_docs
+     --data @places.json http://localhost:5984/places/_bulk_docs
 
 Link do użytego powyżej pliku {%= link_to "places.json", "/node/db/places.json" %}.
 
