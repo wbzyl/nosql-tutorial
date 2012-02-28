@@ -64,7 +64,7 @@ module WB
       extname = params[:captures][2]
       filename = name + "." + extname
 
-      @title =  'WB@HCJ' + dirname.split('/').join(' » ')
+      @title =  'WB@NoSQL' + dirname.split('/').join(' » ')
 
       @filename = File.expand_path(File.join(File.dirname(__FILE__), 'x', dirname, filename))
 

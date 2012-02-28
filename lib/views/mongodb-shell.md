@@ -90,13 +90,11 @@ Uwaga: w przykładach poniżej pomijam znak zachęty `>`.
 **Create:**
 
     :::javascript
-    contact = { "name": "Burek", "email": "burasek@psy.pl", "dob": new Date(2000,0,31,1) }
+    contact = { "name": "Burek", "email": "burasek@psy.pl", "dob": new Date(2000,0,31) } # to be converted to UTC
     contact.name
     contact.dob
     contact.dob.valueOf()
     db.dogs.insert(contact)
-
-*Uwaga:* Bez *1* w dacie funkcja *Date* wylicza błędnie daty (MongoDB, v1.9.0).
 
 **Find:**
 
@@ -156,6 +154,7 @@ wpisujemy obiekty, **po jednym w wierszu**:
 
 Importujemy JSON-y do bazy:
 
+    :::bash
     mongoimport --host localhost --db test --collection animals --type json --file animals.json --
 
 Sprawdzamy w powłoce co się zaimportowało:

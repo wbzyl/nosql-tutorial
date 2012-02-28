@@ -9,6 +9,7 @@ serwera na drugi: *copyDatabase* oraz *cloneDatabase*.
 
 Druga metoda jest łatwiejsza w użyciu; na przykład:
 
+    :::js
     use books
     db.cloneDatabase("tao.inf.ug.edu.pl")
       { "ok" : 1 }
@@ -19,6 +20,7 @@ kopiuje bazę *books* z podanego serwera.
 
 Oczywiście przed kopiowaniem należy uruchomić MongoDB na Tao:
 
+    :::bash
     sudo systemctl start mongod.service
     sudo systemctl status mongod.service
 
