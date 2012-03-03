@@ -645,6 +645,11 @@ Sprawdzamy status MongoDB w taki sposób:
     systemctl status mongod.service
 
 
+### Fedora 15
+
+* {%= link_to "/etc/init.d/mongodb", "/fedora/f15/mongodb.init" %}
+
+
 ## Linki
 
 * [MongoDB](http://www.mongodb.org/)
