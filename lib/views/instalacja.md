@@ -250,23 +250,24 @@ Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
 
 Często się zdarzało, że nie działał replikator.
-Spróbujmy zreplikować jakąś bazę z serwera *Tao*, na przykład
+Spróbujmy zreplikować jakąś bazę z bazy
+CouchDB na *Tao*, na przykład
 
-    http://tao.inf.ug.edu.pl:5984/rock
+    http://couch.inf.ug.edu.pl/rock
 
 Następnie replikujemy tę bazę lokalnie.
 
 Replikację możemy wyklikać w zakładce Replication *Futona*:
 
     :::json
-    {"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}
+    {"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}
 
 albo za pomocą programu *curl*:
 
     :::bash
 
     curl -X POST http://127.0.0.1:5984/_replicate -H 'Content-Type: application/json' \
-       -d '{"source":"http://tao.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
+       -d '{"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}'
 
 Możemy też uruchamiać CouchDB via skrypt *etc/rc.d/couchdb*:
 
@@ -610,6 +611,38 @@ Sprawdzamy jak to działa:
     logrotate -d /etc/logrotate.d/mongodb
 
 I to wszystko!
+
+
+## MongoDB na Fedorze 16
+
+[2012.03.03] Aktualna wersja, to 2.0.2. Do pobrania
+z [RPM Find](ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/m/mongodb-2.0.2-10.fc18.src.rpm).
+Po wykonaniu polecenia:
+
+    rpmbuild --rebuild mongodb-2.0.2-10.fc18.src.rpm
+
+tworzone są następujące paczki:
+
+    mongodb-2.0.2-10.fc16.x86_64.rpm
+    libmongodb-2.0.2-10.fc16.x86_64.rpm
+    mongodb-devel-2.0.2-10.fc16.x86_64.rpm
+    mongodb-server-2.0.2-10.fc16.x86_64.rpm
+
+(razem ok. 58 MB)
+
+Po zainstalowaniu tych paczek, możemy
+się przyjrzeć jak skonfigurowane jest MongoDB na Fedorze.
+W tym celu przeglądamy następujące pliki:
+
+* {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
+ dopisałem *rest=true* oraz *nohttpinterface=false*
+* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod.sysconfig" %}
+* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb.logrotate" %}
+* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod.service" %}
+
+Sprawdzamy status MongoDB w taki sposób:
+
+    systemctl status mongod.service
 
 
 ## Linki
