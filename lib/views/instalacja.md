@@ -917,6 +917,12 @@ Na przykład na Sigmie to katalog */home/inf/wbzyl*.
 W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
 
 
+## Running ElasticSearch as a non-root-user
+
+* Clinton Gormley.
+  [Running ElasticSearch as a non-root-user ](http://www.elasticsearch.org/tutorials/2011/02/22/running-elasticsearch-as-a-non-root-user.html)
+
+
 ## Testowanie instalacji
 
 Wszystko działa? ElasticSearch nasłuchuje na porcie 9200. Sprawdźmy to:
