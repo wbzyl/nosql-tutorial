@@ -636,9 +636,9 @@ W tym celu przeglądamy następujące pliki:
 
 * {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
  dopisałem *rest=true* oraz *nohttpinterface=false*
-* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod.sysconfig" %}
-* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb.logrotate" %}
-* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod.service" %}
+* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
+* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
+* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod-service.txt" %}
 
 Sprawdzamy status MongoDB w taki sposób:
 
