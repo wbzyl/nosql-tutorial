@@ -72,7 +72,7 @@ Domyślne ustawienia są inne, dlatego demony baz danych
 uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
-* [MongoDB](xxx) – TODO: uaktualnić
+* [MongoDB](https://gist.github.com/1967489)
 * [ElasticSearch](https://gist.github.com/1687963)
 
 <!--
@@ -265,40 +265,20 @@ Replikację możemy wyklikać w zakładce Replication *Futona*:
 albo za pomocą programu *curl*:
 
     :::bash
-
     curl -X POST http://127.0.0.1:5984/_replicate -H 'Content-Type: application/json' \
        -d '{"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}'
 
-Możemy też uruchamiać CouchDB via skrypt *etc/rc.d/couchdb*:
-
-    ./couchdb help
-
-Wcześniej w kodzie skryptu wykomentowujemy kilka wierszy
-(możemy też dopisać do `COUCHDB_OPTIONS` opcję
-`-A $HOME/.data/etc/couchdb/local.d`):
+Możemy też uruchamiać demona couchdb za pomocą skryptu
+{%= link_to "/etc/init.d/couchdb", "/fedora/f15/couchdb.init" %}
 
     :::bash
-    run_command () {
-        command="$1"
-        if test -n "$COUCHDB_OPTIONS"; then
-            command="$command $COUCHDB_OPTIONS"
-        fi
-        # if test -n "$COUCHDB_USER"; then
-        #     if su $COUCHDB_USER -c "$command"; then
-        #         return $SCRIPT_OK
-        #     else
-        #         return $SCRIPT_ERROR
-        #     fi
-        # else
-            if $command; then
-                return $SCRIPT_OK
-            else
-                return $SCRIPT_ERROR
-            fi
-        # fi
-    }
+    /etc/init.d/couchdb help
 
-Czy można się obejść bez wykomentowywania tego kodu?
+Wcześniej musimy założyć dwa katalogi, an PID oraz LOCK:
+
+    :::bash
+    mkdir -p $HOME/.data/var/run/couchdb/
+    mkdir -p $HOME/.data/var/lock/subsys/couchdb
 
 
 ## Gdzie są moje bazy?
@@ -359,6 +339,7 @@ Sprawdamy jak to będzie działać:
 
 I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
+
 
 ## Instalujemy rozszerzenie GeoCouch
 
@@ -619,6 +600,7 @@ I to wszystko!
 z [RPM Find](ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/m/mongodb-2.0.2-10.fc18.src.rpm).
 Po wykonaniu polecenia:
 
+    :::bash
     rpmbuild --rebuild mongodb-2.0.2-10.fc18.src.rpm
 
 tworzone są następujące paczki:
@@ -628,10 +610,10 @@ tworzone są następujące paczki:
     mongodb-devel-2.0.2-10.fc16.x86_64.rpm
     mongodb-server-2.0.2-10.fc16.x86_64.rpm
 
-(razem ok. 58 MB)
+Po instalcji system zajmuje ok. 58 MB.
 
 Po zainstalowaniu tych paczek, możemy
-się przyjrzeć jak skonfigurowane jest MongoDB na Fedorze.
+się przyjrzeć jak jest konfigurowane MongoDB na Fedorze.
 W tym celu przeglądamy następujące pliki:
 
 * {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
