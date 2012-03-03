@@ -18,6 +18,9 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+[2012.03.03] Ilya Katsov.
+[NoSQL Data Modeling Techniques](http://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/)
+
 [20.02.2012] Rzeczy do zreferowania na wykładach:
 
 * Hadoop
