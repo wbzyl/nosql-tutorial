@@ -950,6 +950,78 @@ Albo instalujemy przeglądarkę webową jako wtyczkę do Elasticsearch.
     elasticsearch/bin/plugin -install Aconex/elasticsearch-head
     xdg-open http://localhost:9200/_plugin/head/
 
+Instalacja w systemie:
+
+    :::bash
+    sudo -u elasticsearch /usr/local/share/elasticsearch/bin/elasticsearch \
+      -Des.config=/etc/elasticsearch/elasticsearch.yml -p /var/run/elasticsearch/es-wlodek.pid
+
+Plik konfiguracyjny:
+
+    :::yaml /etc/elasticsearch/elasticsearch.yml
+    cluster:
+      name: wlodek
+
+      routing:
+        allocation:
+          concurrent_recoveries: 1
+
+    # indeksy: http://localhost:9200/<index name>/_status – sprawdzanie statusu
+
+    index:
+      number_of_shards: 1
+      number_of_replicas: 0
+
+    # ścieżki
+
+    path:
+      home: /usr/local/share/elasticsearch
+      conf: /etc/elasticsearch
+      data: /var/lib/elasticsearch
+      logs: /var/log/elasticsearch
+
+    rootLogger: DEBUG, console, file
+
+    logger:
+      # log action execution errors for easier debugging
+      action :      DEBUG
+
+      index:
+        shard:
+          recovery: DEBUG
+        store:      INFO
+        gateway:    DEBUG
+        engine:     DEBUG
+        merge:      DEBUG
+        translog:   DEBUG
+      cluster:
+        service:    DEBUG
+        action:
+          shard:    DEBUG
+      gateway:      DEBUG
+      discovery:    DEBUG
+      jmx:          DEBUG
+      httpclient:   INFO
+      node:         DEBUG
+      plugins:      DEBUG
+
+    appender:
+      console:
+        type: console
+        layout:
+          type: consolePattern
+          conversionPattern: "[%d{ABSOLUTE}][%-5p][%-25c] %m%n"
+
+      file:
+        type: dailyRollingFile
+        file: ${path.logs}/${cluster.name}.log
+        datePattern: "'.'yyyy-MM-dd"
+        layout:
+          type: pattern
+          conversionPattern: "[%d{ABSOLUTE}][%-5p][%-25c] %m%n"
+
+(pozostałe szczegóły [Data Recipes](http://thedatachef.blogspot.com/2011/01/bulk-indexing-with-elasticsearch-and.html))
+
 
 ## ICU Analysis for ElasticSearch
 
