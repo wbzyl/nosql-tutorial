@@ -18,6 +18,13 @@ cut their processing time from a solid month using traditional
 relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
+# Wasze prezentacje
+
+* [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juchas
+
+
+## Różne rzeczy
+
 [2012.03.03] Ilya Katsov.
 [NoSQL Data Modeling Techniques](http://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/)
 
@@ -211,7 +218,7 @@ Wdrażamy aplikację „EST” na Sigmie.
  <p class="author">[stare powiedzenie]</p>
 </blockquote>
 
-# Wasze prezentacje
+# Wasze prezentacje (2011)
 
 * Elasticsearch –
   import bazy do elasticsearch, połączenie z CouchDB i MongoDB,
