@@ -20,7 +20,7 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 # Wasze prezentacje
 
-* [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juchas
+* [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
 
 
 ## Różne rzeczy
