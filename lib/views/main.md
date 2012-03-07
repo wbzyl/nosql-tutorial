@@ -31,6 +31,7 @@ może się przydać w czasie przygotowywania wizualizacji
 * Baza grafowa Neo4j (2 referaty)
 * Konfiguracja MongoDB (sharding, replica sets)
 * ElasticSearch / Konfiguracja ElasticSearch
+  - [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
 
 
 [4.02.2012] [Udacity](http://www.udacity.com/) – kurs online
