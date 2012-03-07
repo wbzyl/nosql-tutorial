@@ -19,6 +19,13 @@ relational solutions to just 13 minutes.”,
 cytat z [Breaking free of structured data](http://www.itworld.com/data-centerservers/172477/nosql-breaking-free-structured-data)
 
 
+# Wasze prezentacje
+
+* [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
+
+
+## Różne rzeczy
+
 [2012.02.08] [A simple viewer for code examples hosted on GitHub Gist](http://bl.ocks.org/) –
 może się przydać w czasie przygotowywania wizualizacji
 
@@ -216,7 +223,7 @@ Wdrażamy aplikację „EST” na Sigmie.
  <p class="author">[stare powiedzenie]</p>
 </blockquote>
 
-# Wasze prezentacje
+# Wasze prezentacje (2011)
 
 * Elasticsearch –
   import bazy do elasticsearch, połączenie z CouchDB i MongoDB,
