@@ -161,7 +161,7 @@ Przykładowy dokument z kolekcji *chesterton*:
       "title" : "the man who knew too much"
     }
 
-Poniższe MapReduce różni się *wc.js* tylko tym, że w wyrażeniu
+Kod poniższego MapReduce różni się od *wc.js* tylko tym, że w wyrażeniu
 regularnym użytym w metodzie *match* dodano litery z Latin-1,
 polskie diakrytyki (i nieco innych liter):
 
