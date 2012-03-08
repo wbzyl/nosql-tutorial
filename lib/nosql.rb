@@ -54,7 +54,8 @@ module WB
         'ru' => 'ruby',
         'css' => 'css',
         'yml' => 'yaml',
-        'sh' => 'bash'
+        'sh' => 'bash',
+        'js' => 'javascript'
       }
 
       content_type 'text/html', :charset => 'utf-8'

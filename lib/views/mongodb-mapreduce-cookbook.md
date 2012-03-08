@@ -122,7 +122,7 @@ Full info z logów:
       "useragent" : "Opera/9.64 (Windows NT 6.0; U; pl) Presto/2.1.1"
     }
 
-Tyle potrzebuje do przykladu MapReduce poniżej:
+Tylko te pola będą potrzebne do poniższego przykładu:
 
     :::javascript
     {

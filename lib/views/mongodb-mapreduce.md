@@ -11,13 +11,6 @@ Przykłady za Matthew Johnson,
 * Pivot Data
 * Spam
 
-Przykład „Word Count” rozrysowany przez Ketrinę Yim, Sally Ahn, Dan Garcia,
-[Computer Science Illustrated](http://csillustrated.berkeley.edu/):
-
-* [An Example: Distributed Word Count](http://csillustrated.berkeley.edu/PDFs/mapreduce-example.pdf)
-* [The wordcount in Code](http://csillustrated.berkeley.edu/PDFs/mapreduce-code.pdf)
-* [Parallelism and Functional Programming](http://csillustrated.berkeley.edu/PDFs/mapreduce.pdf)
-
 Podstawowa dokumentacja:
 
 * [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
@@ -26,7 +19,7 @@ Podstawowa dokumentacja:
 
 ## Jak działa MapReduce?
 
-Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
+Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
 
     :::javascript wc.js
     db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
