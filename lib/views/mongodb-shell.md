@@ -1,4 +1,4 @@
-#### {% title "Interaktywna powłoka mongo" %}
+### {% title "Interaktywna powłoka mongo" %}
 
 <blockquote>
  {%= image_tag "/images/mongo-tree.jpg", :alt => "[Mongo tree]" %}
@@ -90,7 +90,7 @@ Uwaga: w przykładach poniżej pomijam znak zachęty `>`.
 **Create:**
 
     :::javascript
-    contact = { "name": "Burek", "email": "burasek@psy.pl", "dob": new Date(2000,0,31) } # to be converted to UTC
+    contact = { "name": "Burek", "email": "burasek@psy.pl", "dob": ISODate('2006-06-24 12:00:00') }
     contact.name
     contact.dob
     contact.dob.valueOf()
@@ -155,7 +155,7 @@ wpisujemy obiekty, **po jednym w wierszu**:
 Importujemy JSON-y do bazy:
 
     :::bash
-    mongoimport --host localhost --db test --collection animals --type json --file animals.json --
+    mongoimport --host localhost --db test --collection animals --type json --file animals.json
 
 Sprawdzamy w powłoce co się zaimportowało:
 
