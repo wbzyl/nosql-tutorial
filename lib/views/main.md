@@ -26,11 +26,17 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.03.10] Mike Bostock.
+[D3 Workshop](http://bost.ocks.org/mike/d3/workshop/);
+zob. też [stack.js](https://github.com/mbostock/stack)
+oraz slajdy [index.html](http://mbostock.github.com/stack/)
+(gh-pages).
+
 [2012.02.08] [A simple viewer for code examples hosted on GitHub Gist](http://bl.ocks.org/) –
-może się przydać w czasie przygotowywania wizualizacji
+może się przydać w czasie przygotowywania wizualizacji.
 
 [2012.03.03] Ilya Katsov.
-[NoSQL Data Modeling Techniques](http://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/)
+[NoSQL Data Modeling Techniques](http://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/).
 
 [20.02.2012] Rzeczy do zreferowania na wykładach:
 
