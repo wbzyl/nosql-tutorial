@@ -83,6 +83,32 @@ Jaka jest różnica w wykonaniu poniższych dwóch poleceń:
     > db.getLastError
 
 
+## Zapisywanie funkcji JavaScript w bazie danych
+
+Jeśli w kolekcji o nazwie *system.js* zapiszemy
+kod JavaScript, to będzie można go wykorzystać w *mapReduce*, *eval*…
+(funkcje te są wykonywane po stronie serwera – na serwerze z bazą danych).
+
+Przykład:
+
+    :::js
+    db.system.js.save( { _id : "add" , value : function(x, y) { return x + y; } } )
+    db.system.js.save( { _id : "pi" , value : 3.1 } )
+    db.eval("add(2, 2)")
+    db.eval("pi")
+
+Od wersji 2.1 MongoDB można wczytywać kod zapisany w kolekcji *system.js*
+do powłoki *mongo*:
+
+    :::js
+    db.loadServerScripts()
+    add(2, 2)
+    pi
+
+Zobacz też [Storing functions server-side](http://www.mongodb.org/display/DOCS/Server-side+Code+Execution#Server-sideCodeExecution-Storingfunctionsserverside)
+oraz [Server-side Code Execution](http://www.mongodb.org/display/DOCS/Server-side+Code+Execution).
+
+
 ## Operacje CRUD
 
 Uwaga: w przykładach poniżej pomijam znak zachęty `>`.
