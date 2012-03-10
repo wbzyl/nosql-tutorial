@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.1 r9760"
    sodipodi:docname="after-reduce.svg"
-   inkscape:export-filename="/home/wbzyl/repos/tutorials/nosql-tutorial/lib/public/images/after-reduce.png"
+   inkscape:export-filename="/home/wbzyl/repos/tutorials/nosql-tutorial/lib/public/images/after-map.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -551,9 +551,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.335"
-     inkscape:cx="400"
-     inkscape:cy="300"
+     inkscape:zoom="1.36"
+     inkscape:cx="399.26471"
+     inkscape:cy="311.02941"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
@@ -3249,7 +3249,79 @@
            y="163.36168">reduce</tspan></text>
     </g>
     <g
-       transform="matrix(0.55504283,0,0,0.55504283,397.52982,178.01787)"
+       id="g5261"
+       transform="matrix(0.55504283,0,0,0.55504283,420.06233,135.77011)">
+      <rect
+         ry="6.6237617"
+         rx="27.819792"
+         y="123.52941"
+         x="45.588234"
+         height="52.205883"
+         width="88.235291"
+         id="rect5242"
+         style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5244"
+         y="155.14705"
+         x="66.718086"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
+         xml:space="preserve"><tspan
+           y="155.14705"
+           x="66.718086"
+           id="tspan5246"
+           sodipodi:role="line">to: 1</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.55504283,0,0,0.55504283,519.32704,156.35834)"
+       id="g5282">
+      <rect
+         style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
+         id="rect5284"
+         width="88.235291"
+         height="52.205883"
+         x="45.588234"
+         y="123.52941"
+         rx="27.819792"
+         ry="6.6237617" />
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
+         x="66.718086"
+         y="155.14705"
+         id="text5286"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5288"
+           x="66.718086"
+           y="155.14705">to: 1</tspan></text>
+    </g>
+    <g
+       id="g5290"
+       transform="matrix(0.55504283,0,0,0.55504283,327.41527,256.35834)">
+      <rect
+         ry="6.6237617"
+         rx="27.819792"
+         y="123.52941"
+         x="45.588234"
+         height="52.205883"
+         width="88.235291"
+         id="rect5292"
+         style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5294"
+         y="155.14705"
+         x="66.718086"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
+         xml:space="preserve"><tspan
+           y="155.14705"
+           x="66.718086"
+           id="tspan5296"
+           sodipodi:role="line">to: 1</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.55504283,0,0,0.55504283,383.29762,199.74071)"
        id="g5298">
       <rect
          style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
@@ -3270,11 +3342,11 @@
            sodipodi:role="line"
            id="tspan5304"
            x="66.718086"
-           y="155.14705">be: 2</tspan></text>
+           y="155.14705">be: 1</tspan></text>
     </g>
     <g
        id="g5306"
-       transform="matrix(0.55504283,0,0,0.55504283,318.21446,207.57557)"
+       transform="matrix(0.55504283,0,0,0.55504283,298.7388,181.35834)"
        inkscape:transform-center-y="-48.529412">
       <g
          id="g5338">
@@ -3301,8 +3373,33 @@
       </g>
     </g>
     <g
+       inkscape:transform-center-y="-48.529412"
+       transform="matrix(0.55504283,0,0,0.55504283,509.03292,267.38775)"
+       id="g5314">
+      <rect
+         style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
+         id="rect5316"
+         width="88.235291"
+         height="52.205883"
+         x="45.588234"
+         y="123.52941"
+         rx="27.819792"
+         ry="6.6237617" />
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
+         x="66.718086"
+         y="155.14705"
+         id="text5318"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5320"
+           x="66.718086"
+           y="155.14705">be: 1</tspan></text>
+    </g>
+    <g
        id="g5354"
-       transform="translate(375.19829,-140.05014)">
+       transform="translate(404.41177,-121.32354)">
       <rect
          style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
          id="rect5324"
@@ -3326,7 +3423,7 @@
     </g>
     <g
        id="g5349"
-       transform="translate(461.9024,-144.02125)">
+       transform="translate(454.41176,-149.2647)">
       <rect
          ry="3.6764715"
          rx="15.441176"
@@ -3347,34 +3444,6 @@
            x="50.237709"
            id="tspan5336"
            sodipodi:role="line">not: 1</tspan></text>
-    </g>
-    <g
-       inkscape:transform-center-y="-48.529412"
-       transform="matrix(0.55504283,0,0,0.55504283,478.51409,147.65047)"
-       id="g6093">
-      <g
-         id="g6095">
-        <rect
-           ry="6.6237617"
-           rx="27.819792"
-           y="123.52941"
-           x="45.588234"
-           height="52.205883"
-           width="88.235291"
-           id="rect6097"
-           style="opacity:0.42211058;fill:#ff8080;fill-opacity:1;stroke:#00376a;stroke-width:1.8016628;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
-        <text
-           sodipodi:linespacing="125%"
-           id="text6099"
-           y="155.14705"
-           x="66.718086"
-           style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Bold"
-           xml:space="preserve"><tspan
-             y="155.14705"
-             x="66.718086"
-             id="tspan6101"
-             sodipodi:role="line">to: 3</tspan></text>
-      </g>
     </g>
   </g>
 </svg>

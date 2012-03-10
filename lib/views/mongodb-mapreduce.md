@@ -19,21 +19,62 @@ Podstawowa dokumentacja:
 
 ## Jak działa MapReduce?
 
+Czym jest MapReduce: „MapReduce is the Uzi of aggregation tools.”
 
-{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MongoDB MapReduce]" %}
+{%= image_tag "/images/mongo-mapreduce.png", :alt => "[MongoDB MapReduce]" %}
 
+Jak działa MapReduce:
+„MapReduce has a couple of steps. It starts with the map step, which
+maps an operation onto every document in a collection. That operation
+could be either “do nothing” or “emit these keys with X values.” There
+is then an intermediary stage called the shuffle step: keys are
+grouped and lists of emitted values are created for each key. The
+reduce takes this list of values and reduces it to a single
+element. This element is returned to the shuffle step until each key
+has a list containing a single value: the result.”
 
-Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
+Oba cytaty z książki K. Chodorow i M. Dirolf,
+„MongoDB: The Definitive Guide”.
+
+Zapiszemy dwa przykładowe dokumenty w kolekcji *books*:
 
     :::javascript wc.js
     db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
     db.books.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
 
+Na funkcjach zdefiniowanych poniżej, uruchamiamy obliczenia MapReduce
+na kolekcji *books*:
+
+    db.books.mapReduce(m, r, {out: "wc"});  // m == map, r == reduce
+
+{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
+
+Funkcja map:
+
+    :::javascript wc.js
     m = function() {
       this.content.match(/[a-z]+/g).forEach(function(word) {
         emit(word, 1);
       });
     };
+
+Po wykonaniu map:
+
+{%= image_tag "/images/after-map.png", :alt => "[MongoDB Map]" %}
+
+
+Przed wykonaniem funkcji reduce wykonywany jest krok „shuffle”:
+
+    :::js
+    to:  [ 1, 1, 1 ]
+    be:  [ 1, 1 ]
+    not: [ 1 ]
+    or:  [ 1 ]
+    wit: [ 1 ]
+
+Funkcja reduce:
+
+    :::javascript wc.js
     r = function(key, values) {
       var value = 0;
       values.forEach(function(count) {
@@ -42,8 +83,9 @@ Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”
       return value;
     };
 
-    db.books.mapReduce(m, r, {out: "wc"});
-    print("☯ To display results run: db.wc.find()");  // dlaczego tak?
+Po wykonaniu reduce:
+
+{%= image_tag "/images/after-reduce.png", :alt => "[MongoDB Reduce]" %}
 
 Program *wc.js* uruchamiamy na konsoli *mongo*:
 
