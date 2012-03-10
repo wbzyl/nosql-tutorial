@@ -65,12 +65,13 @@ Po wykonaniu map:
 
 Przed wykonaniem funkcji reduce wykonywany jest krok „shuffle”:
 
-    :::js
-    to:  [ 1, 1, 1 ]
-    be:  [ 1, 1 ]
-    not: [ 1 ]
-    or:  [ 1 ]
-    wit: [ 1 ]
+<pre><i>key</i>:  <i>values</i>
+ be: [ 1, 1 ]
+not: [ 1 ]
+ or: [ 1 ]
+ to: [ 1, 1, 1 ]
+wit: [ 1 ]
+</pre>
 
 Funkcja reduce:
 
@@ -83,7 +84,7 @@ Funkcja reduce:
       return value;
     };
 
-Po wykonaniu reduce:
+Po wykonaniu, być może kilkukrotnie, funkcji reduce:
 
 {%= image_tag "/images/after-reduce.png", :alt => "[MongoDB Reduce]" %}
 
@@ -91,7 +92,8 @@ Program *wc.js* uruchamiamy na konsoli *mongo*:
 
     mongo wc.js --shell
 
-gdzie sprawdzamy co wyliczyło mapreduce:
+gdzie sprawdzamy co wyliczyły funkcje map i reduce
+zdefiniowane powyżej:
 
     :::javascript
     db.wc.find()
