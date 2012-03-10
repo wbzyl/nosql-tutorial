@@ -19,6 +19,10 @@ Podstawowa dokumentacja:
 
 ## Jak działa MapReduce?
 
+
+{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MongoDB MapReduce]" %}
+
+
 Implementacja MapReduce z ilustracji „An Example: Distributed Word Count”:
 
     :::javascript wc.js
