@@ -1,7 +1,9 @@
 #### {% title "MapReduce w przykładach" %}
 
 <blockquote>
- {%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
+ <p>{%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
+ <p>MapReduce is the Uzi of aggregation tools.
+ <p class="author">— K. Chodorow, M. Dirolf
 </blockquote>
 
 Przykłady za Matthew Johnson,
@@ -17,11 +19,46 @@ Podstawowa dokumentacja:
 * [Troubleshooting MapReduce](http://www.mongodb.org/display/DOCS/Troubleshooting+MapReduce)
 
 
-## Jak działa MapReduce?
+## Dlaczego MapReduce?
 
-Czym jest MapReduce: „MapReduce is the Uzi of aggregation tools.”
+W klasycznym modelu obliczeniowym, dane pobieramy na komputer na którym
+wykonywane są obliczenia:
 
-{%= image_tag "/images/mongo-mapreduce.png", :alt => "[MongoDB MapReduce]" %}
+{%= image_tag "/images/petabyte.png", :alt => "[petabyte]" %}
+
+Jeśli danych tych jest dużo, to czas pobierania będzie długi.
+Na przykład, ile czasu zajmie ściągnięcie 1 TB danych łączem 8 Mbit?
+A ile to będzie czasu dla 1 PB danych?
+Nieco [back-of-the-envelope calculation](http://en.wikipedia.org/wiki/Back-of-the-envelope_calculation)
+daje taki wynik:
+<pre>1 TB / 1 MB/s = 10^12 / 10^6 = 10^6 s
+10^6 / (24 * 60*60) około <b>11.5 dnia</b>
+</pre>
+
+Dla 1 PB danych czas będzie 1 000 razy dłuższy —  około **31 lat**.
+
+Jeśli będziemy chcieli jeszcze coś szybko przeliczyć,
+to te liczby mogą się przydać:
+
+{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
+
+Przy okazji:
+
+* 1 ns = 10^-9 s, tak dla przypomnienia
+* 10^9 cykli na sekundę to 1 GHz
+* na przebycie 1 m światło potrzebuje ok. 3.33 ns
+* 1 miesiąc to ok. 2,5 · 10^6 s
+* 1 rok to ok. 10^9 s.
+
+
+<blockquote>
+ <p>{%= image_tag "/images/being-john-malkovich.jpg", :alt => "[Being John Malkovich]" %}
+ <p>Here's the thing:
+   If you ever got me, you wouldn't have a clue what to do with me.
+ <p class="author">[Being John Malkovich]
+</blockquote>
+
+## Jak działa MapReduce w MongoDB?
 
 Jak działa MapReduce:
 „MapReduce has a couple of steps. It starts with the map step, which
@@ -33,21 +70,29 @@ reduce takes this list of values and reduces it to a single
 element. This element is returned to the shuffle step until each key
 has a list containing a single value: the result.”
 
-Oba cytaty z książki K. Chodorow i M. Dirolf,
-„MongoDB: The Definitive Guide”.
+(cytat z książki *K. Chodorow* i *M. Dirolf*, „MongoDB: The Definitive Guide”)
+
+{%= image_tag "/images/mongo-mapreduce.png", :alt => "[MongoDB MapReduce]" %}
+
+Zasadą obliczeń MapReduce jest wysłanie kodu do danych,
+na których przeprowadzane są obliczenia. Dane nie są przemieszczane!
+
+{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
+
+### Prosty przykład
 
 Zapiszemy dwa przykładowe dokumenty w kolekcji *books*:
 
-    :::javascript wc.js
+    :::js wc.js
     db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
     db.books.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
 
-Na funkcjach zdefiniowanych poniżej, uruchamiamy obliczenia MapReduce
-na kolekcji *books*:
+Funkcje *m* (map) i *r* (reduce) zdefiniowane poniżej, wysyłamy do kolekcji *books*:
 
-    db.books.mapReduce(m, r, {out: "wc"});  // m == map, r == reduce
+    :::js wc.js
+    db.books.mapReduce(m, r, {out: "wc"});
 
-{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
+Po wykonaniu obliczeń wyniki zapisujemy w kolekcji *wc*.
 
 Funkcja map:
 
@@ -133,26 +178,6 @@ Na koniec sprzątamy po skrypcie:
 
 Zobacz też implementację metody
 [convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
-
-
-## Dlaczego MapReduce
-
-Te liczby powinny coś wyjaśnić (dla przypomnienia 1 ns = 10^-9 s):
-
-{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
-
-Przy okazji:
-
-* 10^9 cykli na sekundę to 1 GHz
-* na przebycie 1 m światło potrzebuje ok. 3.33 ns
-* 1 miesiąc to ok. 2,5 · 10^6 s
-* 1 rok to ok. 10^9 s.
-
-Jakiś przykład: sumowanie odwrotności liczb:
-
-* wszystkie liczby są w RAM
-* liczby pobieramy po jednej z kolekcji,
-  umieszczonej gdzieś w chmurze
 
 
 ## Crazy MapReduce
