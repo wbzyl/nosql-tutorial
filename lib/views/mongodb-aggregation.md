@@ -24,6 +24,16 @@ Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
+Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
+
+    :::json
+    {
+      "_id" : ObjectId("4f2e956fe138237e61000079"),
+      "word": "morning",
+      "para": 4,                                     # numer akapitu ze słowem "morning"
+      "letters": ["g", "i", "m", "n", "o", "r"]      # posortowane i unikalne
+    }
+
 
 ## Funkcja agregująca *group*
 
@@ -54,16 +64,6 @@ liczba liter oraz średnia długość słowa dla słów tego akapitu.
           "avg_word_len" : 5.928571428571429
       }
     ]
-
-Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
-
-    :::json
-    {
-      "_id" : ObjectId("4f2e956fe138237e61000079")
-      "word": "morning",
-      "para": 4.                                    # paragraph no with "morning"
-      "letters": ["g", "i", "m", "n", "o", "r"]     # sorted and unique
-    }
 
 Grupowanie po atrybucie *word*: dla każdego słowa, jego licznik wystąpień
 
