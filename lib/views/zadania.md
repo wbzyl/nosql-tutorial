@@ -7,7 +7,26 @@
  <p class="author">[The Tao of Programming 2.1]</p>
 </blockquote>
 
-Typowe zastosowania dokumentowych baz danych to:
+Warunkiem zaliczenia ćwiczeń jest:
+
+* Wyszukanie w sieci interesujących danych.
+* Zapisanie tych danych w jednej z baz: MongoDB, CouchDB lub Elasticsearch.
+* Napisanie skryptu, który przeniesie zapisane dane do innej bazy
+  (tutaj można wybrać bazę PostgreSQL).
+* Napisanie funkcji map oraz reduce dla swoich danych,
+  dla baz MongoDB oraz CouchDB.
+* Wrzucenie wszystkich tych rzeczy wraz z krótkim opisem tego co zostało
+  zrobione (w pliku *README.md*) do repozytorium Git’a.
+  Adres repozytorium należy wpisać w polu *comments*
+  na swojej liście obecności.
+
+Na egzamin należy przygotować prezentację na wykładzie
+albo aplikację WWW wykorzystujacą obliczenia MapReduce.
+Prezentacje aplikacji odbędą się 23.05 i 30.05.
+Tytuły prezentacji należy zgłosić do 15.05.
+
+
+## Typowe zastosowania dokumentowych baz danych
 
 * Contact Address/Phone Book
 * Forum/Discussion
