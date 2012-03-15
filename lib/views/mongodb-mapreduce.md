@@ -281,6 +281,112 @@ Na koniec sprawdzamy co się wyliczyło:
       { "_id" : "it", "value" : 970 }
 
 
+### Word Segmentaion
+
+Funkcja map powyżej jest prymitywną implementacją algorytmu „word segmentation”,
+czyli podziału tekstu na słowa. Powinniśmy ją zastąpić jakimś „prawdziwym”
+tokenizerem.
+
+Poniżej skorzystam z dwóch modułów dla NodeJS,
+[MongoDB Native NodeJS Driver](https://github.com/christkv/node-mongodb-native/)
+oraz [Natural](https://github.com/NaturalNode/natural).
+Ten ostatni moduł implementuje kilka „tokenizerów”:
+
+Zaczniemy od instalacji modułów:
+
+    :::bash
+    npm install natural
+    npm install mongodb --mongodb:native
+
+Zapiszemy w bazie *gutenberg* w kolekcji *chest* akapity z książki
+G. K. Chestertona, *The Man Who Knew Too Much*:
+
+    :::bash
+    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt -c chest
+
+Następnie do każdego dokumentu dodamy pole *words*:
+
+    :::javascript add-words-to-chest.js
+    {
+      "_id" : ObjectId("4de5e745e138230694000054"),
+      "paragraph" : "And he carried off the two rifles without casting a glance at the stranger...",
+      "words" : ["and", "he", "carried", "off", "the", "two", …],
+      "count" : 83,
+      "title" : "the man who knew too much"
+    }
+
+W tym celu użyjemy poniższego skryptu:
+
+    :::js add-words-to-chest.js
+    var mongo = require('mongodb')
+    , server = new mongo.Server("127.0.0.1", 27017, { })
+    , db = new mongo.Db('gutenberg', server, { strict: true })
+
+    var natural = require('natural')
+    , tokenizer = new natural.WordTokenizer();
+
+    db.open(function (error, client) {
+      if (error) throw error;
+      var collection = new mongo.Collection(client, 'chest');
+      collection.find({ }, { snapshot: true })
+        .each(function(err, doc) {
+          if (error) throw error;
+
+          if (doc == null)
+            db.close();
+          else {
+            var words = tokenizer.tokenize(doc.paragraph);
+            doc.words = words;
+            collection.save(doc);
+          };
+        });
+    });
+
+
+Zmienimy funkcję map, tak by korzystała z listy słów *words*:
+
+    :::javascript natural-chesterton.js
+    m = function() {
+      this.words.forEach(function(word) {
+        emit(word.toLowerCase(), 1);
+      });
+    };
+    r = function(key, values) {
+      var value = 0;
+      values.forEach(function(count) {
+        value += count;
+      });
+      return value;
+    };
+    res = db.chest.mapReduce(m, r, {out: "wc"});
+    printjson(res);
+
+Teraz możemy uruchomić obliczenia MapReduce:
+
+    :::bash terminal
+    mongo gutenberg natural-chesterton.js --shell
+      {
+          "result" : "wc",
+          "timeMillis" : 448,
+          "counts" : {
+              "input" : 976,
+              "emit" : 60579,
+              "reduce" : 3264,
+              "output" : 6336
+          },
+          "ok" : 1,
+      }
+
+Sprawdzamy wyniki:
+
+    :::js konsola-mongo
+    db.wc.count()  //=> 6336
+    db.wc.find({ }).sort({ value: -1 })
+
+**TODO:** usunąć wszystkie stopwords. *Q:* Ile jest akapitów
+składających się tylko ze stopwords?
+
+
 ## „Pivot Data” na przykładzie kolekcji *Rock*
 
 Zaczynamy od przeniesienia bazy *rock* z CouchDB do MongoDB.
