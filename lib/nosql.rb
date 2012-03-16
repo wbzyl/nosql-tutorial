@@ -75,7 +75,7 @@ module WB
         content = "<h1>#{filename}</h1>"
         content += "<pre><code>:::#{lang}\n#{escape_html(File.read @filename)}</code></pre>"
         #content += "<pre><code>:::#{lang}\n#{File.read(@filename)}</code></pre>"
-        puts content
+        #puts content
       else
         content = "<h2>oops! couldn't find <em>#{filename}</em></h2>"
       end
