@@ -1,7 +1,7 @@
 
 MongoDB import:
 
-    node json_dump-nosql_tweets.js | mongoimport -d test -c tweets --type json
+    node json_dump-nosql_tweets.js | mongoimport --upsert -d test -c tweets --type json
 
 Tweets do ElasticSearch:
 
