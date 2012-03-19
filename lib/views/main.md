@@ -22,9 +22,14 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 # Wasze prezentacje
 
 * [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
+* [??.04.2012] **Hadoop** – Dawid Milewski, …
 
 
 ## Różne rzeczy
+
+[2012.03.18] Luanne Misquitta.
+[Flavorwocky](http://flavorwocky.herokuapp.com/) –
+Neo4j Heroku Challenge Winner
 
 [2012.03.10] Mike Bostock.
 [D3 Workshop](http://bost.ocks.org/mike/d3/workshop/);
