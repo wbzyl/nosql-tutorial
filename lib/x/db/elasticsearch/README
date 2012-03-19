@@ -1,0 +1,8 @@
+
+MongoDB import:
+
+    node json_dump-nosql_tweets.js | mongoimport -d test -c tweets --type json
+
+Tweets do ElasticSearch:
+
+    https://github.com/wbzyl/est  (jak? README)
