@@ -8,8 +8,20 @@ Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących)
 
 ## Zadania na grupowanie
 
-W każdym zadaniu ograniczamy się do wszystkich słów, ale bez
-„stopwords”, z książki „Idiota” F. Dostojewskiego.
+W zadaniach będziemy korzystać z kolekcji *dostojewski*.
+Kolekcję tę tworzymy korzystając ze skryptu
+{%= link_to "aggregation.rb", "/db/mongodb/aggregation.rb" %}
+z wykłądu {%= link_to "Język zapytań", "/mongodb-queries" %}.
+
+Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
+
+    :::json
+    {
+      "_id" : ObjectId("4f2e956fe138237e61000079"),
+      "word": "morning",
+      "para": 4,                                     # numer akapitu ze słowem "morning"
+      "letters": ["g", "i", "m", "n", "o", "r"]      # posortowane i unikalne
+    }
 
 Zadanie 1. Ile jest słów zawierających daną literę?
 
@@ -24,23 +36,13 @@ Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
-Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
-
-    :::json
-    {
-      "_id" : ObjectId("4f2e956fe138237e61000079"),
-      "word": "morning",
-      "para": 4,                                     # numer akapitu ze słowem "morning"
-      "letters": ["g", "i", "m", "n", "o", "r"]      # posortowane i unikalne
-    }
-
 
 ## Funkcja agregująca *group*
 
 Jak działa funkcja *group* wyjaśnimy na trzech prostych przykładach.
 
-Grupowanie po atrybucie *para*: dla każdego akapitu, liczba słów,
-liczba liter oraz średnia długość słowa dla słów tego akapitu.
+Grupowanie po atrybucie *para*: dla każdego akapitów o numerach 1022..1024,
+zliczamy liczbę słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
 
     :::js
     db.dostojewski.group({
@@ -80,10 +82,10 @@ jego licznik wystąpień
       , reduce: function(doc, out){ out.count++; }
     } );
 
-    // var totals = res.map(function(x) { return x.count });
+    var totals = res.map(function(x) { return x.count });
     // print("Max frequency: " + Math.max.apply(null, totals));
 
-    var numeric = function(a, b){ return (b - a); };
+    var numeric = function(a, b) { return (b - a); };
     var top10 = totals.sort(numeric).slice(0, 9);
     print("Top 10 frequencies: " + top10);
     // Top 10: 1786,512,499,462,454,447,438,374,361
@@ -91,9 +93,9 @@ jego licznik wystąpień
     db.results.drop();
 
     // There is no bulk insertion for the MongoDB shell versions prior to 2.1.0
-    // res.forEach(function(obj) { db.results.insert(obj) });
+    // db.results.insert(res);
 
-    db.results.insert(res);
+    res.forEach(function(obj) { db.results.insert(obj) });
 
     var obj = db.results.findOne({ count: 512 });
     db.dostojewski.find({ letters: obj.letters });
