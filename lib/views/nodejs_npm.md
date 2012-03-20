@@ -17,6 +17,8 @@ Na dobry początek kilka odsyłaczy:
 * [The Node Beginner Book](http://www.nodebeginner.org/)
 * [Node.js](http://nodejs.org/)
 * NPM – [Node Package Manager](http://npmjs.org/)
+* [docs.nodejitsu.com](http://docs.nodejitsu.com/) –
+  assembled collection of node.js how-to articles
 
 
 ## Instalacja
