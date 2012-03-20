@@ -104,4 +104,5 @@ Indeksy:
 
 ## Wyszukiwanie w sub-dokumentach
 
-**TODO** – nowy rozdział?
+* [Dot Notation (Reaching into Objects)](http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29)
+* [Multikeys](http://www.mongodb.org/display/DOCS/Multikeys)
