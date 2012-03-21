@@ -27,6 +27,8 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.03.21] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
+
 [2012.03.18] Luanne Misquitta.
 [Flavorwocky](http://flavorwocky.herokuapp.com/) –
 Neo4j Heroku Challenge Winner
