@@ -25,6 +25,15 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 * [??.04.2012] **Hadoop** – Dawid Milewski, …
 
 
+<blockquote>
+ <p>Having good ideas is most of writing well. If you know what you're
+  talking about, you can say it in the plainest words and you'll be
+  perceived as having a good style. With speaking it's the opposite:
+  having good ideas is an alarmingly small component of being a good
+  speaker.</p>
+ <p class="author">– <a href="http://paulgraham.com/speak.html">Paul Graham</a></p>
+</blockquote>
+
 ## Różne rzeczy
 
 [2012.03.21] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
