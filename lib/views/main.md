@@ -29,9 +29,12 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 [2012.03.21] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
 
+[2012.03.20] [SQL Fiddle](http://sqlfiddle.com/) –
+a tool for database developers to test out their SQL queries.
+
 [2012.03.18] Luanne Misquitta.
 [Flavorwocky](http://flavorwocky.herokuapp.com/) –
-Neo4j Heroku Challenge Winner
+Neo4j Heroku Challenge Winner.
 
 [2012.03.10] Mike Bostock.
 [D3 Workshop](http://bost.ocks.org/mike/d3/workshop/);
