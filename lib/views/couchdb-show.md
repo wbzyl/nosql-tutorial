@@ -1,7 +1,11 @@
 #### {% title "Funkcje Show" %}
 
 <blockquote>
- {%= image_tag "/images/show_functions.jpg", :alt => "[Show Functions]" %}
+ {%= image_tag "/images/data_perspective.jpg", :alt => "[data perspective]" %}
+ <p>
+   Jeśli coś widzisz źle, to zmień perspektywę.
+ </p>
+ <p class="author">[stare powiedzenie]</p>
 </blockquote>
 
 Do czego mogą się przydać [show functions](http://guide.couchdb.org/draft/show.html):

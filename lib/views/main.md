@@ -26,7 +26,8 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 * [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
 * [??.0?.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
   [Data Wrangler](http://vis.stanford.edu/wrangler/)
-* [??.0?.2012] **Aggregacja w ElasticSearch**.
+* [??.0?.2012] **Aggregacja w ElasticSearch**,
+  [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
 * [??.0?.2012] **Wprowadzenie do Neo4j**.
 
 
@@ -61,15 +62,6 @@ może się przydać w czasie przygotowywania wizualizacji.
 
 [2012.03.03] Ilya Katsov.
 [NoSQL Data Modeling Techniques](http://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/).
-
-[20.02.2012] Rzeczy do zreferowania na wykładach:
-
-* Hadoop
-* Baza grafowa Neo4j (2 referaty)
-* Konfiguracja MongoDB (sharding, replica sets)
-* ElasticSearch / Konfiguracja ElasticSearch
-  - [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
-
 
 [4.02.2012] [Udacity](http://www.udacity.com/) – kurs online
 [Building a Search Engine](http://www.udacity.com/cs#101).
@@ -235,36 +227,3 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "NodeJS", "/node" %}
-
-
-## Machine Learning
-
-…czyli komputerowe uczenie się:
-
-* [Intro to Machine Learning in Ruby](http://blog.siyelo.com/machine-learning-in-ruby-statistic-classifica)
-* 0xfe. [K-Means Clustering and Art](http://0xfe.blogspot.com/2011/12/k-means-clustering-and-art.html)
-
-
-<blockquote>
- {%= image_tag "/images/data_perspective.jpg", :alt => "[data perspective]" %}
- <p>
-   Jeśli coś widzisz źle, to zmień perspektywę.
- </p>
- <p class="author">[stare powiedzenie]</p>
-</blockquote>
-
-# Wasze prezentacje (2011)
-
-* Elasticsearch –
-  import bazy do elasticsearch, połączenie z CouchDB i MongoDB,
-  wyszukiwanie fasetowe
-  (<i>T. Widanka</i>, <i>K. Pluszczewicz</i>, <i>B. Rożek</i>)
-* [Neo4j](http://neo4j.org/) – instalacja na Sigmie, przykład objaśniający
-  ideę grafowych baz danych (diagramy, [narzędzie do rysowania](https://cacoo.com/))
-  (<i>M. Kaliszuk, M. Kaszałowicz, M. Tupacz, M. Maszkiewicz</i>)
-* [Hadoop](http://hadoop.apache.org/) – instalacja na Sigmie,
-  przykład objaśniający jak to działa (diagramy),
-  do czego można użyć hadoopa, hadoop mapreduce w przykładach
-  (<i>Sz. Szypulski, M. Chadaj, B. Drzazgowski, D. Zmitrowicz</i>)
-* Narzędzia do wizualizacji baz danych
-  (<em>M. Rusajczyk, M. Pętlicki, M. Smolinski</em>)
