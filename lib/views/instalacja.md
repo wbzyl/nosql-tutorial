@@ -672,7 +672,7 @@ adres dla *bind*:
     :::plain  ~/.data/etc/redis.conf
     port 6379
     #
-    pidfile /home/wbzyl/.data/var/run/redis.pid   # mkdir -p ~/.nosql/var/run/
+    pidfile /home/wbzyl/.data/var/run/redis.pid   # mkdir -p ~/.data/var/run/
     #
     bind 0.0.0.0
     #
@@ -684,12 +684,13 @@ adres dla *bind*:
     #
     # Also the Append Only File will be created inside this directory.
     #
-    dir /home/wbzyl/.data/var/lib/redis
+    dir /home/wbzyl/.data/var/lib/redis  # mkdir -p ~/.data/var/lib/redis
     #
     # Specify the log file name. Also 'stdout' can be used to force
     # Redis to log on the standard output. Note that if you use standard
     # output for logging but daemonize, logs will be sent to /dev/null
-    logfile /home/wbzyl/.data/var/log/redis/redis.log
+    #
+    logfile /home/wbzyl/.data/var/log/redis/redis.log  # mkdir -p ~/.data/var/log/redis
 
 
 ## Testujemy instalację
