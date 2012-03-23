@@ -23,6 +23,11 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 * [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
 * [??.04.2012] **Hadoop** – Dawid Milewski, …
+* [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
+* [??.0?.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
+  [Data Wrangler](http://vis.stanford.edu/wrangler/)
+* [??.0?.2012] **Aggregacja w ElasticSearch**.
+* [??.0?.2012] **Wprowadzenie do Neo4j**.
 
 
 <blockquote>
