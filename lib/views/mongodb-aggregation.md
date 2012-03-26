@@ -41,8 +41,19 @@ samogłosek, itd.
 
 Jak działa funkcja *group* wyjaśnimy na trzech prostych przykładach.
 
-Grupowanie po atrybucie *para*: dla każdego akapitów o numerach 1022..1024,
-zliczamy liczbę słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
+W przykładzie poniżej będziemy grupować po atrybucie *para*:
+
+    :::js
+    db.dostojewski.findOne()
+    {
+        "_id" : ObjectId("4f70883be1382375ac000001"),
+        "word" : "idiot",
+        "para" : 0,
+        "letters" : [ "d", "i", "o", "t" ]
+    }
+
+Dla każdego akapitu, dla którego *para* ϵ [1022, 1024) zliczamy liczbę
+słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
 
     :::js
     db.dostojewski.group({
@@ -67,13 +78,8 @@ zliczamy liczbę słów, liczbę liter oraz średnią długość słowa dla sł�
       }
     ]
 
-Grupowanie po atrybucie *word*: dla każdego słowa, jego licznik wystąpień
-
-    :::js
-    TODO:
-
-Grupowanie po atrybucie *letters*: dla każdego zestawu liter,
-jego licznik wystąpień
+Następny przykład. Grupowanie względem atrybutu *letters*:
+dla każdego zestawu liter, jego licznik wystąpień
 
     :::js group.js
     var res = db.dostojewski.group({
@@ -82,37 +88,77 @@ jego licznik wystąpień
       , reduce: function(doc, out){ out.count++; }
     } );
 
-    var totals = res.map(function(x) { return x.count });
-    // print("Max frequency: " + Math.max.apply(null, totals));
+Wynikiem *res* jest tablica. Pierwszy element tej tablicy, *res[0]* to:
 
-    var numeric = function(a, b) { return (b - a); };
-    var top10 = totals.sort(numeric).slice(0, 9);
-    print("Top 10 frequencies: " + top10);
-    // Top 10: 1786,512,499,462,454,447,438,374,361
+    :::json
+    { "letters" : [ "d", "i", "o", "t" ], "count" : 50 }
 
+Łatwo zgadnąć, że słowo *idiot* oraz inne słowa składające się
+z liter z tablicy *letters* wystąpiły w książce 50 razy.
+
+Które zestawy liter występują najczęściej?
+Posortujmy malejąco listę *res* względem licznika *count*
+i zapamiętajmy w *top10* dziesięć najczęściej występujących
+zestawów liter:
+
+    :::js
+    var top10 = res.sort(function(a,b){ return b.count - a.count; }).slice(0, 10);
+
+Pierwsza trójka to:
+
+    :::js
+    "letters" : [ "c", "e", "i", "n", "p", "r" ], "count" : 1786
+    "letters" : [ "d", "n", "o", "t" ],           "count" : 512
+    "letters" : [ "a", "e", "g", "l", "n", "r" ], "count" : 499
+
+Drugie miejsce to zasługa słówka *don’t*. Nieprawdaż?
+A miejsca pierwsze i trzecie to zasługa…?
+
+    :::js
+    var winner = db.dostojewski.find({letters: [ "c", "e", "i", "n", "p", "r" ]})
+    var third  = db.dostojewski.find({letters: [ "a", "e", "g", "l", "n", "r" ]})
+
+Warto pogrupować wyniki *winner* względem *word*.
+Najpierw zapiszemy wyniki w kolekcji winners:
+
+    :::js
+    db.winners.drop();
+    winner.forEach(function(obj) { db.winners.insert(obj) });
+    var winners = db.winners.group({
+      key: {word: true}
+      , initial: {count: 0}
+      , reduce: function(doc, out){ out.count++; }
+    } );
+    winners.length  //=> 1  Jakie to słowo?
+
+Dla *third* wynik jest następujący:
+
+    :::js
+    thirds.length  //=> 2   Jakie to słowa?
+
+Na koniec, zapamiętamy wyniki grupowania *res*, może się
+jeszcze przydadzą do jakiegoś grupowania?
+
+    :::js
     db.results.drop();
+    // bulk insert for the mongo 2.1+; res jest tablicą
+    db.results.insert(res);
+    // there is no bulk insertion for the mongo < 2.1; działa też na cursorach
+    // res.forEach(function(obj) { db.results.insert(obj) });
 
-    // There is no bulk insertion for the MongoDB shell versions prior to 2.1.0
-    // db.results.insert(res);
-
-    res.forEach(function(obj) { db.results.insert(obj) });
-
-    var obj = db.results.findOne({ count: 512 });
-    db.dostojewski.find({ letters: obj.letters });
-
-Skrypt *group.js* uruchamiamy w następujący sposób:
+**Uwaga 1:** Wszystkie te polecenia możemy wpisać w pliku,
+na przykład *group.js* i wykonać je w taki sposób:
 
     :::bash
     mongo --shell gutenberg group.js
 
-albo tak:
+albo taki sposób:
 
     :::bash
     mongo --shell gutenberg
     > load('group.js')
 
-
-W pliku *src/mongo/shell/utils.js* zdefiniowano
+**Uwaga 2:** W pliku *src/mongo/shell/utils.js* zdefiniowano
 wiele użytecznych funkcji, na przykład:
 
     :::js
