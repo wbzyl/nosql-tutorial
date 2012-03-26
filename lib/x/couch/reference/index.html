@@ -4,6 +4,15 @@
     <title>CouchDB jQuery Examples</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- CouchDB 1.2.0 -->
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Verdana, sans-serif;
+      width: 640px;
+      margin: 0 auto 0 4em;
+      padding: 1em;
+    }
+    </style>
     <script src="/_utils/script/json2.js"></script>
     <script src="/_utils/script/sha1.js"></script>
     <script src="/_utils/script/jquery.js?1.6.2"></script>
@@ -18,14 +27,648 @@
   call. For example:</p>
   <pre>$.couch.urlPrefix = "http://localhost:5984";</pre>
 
-  <p>Server API</p>
-  <pre>$.couch.info({
+<h3>Server API</h3>
+<h4>Server Information</h4>
+<p>JavaScript example:</p>
+<pre>$.couch.info({
+  success: function(data) {
+      console.log(data);
+  }
+});</pre>
+
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/ <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "couchdb"="Welcome",
+    "version"="1.1.0"
+}</code></pre>
+<h4>All DBs</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.allDbs({
     success: function(data) {
         console.log(data);
     }
-  });</pre>
-
-  <h3>TBC</h3>
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_all_dbs <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">[
+    "_replicator",
+    "_users"
+]</code></pre>
+<h4>User Signup</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var userDoc = {
+    _id: "org.couchdb.user:bob",
+    name: "bob"
+};
+$.couch.signup(userDoc, "supersecurepassword", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>PUT</strong> http://localhost:5984/_users/org.couchdb.user%3Abob <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok"=true,
+    "id"="org.couchdb.user:bob",
+    "rev"="1-230dc0625bd3c4aac735846cc152c296"
+}</code></pre>
+<h4>Login</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.login({
+    name: "bob",
+    password: "supersecurepassword",
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST</strong> http://localhost:5984/_session <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true,
+    "name":"bob",
+    "roles":[]
+}</code></pre>
+<p>This will result in an <code>AuthSession</code> cookie being set and then sent back to the server on subsequent requests, authenticating the user on each request. The session length is 10 minutes by default, but can be set in CouchDB&#8217;s <code>couch_httpd_auth.timeout</code> configuration option.</p>
+<h4>Session</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.session({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_session <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true,
+    "userCtx":{
+        "name":"bob",
+         "roles":[]
+    },
+    "info":{
+        "authentication_db":"_users",
+        "authentication_handlers":[
+            "oauth",
+            "cookie",
+            "default"
+        ],
+        "authenticated":"cookie"
+    }
+}</code></pre>
+<h4>Logout</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.logout({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>DELETE</strong> http://_:_@localhost:5984/_session <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
+<p>This will set the <code>AuthSession</code> cookie to an empty string, effectively logging the client out.</p>
+<h4>Active Tasks</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.activeTasks({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_active_tasks <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">[]</code></pre>
+<h4>Server Configuration</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.config({
+    success: function(data) {
+        console.log(data);
+    }
+}, "uuids", "algorithm");</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_config/uuids/algorithm <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">"sequential"</code></pre>
+<p>The second and third parameters are the <code>section</code> and <code>option</code> parameters, respectively. Omit the <code>option</code> parameter if you&#8217;d like to retrieve the entire section. Omit both the <code>section</code> and <code>option</code> parameters if you&#8217;d like to see the entire server configuration. Add an optional fourth parameter to set the configuration option&#8217;s value, which will result in a <code>PUT</code> request with the value.</p>
+<h4>User DB</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.userDb(function(data) {
+    console.log(data);
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_session <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "name"="_users",
+    "uri"="../_users/"
+}</code></pre>
+<p>The URI will be relative to the HTML executing the script.</p>
+<h4>New UUID</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var uuid = $.couch.newUUID();
+console.log(uuid);</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/_uuids?count=1 <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">d12ee5ea1df6baa2b06451f44a0156fa</code></pre>
+<p>This function takes a <code>count</code> parameter as an optional first parameter. If the <code>count</code> parameter is greater than one, then it will keep a cache of UUIDs that will be returned on subsequent calls, rather than making another request to the server.</p>
+<h4>Replicate</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.replicate("mydb", "otherdb", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+}, {
+    create_target: true
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST</strong> http://localhost:5984/_replicate <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true,
+    "session_id":"705797bae87456c52f5b76f44fe5f245",
+    "source_last_seq":27,
+    "replication_id_version":2,
+    "history":[
+        {
+            "session_id":"705797bae87456c52f5b76f44fe5f245",
+            "start_time":"Wed, 13 Jul 2011 22:40:09 GMT",
+            "end_time":"Wed, 13 Jul 2011 22:40:09 GMT",
+            "start_last_seq":0,
+            "end_last_seq":27,
+            "recorded_seq":27,
+            "missing_checked":0,
+            "missing_found":14,
+            "docs_read":14,
+            "docs_written":14,
+            "doc_write_failures":0
+        }
+    ]
+}</code></pre>
+<h3>Database API</h3>
+<h4>Create Database</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").create({
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>PUT</strong> http://localhost:5984/mydb/ <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
+<h4>Database Info</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").info({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/mydb/ <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "db_name":"mydb",
+    "doc_count":0,
+    "doc_del_count":0,
+    "update_seq":0,
+    "purge_seq":0,
+    "compact_running":false,
+    "disk_size":79,
+    "instance_start_time":"1310597000825187",
+    "disk_format_version":5,
+    "committed_update_seq":0
+}</code></pre>
+<h4>Save New Document</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var doc = {};
+$.couch.db("mydb").saveDoc(doc, {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST</strong> http://localhost:5984/mydb/ <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true,
+    "id":"d12ee5ea1df6baa2b06451f44a019ab9",
+    "rev":"1-967a00dff5e02add41819138abb3284d"
+}</code></pre>
+<h4>Open Document</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").openDoc("d12ee5ea1df6baa2b06451f44a019ab9", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET</strong> http://localhost:5984/mydb/d12ee5ea1df6baa2b06451f44a019ab9 <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "_id":"d12ee5ea1df6baa2b06451f44a019ab9",
+    "_rev":"1-967a00dff5e02add41819138abb3284d"
+}</code></pre>
+<p>Note that the HTTP response includes an <code>Etag</code> HTTP header. If you do a subsequent request for the same document, and your client supports caching and conditional HTTP requests, then an <code>If-None-Match</code> header should be sent using the value from the previous response&#8217;s <code>Etag</code> header. If the document has not been modified, then CouchDB will send a <code>304 Not Modified</code> response and no response body, saving bandwidth and speeding up the response.</p>
+<h4>Save Updated Document</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var doc = {
+    _id: "d12ee5ea1df6baa2b06451f44a019ab9",
+    _rev: "1-967a00dff5e02add41819138abb3284d",
+    foo: "bar"
+};
+$.couch.db("mydb").saveDoc(doc, {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>PUT </strong>http://localhost:5984/mydb/d12ee5ea1df6baa2b06451f44a019ab9 <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true,
+    "id":"d12ee5ea1df6baa2b06451f44a019ab9",
+    "rev":"2-13839535feb250d3d8290998b8af17c3"
+}</code></pre>
+<h4>Remove Document</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var doc = {
+    _id: "d12ee5ea1df6baa2b06451f44a019ab9",
+    _rev: "2-13839535feb250d3d8290998b8af17c3"
+};
+$.couch.db("mydb").removeDoc(doc, {
+     success: function(data) {
+         console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>DELETE </strong>http://localhost:5984/mydb/d12ee5ea1df6baa2b06451f44a019ab9?rev=2-13839535… <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "id":d12ee5ea1df6baa2b06451f44a019ab9
+    "ok":true,
+    "rev":"3-1f04f977685e1108b4664f70b09c6f65"
+}</code></pre>
+<h4>Bulk Save</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").bulkSave({"docs": [{}, {}]}, {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_bulk_docs?successStatus=201 <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">[
+    {
+        "id":"d12ee5ea1df6baa2b06451f44a01a0d8",
+        "rev":"1-967a00dff5e02add41819138abb3284d"
+    },
+    {
+        "id":"d12ee5ea1df6baa2b06451f44a01a75a",
+        "rev":"1-967a00dff5e02add41819138abb3284d"
+    }
+]</code></pre>
+<h4>Bulk Remove</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var docs = [
+    {
+        _id: "d12ee5ea1df6baa2b06451f44a01a0d8",
+        _rev: "1-967a00dff5e02add41819138abb3284d"
+    },
+    {
+        _id: "d12ee5ea1df6baa2b06451f44a01a75a",
+        _rev: "1-967a00dff5e02add41819138abb3284d"
+    }
+];
+$.couch.db("mydb").bulkRemove({"docs": docs}, {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_bulk_docs?successStatus=201 <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">[
+    {
+        "id":"d12ee5ea1df6baa2b06451f44a01a0d8",
+        "rev":"2-eec205a9d413992850a6e32678485900"
+    },
+    {
+        "id":"d12ee5ea1df6baa2b06451f44a01a75a",
+        "rev":"2-eec205a9d413992850a6e32678485900"
+    }
+]</code></pre>
+<p>This operates almost exactly like the bulk save, but instead sets the <code>deleted</code> flag to <code>true</code> on the documents.</p>
+<h4>All Documents</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").allDocs({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/mydb/_all_docs <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "total_rows":11,
+    "offset":0,
+    "rows":[
+        {
+            "id":"_design/default",
+            "key":"_design/default",
+            "value":{
+                "rev":"9-5212dde9da06f1933dbe29811fc380d4"
+            }
+        },
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a002cef",
+            "key":"d12ee5ea1df6baa2b06451f44a002cef",
+            "value":{
+                "rev":"1-967a00dff5e02add41819138abb3284d"
+            }
+        },
+        …
+    ]
+}</code></pre>
+<h4>All Design Documents</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").allDesignDocs({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET </strong>
+http://localhost:5984/mydb/_all_docs?startkey=%22_design%22&amp;endkey=%22_design0%22 <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "total_rows":11,
+    "offset":0,
+    "rows":[
+        {
+            "id":"_design/default",
+            "key":"_design/default",
+            "value":{
+                "rev":"9-5212dde9da06f1933dbe29811fc380d4"
+            }
+        }
+    ]
+}</code></pre>
+<h4>All Apps</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("tutorial").allApps({
+    success: function(data) {
+        console.log(data);
+    },
+    eachApp: function(appName, appPath, ddoc) {
+        console.log(appName);
+        console.log(appPath);
+        console.log(ddoc);
+    }
+});</code></pre>
+<p>Resulting HTTP requests:</p>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/tutorial/_all_docs?startkey=%22_design%22&amp;endkey=%22_design0%22 <strong>200 OK</strong></code></pre>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/tutorial/_design/tutorial <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">tutorial</code></pre>
+<pre><code class="javascript">/tutorial/_design/tutorial/index.html</code></pre>
+<pre><code class="javascript">{
+    "_id":"_design/tutorial",
+    "_rev":"5-276897ecff6dc272c0b9143aa23e8a2e",
+    …
+}</code></pre>
+<p>This is intended as a convenience to find metadata about CouchApps.</p>
+<h4>Query</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">var mapFunction = function(doc) {
+    emit();
+};
+$.couch.db("mydb").query(mapFunction, "_count", "javascript", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    },
+    reduce: false
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_temp_view?reduce=false <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "total_rows":10,
+    "offset":0,
+    "rows":[
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a002cef",
+            "key":null,
+            "value":null
+        },
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a0037b5",
+            "key":null,
+            "value":null
+        },
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a003b06",
+            "key":null,
+            "value":null
+        },
+        …
+    ]
+}</code></pre>
+<p>This creates a temporary view as defined by your map and reduce functions. Temporary views are useful in development, but should be replaced with views permanently saved to design documents for production. Temporary views are slow, especially with a large number of documents.</p>
+<h4>View</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").view("default/all", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    },
+    reduce: false
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/mydb/_design/default/_view/all?reduce=false <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "total_rows":10,
+    "offset":0,
+    "rows":[
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a002cef",
+            "key":null,
+            "value":null
+        },
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a0037b5",
+            "key":null,
+            "value":null
+        },
+        {
+            "id":"d12ee5ea1df6baa2b06451f44a003b06",
+            "key":null,
+            "value":null
+        },
+        …
+    ]
+}</code></pre>
+<h4>List</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").list("default/all", "all", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    },
+    reduce: false
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/mydb/_design/default/_list/all/all?reduce=false <strong>200 OK</strong></code></pre>
+<p>The console output will depend on your list&#8217;s behavior.</p>
+<h4>Compact</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").compact({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_compact <strong>202 Accepted</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
+<h4>View Cleanup</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").viewCleanup({
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_view_cleanup <strong>202 Accepted</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
+<h4>Compact View</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").compactView("default", {
+    success: function(data) {
+        console.log(data);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>POST </strong>http://localhost:5984/mydb/_compact/default <strong>202 Accepted</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
+<h4>Changes</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").changes().onChange(function(data) {
+    console.log(data);
+});</code></pre>
+<p>Resulting HTTP requests:</p>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/mydb/ <strong>200 OK</strong></code></pre>
+<pre><code class="no-highlight"><strong>GET </strong>http://localhost:5984/mydb/_changes?heartbeat=10000&amp;feed=longpoll&amp;since=34 <strong>200 OK</strong></code></pre>
+<p>This will keep a connection open until changes are detected, and then open up another connection to listen for subsequent changes starting from the next sequence.</p>
+<p>Console output when a new document is created:</p>
+<pre><code class="javascript">{
+    "results":[
+        {
+            "seq":35,
+            "id":"d12ee5ea1df6baa2b06451f44a01b7b5",
+            "changes":[
+                {
+                    "rev":"1-967a00dff5e02add41819138abb3284d"
+                }
+            ]
+        }
+    ],
+    "last_seq":35
+}</code></pre>
+<p>This is very powerful feature. It allows you to listen for any changes to documents in the database and immediately respond to those changes.</p>
+<h4>Copy Document</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").copyDoc("d12ee5ea1df6baa2b06451f44a01b7b5", {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+}, {
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Destination", "aNewDocId");
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>COPY </strong>http://localhost:5984/mydb/d12ee5ea1df6baa2b06451f44a01b7b5 <strong>201 Created</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "id":"aNewDocId",
+    "rev":"1-967a00dff5e02add41819138abb3284d"
+}</code></pre>
+<h4>Drop Database</h4>
+<p>JavaScript example:</p>
+<pre><code class="javascript">$.couch.db("mydb").drop({
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});</code></pre>
+<p>Resulting HTTP request:</p>
+<pre><code class="no-highlight"><strong>DELETE </strong>http://localhost:5984/mydb/ <strong>200 OK</strong></code></pre>
+<p>Console output:</p>
+<pre><code class="javascript">{
+    "ok":true
+}</code></pre>
 
   </body>
 </html>
