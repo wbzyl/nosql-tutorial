@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>CouchDB jQuery Examples</title>
@@ -9,12 +9,23 @@
     <script src="/_utils/script/jquery.js?1.6.2"></script>
     <script src="/_utils/script/jquery.couch.js?0.11.0"></script>
     <script src="/_utils/script/jquery.dialog.js?0.11.0"></script>
-    <script src="/_utils/script/futon.js?0.11.0"></script>
-    <script src="/_utils/script/jquery.resizer.js?0.11.0"></script>
-    <script src="/_utils/script/jquery.suggest.js?0.11.0"></script>
-    <script src="/_utils/script/futon.browse.js?0.11.0"></script>
-    <script src="/_utils/script/futon.format.js?0.11.0"></script>
   </head>
   <body>
+  <h2>CouchDB jQuery Plugin Reference</h2>
+
+  <p>By default, CouchDB will use an empty string as its URL
+  prefix. However, you can configure this before your first API
+  call. For example:</p>
+  <pre>$.couch.urlPrefix = "http://localhost:5984";</pre>
+
+  <p>Server API</p>
+  <pre>$.couch.info({
+    success: function(data) {
+        console.log(data);
+    }
+  });</pre>
+
+  <h3>TBC</h3>
+
   </body>
 </html>
