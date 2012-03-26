@@ -121,11 +121,26 @@ Oczywiście operacje CRUD możemy zaprogramować i wykonać
 używając swojego ulubionego języka programowania.
 
 
+## Plugin Reference
+
+* Bradley Holt,
+  [CouchDB jQuery Plugin Reference](http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/)
+
+Wchodzimy na stronę:
+
+    http://couch.inf.ug.edu.pl/plugin/ref/index.html
+
+Na konsoli przeglądarki wpisujemy:
+
+    $.couch.urlPrefix = "http://couch.inf.ug.edu.pl";
+
+Teraz możemy przeklikać przykłady z artykułu Holta.
+
+
 # Linki
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
   [CouchDB: The Definitive Guide][couchdb]
-* [CouchDB jQuery Plugin Reference](http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/)
 * [BrowserCouch Tutorial](http://hg.toolness.com/browser-couch/raw-file/blog-post/tutorial.html)
 * [CouchApp.org: Simple JavaScript Applications with CouchDB](http://couchapp.org/page/index) –
   utilities to make standalone CouchDB application development simple
