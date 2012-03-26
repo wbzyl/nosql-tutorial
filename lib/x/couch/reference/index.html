@@ -22,6 +22,25 @@
   <body>
   <h2>CouchDB jQuery Plugin Reference</h2>
 
+  <p>Pomysł i artykuł, Bradley Holt,
+  <a href="http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/">CouchDB
+  jQuery Plugin Reference</a>.</p>
+
+  <p>I’ve had a difficult time finding documentation on the CouchDB jQuery
+  plugin that ships with CouchDB. So, I’ve decided to create my own
+  reference and share it with you.</p>
+
+  <h3>Setup</h3>
+
+  <p>CouchDB ships with several useful JavaScript libraries, including
+  jQuery. Here is an example of an HTML document that takes advantage
+  of CouchDB’s included JavaScript libraries:</p>
+  <pre>/_utils/script/json2.js
+/_utils/script/sha1.js
+/_utils/script/jquery.js?1.6.2"
+/_utils/script/jquery.couch.js?0.11.0"
+/_utils/script/jquery.dialog.js?0.11.0</pre>
+
   <p>By default, CouchDB will use an empty string as its URL
   prefix. However, you can configure this before your first API
   call. For example:</p>
