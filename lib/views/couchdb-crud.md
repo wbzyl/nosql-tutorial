@@ -59,6 +59,7 @@ Informacje o zespole skopiowałem ze strony A. Reisner’a
 
 Zaczynamy od utworzenia bazy:
 
+    :::bash
     curl -X PUT http://127.0.0.1:5984/lz/
 
 **Uwagi:**
@@ -73,7 +74,7 @@ Zaczynamy od utworzenia bazy:
 
 Dodajemy dane pierwszego albumu:
 
-    :::text
+    :::bash
     curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i \
       --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
@@ -85,13 +86,14 @@ o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
 
 *Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
 
-    :::text
+    :::bash
     curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
     {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
 
 Obrazek, dopiero co zapisany w bazie, pobieramy korzystając z takiego uri:
 
+    :::bash
     curl -X GET http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg
 
 Uwagi:
@@ -105,7 +107,7 @@ przy zapisywaniu załącznika w bazie.
 możemy skorzystać z funkcji *use UUID generated document ID*
 (co oznacza, że skorzystamy z *POST* zamiast *PUT*):
 
-    :::text
+    :::bash
     curl -X POST http://localhost:5984/lz  -H "Content-Type: application/json" \
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
@@ -120,6 +122,7 @@ Dodawanie pojedynczo rekordów do bazy jest męczące.
 [HTTP Bulk Document API](http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API)
 ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
 
+    :::bash
     curl -X POST -H "Content-Type: application/json" --data @lz.json http://127.0.0.1:5984/lz/_bulk_docs
 
 gdzie w pliku *lz.json* wpisujemy:
