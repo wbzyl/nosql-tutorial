@@ -1,20 +1,5 @@
 #### {% title "Oswajamy CouchDB" %}
 
-Co to są [dokumentowe bazy danych] [document-oriented database]?
-Dlaczego korzystamy z dokumentowych baz danych:
-„Another advantage of document oriented databases is **the ease of
-usage and programming** so that untrained business users, for example,
-can create applications and design their own databases. Information
-can be added without worrying about the „record size” and so
-programmers simply need to build an interface to allow the
-information to be entered easily.”
-
-Co jest ciekawego w CouchDB opisuje Daniel Alexiuc w artykule
-(pod mylącym tytułem) [Enterprise Web Application Architecture 2.0 and
-kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-architecture.html).
-Przypowieść o CouchDB,
-[The Parable of CouchDB](http://www.iriscouch.com/blog/2011/06/the-parable-of-couchdb)
-
 <blockquote>
  <h2>Kot pewnego guru</h2>
  <p>
@@ -37,6 +22,22 @@ Przypowieść o CouchDB,
   o istotnej roli kota
   w należytym odprawianiu nabożeństwa.
 </blockquote>
+
+Co to są [dokumentowe bazy danych] [document-oriented database]?
+Dlaczego korzystamy z dokumentowych baz danych:
+„Another advantage of document oriented databases is **the ease of
+usage and programming** so that untrained business users, for example,
+can create applications and design their own databases. Information
+can be added without worrying about the „record size” and so
+programmers simply need to build an interface to allow the
+information to be entered easily.”
+
+Co jest ciekawego w CouchDB opisuje Daniel Alexiuc w artykule
+(pod mylącym tytułem) [Enterprise Web Application Architecture 2.0 and
+kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-architecture.html).
+Przypowieść o CouchDB,
+[The Parable of CouchDB](http://www.iriscouch.com/blog/2011/06/the-parable-of-couchdb)
+
 
 ## Dlaczego CouchDB?
 
@@ -79,29 +80,32 @@ Dokumentacja:
 
 * [CouchDB Reference](http://wiki.apache.org/couchdb/Reference)
 * [Couchbase HTTP API Reference](http://www.couchbase.org/sites/default/files/uploads/all/documentation/couchbase-api.html)
+* [HTTP_view_API, Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options)
 
-CRUD to skrót od pierwszych liter słów:
-Create, Read, Update, Delete.
-
+CRUD to skrót od pierwszych liter słów: Create, Read, Update, Delete.
 Poniżej zobaczymy jak korzystając z programu *curl*
-**utworzyć** nową bazę danych, **usunąć** bazę, **pobrać informację** o bazie.
+**utworzyć** nową bazę danych, **usunąć** bazę, **pobrać informację** o bazie,
+czyli operacje *CR[U]D* na bazie.
 
 Tworzymy nową bazę o nazwie *xxx*:
 
+    :::bash
     curl -X PUT http://127.0.0.1:5984/xxx
 
 Pobieramy info o bazie *xxx*:
 
+    :::bash
     curl -X GET http://127.0.0.1:5984/xxx
 
 Usuwamy bazę *xxx*:
 
+    :::bash
     curl -X DELETE http://127.0.0.1:5984/xxx
 
 Nie ma polecenia dla **update**.
 
-Omówić pozostałe operacje z sekcji „Database level”
-z [API Cheatsheet](http://wiki.apache.org/couchdb/API_Cheatsheet).
+[API Cheatsheet](http://wiki.apache.org/couchdb/API_Cheatsheet) –
+pozostałe operacje z sekcji „Database level”.
 
 **REST** to akronim od *Represenational State Transfer*.
 Zwykle w kontekście WWW rozumiemy ten skrót tak:
@@ -130,10 +134,10 @@ używając swojego ulubionego języka programowania.
 
 Cykl artykułów, Jan Lehnardt. *What’s new in CouchDB*:
 
-* Part 1: [Nice URLs with Rewrite Rules and Virtual Hosts](http://blog.couchbase.com/whats-new-in-apache-couchdb-0-11-part-one-nice-urls)
-* Part 2: [Views; JOINs Redux, Raw Collation for Speed](http://blog.couchbase.com/whats-new-in-apache-couchdb-0-11-part-two-views)
-* Part 3: [New Features in Replication](http://blog.couchbase.com/whats-new-in-apache-couchdb-0-11-part-three-new)
-* Part 4: [Security’n stuff: Users, Authentication, Authorisation and Permissions](http://blog.couchbase.com/whats-new-in-couchdb-1-0-part-4-securityn-stuff)
+* Part 1: [Nice URLs with Rewrite Rules and Virtual Hosts](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-one-nice-urls-rewrite-rules-and-virtual-hosts)
+* Part 2: [Views; JOINs Redux, Raw Collation for Speed](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-two-views-joins-redux-raw-collation-speed)
+* Part 3: [New Features in Replication](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-three-new-features-replication)
+* Part 4: [Security’n stuff: Users, Authentication, Authorisation and Permissions](http://blog.couchbase.com/what%E2%80%99s-new-couchdb-10-%E2%80%94-part-4-security%E2%80%99n-stuff-users-authentication-authorisation-and-permissions)
 
 Pozostałe linki:
 
