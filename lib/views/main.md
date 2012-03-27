@@ -22,10 +22,10 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 # Wasze prezentacje
 
 * [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
-* [??.04.2012] **Hadoop** – Dawid Milewski, …
-* [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
+* [??.04.2012] **Hadoop** – Dawid Milewski,…
 * [??.0?.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
-  [Data Wrangler](http://vis.stanford.edu/wrangler/)
+  [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński, Jan Siegel
+* [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
 * [??.0?.2012] **Aggregacja w ElasticSearch**,
   [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
 * [??.0?.2012] **Wprowadzenie do Neo4j**.
@@ -164,8 +164,8 @@ Wdrażamy aplikację „EST” na Sigmie.
 ## CouchDB
 
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
-1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
+1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}

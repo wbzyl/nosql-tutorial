@@ -2,7 +2,7 @@
 
 Replikujemy bazę *lz*:
 
-    :::text
+    :::bash
     curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
       -d '{"source":"http://sigma.ug.edu.pl:5984/lz","target":"lz","create_target":true}'
     {"ok":true,"session_id":"fb84...",
