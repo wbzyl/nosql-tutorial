@@ -20,7 +20,8 @@ Replikujemy bazę *ls*:
         "doc_write_failures":0}]}
 
 A teraz replikujemy – między sobą – swoje bazy danych.
-Na razie do replikacji wykorzystamy Futona.
+
+W tym celu, w Futonie, klikamy w zakładkę (po prawej stronie) *Replicator*.
 
 
 ## Replikujemy bazy z CouchDB na Sigmie
@@ -33,7 +34,7 @@ i wybieramy bazy, które nas interesują, na przykład:
 
     gutenberg ksiazki ls
 
-Oczywiście do replikacji użyjemy prostego skryptu:
+Oczywiście do replikacji użyjemy prostego skryptu *couchdb-replicate-from-tau.sh*:
 
     :::bash couchdb-replicate-from-tau.sh
     #!/bin/bash
@@ -47,4 +48,5 @@ Oczywiście do replikacji użyjemy prostego skryptu:
 
 Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
 
+    :::bash
     ./couchdb-replicate-from-tau.sh gutenberg plugin ls

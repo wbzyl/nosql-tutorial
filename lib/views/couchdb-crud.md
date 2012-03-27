@@ -60,14 +60,14 @@ Informacje o zespole skopiowałem ze strony A. Reisner’a
 Zaczynamy od utworzenia bazy:
 
     :::bash
-    curl -X PUT http://127.0.0.1:5984/lz/
+    curl -X PUT localhost:5984/lz/
 
 **Uwagi:**
 
 1. Przykładowy numer portu *5984* należy zmienić na taki jaki mamy
   ustawiony w swojej konfiguracji CouchDB.
-2. W przykładach numer rewizji wpisany w fomacie **?-XXXX**
-  należy wstawić prawdziwy numer rewizji dokumentu.
+2. W poniższych przykładach, zamiast fikcyjnego numeru rewizji
+   **?-XXXX** należy wstawić numer rewizji dokumentu.
 
 
 ## CRUD na dokumentach
@@ -75,7 +75,7 @@ Zaczynamy od utworzenia bazy:
 Dodajemy dane pierwszego albumu:
 
     :::bash
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i \
+    curl -X PUT localhost:5984/lz/led-zeppelin-i \
       --data '{"title":"Led Zeppelin I","released":"1969-01-12","tracks":["Good Times Bad Times","..."]}'
     {"ok":true,"id":"led-zeppelin-i","rev":"1-XXXX"}
 
@@ -87,14 +87,14 @@ o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
 *Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
 
     :::bash
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
+    curl -X PUT localhost:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
     {"ok":true,"id":"led-zeppelin-i","rev":"2-XXXX"}
 
 Obrazek, dopiero co zapisany w bazie, pobieramy korzystając z takiego uri:
 
     :::bash
-    curl -X GET http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg
+    curl -X GET localhost:5984/lz/led-zeppelin-i/cover.jpg
 
 Uwagi:
 
@@ -108,7 +108,7 @@ możemy skorzystać z funkcji *use UUID generated document ID*
 (co oznacza, że skorzystamy z *POST* zamiast *PUT*):
 
     :::bash
-    curl -X POST http://localhost:5984/lz  -H "Content-Type: application/json" \
+    curl -X POST localhost:5984/lz  -H "Content-Type: application/json" \
       --data '{"title":"Houses Of The Holy","released":"March 28, 1973"}'
     {"ok":true,"id":"076c85dcf037c293f237c44eac0000a8","rev":"1-XXXX"}
 
@@ -123,7 +123,7 @@ Dodawanie pojedynczo rekordów do bazy jest męczące.
 ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
 
     :::bash
-    curl -X POST -H "Content-Type: application/json" --data @lz.json http://127.0.0.1:5984/lz/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" --data @lz.json localhost:5984/lz/_bulk_docs
 
 gdzie w pliku *lz.json* wpisujemy:
 
@@ -185,30 +185,31 @@ gdzie w pliku *lz.json* wpisujemy:
         }
     ]}
 
-*Uwaga:* Daty powinniśmy wpisywać korzystając z *new Date*, jakoś tak (dlaczego?):
-
-    :::javascript
-    new Date(1969,9,23)
-
-Niestety, obrazki musimy dodać ręcznie – tak jak to zrobiliśmy powyżej –
-*curl* nam w tym nie pomoże (?, sprawdzić najnowszą wersję).
+Obrazki do dokumentów dodamy ręcznie, w Futonie. Niestety.
+Zanim dodamy *załącznik* do dokumentu musimy znać jego rewizję.
+Dlatego, do dodania dokumentu do bazy, potrzebne są
+dwa wywołania programu *curl*
 
 
-### *_ALL_DOCS* – użyteczny uri
+## Użyteczne *_ALL_DOCS*
 
 Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev*.
 
 Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
 
-    :::text
-    curl -X GET http://localhost:5984/lz/_all_docs
+    :::bash
+    curl -X GET localhost:5984/lz/_all_docs
       {"total_rows":3, "offset":0,
        "rows":[
          {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
          {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
          {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
       ]}
-    curl -X GET http://localhost:5984/lz/_all_docs?include_docs=true
+
+Kompletne dokumenty nie są nam potrzebne:
+
+    :::bash
+    curl -X GET localhost:5984/lz/_all_docs?include_docs=true
       {"total_rows":3, "offset":0,
        "rows":[
          {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"4-b6b2..."},
@@ -225,50 +226,54 @@ Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery 
 *Uwaga:* adresy URI możemy wpisać bezpośrednio do przeglądarki.
 
 
-### Update ≡ Replace ? – wersjonowanie dokumentów
+## Wersjonowanie dokumentów: Update ≡ Replace ?
 
 Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
 
-    curl -X PUT http://127.0.0.1:5984/lz/076c... \
+    :::bash
+    curl -X PUT localhost:5984/lz/076c... \
        --data '{"_rev":"1-XXXX","songs":["The Song Remains The Same"]}'
 
 Załącznik dodajemy w taki sposób (korzystamy z rewizji wypisanych powyżej):
 
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
+    :::bash
+    curl -X PUT localhost:5984/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin.jpg
 
 Dodajemy okładki do albumu II oraz III:
 
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
+    :::bash
+    curl -X PUT localhost:5984/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-ii.jpg
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
+    curl -X PUT localhost:5984/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
 
-W zasadzie, załączniki wygodniej dodawać w Futonie!
-Chyba, że skorzystamy z jakiegoś języka skryptowego oraz
-drivera do bazy CouchDB w tym języku.
+Takie dodawanie załączników nie jest to wygodne.
+(Ale drivery do baz danych jakoś ten niewygodny problem rozwiązują.)
 
 
 ### Delete
 
-Jeśli będziemy chcieli usunąć dokument z „led-zeppelin-i” z bazy,
-to wystarczy wykonać polecenie:
+Aby usunąć dokument z „led-zeppelin-i” z bazy wystarczy wykonać polecenie:
 
-    curl -X DELETE http://127.0.0.1:5984/lz/led-zeppelin-i?rev=2-XXXX
+    :::bash
+    curl -X DELETE localhost:5984/lz/led-zeppelin-i?rev=2-XXXX
 
 
 ### Get
 
-Pobieramy dokument:
+Pobieranie dokumentu też jest proste:
 
-    curl -X GET http://127.0.0.1:5984/lz/led-zeppelin-i
+    :::bash
+    curl -X GET localhost:5984/lz/led-zeppelin-i
 
 
 ### Copy
 
-Kopiujemy dokument z *led-zeppelin-i*:
+Z kopiowaniem dokumentów też nie ma problemu:
 
-    curl -X COPY http://127.0.0.1:5984/lz/led-zeppelin-i -H "Destination: mothership"
+    :::bash
+    curl -X COPY localhost:5984/lz/led-zeppelin-i -H "Destination: mothership"
 
 Czy można użyć kopiowania do czegoś sensownego?
 
@@ -283,12 +288,13 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-i*:
     <title>Led Zeppelin I</title>
     <h1>Led Zeppelin I</h1>
     <p>
-      <img src="/lz/led-zeppelin-i/cover.jpg" alt="cover">
+      <img src="/lz/led-zeppelin-i/led-zeppelin-i.jpg" alt="cover">
     </p>
 
 za pomocą polecenia:
 
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-i/index.html?rev=2-XXXX \
+    :::bash
+    curl -X PUT localhost:5984/lz/led-zeppelin-i/index.html?rev=2-XXXX \
       -H "Content-Type: text/html" --data @i.html
 
 i po wpisaniu w przeglądarce:
@@ -300,21 +306,14 @@ widzimy stronę z obrazkiem. Dziwne, nieprawdaż.
 
 # Pokrętny przykład
 
-Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-ii*:
+Dodamy do dokumentu plik *ii.html* do dokumentu *led-zeppelin-ii*:
 
     :::html ii.html
     <!doctype html>
     <meta charset="utf-8" />
     <title>Led Zeppelin II</title>
 
-    <h1>Led Zeppelin II</h1>
-    <p>
-      <img src="/lz/led-zeppelin-ii/cover.jpg" alt="cover">
-    </p>
-    <ul id="songs">
-    </ul>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script>
     $(function() {
       var ul = $('#songs');
@@ -327,9 +326,17 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-ii*:
     });
     </script>
 
-Polecenie:
+    <h1>Led Zeppelin II</h1>
+    <p>
+      <img src="/lz/led-zeppelin-ii/led-zeppelin-ii.jpg" alt="cover">
+    </p>
+    <ul id="songs">
+    </ul>
 
-    curl -X PUT http://127.0.0.1:5984/lz/led-zeppelin-ii/index.html?rev=8-XXXX \
+Jak zwykle, skorzystamy z programu *curl*:
+
+    :::bash
+    curl -X PUT localhost:5984/lz/led-zeppelin-ii/index.html?rev=8-XXXX \
       -H "Content-Type: text/html" --data @ii.html
 
 Teraz po wejściu na stronę:
@@ -344,6 +351,13 @@ jedną stronę (albo, w zasadzie drugie pytanie, szablon strony)
 dla wszystkich trzech albumów?
 
 Odpowiedź jest TAK. I można to zrobić na kilka sposobów.
+
+
+## Co to jest CORS
+
+* [Cross-origin resource sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
+* [Enable Cross-Origin Resource Sharing](http://enable-cors.org/)
+
 
 
 [couchdb]: http://books.couchdb.org/relax/ "CouchDB: The Definitive Guide"
