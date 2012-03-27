@@ -53,6 +53,7 @@ module WB
         'rb' => 'ruby',
         'ru' => 'ruby',
         'css' => 'css',
+        'json' => 'json',
         'yml' => 'yaml',
         'sh' => 'bash',
         'js' => 'javascript'

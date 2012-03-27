@@ -43,8 +43,8 @@ chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
     :::bash
     curl -X PUT  http://Admin:Pass@localhost:5984/ls
 
-Następnie wrzucamy do hurtem do bazy wszystkie cytaty
-({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/doc/json/ls.json" %}):
+Następnie wrzucamy hurtem do bazy wszystkie cytaty
+({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/couch/shows/ls.json" %}):
 
     :::bash
     curl -X POST -H "Content-Type: application/json" \
@@ -133,7 +133,7 @@ Przykład żądania z opcją w żądaniu:
     curl localhost:5984/ls/_design/default/_show/aye/1?q=Captain
 
 
-### Różne reprezentacje dokumentów
+## Różne reprezentacje dokumentów
 
 Przykład funkcji show renderującej różne reprezentacje dokumentu
 (w poniższym kodzie – HTML albo XML) w zależności od zawartości nagłówka *Content-Type* żądania:
@@ -197,7 +197,7 @@ Kompletna lista *mime types* z pliku *main.js*:
 Oczywiście możemy też rejestrować swoje typy mime.
 
 
-## Ściąga z budowy obiektów Request & Response
+## Ściąga z Request & Response
 
 Wygodnie jest mieć te informacje pod ręką.
 
