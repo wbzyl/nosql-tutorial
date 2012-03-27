@@ -1,10 +1,10 @@
 #### {% title "Replikacja – jakie to proste!" %}
 
-Replikujemy bazę *lz*:
+Replikujemy bazę *ls*:
 
-    :::text
+    :::bash
     curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-      -d '{"source":"http://sigma.ug.edu.pl:5984/lz","target":"lz","create_target":true}'
+      -d '{"source":"http://wbzyl.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
     {"ok":true,"session_id":"fb84...",
      "source_last_seq":5,
      "history":[{"session_id":"fb84...",
@@ -35,16 +35,16 @@ i wybieramy bazy, które nas interesują, na przykład:
 
 Oczywiście do replikacji użyjemy prostego skryptu:
 
-    :::text couchdb-replicate-from-sigma.sh
+    :::bash couchdb-replicate-from-tau.sh
     #!/bin/bash
     for i in "$@"
     do
-      sigma=http://sigma.ug.edu.pl:5984/$i
-      echo "replicate: $sigma -> $i"
+      tau=http://couch.inf.ug.edu.pl/$i
+      echo "replicate: $tau -> $i"
       curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-        -d "{\"source\":\"$sigma\",\"target\":\"$i\",\"create_target\":true}"
+        -d "{\"source\":\"$tau\",\"target\":\"$i\",\"create_target\":true}"
     done
 
 Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
 
-    ./couchdb-replicate-from-sigma.sh gutenberg ksiazki ls
+    ./couchdb-replicate-from-tau.sh gutenberg plugin ls
