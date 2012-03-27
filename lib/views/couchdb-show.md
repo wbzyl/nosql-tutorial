@@ -35,17 +35,20 @@ Format przykładowego aforyzmu umieszczonego w bazie:
 
 Tworzymy bazę *ls*, tak:
 
-    curl -X PUT  http://localhost:5984/ls
+    :::bash
+    curl -X PUT  localhost:5984/ls
 
 chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
 
+    :::bash
     curl -X PUT  http://Admin:Pass@localhost:5984/ls
 
 Następnie wrzucamy do hurtem do bazy wszystkie cytaty
 ({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/doc/json/ls.json" %}):
 
+    :::bash
     curl -X POST -H "Content-Type: application/json" \
-      http://localhost:5984/ls/_bulk_docs -d @ls.json
+      localhost:5984/ls/_bulk_docs -d @ls.json
 
 
 ## „HTML Show”
@@ -64,7 +67,8 @@ Oto prosty przykład:
 Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
 aby zapisać kod w bazie:
 
-     curl -X PUT http://localhost:5984/ls/_design/default \
+    :::bash
+     curl -X PUT localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
 
 **Uwaga:** Jeśli planujemy zapisać kilka funkcji show w design doc,
@@ -85,7 +89,8 @@ podanego cytatu, dla każdego żądania postaci:
 
 Można też pobrać sformatowaną wersję HTML cytatu za pomocą programu *curl*:
 
-    curl -v http://localhost:5984/ls/_design/default/_show/quotation/4
+    :::bash
+    curl -v localhost:5984/ls/_design/default/_show/quotation/4
 
 Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
@@ -118,12 +123,14 @@ Odczytujemy opcje wywołania przekazane do funkcji show:
 
 Zapisujemy powyższą funkcję w bazie:
 
-     curl -X PUT http://localhost:5984/ls/_design/default \
+    :::bash
+    curl -X PUT localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @aye.json
 
 Przykład żądania z opcją w żądaniu:
 
-    curl http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
+    :::bash
+    curl localhost:5984/ls/_design/default/_show/aye/1?q=Captain
 
 
 ### Różne reprezentacje dokumentów
@@ -147,15 +154,17 @@ Przykład funkcji show renderującej różne reprezentacje dokumentu
 
 Zapisujemy powyższą funkcję show *aye* w bazie:
 
-     curl -X PUT http://localhost:5984/ls/_design/default \
-       -H "Content-Type: application/json" -d @maye.json
+    :::bash
+    curl -X PUT localhost:5984/ls/_design/default \
+      -H "Content-Type: application/json" -d @maye.json
 
 Dwa przykłady żądań korzystających z tej funkcji show: zwykłe żądanie
 z domyślnym nagłówkiem *Accept* i żądanie z nagłówkiem
 *Accept: application/xml*
 
-    curl -v http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
-    curl -v -H 'Accept: application/xml' http://localhost:5984/ls/_design/default/_show/aye/1?q=Captain
+    :::bash
+    curl -v localhost:5984/ls/_design/default/_show/aye/1?q=Captain
+    curl -v -H 'Accept: application/xml' localhost:5984/ls/_design/default/_show/aye/1?q=Captain
 
 ## Mime types
 
@@ -199,7 +208,7 @@ Wygodnie jest mieć te informacje pod ręką.
 * `cookie` - cookie information passed on from mochiweb
 * `form` - if the request’s *Content-Type* is
   *application/x-www-form-urlencoded*, a decoded version of the body
-* `info` - same structure as returned by *http://localhost:5984/db_name/*
+* `info` - same structure as returned by *localhost:5984/db_name/*
 * `path` - any extra path information after routing to the external process
 * `query` - decoded version of the query string parameters.
 * `method` - HTTP request verb
