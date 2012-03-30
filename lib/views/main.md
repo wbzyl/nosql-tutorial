@@ -51,6 +51,9 @@ Na początek proponuję przykład *circle-05*:
 
 Kod aplikacji jest dostępny na GitHubie (repo *water*).
 
+Przykładowe zadanie:
+[Line chart in D3](http://www.janwillemtulp.com/2011/04/01/tutorial-line-chart-in-d3/).
+
 [2012.03.21] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
 
 [2012.03.20] [SQL Fiddle](http://sqlfiddle.com/) –
