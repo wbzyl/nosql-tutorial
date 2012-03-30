@@ -42,6 +42,15 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.03.31] Na Heroku uruchomiłem prosta aplikację pozwalającą
+[kodować online w D3](http://deep-water.herokuapp.com/)
+
+Na początek proponuję przykład *circle-05*:
+
+    http://deep-water.herokuapp.com/#circle-05
+
+Kod aplikacji jest dostępny na GitHubie (repo *water*).
+
 [2012.03.21] [Where can I get large datasets open to the public?](http://www.quora.com/Data/Where-can-I-get-large-datasets-open-to-the-public)
 
 [2012.03.20] [SQL Fiddle](http://sqlfiddle.com/) –
