@@ -42,6 +42,8 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.04.02] [Denied!](http://saito.section9.co.uk/)
+
 [2012.03.31] Na Heroku uruchomiłem prosta aplikację pozwalającą
 [kodować online w D3](http://deep-water.herokuapp.com/).
 
