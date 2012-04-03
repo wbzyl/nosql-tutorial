@@ -21,14 +21,14 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 # Wasze prezentacje
 
-* [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
+* [07.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
 * [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior, Aleksandra Chlebus
+* [09.05.2012] **Wprowadzenie do Neo4j** – Adrian Modliszewski, Daniel Mielniczuk
 * [??.0?.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
   [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński, Jan Siegel
-* [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
 * [??.0?.2012] **Aggregacja w ElasticSearch**,
   [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
-* [9.05.2012] **Wprowadzenie do Neo4j** – Adrian Modliszewski, Daniel Mielniczuk
+* [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
 
 <blockquote>
  <p>Having good ideas is most of writing well. If you know what you're
