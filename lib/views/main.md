@@ -22,7 +22,7 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 # Wasze prezentacje
 
 * [7.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
-* [??.04.2012] **Hadoop** – Dawid Milewski,…
+* [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior, Aleksandra Chlebus
 * [??.0?.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
   [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński, Jan Siegel
 * [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
