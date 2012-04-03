@@ -28,8 +28,7 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 * [??.0?.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/)
 * [??.0?.2012] **Aggregacja w ElasticSearch**,
   [Search made easy for (web) developers](http://spinscale.github.com/elasticsearch/2012-03-jugm.html)
-* [??.0?.2012] **Wprowadzenie do Neo4j**.
-
+* [9.05.2012] **Wprowadzenie do Neo4j** – Adrian Modliszewski, Daniel Mielniczuk
 
 <blockquote>
  <p>Having good ideas is most of writing well. If you know what you're
