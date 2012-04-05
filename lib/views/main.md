@@ -41,6 +41,9 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.04.04] Wizualizacja –
+[The Birth Of Silicon Valley](http://www.npr.org/2012/03/26/149404846/the-birth-of-silicon-valley).
+
 [2012.04.02] [Denied!](http://saito.section9.co.uk/)
 
 [2012.03.31] Na Heroku uruchomiłem prosta aplikację pozwalającą
