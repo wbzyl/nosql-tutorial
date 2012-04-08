@@ -23,6 +23,9 @@
   w należytym odprawianiu nabożeństwa.
 </blockquote>
 
+* [CouchDB](https://blogs.apache.org/couchdb/) – blog
+* [CouchDB](http://couchdb.apache.org/) – info
+
 Co to są [dokumentowe bazy danych] [document-oriented database]?
 Dlaczego korzystamy z dokumentowych baz danych:
 „Another advantage of document oriented databases is **the ease of
