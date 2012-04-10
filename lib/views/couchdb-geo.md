@@ -30,8 +30,6 @@ Do zapisania funkcji spatial oraz funkcji listowej użyjemy prostego skryptu
 oraz programu *couchapp*:
 
     :::javascript geo.js
-    // var couchapp = require('couchapp');
-
     ddoc = {
       _id: '_design/default'
       , views:   {}
@@ -195,8 +193,6 @@ możemy przeklikać *place_id*, aby dowiedzieć się co to za miejsce.
 Spatial view:
 
     :::js flickr.js
-    var couchapp = require('couchapp');
-
     ddoc = {
       _id: '_design/photos'
       , views:   {}

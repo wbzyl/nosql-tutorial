@@ -153,8 +153,6 @@ Ułatwia on tworzenie aplikacji dla CouchDB.
 Oto prosty przykład
 
     :::javascript aye.js
-    // var couchapp = require('couchapp');
-
     ddoc = {
       _id: '_design/default'
       , views: {}
