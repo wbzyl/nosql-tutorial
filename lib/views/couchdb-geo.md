@@ -30,7 +30,7 @@ Do zapisania funkcji spatial oraz funkcji listowej użyjemy prostego skryptu
 oraz programu *couchapp*:
 
     :::javascript geo.js
-    var couchapp = require('couchapp');
+    // var couchapp = require('couchapp');
 
     ddoc = {
       _id: '_design/default'
@@ -101,6 +101,11 @@ Tworzymy bazę *tatry*:
 
 I importujemy do niej dane z wcześniej pobranego z Flickr pliku *flickr_search-01.json*:
 
+    :::bash
+    node import.js
+
+Oto kod *import.js*:
+
     :::js import.js
     var cradle = require("cradle")
     , util = require("util")
@@ -147,7 +152,7 @@ I importujemy do niej dane z wcześniej pobranego z Flickr pliku *flickr_search
       console.log("imported data from:", name);
     });
 
-Dane pobrałem w taki sposób:
+Dane zostały pobrane w taki sposób:
 
     :::bash terminal
     curl "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=<MY-API-KEY>&text=$search&has_geo=true&extras=geo&per_page=250&format=json&nojsoncallback=1"
@@ -207,10 +212,10 @@ Spatial view:
       };
     };
 
-Przykładowe zapytanie:
+Przykładowe zapytanie spatial:
 
     :::bash
-    http://localhost:5984/tatry/_design/photos/_spatial/points?bbox=0,0,180,90&limit=2
+    http://localhost:5984/tatry/_design/photos/_spatial/points?bbox=0,0,180,90
 
 Dopisujemy funkcję listową:
 
@@ -226,6 +231,10 @@ Dopisujemy funkcję listową:
       };
     };
 
-Przykładowe zapytanie:
+Funkcję spatial i listową zapisujemy w bazie *tatry*:
+
+    couchapp push flickr.js http://localhost:5984/tatry
+
+Przykładowe zapytanie listowe:
 
     http://localhost:5984/tatry/_design/photos/_spatial/_list/wkt/points?bbox=0,0,180,90
