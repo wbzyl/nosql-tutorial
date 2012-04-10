@@ -44,7 +44,7 @@ chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
     curl -X PUT  http://Admin:Pass@localhost:5984/ls
 
 Następnie wrzucamy hurtem do bazy wszystkie cytaty
-({%= link_to "link do pliku *ls.json* z wszystkimi cytatatami", "/couch/shows/ls.json" %}):
+({%= link_to "link do pliku *ls.json* z wszystkimi cytatami", "/couch/shows/ls.json" %}):
 
     :::bash
     curl -X POST -H "Content-Type: application/json" \
