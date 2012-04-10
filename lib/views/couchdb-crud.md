@@ -84,7 +84,7 @@ W bazie możemy zapisać dane binarne, na przykład obrazki, filmy;
 możemy też zapisać pliki html, xml. W terminologii CouchDB mówimy
 o dodaniu ** *załącznika* ** (ang. *attachment*) do dokumentu.
 
-*Przykład:* dodajemy załącznik, okładkę *led-zeppelin-i.jpg*, do dokumentu *led-zeppelin-i*:
+Dodajemy **załącznik** – obrazek *led-zeppelin-i.jpg* – do dokumentu *led-zeppelin-i*:
 
     :::bash
     curl -X PUT localhost:5984/lz/led-zeppelin-i/cover.jpg?rev=1-XXXX \
@@ -187,26 +187,29 @@ gdzie w pliku *lz.json* wpisujemy:
 
 Obrazki do dokumentów dodamy ręcznie, w Futonie. Niestety.
 Zanim dodamy *załącznik* do dokumentu musimy znać jego rewizję.
-Dlatego, do dodania dokumentu do bazy, potrzebne są
-dwa wywołania programu *curl*
+Dlatego, aby uaktualnić zawartość dokumentu, konieczne są
+dwa wywołania programu *curl*:
+
+1. pobieramy dokument i zapamiętujemy jego rewizję
+2. uaktualniamy zawartość dokumentu o zapamiętanej rewizji
 
 
-## Użyteczne *_ALL_DOCS*
+## _all_docs – pobieramy info z rewizjami
 
-Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev*.
-
-Skorzystamy z **użytecznego** uri powyżej – użytecznego bo wypisuje numery rewizji dokumentów:
+Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev*:
 
     :::bash
     curl -X GET localhost:5984/lz/_all_docs
       {"total_rows":3, "offset":0,
        "rows":[
-         {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"2-ab9b..."}},
+         {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"1-ab9b..."}},
          {"id":"led-zeppelin-ii", "key":"led-zeppelin-ii", "value":{"rev":"1-f27a..."}},
          {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
       ]}
 
-Kompletne dokumenty nie są nam potrzebne:
+Do dosania okładek wystarczą wypisane powyżej rewizje.
+
+Ale, gdyby były potrzebne całe dokumenty, to możemy je pobrać tak:
 
     :::bash
     curl -X GET localhost:5984/lz/_all_docs?include_docs=true
@@ -223,10 +226,10 @@ Kompletne dokumenty nie są nam potrzebne:
               "index.html":{"content_type":"text/html","revpos":9,"length":152,"stub":true}, ...
       ...
 
-*Uwaga:* adresy URI możemy wpisać bezpośrednio do przeglądarki.
+**Uwaga:** powyższe URI możemy wpisywać bezpośrednio w przeglądarce.
 
 
-## Wersjonowanie dokumentów: Update ≡ Replace ?
+## Wersjonowanie dokumentów: update ≡ replace ?
 
 Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Holy”:
 
@@ -237,15 +240,15 @@ Uaktualniamy, ale naprawdę zamieniamy zawartość dokumentu „Houses of The Ho
 Załącznik dodajemy w taki sposób (korzystamy z rewizji wypisanych powyżej):
 
     :::bash
-    curl -X PUT localhost:5984/lz/led-zeppelin-i/cover.jpg?rev=4-XXXX \
-       -H "Content-Type: image/jpg" --data-binary @led-zeppelin.jpg
+    curl -X PUT localhost:5984/lz/led-zeppelin-i/led-zeppelin-i.jpg?rev=4-XXXX \
+       -H "Content-Type: image/jpg" --data-binary @led-zeppelin-i.jpg
 
 Dodajemy okładki do albumu II oraz III:
 
     :::bash
-    curl -X PUT localhost:5984/lz/led-zeppelin-ii/cover.jpg?rev=1-XXXX \
+    curl -X PUT localhost:5984/lz/led-zeppelin-ii/led-zeppelin-ii.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-ii.jpg
-    curl -X PUT localhost:5984/lz/led-zeppelin-iii/cover.jpg?rev=1-XXXX \
+    curl -X PUT localhost:5984/lz/led-zeppelin-iii/led-zeppelin-iii.jpg?rev=1-XXXX \
        -H "Content-Type: image/jpg" --data-binary @led-zeppelin-iii.jpg
 
 Takie dodawanie załączników nie jest to wygodne.
@@ -306,7 +309,7 @@ widzimy stronę z obrazkiem. Dziwne, nieprawdaż.
 
 # Pokrętny przykład
 
-Dodamy do dokumentu plik *ii.html* do dokumentu *led-zeppelin-ii*:
+Do dokumentu *led-zeppelin-ii* dodamy załącznik *ii.html*:
 
     :::html ii.html
     <!doctype html>
@@ -330,8 +333,7 @@ Dodamy do dokumentu plik *ii.html* do dokumentu *led-zeppelin-ii*:
     <p>
       <img src="/lz/led-zeppelin-ii/led-zeppelin-ii.jpg" alt="cover">
     </p>
-    <ul id="songs">
-    </ul>
+    <ul id="songs"></ul>
 
 Jak zwykle, skorzystamy z programu *curl*:
 

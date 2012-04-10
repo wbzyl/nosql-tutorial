@@ -185,7 +185,6 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
-1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
 1. {%= link_to "GeoCouch", "/couchdb-geo" %}
@@ -197,6 +196,7 @@ Wdrażamy aplikację „EST” na Sigmie.
 1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
+1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 
 <!--
 

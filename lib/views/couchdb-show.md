@@ -8,12 +8,12 @@
  <p class="author">[stare powiedzenie]</p>
 </blockquote>
 
-Do czego mogą się przydać [show functions](http://guide.couchdb.org/draft/show.html):
-„There is one important use case that JSON documents don’t cover:
-building plain old HTML web pages.”, nie zapominając o innych formatach
-danych, takich jak XML, CSV, CSS, JSON…
-Innymi słowy – funkcji show będziemy używać do przekształcenia dokumentów
-do innych formatu – zazwyczaj do HTML.
+Do czego służą [funkcje show](http://guide.couchdb.org/draft/show.html)?
+
+„There is one important use case that JSON documents don’t cover: building plain old HTML web pages”
+oraz dokumentów XML, CSV, CSS, JSON…
+Innymi słowy, funkcji show będziemy używać do przekształcenia dokumentów
+CouchDB do innych formatów; najczęściej do formatu HTML.
 
 W przykładach poniżej skorzystamy z bazy *ls* zawierającej
 kilka aforyzmów Stanisława J. Leca (1909–1966)
@@ -28,8 +28,7 @@ Format przykładowego aforyzmu umieszczonego w bazie:
     {
       "_id": "1",
       "created_at": [2010, 0, 1],
-      "quotation": "Szerzenie niewiedzy o wszechświecie \
-                    musi być także naukowo opracowane.",
+      "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
@@ -41,7 +40,7 @@ Tworzymy bazę *ls*, tak:
 chyba że, baza jest zabezpieczona hasłem, wtedy polecenie powinno być takie:
 
     :::bash
-    curl -X PUT  http://Admin:Pass@localhost:5984/ls
+    curl -X PUT  http://Admin:Password@localhost:5984/ls
 
 Następnie wrzucamy hurtem do bazy wszystkie cytaty
 ({%= link_to "link do pliku *ls.json* z wszystkimi cytatami", "/couch/shows/ls.json" %}):
@@ -54,9 +53,10 @@ Następnie wrzucamy hurtem do bazy wszystkie cytaty
 ## „HTML Show”
 
 Funkcje show musimy umieścić w polu *shows* (uwaga: liczba mnoga)
-w jakimś design document.
+dowolnego **design document** bazy *ls*.
+Oto prosty przykład wyjaśniający jak to zrobić.
 
-Oto prosty przykład:
+Poniżej definiujemy funkcję show o nazwie *quotation*:
 
     :::json quotation.json
     {
@@ -64,15 +64,15 @@ Oto prosty przykład:
         "quotation" : "function(doc, req) { return '<p>' + doc.quotation + '</p>'; }" }
     }
 
-Po zapisaniu kodu w pliku *quotation.json*, skorzystamy z programu *curl*
-aby zapisać kod w bazie:
+Teraz skorzystamy z programu *curl*, aby zapisać kod tej funkcji
+w *design document* o nazwie *default*:
 
     :::bash
      curl -X PUT localhost:5984/ls/_design/default \
        -H "Content-Type: application/json" -d @quotation.json
 
 **Uwaga:** Jeśli planujemy zapisać kilka funkcji show w design doc,
-to wpisujemy je w pliku w taki sposób:
+to możemy je wszystkie wpisać w taki sposób:
 
     :::json
     {
@@ -170,7 +170,7 @@ z domyślnym nagłówkiem *Accept* i żądanie z nagłówkiem
 
 Kompletna lista *mime types* z pliku *main.js*:
 
-    :::javascript ./share/server/main.js
+    :::javascript share/couchdb/server/main.js
     // Some default types ported from Ruby on Rails
     // Build list of Mime types for HTTP responses
     // http://www.iana.org/assignments/media-types/
@@ -241,5 +241,6 @@ Zobacz też opis
 (plik *main.js* powstaje ze sklejenia wszystkich plików w tym katalogu;
 najciekawsze rzeczy są w pliku *render.js*, *views.js*).
 
-Dużo przykładów znajdziemy w źródłach CouchDB w katalogu *share/www/script/test* –
-pliki *show_documents.js*, *list_views.js*.
+Dużo przykładów znajdziemy w źródłach CouchDB w katalogu
+*share/couchdb/www/script/test* – pliki *show_documents.js*,
+*list_views.js*.

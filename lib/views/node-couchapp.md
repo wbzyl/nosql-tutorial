@@ -7,28 +7,24 @@ musiał być odpowiednio „quoted”.
 
 Takie podejście ma dużą zaletę – przykłady łatwo jest
 przeklikać na terminal i uruchomić.
-Jednak gdy sami mamy taki przykład wpisać, lepiej
+Jednakże, kiedy sami mamy taki przykład wpisać, lepiej
 jest skorzystać z metody która umożliwi wpisywanie
-kodu JavaScript jako kodu a nie napisu.
+kodu JavaScript jako kodu a nie jako napisu.
 
 Poniżej opisuję jak to można zrobić korzystając z modułu
-[couchapp](https://github.com/mikeal/node.couchapp.js).
+[couchapp](https://github.com/mikeal/node.couchapp.js):
 
-Niestety, Couchapp nie nadaje się do odpytywania bazy CouchDB, ani do
-zapisywania w niej dokumentów.
+    git clone git://github.com/mikeal/node.couchapp.js.git
+    cd node.couchapp.js
+    npm install -g .
 
-Dlatego do zapisywania dokumentów będziemy korzystać z modułów
+Moduł ten nie nadaje się do zapisywania dokumentów w bazie CouchDB,
+dlatego do zapisywania dokumentów w bazie użyjemy modułów
 [CouchClient](https://github.com/creationix/couch-client)
-i [Cradle](https://github.com/cloudhead/cradle).
-Oba moduły instalujemy globalnie:
+i [Cradle](https://github.com/cloudhead/cradle):
 
-    npm install -g couchapp
-    npm install -g couch-client
-    npm install -g cradle
-
-Sprawdzamy jakie mamy moduły są zainstalowane:
-
-    npm ls -g
+    npm install couch-client
+    npm install cradle
 
 
 ## Zapisywanie danych w bazie
@@ -73,10 +69,12 @@ Zobacz też rozbudowaną wersję tego skryptu:
 
 Skrypt ten uruchamiamy na konsoli w taki sposób:
 
+    :::bash
     node bulk_docs.js places.json places
 
 *Uwaga:* Przed uruchomieniem skryptu musimy utworzyć bazę *places*:
 
+    :::bash
     curl -X PUT http://localhost:5984/places
 
 
@@ -92,11 +90,13 @@ skomplikowany od poprzedniego skryptu.
 W skrypcie użyjemy modułu [CSV](https://github.com/wdavidw/node-csv-parser),
 który musimy najpierw zainstalować:
 
+    :::bash
     npm search csv      # szukamy czy ostatnio nie pojawiło się coś nowego
-    npm install -g csv
+    npm install csv
 
 Skrypt nazwiemy *csv_insert.js* i będziemy go uruchamiać w taki sposób:
 
+    :::bash
     node csv_insert.js cities
 
 Oto kod tego skryptu:
@@ -145,14 +145,15 @@ Tak jak powyżej, link do rozbudowanej wersji:
 ({%= link_to "źródło", "/doc/node/db/csv_insert.js" %}).
 
 
-## Moduł Couchapp
+## Node CouchApp
 
-Moduł Couchapp zawiera plik wykonywalny *couchapp*.
+Moduł Node Couchapp zawiera plik wykonywalny *couchapp*.
 Ułatwia on tworzenie aplikacji dla CouchDB.
-Poniżej jest prosty przykład wyjaśniający co to znaczy.
+
+Oto prosty przykład
 
     :::javascript aye.js
-    var couchapp = require('couchapp');
+    // var couchapp = require('couchapp');
 
     ddoc = {
       _id: '_design/default'
@@ -172,6 +173,7 @@ Poniżej jest prosty przykład wyjaśniający co to znaczy.
 Po wpisaniu powyższego kodu w pliku *aye.js*, bardzo łatwo jest zapisać
 funkcję show w bazie:
 
+    :::bash
     curl -X PUT http://localhost:5984/aye
     couchapp push aye.js http://localhost:5984/aye
     Preparing.
@@ -179,6 +181,8 @@ funkcję show w bazie:
     PUT http://localhost:5984/aye/_design/default
     Finished push. 1-8b19d3b6d7c00d6f51743968f77e9cbf
 
-Na konie sprawdzamy, czy funkcja show została zapisana w bazie:
+Po zapisaniu funkcji show *aye* w *_design/default* w bazie *aye*,
+możemy ją wykonać, np. w taki sposób:
 
+    :::bash
     curl -v http://localhost:5984/aye/_design/default/_show/aye/x?q=Captain
