@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CouchDB Database Queries</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- CouchDB 1.2.0 -->
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Verdana, sans-serif;
+      width: 640px;
+      margin: 0 auto 0 4em;
+      padding: 1em;
+    }
+    </style>
+    <script src="/_utils/script/json2.js"></script>
+    <script src="/_utils/script/sha1.js"></script>
+    <script src="/_utils/script/jquery.js?1.6.2"></script>
+    <script src="/_utils/script/jquery.couch.js?0.11.0"></script>
+    <script src="/students/_design/default/hallet.js"></script>
+  </head>
+  <body>
+  <h2>CouchDB Database Queries</h2>
+
+  <p>Pomysł Jasse Hallett,
+  <a href="http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html">Database Queries the CouchDB Way</a>.</p>
+
+<h3>All Documents</h3>
+
+<pre>$.couch.db("students").allDocs({
+    success: function(data) {
+        console.log(data)
+    }
+})
+</pre>
+
+<h3>All Design Documents</h3>
+
+<pre>$.couch.db("students").allDesignDocs({
+    success: function(data) {
+        console.log(data)
+    }
+})
+</pre>
+
+<h3>Temporary view</h3>
+
+<pre>var mapFunction = function(doc) {
+  emit()
+}
+$.couch.db("students").query(mapFunction, "_count", "javascript", {
+    success: function(data) {
+      console.log(data)
+    },
+    error: function(status) {
+      console.log(status)
+    },
+    reduce: false
+})
+</pre>
+
+<p>Resulting HTTP request:</p>
+
+<pre>POST http://localhost:5984/students/_temp_view?reduce=false 200 OK
+</pre>
+
+<p>This creates a temporary view as defined by your map and reduce
+functions. Temporary views are useful in development, but should be
+replaced with views permanently saved to design documents for
+production. Temporary views are slow, especially with a large number
+of documents.</p>
+
+
+<h3>View</h3>
+
+<pre>$.couch.db("students").view("default/all", {
+    success: function(data) {
+      console.log(data)
+    },
+    error: function(status) {
+      console.log(status)
+    },
+    reduce: false
+})
+</pre>
+
+<p>Resulting HTTP request:</p>
+
+<pre>GET http://localhost:5984/mydb/_design/default/_view/all?reduce=false 200 OK
+</pre>
+
+
+<h3>List</h3>
+
+<pre>$.couch.db("students").list("default/all", "all", {
+    success: function(data) {
+      console.log(data)
+    },
+    error: function(status) {
+      console.log(status)
+    },
+    reduce: false
+});
+
+<p>Resulting HTTP request:</p>
+
+<pre>GET http://localhost:5984/mydb/_design/default/_list/all/all?reduce=false 200 OK
+</pre>
+
+
+<h2>TODO</h2>
+
+<p>Add views and list function to <i>hallet.js</i></p>
+
+
+
+  </body>
+</html>
