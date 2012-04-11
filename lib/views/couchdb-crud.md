@@ -72,6 +72,9 @@ Zaczynamy od utworzenia bazy:
 
 ## CRUD na dokumentach
 
+* [Replication and conflict model](http://wiki.apache.org/couchdb/Replication_and_conflicts)
+  – do czego służą rewizje
+
 Dodajemy dane pierwszego albumu:
 
     :::bash
