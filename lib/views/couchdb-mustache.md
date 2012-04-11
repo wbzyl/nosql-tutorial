@@ -56,15 +56,15 @@ Na koniec piszemy plik *ls.js* dla programu *couchapp*:
 
     :::javascript ls.js
     var couchapp = require('couchapp')
-      , path = require('path')
-      , fs = require('fs');
+    , path = require('path')
+    , fs = require('fs');
 
     ddoc = {
-        _id: '_design/default'
-      , views: {}
-      , lists: {}
-      , shows: {}
-      , templates: {}
+      _id:   '_design/default'
+    , views: {}
+    , lists: {}
+    , shows: {}
+    , templates: {}
     }
     module.exports = ddoc;
 
@@ -84,10 +84,12 @@ Na koniec piszemy plik *ls.js* dla programu *couchapp*:
 
 Wreszcie możemy zapisać wszystko w bazie *ls*:
 
+    :::bash
     couchapp push ls.js http://localhost:5984/ls
 
 Na deser oglądamy jak to działa, tak:
 
+    :::bash
     curl -I http://localhost:5984/ls/_design/default/_show/quotation/1
 
 albo wpisując w przeglądarce:
@@ -102,7 +104,7 @@ dokumentów w bazie za pomocą NodeJS. Zrobimy to korzystając z modułu
 [couch-client](https://github.com/creationix/couch-client). Moduł
 instalujemy wykonując w głównym katalogu repozytorium polecenie:
 
-    npm mustache
+    npm couch-client
 
 Cytaty zapiszemy w bazie za pomocą skryptu:
 
@@ -118,4 +120,5 @@ Cytaty zapiszemy w bazie za pomocą skryptu:
 
 Teraz dokumenty zapiszemy hurtem w bazie wykonując polecenie:
 
-    node populate
+    :::bash
+    node populate.js

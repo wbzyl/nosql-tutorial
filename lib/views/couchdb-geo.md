@@ -4,7 +4,7 @@
  {%= image_tag "/images/playing_geohash.jpg", :alt => "[Playing Geohash]" %}
 </blockquote>
 
-[2012.02.24] Być może, też użyteczne poza Pythonowym *CouchApps*:
+[2012.02.24] **TODO** Być może, też użyteczne poza Pythonowym *CouchApps*:
 
 * [Helper Functions for GeoCouch](https://github.com/maxogden/geocouch-utils)
 
@@ -76,8 +76,6 @@ Miejsca zapisane w bazie:
 {%= image_tag "/images/places.png", :alt => "[Places: Brasilia, …]" %}
 
 Czy wyniki są OK?
-
-Zobacz też [database queries](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html) (2009).
 
 
 ## Flickr & GeoCouch

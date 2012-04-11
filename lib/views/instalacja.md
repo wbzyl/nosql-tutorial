@@ -392,24 +392,17 @@ Więcej informacji o *Geocouch*:
    * [Reference](http://wiki.apache.org/couchdb/Reference) – API, Views, Configuration, Security
    * [Basics](http://wiki.apache.org/couchdb/Basics) – C, Ruby, Javascript…
    * [HowTo Guides](http://wiki.apache.org/couchdb/How-To_Guides)
-* Caolan McMahon. [Blog](http://caolanmcmahon.com/)
-   * [On _designs undocumented](http://caolanmcmahon.com/on_designs_undocumented.html)
 * [CouchDB Implementation](http://horicky.blogspot.com/2008/10/couchdb-implementation.html)
 * CouchDB korzysta z [CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/CommonJS),
-  [Modules/1.0](http://wiki.commonjs.org/wiki/Modules/1.0)
-  (przykładowa implementacja –  D. Flanagan,
-  [A module loader with simple dependency management](http://www.davidflanagan.com/2009/11/a-module-loader.html))
+  [Modules/1.0](http://wiki.commonjs.org/wiki/Modules/1.0);
+  przykładowa implementacja – D. Flanagan,
+  [A module loader with simple dependency management](http://www.davidflanagan.com/2009/11/a-module-loader.html)
 * [GeoCouch: The future is now](http://vmx.cx/cgi-bin/blog/index.cgi/geocouch-the-future-is-now:2010-05-03:en,CouchDB,Python,Erlang,geo)
 * [What’s wrong with Ruby libraries for CouchDB?](http://gist.github.com/503660)
-* Karel Minarik.
-  [A small application to demonstrate basic CouchDB features](http://github.com/karmi/couchdb-showcase)
 * [CouchApp](http://github.com/couchapp/couchapp) –
   utilities to make standalone CouchDB application development simple
 * [Google Group](http://groups.google.com/group/couchapp) –
   standalone CouchDB application development made simple
-* Jesse Hallett. [Database Queries
-  the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
-
 
 
 # MongoDB

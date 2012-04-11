@@ -56,6 +56,11 @@ Funkcje show musimy umieścić w polu *shows* (uwaga: liczba mnoga)
 dowolnego **design document** bazy *ls*.
 Oto prosty przykład wyjaśniający jak to zrobić.
 
+Caolan McMahon, [Blog](http://caolanmcmahon.com/):
+
+- [On _designs undocumented](http://caolanmcmahon.com/on_designs_undocumented.html)
+- [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb)
+
 Poniżej definiujemy funkcję show o nazwie *quotation*:
 
     :::json quotation.json

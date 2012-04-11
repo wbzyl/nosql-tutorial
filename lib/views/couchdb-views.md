@@ -38,8 +38,16 @@ documents.” Widoki kodujemy zazwyczaj w Javascript albo Erlangu
 
 Widoki zapisujemy w tak zwanych *design documents*. Design documents
 są zwykłymi dokumentami. Tym co je wyróżnia jest identyfikator
-zaczynający się od **_design/**, na przykład *_design/app*.
+zaczynający się od **_design/**, na przykład *_design/default*.
 Widoki zapisujemy w polu *views* dokumentów projektowych.
+
+* John P. Wood,
+  [CouchDB: A Case Study](http://johnpwood.net/2009/06/15/couchdb-a-case-study/);
+  zob. też części 2–6.
+* Jesse Hallett,
+  [Database Queries the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
+
+**TODO:** lista obecności do CouchDB + include the Couch library in a web page
 
 
 ## Baza *ls*
