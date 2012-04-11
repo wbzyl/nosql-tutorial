@@ -1,8 +1,7 @@
 # Zaczynamy
 
-    bundle install --path=$HOME/.gems
-    cd lib
-    bundle exec thin --rackup config.ru -p 3000 start
+    bundle install --path=$HOME/.gems --binstubs
+    bin/thin --rackup lib/config.ru -p 3000 start
 
 ### Linki do kodu
 
@@ -11,3 +10,25 @@
 ### Linki do źródeł
 
     {%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}
+
+
+# Poradnik redaktora
+
+Wykorzystać, wykorzystanie:
+
+* używać, użytkować, korzystać, stosować
+* używanie, użytkowanie, korzystanie, stosowanie
+
+Wymaganie:
+
+Zasadnicze wymaganie – to odporność na błędy użytkownika.
+
+Zastąpić co czym.
+
+Złożony:
+
+* trudny, skomplikowany, zawiły
+
+Zmiana czego:
+
+* zmiana pogladów, przekonań.
