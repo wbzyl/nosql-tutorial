@@ -135,9 +135,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 ## ElasticSearch
 
-Instalacja, REST API, przykładowa aplikacja Rails:
-[Wyszukiwanie z ElasticSearch](http://wbzyl.inf.ug.edu.pl/rails4/elasticsearch).
-Wdrażamy aplikację „EST” na Sigmie.
+1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
+1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
 
 
 ## MongoDB
