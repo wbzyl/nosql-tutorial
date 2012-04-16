@@ -69,3 +69,6 @@ Przykłady:
 ## Różne
 
 * [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)
+* Ricky Ho.
+  [MongoDb Architecture ](http://horicky.blogspot.com/2012/04/mongodb-architecture.html) –
+  zob. rozdział „Map/Reduce Execution”
