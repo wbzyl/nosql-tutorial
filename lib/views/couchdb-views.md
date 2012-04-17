@@ -128,10 +128,12 @@ Później pokażemy jak można te funkcje zaimplementować samemu w Javascripci
 
 Widok zapiszemy w bazie wykonujac polecenie:
 
+    :::bash
     couchapp push ls_views.js http://localhost:5984/ls
 
 Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
 
+    :::bash
     curl http://localhost:5984/ls/_design/app/_view/by_date
     {"rows":[
       {"key": null, "value": 351}
@@ -180,6 +182,7 @@ tę uciążliwość. Należy skorzystać z dwóch opcji `-G` oraz `--data-urlenc
 
 Dla przykładu, zapytanie:
 
+    :::bash
     curl http://localhost:5984/ls/_design/app/_view/by_tag -G \
       --data-urlencode startkey='"w"' --data-urlencode endkey='"w\ufff0"' \
       -d reduce=false
@@ -357,6 +360,7 @@ z [Unicode 6.0 Character Code Charts](http://www.unicode.org/charts/):
 
 Zapisujemy widoki w bazie:
 
+    :::bash
     couchapp push wc.js http://Admin:Pass@localhost:5984/gutenberg
 
 Odpytujemy widok *wc* w Futonie.
@@ -407,6 +411,7 @@ Skorzystamy z modułu *couch-client* dla NodeJS i ze skryptu:
 
 Teraz wystarczy wykonać na konsoli:
 
+    :::bash
     node collation.js
 
 i dokumenty znajdą się w bazie.
@@ -419,6 +424,7 @@ Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
 
 Jeśli odpytujemy widok (tymczasowy na konsoli; konieczne są uprawnienia Admina):
 
+    :::bash
     curl -X POST http://Admin:Pass@localhost:5984/coll/_temp_view \
       -H "Content-Type: application/json" -d '
     {
@@ -500,10 +506,12 @@ Następujący widok:
 
 zapiszmy w bazie *statuses* (podzbiór bazy *nosql*):
 
+    :::bash
     couchapp push total.js http://localhost:5984/nosql
 
 Teraz go odpytajmy w ten sposób
 
+    :::bash
     curl 'http://localhost:5984/nosql/_design/test/_view/total?group=true'
 
 Po wciśnięciu *Enter*, natychmiat przechodzimy na konsolę, gdzie
@@ -554,17 +562,18 @@ W bazie *movies* zapiszemy następujący widok:
 
 Tak go zapiszemy w bazie:
 
+    :::bash
     couchapp push movies.js http://localhost:5984/movies
 
 a tak go odpytamy:
 
+    :::bash
     curl http://localhost:5984/movies/_design/test/_view/rating_avg
 
 Po wciśnięciu enter, natychmiat przechodzimy na konsolę, gdzie
 uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
 
 Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
-
 
 
 # Złączenia – czyli co wynika z *Collation Specification*
@@ -609,6 +618,7 @@ Utworzymy bazę *blog-1* zawierającą następujące dokumenty:
 
 Dokumenty zapiszemy korzystając z programu *curl*:
 
+    :::bash
     curl -X POST -H "Content-Type: application/json" -d @blog-1.json http://localhost:5984/blog-1/_bulk_docs
 
 <!--
@@ -699,6 +709,7 @@ oraz komentarzy:
 
 Dokumenty zapisujemy w bazie:
 
+    :::bash
     curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:5984/blog-2/_bulk_docs
     curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:5984/blog-2/_bulk_docs
 
