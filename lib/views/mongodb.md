@@ -59,7 +59,6 @@ Przykłady:
 
 * [MapReduce Example Programs](http://holumbus.fh-wedel.de/trac/wiki/MapReduceExamples) –
  proste grafiki pokazujące o co chodzi w mapreduce
-* [map-reduce using mongoid](https://willj.net/2010/07/12/map-reduce-using-mongoid/)
 * [MapReduce and K-Means Clustering](http://blog.data-miners.com/2008/02/mapreduce-and-k-means-clustering.html) –
  tylko dla MongoDB
 * [Cube](http://square.github.com/cube/) –
