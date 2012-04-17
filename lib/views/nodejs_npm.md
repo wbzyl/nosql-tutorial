@@ -58,20 +58,7 @@ i sprawdzamy co się zainstalowało:
 
 ## Instalacja NPM
 
-Teraz kolej na instalację narzędzia [NPM](http://npmjs.org/)
-– a package manager for node:
-
-    curl http://npmjs.org/install.sh | sh
-      ...
-      Napisany przez John Gilmore i Jay Fenlason
-      install npm@1.1
-      fetching: http://registry.npmjs.org/npm/-/npm-1.1.0-3.tgz
-      0.6.9
-      1.1.0-3
-      cleanup prefix=/home/wbzyl/.node
-      ~/.node/bin/npm -> /home/wbzyl/.node/lib/node_modules/npm/bin/npm-cli.js
-      npm@1.1.0-3 /home/wbzyl/.node/lib/node_modules/npm
-      It worked
+Od wersji 0.6.14 **npm comes with it**.
 
 
 ## Moduły NodeJS
@@ -156,6 +143,17 @@ Usuwamy moduł, tak:
 
 ### Couchapp
 
+Instalujemy ze źródeł, [node.couchapp.js](https://github.com/mikeal/node.couchapp.js):
+
+    :::bash
+    git clone git://github.com/mikeal/node.couchapp.js.git
+    cd node.couchapp.js/
+    npm install
+    npm link .
+       $HOME/.node/bin/couchapp -> $HOME/.node/lib/node_modules/couchapp/bin.js
+
+<!--
+
 Użyjemy wyszukiwarki programu *npm*:
 
     npm search couchapp
@@ -169,6 +167,8 @@ Wybieramy moduł *couchapp* i instalujemy go *globalnie* (dlaczego?):
       watch@0.5.0 /home/wbzyl/.node/lib/node_modules/couchapp/node_modules/watch
       request@2.9.100 /home/wbzyl/.node/lib/node_modules/couchapp/node_modules/request
       couchapp@0.9.0 /home/wbzyl/.node/lib/node_modules/couchapp
+
+-->
 
 Program *couchapp* został zainstalowany
 w katalogu *$HOME/.node/bin/*, który wcześniej umieściliśmy
