@@ -34,6 +34,7 @@ MongoDB is written in C++ and offers the following features:
 * Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek
 * Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html)
   i dłuższy samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
+* [NoSQL DZone](http://dzone.com/mz/nosql)
 
 
 ## Historia
