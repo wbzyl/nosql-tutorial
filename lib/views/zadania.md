@@ -73,6 +73,9 @@ ze współrzędnymi GEO:
 Dane pochodzą z serwisu [Infochimps](http://www.infochimps.com/).
 Dane o UFO zostały „cleaned up”. Dane są zapisane w formacie TSV.
 
+50,000+ tweets zebranych w kwietniu 2012, plik *tweets.json.gz*.
+Słowa kluczowe: rails, elasticsearch, redis, mongodb, couchdb, jquery.
+
 Zapisać dane w jednej z baz: Elasticsearch albo MongoDB, albo CouchDB.
 Następnie wyeksportować z tej bazy dane do pliku w formacie JSON.
 Na koniec zapisać dane w formacie w JSON w pozostałych dwóch bazach.
