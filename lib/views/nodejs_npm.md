@@ -76,6 +76,9 @@ Użyteczne moduły:
   Express compliant
 * [Express](https://github.com/visionmedia/express) – Sinatra inspired web development
   framework for NodeJS; insanely fast, flexible, and simple
+* [StreamlineJS](https://github.com/Sage/streamlinejs) –
+  asynchronous Javascript for dummies
+
 
 Przykładowa aplikacja [Express & Google Maps](https://github.com/wbzyl/example_geohash_to_location)
 (fork repo [Micka Thompsona](https://github.com/dthompson/example_geohash_to_location)).
