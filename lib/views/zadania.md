@@ -20,10 +20,23 @@ Warunkiem zaliczenia ćwiczeń jest:
   Adres repozytorium należy wpisać w polu *comments*
   na swojej liście obecności.
 
-Na egzamin należy przygotować prezentację na wykładzie
-albo aplikację WWW wykorzystujacą obliczenia MapReduce.
-Prezentacje aplikacji odbędą się 23.05 i 30.05.
-Tytuły prezentacji należy zgłosić do 15.05.
+Ostateczny termin wpisania adresu repozytorium z rzeczami
+na zaliczenie upływa *17.05.2012*.
+
+**Nowe:** Zadanie *bonusowe* za 5-20 pkt. Należy zgłosić *pull request*,
+repozytorium [water](https://github.com/wbzyl/water),
+z przykładem ilustrującym możliwości biblioteki *d3.js*.
+
+Kilkanaście gotowych przykładów jest
+[tutaj](https://github.com/wbzyl/water/tree/master/examples)
+i wszystkie można obejrzeć [tutaj, circle-05](http://deep-water.herokuapp.com/#circle-05).
+Jak zgłaszać *pull request* przedstawiono w artykule
+[How to GitHub: Fork, Branch, Track, Squash and Pull Request](http://gun.io/blog/how-to-github-fork-branch-and-pull-request/).
+
+Na ocenę db z egzaminu należy przygotować aplikację
+korzystającą z obliczeń MapReduce.
+Na ocenę bdb należy przygotować prezentację
+z jednego z tematów podanych na stronie głównej tego wykładu.
 
 
 ## Typowe zastosowania dokumentowych baz danych
