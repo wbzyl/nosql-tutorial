@@ -22,12 +22,12 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 # Wasze prezentacje
 
 * [07.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
-* [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior, Aleksandra Chlebus
+* [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior
 * [09.05.2012] **Wprowadzenie do Neo4j** – Adrian Modliszewski, Daniel Mielniczuk, Karol Bachewicz
 * [16.05.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/) –
   Radosław Kwolek, Krzysztof Marzec, Rafał Ośko
 * [23.05.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
-  [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński, Jan Siegel, Łukasz Kędroń
+  [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński,  Łukasz Kędroń
 
 <!--
 * [??.0?.2012] **Aggregacja w ElasticSearch**,
