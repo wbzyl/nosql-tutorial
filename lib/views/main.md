@@ -45,6 +45,8 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.04.24] [Harvard Library Bibliographic Dataset](http://openmetadata.lib.harvard.edu/bibdata)
+
 [2012.04.18] [Incremental Mapreduce for Analytics with R](http://dustin.github.com/2012/04/16/couchr.html)
 
 [2012.04.18] [The Evolving Panorama of Data](http://www.infoq.com/presentations/The-Evolving-Panorama-of-Data)
