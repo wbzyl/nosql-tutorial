@@ -45,6 +45,8 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.04.26] [Data and visualization blogs worth following](http://flowingdata.com/2012/04/27/data-and-visualization-blogs-worth-following/)
+
 [2012.04.24] [Harvard Library Bibliographic Dataset](http://openmetadata.lib.harvard.edu/bibdata)
 
 [2012.04.18] [Incremental Mapreduce for Analytics with R](http://dustin.github.com/2012/04/16/couchr.html)
