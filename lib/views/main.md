@@ -45,6 +45,12 @@ cytat z [Breaking free of structured data](http://www.itworld.com/data-centerse
 
 ## Różne rzeczy
 
+[2012.05.10] [Learn Hadoop and get paper published](http://commoncrawl.org/learn-hadoop-and-get-a-paper-published/):
+„As an added bonus, you would be helping us out. We’re trying to
+encourage researchers to use the Common Crawl corpus. Your technical
+report could inspire others and provide a citable papers for them to
+reference.”
+
 [2012.04.26] [Data and visualization blogs worth following](http://flowingdata.com/2012/04/27/data-and-visualization-blogs-worth-following/)
 
 [2012.04.24] [Harvard Library Bibliographic Dataset](http://openmetadata.lib.harvard.edu/bibdata)
