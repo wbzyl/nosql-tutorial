@@ -1,34 +1,31 @@
 #### {% title "Sterowniki NodeJS i Ruby dla MongoDB" %}
 
-Wszystkie sterowniki mają podobne API.
+Sterowniki mają podobne API.
 
 
 ## NodeJS
 
-Źródła:
-
-* [MongoJS](https://github.com/gett/mongojs)
+* [MongoDB](https://github.com/mongodb/node-mongodb-native) native NodeJS driver.
+  [The Node.JS MongoDB Driver Manual](http://mongodb.github.com/node-mongodb-native/)
 * [Mongoose](https://github.com/LearnBoost/mongoose)
+* [MongoJS](https://github.com/gett/mongojs)
 
 Instalacja:
 
     :::bash
-    npm install mongojs
+    npm install mongodb
     npm install mongoose
+    npm install mongojs
 
 Przykłady w repo [node](https://github.com/wbzyl/node).
 
 
 ## Ruby
 
-Źródło, samouczek:
-
-* [mongo](https://github.com/mongodb/mongo-ruby-driver)
-* [samouczek](http://api.mongodb.org/ruby/current/)
+* [Mongo](https://github.com/mongodb/mongo-ruby-driver).
+  [API + Tutorial](http://api.mongodb.org/ruby/current/)
 
 Instalacja:
 
     :::bash
     gem install mongo bson_ext
-
-Przykłady w repo w katalogu z dokumentacją.
