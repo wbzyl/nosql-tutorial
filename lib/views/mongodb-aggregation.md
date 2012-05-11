@@ -5,6 +5,12 @@ Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących)
 * [Aggregation](http://www.mongodb.org/display/DOCS/Aggregation)
 * [Aggregation Framework](http://www.mongodb.org/display/DOCS/Aggregation+Framework)
 
+Przykłady:
+
+* Kristina Chodorow.
+  - [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
+  - [SQL to MongoDB: An Updated Mapping](http://www.snailinaturtleneck.com/blog/2011/12/09/sql-to-mongodb-an-updated-mapping/)
+
 
 ## Zadania na grupowanie
 

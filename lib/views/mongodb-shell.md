@@ -256,5 +256,13 @@ JSON, MongoDB dodaje kilka swoich typów. Oto cała lista:
 * tablice (JSON)
 * embedded document (JSON)
 
-Dokumentacja: [MongoDB Javascript API](http://api.mongodb.org/js/current/),
-[ECMA-262, Edition 5](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf).
+Data:
+
+* Kristina Chodorow.
+  [Popping Timestamps into ObjectIds](http://www.snailinaturtleneck.com/blog/2011/12/20/querying-for-timestamps-using-objectids/)
+
+
+## Dokumentacja
+
+* [MongoDB Javascript API](http://api.mongodb.org/js/current/)
+* [ECMA-262, Edition 5](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf)
