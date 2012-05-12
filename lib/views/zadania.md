@@ -159,7 +159,7 @@ Dane z katastrofami zawierają następujące pola:
 <tr><th>Cost       <td>Several institutions have developed methodologies to quantify
                    these losses in their specific domain. However, there is no standard
                    procedure to determine a global figure for economic impact. Estimated
-                   damage are given (000’)
+                   damage are given.
 <tr><th>Id         <td>A unique identifier for the disaster
 </tbody>
 </table>
@@ -168,6 +168,63 @@ Na Infochimps znajdziemy dużo interesujących danych, na przykład:
 
 * [The First Billion Digits of Pi](http://www.infochimps.com/datasets/the-first-billion-digits-of-pi)
 * [Word List - 350,000+ Simple English Words (Excel readable)](http://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable)
+
+
+## MongoDB
+
+1\. Ze strony [Zasoby](http://korpus.pl/index.php?page=download)
+Korpusu Języka Polskiego IPI PAN pobieramy wersję źródłową (XML)
+„Słownika frekwencyjnego” [frek.xces.tar.bz2](http://korpus.pl/download/frek.xces.tar.bz2).
+Po pobraniu archiwum rozpakowujemy je:
+
+    :::bash
+    tar jxf frek.xces.tar.bz2
+
+Następnie pobieramy skrypt {%= link_to "walk-frekwencyjny.js", "/doc/mongodb/walk-frekwencyjny.js" %}
+({%= link_to "kod", "/db/mongodb/walk-frekwencyjny.js" %})
+i zapisujemy go w katalogu ze słownikiem frekwencyjnym. Instalujemy
+moduły użyte w skrypcie i uruchamiamy sam skrypt:
+
+    :::bash
+    npm install eyes xml2js findit
+    npm install mongodb --mongodb:native
+    node walk-frekwencyjny.js
+
+Skrypt wczytuje zawartość każdego pliku XML słownika,
+przerabia ją na tablicę JSON-ów i zapisuje je w bazie *poliqarp*
+w kolekcji *toks*.
+Po zapisaniu wszystkich JSON–ów (ok. 5-10 min), kończymy działanie skryptu
+wciskając *CTRL+C*.
+
+Jeśli nie było problemów, to wchodzimy na konsolę *mongo*:
+
+    :::bash
+    mongo poliqarp
+
+gdzie sprawdzamy liczbę dokumentów zapisanych w kolekcji
+i wypisujemy przykładowy dokument:
+
+    :::js
+    db.toks.count()  //=> 661839
+    db.toks.findOne()
+    {
+      "orth" : "Ziemskimi",
+      "lex" : [
+         {
+           "base" : "ziemski",
+           "ctag" : "adj:pl:inst:n:pos"
+         }
+      ],
+      "_id" : ObjectId("4faeb1778de17f7162000001")
+    }
+
+Znaczenia skrótów użytych w polu *ctag* są opisane na stronie
+[Zestaw znaczników morfosyntaktycznych](http://korpus.pl/pl/cheatsheet/node2.html).
+
+Wyszukiwarki:
+
+* [Poliqarp](http://korpus.pl/poliqarp/poliqarp.php); konkordancje
+* [PELCRA](http://nkjp.uni.lodz.pl/); konkordancje + kolokator
 
 
 <h2 class="clear">CouchDB</h2>
