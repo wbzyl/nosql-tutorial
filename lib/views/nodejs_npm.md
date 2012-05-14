@@ -19,6 +19,7 @@ Na dobry początek kilka odsyłaczy:
 * NPM – [Node Package Manager](http://npmjs.org/)
 * [docs.nodejitsu.com](http://docs.nodejitsu.com/) –
   assembled collection of node.js how-to articles
+* [DailyJS](http://dailyjs.com/) – a JavaScript Blog
 
 
 ## Instalacja
