@@ -221,6 +221,74 @@ i wypisujemy przykładowy dokument:
 Znaczenia skrótów użytych w polu *ctag* są opisane na stronie
 [Zestaw znaczników morfosyntaktycznych](http://korpus.pl/pl/cheatsheet/node2.html).
 
+1\. Zamienić na małe litery wszystkie słowa "orth" (skrypt *poliqarp-downcase.rb*)
+
+2\. Dodać indeks po polu *orth*:
+
+    :::js
+    db.toks.ensureIndex({orth: 1})
+
+3\. Sprawdzić co daje taki indeks:
+
+    :::js
+    db.toks.find({orth: "ziemskimi"}).explain()
+    {
+      "cursor" : "BtreeCursor orth_1",
+      "isMultiKey" : false,
+      "n" : 3,
+      "nscannedObjects" : 3,
+      "nscanned" : 3,
+      "scanAndOrder" : false,
+      "indexOnly" : false,
+      "nYields" : 0,
+      "nChunkSkips" : 0,
+      "millis" : 0,
+      "indexBounds" : {
+         "orth" : [
+             [ "ziemskimi", "ziemskimi" ]
+         ]
+      },
+      "server" : "localhost.localdomain:27017"
+    }
+
+Bez indeksu *explain* wypisuje:
+
+    :::json
+    "nscannedObjects" : 661839,
+    "nscanned" : 661839,
+    "nYields" : 2,
+    "millis" : 339,
+
+4\. Ten indeks, też się przyda:
+
+    :::js
+    db.toks.ensureIndex({"lex.base": 1})
+    db.toks.find({"lex.base": "ziemski"}).explain()
+
+**Zadanie 1.** Wykonać „pivot” na dokumentach. Oznacza to, że należy zamienić
+wszystkie dokumenty według schematu:
+
+    :::json
+    {
+      "base" : "ziemski",
+      "lex" : [
+         {
+           "orth" : "ziemskimi",
+           "ctag" : "adj:pl:inst:n:pos"
+         }
+      ],
+      "_id" : ObjectId("4faeb1778de17f7162000001")
+    }
+
+*Uwaga:* "lex" jest tablicą! *Wskazówka:* zadanie na MapReduce.
+
+<!--
+Można zacząć od skopiowania bazy na konsoli *mongo*:
+
+    :::js
+    db.toks.copyTo("base")
+-->
+
 Wyszukiwarki:
 
 * [Poliqarp](http://korpus.pl/poliqarp/poliqarp.php); konkordancje
