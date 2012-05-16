@@ -265,29 +265,40 @@ Bez indeksu *explain* wypisuje:
     db.toks.ensureIndex({"lex.base": 1})
     db.toks.find({"lex.base": "ziemski"}).explain()
 
-**Zadanie 1.** Wykonać „pivot” na dokumentach. Oznacza to, że należy zamienić
+**Zadanie 0.** Zaggregować co się da (Aggregation Framework *v2.2+*, MapReduce).
+
+**Zadanie 1.** Usunąć z bazy *toks* duplikaty. Przykładowo, zastąpić
+wszystkie 9 dokumentów:
+
+    :::js
+    db.toks.find({orth: "kot"}, {_id: 0})
+    { "orth" : "kot", "lex" : [ { "base" : "kot", "ctag" : "subst:sg:nom:m2" } ] }
+    ...
+    { "orth" : "kot", "lex" : [ { "base" : "kot", "ctag" : "subst:sg:nom:m2" } ] }
+
+jednym dokumentem.
+
+Bezpiecznie jest zacząć od skopiowania bazy na konsoli *mongo*:
+
+    :::js
+    db.toks.copyTo("base")
+
+i wykonywać eksperymenty na kopii bazy. Teraz, jeśli nawet coś pójdzie nie tak…
+
+**Zadanie 2.** Wykonać „pivot” na dokumentach. Oznacza to, że należy zamienić
 wszystkie dokumenty według schematu:
 
     :::json
-    {
-      "base" : "ziemski",
-      "lex" : [
-         {
-           "orth" : "ziemskimi",
-           "ctag" : "adj:pl:inst:n:pos"
-         }
-      ],
-      "_id" : ObjectId("4faeb1778de17f7162000001")
+    { "_id": "ziemski",
+      "value" : [
+         { "orth": "ziemskiej", "ctag": "adj:sg:loc:f:pos" },
+         ...
+         { "orth": "ziemskimi", "ctag": "adj:pl:inst:n:pos" }
+      ]
     }
 
 *Uwaga:* "lex" jest tablicą! *Wskazówka:* zadanie na MapReduce.
 
-<!--
-Można zacząć od skopiowania bazy na konsoli *mongo*:
-
-    :::js
-    db.toks.copyTo("base")
--->
 
 Wyszukiwarki:
 
