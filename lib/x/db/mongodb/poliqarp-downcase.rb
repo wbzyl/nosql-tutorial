@@ -2,11 +2,15 @@ require 'string_case_pl' # https://github.com/apohllo/string_pl
 
 require 'mongo'
 
-# collection = Mongo::Connection.new("localhost", 27017).db("test").collection("students")
+connection = Mongo::Connection.new("localhost", 27017, safe: true) # safe propagated to DB objects
+database = Mongo::DB.new("poliqarp", connection, strict: true)     # collections must exist to be accessed
 
-collection = Mongo::Connection.new("localhost", 27017).db("poliqarp").collection("toks")
+# collection = Mongo::Connection.new("localhost", 27017, safe: true).db("poliqarp").collection("toks")
 
-puts "Documents in collection: #{coll.count}"
+collection = Mongo::Collection.new("toks", database)
+
+puts "Documents in collection: #{collection.count}"
+puts "safe mode: #{collection.safe}"
 
 # Cursors
 #
