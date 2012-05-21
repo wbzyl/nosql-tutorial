@@ -1,10 +1,18 @@
 #### {% title "MapReduce w przykładach" %}
 
 <blockquote>
+ <h3>There’s no speed limit</h3>
  <p>{%= image_tag "/images/speed.jpg", :alt => "[Speed]" %}
- <p>MapReduce is the Uzi of aggregation tools.
- <p class="author">— K. Chodorow, M. Dirolf
+ <p class="author">— D. Sivers,
+   <a href="http://sivers.org/kimo">The lessons that changed my life</a></p>
 </blockquote>
+
+<!--
+
+<p>MapReduce is the Uzi of aggregation tools.
+<p class="author">— K. Chodorow, M. Dirolf</p>
+
+-->
 
 Przykłady za Matthew Johnson,
 [Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf)):

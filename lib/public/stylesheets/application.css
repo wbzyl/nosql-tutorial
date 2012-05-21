@@ -286,3 +286,8 @@ object {
   border: none;
   margin-bottom: 0;
 }
+
+blockquote h3 {
+  border: none;
+  margin-left: 12px;
+}
