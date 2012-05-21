@@ -21,6 +21,19 @@ Na dobry początek kilka odsyłaczy:
   assembled collection of node.js how-to articles
 * [DailyJS](http://dailyjs.com/) – a JavaScript Blog
 
+[How do I get started with Node.js](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js):
+
+* [underscore.js](http://documentcloud.github.com/underscore/)
+* [optimist](https://github.com/substack/node-optimist) – light-weight option parsing for Node.js
+* [colors.js](https://github.com/Marak/colors.js) – get colors in your Node.js console
+
+Node.js, podstawy:
+
+* [Understanding the node.js event loop](http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/)
+* [Asynchronous Code Design with Node.js](http://shinetech.com/thoughts/articles/139-asynchronous-code-design-with-nodejs-)
+
+Frameworki: [Express](http://expressjs.com/), [Tower](http://towerjs.org/).
+
 
 ## Instalacja
 
