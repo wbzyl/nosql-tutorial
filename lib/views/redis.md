@@ -23,7 +23,10 @@
 * makes your life would a lot easier whenever you want cheap and easy
   set and list operations
 
-Zob. też [Object-Hash Mapping for Redis] [ohm].
+## Gemy
+
+* [Object-Hash Mapping for Redis] [ohm]
+* [Redis Object] [redis-object]
 
 
 ## Sinatra + Redis
@@ -34,3 +37,4 @@ Zob. też [Object-Hash Mapping for Redis] [ohm].
 [redis]: http://www.engineyard.com/blog/2009/key-value-stores-for-ruby-part-4-to-redis-or-not-to-redis/ "Redis or not…"
 [ohm]: http://ohm.keyvalue.org/ "Object-Hash Mapping for Redis"
 [redis-or-not]: http://www.engineyard.com/blog/2009/key-value-stores-for-ruby-part-4-to-redis-or-not-to-redis/ "Redis orn not…"
+[redis-object]: https://github.com/nateware/redis-objects "Redis Object"
