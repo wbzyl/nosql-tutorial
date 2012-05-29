@@ -340,6 +340,9 @@ Niektóre pola są puste. Uwzględnić to w rachunkach.
 
 # TODO
 
+0\. [Grape](https://github.com/intridea/grape) –
+an opinionated micro-framework for creating REST-like APIs in Ruby (Rack app).
+
 1\. Wizualizacja przykładowych danych.
 Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania…”.
 
