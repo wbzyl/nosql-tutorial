@@ -136,6 +136,10 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 * {%= link_to "Kolekcje MongoDB", "/mongodb-databases" %}
 * {%= link_to "Redis", "/redis-databases" %}
 
+Raw data:
+
+* [Raw Data na data.gov](https://explore.data.gov/catalog/raw/)
+
 
 ## Różne rzeczy
 
