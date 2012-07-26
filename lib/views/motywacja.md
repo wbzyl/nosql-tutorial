@@ -99,6 +99,8 @@ frontier for innovation, competition and profit.
 
 Zobacz też:
 
+* Julian Browne,
+  [Brewer’s CAP Theorem](http://www.julianbrowne.com/article/viewer/brewers-cap-theorem)
 * Mike Stonebraker,
   [Errors in Database Systems, Eventual Consistency, and the CAP Theorem](http://cacm.acm.org/blogs/blog-cacm/83396-errors-in-database-systems-eventual-consistency-and-the-cap-theorem/fulltext)
 * [NoSQL Deep Dive – The Missing White Paper](http://www.pythian.com/news/16817/nosql-deep-dive-the-missing-white-paper/)
