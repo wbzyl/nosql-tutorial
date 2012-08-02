@@ -1,5 +1,11 @@
 #### {% title "MongoDB – grupowanie" %}
 
+<blockquote>
+ {%= image_tag "/images/ogilvy-david.png", :alt => "[David Ogilvy]" %}
+ <p>Never write more than two pages on any subject.</p>
+ <p class="author">– David Ogilvy</p>
+</blockquote>
+
 Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących):
 
 * [Aggregation](http://www.mongodb.org/display/DOCS/Aggregation)
