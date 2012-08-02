@@ -1,6 +1,13 @@
 #### {% title "Tworzymy kolekcje MongoDB" %}
 
-**TODO:** Dodać przykład z bazą Redis oraz skrypty dla: MongoDB ⇔ CouchDB ⇔ Redis
+<blockquote>
+ {%= image_tag "/images/higgins-george-v.jpg", :alt => "[George V. Higgins, 1939–1999]" %}
+ <p>You cannot write well without data.</p>
+ <p class="author">– George Higgins</p>
+</blockquote>
+
+
+Tak MongoDB ⇔ JSON array ⇔ CouchDB, czy tak MongoDB ⇔ CouchDB ?
 
 
 ## Kopiowanie bazy z CouchDB do MongoDB
@@ -10,7 +17,8 @@ aby skopiować dane z bazy *gutenberg* z CouchDB do kolekcji *gutenberg*
 w bazie *test*:
 
     ruby couch2mongo.rb --help
-    ruby couch2mongo.rb -p 5984 -o 27017 -d gutenberg -m test -c gutenberg
+    ruby couch2mongo.rb -p 5984 -o 27017 \
+      -d gutenberg -m test -c gutenberg
 
 Uruchamiamy powłokę MongoDB i sprawdzamy co się skopiowało:
 
