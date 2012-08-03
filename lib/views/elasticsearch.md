@@ -26,8 +26,9 @@ Kiedyś trzeba będzie zainstalować tę wtyczkę
 
 ElasticSearch driver dla języka Ruby:
 
-* Karel Minarik.
-  [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
+* Karel Minarik:
+  - [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
+  - [Elasticsearch, Tire, and Nested queries/associations with ActiveRecord](http://stackoverflow.com/questions/11692560/elasticsearch-tire-and-nested-queries-associations-with-activerecord/11711477#11711477)
 
 Fedora:
 
