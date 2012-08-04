@@ -290,6 +290,42 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
     }'
 
 
+**TODO:** Przykład, ale z **mapping** podobny do przykładu z artykułu
+[From Solr to elasticsearch](http://digital.cabinetoffice.gov.uk/2012/08/03/from-solr-to-elasticsearch/)
+(„It’s much more verbose, but it’s also much more obvious what is happening.”):
+
+    :::json
+    curl -XGET 'http://localhost:9200/rummager/_search' -H 'Content-type: application/json' -d '{
+      "from": 0, "size": 50,
+      "query": {
+        "bool": {
+          "must": {
+            "query_string": {
+              "fields": ["title", "description", "indexable_content"],
+              "query": "bank holidays",
+              "minimum_should_match": "75%"
+            }
+          },
+          "should": {
+            "query_string": {
+              "default_field": "format",
+              "query": "transaction OR recommended-link",
+              "boost": 3.0
+            }
+          }
+        }
+      },
+      "highlight": {
+        "pre_tags": ["HIGHLIGHT_START"],
+        "post_tags": ["HIGHLIGHT_END"],
+        "fields": {
+          "description":{ },
+          "indexable_content":{ }
+        }
+      }
+    }'
+
+
 ## Indeksy i typy *Multi Tenant*
 
 *Tenant* to najemca, dzierżawca. *Multi tenant* – jak to przetłumaczyć?
