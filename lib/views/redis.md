@@ -12,10 +12,11 @@
  <p class="author">— Carlos Castaneda</p><!-- Potęga milczenia, p. 126 -->
 </blockquote>
 
-* [To Redis or Not To Redis?] [redis-or-not]
-* [Is CouchDB The Anti-Redis?](http://ai.mee.nu/is_couchdb_the_anti-redis?utm_source=NoSQL+Weekly+List&utm_campaign=92fe997cef-NoSQL_Weekly_Issue_37_Aug_11_2011&utm_medium=email)
+Home:
 
-[Redis] [redis] is key/value store:
+* [Redis](http://redis.io/)
+
+[Redis] [redis] to baza danych typu klucz/wartość:
 
 * which is blazingly fast
 * works best when data set is small enough that it can fit in available RAM
@@ -23,10 +24,15 @@
 * makes your life would a lot easier whenever you want cheap and easy
   set and list operations
 
-## Gemy
+Samouczek:
 
-* [Object-Hash Mapping for Redis] [ohm]
-* [Redis Object] [redis-object]
+* Karl Seguin.
+  [The Little Redis Book](http://openmymind.net/2012/1/23/The-Little-Redis-Book/)
+
+Gemy:
+
+* [Redis] [redis-rb] – a Ruby client library for Redis
+* [Ohm] [ohm] – Object-Hash Mapping for Redis
 
 
 ## Sinatra + Redis
@@ -38,3 +44,4 @@
 [ohm]: http://ohm.keyvalue.org/ "Object-Hash Mapping for Redis"
 [redis-or-not]: http://www.engineyard.com/blog/2009/key-value-stores-for-ruby-part-4-to-redis-or-not-to-redis/ "Redis orn not…"
 [redis-object]: https://github.com/nateware/redis-objects "Redis Object"
+[redis-rb]: https://github.com/redis/redis-rb "A Ruby client library for Redis"
