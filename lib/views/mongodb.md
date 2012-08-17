@@ -42,7 +42,7 @@ MongoDB is written in C++ and offers the following features:
 * [History of MongoDB](http://www.snailinaturtleneck.com/blog/2010/08/23/history-of-mongodb/)
 
 
-## MongoDB Schemas with Embedded, Non-Embedded Documents
+## Schemas & Embedded/Non-Embedded Docs
 
 * [Designing MongoDB Schemas with Embedded, Non-Embedded and Bucket Structures](https://openshift.redhat.com/community/blogs/designing-mongodb-schemas-with-embedded-non-embedded-and-bucket-structures)
 
