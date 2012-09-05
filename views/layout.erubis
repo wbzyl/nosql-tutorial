@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>{%= filler_for?(:title) ? "WB@NOSQL//" + output_filler_for(:title) : "WB@NOSQL" %}</title>
+
+<meta name="description" content="nosql, tutorial">
+<meta name="author" content="Włodek Bzyl">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+{%= link_favicon_tag %}
+
+{%= stylesheet_link_tag "/css/normalize.css", "/css/coderay.css", "/css/application.css" %}
+
+{%= output_filler_for(:head) -%}
+</head>
+
+<body>
+
+<header>
+  <h1>Bazy NoSQL <span>{%= link_to "WB@NOSQL", "/" %}</span></h1>
+</header>
+
+<div id="wrapper">
+
+  <article>
+    {% if filler_for?(:title) && show_title? %}
+    <h1>{%= output_filler_for(:title) %}</h1>
+    {% end %}
+
+    {%= yield %}
+  </article>
+
+</div>
+
+</body>
+</html>

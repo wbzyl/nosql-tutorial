@@ -1,12 +1,14 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
-# Specify your gem's dependencies in nosql-tutorial.gemspec
+# ruby "1.9.3"
+
+# specify your gem's dependencies in spa.gemspec
 gemspec
 
-gem 'sinatra-static-assets', :git => 'git://github.com/wbzyl/sinatra-static-assets.git'
-gem 'sinatra-filler', :git => 'git://github.com/wbzyl/sinatra-filler.git'
+# gem "sinatra-blog", :path => "/home/wbzyl/repos/forks/sinatra-blog"
+gem "sinatra-blog", :git => 'git://github.com/wbzyl/sinatra-blog.git'
 
-# updated for Ruby 1.9
+# middleware
 gem 'rack-codehighlighter', :git => 'git://github.com/wbzyl/rack-codehighlighter.git', :branch => 'pre-caption'
 
 gem 'thin'

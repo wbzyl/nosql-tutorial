@@ -1,0 +1,250 @@
+@html-color: transparent; /* debugging */
+
+@wrapper-color: transparent;
+
+@body-color: transparent; // for right margin for widths greater than 920px
+
+@header-background-color: #4A073C;
+@header-color: white;
+@header-shadow-color: black;
+@header-a-color: #9E0B41;
+
+@h1-color: #CC3E18;
+@h23-color: #181419;
+
+@article-background-color: white;
+@blockquote-background-color: #FFF7F5;
+
+@header-border-color: #181419;
+@article-border-color: #F0971C;
+@pre-border-color: #9E0B41;
+
+
+// less mixins: rounded borders, drop shadows
+// https://github.com/stevelacey/less.js-css3-mixins
+
+.border-radius(@radius: 8px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.box-shadow(@x: 0, @y: 0, @blur: 6px, @spread: 0, @color: black) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -o-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+// CSS3: spread value and box-shadow on one side only
+//  http://blog.w3conversions.com/2011/09/css3-spread-value-and-box-shadow-on-one-side-only/
+// Quick Tip: CSS 100% Height
+//  http://www.tutwow.com/htmlcss/quick-tip-css-100-height/
+
+
+// fix markdown generated elements
+
+h4:empty, p:empty { display: none; }
+
+header {
+  a {
+    text-decoration: none;
+    color: @header-a-color; }
+  h1 span {
+    margin-left: 2em; }
+}
+
+// see http://www.w3.org/TR/css3-selectors/
+
+article {
+ h1:first-of-type {
+   margin-top: 6px; padding-top: 0.75em; }
+ ul, p {
+   &:first-of-type {
+     margin-top: 6px; padding-top: 1em; }
+ }
+}
+
+// use web font for h[1-3]
+
+@font-face {
+  font-family: 'titan_oneregular';
+  src: url('titanone-regular-webfont.woff') format('woff'),
+       url('titanone-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1, h2, h3 {
+  font-family: 'titan_oneregular', Arial, serif;
+  font-weight: 400;
+}
+
+h1 {
+  color: @h1-color;
+}
+
+h2, h3 {
+  color: @h23-color;
+}
+
+// main
+
+html {
+  font-size: 10px;
+  line-height: 1.6;
+  background: @html-color;
+}
+
+// rem units: http://www.alistapart.com/articles/love-the-boring-bits-of-css/
+
+body {
+  font-size: 1.6rem;
+  background-color: @body-color;
+}
+
+blockquote {
+  font-size: 1.4rem;
+}
+
+#wrapper {
+  position: relative;
+  background-color: @wrapper-color;
+  margin: 0 auto 0 0;
+}
+
+// fluid grids: Marcotte Formula
+
+// 1120px = article + gap + blockquote = 775px + 20px + 325px
+
+@wrapper-width: 1120px;
+@article-width: 775px;
+@blockquote-width: 325px;
+@padding-width: 20px;
+
+@article-fluid-width: percentage(@article-width / @wrapper-width);
+@article-fluid-padding-left: percentage(@padding-width / @wrapper-width);
+
+@blockquote-fluid-width: percentage(@blockquote-width / @wrapper-width);
+
+@header-h-padding-left: percentage(@padding-width / @wrapper-width);
+
+@pre-padding-left: percentage(@padding-width / @article-width);
+
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#wrapper {
+  width: @wrapper-width;
+}
+
+article {
+  width: @article-fluid-width;
+  padding-left: @article-fluid-padding-left;
+  border-width: 0 0 0 20px; // removed for smaller viewports
+}
+
+blockquote {
+  .border-radius;
+  .box-shadow(0, 8px, 6px, -6px, @header-shadow-color);
+
+  width: @blockquote-fluid-width;
+  img {
+    max-width: 88%; // approx. (345px - 2 * 20px) / 345px
+    margin: 6% auto 0; // 100% = 2 * 6% + 88%
+    display: block; }
+  p {
+    margin-left: 6%;
+    margin-right: 6%; }
+}
+
+header {
+  .box-shadow(0, 8px, 6px, -6px, @header-shadow-color);
+
+  border-width: 0 0 0 20px; // removed for smaller viewports
+  h1 {
+    padding-left: @header-h-padding-left;
+  }
+}
+
+pre {
+  white-space: pre;
+
+  margin-left: -40px; // overriden for smaller viewports
+  border-width: 0 0 0 20px; // removed for smaller viewports
+  padding-left: 40px; // = 20px left margin
+}
+
+
+// other stuff
+
+blockquote {
+  position: absolute;  // relative #wrapper
+  margin: 0;
+  right: 0;
+  background-color: @blockquote-background-color;
+}
+
+header {
+  background-color: @header-background-color;
+  border-style: solid;
+  border-color: @header-border-color;
+  h1 {
+    margin: 0;
+    padding-top: 0.75em;
+    padding-bottom: 1em;
+    color: @header-color;
+  }
+}
+
+article {
+  background-color: @article-background-color;
+  border-style: solid;
+  border-color: @article-border-color;
+  padding-bottom: 1em;
+}
+
+pre {
+  border-style: solid;
+  border-color: @pre-border-color;
+}
+
+
+@media screen and (max-width: 1140px) { // 920px + 20px -- compensate for negative left margin?
+  #wrapper, header, article {
+    border: none;
+  }
+
+  #wrapper {
+    width: 100%;
+  }
+
+  pre {
+    border-style: none;
+    margin-left: 0;
+    padding-left: @pre-padding-left;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  article {
+    width: 100%;
+  }
+  blockquote {
+    display: none;
+  }
+}
+
+/* misc stuff */
+
+.author {
+  font-style: italic;
+  text-align: right;
+  padding-right: 2em;
+  color: #444;
+}
