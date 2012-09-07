@@ -1,5 +1,3 @@
-# Bazy NoSQL
-
 <blockquote>
  {%= image_tag "/images/alan-kay.jpg", :alt => "[Alan Kay]" %}
  <p>
@@ -8,6 +6,8 @@
  </p>
  <p class="author">– Alan Kay</p>
 </blockquote>
+
+Referaty:
 
 * [07.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
 * [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior

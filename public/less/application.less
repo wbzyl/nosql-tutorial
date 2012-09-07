@@ -58,12 +58,12 @@ header {
 // see http://www.w3.org/TR/css3-selectors/
 
 article {
- h1:first-of-type {
-   margin-top: 6px; padding-top: 0.75em; }
- ul, p {
-   &:first-of-type {
-     margin-top: 6px; padding-top: 1em; }
- }
+  > h1:first-child {
+    margin-top: 8px; padding-top: 0.75em; }
+  > ul:nth-child(2) {
+    margin-top: 8px; padding-top: 1em; }
+  > p:nth-child(2) {
+    margin-top: 8px; padding-top: 1em; }
 }
 
 // use web font for h[1-3]
