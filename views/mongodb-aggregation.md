@@ -8,8 +8,9 @@
 
 Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących):
 
-* [Aggregation](http://www.mongodb.org/display/DOCS/Aggregation)
-* [Aggregation Framework](http://www.mongodb.org/display/DOCS/Aggregation+Framework)
+* [Aggregation Framework](http://docs.mongodb.org/manual/applications/aggregation/)
+* [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/aggregation/)
+* [Aggregation Framework Examples](http://docs.mongodb.org/manual/tutorial/aggregation-examples/)
 
 Przykłady:
 
