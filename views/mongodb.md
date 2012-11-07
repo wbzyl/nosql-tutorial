@@ -26,8 +26,10 @@ MongoDB is written in C++ and offers the following features:
 * Efficient storage of binary data including large objects (e.g. photos and videos)
 
 
-## Samouczki, ściągi itp.
+## Manuale, samouczki, ściągi…
 
+* [The MongoDB Manual](http://docs.mongodb.org/manual/)
+  ([single page html](http://docs.mongodb.org/master/single/index.html), źródło [github][https://github.com/mongodb/docs])
 * Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb)
   etykietowane znacznikiem *mongodb*
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
