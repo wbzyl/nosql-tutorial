@@ -28,15 +28,15 @@ MongoDB is written in C++ and offers the following features:
 
 ## Manuale, samouczki, ściągi…
 
-* [The MongoDB Manual](http://docs.mongodb.org/manual/)
-  ([single page html](http://docs.mongodb.org/master/single/index.html), źródło [github][https://github.com/mongodb/docs])
-* Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb)
-  etykietowane znacznikiem *mongodb*
-* Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf)
-* Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek
-* Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html)
+* [The MongoDB Manual](http://docs.mongodb.org/manual/).
+  ([single page html](http://docs.mongodb.org/master/single/index.html), źródło [github](https://github.com/mongodb/docs)).
+* Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb).
+  oznaczone etykietką *mongodb*.
+* Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf).
+* Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek.
+* Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html).
   i dłuższy samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
-* [NoSQL DZone](http://dzone.com/mz/nosql)
+* [NoSQL DZone](http://dzone.com/mz/nosql).
 
 
 ## Historia
