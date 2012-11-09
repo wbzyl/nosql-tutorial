@@ -106,3 +106,15 @@ Indeksy:
 
 * [Dot Notation (Reaching into Objects)](http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29)
 * [Multikeys](http://www.mongodb.org/display/DOCS/Multikeys)
+
+
+## The wonderful world of GEO spatial indexes in MongoDB
+
+Przykłady dla Node.js + sterownik node-mongodb-native:
+* [The wonderful world of GEO spatial indexes in MongoDB](http://christiankvalheim.com/post/35293863731/the-wonderful-world-of-geo-spatial-indexes-in-mongodb)
+
+Najpierw instalujemy moduł:
+
+    npm install mongodb
+
+Dokumentacja sterownika [mongodb](https://github.com/mongodb/node-mongodb-native).
