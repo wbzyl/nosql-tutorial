@@ -6,12 +6,12 @@
 Zaczniemy od przygotowania kolekcji.
 W kolekcji zapiszemy dokumenty:
 
-    :::json
+    :::js
     {
       "_id" : ObjectId("4f2e956fe138237e61000079")
       "word": "morning",
-      "para": 4.                                    # paragraph no with "morning"
-      "letters": ["g", "i", "m", "n", "o", "r"]     # sorted and unique
+      "para": 4.                                // numer akapitu ze słowem "morning"
+      "letters": ["g", "i", "m", "n", "o", "r"] // litery "morning" w kolejności alfabetycznej, bez powtórzeń
     }
 
 Dokumenty te utworzymy z angielskiej wersji tekstu powieści
@@ -55,7 +55,7 @@ Proste zapytania z rzutowaniem i sortowaniem:
     db.dostojewski.find({}, {word: 1, _id: 0}).sort({word: 1}).limit(20)
     db.dostojewski.find({}, {_id: 0}).sort({word: -1}).skip(32060).limit(10)
     db.dostojewski.find({word: /^x/}, {_id: 0}).sort({word: -1}).limit(20)
-    db.dostojewski.find({letters: "x"}, {_id: 0})     # it – iterate over result set
+    db.dostojewski.find({letters: "x"}, {_id: 0})     // it – iterate over result set
     db.dostojewski.find({"letters.2": "x"}, {_id: 0})
 
 Tablice:
@@ -83,7 +83,7 @@ Operatory boolowskie: $ne, $not, $or, $and, $exists:
     db.dostojewski.find({word: {$not: /[a-z]/}}, {_id: 0})
     db.dostojewski.find({$or: [{word: "petersburg"}, {word: "russia"}]}
     db.dostojewski.find({ $and: [{letters: {$in: ['a', 'e', 'i']}}, {letters: {$in: ['i', 'o', 'u']}}] })
-    db.dostojewski.find({ letters: {$exists: false} })  # dokumenty bez atrybutu letters
+    db.dostojewski.find({ letters: {$exists: false} })  // dokumenty bez atrybutu letters
 
 JavaScript:
 
@@ -98,7 +98,7 @@ albo równoważnie:
 Indeksy:
 
     :::js
-    db.dostojewski.ensureIndex({'word': 1})  # ?
+    db.dostojewski.ensureIndex({'word': 1})  // ?
     db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
 
 
@@ -111,6 +111,7 @@ Indeksy:
 ## The wonderful world of GEO spatial indexes in MongoDB
 
 Przykłady dla Node.js + sterownik node-mongodb-native:
+
 * [The wonderful world of GEO spatial indexes in MongoDB](http://christiankvalheim.com/post/35293863731/the-wonderful-world-of-geo-spatial-indexes-in-mongodb)
 
 Najpierw instalujemy moduł:
