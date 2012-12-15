@@ -856,6 +856,11 @@ Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
 Prosta instalacja dla trybu **development**. Dlaczego taka
 instalacja: *w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
 
+Uwagi o instalacji w trybie **produkcyjnym**:
+
+* [ElasticSearch pre-flight checklist](http://asquera.de/opensource/2012/11/25/elasticsearch-pre-flight-checklist/)
+  by skade
+
 [Pobieramy ostatnią wersję](https://github.com/elasticsearch/elasticsearch/downloads)
 (ok. 16 MB) i rozpakowujemy ją w katalogu. Na przykład w *$HOME/.nosql/elasticsearch*:
 
