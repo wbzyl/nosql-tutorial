@@ -7,15 +7,16 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
-Referaty:
+Tematy referatów:
 
-* [07.03.2012] **MapReduce** – Piotr Kamiński, Jacek Dzido, Olga Juhas
-* [25.04.2012] **Hadoop** – Dawid Milewski, Marek Olszewski, Aleksandra Bucior
-* [09.05.2012] **Wprowadzenie do Neo4j** – Adrian Modliszewski, Daniel Mielniczuk, Karol Bachewicz
-* [16.05.2012] **Wizualizacja danych**, wprowadzenie do [d3.js](http://bost.ocks.org/mike/d3/workshop/) –
-  Radosław Kwolek, Krzysztof Marzec, Rafał Ośko
-* [23.05.2012] **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
-  [Data Wrangler](http://vis.stanford.edu/wrangler/) – Marcin Brzeziński,  Łukasz Kędroń
+* **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
+ [Data Wrangler](http://vis.stanford.edu/wrangler/)
+ (przykładow dane – [Sejmometr](http://sejmometr.pl/start baza danych z kodami pocztowymi dla Polski)
+* **Wprowadzenie do Neo4j**
+* **Co to jest Hadoop?**
+* **Wizualizacja danych** – [d3.js](http://bost.ocks.org/mike/d3/workshop/) 
+ (działa z CORS)
+
 
 ## Co to jest „NoSQL”?
 
@@ -113,6 +114,14 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
 *  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
+
+
+## Tools
+
+* [Postman – REST Client dla Chrome](https://chrome.google.com/webstore/)
+* [REST Console dla Chrome](https://chrome.google.com/webstore/)
+* [Html5 Snippet - Beta dla Chrome](https://chrome.google.com/webstore/)
+* [jaFiddle][http://jsfiddle.net/)]
 
 
 <blockquote>
