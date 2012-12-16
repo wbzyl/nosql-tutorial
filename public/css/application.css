@@ -8,7 +8,7 @@ article>p:nth-child(2){margin-top:8px;padding-top:1em;}
 h1{color:#cc3e18;}
 h2,h3{color:#181419;}
 html{font-size:10px;line-height:1.6;background:transparent;}
-body{font-size:1.6rem;background-color:transparent;}
+body{font-size:1.6rem;background-color:transparent;-webkit-text-stroke:1px transparent;}
 blockquote{font-size:1.4rem;}
 #wrapper{position:relative;background-color:transparent;margin:0 auto 0 0;}
 *{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;}
