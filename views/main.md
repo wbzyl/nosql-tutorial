@@ -121,7 +121,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 * [Postman – REST Client dla Chrome](https://chrome.google.com/webstore/)
 * [REST Console dla Chrome](https://chrome.google.com/webstore/)
 * [Html5 Snippet - Beta dla Chrome](https://chrome.google.com/webstore/)
-* [jaFiddle][http://jsfiddle.net/)]
+* [jsFiddle](http://jsfiddle.net/)
 
 
 <blockquote>

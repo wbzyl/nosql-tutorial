@@ -7,3 +7,9 @@ Książki:
 
 * Scott Murray,
   [Interactive Data Visualization for the Web](http://ofps.oreilly.com/titles/9781449339739/)
+
+e-Learning:
+
+* [Data Visualisation](https://graphics.stanford.edu/wikis/cs448b-12-fall) – cs448b at Stanford
+* Mikey Levine.
+  [D3, Conceptually ](http://code.hazzens.com/d3tut/)
