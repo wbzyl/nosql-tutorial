@@ -156,3 +156,4 @@ Raw data:
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "NodeJS", "/node" %}
 1. {%= link_to "D3.js", "/d3js" %}
+1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)
