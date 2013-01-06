@@ -12,7 +12,7 @@ Tematy referatów:
 * **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
  [Data Wrangler](http://vis.stanford.edu/wrangler/).
  Przykładowe dane do wykorzystania w prezentacji:
- [Sejmometr](http://sejmometr.pl/start) –
+ [Sejmometr](http://sejmometr.pl/api) –
  baza danych z kodami pocztowymi
 * **Wprowadzenie do Neo4j**
 * **Co to jest Hadoop?**
