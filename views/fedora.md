@@ -1,18 +1,29 @@
 #### {% title "Fedora 16" %}
 
-Instalacja MongoDB, CouchDB, Redis, ElasticSearch, PostgreSQL.
+Hugo Lindgren,
+[Be Wrong as Fast as You Can](http://www.nytimes.com/2013/01/06/magazine/be-wrong-as-fast-as-you-can.html):
+
+**Ideas, in a sense, are overrated.** Of course, you need good ones, but
+at this point in our supersaturated culture, precious few are so novel
+that nobody else has ever thought of them before.
+**It’s really about where you take the idea, and how committed you are
+to solving the endless problems that come up in the execution.**
+
+
+Tworzenie własnych paczek RPM dla MongoDB, CouchDB, Redis, ElasticSearch, PostgreSQL.
+
+RPM info:
 
 * [Working with Spec Files](http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch-specfiles.html)
 * [Built-in macros](http://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/RPM_Guide/ch09s07.html)
 
-## MongoDB
-
-Tworzymy paczkę RPM.
-
-Dodajemy siebie do grupy *mock*:
+Dodajemy siebie do grupy *mock*?
 
     :::bash
     sudo usermod -a -G mock wbzyl
+
+
+## MongoDB
 
 Tworzymy katalogi dla programu *rpmbuild*:
 
@@ -55,8 +66,18 @@ Użyteczne polecenia:
     rpm --eval '%makeinstall'
 
 
+## CouchDB
+
+* [couchdb-rpm](https://github.com/wendall911/couchdb-rpm) (v1.2.1)
+* [fedora git](http://pkgs.fedoraproject.org/cgit/couchdb.git/) (v1.2.0)
+
 
 ## ElasticSearch
 
 [Elasticsearch RPMs](https://github.com/tavisto/elasticsearch-rpms) –
 an easy way to install elasticsearch on fedora/rhel based systems.
+
+
+## PostgreSQL
+
+TODO.

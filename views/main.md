@@ -10,11 +10,13 @@
 Tematy referatów:
 
 * **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
- [Data Wrangler](http://vis.stanford.edu/wrangler/)
- (przykładow dane – [Sejmometr](http://sejmometr.pl/start baza danych z kodami pocztowymi dla Polski)
+ [Data Wrangler](http://vis.stanford.edu/wrangler/).
+ Przykładowe dane do wykorzystania w prezentacji:
+ [Sejmometr](http://sejmometr.pl/start) –
+ baza danych z kodami pocztowymi
 * **Wprowadzenie do Neo4j**
 * **Co to jest Hadoop?**
-* **Wizualizacja danych** – [d3.js](http://bost.ocks.org/mike/d3/workshop/) 
+* **Wizualizacja danych** – [d3.js](http://bost.ocks.org/mike/d3/workshop/)
  (działa z CORS)
 
 
@@ -112,6 +114,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 ## Laboratorium
 
 *  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
+*  {%= link_to "Instalacja z paczek RPM w Fedorze 16+", "/fedora" %}
 *  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
