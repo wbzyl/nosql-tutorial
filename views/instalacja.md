@@ -548,7 +548,7 @@ MongoDB & Ruby:
 * [What If A Key/Value Store Mated With A Relational Database System?](http://railstips.org/2009/6/3/what-if-a-key-value-store-mated-with-a-relational-database-system)
 
 
-# Redis
+# TODO: Redis
 
 Z serwera *github.com* klonujemy repozytorium:
 
@@ -752,7 +752,7 @@ Czy coś takiego wystarczy?
 * [To Redis or Not To Redis?] [redis-or-not]
 
 
-# ElasticSearch
+# TODO: ElasticSearch
 
 Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
 
