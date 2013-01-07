@@ -4,21 +4,22 @@
  {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
 </blockquote>
 
-W Google pod hasłem **NoSQL** znajdziemy linki do nowych
-technologii będących alternatywą dla relacyjnych baz danych
+W Google pod hasłem **NoSQL** znajdziemy linki
+do programów będących alternatywą dla relacyjnych systemów baz danych
 takich jak PostgreSQL czy MySQL. Na wykładach zostaną
-przedstawione bazy:
+omówione:
 
 * ElasticSearch – wyszukiwarka
 * MongoDB – baza dokumentowa
 * CouchDB – baza dokumentowa
 
-oraz bazy:
+oraz (referaty)
 
 * Neo4j – baza grafowa
 * Redis – baza klucz–wartość
 
-Przed instalacją systemów baz danych powinniśmy sprawdzić, czy mamy
+
+Przed instalacją tych programów powinniśmy sprawdzić, czy mamy
 wystarczająco dużo miejsca na swoim koncie na *Sigmie*. W tym celu
 logujemy się na *Sigmie*, gdzie wykonujemy polecenie:
 
@@ -26,34 +27,23 @@ logujemy się na *Sigmie*, gdzie wykonujemy polecenie:
 
 Polecenie to wypisze nasze limity dyskowe.
 Jeśli mamy mniej niż ok. 200 MB do dyspozycji, to musimy
-zacząć od usunięcia zbędnych rzeczy.
-Tutaj może być pomocne wykonanie polecenia,
-wypisującego dziesięć katalogów zajmujących najwięcej miejsca:
+usunąć zbędne rzeczy.
+
+Aby się zorientować, jakie katalogi zajmują dużo miejsca,
+możemy wykonać to polecenie:
 
     du -m ~ | sort -k1nr | head
 
-**Zależności:**
+Wypisze ono dziesięć katalogów zajmujących najwięcej miejsca.
 
-Instalujemy silniki JavaScript: *js* i *v8*.
-W Fedorze ściągamy paczki ze źródłami:
+Użyteczny jest też program *ncdu* (zainstalowany na *Sigmie*).
 
-    wget ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v/v8-3.3.10-4.fc17.src.rpm
-    ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/j/js-1.8.5-9.fc17.src.rpm
 
-i budujemy pakiety:
+## Post Installation
 
-    rpmbuild --rebuild v8-3.3.10-4.fc17.src.rpm
-    rpmbuild --rebuild js-1.8.5-9.fc17.src.rpm
-
-(Ostatnie wersje ze stycznia 2012.)
-
-Być może trzeba będzie zainstalować jeszcze zależności, np.
-
-    sudo yum install autoconf213
-
-**Post Installation.** Całą instalację zakończymy dodając
-do ścieżek wyszukiwania *PATH* ścieżki do zainstalowanych programów
-oraz skryptów.
+<!--
+Instalację kończymy dodając do ścieżek wyszukiwania *PATH*
+ścieżki do zainstalowanych programów oraz skryptów.
 W tym celu dopiszemy w pliku *~/.bashrc*:
 
     :::text
@@ -64,15 +54,15 @@ Dlatego przelogowujemy się (zalecane podejście) albo wykonujemy polecenie:
 
     source ~/.bashrc
 
-Same bazy powinniśmy trzymać poza katalogami, które zostały utworzone
-w czasie instalacji (dlaczego?).
+-->
 
-Ja trzymam wszystkie swoje bazy w katalogu *$HOME/.data*.
-Domyślne ustawienia są inne, dlatego demony baz danych
-uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
-Same skrypty są tutaj:
+Bazy danych utworzymy w katalogu *$HOME/.data*,
+czyli poza katalogami utworzonymi w czasie instalacji. Dlaczego?
 
-* [CouchDB](https://gist.github.com/1967489)
+Domyślne ustawienia są inne, dlatego demony baz danych będziemy
+uruchamiać za pomocą skryptów w których wpiszemy odpowiednie ścieżki:
+
+* [CouchDB](https://gist.github.com/4477030)
 * [MongoDB](https://gist.github.com/1967489)
 * [ElasticSearch](https://gist.github.com/1687963)
 
@@ -81,36 +71,10 @@ Same skrypty są tutaj:
 -->
 
 
-## Uwagi o instalacji programów na *Sigmie*
+## Bazy 32-bitowe czy 64-bitowe?
 
-1\. \[Rails] W laboratoriach na komputerach lokalnych w trakcie konfiguracji nie
-są tworzone dowiązania symboliczne do plików poza katalogiem */home*.
-Powoduje to masę problemów z instalacją gemów.
-
-Przed zalogowaniem się na Sigmę:
-
-    rpm -qa | grep sqlite3
-    sqlite3-3.7.3-1.i686
-
-Po zalogowaniu:
-
-    ssh sigma
-    rpm -qa | grep sqlite3
-    sqlite3-3.7.3-1.i686
-    sqlite3-devel-3.7.3-1.i686
-
-Z tego wynika, że instalacja lokalna gemu *sqlite3* się nie powiedzie.
-
-2\. \[CouchDB] Program konfigurujący *bootstrap* nie sprawdza,
-czy linki symboliczne zostały poprawnie utworzone.
-
-Na przykład, w trakcie konfiguracji CouchDB *bootstrap*
-próbuje utworzyć linki symboliczne do katalogu */usr*. Dlatego
-kompilacja zakończy się błędem albo po instalacji, programy nie będą
-działać.
-
-**Dlatego, najpierw logujemy się na *Sigmę*, a dopiero potem
-wykonujemy wszystkie opisane poniżej polecenia.**
+Jeśli programy instalujemy na maszynach w pracowni, to instalujemy
+wersje 32-bitowe. Jeśli na *Sigmie* – 64-bitowe.
 
 
 <blockquote>
@@ -122,33 +86,29 @@ wykonujemy wszystkie opisane poniżej polecenia.**
  <p class="author">— Benjamin Franklin (1706–1790)</p>
 </blockquote>
 
-# Każdy leży na swojej CouchDB
+# CouchDB z rozszerzeniem GeoCouch
 
-Będziemy instalować system CouchDB z rozszerzeniem GeoCouch.
+Rozszerzenie GeoCouch działa z wersjami CouchDb do wersji 1.3.x włącznie.
 
-Zaczynamy od sklonowania repozytoriów:
+Zaczynamy od sklonowania repozytoriów couchdb i geocouch:
 
     :::bash
     git clone http://git-wip-us.apache.org/repos/asf/couchdb.git
     git clone git://github.com/couchbase/geocouch.git
 
-Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.2.x:
+Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
 
     :::text
     cd couchdb
     git branch -a
-    git checkout --track origin/1.2.x
+    git checkout --track origin/1.3.x
     ./bootstrap
-    ./configure --prefix=$HOME/.nosql
+    # ./configure --prefix=$HOME/.nosql # 32-bity
+    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
     make
     make install
 
-*Uwaga:* Na Fedorze 64-bitowej, konfiguracja przebiega inaczej, musimy
-podać ścieżkę do plików nagłówkowych:
-
-    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include
-
-Zob. też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
+Zobacz też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
 
 
 ## Post-install
@@ -156,7 +116,9 @@ Zob. też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
 Kończymy instalację tworząc nowy plik *sigma.ini* i wpisując do niego
 następujące rzeczy:
 
-    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
+    :::plain
+    ; Plik ~/.nosql/etc/couchdb/local.d/sigma.ini
+
     [httpd]
     port = 5984
     bind_address = 0.0.0.0
@@ -182,7 +144,9 @@ Ponieważ katalogi, te nie istnieją, Tworzymy je:
 
 Hostami wirtualnymi zajmiemy się później:
 
-    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
+    :::plain
+    ; Plik ~/.nosql/etc/couchdb/local.d/sigma.ini
+
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
     ; dlatego zamiast *example.com* poniżej,
     ; powinno zadziałać coś takiego i coś takiego:
@@ -200,31 +164,26 @@ Hostami wirtualnymi zajmiemy się później:
 Alternatywny sposób konfiguracji hostów wirtualnych opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
 
-3\. Ja uruchamiam server CouchDB, korzystając ze skryptu
-o takiej zawartości:
-
-    :::bash
-    #! /bin/bash
-    couchdb -A $HOME/.data/etc/couchdb/local.d
-
-a plik *sigma.ini* umieszczam w powyższym katalogu.
-Dlaczego tak postępuję?
-
 
 ## Testujemy instalację
 
 Uruchamiamy serwer:
 
-    couchdb
-      Apache CouchDB 1.1.1 (LogLevel=info) is starting.
+    couchdb.sh
+      Apache CouchDB 1.3.0a-98988dd-git (LogLevel=info) is starting.
       Apache CouchDB has started. Time to relax.
-      [info] [<0.31.0>] Apache CouchDB has started on http://127.0.0.1:5984/
+      [info] [<0.31.0>] Apache CouchDB has started on http://0.0.0.0:5984/
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
     :::text
     curl http://127.0.0.1:5984
-      {"couchdb":"Welcome","version":"1.1.2"}
+    {
+      "couchdb":"Welcome",
+      "uuid":"9a5f855eda071efad446d49b1cd09a8b",
+      "version":"1.3.0a-98988dd-git",
+      "vendor":{"version":"1.3.0a-98988dd-git","name":"The Apache Software Foundation"}
+    }
 
 Następnie wchodzimy na stronę:
 
@@ -240,8 +199,8 @@ Informacje o bazach i serwerze można uzyskać kilkając w odpowiednie zakładk
     curl -X GET http://127.0.0.1:5984/_all_dbs
     curl -X GET http://127.0.0.1:5984/_config
 
-W odpowiedzi na każde żądanie HTTP (*request*), dostajemy
-odpowiedź HTTP (*response*) w formacie [JSON][json].
+Na każde powyższe żądanie (*request*) odpowiedzią (*response*) servera CouchDB
+jest tekst w formacie [JSON][json].
 
 Jeśli skorzystamy z opcji *-v*, to *curl* wypisze szczegóły tego co robi:
 
@@ -250,39 +209,28 @@ Jeśli skorzystamy z opcji *-v*, to *curl* wypisze szczegóły tego co robi:
 Chociaż teraz widzimy, że **Content-Type** jest ustawiony na
 **text/plain;charset=utf-8**.  Dlaczego?
 
-Często się zdarzało, że nie działał replikator.
-Spróbujmy zreplikować jakąś bazę z bazy
-CouchDB na *Tao*, na przykład
+W przeszłości często się zdarzało, że nie działał replikator.
+Dlatego w ramach testowania, sprawdzimy czy działa replikator.
 
-    http://couch.inf.ug.edu.pl/rock
+W tym celu zreplikujemy jakąś bazę z servera*Tao*, na przykład
 
-Następnie replikujemy tę bazę lokalnie.
+    http://couch.inf.ug.edu.pl/ls
 
-Replikację możemy wyklikać w zakładce Replication *Futona*:
+Następnie, w ramach dalszego testowania, replikujemy tę bazę lokalnie.
+
+Samą replikację możemy wyklikać w zakładce Replication *Futona*:
 
     :::json
     {"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}
 
-albo za pomocą programu *curl*:
+albo możemy wykonać za pomocą programu *curl*:
 
     :::bash
     curl -X POST http://127.0.0.1:5984/_replicate -H 'Content-Type: application/json' \
        -d '{"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}'
 
-Możemy też uruchamiać demona couchdb za pomocą skryptu
-{%= link_to "/etc/init.d/couchdb", "/fedora/f15/couchdb.init" %}
 
-    :::bash
-    /etc/init.d/couchdb help
-
-Wcześniej musimy założyć dwa katalogi, an PID oraz LOCK:
-
-    :::bash
-    mkdir -p $HOME/.data/var/run/couchdb/
-    mkdir -p $HOME/.data/var/lock/subsys/couchdb
-
-
-## Gdzie są moje bazy?
+## Gdzie są moje bazy danych?
 
 Domyślnie, skompilowany CouchDB będzie zapisywał rekordy
 do baz w katalogu *$HOME/.nosql/var/lib/couchdb/*.
@@ -344,31 +292,35 @@ I to wszystko. Na koniec polecam lekturę
 
 ## Instalujemy rozszerzenie GeoCouch
 
+Wersja działająca: couchdb1.2.0. Wersja couchdb1.3.x nie działa.
+
 Zaczynamy od *cd* do katalogu repozytorium:
 
     :::bash
     cd geocouch
-    git checkout --track origin/couchdb1.2.x
+    git checkout --track origin/couchdb1.3.x
 
 Następnie ustawiamy wartość zmiennej *COUCH_SRC*, tak aby wskazywała
 na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*.
 i uruchamiamy *make*:
 
-    :::text
-    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.2.0a-384a75b-git/include
+    :::bash
+    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/include
     make
 
 Ponieważ nazwa tego katalogu, zależy od sumy SHA gałęzi, trzeba to
-wcześniej sprawdzić, przykładowo:
+wcześniej sprawdzić.
 
+<!--
     git log --graph --decorate --pretty=oneline --abbrev-commit | head -1
     * 384a75b (HEAD, origin/1.2.x, 1.2.x) fix show/list/external requested_path for rewrites
+-->
 
 Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
 do odpowiednich katalogów:
 
     cp $HOME/.nosql/geocouch/etc/couchdb/default.d/geocouch.ini $HOME/.nosql/etc/couchdb/default.d/
-    cp $HOME/.nosql/geocouch/build/*  $HOME/.nosql/lib/couchdb/erlang/lib/couch-1.2.0a-384a75b-git/ebin/
+    cp $HOME/.nosql/geocouch/build/* /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/ebin/
 
 Na koniec sprawdzamy czy geolokacja działa.
 W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
@@ -417,23 +369,14 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::bash
     cd mongo
-    git checkout r2.0.2
-    scons --usev8 all                            # build all binaries with v8
-    scons --usev8 --prefix=$HOME/.nosql install
+    git checkout r2.3.2
+    scons all                            # build all binaries with v8
+    scons --prefix=$HOME/.nosql install
     git checkout master
 
-Zamiast domyślnej maszyny Javascript o nazwie „Spider Monkey” (Firefox)
-użyjemy – „V8” (Chrome).
-
-Zakładam, że biblioteka V8 jest zainstalowana w systemie.
-
-Fedora – kompilujemy pakiety *v8* i *v8-devel*. Zaczynamy od pobrania źródeł:
-
-    :::bash
-    wget ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/v/v8-3.3.10-4.fc17.src.rpm
-
-**Uwaga:** Niestety na *Sigmie* powyższa procedura nie działa,
-ponieważ nie jest zainstalowana biblioteka *Boost*.
+**Uwaga:** Od wersji 2.3.1 MongoDB korzysta z silnika JavaScript „V8” (Chrome).
+Wcześniejsze wersje korzystały ze „Spider Monkey” (Firefox). Zobacz też
+[ECMA 5 Mozilla Features Implemented in V8](https://github.com/joyent/node/wiki/ECMA-5-Mozilla-Features-Implemented-in-V8).
 
 
 ### Instalacja na skróty
@@ -442,11 +385,11 @@ Pobieramy paczkę dla naszego systemu ze strony
 [MongoDB Downloads](http://www.mongodb.org/downloads). Przykładowo:
 
     :::bash
-    wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.0.2.tgz
+    wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-latest.tgz
 
 Odpakowujemy archiwum:
 
-    tar zxvf mongodb-linux-x86_64-2.0.2.tgz
+    tar zxvf mongodb-linux-x86_64-latest.tgz
 
 Kopiujemy pliki wykonywalne do odpowiednich katalogów:
 
@@ -467,18 +410,50 @@ Dopiero teraz uruchamiamy demona *mongod* (poniżej wpisuję domyślny port):
 
     :::bash
     mongod --dbpath=$HOME/.data/var/lib/mongodb --port=27017
-      Tue Dec 28 ... MongoDB starting : pid=25909 port=27017  ...
-      Tue Dec 28 ... git version: 3b7152d81bc6b30fa15bfd301d28924a33ac5dfe
-      Tue Dec 28 ... sys info: Linux localhost.localdomain ...
-      Tue Dec 28 ... [initandlisten] waiting for connections on port 27017
-      Tue Dec 28 ... [websvr] web admin interface listening on port 27017+1000
+      Mon Jan  7 21:34:41.812 [initandlisten] MongoDB starting : pid=16536 port=27017 ..
+      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
+      Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
+      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Mon Jan  7 21:34:41.813 [initandlisten] db version v2.3.2-pre-, pdfile version 4.5
+      Mon Jan  7 21:34:41.813 [initandlisten] git version: be56edc259bb5c0e3bb862c69a6303705ef453f4
+      Mon Jan  7 21:34:41.813 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen ..
+      Mon Jan  7 21:34:41.813 [initandlisten] allocator: tcmalloc
+      Mon Jan  7 21:34:41.813 [initandlisten] options: { dbpath: "/home/wbzyl/.data/var/lib/mongodb", port: 27017 }
+      Mon Jan  7 21:34:41.895 [initandlisten] journal dir=/home/wbzyl/.data/var/lib/mongodb/journal
+      Mon Jan  7 21:34:41.927 [initandlisten] recover : no journal files present, no recovery needed
+      Mon Jan  7 21:34:44.092 [initandlisten] preallocateIsFaster=true 25.74
+      Mon Jan  7 21:34:46.198 [initandlisten] preallocateIsFaster=true 24.46
+      Mon Jan  7 21:34:49.403 [initandlisten] preallocateIsFaster=true 26.52
+      Mon Jan  7 21:34:49.403 [initandlisten] preallocateIsFaster check took 7.476 secs
+      Mon Jan  7 21:34:49.403 [initandlisten] preallocating a journal file..
+      Mon Jan  7 21:34:52.020 [initandlisten]     File Preallocator Progress: 870318080/1073741824  81%
+      Mon Jan  7 21:35:00.285 [initandlisten] preallocating a journal file..
+      Mon Jan  7 21:35:03.073 [initandlisten]     File Preallocator Progress: 870318080/1073741824  81%
+      Mon Jan  7 21:35:10.966 [initandlisten] preallocating a journal file..
+      Mon Jan  7 21:35:13.129 [initandlisten]     File Preallocator Progress: 796917760/1073741824  74%
+      Mon Jan  7 21:35:22.214 [FileAllocator] allocating new datafile..
+      Mon Jan  7 21:35:22.214 [FileAllocator] creating directory /home/wbzyl/.data/var/lib/mongodb/_tmp
+      Mon Jan  7 21:35:22.340 [FileAllocator] done allocating datafile ..
+      Mon Jan  7 21:35:22.341 [FileAllocator] allocating new datafile ..
+      Mon Jan  7 21:35:23.848 [FileAllocator] done allocating datafile ..
+      Mon Jan  7 21:35:23.885 [initandlisten] command local.$cmd command: ..
+      Mon Jan  7 21:35:23.886 [websvr] admin web console waiting for connections on port 28017
+      Mon Jan  7 21:35:23.951 [initandlisten] waiting for connections on port 27017
+
 
 Uruchamiamy powłokę *mongo*:
 
     :::bash
     mongo --port 27017
-      MongoDB shell version: 1.9.1
+      MongoDB shell version: 2.3.2-pre-
       connecting to: 127.0.0.1:27017/test
+      Server has startup warnings: 
+      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
+      Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
+      Mon Jan  7 21:34:41.813 [initandlisten] 
+      localhost(mongod-2.3.2-pre-) test> 
 
 W powłoce wpisujemy i wykonujemy kilka poleceń:
 
@@ -512,47 +487,17 @@ na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
 Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
 Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając demona
 *mongod* za pomocą prostego skryptu
-[mongod.sh](https://gist.github.com/1662651).
-
-W skrypcie wpiszemy ścieżkę do pliku konfiguracyjnego *mongodb.conf*,
-w którym dostosujemy opcje do swoich potrzeb:
-
-    :::plain ~/.data/etc/mongodb.conf
-    journal=true            # wymaga ok. 0.5 GB miejsca na dysku
-    rest=true
-    cpu=true
-    directoryperdb=true
-    jsonp=true
-    nssize=2
-    smallfiles=true
-    objcheck=true
-    syncdelay=4
-    logpath=/home/wbzyl/.nosql/var/log/mongodb/mongo.log
-    pidfilepath=/home/wbzyl/.data/var/run/mongodb.pid
-
-Oczywiście powyżej wpisujemy **swoje** ścieżki.
-
-Teraz demona uruchamiamy w taki sposób:
-
-    :::bash mongod.sh
-    mongod.sh         # użyj domyślnego portu
-    mongod.sh 16000   # użyj podanego portu
+[mongod.sh](https://gist.github.com/1967489).
 
 
 ## Logrotate
 
-Journal i bazy MongoDB zajmują sporo miejsca na dysku:
+Journal i bazy MongoDB zajmują sporo miejsca na dysku (3 GB!):
 
     ls -l ~/.data/var/lib/mongodb/journal/
-    -rw-------. 1 wbzyl wbzyl 134217728 05-10 12:36 prealloc.0
-    -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.1
-    -rw-------. 1 wbzyl wbzyl 134217728 05-10 11:56 prealloc.2
-    ls -l ~/.data/var/lib/mongodb/twitter/
-    drwxrwxr-x. 2 wbzyl wbzyl     4096 05-10 12:01 _tmp
-    -rw-------. 1 wbzyl wbzyl 16777216 05-10 12:36 twitter.0
-    -rw-------. 1 wbzyl wbzyl 33554432 05-10 12:01 twitter.1
-    -rw-------. 1 wbzyl wbzyl  2097152 05-10 12:36 twitter.ns
-    ...
+      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 j._0
+      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 prealloc.1
+      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 prealloc.2
 
 Logi z czasem też. Dlatego od czasu do czasu ręcznie rotujemy logi:
 
@@ -586,44 +531,6 @@ Sprawdzamy jak to działa:
     logrotate -d /etc/logrotate.d/mongodb
 
 I to wszystko!
-
-
-## MongoDB na Fedorze 16
-
-[2012.03.03] Aktualna wersja, to 2.0.2. Do pobrania
-z [RPM Find](ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/m/mongodb-2.0.2-10.fc18.src.rpm).
-Po wykonaniu polecenia:
-
-    :::bash
-    rpmbuild --rebuild mongodb-2.0.2-10.fc18.src.rpm
-
-tworzone są następujące paczki:
-
-    mongodb-2.0.2-10.fc16.x86_64.rpm
-    libmongodb-2.0.2-10.fc16.x86_64.rpm
-    mongodb-devel-2.0.2-10.fc16.x86_64.rpm
-    mongodb-server-2.0.2-10.fc16.x86_64.rpm
-
-Po instalcji system zajmuje ok. 58 MB.
-
-Po zainstalowaniu tych paczek, możemy
-się przyjrzeć jak jest konfigurowane MongoDB na Fedorze.
-W tym celu przeglądamy następujące pliki:
-
-* {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
- dopisałem *rest=true* oraz *nohttpinterface=false*
-* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
-* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
-* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod-service.txt" %}
-
-Sprawdzamy status MongoDB w taki sposób:
-
-    systemctl status mongod.service
-
-
-### Fedora 15
-
-* {%= link_to "/etc/init.d/mongodb", "/fedora/f15/mongodb.init" %}
 
 
 ## Linki
