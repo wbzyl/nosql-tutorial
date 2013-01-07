@@ -46,7 +46,7 @@ Instalację kończymy dodając do ścieżek wyszukiwania *PATH*
 ścieżki do zainstalowanych programów oraz skryptów.
 W tym celu dopiszemy w pliku *~/.bashrc*:
 
-    :::text
+    :::bash
     export PATH=$HOME/.nosql/bin:$PATH
 
 Teraz wypadałoby wczytać nowe ustawienia.
@@ -98,7 +98,7 @@ Zaczynamy od sklonowania repozytoriów couchdb i geocouch:
 
 Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
 
-    :::text
+    :::bash
     cd couchdb
     git branch -a
     git checkout --track origin/1.3.x
@@ -116,8 +116,7 @@ Zobacz też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
 Kończymy instalację tworząc nowy plik *sigma.ini* i wpisując do niego
 następujące rzeczy:
 
-    :::plain
-    ; Plik ~/.nosql/etc/couchdb/local.d/sigma.ini
+    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
 
     [httpd]
     port = 5984
@@ -144,9 +143,7 @@ Ponieważ katalogi, te nie istnieją, Tworzymy je:
 
 Hostami wirtualnymi zajmiemy się później:
 
-    :::plain
-    ; Plik ~/.nosql/etc/couchdb/local.d/sigma.ini
-
+    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
     ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
     ; dlatego zamiast *example.com* poniżej,
     ; powinno zadziałać coś takiego i coś takiego:
@@ -176,7 +173,7 @@ Uruchamiamy serwer:
 
 Sprawdzamy, czy instalacja przebiegła bez błędów:
 
-    :::text
+    :::bash
     curl http://127.0.0.1:5984
     {
       "couchdb":"Welcome",
@@ -411,10 +408,10 @@ Dopiero teraz uruchamiamy demona *mongod* (poniżej wpisuję domyślny port):
     :::bash
     mongod --dbpath=$HOME/.data/var/lib/mongodb --port=27017
       Mon Jan  7 21:34:41.812 [initandlisten] MongoDB starting : pid=16536 port=27017 ..
-      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Mon Jan  7 21:34:41.813 [initandlisten]
       Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
       Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
-      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Mon Jan  7 21:34:41.813 [initandlisten]
       Mon Jan  7 21:34:41.813 [initandlisten] db version v2.3.2-pre-, pdfile version 4.5
       Mon Jan  7 21:34:41.813 [initandlisten] git version: be56edc259bb5c0e3bb862c69a6303705ef453f4
       Mon Jan  7 21:34:41.813 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen ..
@@ -448,12 +445,12 @@ Uruchamiamy powłokę *mongo*:
     mongo --port 27017
       MongoDB shell version: 2.3.2-pre-
       connecting to: 127.0.0.1:27017/test
-      Server has startup warnings: 
-      Mon Jan  7 21:34:41.813 [initandlisten] 
+      Server has startup warnings:
+      Mon Jan  7 21:34:41.813 [initandlisten]
       Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
       Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
-      Mon Jan  7 21:34:41.813 [initandlisten] 
-      localhost(mongod-2.3.2-pre-) test> 
+      Mon Jan  7 21:34:41.813 [initandlisten]
+      localhost(mongod-2.3.2-pre-) test>
 
 W powłoce wpisujemy i wykonujemy kilka poleceń:
 

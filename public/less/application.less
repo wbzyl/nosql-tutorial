@@ -215,6 +215,16 @@ pre {
   border-color: @pre-border-color;
 }
 
+.pre-caption {
+  font-size: 80%;
+  font-style: italic;
+  color: #888;
+  text-align: right;
+}
+
+.pre-caption + pre {
+  margin-top: 6px;
+}
 
 @media screen and (max-width: 1140px) { // 920px + 20px -- compensate for negative left margin?
   #wrapper, header, article {
