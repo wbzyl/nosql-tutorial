@@ -72,11 +72,12 @@ Domyślne ustawienia są inne, dlatego demony baz danych
 uruchamiam ze skryptów w których podaję odpowiednie ścieżki.
 Same skrypty są tutaj:
 
+* [CouchDB](https://gist.github.com/1967489)
 * [MongoDB](https://gist.github.com/1967489)
 * [ElasticSearch](https://gist.github.com/1687963)
 
 <!--
-* [Redisa](https://gist.github.com/1374681)
+* [Redis](https://gist.github.com/1374681)
 -->
 
 
