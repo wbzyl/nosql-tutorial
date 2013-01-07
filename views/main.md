@@ -113,8 +113,8 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 
 ## Laboratorium
 
-*  {%= link_to "Instalacja i konfiguracja baz: CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
-*  {%= link_to "Instalacja z paczek RPM w Fedorze 16+", "/fedora" %}
+*  {%= link_to "Instalacja ze źródeł programów CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
+*  {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
 *  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
