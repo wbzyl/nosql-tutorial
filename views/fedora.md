@@ -121,6 +121,11 @@ Pakiety wymagane w trakcie kompilacji origramu ze źródeł:
       erlang-crypto erlang-erts erlang-inets erlang-kernel \
       erlang-sasl erlang-stdlib erlang-tools
 
+    sudo yum install python-pygments
+    # sudo easy_install -U Pygments
+    sudo yum install python-sphinx
+    # sudo easy_install -U Sphinx
+
 
 ## ElasticSearch
 
