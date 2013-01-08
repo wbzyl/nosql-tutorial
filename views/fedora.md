@@ -92,7 +92,6 @@ W tym celu przeglądamy następujące pliki:
  dopisałem *rest=true* oraz *nohttpinterface=false*
 * {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
 * {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
-* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod-service.txt" %}
 
 Status MongoDB sprawdzamy w taki sposób:
 
@@ -110,7 +109,7 @@ Oficjalne repo Fedory (Peter Lemenkov):
 
 * [fedora git](http://pkgs.fedoraproject.org/cgit/couchdb.git/) (v1.2.0)
 
-Pakiety wymagane w trakcie kompilacji origramu ze źródeł:
+Pakiety wymagane w trakcie kompilacji programu ze źródeł:
 
     :::bash
     sudo yum install js js-devel
@@ -125,6 +124,23 @@ Pakiety wymagane w trakcie kompilacji origramu ze źródeł:
     # sudo easy_install -U Pygments
     sudo yum install python-sphinx
     # sudo easy_install -U Sphinx
+
+Niestety, w ten sposób zainstalujemy tylko wersję 1.2.1. A aktualna
+wersja to 1.4.x. Dlatego program skompilujemy ze źrodeł.
+
+Pobieramy repozytorium z kodem, kompilujemy i instalujemy system CouchDB:
+
+    :::bash
+    git clone
+    cd couchdb
+    ./bootstrap
+    ...
+
+Teraz  w odpowiednich katalogach zapisujemy te pliki:
+
+* {%= link_to "/etc/init.d/couchdb", "/fedora/f16/mongod-sysconfig.txt" %}
+* {%= link_to "/etc/logrotate.d/couchdb", "/fedora/f16/mongodb-logrotate.txt" %}
+* {%= link_to "$HOME/.data/etc/couchdb/...sigma.ini", "/fedora/f16/mongod-service.txt" %}
 
 
 ## ElasticSearch
