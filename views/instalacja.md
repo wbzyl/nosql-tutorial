@@ -4,10 +4,10 @@
  {%= image_tag "/images/cv.jpg", :alt => "[How to write a CV]" %}
 </blockquote>
 
-W Google pod hasłem **NoSQL** znajdziemy linki
-do programów będących alternatywą dla relacyjnych systemów baz danych
-takich jak PostgreSQL czy MySQL. Na wykładach zostaną
-omówione:
+Google na zapytanie o **NoSQL** zwraca linki do stron
+z opisami programów będących alternatywą dla relacyjnych systemów baz
+danych.
+Na wykładach i w laboratoriach zapoznamy się z niektórymi z tych programów:
 
 * ElasticSearch – wyszukiwarka
 * MongoDB – baza dokumentowa
@@ -18,23 +18,22 @@ oraz (referaty)
 * Neo4j – baza grafowa
 * Redis – baza klucz–wartość
 
-
-Przed instalacją tych programów powinniśmy sprawdzić, czy mamy
-wystarczająco dużo miejsca na swoim koncie na *Sigmie*. W tym celu
-logujemy się na *Sigmie*, gdzie wykonujemy polecenie:
+Przed instalacją programów na swoim koncie na Sigmie
+powinniśmy sprawdzić, czy mamy wystarczająco dużo miejsca na swoim koncie.
+W tym celu logujemy się na *Sigmie*, gdzie wykonujemy polecenie:
 
     quota
 
-Polecenie to wypisze nasze limity dyskowe.
-Jeśli mamy mniej niż ok. 200 MB do dyspozycji, to musimy
-usunąć zbędne rzeczy.
+Polecenie to wypisze nasze limity dyskowe i ile miejsca zajmują nasze
+pliki. Jeśli mamy mniej niż 200 MB do dyspozycji, to przed instalacją
+musimy usunąć zbędne rzeczy.
 
 Aby się zorientować, jakie katalogi zajmują dużo miejsca,
 możemy wykonać to polecenie:
 
     du -m ~ | sort -k1nr | head
 
-Wypisze ono dziesięć katalogów zajmujących najwięcej miejsca.
+Wypisuje ono dziesięć katalogów zajmujących najwięcej miejsca.
 
 Użyteczny jest też program *ncdu* (zainstalowany na *Sigmie*).
 
@@ -56,10 +55,9 @@ Dlatego przelogowujemy się (zalecane podejście) albo wykonujemy polecenie:
 
 -->
 
-Bazy danych utworzymy w katalogu *$HOME/.data*,
-czyli poza katalogami utworzonymi w czasie instalacji. Dlaczego?
-
-Domyślne ustawienia są inne, dlatego demony baz danych będziemy
+Programy będziemy instalować w niestandardowych katalogach.
+Bazy danych umieścimy w katalogu *$HOME/.data*.
+Domyślne katalogi są inne. Dlatego programy będziemy
 uruchamiać za pomocą skryptów w których wpiszemy odpowiednie ścieżki:
 
 * [CouchDB](https://gist.github.com/4477030)
@@ -73,8 +71,8 @@ uruchamiać za pomocą skryptów w których wpiszemy odpowiednie ścieżki:
 
 ## Bazy 32-bitowe czy 64-bitowe?
 
-Jeśli programy instalujemy na maszynach w pracowni, to instalujemy
-wersje 32-bitowe. Jeśli na *Sigmie* – 64-bitowe.
+Jeśli programy instalujemy lokalnie na maszynach w pracowni, to wybieramy
+wersje 32-bitowe; jeśli na Sigmie – 64-bitowe.
 
 
 <blockquote>
@@ -88,7 +86,8 @@ wersje 32-bitowe. Jeśli na *Sigmie* – 64-bitowe.
 
 # CouchDB z rozszerzeniem GeoCouch
 
-Rozszerzenie GeoCouch działa z wersjami CouchDb do wersji 1.3.x włącznie.
+Rozszerzenie GeoCouch **powinno działać** z wersjami CouchDB do wersji
+1.3.x włącznie.
 
 Zaczynamy od sklonowania repozytoriów couchdb i geocouch:
 
@@ -102,8 +101,9 @@ Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
     cd couchdb
     git branch -a
     git checkout --track origin/1.3.x
+
     ./bootstrap
-    # ./configure --prefix=$HOME/.nosql # 32-bity
+    # ./configure --prefix=$HOME/.nosql # 32-bity, programy będą instalowane w katalogu $HOME/.nosql/bin
     ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
     make
     make install
@@ -114,7 +114,7 @@ Zobacz też [Road Map](https://issues.apache.org/jira/browse/COUCHDB).
 ## Post-install
 
 Kończymy instalację tworząc nowy plik *sigma.ini* i wpisując do niego
-następujące rzeczy:
+takie rzeczy:
 
     :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
 
@@ -134,32 +134,15 @@ Ponieważ katalogi, te nie istnieją, Tworzymy je:
     mkdir $HOME/.data/var/lib/couchdb/ -p
     mkdir $HOME/.data/var/log/couchdb/ -p
 
-**Dwie uwagi**
+**Uwagi:**
+1. Powyżej zamiast numeru portu *5984* wpisujemy numer przydzielony na zajęciach.
+2. Oczywiście zamiast */home/wbzyl/* powyżej wstawiamy ścieżkę do
+swojego katalogu domowego (albo jakąś inną ścieżkę).
 
-1. Powyżej zamiast domyślnego numeru portu *5984* wpisujemy numer przydzielony na zajęciach.
-
-2. Oczywiście zamiast */home/wbzyl/* wstawiamy ścieżkę do swojego katalogu domowego
-(albo jakąś inną).
-
-Hostami wirtualnymi zajmiemy się później:
-
-    :::plain ~/.nosql/etc/couchdb/local.d/sigma.ini
-    ; host *lvh.me* przekierowuje na *127.0.0.1* (czyli na *localhost*).
-    ; dlatego zamiast *example.com* poniżej,
-    ; powinno zadziałać coś takiego i coś takiego:
-    ; http://lvh.me:4000
-    ; http://couchdb.lvh.me:4000
-    ;
-    ; To enable Virtual Hosts in CouchDB,
-    ; add a vhost = path directive. All requests to
-    ; the Virual Host will be redirected to the path.
-    ; In the example below all requests to
-    ; http://example.com:5984/ are redirected to /database.
-    ; [vhosts]
-    ; example.com:4000 = /database/
-
+<!--
 Alternatywny sposób konfiguracji hostów wirtualnych opisano
 w [Auto-configuring Proxy Settings with a PAC File](http://mikewest.org/2007/01/auto-configuring-proxy-settings-with-a-pac-file).
+-->
 
 
 ## Testujemy instalację
@@ -240,15 +223,15 @@ My zmieniliśmy tę lokalizację na:
 Kilka baz z serwera *Tao*:
 
     ls -l ~/.data/var/lib/couchdb
-    razem 4047240
-    -rw-rw-r--. 1 wbzyl wbzyl 2629685354  apache-time-logs.couch
-    -rw-rw-r--. 1 wbzyl wbzyl  376643684  nosql.couch
-    -rw-rw-r--. 1 wbzyl wbzyl   48316516  gutenberg.couch
-    -rw-rw-r--. 1 wbzyl wbzyl    6512740  chromium.couch
-    -rw-rw-r--. 1 wbzyl wbzyl    1577060  imdb.couch
-    ...
-
-Pierwsza baza zajmuje 2.5GB! Hmm… Dlaczego?
+      razem 40380
+      -rw-r--r--. 1 wbzyl wbzyl   565368 01-08 20:42 albums.couch
+      -rw-r--r--. 1 wbzyl wbzyl  1036408 01-08 20:38 books.couch
+      -rw-r--r--. 1 wbzyl wbzyl 21590136 01-08 20:44 cities.couch
+      -rw-r--r--. 1 wbzyl wbzyl   741496 01-08 20:42 imdb.couch
+      -rw-r--r--. 1 wbzyl wbzyl    16495 01-08 20:37 ls.couch
+      -rw-r--r--. 1 wbzyl wbzyl 17113208 01-08 20:40 movies.couch
+      -rw-r--r--. 1 wbzyl wbzyl   237679 01-08 20:41 rock.couch
+      ...
 
 
 ## Logrotate
@@ -548,6 +531,76 @@ MongoDB & Ruby:
 * [What If A Key/Value Store Mated With A Relational Database System?](http://railstips.org/2009/6/3/what-if-a-key-value-store-mated-with-a-relational-database-system)
 
 
+# ElasticSearch
+
+Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
+
+    sudo yum install java-1.6.0-openjdk
+
+Następnie pobieramy [ostatnią wersję](http://www.elasticsearch.org/download/)
+i rozpakowujemy ją w katalogu, na przykład w *$HOME/.nosql/elasticsearch*:
+
+    :::bash
+    mkdir $HOME/.nosql/elasticsearch
+    cd $HOME/.nosql/elasticsearch
+    wget http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.2.tar.gz
+    tar zxvf elasticsearch-0.20.2.tar.gz
+    rm -f elasticsearch
+    ln -s elasticsearch-0.20.2 elasticsearch
+
+Następnie tworzymy katalogi na logi, indeksy (bazę danych) i pliki
+konfiguracyjne:
+
+    :::bash
+    mkdir -p $HOME/.data/var/log/elasticsearch  # logi
+    mkdir -p $HOME/.data/var/lib/elasticsearch  # indeksy
+    mkdir -p $HOME/.data/etc                    # plik konfiguracyjny
+
+Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
+
+    :::bash elasticsearch.sh
+    #! /bin/bash
+    config=$HOME/.data/etc/elasticsearch.yml
+    echo ""
+    echo "---- $config"
+    cat $config
+    echo "--------------------------------------------------"
+    echo ""
+    $HOME/.nosql/elasticsearch/bin/elasticsearch -f -Des.config=$configfile
+
+W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
+*elasticsearch.yml*. Oto jego zawartość:
+
+    :::yaml elasticsearch.yml
+    cluster.name: wlodek
+    # indeksy: http://localhost:9200/<index name>/_status – sprawdzanie statusu
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+    # ścieżki do baz danych (indeksów) i logów
+    path.data: /home/wbzyl/.data/var/lib/elasticsearch
+    path.logs: /home/wbzyl/.data/var/log/elasticsearch
+
+**Uwaga:** Oczywiście, powyżej wpisujemy ścieżki do katalogów
+w swoim katalogu domowym.
+
+
+## ICU Analysis for ElasticSearch
+
+Dodać opis instalacji wtyczki
+[ICU Analysis plugin for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-icu).
+
+Czy są **collation rules for the Polish language**?
+
+ICU User Guide, [Collation Customization](http://userguide.icu-project.org/collation/customization)
+
+
+## Testowanie instalacji
+
+Wykonać polecenia ze strony [domowej](http://www.elasticsearch.org/) programu.
+
+
+<!--
+
 # TODO: Redis
 
 Z serwera *github.com* klonujemy repozytorium:
@@ -752,74 +805,7 @@ Czy coś takiego wystarczy?
 * [To Redis or Not To Redis?] [redis-or-not]
 
 
-# TODO: ElasticSearch
-
-Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
-
-    sudo yum install java-1.6.0-openjdk
-
-Prosta instalacja dla trybu **development**. Dlaczego taka
-instalacja: *w roku 2011 było ok. trzydziestu wydań ElasticSearch*.
-
-Uwagi o instalacji w trybie **produkcyjnym**:
-
-* [ElasticSearch pre-flight checklist](http://asquera.de/opensource/2012/11/25/elasticsearch-pre-flight-checklist/)
-  by skade
-
-[Pobieramy ostatnią wersję](https://github.com/elasticsearch/elasticsearch/downloads)
-(ok. 16 MB) i rozpakowujemy ją w katalogu. Na przykład w *$HOME/.nosql/elasticsearch*:
-
-    :::bash
-    mkdir $HOME/.nosql/elasticsearch
-    cd $HOME/.nosql/elasticsearch
-    wget https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.18.7.zip
-    unzip -a elasticsearch-0.18.7.zip
-    rm -f elasticsearch
-    ln -s elasticsearch-0.18.7 elasticsearch
-
-Następnie tworzymy katalogi na logi, indeksy (bazę danych) i pliki
-konfiguracyjne:
-
-    :::bash
-    mkdir -p $HOME/.data/var/log/elasticsearch  # logi
-    mkdir -p $HOME/.data/var/lib/elasticsearch  # indeksy
-    mkdir -p $HOME/.data/etc                    # plik konfiguracyjny
-
-Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
-
-    :::bash elasticsearch.sh
-    #! /bin/bash
-    progname=$(basename $0 .sh)
-    config=$HOME/.data/etc/elasticsearch.yml
-
-    echo ""
-    echo "---- $config"
-    cat $config
-    echo "-----------------------------------------------------------------------"
-    echo ""
-
-    $HOME/.nosql/elasticsearch/$progname/bin/elasticsearch -f -Des.config=$config
-
-W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
-*elasticsearch.yml*. Oto jego zawartość:
-
-    :::yaml HOME/.data/etc/elasticsearch.yml
-    cluster.name: wlodek
-    # indeksy: http://localhost:9200/<index name>/_status – sprawdzanie statusu
-    index.number_of_shards: 1
-    index.number_of_replicas: 0
-    # ścieżki
-    path.data: /home/wbzyl/.data/var/lib/elasticsearch
-    path.logs: /home/wbzyl/.data/var/log/elasticsearch
-
-**Uwaga** na ścieżki wpisane powyżej. *HOME* to niekoniecznie */home/wbzyl*.
-Na przykład na Sigmie to katalog */home/inf/wbzyl*.
-
-
-## Gdzie są moje indeksy
-
-W katalogu *$HOME/.data/var/lib/elasticsearch/wlodek*.
-
+# TODO
 
 ## Running ElasticSearch as a non-root-user
 
@@ -926,16 +912,7 @@ Plik konfiguracyjny:
 
 (pozostałe szczegóły [Data Recipes](http://thedatachef.blogspot.com/2011/01/bulk-indexing-with-elasticsearch-and.html))
 
-
-## ICU Analysis for ElasticSearch
-
-**TODO:** Dodać opis instalacji
-[ICU Analysis plugin for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-icu).
-
-Czy są **collation rules for the Polish language**?
-
-ICU User Guide, [Collation Customization](http://userguide.icu-project.org/collation/customization)
-
+-->
 
 [json]: http://www.json.org/ "JSON"
 
