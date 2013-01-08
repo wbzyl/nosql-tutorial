@@ -85,6 +85,19 @@ Paczkę instalujemy / uaktualniamy korzystając z programu *yum*:
 
 Dlaczego?
 
+Po instalacji, sprawdzamy jak skonfigurowane jest MongoDB na Fedorze.
+W tym celu przeglądamy następujące pliki:
+
+* {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
+ dopisałem *rest=true* oraz *nohttpinterface=false*
+* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
+* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
+* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod-service.txt" %}
+
+Status MongoDB sprawdzamy w taki sposób:
+
+    systemctl status mongod.service
+
 
 ## CouchDB
 
@@ -123,36 +136,3 @@ TODO.
 ## PostgreSQL
 
 TODO.
-
-
-## Extra? MongoDB na Fedorze 16
-
-[2012.03.03] Aktualna wersja, to 2.0.2. Do pobrania
-z [RPM Find](ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/source/SRPMS/m/mongodb-2.0.2-10.fc18.src.rpm).
-Po wykonaniu polecenia:
-
-    :::bash
-    rpmbuild --rebuild mongodb-2.0.2-10.fc18.src.rpm
-
-tworzone są następujące paczki:
-
-    mongodb-2.0.2-10.fc16.x86_64.rpm
-    libmongodb-2.0.2-10.fc16.x86_64.rpm
-    mongodb-devel-2.0.2-10.fc16.x86_64.rpm
-    mongodb-server-2.0.2-10.fc16.x86_64.rpm
-
-Po instalcji system zajmuje ok. 58 MB.
-
-Po zainstalowaniu tych paczek, możemy
-się przyjrzeć jak jest konfigurowane MongoDB na Fedorze.
-W tym celu przeglądamy następujące pliki:
-
-* {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
- dopisałem *rest=true* oraz *nohttpinterface=false*
-* {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
-* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
-* {%= link_to "/lib/systemd/system/mongod.service", "/fedora/f16/mongod-service.txt" %}
-
-Sprawdzamy status MongoDB w taki sposób:
-
-    systemctl status mongod.service
