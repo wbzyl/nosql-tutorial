@@ -135,7 +135,9 @@ Pobieramy repozytorium z kodem, kompilujemy i instalujemy system CouchDB:
     git clone
     cd couchdb
     ./bootstrap
-    ...
+    ./configure --prefix=$HOME/.couchdb --with-erlang=/usr/lib64/erlang/usr/include
+    make
+    make install
 
 Teraz w odpowiednich katalogach zapisujemy te pliki:
 

@@ -103,8 +103,8 @@ Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
     git checkout --track origin/1.3.x
 
     ./bootstrap
-    # ./configure --prefix=$HOME/.nosql # 32-bity, programy będą instalowane w katalogu $HOME/.nosql/bin
-    ./configure --prefix=$HOME/.nosql --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
+    # ./configure --prefix=$HOME/.couchdb # 32-bity, programy będą instalowane w katalogu $HOME/.nosql/bin
+    ./configure --prefix=$HOME/.couchdb --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
     make
     make install
 
@@ -541,8 +541,8 @@ Następnie pobieramy [ostatnią wersję](http://www.elasticsearch.org/download/)
 i rozpakowujemy ją w katalogu, na przykład w *$HOME/.nosql/elasticsearch*:
 
     :::bash
-    mkdir $HOME/.nosql/elasticsearch
-    cd $HOME/.nosql/elasticsearch
+    mkdir $HOME/.elasticsearch
+    cd $HOME/.elasticsearch
     wget http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.2.tar.gz
     tar zxvf elasticsearch-0.20.2.tar.gz
     rm -f elasticsearch
