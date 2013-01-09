@@ -107,7 +107,6 @@ Po wykonaniu map:
 
 {%= image_tag "/images/after-map.png", :alt => "[MongoDB Map]" %}
 
-
 Przed wykonaniem funkcji reduce wykonywany jest krok „shuffle”:
 
 <pre><i>key</i>:  <i>values</i>
@@ -158,34 +157,6 @@ zdefiniowane powyżej:
       { "_id" : "or", "value" : 1 }
       { "_id" : "wit", "value" : 1 }
 
-<!--
-
-Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest uciążliwe.
-W skryptach poprawność wyników będziemy sprawdzać
-za pomocą wbudowanej funkcji *assert*. W tym celu zmienimy
-dwie ostatnie linijki skryptu *wc.js*:
-
-    :::javascript
-    res = db.books.mapReduce(m, r, {out: "wc"});
-    z = res.convertToSingleObject();
-    //  z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
-    assert.eq( 2 , z.be, "liczba wystąpień 'be'" );
-    assert.eq( 1 , z.not, "liczba wystąpień 'not'" );
-    assert.eq( 1 , z.or, "liczba wystąpień 'or'" );
-    assert.eq( 3 , z.to, "liczba wystąpień 'to'" );
-    assert.eq( 2 , z.wit, "liczba wystąpień 'wit'" );
-
-Na koniec sprzątamy po skrypcie:
-
-    :::javascript
-    db.books.drop();
-    db.wc.drop();
-
-Zobacz też implementację metody
-[convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
-
--->
-
 
 <blockquote>
  <h3>ECMA 5 & V8</h3>
@@ -194,37 +165,78 @@ Zobacz też implementację metody
    JavaScript functions</b> that we can’t use because certain browsers don’t
    implement them.<br>
    Z tych <b>wspaniałych funkcji</b>, najbardziej użyteczną dla nas
-   będzie funkcja <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce">Array#reduce</a></p>
+   będzie funkcja <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce">Array#reduce</a>.</p>
  <p class="author"><a href="https://github.com/joyent/node/wiki/ECMA-5-Mozilla-Features-Implemented-in-V8">Features Implemented in V8</a>.</p>
 </blockquote>
 
-## Szalone MapReduce
+## Duże MapReduce
 
-**TODO:** Tworzymy taką *crazy* collection:
+Od wersji 2.3.1+ MongoDB używa silnika JavaScript o nazwie „V8”.
+Wcześniejsze wersje korzystały z silnika „SpiderMonkey”.
+
+W wersji V8 użytej w MongoDB zaimplementowano funkcję *reduce*.
+Oto prosty przykład:
+
+    :::js
+    [1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
+      return previousValue + currentValue;
+    });
+
+Powyższy kod wylicza 10.
+
+A wykonanie tego kodu:
+
+    :::js
+    [1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
+      return previousValue + currentValue;
+    }, 10);
+
+daje 20.
+
+
+### Tworzymy kolekcję *big*
+
+Użyjemy MapReduce do wyliczenia najmniejszej i największej liczby
+w kolekcji czterech liczb losowych z przedziału [0, 1):
 
     :::javascript insert_data.js
-    for (var i = 0; i < 10; i++)
-      db.crazy.insert( { x: Math.random() } );
+    for (var i = 0; i < 4; i++) db.big.insert( {x: Math.random()} );
+    db.big.count();
+    db.big.find().limit(8);
 
-Uruchomimy na niej poniższe MapReduce:
+Później liczbę 4 zastąpimy liczbami 10^6 i 10^7.
+Dopiero dla takich kolekcje nazwa *big* będzie adekwatna.
+
+### MapReduce
+
+Zaczniemy od poniższego MapReduce:
 
     :::javascript crazy.js
     m = function() {
-       emit("answer", this.x);
+       emit("answer", { min: this.x, max: this.x });
     };
     r = function(key, values) {
-      var value = values.shift();
+      var value = { min: 1, max: 0 };
       values.forEach(function(x, i) {
-        value += x / (i + 2);
+        if (x.min < value.min) value.min = x.min;
+        if (x.max > value.max) value.max = x.max;
       });
       return value;
     };
 
-    res = db.crazy.mapReduce(m, r, { out: {inline: 1} });
-    printjson(res);
+    res = db.big.mapReduce(m, r, { out: {inline: 1} });
+    db.big.drop();
 
-Co jest nie tak z tym MapReduce?
-Czy zawsze wyliczana jest ta sama liczba?
+Podmianka na *Array#reduce*:
+
+    :::js
+    r =  function(key, values) {
+      return values.reduce(function(prev, cur) {
+        if (cur.min < prev.min) prev.min = cur.min;
+        if (cur.max > prev.max) prev.max = cur.max;
+        return prev;
+      }, {min: 1, max: 0});
+    };
 
 
 ## Word Count
@@ -760,3 +772,35 @@ i sprawdzamy wyniki:
       { "_id" : "viteev@mail.ru", "value" : 3 }
 
 Wnioski nasuwają się same. Jakie?
+
+<!--
+
+Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest uciążliwe.
+W skryptach poprawność wyników będziemy sprawdzać
+za pomocą wbudowanej funkcji *assert*. W tym celu zmienimy
+dwie ostatnie linijki skryptu *wc.js*:
+
+    :::javascript
+    res = db.books.mapReduce(m, r, {out: "wc"});
+    z = res.convertToSingleObject();
+    //  z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
+    assert.eq( 2 , z.be, "liczba wystąpień 'be'" );
+    assert.eq( 1 , z.not, "liczba wystąpień 'not'" );
+    assert.eq( 1 , z.or, "liczba wystąpień 'or'" );
+    assert.eq( 3 , z.to, "liczba wystąpień 'to'" );
+    assert.eq( 2 , z.wit, "liczba wystąpień 'wit'" );
+
+Na koniec sprzątamy po skrypcie:
+
+    :::javascript
+    db.books.drop();
+    db.wc.drop();
+
+Zobacz też implementację metody
+[convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
+
+Użyteczna funkcja:
+
+    printjson(res);
+
+-->
