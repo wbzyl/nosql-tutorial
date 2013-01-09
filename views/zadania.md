@@ -1,45 +1,75 @@
-#### {% title "Zadania" %}
+#### {% title "Laboratorium" %}
 
 <blockquote>
+ {%= image_tag "/images/tao.jpg", :alt => "[Tao]" %}
  <p>
    After three days without programming, life becomes meaningless.
  </p>
- <p class="author">[The Tao of Programming 2.1]</p>
+ <p class="author"><a href="http://www.canonical.org/~kragen/tao-of-programming.html">The Tao of Programming 2.1</a></p>
 </blockquote>
 
-Warunkiem zaliczenia ćwiczeń jest:
+Aby zaliczyć laboratorium należy:
 
-* Wyszukanie w sieci interesujących danych.
-* Zapisanie tych danych w jednej z baz: MongoDB, CouchDB lub Elasticsearch.
-* Napisanie skryptu, który przeniesie zapisane dane do innej bazy
-  (tutaj można wybrać bazę PostgreSQL).
-* Napisanie funkcji map oraz reduce dla swoich danych,
-  dla baz MongoDB oraz CouchDB.
-* Wrzucenie wszystkich tych rzeczy wraz z krótkim opisem tego co zostało
-  zrobione (w pliku *README.md*) do repozytorium Git’a.
-  Adres repozytorium należy wpisać w polu *comments*
-  na swojej liście obecności.
+* Wyszukać w sieci ciekawe dane.
+* Oczyścić dane za pomocą jednego z narzędzi:
+  [Google Refine](http://code.google.com/p/google-refine/)
+  ([Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
+  [Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
+  [Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk))
+  lub
+  [Data Wrangler](http://vis.stanford.edu/wrangler/).
+  Przykładowe dane: baza danych z kodami pocztowymi ze
+  strony [Sejmometr](http://sejmometr.pl/api).
+  Opis tego co zostało zrobione należy umieścić w tym repozytorium:
+  [Data Refine](https://github.com/nosql/data-refine) (team – Data Wranglers).
+* Zapisać dane w w bazach: MongoDB, CouchDB i Elasticsearch.
+  (Oczywiście, należy napisać skrypt, który to za nas zrobi.)
+* Przenieść zapisane dane do bazy PostgreSQL.
 
-Ostateczny termin wpisania adresu repozytorium z rzeczami
-na zaliczenie upływa *17.05.2012*.
+Na lepszą ocenę należy:
 
-**Nowe:** Zadanie *bonusowe* za 5-20 pkt. Należy zgłosić *pull request*,
-repozytorium [water](https://github.com/wbzyl/water),
-z przykładem ilustrującym możliwości biblioteki *d3.js*.
+* Przygotować funkcje map oraz reduce dla swoich danych (MongoDB, CouchDB).
+* Dodać opis tego co zostało zrobione do tego repozytorium:
+  [map-reduce](https://github.com/nosql/map-reduce) (team – Map Reducers).
+  W pliku *README.md* dopisać się do spisu treści.
+  Przykład:
+  [MapReduce multiple MongoDB collections into one](http://www.pal-blog.de/entwicklung/mongodb/2013/mapreduce-multiple-mongodb-collections-into-one.html).
 
-Kilkanaście gotowych przykładów jest
-[tutaj](https://github.com/wbzyl/water/tree/master/examples)
-i wszystkie można obejrzeć [tutaj, circle-05](http://deep-water.herokuapp.com/#circle-05).
-Jak zgłaszać *pull request* przedstawiono w artykule
-[How to GitHub: Fork, Branch, Track, Squash and Pull Request](http://gun.io/blog/how-to-github-fork-branch-and-pull-request/).
 
-Na ocenę db z egzaminu należy przygotować aplikację
-korzystającą z obliczeń MapReduce.
+## Przykładowe zadania z MapReduce
+
+1\. Znaleźć najczęściej występujące słowa w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
+(ok. 1 GB).
+
+2\. Matrix-Vector Multiplication by Map-Reduce. Przeczytać rozdziały
+[2.3.1, 2.3.11](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf) i zaimplementować
+jeden z opisanych tam sposobów mnożenia macierzy w MongoDB.
+
+3\. Zaprojektować i zaimplementować algorytm map-reduce który dla bardzo dużego zbioru
+liczb całkowitych wyliczy:
+(a) największą liczbę występujaca w tym zbiorze,
+(b) średnią z liczb z tego zbioru,
+(c) liczby które występują najczęściej w tym zbiorze,
+(d) liczbę różnych liczb z tego zbioru.
+
+Jaka jest efektwność zaimplementowanych algorytmów?
+Zobacz [2.5 Efficiency of Cluster-Computing Algorithms](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf).
+
+Zadania 2–3 pochodzą z rozdziału 2
+[Large-Scale File Systems and Map-Reduce](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf)
+książki A. Rajaramana i J. Ullmana, [Mining of Massive Datasets](http://infolab.stanford.edu/~ullman/mmds.html).
+
+
+# Egzamin
+
+Na ocenę db z egzaminu należy przygotować
+w zespole (4–5 osobowym) aplikację
+wykorzystujacą jedną z baz danych NoSQL.
+
 Na ocenę bdb należy przygotować prezentację
-z jednego z tematów podanych na stronie głównej tego wykładu.
+jednego z tematów podanych na stronie głównej tego wykładu.
 
-
-## Typowe zastosowania dokumentowych baz danych
+Typowe zastosowania dokumentowych baz danych:
 
 * Contact Address/Phone Book
 * Forum/Discussion
@@ -53,13 +83,6 @@ z jednego z tematów podanych na stronie głównej tego wykładu.
 * Help/Reference Desk
 * CRM(?)
 
-Typowe zastosowania baz klucz-wartość to:
-
-* …
-
-Typowe zastosowania grafowych baz danych to:
-
-* …
 
 
 <blockquote>
@@ -71,11 +94,9 @@ Typowe zastosowania grafowych baz danych to:
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
 
-## A to co za zadanie?
+# Zadania różne…
 
-{%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
-
-Zaczynamy od pobrania danych w formacie TSV o pojawieniach się UFO w USA,
+1\. (CouchDB) Pobieramy dane w formacie TSV o pojawieniach się UFO w USA,
 dane o katastrofach, oraz danych tekstowych ze stacji meteo na lotnisku w Rębiechowie
 i danych w formacie [GPX](http://www.topografix.com/GPX/1/0/gpx.xsd)
 z wycieczki w okolicach Zakopanego, dane w formacie JSON zawierający uri zdjęć
@@ -92,6 +113,8 @@ Słowa kluczowe: rails, elasticsearch, redis, mongodb, couchdb, jquery.
 Zapisać dane w jednej z baz: Elasticsearch albo MongoDB, albo CouchDB.
 Następnie wyeksportować z tej bazy dane do pliku w formacie JSON.
 Na koniec zapisać dane w formacie w JSON w pozostałych dwóch bazach.
+
+{%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
 
 W repozytorium jest też skrypt importujący dane *flickr_search.json*
 do bazy CouchDB. Najpierw tworzymy w Futonie bazę *tatry*, a następnie
@@ -170,9 +193,7 @@ Na Infochimps znajdziemy dużo interesujących danych, na przykład:
 * [Word List - 350,000+ Simple English Words (Excel readable)](http://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable)
 
 
-## MongoDB
-
-1\. Ze strony [Zasoby](http://korpus.pl/index.php?page=download)
+2\. (**MongoDB**) Ze strony [Zasoby](http://korpus.pl/index.php?page=download)
 Korpusu Języka Polskiego IPI PAN pobieramy wersję źródłową (XML)
 „Słownika frekwencyjnego” [frek.xces.tar.bz2](http://korpus.pl/download/frek.xces.tar.bz2).
 Po pobraniu archiwum rozpakowujemy je:
@@ -306,8 +327,6 @@ Wyszukiwarki:
 * [PELCRA](http://nkjp.uni.lodz.pl/); konkordancje + kolokator
 
 
-<h2 class="clear">CouchDB</h2>
-
 <blockquote>
  <p>
   A well-written program is its own heaven; a poorly-written program is its own hell.
@@ -315,10 +334,10 @@ Wyszukiwarki:
  <p class="author">[The Tao of Programming 4.1]</p>
 </blockquote>
 
-1\. Baza (CouchDB) „książki” zawiera dokumenty z informacjami o książkach,
+3\. (**CouchDB**) Baza „książki” zawiera dokumenty z informacjami o książkach,
 na przykład:
 
-    :::javascript books
+    :::javascript
     {
       "_id": "3194d86ab7cb2c1465fa5fea901f4c55",
       "_rev": "1-2724eb06ca15197e71e13e1b46b75aee",
@@ -338,10 +357,10 @@ Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej baz
 Niektóre pola są puste. Uwzględnić to w rachunkach.
 
 
-# TODO
+## Różności…
 
-0\. [Grape](https://github.com/intridea/grape) –
-an opinionated micro-framework for creating REST-like APIs in Ruby (Rack app).
+0\. Jak zgłaszać *pull request* przedstawiono w artykule
+[How to GitHub: Fork, Branch, Track, Squash and Pull Request](http://gun.io/blog/how-to-github-fork-branch-and-pull-request/).
 
 1\. Wizualizacja przykładowych danych.
 Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania…”.
@@ -349,7 +368,7 @@ Klasyczny przykład opisałem w „Generator przemówień i inne zastosowania�
 2\. [Anagram Finder](http://www.anagramfinder.net/).
 Dokumentacja [Anagram Finder: A Do-It-Yourself Little Big Data Project](http://www.databonanza.com/2011/09/anagram-finder-do-it-yourself-little.html). Napisać coś takiego w CouchDB? MongoDB?
 
-2\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
+3\. **SQL & JSON**. [Yahoo! Query Language](http://developer.yahoo.com/yql/).
 Zobacz przykłady Zillow, Yelp, Pidgets Geo IP – wybrać format JSON.
 
 [streaming twitter into mongodb](http://eliothorowitz.com/post/459890033/streaming-twitter-into-mongodb):
@@ -379,13 +398,13 @@ Więcej dokumentacji – [Mozilla Developer Network](https://developer.mozilla.o
 Przykład aplikacji offline korzystającej z HTML5 localStorage, np. Offline Apps
 [Part 1](http://railscasts.com/episodes/247) & [Part 2](http://railscasts.com/episodes/248).
 
-3\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
+2\. [BigQuery](http://code.google.com/intl/pl/apis/bigquery/) –
 is a web service that enables you to do interactive analysis of
 massively large datasets.
 Both RESTful and JSON-RPC methods are available. Queries are expressed
 in a SQL dialect.
 
-4\. [Building a Twitter Filter With Sinatra, Redis, and
+3\. [Building a Twitter Filter With Sinatra, Redis, and
 TweetStream](http://www.digitalhobbit.com/2009/11/08/building-a-twitter-filter-with-sinatra-redis-and-tweetstream/).
 
 Linki:
@@ -393,30 +412,21 @@ Linki:
 * Twitter [Streaming API Documentation](http://apiwiki.twitter.com/Streaming-API-Documentation)
 * [tweetstream](http://github.com/intridea/tweetstream) – a RubyGem to access the Twitter Streaming API
 
-3\. [NoSQL Twitter Applications](http://nosql.mypopescu.com/post/319859407/nosql-twitter-applications).
+4\. [NoSQL Twitter Applications](http://nosql.mypopescu.com/post/319859407/nosql-twitter-applications).
 
-4\. [Usecase: NoSQL-based Blogs](http://nosql.mypopescu.com/post/346471814/usecase-nosql-based-blogs).
+5\. [Usecase: NoSQL-based Blogs](http://nosql.mypopescu.com/post/346471814/usecase-nosql-based-blogs).
 
-5\. [Note taking apps a la NoSQL](http://nosql.mypopescu.com/post/425140372/note-taking-apps-a-la-nosql).
+6\. [Note taking apps a la NoSQL](http://nosql.mypopescu.com/post/425140372/note-taking-apps-a-la-nosql).
 
-6\. Redis:
+7\. Redis:
 
 * Rob Watson. [A Redis-powered newsfeed
   implementation](http://rfw.posterous.com/a-redis-powered-newsfeed-implementation)
 
-7\. NodeJS:
+8\. NodeJS:
 
 * Rob Watson. [How NodeJS saved my web
   application](http://rfw.posterous.com/how-nodejs-saved-my-web-application)
-
-8\. Michael Dirolf.
-[Getting Non-Relational with MongoDB](http://www.softdevtube.com/2010/03/15/getting-non-relational-with-mongodb/) —
-This talk will introduce MongoDB and discuss some of the reasons why
-MongoDB might be the right choice for your project. It will include an
-overview of MongoDB as well as detailed examples using MongoDB in
-Ruby.
-
-<embed src='http://rubyconf2009.confreaks.com/player.swf' height='285' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='image=images%2F19-nov-2009-16-20-getting-non-relational-with-mongodb-michael-dirolf-preview.png&file=http%3A%2F%2Frubyconf2009.confreaks.com%2Fvideos%2F19-nov-2009-16-20-getting-non-relational-with-mongodb-michael-dirolf-small.mp4&plugins=viral-1'/>
 
 9\. [MySQL vs MongoDB](http://blog.boardtracker.com/viewtopic.php?f=4&t=75)
 
@@ -424,17 +434,19 @@ Ruby.
 [Faceted search with MongoDB](http://ianwarshak.posterous.com/faceted-search-with-mongodb) —
 przepisać na CouchDB.
 
-7\. [MongoDB geospatial examples in Ruby](http://codesnotdead.blogspot.com/2010/03/mongodb-geospatial-indexing-examples-in.html) — przepisać na CouchDB.
+11\. [MongoDB geospatial examples in Ruby](http://codesnotdead.blogspot.com/2010/03/mongodb-geospatial-indexing-examples-in.html) — przepisać na CouchDB.
 
-8\. [CouchDB Case Studies](http://nosql.mypopescu.com/post/597651382/couchdb-case-studies)
+12\. [CouchDB Case Studies](http://nosql.mypopescu.com/post/597651382/couchdb-case-studies)
 
-9\. [A NoSQL Use Case: URL Shorteners](http://nosql.mypopescu.com/post/597603446/a-nosql-use-case-url-shorteners): MongoDB+Redis, Riak+Sinatra, [CouchDB](http://github.com/janl/io).
+13\. [A NoSQL Use Case: URL Shorteners](http://nosql.mypopescu.com/post/597603446/a-nosql-use-case-url-shorteners): MongoDB+Redis, Riak+Sinatra, [CouchDB](http://github.com/janl/io).
 
 
-# Prezentacje (ok. 30 min.)
+<!--
+**Nowe:** Zadanie *bonusowe* za 5-20 pkt. Należy zgłosić *pull request*,
+repozytorium [water](https://github.com/wbzyl/water),
+z przykładem ilustrującym możliwości biblioteki *d3.js*.
 
-* **Cassandra** — podstawy, indeksowanie, wyjaśnić
-  pojęcie *kolumnowa baza danych*, wyjaśnić dlaczego odczytywanie
-  danych z bazy jest tak szybkie
-  -- [kilka linków na początek](http://nosql.mypopescu.com/post/660373825/presentation-cassandra-basics-indexing)
-* [Node.JS + Riak](http://nosql.mypopescu.com/post/654107903/presentation-an-introduction-to-node-js-and-riak) – koszt operacji IO „Numbers Everyone Should Know”
+Kilkanaście gotowych przykładów jest
+[tutaj](https://github.com/wbzyl/water/tree/master/examples)
+i wszystkie można obejrzeć [tutaj, circle-05](http://deep-water.herokuapp.com/#circle-05).
+-->

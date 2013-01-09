@@ -9,15 +9,12 @@
 
 Tematy referatów:
 
-* **Data is Messy**, [Google Refine](http://code.google.com/p/google-refine/),
- [Data Wrangler](http://vis.stanford.edu/wrangler/).
- Przykładowe dane do wykorzystania w prezentacji:
- [Sejmometr](http://sejmometr.pl/api) –
- baza danych z kodami pocztowymi
 * **Wprowadzenie do Neo4j**
 * **Co to jest Hadoop?**
-* **Wizualizacja danych** – [d3.js](http://bost.ocks.org/mike/d3/workshop/)
- (działa z CORS)
+* **Redis = Data Structure Engine**
+  ([Redis tutorial, April 2010](http://simonwillison.net/static/2010/redis-tutorial/),
+  [Redis: Zero to Master in 30 minutes](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/))
+* **Wizualizacja danych** ([d3.js](http://bost.ocks.org/mike/d3/workshop/), działa z CORS)
 
 
 ## Co to jest „NoSQL”?
