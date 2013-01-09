@@ -88,10 +88,11 @@ Dlaczego?
 Po instalacji, sprawdzamy jak skonfigurowane jest MongoDB na Fedorze.
 W tym celu przeglądamy następujące pliki:
 
-* {%= link_to "/etc/mongodb.conf", "/fedora/f16/mongodb.conf" %} –
+* {%= link_to "/etc/mongod.conf", "/fedora/f16/mongod.conf" %} –
  dopisałem *rest=true* oraz *nohttpinterface=false*
+* {%= link_to "/etc/init.d/mongod", "/fedora/f16/mongod.sh" %}
 * {%= link_to "/etc/sysconfig/mongod", "/fedora/f16/mongod-sysconfig.txt" %}
-* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongodb-logrotate.txt" %}
+* {%= link_to "/etc/logrotate.d/mongodb", "/fedora/f16/mongod-logrotate.txt" %}
 
 Status MongoDB sprawdzamy w taki sposób:
 
@@ -136,11 +137,11 @@ Pobieramy repozytorium z kodem, kompilujemy i instalujemy system CouchDB:
     ./bootstrap
     ...
 
-Teraz  w odpowiednich katalogach zapisujemy te pliki:
+Teraz w odpowiednich katalogach zapisujemy te pliki:
 
-* {%= link_to "/etc/init.d/couchdb", "/fedora/f16/mongod-sysconfig.txt" %}
-* {%= link_to "/etc/logrotate.d/couchdb", "/fedora/f16/mongodb-logrotate.txt" %}
-* {%= link_to "$HOME/.data/etc/couchdb/...sigma.ini", "/fedora/f16/mongod-service.txt" %}
+* {%= link_to "/etc/init.d/couchdb", "/fedora/f16/couchdb-service.sh" %}
+* {%= link_to "$HOME/.data/etc/couchdb/local.d/sigma.ini", "/fedora/f16/couchdb-sigma.ini" %}
+* {%= link_to "/etc/logrotate.d/couchdb", "/fedora/f16/couchdb-logrotate.txt" %}
 
 
 ## ElasticSearch

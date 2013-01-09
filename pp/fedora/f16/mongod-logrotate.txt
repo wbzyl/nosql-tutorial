@@ -1,0 +1,13 @@
+/var/log/mongod/*.log {
+       weekly
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+       postrotate
+          #/bin/kill -USR1 `cat /var/run/mongodb/mongodb.pid 2>/dev/null` 2> /dev/null|| true
+          /usr/bin/pkill -USR2 mongod 2>/dev/null|| true
+       endscript
+}

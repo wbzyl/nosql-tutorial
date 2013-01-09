@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+# couchdb This is the init script for starting up the CouchDB server
+#
+# chkconfig: - 26 74
+# description: Starts and stops the CouchDB daemon that handles \
+#	       all database requests.
+
+### BEGIN INIT INFO
+# Provides: couchdb
+# Required-Start: $local_fs $network
+# Required-Stop: $local_fs $network
+# Should-Start: $remote_fs
+# Should-Stop: $remote_fs
+# Default-Start: 
+# Default-Stop: 0 1 2 3 4 5 6
+# Short-Description: start and stop CouchDB database server
+# Description: Apache CouchDB is a distributed, fault-tolerant and 
+#              schema-free document-oriented database accessible 
+#              via a RESTful HTTP/JSON API
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog=couchdb
+exec=/home/wbzyl/.couchdb/bin/$prog
+
+# default values
+COUCHDB_USER=wbzyl
+COUCHDB_STDOUT_FILE=/dev/null
+COUCHDB_STDERR_FILE=/dev/null
+COUCHDB_RESPAWN_TIMEOUT=0
+COUCHDB_CONFIGDIR="/home/wbzyl/.data/etc/couchdb/local.d"
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+pidfile=/home/wbzyl/.data/var/run/$prog/$prog.pid
+lockfile=/home/wbzyl/.data/var/lock/subsys/$prog
+
+start() {
+    [ -x $exec ] || exit 5
+    echo -n $"Starting $prog: "
+    rh_status_q && echo -n "already running" && warning && echo && exit 0
+    daemon --user $COUCHDB_USER "$exec -r $COUCHDB_RESPAWN_TIMEOUT -o $COUCHDB_STDOUT_FILE -e $COUCHDB_STDERR_FILE -p $pidfile -A $COUCHDB_CONFIGDIR -b >/dev/null" 
+    retval=$?
+    echo -n $"Starting $prog: "
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    retval=0
+    if ! rh_status_q ; then
+	echo -n "already stopped" && warning
+    else
+        daemon --user $COUCHDB_USER "$exec -d > /dev/null"
+        retval=$?
+    fi
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+rh_status() {
+    # run checks to determine if the service is running or use generic status
+    status -p $pidfile $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+
+case "$1" in
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    restart|force-reload)
+        restart
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?
