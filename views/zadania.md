@@ -42,7 +42,7 @@ Na lepszą ocenę należy:
 (ok. 1 GB).
 
 2\. Matrix-Vector Multiplication by Map-Reduce. Przeczytać rozdziały
-[2.3.1, 2.3.11](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf) i zaimplementować
+[2.3.1, 2.3.10–11](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf) i zaimplementować
 jeden z opisanych tam sposobów mnożenia macierzy w MongoDB.
 
 3\. Zaprojektować i zaimplementować algorytm map-reduce który dla bardzo dużego zbioru
