@@ -43,9 +43,9 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Język zapytań", "/mongodb-queries" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "Sterowniki NodeJS i Ruby dla MongoDB", "/mongo" %}
-1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
+1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
 
 <!--
 1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}

@@ -7,24 +7,14 @@
    <a href="http://sivers.org/kimo">The lessons that changed my life</a></p>
 </blockquote>
 
-<!--
-
-<p>MapReduce is the Uzi of aggregation tools.
-<p class="author">— K. Chodorow, M. Dirolf</p>
-
--->
-
 Przykłady za Matthew Johnson,
-[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf)):
-
-* Word Count
-* Pivot Data
-* Spam
+[Infusing Parallelism into Introductory ComputerScience Curriculum using MapReduce](http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-34.pdf):
+Word Count, Pivot Data, Spam.
 
 Podstawowa dokumentacja:
 
-* [MapReduce](http://www.mongodb.org/display/DOCS/MapReduce)
-* [Troubleshooting MapReduce](http://www.mongodb.org/display/DOCS/Troubleshooting+MapReduce)
+* [MapReduce](http://docs.mongodb.org/manual/applications/map-reduce/)
+* [Troubleshooting MapReduce](http://docs.mongodb.org/manual/applications/map-reduce/#map-reduce-troubleshooting)
 
 
 ## Dlaczego MapReduce?
@@ -35,28 +25,34 @@ wykonywane są obliczenia:
 {%= image_tag "/images/petabyte.png", :alt => "[petabyte]" %}
 
 Jeśli danych tych jest dużo, to czas pobierania będzie długi.
-Na przykład, ile czasu zajmie ściągnięcie 1 TB danych łączem 8 Mbit?
-A ile to będzie czasu dla 1 PB danych?
-Nieco [back-of-the-envelope calculation](http://en.wikipedia.org/wiki/Back-of-the-envelope_calculation)
-daje taki wynik:
-<pre>1 TB / 1 MB/s = 10^12 / 10^6 = 10^6 s
-10^6 / (24 * 60*60) około <b>11.5 dnia</b>
+Przykładowo, ściągnięcie 1 TB danych łączem 8 Mbps, czyli 1MB/s, zajmuje:
+<pre>1 TB / 1 MB/s = 10^6 MB / 1 MB/s = 10^6 s
+10^6 s ≅ 277 godzin ≅ <b>11.5 dnia</b>
 </pre>
 
-Dla 1 PB danych czas będzie 1 000 razy dłuższy —  około **31 lat**.
+A dla 1 PB danych czas będzie 1 000 razy dłuższy,
+co czyni około **31 lat**.
 
-Jeśli będziemy chcieli jeszcze coś szybko przeliczyć,
-to te liczby mogą się przydać:
+Kod użyty w obliczeniach zajmuje zazwyczaj dużo mniej miejsca.
+Jeśli wyniki obliczeń też nie zajmują dużo miejsca, to szybciej
+będzie przesłać kod na komputery z danymi, tam go wykonać,
+a następnie ściągnąć wyniki.
 
-{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
+{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
+
+I taka jest zasada obliczeń MapReduce – kod jest przesyłany do
+komputera (lub komputerów) z danymi, na którym przeprowadzane są obliczenia.
+Dane nie są przemieszczane (obliczenia są wykonywane na wielu komputerach)!
 
 Przy okazji:
 
-* 1 ns = 10^-9 s, tak dla przypomnienia
+* 1 ns = 10^-9 s
 * 10^9 cykli na sekundę to 1 GHz
 * na przebycie 1 m światło potrzebuje ok. 3.33 ns
-* 1 miesiąc to ok. 2,5 · 10^6 s
-* 1 rok to ok. 10^9 s.
+
+A te liczby warto znać:
+
+{%= image_tag "/images/nesk.png", :alt => "[Numbers Everyone Should Know]" %}
 
 
 <blockquote>
@@ -82,10 +78,6 @@ has a list containing a single value: the result.”
 
 {%= image_tag "/images/mongo-mapreduce.png", :alt => "[MongoDB MapReduce]" %}
 
-Zasadą obliczeń MapReduce jest wysłanie kodu do danych,
-na których przeprowadzane są obliczenia. Dane nie są przemieszczane!
-
-{%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
 
 ### Prosty przykład
 
@@ -137,9 +129,12 @@ Funkcja reduce:
       return value;
     };
 
-Po wykonaniu, być może kilkukrotnie, funkcji reduce:
+Po wykonaniu, być może kilkukrotnie, funkcji reduce, otrzymujemy:
 
 {%= image_tag "/images/after-reduce.png", :alt => "[MongoDB Reduce]" %}
+
+Jeśli nie korzystamy z *finalize*, to to co widać na rysunku
+powyżej jest wynikiem obliczeń MapReduce.
 
 Program *wc.js* uruchamiamy na konsoli *mongo*:
 
@@ -162,6 +157,8 @@ zdefiniowane powyżej:
       { "_id" : "not", "value" : 1 }
       { "_id" : "or", "value" : 1 }
       { "_id" : "wit", "value" : 1 }
+
+<!--
 
 Na dłuższą metę ręczne sprawdzanie wyników na konsoli jest uciążliwe.
 W skryptach poprawność wyników będziemy sprawdzać
@@ -187,10 +184,23 @@ Na koniec sprzątamy po skrypcie:
 Zobacz też implementację metody
 [convertToSingleObject](http://api.mongodb.org/js/1.9.0/symbols/src/shell_collection.js.html).
 
+-->
 
-## Crazy MapReduce
 
-Tworzymy taką *crazy* collection:
+<blockquote>
+ <h3>ECMA 5 & V8</h3>
+ <p>{%= image_tag "/images/v8.png", :alt => "[V8]" %}
+ <p>When developing in the browser there are many <b>wonderful built in
+   JavaScript functions</b> that we can’t use because certain browsers don’t
+   implement them.<br>
+   Z tych <b>wspaniałych funkcji</b>, najbardziej użyteczną dla nas
+   będzie funkcja <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce">Array#reduce</a></p>
+ <p class="author"><a href="https://github.com/joyent/node/wiki/ECMA-5-Mozilla-Features-Implemented-in-V8">Features Implemented in V8</a>.</p>
+</blockquote>
+
+## Szalone MapReduce
+
+**TODO:** Tworzymy taką *crazy* collection:
 
     :::javascript insert_data.js
     for (var i = 0; i < 10; i++)

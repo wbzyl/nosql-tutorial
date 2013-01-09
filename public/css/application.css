@@ -56,6 +56,9 @@ body {
 blockquote {
   font-size: 1.4rem;
 }
+blockquote h3 {
+  text-align: center;
+}
 #wrapper {
   position: relative;
   background-color: transparent;
