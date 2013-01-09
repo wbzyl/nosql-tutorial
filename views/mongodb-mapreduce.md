@@ -204,39 +204,42 @@ w kolekcji czterech liczb losowych z przedziału [0, 1):
     db.big.count();
     db.big.find().limit(8);
 
-Później liczbę 4 zastąpimy liczbami 10^6 i 10^7.
-Dopiero dla takich kolekcje nazwa *big* będzie adekwatna.
+Później liczbę 4 zastąpimy liczbami 10^6 i 10^7. Dopiero dla kolekcji
+takich rozmiarów nazwa *big* jest adekwatna.
 
 ### MapReduce
 
-Zaczniemy od poniższego MapReduce:
+Definiujemy funkcję map – *m* i funkcję reduce – *r*:
 
     :::javascript crazy.js
     m = function() {
        emit("answer", { min: this.x, max: this.x });
     };
-    r = function(key, values) {
-      var value = { min: 1, max: 0 };
-      values.forEach(function(x, i) {
-        if (x.min < value.min) value.min = x.min;
-        if (x.max > value.max) value.max = x.max;
-      });
-      return value;
-    };
-
-    res = db.big.mapReduce(m, r, { out: {inline: 1} });
-    db.big.drop();
-
-Podmianka na *Array#reduce*:
-
-    :::js
     r =  function(key, values) {
-      return values.reduce(function(prev, cur) {
+      var value = values.reduce(function(prev, cur) {
         if (cur.min < prev.min) prev.min = cur.min;
         if (cur.max > prev.max) prev.max = cur.max;
         return prev;
       }, {min: 1, max: 0});
+      return value;
     };
+
+i uruchamiamy MapReduce:
+
+    :::js
+    res = db.big.mapReduce(m, r, { out: {inline: 1} });
+      {
+        "results": [
+          {
+            "_id": "answer",
+            "value": {
+              "min": 0.029445646097883582,
+              "max": 0.8922047016676515
+            }
+          }
+        ],
+        ...
+      }
 
 
 ## Word Count
