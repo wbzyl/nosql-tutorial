@@ -768,11 +768,7 @@ Kto to rozsyła – Spamerzy ?
       };
     };
     r = function(key, values) {
-      var value = 0;
-      values.forEach(function(count) {
-        value += count;
-      });
-      return value;
+      return Array.sum(values);
     };
 
     res = db.spam.mapReduce(m, r, {out: "spammers", scope: {subject: subject}});
