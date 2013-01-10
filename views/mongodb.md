@@ -74,6 +74,11 @@ Przykłady:
   Node and [D3](http://mbostock.github.com/d3/)
 
 
+## Full Text Search
+
+* [MongoDB Text Search Explained](http://blog.codecentric.de/en/2013/01/text-search-mongodb-stemming/)
+
+
 ## Różne
 
 * [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)

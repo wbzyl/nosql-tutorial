@@ -5,11 +5,7 @@ m = function() {
 };
 
 r = function(key, values) {
-  var value = 0;
-  values.forEach(function(count) {
-    value += count;
-  });
-  return value;
+  return Array.sum(values);
 };
 
 var res = db.chesterton.mapReduce(m, r, {out: "wc"});

@@ -1,3 +1,7 @@
+// http://docs.mongodb.org/manual/tutorial/write-scripts-for-the-mongo-shell/
+var conn = new Mongo();
+db = conn.getDB("gutenberg");
+
 m = function() {
   this.words.forEach(function(word) {
     emit(word.toLowerCase(), 1);
@@ -5,12 +9,9 @@ m = function() {
 };
 
 r = function(key, values) {
-  var value = 0;
-  values.forEach(function(count) {
-    value += count;
-  });
-  return value;
+  return Array.sum(values);
 };
 
-res = db.chest.mapReduce(m, r, {out: "wc"});
+res = db.chesterton.mapReduce(m, r, {out: "wc"});
 printjson(res);
+// db.wc.find().sort({value: -1})

@@ -1,6 +1,10 @@
+// var mongo = require('mongodb')
+// , server = new mongo.Server("127.0.0.1", 27017, { })
+// , db = new mongo.Db('gutenberg', server, { safe: false });
+
 var mongo = require('mongodb')
 , server = new mongo.Server("127.0.0.1", 27017, { })
-, db = new mongo.Db('gutenberg', server, { strict: true })
+, db = new mongo.Db('gutenberg', server, {safe: false});
 
 var natural = require('natural')
 , tokenizer = new natural.WordTokenizer();

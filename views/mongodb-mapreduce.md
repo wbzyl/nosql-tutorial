@@ -261,6 +261,7 @@ A tak wygląda wykorzystanie procesora w trakcie obliczeń:
 Zaczynamy od zapisania w bazie *test* w kolekcji *chesterton*
 (976) akapitów z książki G.K. Chestertona, „The Man Who Knew Too Much”.
 
+    :::bash
     ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
        http://www.gutenberg.org/cache/epub/1720/pg1720.txt -v -d test -c chesterton
 
@@ -285,11 +286,7 @@ polskie diakrytyki (i nieco innych liter):
       });
     };
     r = function(key, values) {
-      var value = 0;
-      values.forEach(function(count) {
-        value += count;
-      });
-      return value;
+      return Array.sum(values);
     };
     res = db.chesterton.mapReduce(m, r, {out: "wc"});
     printjson(res);
@@ -342,14 +339,15 @@ Ten ostatni moduł implementuje kilka „tokenizerów”:
 Zaczniemy od instalacji modułów:
 
     :::bash
-    npm install natural
-    npm install mongodb --mongodb:native
+    npm install -g natural
+    npm install -g mongodb --mongodb:native
 
-Zapiszemy w bazie *gutenberg* w kolekcji *chest* akapity z książki
+Zapiszemy w bazie *gutenberg* w kolekcji *chesterton* akapity z książki
 G. K. Chestertona, *The Man Who Knew Too Much*:
 
     :::bash
-    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt -c chest
+    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
+        http://www.gutenberg.org/cache/epub/1720/pg1720.txt -c chesterton
 
 Następnie do każdego dokumentu dodamy pole *words*:
 
@@ -362,51 +360,60 @@ Następnie do każdego dokumentu dodamy pole *words*:
       "title" : "the man who knew too much"
     }
 
-W tym celu użyjemy poniższego skryptu:
+Napiszemy skrypt dla *node*, który to zrobi. W skrypcie skorzystamy
+z drivera *mongodb* ([Node.JS MongoDB Driver Manual](http://mongodb.github.com/node-mongodb-native/contents.html)):
 
-    :::js add-words-to-chest.js
-    var mongo = require('mongodb')
-    , server = new mongo.Server("127.0.0.1", 27017, { })
-    , db = new mongo.Db('gutenberg', server, { strict: true })
-
+    :::js add-words-to-chesterton.js
     var natural = require('natural')
-    , tokenizer = new natural.WordTokenizer();
+    , tokenizer = new natural.WordTokenizer()
+    , assert = require('assert')
+    , mongoClient = require('mongodb').MongoClient;
 
-    db.open(function (error, client) {
-      if (error) throw error;
-      var collection = new mongo.Collection(client, 'chest');
-      collection.find({ }, { snapshot: true })
-        .each(function(err, doc) {
-          if (error) throw error;
+    mongoClient.connect("mongodb://localhost:27017/gutenberg", {native_parser: true}, function(err, db) {
+      assert.equal(null, err);
 
-          if (doc == null)
-            db.close();
-          else {
-            var words = tokenizer.tokenize(doc.paragraph);
-            doc.words = words;
-            collection.save(doc);
-          };
-        });
+      var collection = db.collection('chesterton');
+      var cursor = collection.find({}, {snapshot: true});
+      cursor.each(function(err, doc) {
+        assert.equal(null, err);
+
+        if (doc == null) {
+          db.close();
+        } else {
+          var words = tokenizer.tokenize(doc.paragraph);
+          doc.words = words;
+          collection.save(doc, {w: 1}, function(err, result) {
+            assert.equal(null, err);
+
+          });
+          // console.dir(doc);
+        };
+      });
     });
 
+*Uwaga o funkcji **save** użytej powyżej:*
+„Simple full document replacement function.
+Not recommended for efficiency, **use atomic operators
+and update** instead for more efficient operations.”
 
 Zmienimy funkcję map, tak by korzystała z listy słów *words*:
 
     :::javascript natural-chesterton.js
+    var conn = new Mongo();
+    db = conn.getDB("gutenberg");
     m = function() {
       this.words.forEach(function(word) {
         emit(word.toLowerCase(), 1);
       });
     };
     r = function(key, values) {
-      var value = 0;
-      values.forEach(function(count) {
-        value += count;
-      });
-      return value;
+      return Array.sum(values);
     };
-    res = db.chest.mapReduce(m, r, {out: "wc"});
+    res = db.chesterton.mapReduce(m, r, {out: "wc"});
     printjson(res);
+
+Więcej o pisaniu skryptów na konsolę *mongo* –
+[Write Scripts for the mongo Shell](http://docs.mongodb.org/manual/tutorial/write-scripts-for-the-mongo-shell/).
 
 Teraz możemy uruchomić obliczenia MapReduce:
 
@@ -424,26 +431,43 @@ Teraz możemy uruchomić obliczenia MapReduce:
           "ok" : 1,
       }
 
-Sprawdzamy wyniki:
+Sprawdzamy wyniki na konsoli *mongo*:
 
-    :::js konsola-mongo
+    :::js konsola
     db.wc.count()  //=> 6336
-    db.wc.find({ }).sort({ value: -1 })
+    db.wc.find().sort({ value: -1 })
 
-**TODO:** usunąć wszystkie stopwords. *Q:* Ile jest akapitów
-składających się tylko ze stopwords?
+**Zadanie:** Usunąć z tekstu książki wszystkie
+[stop words](http://en.wikipedia.org/wiki/Stop_words)
+(zawiera linki do angielskich i polskich „stop words”).
+*Pytanie:* Ile jest akapitów składających się wyłącznie
+z „stop words”?
 
 
-## „Pivot Data” na przykładzie kolekcji *Rock*
+## „Pivot” dokumentów kolekcji *Rock*
 
-Zaczynamy od przeniesienia bazy *rock* z CouchDB do MongoDB.
-W tym celu, w bazie CouchDB zapiszemy widok i funkcję listową
-({%= link_to "kod", "/db/mongodb/rock.js" %}
-i {%= link_to "źródło", "/doc/scripts/rock.js" %}) generującą –
-po jednym w wierszu – dokumenty przekonwertowane na format JSON.
-Następnie odpytamy funkcję listową zapomocą programu *curl*.
-Otrzymane JSON-y zapiszemy w kolekcji *rock* korzystając
+Zaczynamy od instalacji modułu *couchapp* dla *node*:
+
+    :::bash
+    npm install -g couchapp
+
+Aby przenieść bazę *rock* z CouchDB do MongoDB użyjemy
+widoku i funkcji listowej.
+
+W bazie CouchDB zapiszemy widok i funkcję listową korzystając
+ze skryptu {%= link_to "rock.js", "/doc/scripts/rock.js" %}
+({%= link_to "kod", "/db/mongodb/rock.js" %}).
+Instrukcja użycia skryptu jest w komentarzu na końcu pliku.
+
+Funkcja listowa generuje, po jednym w wierszu,
+dokumenty przekonwertowane na format JSON.
+Następnie odpytamy funkcję listową za pomocą programu *curl*.
+Otrzymane JSON-y zapisujemy w kolekcji *rock* korzystając
 z programu *mongoimport*.
+
+Termin *pivot* można przetłumaczyć jako „obracać”.
+Przedstawioną poniżej zmianę formatu dokumentu, można
+określić jako obrót.
 
 Przykładowy dokument z kolekcji *rock*:
 
@@ -460,7 +484,7 @@ Przykładowy dokument z kolekcji *rock*:
     }
 
 Z dokumentów chcemy utworzyć kolekcję *genres* zawierającą
-dokumenty w takim formacie:
+dokumenty „obrócone”:
 
     :::javascript
     {
@@ -471,12 +495,11 @@ dokumenty w takim formacie:
 
 ### MapReduce
 
-W kodzie poniżej argument *value* nie może być tablicą.
-Dlaczego? Odpowiedź: Takie ograniczenie jest w wersji 1.9 MongoDB.
-Może to się zmienić w kolejnej wersji MongoDB.
+Argument *value* może być skalarem lub obiektem.
+Użyjemy obiektu z tablicą wewnątrz.
+(Takie ograniczenie było w MongoDB 1.9.0.)
 
-To ograniczenie, utrudnia nieco kodowanie.
-Aby je obejść wstawiamy tablicę do obiektu *value*:
+Tablicę wstawiamy do obiektu *value*:
 
     :::javascript pivot.js
     m = function() {
@@ -486,17 +509,16 @@ Aby je obejść wstawiamy tablicę do obiektu *value*:
       });
     };
     r = function(key, values) {
-      var list = { names: [] };
-      values.forEach(function(x) {
-        list.names = x.names.concat(list.names);
-      });
-      return list;
+      var list = values.reduce(function(a, b) {
+        return a.concat(b.names);
+      }, []);
+      return { names: list };
     };
     f = function(key, value) {
-      return value.names;  // a to po co? kto wie?
+      return value.names;       // a to po co?
     };
 
-    db.rock.mapReduce(m, r, { finalize: f, out: "pivot" });
+    res = db.rock.mapReduce(m, r, { finalize: f, out: "pivot" });
 
 
 ### Sprawdzamy wyniki
@@ -525,33 +547,21 @@ a miały mieć format:
     }
 
 Nazwy pól zmienimy w pętli. Dokument z nowymi nazwami pól
-zapiszemy w kolekcji *genre*:
-
-    :::javascript
-    var cursor = db.pivot.find();
-    while (cursor.hasNext()) {
-     var doc = cursor.next();
-     var ddoc = {};
-     ddoc.tag = doc._id;
-     ddoc.names = doc.value;
-     db.genre.insert(ddoc);
-    };
-
-Albo, to samo, tylko zamiast pary metod *hasNext* i *next* skorzystamy
-z metody *forEach*:
+zapiszemy w nowej kolekcji o nazwie *genre*:
 
     :::javascript
     db.pivot.find().forEach(function(doc) {
       var ddoc = {};
       ddoc.tag = doc._id;
       ddoc.names = doc.value;
-      db.genre.insert(ddoc);
+      db.genres.insert(ddoc);
     });
 
-i usuwamy niepotrzebną już kolekcję *pivot*.
+No a teraz możemy przyjrzeć się wynikom:
 
-    :::javascript
-    db.pivot.drop();
+    :::js
+    db.pivot.find().pretty()
+    db.pivot.find().pretty()
 
 
 ## SPAM
