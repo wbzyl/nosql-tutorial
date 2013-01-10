@@ -40,6 +40,17 @@ a następnie ściągnąć wyniki.
 
 {%= image_tag "/images/mapreduce-cloud.png", :alt => "[MapReduce]" %}
 
+<blockquote>
+  <p>When processing a large dataset, it's often much more efficient
+    to take the computation to the data than it is to bring the data
+    to the computation. In practice, your MapReduce job code is likely
+    less than 10 kilobytes, it is more efficient to send the code
+    to the gigs of data being processed, than to stream gigabytes
+    of data to your 10k of code.</p>
+ <p class="author">
+   <a href="http://docs.basho.com/riak/latest/references/appendices/MapReduce-Implementation/">riak/docs</a></p>
+</blockquote>
+
 I taka jest zasada obliczeń MapReduce – kod jest przesyłany do
 komputera (lub komputerów) z danymi, na którym przeprowadzane są obliczenia.
 Dane nie są przemieszczane (obliczenia są wykonywane na wielu komputerach)!
@@ -121,11 +132,7 @@ Funkcja reduce:
 
     :::javascript wc.js
     r = function(key, values) {
-      var value = 0;
-      values.forEach(function(count) {
-        value += count;
-      });
-      return value;
+      return Array.sum(values);
     };
 
 Po wykonaniu, być może kilkukrotnie, funkcji reduce, otrzymujemy:
@@ -159,7 +166,7 @@ zdefiniowane powyżej:
 
 
 <blockquote>
- <h3>ECMA 5 & V8</h3>
+ <h3>ECMA 5 &amp; V8</h3>
  <p>{%= image_tag "/images/v8.png", :alt => "[V8]" %}
  <p>When developing in the browser there are many <b>wonderful built in
    JavaScript functions</b> that we can’t use because certain browsers don’t
@@ -199,7 +206,7 @@ daje 20.
 Użyjemy MapReduce do wyliczenia najmniejszej i największej liczby
 w kolekcji czterech liczb losowych z przedziału [0, 1):
 
-    :::javascript insert_data.js
+    :::js big-insert-data.js
     for (var i = 0; i < 4; i++) db.big.insert( {x: Math.random()} );
     db.big.count();
     db.big.find().limit(8);
@@ -207,11 +214,12 @@ w kolekcji czterech liczb losowych z przedziału [0, 1):
 Później liczbę 4 zastąpimy liczbami 10^6 i 10^7. Dopiero dla kolekcji
 takich rozmiarów nazwa *big* jest adekwatna.
 
+
 ### MapReduce
 
 Definiujemy funkcję map – *m* i funkcję reduce – *r*:
 
-    :::javascript crazy.js
+    :::javascript big.js
     m = function() {
        emit("answer", { min: this.x, max: this.x });
     };
@@ -240,6 +248,12 @@ i uruchamiamy MapReduce:
         ],
         ...
       }
+
+Obliczenia dla kolekcji big składającej się z 10^6 liczb losowych
+trwają około 25 s (na moim komputerze).
+A tak wygląda wykorzystanie procesora w trakcie obliczeń:
+
+{%= image_tag "/images/mapreduce-wykorzystanie-procesora.png", :alt => "[Big MapReduce, 10^6 liczb losowych]" %}
 
 
 ## Word Count

@@ -15,26 +15,26 @@ m = function() {
 // m.apply(x);
 
 r = function(key, values) {
-  var value = 0;
-  values.forEach(function(count) {
-    value += count;
-  });
-  return value;
+  return Array.sum(values);
+  // var value = 0;
+  // values.forEach(function(count) {
+  //   value += count;
+  // });
+  // return value;
 };
 
 res = db.books.mapReduce(m, r, {out: "wc"});
 z = res.convertToSingleObject();
 
-// printjson(z);  // to samo co print(tojson(z))
+printjson(z);  // to samo co print(tojson(z))
 // z == { "be" : 2, "not" : 1, "or" : 1, "to" : 3, "wit" : 1 }
 
 assert.eq( 2 , z.be, "liczba wystąpień 'be'" );
 assert.eq( 1 , z.not, "liczba wystąpień 'not'" );
 assert.eq( 1 , z.or, "liczba wystąpień 'or'" );
 assert.eq( 3 , z.to, "liczba wystąpień 'to'" );
-assert.eq( 2 , z.wit, "liczba wystąpień 'wit'" );
+assert.eq( 1 , z.wit, "liczba wystąpień 'wit'" );
 
 // sprzątamy po skrypcie
-
-db.books.drop();
-db.wc.drop();
+// db.books.drop();
+// db.wc.drop();
