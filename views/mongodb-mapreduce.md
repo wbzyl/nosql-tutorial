@@ -749,6 +749,8 @@ Tematy — Top 13:
       { "_id" : "Your wife photos attached", "value" : 88 }
       ... top 13 ...
 
+### MapReduce
+
 Kto to rozsyła – Spamerzy ?
 
     :::javascript spamers.js
