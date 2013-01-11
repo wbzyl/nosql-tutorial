@@ -85,9 +85,18 @@ reduce takes this list of values and reduces it to a single
 element. This element is returned to the shuffle step until each key
 has a list containing a single value: the result.”
 
-(cytat z książki *K. Chodorow* i *M. Dirolf*, „MongoDB: The Definitive Guide”)
+(*K. Chodorow* i *M. Dirolf*, „MongoDB: The Definitive Guide”)
 
 {%= image_tag "/images/mongo-mapreduce.png", :alt => "[MongoDB MapReduce]" %}
+
+Szczegóły:
+„When you run a MapReduce on a cluster, each shard performs its own map
+and reduce. *mongos* chooses a “leader” shard and sends all the reduced data
+from the other shards to that one for a final reduce.
+Once the data is reduced to its final form, it will be output
+in whatever method you’ve specified.”
+
+(*K. Chodorow*, „Scaling MongoDB”, s. 38)
 
 
 ### Prosty przykład

@@ -19,7 +19,7 @@ map, reduce i finalize.
 Zmienne umieszczone w *scope* są **tylko do odczytu**.
 
     :::javascript scope.js
-    t = db.letters;
+    t = db.letters;  // wygodny skrót
     t.drop();
 
     t.save( { tags : [ "a" , "b" ] } ); t.save( { tags : [ "b" , "c" ] } );
@@ -31,29 +31,47 @@ Zmienne umieszczone w *scope* są **tylko do odczytu**.
       });
     };
     r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
-      });
-      return total;
+      return Array.sum(values);
     };
-
     res = t.mapReduce( m, r, {scope: {xx: 2}, out: "letters.out"} );
-    z = res.convertToSingleObject()
 
+    t.out.find();                 // to samo co: db.letters.out.find();
+      { "_id": "a", "value": 4 }
+      { "_id": "b", "value": 6 }
+      { "_id": "c", "value": 6 }
     printjson(res);
+      {
+        "result": "letters.out",
+        "timeMillis": 38,
+        "counts": {
+          "input": 4,
+          "emit": 8,
+          "reduce": 3,
+          "output": 3
+        },
+        "ok": 1,
+      }
+
+    z = res.convertToSingleObject();
     printjson(z);
+      {
+        "a": 4,
+        "b": 6,
+        "c": 6
+      }
 
     assert.eq( 4 , z.a, "liczbie wystąpień 'a' × 2" );
     assert.eq( 6 , z.b, "liczbie wystąpień 'b' × 2" );
     assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
 
-    res.drop();  // to samo co db.scope.out.drop() ?
+    // sprzątamy po skrypcie
+    res.drop();
     t.drop();
 
 Skrypt wykonujemy na konsoli *mongo*:
 
-    mongo scope.js
+    :::bash
+    mongo scope.js --shell
 
 
 ## Debugging MapReduce
@@ -64,6 +82,7 @@ jest przetestować funkcję reduce.
 
     :::javascript debugging.js
     t = db.map; t.drop();
+
     t.insert({_id: 1, tags: ['ą', 'ć', 'ć', 'ł']});
     t.insert({_id: 2, tags: ['ł', 'ń', 'ą']});
 
@@ -150,15 +169,15 @@ Wynik:
 
     :::javascript
     db.pass1r.findOne();
-        {
-            "_id" : {
-                    "hour" : 0,
-                    "client" : "108.89.250.109"
-            },
-            "value" : {
-                    "count" : 3
-            }
+      {
+        "_id" : {
+          "hour" : 0,
+          "client" : "108.89.250.109"
+        },
+        "value" : {
+          "count" : 3
         }
+      }
     db.pass1r.find().sort({value: -1})
       { "_id" : { "hour" : 19, "client" : "158.111.18.101" }, "value" : { "count" : 3215 } }
       { "_id" : { "hour" : 7, "client" : "157.111.77.180" }, "value" : { "count" : 1667 } }

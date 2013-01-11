@@ -10,11 +10,12 @@
       });
     };
     r = function(key, values) {
-      var total = 0;
-      values.forEach(function(count) {
-        total += count;
-      });
-      return total;
+      return Array.sum(values);
+      // var total = 0;
+      // values.forEach(function(count) {
+      //   total += count;
+      // });
+      // return total;
     };
 
     res = t.mapReduce( m, r, {scope: {xx: 2}, out: "letters.out"} );
@@ -27,5 +28,7 @@
     assert.eq( 6 , z.b, "liczbie wystąpień 'b' × 2" );
     assert.eq( 6 , z.c, "liczbie wystąpień 'c' × 2" );
 
-    res.drop();  // to samo co db.scope.out.drop() ?
-    t.drop();
+    // res.drop();  // to samo co db.scope.out.drop() ?
+    // t.drop();
+
+    // mongo scope.js --shell
