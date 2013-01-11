@@ -42,9 +42,16 @@ ways errors can creep into your life:
 
 * *update*: *write-write conflict* – kilku użytkowników
 uaktualnia te same dane w tym samym czasie
+
+Approaches for maintaining consistency in the face of concurrency are often
+described as **pessimistic** or **optimistic**.
+A pessimistic approach works by preventing conflicts from occurring;
+an optimistic approach lets conflicts occur, but detects
+them and takes action to sort them out.
+
 * *read*: różne rodzaje – *logical consistency*,
 *replication consistency*, *eventually consistent*;
-również *inconsistency window*
+również *inconsistency window* i *atomic updates*
 
 **Availability** (dostępność)
 means that **if you can talk to a node in the cluster**,
@@ -52,7 +59,7 @@ it can read and write data.
 
 <blockquote>
   <h3>Are you left or right-brained?</h3>
-  {%= image_tag "/images/hands.jpg", :alt => "[left or Right Brained?]" %}
+  {%= image_tag "/images/hands.jpg", :alt => "[Are you left or right-brained?]" %}
   <p>Prof. R. Wiseman, Neuropsychologist and Magician, suggests easy
   and entertaining ways to discover whether you are
   left-brained or right-brained. One way is to clasp your hands casually
@@ -71,43 +78,43 @@ unable to communicate with each other (situation known as a split brain).
 (źródło: P.J. Sadalage, M. Fowler, *NoSQL Distilled*)
 
 
-### CAP i MongoDB
+## CAP i MongoDB
 
-Consistency in MongoDB database is configured by using the **replica sets** and
-choosing to wait for the writes to be replicated to all the slaves or a given number
-of slaves. Every write can specify the number of servers the write has to be
-propagated to before it returns as successful.
+Dane w klastrze MongoDB są *sharded* i *replicated*
+(*shard* możemy przetłumaczyć jako kawałek, *replica* – kopia).
 
-Replica sets also allow you to increase the read performance
-by allowing reading from slaves.
-When we want to scale for write, we can start sharding the data.
+{%= image_tag "/images/mongodb-cluster.jpg", :alt => "[mongodb cluster]" %}
+
+**MongoDB sharded cluster**
+
+A sharded cluster consists of *shards*, *mongos* routers
+(an interface to the cluster as a whole; typically reside on the
+same machines as the application servers),
+and *config servers* (store the shard cluster’s state – configuration,
+location of each database and collection, shard ranges of;
+typically reside in separate failure domains).
+
+Each shard is a *replica set*.
+Replica sets are used for data redundancy,
+automated failover, read scaling, server maintenance without downtime,
+and disaster recovery. Shards are used fo write scaling.
+
+**Consistency** in MongoDB database is configured by using the *replica sets*
+and choosing to wait for the writes to be replicated to all the slaves
+or a given number of slaves. Every write can specify the number
+of servers the write has to be propagated to before it returns as successful.
 
 By default, a write is reported successful once the database receives it;
 you can change this so as to wait for the
 writes to be synced to disk or to propagate to two or more slaves.
 This is known as **write concern**.
 
-Transactions at the single-document level are known as **atomic transactions**.
-
-
-Availability
-
-The CAP theorem dictates that we can have only
-two of Consistency, Availability, and Partition Tolerance.
-Document databases try to improve on availability by replicating data using the master-slave
-setup. The same data is available on multiple nodes and the clients can get to the
+Document databases try to improve on **availability** by replicating
+data using the master-slave setup.
+The same data is available on multiple nodes and the clients can get to the
 data even when the primary node is down. Usually, the application code does
 not have to determine if the primary node is available or not. MongoDB
 implements replication, providing high availability using replica sets.
-
-Replica sets are generally used for data redundancy, automated failover, read
-scaling, server maintenance without downtime, and disaster recovery.
-
-p. 94, fig. 9.1
-
-
-* sharding (horizontal, scalability) (*shard* – kawałek)
-* replica sets (durability) (*replica set* – zbiór kopii)
 
 
 ## Manuale, samouczki, ściągi…
