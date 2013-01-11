@@ -11,9 +11,11 @@
 </blockquote>
 
 MongoDB is a document-oriented database.
+Each MongoDB instance has multiple databases, and each database
+can have multiple collections.
 
-MongoDB can be thought of as the goodness that erupts when a
-traditional key-value store collides with a relational database
+MongoDB can be thought of as the goodness that erupts when
+a traditional key-value store collides with a relational database
 management system, mixing their essences into something that’s not
 quite either, but rather something novel and fascinating.
 
@@ -24,6 +26,88 @@ MongoDB is written in C++ and offers the following features:
 * Full index support, including on inner objects and embedded arrays
 * Query profiling
 * Efficient storage of binary data including large objects (e.g. photos and videos)
+
+## Twierdzenie CAP (Eric Brewer, 2000)
+
+[CAP](http://en.wikipedia.org/wiki/CAP_theorem)
+to [skrótowiec](http://pl.wikipedia.org/wiki/Skr%C3%B3towiec)
+literowy – „Consistency, Availability, Partition tolerance”.
+
+**Twierdzenie CAP** mówi, że rozproszony system baz danych nie może
+jednocześnie zapewniać Consistency, Availability i Partition Tolerance.
+
+**Consistency** (spójność)
+comes in various forms, and that one word covers a myriad of
+ways errors can creep into your life:
+
+* *update*: *write-write conflict* – kilku użytkowników
+uaktualnia te same dane w tym samym czasie
+* *read*: różne rodzaje – *logical consistency*,
+*replication consistency*, *eventually consistent*;
+również *inconsistency window*
+
+**Availability** (dostępność)
+means that **if you can talk to a node in the cluster**,
+it can read and write data.
+
+<blockquote>
+  <h3>Are you left or right-brained?</h3>
+  {%= image_tag "/images/hands.jpg", :alt => "[left or Right Brained?]" %}
+  <p>Prof. R. Wiseman, Neuropsychologist and Magician, suggests easy
+  and entertaining ways to discover whether you are
+  left-brained or right-brained. One way is to clasp your hands casually
+  and see whether right or left thumb is positioned on the top
+  (see the picture). If the left thumb comes on top,
+  you are right brained and artistic, adventurous and accommodative.
+  If the right thumb is on the top, you are analytical,
+  fluent with words and conservative.</p>
+</blockquote>
+
+**Partition tolerance** (odporność na podział sieci)
+means that the cluster can survive communication
+breakages in the cluster that separate the cluster into multiple partitions
+unable to communicate with each other (situation known as a split brain).
+
+(źródło: P.J. Sadalage, M. Fowler, *NoSQL Distilled*)
+
+
+### CAP i MongoDB
+
+Consistency in MongoDB database is configured by using the **replica sets** and
+choosing to wait for the writes to be replicated to all the slaves or a given number
+of slaves. Every write can specify the number of servers the write has to be
+propagated to before it returns as successful.
+
+Replica sets also allow you to increase the read performance
+by allowing reading from slaves.
+When we want to scale for write, we can start sharding the data.
+
+By default, a write is reported successful once the database receives it;
+you can change this so as to wait for the
+writes to be synced to disk or to propagate to two or more slaves.
+This is known as **write concern**.
+
+Transactions at the single-document level are known as **atomic transactions**.
+
+
+Availability
+
+The CAP theorem dictates that we can have only
+two of Consistency, Availability, and Partition Tolerance.
+Document databases try to improve on availability by replicating data using the master-slave
+setup. The same data is available on multiple nodes and the clients can get to the
+data even when the primary node is down. Usually, the application code does
+not have to determine if the primary node is available or not. MongoDB
+implements replication, providing high availability using replica sets.
+
+Replica sets are generally used for data redundancy, automated failover, read
+scaling, server maintenance without downtime, and disaster recovery.
+
+p. 94, fig. 9.1
+
+
+* sharding (horizontal, scalability) (*shard* – kawałek)
+* replica sets (durability) (*replica set* – zbiór kopii)
 
 
 ## Manuale, samouczki, ściągi…
