@@ -33,8 +33,8 @@ MongoDB is written in C++ and offers the following features:
 to [skrótowiec](http://pl.wikipedia.org/wiki/Skr%C3%B3towiec)
 literowy – „Consistency, Availability, Partition tolerance”.
 
-**Twierdzenie CAP** mówi, że rozproszony system baz danych nie może
-jednocześnie zapewniać Consistency, Availability i Partition Tolerance.
+**Twierdzenie CAP** mówi, że **rozproszony system baz danych** nie może
+jednocześnie zapewniać *consistency*, *availability*, *partition tolerance*.
 
 **Consistency** (spójność)
 comes in various forms, and that one word covers a myriad of
@@ -83,7 +83,7 @@ unable to communicate with each other (situation known as a split brain).
 Dane w klastrze MongoDB są *sharded* i *replicated*
 (*shard* możemy przetłumaczyć jako kawałek, *replica* – kopia).
 
-{%= image_tag "/images/mongodb-cluster.jpg", :alt => "[mongodb cluster]" %}
+{%= image_tag "/images/mongodb-cluster.png", :alt => "[mongodb cluster]" %}
 
 **MongoDB sharded cluster**
 
@@ -107,14 +107,33 @@ of servers the write has to be propagated to before it returns as successful.
 By default, a write is reported successful once the database receives it;
 you can change this so as to wait for the
 writes to be synced to disk or to propagate to two or more slaves.
-This is known as **write concern**.
+This is known as ***write concern***.
 
 Document databases try to improve on **availability** by replicating
 data using the master-slave setup.
 The same data is available on multiple nodes and the clients can get to the
-data even when the primary node is down. Usually, the application code does
-not have to determine if the primary node is available or not. MongoDB
-implements replication, providing high availability using replica sets.
+data even when the primary node is down.
+
+## Deployment topologies
+
+Przykład jak to można zrobić dla dwóch *shards*
+(*replica set* = 2 kopie + 1 arbiter) i 3 *config servers*.
+
+{%= image_tag "/images/mongodb-sharded-cluster.png", :alt => "[MongoDB sharded cluster]" %}
+
+Minimum deployment requirements:
+
+1. Each member of a replica set, whether it’s a complete replica or an arbiter,
+needs to live on a distinct machine.
+2. Every replicating replica set member needs its own machine.
+3. Replica set arbiters are lightweight enough to share a machine with another
+process.
+4. Config servers can optionally share a machine. The only hard requirement is
+that all config servers in the config cluster reside on distinct machines.
+
+(źródło, K. Banker, *MongoDB in Action*)
+
+Jak widać potrzebne są 4 komputery.
 
 
 ## Manuale, samouczki, ściągi…
