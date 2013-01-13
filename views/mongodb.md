@@ -83,7 +83,7 @@ unable to communicate with each other (situation known as a split brain).
 Dane w klastrze MongoDB są *sharded* i *replicated*
 (*shard* możemy przetłumaczyć jako kawałek, *replica* – kopia).
 
-{%= image_tag "/images/mongodb-cluster.png", :alt => "[mongodb cluster]" %}
+{%= image_tag "/images/mongodb-cluster.jpg", :alt => "[mongodb cluster]" %}
 
 **MongoDB sharded cluster**
 
