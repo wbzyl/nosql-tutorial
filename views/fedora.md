@@ -145,6 +145,41 @@ Teraz w odpowiednich katalogach zapisujemy te pliki:
 * {%= link_to "$HOME/.data/etc/couchdb/local.d/sigma.ini", "/fedora/f16/couchdb-sigma.ini" %}
 * {%= link_to "/etc/logrotate.d/couchdb", "/fedora/f16/couchdb-logrotate.txt" %}
 
+### CouchDB & Nginx
+
+Wirtualny host:
+
+    :::bash /etc/hosts
+    127.0.0.1 localhost.localdomain localhost sinatra.local couch.local
+
+Nginx:
+
+    :::bash /etc/nginx/conf.d/wbzyl.conf
+    server  {
+      listen         80;
+      server_name  couch.local;
+
+      location / {
+        proxy_pass http://localhost:5984;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+
+      location ~ ^/(.*)/_changes {
+        proxy_pass http://localhost:5984;
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+  }
+
+Teraz CouchDB jest dostępny pod takim URI:
+
+    http://couch.local
+
 
 ## ElasticSearch
 

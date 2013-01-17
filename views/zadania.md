@@ -35,6 +35,11 @@ Na lepszą ocenę należy:
   Przykład:
   [MapReduce multiple MongoDB collections into one](http://www.pal-blog.de/entwicklung/mongodb/2013/mapreduce-multiple-mongodb-collections-into-one.html).
 
+Do eksperymentów można skorzystać z tych danych wzorcowych:
+
+* [PUMA: Purdue MapReduce Benchmarks Suite](http://web.ics.purdue.edu/~fahmad/benchmarks.htm)
+* [PUMA Benchmarks and dataset downloads](http://web.ics.purdue.edu/~fahmad/benchmarks/datasets.htm)
+
 
 ## Przykładowe zadania z MapReduce
 

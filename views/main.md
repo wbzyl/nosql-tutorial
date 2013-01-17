@@ -9,12 +9,15 @@
 
 Tematy referatów:
 
-* **Wprowadzenie do Neo4j**
+* **Wprowadzenie do Neo4j**:
+  - [Using a Graph Database with Ruby. Part I: Introduction](http://rubysource.com/using-a-graph-database-with-ruby-part-i-introduction/)
+  - [Using a Graph Database with Ruby, Part II: Integration](http://rubysource.com/using-a-graph-database-with-ruby-part-ii-integration/)
 * **Co to jest Hadoop?**
-* **Redis = Data Structure Engine**
-  ([Redis tutorial, April 2010](http://simonwillison.net/static/2010/redis-tutorial/),
-  [Redis: Zero to Master in 30 minutes](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/))
-* **Wizualizacja danych** ([d3.js](http://bost.ocks.org/mike/d3/workshop/), działa z CORS)
+* **Redis = Data Structure Engine**:
+  - [Redis tutorial, April 2010](http://simonwillison.net/static/2010/redis-tutorial/)
+  - [Redis: Zero to Master in 30 minutes](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/)
+* **Wizualizacja danych**:
+  - [d3.js](http://bost.ocks.org/mike/d3/workshop/), działa z CORS
 
 
 ## Co to jest „NoSQL”?
@@ -157,3 +160,5 @@ Raw data:
 1. {%= link_to "NodeJS", "/node" %}
 1. {%= link_to "D3.js", "/d3js" %}
 1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)
+1. Data Visualisation – 
+   [A Carefully Selected List of Recommended Tools](http://selection.datavisualization.ch/)
