@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <title>Hello, Elasticsearch!</title>
+  <style>body { font: 100% normal 'Helvetica Neue', sans-serif; margin: 4em; }</style>
+  <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+  <p>
+    “Hello, Elasticsearch (version <i id="version">version</i>)
+    cluster <span id="cluster_name">name</span>!”,
+    says <b id="node_name">node</b>,
+    running on <i id="host_name">localhost</em>.
+  </p>
+
+  <script>
+  $(function() {
+    $.getJSON('http://localhost:9200/_cluster/nodes/_local', function(data) {
+      console.log(data);
+
+      var node_id = Object.keys(data.nodes)[0]
+        , cluster_name = data['cluster_name']
+        , version      = data.nodes[node_id]['version']
+        , node_name    = data.nodes[node_id]['name']
+        , host_name    = data.nodes[node_id]['hostname'];
+
+      $('#cluster_name').html( cluster_name );
+      $('#version').html(      version      );
+      $('#node_name').html(    node_name    );
+      $('#host_name').html(    host_name    );
+    })
+  });
+  </script>
+</body>
+</html>
