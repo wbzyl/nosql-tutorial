@@ -289,12 +289,12 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
         }
     }'
 
-
+curl -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking
 **TODO:** Przykład, ale z **mapping** podobny do przykładu z artykułu
 [From Solr to elasticsearch](http://digital.cabinetoffice.gov.uk/2012/08/03/from-solr-to-elasticsearch/)
 („It’s much more verbose, but it’s also much more obvious what is happening.”):
 
-    :::json
+    :::bash
     curl -XGET 'http://localhost:9200/rummager/_search' -H 'Content-type: application/json' -d '{
       "from": 0, "size": 50,
       "query": {
@@ -381,7 +381,7 @@ Dodatkowo do odfiltrowania interesujących nas statusów
 skorzystamy z [stream API](https://dev.twitter.com/docs/streaming-api):
 
     :::ruby tracking
-    track=rails,mongodb,couchdb,redis,elasticsearch,neo4j
+    track=rails,mongodb,couchdb,redis,elasticsearch,neo4j,riak
 
 (Dlaczego filtrujemy? Co sekundę wysyłanych jest do Twittera ok. 1000
 nowych statusów. Większość z nich nie ma dla nas żadnego znaczenia.)
@@ -404,7 +404,7 @@ Dlatego, przed wypisaniem statusu na ekran, powinniśmy go „oczyścić”
 ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby. W skrypcie
 skorzystamy z następujących gemów:
 
-    gem install tweetstream yajl-ruby tire ansi
+    gem install tire tweetstream colored # oj yajl-ruby
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 
@@ -415,12 +415,10 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
 
     :::ruby nosql-tweets.rb
     # encoding: utf-8
-
-    require 'yajl/json_gem'
     require 'tweetstream'
+    require 'colored'
 
     user, password = ARGV
-
     unless (user && password)
       puts "\nUsage:\n\t#{__FILE__} <AnyTwitterUser> <Password>\n\n"
       exit(1)
@@ -429,12 +427,11 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
     TweetStream.configure do |config|
       config.username = user
       config.password = password
-      config.auth_method = :basic  # OAuth or HTTP Basic Authentication is required
-      config.parser = :yajl
+      config.auth_method = :basic
     end
 
     def handle_tweet(s)
-      puts "#{JSON.pretty_generate(s)}"
+      puts "#{s[:created_at].to_s.cyan}:\t#{s[:text].yellow}"
     end
 
     client = TweetStream::Client.new
@@ -443,14 +440,13 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
       puts message
     end
 
-    client.track('rails', 'mongodb', 'couchdb', 'redis', 'neo4j', 'elasticsearch') do |status|
+    client.track('rails', 'mongodb', 'couchdb', 'redis', 'neo4j', 'elasticsearch', 'riak') do |status|
       handle_tweet status
     end
 
-
 W skrypcie {%= link_to "nosql-tweets.rb", "/elasticsearch/nosql-tweets.rb" %},
 który zostanie wykorzystany na wykładzie, inaczej rozwiązano
-podawanie swoich danych. Dlaczego tak?
+podawanie swoich danych. Użyjemy też autentykacji OAuth.
 
 
 <blockquote>
