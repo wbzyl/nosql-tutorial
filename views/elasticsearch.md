@@ -381,7 +381,7 @@ Dodatkowo do odfiltrowania interesujących nas statusów
 skorzystamy z [stream API](https://dev.twitter.com/docs/streaming-api):
 
     :::ruby tracking
-    track=rails,mongodb,couchdb,redis,elasticsearch,neo4j,riak
+    track=mongodb,couchdb,elasticsearch,neo4j,meteorjs,backbonejs,emberjs,rails
 
 (Dlaczego filtrujemy? Co sekundę wysyłanych jest do Twittera ok. 1000
 nowych statusów. Większość z nich nie ma dla nas żadnego znaczenia.)
@@ -1219,8 +1219,8 @@ aż otrzymamy pustą tablicę *hits.hits*:
         "hits" : [ ]
         ...
 
-Przykładowa implementacja tego algorytmu w NodeJS (v0.6.12)
-+ moduł [Restler](https://github.com/danwrong/restler) (v2.0.0):
+Przykładowa implementacja tego algorytmu w NodeJS (v0.8.14)
++ moduł [Restler](https://github.com/danwrong/restler) (v2.0.1):
 
     :::js dump-tweets.js
     var rest = require('restler');

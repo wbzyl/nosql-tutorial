@@ -151,7 +151,7 @@ Wyszukiwanie po fasecie *myślenie*:
 
 # Skrypt NodeJS „elasticimport”
 
-Funkcjonalność podobna do programu *mongoimport*. Coś takiego:
+**TODO:** Funkcjonalność podobna do programu *mongoimport*. Coś takiego:
 
     mongoimport
     connected to: 127.0.0.1
