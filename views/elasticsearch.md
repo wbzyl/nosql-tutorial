@@ -404,9 +404,22 @@ Dlatego, przed wypisaniem statusu na ekran, powinniśmy go „oczyścić”
 ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby. W skrypcie
 skorzystamy z następujących gemów:
 
-    gem install tire tweetstream colored # oj yajl-ruby
+    gem install tire tweetstream colored # oj
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
+
+<blockquote>
+<p>
+  <h3><a href="https://dev.twitter.com/docs/streaming-api/concepts#access-rate-limiting">Ważne!</a></h3>
+  <p>Each account may create only one standing connection to the
+  Streaming API. Subsequent connections from the same account may
+  cause previously established connections to be
+  disconnected. Excessive connection attempts, regardless of success,
+  will result in an automatic ban of the client's IP
+  address. Continually failing connections will result in your IP
+  address being blacklisted from all Twitter access.
+</p>
+</blockquote>
 
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl* powyżej.
 
@@ -444,57 +457,14 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
       handle_tweet status
     end
 
-W skrypcie {%= link_to "nosql-tweets.rb", "/elasticsearch/nosql-tweets.rb" %},
-który zostanie wykorzystany na wykładzie, inaczej rozwiązano
-podawanie swoich danych. Użyjemy też autentykacji OAuth.
-
-
-<blockquote>
-<p>
-  <h2><a href="https://dev.twitter.com/docs/streaming-api/concepts#access-rate-limiting">Important note</a></h2>
-  <p>Each account may create only one standing connection to the
-  Streaming API. Subsequent connections from the same account may
-  cause previously established connections to be
-  disconnected. Excessive connection attempts, regardless of success,
-  will result in an automatic ban of the client's IP
-  address. Continually failing connections will result in your IP
-  address being blacklisted from all Twitter access.
-</p>
-</blockquote>
-
 Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
     :::bash
     ruby nosql-tweets.rb MyTwitterUserName MyPassword
 
-Wpatrując się w ekran przez jakiś czas zaczynamy
-dostrzegać pole zawierające interesujące dane:
-
-    id
-    text
-    created_at
-    user:
-      screen_name
-    entities:      # tylko trzy tablice?
-      urls (url)
-      user_mentions (id_str, name, screen_name)
-      hashtags (text)
-
-Czyszczenie statusów, to zadanie dla metody *handle_tweet*:
-
-    :::ruby
-    def handle_tweet(s)
-      h = { }
-      h[:id] = s[:id]
-      h[:text] =  s[:text]
-      h[:screen_name] = s[:user][:screen_name]
-      h[:entities] = s[:entities]
-      h[:created_at] = Time.parse(s[:created_at])
-      puts "#{JSON.pretty_generate(h)}"
-    end
-
-Po wymianie na nowy kodu *handle_tweet* i ponownym uruchomieniu skryptu
-widzimy efekty. To się da czytać!
+W skrypcie {%= link_to "nosql-tweets.rb", "/elasticsearch/nosql-tweets.rb" %},
+który zostanie wykorzystany na wykładzie, inaczej rozwiązano
+podawanie swoich danych. Użyto też autentykacji OAuth.
 
 
 ## Twitter Stream ⟿ ElasticSearch
@@ -513,7 +483,7 @@ Wykorzystamy w tym celu mechanizm perkolacji.
 Co oznacza *percolation*? przenikanie, przefiltrowanie, perkolacja?
 „Let's define callback for percolation.
 Whenewer a new document is saved in the index, this block will be executed,
-and we will have access to matching queries in the `NosqlTweet#matches` property.”
+and we will have access to matching queries in the `Tweet#matches` property.”
 
 Przy okazji zdefinujemy *mapping* dla statusów zapisywanych w bazie ElasticSearch.
 
@@ -522,11 +492,11 @@ Co to jest *mapping*?
 the Search Engine, including its searchable characteristics such as
 which fields are searchable and if/how they are tokenized.”
 
-    :::ruby create-index-percolate_nosql_tweets.rb
+    :::ruby create-index-percolate_tweets.rb
     # encoding: utf-8
     require 'tire'
 
-    nosql_tweets_mapping =  {
+    tweets_mapping =  {
       :properties => {
         :text          => { :type => 'string', :boost => 2.0,            :analyzer => 'snowball'       },
         :screen_name   => { :type => 'string', :index => 'not_analyzed',                               },
@@ -538,22 +508,23 @@ which fields are searchable and if/how they are tokenized.”
     }
 
     mappings = { }
+    keywords = %w{rails jquery mongodb couchdb redis neo4j elasticsearch basho meteorjs emberjs backbonejs d3js}
 
-    %w{rails jquery mongodb couchdb redis neo4j elasticsearch}.each do |keyword|
-      mappings[keyword.to_sym] = nosql_tweets_mapping
+    keywords.each do |keyword|
+      mappings[keyword.to_sym] = tweets_mapping
     end
 
-    Tire.index('nosql_tweets') do
+    Tire.index('tweets') do
       delete
       create :mappings => mappings
     end
 
-    Tire.index('nosql_tweets').refresh
+    Tire.index('tweets').refresh
 
-    # Register several queries for percolation against the nosql_tweets index.
+    # Register several queries for percolation against the tweets index.
 
-    Tire.index('nosql_tweets') do
-      %w{rails jquery mongodb redis couchdb neo4j elasticsearch}.each do |keyword|
+    Tire.index('tweets') do
+      keywords.each do |keyword|
         register_percolator_query(keyword) { string keyword }
       end
     end
@@ -565,22 +536,47 @@ which fields are searchable and if/how they are tokenized.”
 Uuruchamiamy ten skrypt i sprawdzamy czy *mapping* zostało zapisane w bazie:
 
     :::bash
-    ruby create-index-percolate_nosql_tweets.rb
-    curl 'http://localhost:9200/nosql_tweets/_mapping?pretty=true'
+    ruby create-index-percolate_tweets.rb
+    curl 'http://localhost:9200/tweets/_mapping?pretty=true'
 
 Cały skrypt można obejrzeć na GitHubie –
-[create-index-percolate_nosql_tweets.rb](https://github.com/wbzyl/est/blob/master/create-index-percolate_nosql_tweets.rb).
+[create-index-percolate_tweets.rb](https://github.com/wbzyl/est/blob/master/create-index-percolate_tweets.rb).
 
-Dopiero po tych wstępnych robótkach ręcznych, zabierzemy się za
-skrypt zapisujący statusy indeksie *nosql_tweets* i w typach
+Dopiero po tych wstępnych robótkach ręcznych, zabieramy się za
+skrypt zapisujący statusy indeksie *tweets* i w typach
 o nazwach takich samych jak słowa kluczowe.
 
-    :::ruby fetch-nosql_tweets.rb
-    # Let's define a class to hold our data in ElasticSearch.
+    :::ruby fetch-tweets.rb
+    # encoding: utf-8
+    require 'tweetstream'
+    require 'tire'
+    require 'yaml'
+    require 'colored'
 
-    class NosqlTweet
+    begin
+      raw_config = File.read("#{ENV['HOME']}/.credentials/services.yml")
+      twitter = YAML.load(raw_config)['twitter']
+    rescue
+      puts "\n\tError: problems with #{ENV['HOME']}/.credentials/services.yml\n".red
+      exit(1)
+    end
+
+    # https://dev.twitter.com/apps  (app: Tao Streams)
+    TweetStream.configure do |config|
+      config.consumer_key       = twitter['consumer_key']
+      config.consumer_secret    = twitter['consumer_secret']
+      config.oauth_token        = twitter['oauth_token']
+      config.oauth_token_secret = twitter['oauth_token_secret']
+      config.auth_method        = :oauth
+    end
+
+    # Tire part.
+
+    # Let's define a class to hold our data in *ElasticSearch*.
+    class Tweet
       include Tire::Model::Persistence
 
+      # property :id
       property :text
       property :screen_name
       property :created_at
@@ -590,26 +586,43 @@ o nazwach takich samych jak słowa kluczowe.
 
       # Let's define callback for percolation.
       # Whenewer a new document is saved in the index, this block will be executed,
-      # and we will have access to matching queries in the `NosqlTweet#matches` property.
+      # and we will have access to matching queries in the `Tweet#matches` property.
       #
       # Below, we will just print the text field of matching query.
       on_percolate do
         if matches.empty?
-          puts bold { "'#{text}' from @#{bold { screen_name }}" }
+          puts "'#{text}' from @#{screen_name}"
         else
-          puts green { "'#{text}' from @#{bold { screen_name }}" }
+          puts "'#{text.green}' from @#{screen_name.yellow}"
         end
       end
     end
 
+    puts "\nYou can check out the statuses in your index with curl:\n".magenta
+    puts "  curl 'http://localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4&pretty=true'\n".yellow
+
+    # Strip off fields we are not interested in.
+    # Flatten and clean up entities.
+
     def handle_tweet(s)
-      ... ✂ ...
+      # tweetstream >= v2.0.0
+      hashtags = s.hashtags.to_a.map { |o| o["text"] }
+      urls = s.urls.to_a.map { |o| o["expanded_url"] }
+      user_mentions = s.user_mentions.to_a.map { |o| o["screen_name"] }
+
+      h = Tweet.new id: s[:id].to_s,
+        text: s[:text],
+        screen_name: s[:user][:screen_name],
+        created_at: s[:created_at],
+        hashtags: hashtags,
+        urls: urls,
+        user_mentions: user_mentions
 
       types = h.percolate
-      puts "matched queries: #{types}"
+      puts "matched queries: #{types}".cyan
 
       types.to_a.each do |type|
-        NosqlTweet.document_type type
+        Tweet.document_type type
         h.save
       end
     end
@@ -619,31 +632,32 @@ o nazwach takich samych jak słowa kluczowe.
     client = TweetStream::Client.new
 
     client.on_error do |message|
-      puts red { message }
+      puts message.red
     end
 
     # Fetch statuses from Twitter and write them to ElasticSearch.
-    client.track('rails', 'jquery', 'mongodb', 'couchdb', 'redis', 'neo4j', 'elasticsearch') do |status|
+    keywords = %w{rails jquery mongodb couchdb redis neo4j elasticsearch basho meteorjs emberjs backbonejs d3js}
+    client.track(*keywords) do |status|
       handle_tweet(status)
     end
 
-Cały skrypt *fetch-nosql_tweets-cli.rb* można podejrzeć
-[tutaj](https://github.com/wbzyl/est/blob/master/fetch-nosql_tweets-cli.rb).
+Cały skrypt *fetch-tweets.rb* można podejrzeć
+[tutaj](https://github.com/wbzyl/est/blob/master/fetch-tweets.rb).
 
-Po uruchmieniu skryptu:
+Po uruchmieniu tego skryptu:
 
-    :::bash fetch-nosql_tweets-cli.rb
-    ruby fetch-nosql_tweets-cli.rb
+    :::bash konsola
+    ruby fetch-tweets.rb
 
 i odczekaniu kilku minut, aż kilka statusów zostanie zapisanych w bazie,
 wykonujemy kilka prostych testów:
 
     :::bash
-    curl 'http://localhost:9200/nosql_tweets/_count'
-    curl 'http://localhost:9200/nosql_tweets/rails/_count'
-    curl 'http://localhost:9200/nosql_tweets/_search?q=*&sort=created_at:desc&size=2&pretty=true'
-    curl 'http://localhost:9200/nosql_tweets/_search?size=2&sort=created_at:desc&pretty=true'
-    curl 'http://localhost:9200/nosql_tweets/_search?_all&sort=created_at:desc&pretty=true'
+    curl 'http://localhost:9200/tweets/_count'
+    curl 'http://localhost:9200/tweets/rails/_count'
+    curl 'http://localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=2&pretty=true'
+    curl 'http://localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty=true'
+    curl 'http://localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty=true'
 
 Oczywiście można też podejrzeć statusy
 korzystając z aplikacji webowej [Elasticsearch Head](https://github.com/Aconex/elasticsearch-head).
@@ -666,25 +680,25 @@ implementations, such as statistical or date histogram facets.”
 Przykłady:
 
     :::bash
-    curl -X POST "http://localhost:9200/nosql_tweets/_count?q=couchdb&pretty=true"
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_count?q=couchdb&pretty=true"
+    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "query_string" : {"query" : "couchdb"} },
       "sort" : { "created_at" : { "order" : "desc" } }
     }'
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "query_string" : {"query" : "couchdb"} },
       "sort" : { "created_at" : { "order" : "desc" } },
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "match_all" : {} },
       "sort" : { "created_at" : { "order" : "desc" } },
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?size=0&pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_search?size=0&pretty=true" -d '
     {
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
@@ -724,7 +738,7 @@ returned facets (*other*), and the total number of tokens in the facet
 Jeszcze jeden przykład:
 
     :::bash
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
        {
          "query" : { "query_string" : {"query" : "couchdb"} },
          "sort" : { "created_at" : { "order" : "desc" } },
@@ -734,7 +748,7 @@ Jeszcze jeden przykład:
 A teraz inny facet:
 
     :::bash
-    curl -X POST "http://localhost:9200/nosql_tweets/_search?pretty=true" -d '
+    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "match_all" : {} },
       "sort" : { "created_at" : { "order" : "desc" } },
@@ -804,10 +818,8 @@ Zobacz też [Epoch & Unix Timestamp Conversion Tools](http://www.epochconverter.
 
 Linki do dokumentacji:
 
-* [eventmachine](https://github.com/eventmachine/eventmachine)
-* [em-http-request](https://github.com/igrigorik/em-http-request)
 * [tweetstream](https://github.com/intridea/tweetstream)
-* [yajl-ruby](https://github.com/brianmario/yajl-ruby)
+([rdoc](http://rdoc.info/github/intridea/tweetstream))
 
 Zobacz też:
 
@@ -822,26 +834,40 @@ Zobacz też:
 
 # Aplikacja EST
 
+Kod aplikacji umieściłem na na serwerze GitHub w repozytorium
+[EST](https://github.com/wbzyl/est).
+
 Śledząc spływające statusy na konsoli i analizując
 wyniki wyszukiwania fasetowego dla hashtagów,
 wkrótce zaczynamy orientować się co się dzieje w świecie
-rails, mongodb, couchdb, redis, elasticsearch, neo4j.
+rails, mongodb, couchdb, redis, elasticsearch, neo4j, riak (basho),
+meteorjs, emberjs, backbonejs.
 
 Napiszemy prostą aplikację Rails umożliwiającą nam przeglądanie
-statusów, które zostały zapisane w bazie, w czasie kiedy nie
-śledziliśmy statusów na konsoli.
+offline zapisanych w bazie statusów.
 
-Aplikacja będzie składała się z jednego modelu *NosqlTweet*,
+Aplikacja będzie składała się z jednego modelu *Tweet*,
 kontroler będzie miał jedną metodę *index*.
 
-Na stronie indeksowej umieścimy formularz wyszukiwania statusów,
-zwracane statusy będą stronicowane (skorzystamy z gemu
+Na stronie indeksowej umieścimy formularz do wyszukiwania
+interesujących nas statusów.
+Wyszukane statusy będą stronicowane (skorzystamy z gemu
 *will_paginate*).
 
 Po wejściu na stronę główną, aplikacja wyświetli stronę z ostatnio
 pobranymi statusami.
 
-Dlaczego korzystamy z gemu Tire? Czy jest jakaś alternatywa dla Tire?
+Skorzystamy z gemu Tire dla Elasticsearch oraz frameworka Bootstrap:
+
+* [Tire](https://github.com/karmi/tire)
+([rdoc](http://rdoc.info/github/karmi/tire/frames))
+* [Bootstrap](http://twitter.github.com/bootstrap/):
+  - [3. Customize variables](http://twitter.github.com/bootstrap/customize.html#variables)
+  - [twitter-bootstrap-rails](https://github.com/seyhunak/twitter-bootstrap-rails)
+
+Warto zainstalować kilka „front ends clients” dla Elasticsearch:
+
+* [Elasticsearch Clients](http://www.elasticsearch.org/guide/appendix/clients.html)
 
 
 ## Generujemy rusztowanie aplikacji
@@ -852,28 +878,99 @@ Aplikację nazwiemy krótko **EST** (*ElasticSearch Statuses*):
     rails new est --skip-active-record --skip-test-unit --skip-bundle
     rm est/public/index.html
 
-Następnie instalujemy gemy, generujemy kontroler:
+Podmieniamy wygenerowany plik *Gemfile* na (*TODO:* handlebars_assets):
 
+    :::ruby Gemfile
+    source 'https://rubygems.org'
+    gem 'rails', '~> 3.2.11'
+
+    group :assets do
+      gem 'coffee-rails', '~> 3.2.1'
+      gem 'therubyracer', :platforms => :ruby
+      gem 'less-rails'
+      gem 'twitter-bootstrap-rails'
+
+      gem 'uglifier', '>= 1.0.3'
+    end
+
+    group :development do
+      gem 'wirble'
+      gem 'hirb'
+      gem 'quiet_assets'
+    end
+
+    gem 'jquery-rails'
+    gem 'tire'
+    gem 'will_paginate'
+    gem 'thin'
+
+i instalujemy gemy:
+
+    :::bash
     cd est
-    bundle install --path=$HOME/.gems --binstubs
-    rails generate controller nosql_tweets index
+    bundle install --path=$HOME/.gems
 
-i zmieniamy routing:
+### post-install: Twitter Bootstrap
+
+Postępujemy, tak jak to opisano w [README](https://github.com/seyhunak/twitter-bootstrap-rails):
+
+    :::bash konsola
+    rails generate bootstrap:install less
+          insert  app/assets/javascripts/application.js
+          create  app/assets/javascripts/bootstrap.js.coffee
+          create  app/assets/stylesheets/bootstrap_and_overrides.css.less
+            gsub  app/assets/stylesheets/application.css
+            gsub  app/assets/stylesheets/application.css
+    rails g bootstrap:layout application fixed
+          conflict  app/views/layouts/application.html.erb
+
+(odpowiadamy **Y**)
+
+Dopiero teraz przystępujemy do kodowania aplikacji.
+Zaczynamy od wygenerowania kontrolera:
+
+    :::bash konsola
+    rails generate controller tweets index
+      create  app/controllers/tweets_controller.rb
+       route  get "tweets/index"
+      invoke  erb
+      create    app/views/tweets
+      create    app/views/tweets/index.html.erb
+      invoke  helper
+      create    app/helpers/tweets_helper.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/tweets.js.coffee
+      invoke    less
+      create      app/assets/stylesheets/tweets.css.less
+
+oraz następującej zmiany w routingu:
 
     :::ruby config/routes.rb
-    match '/nosql_tweets' => 'nosql_tweets#index', as: :nosql_tweets
-    root to: 'nosql_tweets#index'
+    Est::Application.routes.draw do
+      get "tweets/index"
+      # You can have the root of your site routed with "root"
+      # just remember to delete public/index.html.
+      root :to => 'tweets#index'
+    end
 
-Po tej zmianie, polecenie
+Po tej zmianie, polecenie:
 
     :::bash
     rake routes
 
 powinno wypisać taki routing:
 
-    :::json
-    nosql_tweets  /nosql_tweets(.:format) {:controller=>"nosql_tweets", :action=>"index"}
-            root  /                       {:controller=>"nosql_tweets", :action=>"index"}
+    :::text
+    tweets_index GET /tweets/index(.:format) tweets#index
+            root     /                       tweets#index
+
+Zanim uruchomimy serwer, towrzymy pustą ikonkę:
+
+    :::bash
+    touch app/assets/favicon.ico
+
+(dla trybu development; w trybie production należy wykonać takie polecenie…)
 
 
 <blockquote>
@@ -884,85 +981,34 @@ powinno wypisać taki routing:
  <p class="author">— Mark Otto</p>
 </blockquote>
 
-### Korzystamy z frameworka Twitter Bootstrap
+## Korzystamy z Twitter Bootstrap
 
-Dlaczego będziemy korzystać z [Twitter Bootstrap](http://twitter.github.com/bootstrap/)?
-
-Jest kilka gemów ułatwiajacych instalację tego frameworka w Rails.
-My skorzystamy z gemu [Bootstrap Sass](https://github.com/thomas-mcdonald/bootstrap-sass).
-
-Dopisujemy go, i przy okazji gemy [Will Paginate](https://github.com/mislav/will_paginate)
-oraz [Tire](https://github.com/karmi/tire) do *Gemfile*:
-
-    :::ruby Gemfile
-    gem 'bootstrap-sass', group: :assets
-    gem 'will_paginate'
-    gem 'tire'
-
-i instalujemy oba gemy i gemy od nich zależne:
+Po uruchomieniu aplikacji:
 
     :::bash
-    bundle install
+    rails server -p 3000
 
-Zmienne, mixiny, makra i pozostałe rzeczy zdefiniowane w *Bootstrap*
-znajdziemy tutaj:
+widzimy, zę jest kilka rzeczy do poprawki: layout, css…
+Poprawiamy to co nam nie psauje.
 
-    :::bash
-    bundle show bootstrap-sass
-      $HOME/.gems/ruby/1.9.1/gems/bootstrap-sass-1.4.4
-    cd $HOME/.gems/ruby/1.9.1/gems/bootstrap-sass-1.4.4/vendor/assets/stylesheets
-    tree
-    .
-    ├── bootstrap
-    │   ├── forms.css.scss
-    │   ├── mixins.css.scss
-    │   ├── patterns.css.scss
-    │   ├── reset.css.scss
-    │   ├── scaffolding.css.scss
-    │   ├── tables.css.scss
-    │   ├── type.css.scss
-    │   └── variables.css.scss
-    └── bootstrap.css.scss
+Przykładowo:
 
-Ja zmienię wielkość fontu, kolorystykę i dodam brakujący odstęp pod paskiem
-u góry strony:
+    :::css app/assets/stylesheets/bootstrap_and_overrides.css.less
+    @baseFontSize: 18px;
+    @baseLineHeight: 24px;
 
-    :::css app/assets/stylesheets/nosql_tweets.css.scss
-    $basefont: 16px;
-    $baseline: 24px;
+    @navbarBackground: #EB7F00;
+    @navbarBackgroundHighlight: darken(#EB7F00, 10%);
+    @navbarText: black;
+    @navbarLinkColor: black;
+    @navbarLinkBackgroundHover: white;
 
-    @import 'bootstrap';
-
+    body {
+      padding-top: 40px;
+    }
     article {
       clear: both;
     }
-
-    body {
-      padding-top: 60px;
-    }
-
-    // patterns.css.scss:
-    // 0 -- opaque
-    // 1 -- transparent
-    .topbar-inner, .topbar .fill {
-      background-color: rgb(164, 5, 15);
-      @include vertical-gradient(#A4050F, #A40200);
-      $shadow: 0 0 3px rgba(164, 5, 15, .25), inset 0 -1px 0 rgba(164, 5, 15, .1);
-      @include box-shadow($shadow);
-    }
-
-    $headerColor: #300800;
-    $headerColorLight: lighten($headerColor, 25%);
-
-    // type.css.scss
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: bold;
-      color: $headerColor;
-      small {
-        color: $headerColorLight;
-      }
-    }
-
     // statuses: datetime
     .date {
       float: right;
@@ -973,71 +1019,40 @@ u góry strony:
       margin-left: .5em;
     }
 
-Pozostaje zmienić layout (użyjemy gotowego szablonu o nazwie
-[ContainerApp](http://twitter.github.com/bootstrap/examples/container-app.html)),
-dodać kilka widoków częściowych i pierwsza wersja rusztowania
-aplikacji będzie gotowa.
-
-Wszystkie użyte pliki są w repozytorium [EST](https://github.com/wbzyl/est):
-
-* [application.html.erb](https://github.com/wbzyl/est/blob/master/app/views/layouts/application.html.erb) –
-  szablon [ContainerApp](http://twitter.github.com/bootstrap/examples/container-app.html) dostosowany do Rails 3.1
-* szablony częściowe:
-  * [_menu.html.erb](https://github.com/wbzyl/est/blob/master/app/views/common/_menu.html.erb)
-  * [_header.html.erb](https://github.com/wbzyl/est/blob/master/app/views/common/_header.html.erb)
-  * [_footer.html.erb](https://github.com/wbzyl/est/blob/master/app/views/common/_footer.html.erb)
-
-Powyżej skorzystałem z palety:
-
-* pomarańczowy: \#A4050F
-* brązowy: \#300800
-* khaki: \#61673C (ciemny), \#B2AF6A (jaśniejszy), \#F6E6AF (jasny)
-
-Użyteczne linki:
-
-* [Twitter Bootstrap on Rails](http://lucapette.com/rails/twitter-bootstrap-on-rails/)
-* [Too good to be true! Twitter Bootstrap meets Formtastic and Tabulous](http://rubysource.com/too-good-to-be-true-twitter-bootstrap-meets-formtastic-and-tabulous/)
-* [How to Customize Twitter Bootstrap’s Design in a Rails app](http://rubysource.com/how-to-customize-twitter-bootstrap%E2%80%99s-design-in-a-rails-app/)
-* [jQuery Datepicker](http://keith-wood.name/datepick.html)
-* [jQuery-UI Datepicker](http://jqueryui.com/demos/datepicker/)
-
 
 ## Dodajemy pozostałe elementy MVC
 
 Kontroler:
 
-    :::ruby app/controllers/nosql_tweets_controller.rb
-    class NosqlTweetsController < ApplicationController
+    :::ruby app/controllers/tweets_controller.rb
+    class TweetsController < ApplicationController
       def index
-        @nosql_tweets = NosqlTweet.search(params)
+        @tweets = Tweet.search(params)
       end
     end
 
 Formularz:
 
-    :::rhtml app/views/nosql_tweets/index.html.erb
-    <%= form_tag nosql_tweets_path, method: :get do %>
-    <p>
-      <%= text_field_tag :q, params[:q] %>
-      <%= submit_tag 'Search', name: nil %>
-    </p>
+    :::rhtml app/views/tweets/index.html.erb
+    <%= form_tag tweets_index_path, method: :get, class: 'form-search' do %>
+      <%= text_field_tag :q, params[:q], class: 'span4' %>
+      <%= submit_tag 'Search', name: nil, class: 'btn' %>
     <% end %>
 
 Paginacja:
 
-    :::rhtml app/views/nosql_tweets/index.html.erb
+    :::rhtml app/views/tweets/index.html.erb
     <div class="digg_pagination">
       <div clas="page_info">
-        <%= page_entries_info @nosql_tweets.results %>
+        <%= page_entries_info @tweets.results %>
       </div>
-      <%= will_paginate @nosql_tweets.results %>
+      <%= will_paginate @tweets.results %>
     </div>
-
 
 Pozostała część widoku *index* (*TODO:* napisać kilka metod pomocniczych):
 
-    :::rhtml app/views/nosql_tweets/index.html.erb
-    <% @nosql_tweets.results.each do |tweet| %>
+    :::rhtml app/views/tweets/index.html.erb
+    <% @tweets.results.each do |tweet| %>
     <article>
     <p>
      <% text = (tweet.highlight && tweet.highlight.text) ? tweet.highlight.text.first : tweet.text %>
@@ -1058,8 +1073,8 @@ Pozostała część widoku *index* (*TODO:* napisać kilka metod pomocniczych):
 
 Model:
 
-    :::ruby app/models/nosql_tweet.rb
-    class NosqlTweet
+    :::ruby app/models/tweet.rb
+    class Tweet
       include Tire::Model::Persistence
 
       property :text
@@ -1071,7 +1086,7 @@ Model:
 
       def self.search(params)
         #Tire.search('statuses', type: 'mongodb', page: params[:page], per_page: 3) do |search|
-        Tire.search('nosql_tweets', page: params[:page], per_page: 8) do |search|
+        Tire.search('tweets', page: params[:page], per_page: 8) do |search|
           per_page = search.options[:per_page]
           current_page = search.options[:page] ? search.options[:page].to_i : 1
           offset = search.options[:per_page] * (current_page - 1)
@@ -1093,27 +1108,22 @@ Model:
     end
 
 Pobieramy style stronicowania ze strony
-[Samples of pagination styles for will_paginate](http://mislav.uniqpath.com/will_paginate/)
-i modyfikujemy *application.css*:
+[Samples of pagination styles for will_paginate](http://mislav.uniqpath.com/will_paginate/),
+przepisujemy je na LESS i importujemy kod *digg_pagination.less*
+w *bootstrap_and_overrides.css.less*:
 
-    :::css app/assets/stylesheets/application.css
-    /*
-     * This is a manifest file that'll automatically include all the stylesheets available in this directory
-     * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
-     * the top of the compiled file, but it's generally better to create a new file per style scope.
-     *= require_self
-     *= require pagination
-     *= require nosql_tweets
-    */
+    :::css app/assets/stylesheets/bootstrap_and_overrides.css.less
+    @import "digg_pagination";
+
 
 ## Fasety
 
-**TODO:** Dodać wyszukiwanie fasetowe po hashtagach.
+**Zadanie:** Dodać wyszukiwanie fasetowe po hashtagach.
 
 
-# JSON dump indeksu nosql_tweet
+# JSON dump indeksu tweets
 
-Zobacz search API:
+…czyli zrzut indeksu tweets do pliku w formacie JSON:
 
 * [scroll](http://www.elasticsearch.org/guide/reference/api/search/scroll.html)
 * [scan](http://www.elasticsearch.org/guide/reference/api/search/search-type.html)
@@ -1134,7 +1144,7 @@ Zobacz search API:
 Przykład pokazujący jak to działa:
 
     :::bash
-    curl -X GET 'localhost:9200/nosql_tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true'
+    curl -X GET 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true'
 
 Opcjonalnie możemy dopisać kryteria wyszukiwania, wszystko:
 
@@ -1159,7 +1169,7 @@ albo:
 Wtedy zmieniamy wywołanie *curl* na:
 
     :::bash
-    curl -XGET 'localhost:9200/nosql_tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true' -d '
+    curl -XGET 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true' -d '
     {
        "query" : {
          "match_all" : {}
@@ -1227,7 +1237,7 @@ Przykładowa implementacja tego algorytmu w NodeJS (v0.6.12)
         });
     };
 
-    rest.get('http://localhost:9200/nosql_tweets/_search?search_type=scan&scroll=10m&size=32')
+    rest.get('http://localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=32')
       .on('success', function(data, response) {
         iterate(data);
       });
@@ -1237,17 +1247,17 @@ Skrypt ten uruchamiamy tak:
     :::bash
     node dump-tweets.js
 
-Oczywiście wcześniej musimy umieścić dane w indeksie *nosql_tweets*.
+Oczywiście wcześniej musimy umieścić dane w indeksie *tweets*.
 JTZ? Opisałem to w [README tutaj](https://github.com/wbzyl/est).
 
 **Uwaga:** Korzystając z tego skryptu, możemy łatwo przenieść
 dane z Elasticsearch do MongoDB:
 
     :::bash
-    node json_dump-nosql_tweets.js | mongoimport --upsert -d test -c tweets --type json
+    node json_dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
 
 
-# Rivers allows to index streams
+# TODO: Rivers allows to index streams
 
 Zamiast samemu pisać kod do pobierania statusów z Twittera możemy
 użyć do tego celu wtyczki *river-twitter*.
@@ -1279,7 +1289,7 @@ MongoDB River Plugin for ElasticSearch:
 **Uwaga**: Po instalacji wtyczki, należy zrestartować *ElasticSearch*.
 
 
-## River Twitter
+## TODO: River Twitter
 
 Usuwanie swoich rivers, na przykład:
 
