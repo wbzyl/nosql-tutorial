@@ -18,7 +18,9 @@ Teraz pora, na przyjrzenie się zawartości strony domowej *ElasticSearch*:
   - [API](http://www.elasticsearch.org/guide/reference/api/)
   - [Query](http://www.elasticsearch.org/guide/reference/query-dsl/)
   - [Mapping](http://www.elasticsearch.org/guide/reference/mapping/)
-  - [Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html)
+  - [Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html);
+  [Real time analytics of big data with Elasticsearch](http://www.slideshare.net/karmi/realtime-analytic-with-elasticsearch-new-media-inspiration-2013)
+  ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
 * [Setting up ElasticSearch ](http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html)
 
 Kiedyś trzeba będzie zainstalować tę wtyczkę
