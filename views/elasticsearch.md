@@ -1240,7 +1240,7 @@ Przykładowa implementacja tego algorytmu w NodeJS (v0.6.12)
     rest.get('http://localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=32')
       .on('success', function(data, response) {
         iterate(data);
-      });
+    });
 
 Skrypt ten uruchamiamy tak:
 
@@ -1254,7 +1254,7 @@ JTZ? Opisałem to w [README tutaj](https://github.com/wbzyl/est).
 dane z Elasticsearch do MongoDB:
 
     :::bash
-    node json_dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
+    node dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
 
 
 # TODO: Rivers allows to index streams
