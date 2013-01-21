@@ -44,6 +44,7 @@ Dodatkowo warto przeczytać artykuł Teda Newarda,
 1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
 1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
 1. {%= link_to "Język zapytań", "/mongodb-queries" %}
+1. {%= link_to "Wyszukiwanie pełno tekstowe (od v2.4)", "/mongodb-full-text-search" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "Sterowniki NodeJS i Ruby dla MongoDB", "/mongo" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
