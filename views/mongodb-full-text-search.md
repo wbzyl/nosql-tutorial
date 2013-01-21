@@ -16,6 +16,17 @@ albo
     :::bash
     mongod --setParameter textSearchEnabled=true
 
+Kilka linków z 22.01.2013:
+
+* [Full text search in MongoDB](http://blog.serverdensity.com/full-text-search-in-mongodb/)
+* [MongoDB Text Search Explained](http://blog.codecentric.de/en/2013/01/text-search-mongodb-stemming/)
+* [MongoDB Text Search Tutorial](http://blog.codecentric.de/en/2013/01/mongodb-text-search-tutorial/)
+
+Zobacz też co się dzieje na blogu:
+
+* [mongoDB](http://blog.mongodb.org/)
+
+
 ## Proste przykłady
 
 Zaczynamy od prostszej rzeczy: *keyword search*:
@@ -29,3 +40,10 @@ A teraz *full text search*:
 
     :::js
     https://github.com/mongodb/mongo/blob/master/jstests/fts_mix.js
+
+
+## Fortunka z MongoDB i FTS
+
+* [Mongoid](http://mongoid.org/en/mongoid/index.html)
+
+*TODO*.

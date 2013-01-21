@@ -18,3 +18,8 @@ Samouczki:
 
 * [Data Driven Documents](http://vogievetsky.github.com/IntroD3/)
 * [D3, Conceptually](http://code.hazzens.com/d3tut/)
+
+Misc:
+
+* [Bounded Panning in D3](http://computationallyendowed.com/blog/2013/01/21/bounded-panning-in-d3.html) –
+  wykresy funkcji
