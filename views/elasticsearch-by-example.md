@@ -148,6 +148,73 @@ Wyszukiwanie po fasecie *myślenie*:
         } ]
       }
 
+## Facets dla średniozaawansowanych (Elasticsearch v0.20.2)
+
+* Karel Minarik, *Real time analytics of big data with Elasticsearch*
+  (slajdy 7–11: co to jest *inverted index*,
+  slajd 15: Faceted Navigation with ES,
+  slajd 21: Scripting)
+
+### Scripting
+
+Mapping:
+
+    ::bash
+    curl -X DELETE localhost:9200/stats
+    curl -X POST localhost:9200/stats \
+      -d '{"mappings": { "urls": { "properties": {"u": {type: "string", "index": "not_analyzed"}} } } }'
+
+Przykładowe dane:
+
+    :::bash
+    curl -X PUT localhost:9200/stats/urls/1 -d '{"u":"http://some.blogger.com/2012/09/01/index.html"}'
+    curl -X PUT localhost:9200/stats/urls/2 -d '{"u":"http://some.blogger.com/2012/09/11/index.html"}'
+    curl -X PUT localhost:9200/stats/urls/3 -d '{"u":"http://some.blogger.com/about.html"}'
+    curl -X PUT localhost:9200/stats/urls/4 -d '{"u":"https://github.com/user/A"}'
+    curl -X PUT localhost:9200/stats/urls/5 -d '{"u":"http://github.com/user/B"}'
+    curl -X POST localhost:9200/demo-articles/_refresh
+
+Zapytanie fasetowe:
+
+    :::bash
+    curl -X GET 'localhost:9200/stats/_search/?search_type=count&pretty' -d '{
+      "facets": {
+        "popular-domains": {
+          "terms": {
+            "field"  : "u",
+            "script" : "term.replace(new RegExp(\"https?://\"), \"\").split(\"/\")[0]",
+            "lang"   : "javascript"
+          }
+        }
+      }
+    }'
+
+To nie działa. Zwracany jes błąd. Czy potrzebna jest instalacja wtyczki
+[elasticsearch-lang-javascript](https://github.com/elasticsearch/elasticsearch-lang-javascript)?
+[Can not get the lang-javascript working ?](http://elasticsearch-users.115913.n3.nabble.com/0-19-10-Can-not-get-the-lang-javascript-working-td4025185.html)
+
+    sudo service elasticsearch stop  # obowiązkowo!
+    sudo elasticsearch/bin/plugin -remove lang-javascript
+    sudo elasticsearch/bin/plugin -install elasticsearch/elasticsearch-lang-javascript/1.2.0
+    sudo service elasticsearch start
+
+ale w logach nie ma śladu po zainstalowanej wtyczce:
+
+    [INFO ][plugins] [Leonus] loaded [], sites [hello-elasticsearch, head]
+
+Bez *lang* jest OK:
+
+    :::bash
+    curl -X GET 'localhost:9200/stats/_search/?search_type=count&pretty' -d '{
+      "facets": {
+        "popular-domains": {
+          "terms": {
+            "field"  : "u"
+          }
+        }
+      }
+    }'
+
 
 # Skrypt NodeJS „elasticimport”
 
