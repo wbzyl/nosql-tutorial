@@ -103,7 +103,7 @@ Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
     git checkout --track origin/1.3.x
 
     ./bootstrap
-    # ./configure --prefix=$HOME/.couchdb # 32-bity, programy będą instalowane w katalogu $HOME/.nosql/bin
+    # ./configure --prefix=$HOME/.couchdb # 32-bity, programy będą instalowane w katalogu $HOME/.couchdb/bin
     ./configure --prefix=$HOME/.couchdb --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
     make
     make install
@@ -213,7 +213,7 @@ albo możemy wykonać za pomocą programu *curl*:
 ## Gdzie są moje bazy danych?
 
 Domyślnie, skompilowany CouchDB będzie zapisywał rekordy
-do baz w katalogu *$HOME/.nosql/var/lib/couchdb/*.
+do baz w katalogu *$HOME/.couchdb/var/lib/couchdb/*.
 
 My zmieniliśmy tę lokalizację na:
 
@@ -257,14 +257,7 @@ Sprawdamy jak to będzie działać:
 
       reading config file /etc/logrotate.d/couchdb
       reading config info for /home/wbzyl/.data/var/log/couchdb/*.log
-
-      Handling 1 logs
-
-      rotating pattern: /home/wbzyl/.nosql/couchdb/build/var/log/couchdb/*.log  weekly (10 rotations)
-      empty log files are not rotated, old logs are removed
-      considering log /home/wbzyl/.nosql/couchdb/build/var/log/couchdb/couch.log
-        log does not need rotating
-
+      ...
 
 I to wszystko. Na koniec polecam lekturę
 [Rotating Linux Log Files – Part 2: logrotate](http://www.ducea.com/2006/06/06/rotating-linux-log-files-part-2-logrotate/).
@@ -285,7 +278,7 @@ na katalog z zainstalowanym plikiem nagłówkowym *couch_db.hrl*.
 i uruchamiamy *make*:
 
     :::bash
-    export COUCH_SRC=$HOME/.nosql/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/include
+    export COUCH_SRC=$HOME/.couchdb/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/include
     make
 
 Ponieważ nazwa tego katalogu, zależy od sumy SHA gałęzi, trzeba to
@@ -299,8 +292,8 @@ wcześniej sprawdzić.
 Kończymy instalację kopiując skompilowane pliki oraz plik konfiguracyjny GeoCouch
 do odpowiednich katalogów:
 
-    cp $HOME/.nosql/geocouch/etc/couchdb/default.d/geocouch.ini $HOME/.nosql/etc/couchdb/default.d/
-    cp $HOME/.nosql/geocouch/build/* /home/wbzyl/.nosql/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/ebin/
+    cp $HOME/.couchdb/geocouch/etc/couchdb/default.d/geocouch.ini $HOME/.couchdb/etc/couchdb/default.d/
+    cp $HOME/.couchdb/geocouch/build/* /home/wbzyl/.couchdb/lib/couchdb/erlang/lib/couch-1.3.0a-98988dd-git/ebin/
 
 Na koniec sprawdzamy czy geolokacja działa.
 W tym celu restartujemy serwer *couchdb* i przeklikowujemy na konsolę
@@ -350,8 +343,8 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
     :::bash
     cd mongo
     git checkout r2.3.2
-    scons all                            # build all binaries with v8
-    scons --prefix=$HOME/.nosql install
+    scons all                             # build all binaries with v8
+    scons --prefix=$HOME/.mongodb install
     git checkout master
 
 **Uwaga:** Od wersji 2.3.1 MongoDB korzysta z silnika JavaScript „V8” (Chrome).
@@ -373,7 +366,7 @@ Odpakowujemy archiwum:
 
 Kopiujemy pliki wykonywalne do odpowiednich katalogów:
 
-    mv mongodb-linux-x86_64-2.0.2/bin $HOME/.nosql/bin
+    mv mongodb-linux-x86_64-2.0.2/bin $HOME/.mongodb/bin
 
 I już!
 
@@ -538,7 +531,7 @@ Najpierw instalujemy Javę. Na przykład, w Fedorze robimy to tak:
     sudo yum install java-1.6.0-openjdk
 
 Następnie pobieramy [ostatnią wersję](http://www.elasticsearch.org/download/)
-i rozpakowujemy ją w katalogu, na przykład w *$HOME/.nosql/elasticsearch*:
+i rozpakowujemy ją w katalogu, na przykład w *$HOME/.elasticsearch*:
 
     :::bash
     mkdir $HOME/.elasticsearch
@@ -566,7 +559,7 @@ Sam program, będziemy uruchamiać za pomocą skryptu *elasticsearch.sh*
     cat $config
     echo "--------------------------------------------------"
     echo ""
-    $HOME/.nosql/elasticsearch/bin/elasticsearch -f -Des.config=$configfile
+    $HOME/.elasticsearch/elasticsearch/bin/elasticsearch -f -Des.config=$configfile
 
 W skrypcie wpisałem ścieżkę do swojego pliku konfiguracyjnego
 *elasticsearch.yml*. Oto jego zawartość:
@@ -614,7 +607,7 @@ Następnie przechodzimy do katalogu *redis*, gdzie wykonujemy polecenia:
     cd redis
     git checkout 2.4.2
     make
-    make PREFIX=$HOME/.nosql install
+    make PREFIX=$HOME/.redis install
     make test                          # nie działa na Sigmie (brak tclsh8.5)
 
 Na koniec edytujemy plik *redis.conf*, gdzie wpisujemy swoje dane i zmieniamy

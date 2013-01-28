@@ -5,6 +5,7 @@ Od wersji 2.4.0 (oraz dla *nightly builds*):
 * [Model Data to Support Keyword Search](http://docs.mongodb.org/manual/tutorial/model-data-for-keyword-search/#model-data-to-support-keyword-search)
 * [Release Notes for MongoDB 2.4 (2.3 Development Series)](http://docs.mongodb.org/manual/release-notes/2.4/)
 * pliki *jstest/fts\*.js* w źródłach [mongo](https://github.com/mongodb/mongo/tree/master/jstests)
+* [MongoDB Text Search: Experimental Feature in MongoDB 2.4](http://blog.mongodb.org/post/40513621310/mongodb-text-search-experimental-feature-in-mongodb)
 
 Enable:
 
