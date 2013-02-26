@@ -159,7 +159,7 @@ Wyszukiwanie po fasecie *myślenie*:
 
 Mapping:
 
-    ::bash
+    :::bash
     curl -X DELETE localhost:9200/stats
     curl -X POST localhost:9200/stats \
       -d '{"mappings": { "urls": { "properties": {"u": {type: "string", "index": "not_analyzed"}} } } }'
