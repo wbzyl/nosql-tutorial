@@ -23,8 +23,17 @@ Teraz pora, na przyjrzenie się zawartości strony domowej *ElasticSearch*:
   ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
 * [Setting up ElasticSearch ](http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html)
 
-Kiedyś trzeba będzie zainstalować tę wtyczkę
-[A web front end for an ElasticSearch cluster](https://github.com/Aconex/elasticsearch-head)
+Instalujemy wtyczkę ElasticSearch-Head (a web front end for an ElasticSearch cluster):
+
+    elasticsearch/bin/plugin -install mobz/elasticsearch-head
+
+i wchodzimy na stronę ElasticSearch-Head:
+
+    xdg-open http://localhost:9200/_plugin/head/
+
+Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
+
+Lista wszystkich [wtyczek „front ends”](http://www.elasticsearch.org/guide/appendix/clients.html).
 
 ElasticSearch driver dla języka Ruby:
 
