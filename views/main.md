@@ -17,7 +17,8 @@ Tematy referatów:
   - [Redis tutorial, April 2010](http://simonwillison.net/static/2010/redis-tutorial/)
   - [Redis: Zero to Master in 30 minutes](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/)
 * **Wizualizacja danych**:
-  - [d3.js](http://bost.ocks.org/mike/d3/workshop/), działa z CORS
+  - [d3.js](http://bost.ocks.org/mike/d3/workshop/);
+    [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
 
 
 ## Co to jest „NoSQL”?
