@@ -61,8 +61,10 @@ Różne:
 Przykładowe aplikacje:
 
 * Karel Minarik.
-  [Search Your Gmail Messages with ElasticSearch and Ruby](http://ephemera.karmi.cz/)
-  (Sinatra)
+  - [JavaScript Web Applications and elasticsearch ](http://www.elasticsearch.org/tutorials/2012/08/22/javascript-web-applications-and-elasticsearch.html) (plugin)
+  - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
+  [demo](http://karmi.github.com/elasticsearch-paramedic/)
+  - [Search Your Gmail Messages with ElasticSearch and Ruby](http://ephemera.karmi.cz/) (Sinatra)
 
 
 ## Przykładowa instalacja ze źródeł
@@ -1226,7 +1228,10 @@ dane z Elasticsearch do MongoDB:
     node dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
 
 
-# TODO: Rivers allows to index streams
+# Rivers allows to index streams
+
+**UWAGI:** (1) Nie wszystkie wtyczki są zgodne z ostatnią wersją Elasticsearch.
+(2) Po instalacji wtyczki, należy zrestartować ElasticSearch.
 
 Zamiast samemu pisać kod do pobierania statusów z Twittera możemy
 użyć do tego celu wtyczki *river-twitter*.
@@ -1236,18 +1241,14 @@ Instalacja wtyczek *rivers* jest prosta:
     :::bash
     bin/plugin -install river-twitter
       -> Installing river-twitter...
-      Trying http://elasticsearch.googlecode.com/svn/plugins/river-twitter/elasticsearch-river-twitter-0.18.5.zip...
+      Trying ...
       ...
     bin/plugin -install river-couchdb
       -> Installing river-couchdb...
-      Trying http://elasticsearch.googlecode.com/svn/plugins/river-couchdb/elasticsearch-river-couchdb-0.18.5.zip...
-      Downloading ...DONE
-      Installed river-couchdb
+      Trying ...
     bin/plugin -install river-wikipedia
       -> Installing river-wikipedia...
-      Trying http://elasticsearch.googlecode.com/svn/plugins/river-wikipedia/elasticsearch-river-wikipedia-0.18.5.zip...
-      Downloading ......DONE
-      Installed river-wikipedia
+      Trying ...
 
 Repozytoria z kodem wtyczek są na Githubie [tutaj](https://github.com/elasticsearch).
 
@@ -1255,10 +1256,8 @@ MongoDB River Plugin for ElasticSearch:
 
 * [elasticsearch-river-mongodb](https://github.com/richardwilly98/elasticsearch-river-mongodb)
 
-**Uwaga**: Po instalacji wtyczki, należy zrestartować *ElasticSearch*.
 
-
-## TODO: River Twitter
+## River Twitter
 
 Usuwanie swoich rivers, na przykład:
 
@@ -1321,7 +1320,7 @@ Wyszukiwanie:
         }
     }'
 
-Przy okazji możemy sprawdzić jak zaimplemetowany jest *mapping* w Tiver Twitter:
+Przy okazji możemy sprawdzić jak zaimplemetowany jest *mapping* w River Twitter:
 
     :::bash
     curl 'http://localhost:9200/tweets/_mapping?pretty=true'
