@@ -138,7 +138,7 @@ Podstawowe terminy to: **index** i **type** indeksu.
 
 ## index & type w przykładach
 
-Dokument:
+Przykładowy dokument:
 
     :::json book.json
     {
@@ -152,7 +152,7 @@ Dokument:
        "tags" : ["fiction", "children"]
     }
 
-Dodajemy dokument do */amazon/books* (**/index/type**):
+Dodajemy ten dokument do */amazon/books* (**/index/type**):
 
     :::bash
     curl -XPUT http://localhost:9200/amazon/books/0812504321 -d @book.json
@@ -163,7 +163,7 @@ Przykładowe zapytanie (w **query string**):
     :::bash
     curl 'http://localhost:9200/amazon/books/_search?pretty=true&q=author.first_name:Jack'
 
-Dokument:
+Jeszcze jeden dokument:
 
     :::json cd.json
     {
@@ -175,7 +175,7 @@ Dokument:
        "tags" : ["hip-hop", "pop-rap"]
     }
 
-Dodajemy dokument do */amazon/cds* (**/index/type**):
+Ten dokument dodajemy do */amazon/cds* (**/index/type**):
 
     :::bash
     curl -XPUT http://localhost:9200/amazon/cds/B00192IV0O -d @cd.json
@@ -219,7 +219,7 @@ Czy Elasticsearch ma REST API?
 
 ## Korzystamy z JSON Query Language
 
-Zacznamy od zapisania tych dokumentów w ElasticSearch:
+Najpierw zapiszemy te dokumenty w ElasticSearch:
 
     :::bash
     curl -XPUT 'http://localhost:9200/twitter/users/kimchy' -d '
@@ -649,15 +649,15 @@ implementations, such as statistical or date histogram facets.”
 Przykłady:
 
     :::bash
-    curl -X POST "localhost:9200/tweets/_count?q=couchdb&pretty=true"
+    curl -X POST "localhost:9200/tweets/_count?q=redis&pretty=true"
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "query_string" : {"query" : "couchdb"} },
+      "query" : { "query_string" : {"query" : "redis"} },
       "sort" : { "created_at" : { "order" : "desc" } }
     }'
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "query_string" : {"query" : "couchdb"} },
+      "query" : { "query_string" : {"query" : "redis"} },
       "sort" : { "created_at" : { "order" : "desc" } },
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
