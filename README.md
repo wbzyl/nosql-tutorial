@@ -1,15 +1,9 @@
-# Zaczynamy
+# Wiosna, 2012/13
 
-    bundle install --path=$HOME/.gems --binstubs
-    bin/thin --rackup lib/config.ru -p 3000 start
+## 1. Elasticsearch
 
-### Linki do kodu
+Instalacja, instalacja wtyczek, własne skrypty.
 
-    {%= link_to "gutenberg2couchdb.rb", "/mapreduce/couch/gutenberg2couchdb.rb" %}
-
-### Linki do źródeł
-
-    {%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}
 
 
 # Poradnik redaktora
@@ -31,4 +25,4 @@ Złożony:
 
 Zmiana czego:
 
-* zmiana pogladów, przekonań.
+* zmiana pogladów, przekonań
