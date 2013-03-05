@@ -87,7 +87,7 @@ Dane *contacts.bulk*:
     { "index": { "_type" : "private" } }
     { "created_at": "1965-03-01", "name": { "last": "Jaworska",  "first": "Basia" }  }
 
-Przykładowe zapytanie [Filed Query](http://www.elasticsearch.org/guide/reference/query-dsl/field-query.html):
+Przykładowe zapytanie [Field Query](http://www.elasticsearch.org/guide/reference/query-dsl/field-query.html):
 
     :::bash
     curl "localhost:9200/contacts/_search?pretty=true" -d '
@@ -119,7 +119,7 @@ Terms facet:
       }, {
       ...
 
-Wyszukiwanie po fasecie *myślenie*:
+Wyszukiwanie w tagach *myślenie*:
 
     :::bash
     curl "localhost:9200/aphorisms/_search?pretty=true" -d '
@@ -148,7 +148,9 @@ Wyszukiwanie po fasecie *myślenie*:
         } ]
       }
 
-## Facets dla średniozaawansowanych (Elasticsearch v0.20.2)
+## Facets dla średniozaawansowanych
+
+…dla Elasticsearch v0.20.2.
 
 * Karel Minarik, *Real time analytics of big data with Elasticsearch*
   (slajdy 7–11: co to jest *inverted index*,
@@ -218,7 +220,8 @@ Bez *lang* jest OK:
 
 # Skrypt NodeJS „elasticimport”
 
-**TODO:** Funkcjonalność podobna do programu *mongoimport*. Coś takiego:
+Do napisania. Funkcjonalność może być podobna do programu
+*mongoimport*. Przykładowo:
 
     mongoimport
     connected to: 127.0.0.1
@@ -246,5 +249,3 @@ Bez *lang* jest OK:
       --stopOnError           stop importing at first error rather than continuing
       --jsonArray             load a json array, not one item per line.
 
-
-JTZ? Teraz to jest nawet aż za proste…
