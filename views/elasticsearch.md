@@ -10,7 +10,7 @@
 
 Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
-Teraz pora, na przyjrzenie się zawartości strony domowej *ElasticSearch*:
+Podręczne linki do *ElasticSearch*:
 
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Guides](http://www.elasticsearch.org/guide/):
@@ -23,16 +23,18 @@ Teraz pora, na przyjrzenie się zawartości strony domowej *ElasticSearch*:
   ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
 * [Setting up ElasticSearch ](http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html)
 
-Instalujemy wtyczkę ElasticSearch-Head (a web front end for an ElasticSearch cluster):
+[Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) elasticsearch
+i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
-    elasticsearch/bin/plugin -install mobz/elasticsearch-head
+Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
 
-i wchodzimy na stronę ElasticSearch-Head:
+    bin/plugin -install mobz/elasticsearch-head
+
+i wchodzimy na stronę *ElasticSearch-Head*:
 
     xdg-open http://localhost:9200/_plugin/head/
 
 Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
-
 Lista wszystkich [wtyczek „front ends”](http://www.elasticsearch.org/guide/appendix/clients.html).
 
 ElasticSearch driver dla języka Ruby:
@@ -41,7 +43,7 @@ ElasticSearch driver dla języka Ruby:
   - [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
   - [Elasticsearch, Tire, and Nested queries/associations with ActiveRecord](http://stackoverflow.com/questions/11692560/elasticsearch-tire-and-nested-queries-associations-with-activerecord/11711477#11711477)
 
-Fedora:
+Instalacja na Fedorze:
 
 * [Elasticsearch RPMs](https://github.com/tavisto/elasticsearch-rpms)
 
@@ -63,7 +65,7 @@ Przykładowe aplikacje:
   (Sinatra)
 
 
-## Instalacja ze źródeł
+## Przykładowa instalacja ze źródeł
 
 Rozpakowujemy archiwum z ostatnią wersją
 [ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
@@ -87,18 +89,10 @@ może być dodatek do Firefoks o nazwie
 [JSONView](http://jsonview.com/) – that helps you view JSON documents
 in the browser.
 
-Warto też od razu zainstalować i uruchomić interfejs webowy do
-ElasticSearch:
+## Ściąga z Elasticsearch-Head
 
-    :::bash
-    elasticsearch-0.20.5/bin/plugin -install Aconex/elasticsearch-head
-    xdg-open http://localhost:9200/_plugin/head/
-
-### Krótka ściąga z Elasticsearch Head
-
-W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*.
-
-W zakładce *Any Request* zmieniamy **POST** na **GET**.
+W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*,
+a w zakładce *Any Request* zmieniamy **POST** na **GET**.
 
 Następnie dopisujemy do *Query* ścieżkę *_search*:
 
@@ -121,15 +115,13 @@ na przykład na:
   <b>a small number</b> of documents matching your query.
 </blockquote>
 
-## Your data, Your search
+# Your data, Your search
 
-Kilka, nieco zmienionych przykładów ze strony
+…czyli kilka przykładów ze strony
 [Your Data, Your Search](http://www.elasticsearch.org/blog/2010/02/12/yourdatayoursearch.html).
 
-Czy *elasticsearch* ma REST API?
-[REST API & JSON & Elasticsearch](http://www.elasticsearch.org/guide/reference/api/).
+Podstawowe terminy to: **index** i **type** indeksu.
 
-Podstawowa terminologia: indeks i jego typ.<br>
 **Interpretacja URI w zapytaniach kierowanych do ElasticSearch:**
 
 <pre>http://localhost:9200/<b>⟨index⟩</b>/<b>⟨type⟩</b>/...
@@ -144,7 +136,9 @@ Podstawowa terminologia: indeks i jego typ.<br>
  (analysis settings for example).
 </blockquote>
 
-Książka:
+## index & type w przykładach
+
+Dokument:
 
     :::json book.json
     {
@@ -158,7 +152,7 @@ Książka:
        "tags" : ["fiction", "children"]
     }
 
-Dodajemy książkę do indeksu *amazon*:
+Dodajemy dokument do */amazon/books* (**/index/type**):
 
     :::bash
     curl -XPUT http://localhost:9200/amazon/books/0812504321 -d @book.json
@@ -169,7 +163,7 @@ Przykładowe zapytanie (w **query string**):
     :::bash
     curl 'http://localhost:9200/amazon/books/_search?pretty=true&q=author.first_name:Jack'
 
-CD:
+Dokument:
 
     :::json cd.json
     {
@@ -181,7 +175,7 @@ CD:
        "tags" : ["hip-hop", "pop-rap"]
     }
 
-Dodajemy CD do indeksu *amazon*:
+Dodajemy dokument do */amazon/cds* (**/index/type**):
 
     :::bash
     curl -XPUT http://localhost:9200/amazon/cds/B00192IV0O -d @cd.json
@@ -192,36 +186,40 @@ Przykładowe zapytanie:
     :::bash
     curl 'http://localhost:9200/_search?pretty=true&q=label:Interscope'
 
-Wyszukiwanie po wszystkich typach w indeksie *amazon*:
+Wyszukiwanie po wszystkich typach w indeksie */amazon*:
 
     :::bash
     curl 'http://localhost:9200/amazon/_search?pretty=true&q=name:energy'
 
-Wyszukiwanie po kilku typach:
+Wyszukiwanie w indeksie */amazon* po kilku typach:
 
     :::bash
     curl 'http://localhost:9200/amazon/books,cds/_search?pretty=true&q=name:energy'
 
-Teraz pora na posprzątanie po sobie. Usuwamy indeks **amazon**:
+Na koniec posprzątamy po sobie, czyli usuniemy oba
+dodane dokumenty. W tym celu wystarczy usunąć indeks **/amazon**:
 
     :::bash
     curl -XDELETE 'http://localhost:9200/amazon'
 
-albo, za jednym razem usuwamy **wszystkie** indeksy
-(zalecana ostrożność):
+Można też usunąć wszystkie dokumenty (zalecana jest ostrożność):
 
     :::bash
     curl -XDELETE 'http://localhost:9200/_all'
 
-Na koniec, zapytanie o zdrowie klastra ElasticSearch:
+Na koniec zapytamy klaster ElasticSearch o zdrowie:
 
     :::bash
     curl 'http://localhost:9200/_cluster/health?pretty=true'
 
+Czy Elasticsearch ma REST API?
 
-### Zapytania, korzystające z JSON Query Language
+* [REST API & JSON & Elasticsearch](http://www.elasticsearch.org/guide/reference/api/).
 
-Zaczynamy od zapisania kilku dokumentów w ElasticSearch:
+
+## Korzystamy z JSON Query Language
+
+Zacznamy od zapisania tych dokumentów w ElasticSearch:
 
     :::bash
     curl -XPUT 'http://localhost:9200/twitter/users/kimchy' -d '
@@ -250,20 +248,13 @@ Sprawdzamy, co zostało dodane:
     curl 'http://localhost:9200/twitter/tweets/1?pretty=true'
     curl 'http://localhost:9200/twitter/tweets/2?pretty=true'
 
-Dla przypomnienia, interpretacja uri w zapytaniach do ElasticSearch:
-
-<pre>http://localhost:9200/<b>⟨index⟩</b>/_search?...
-http://localhost:9200/<b>⟨index⟩</b>/<b>⟨type⟩</b>/_search?...
-</pre>
-
-Teraz odpytamy indeks *twitter* korzystając
-z ElasticSearch *JSON query language*:
+Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
 
     :::bash
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
        "query" : {
-          "text" : { "user": "kimchy" }
+          "match" : { "user": "kimchy" }
        }
     }'
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
@@ -273,7 +264,8 @@ z ElasticSearch *JSON query language*:
        }
     }'
 
-Jaka jest różnica między wyszukiwaniem z **text** a **term**?
+Jaka jest różnica między wyszukiwaniem z **match**
+(w poprzednich wersjach – *text*) **term**?
 
 Sprawdzamy ile jest dokumentów w indeksie *twitter*:
 
@@ -300,47 +292,12 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
         }
     }'
 
-curl -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking
-**TODO:** Przykład, ale z **mapping** podobny do przykładu z artykułu
-[From Solr to elasticsearch](http://digital.cabinetoffice.gov.uk/2012/08/03/from-solr-to-elasticsearch/)
-(„It’s much more verbose, but it’s also much more obvious what is happening.”):
 
-    :::bash
-    curl -XGET 'http://localhost:9200/rummager/_search' -H 'Content-type: application/json' -d '{
-      "from": 0, "size": 50,
-      "query": {
-        "bool": {
-          "must": {
-            "query_string": {
-              "fields": ["title", "description", "indexable_content"],
-              "query": "bank holidays",
-              "minimum_should_match": "75%"
-            }
-          },
-          "should": {
-            "query_string": {
-              "default_field": "format",
-              "query": "transaction OR recommended-link",
-              "boost": 3.0
-            }
-          }
-        }
-      },
-      "highlight": {
-        "pre_tags": ["HIGHLIGHT_START"],
-        "post_tags": ["HIGHLIGHT_END"],
-        "fields": {
-          "description":{ },
-          "indexable_content":{ }
-        }
-      }
-    }'
+## Indeksy *Multi Tenant*
 
+*Tenant* to najemca, dzierżawca, a *Multi Tenant* to…?
 
-## Indeksy i typy *Multi Tenant*
-
-*Tenant* to najemca, dzierżawca. *Multi tenant* – jak to przetłumaczyć?
-Czy poniższy przykład coś wyjaśnia?
+Czy poniższy przykład pozwala zrozumieć sens *multi tenancy*?
 
     :::bash
     curl -XPUT 'http://localhost:9200/bilbo/info/1' -d '{ "name" : "Bilbo Baggins" }'
@@ -389,18 +346,19 @@ Dalsze takie próby są nużące i wyniki nie są są zajmujące.
 Dlatego, do następnych prób użyjemy większej liczby rzeczywistych
 (i dlatego zajmujących) danych. Naszymi danymi będą statusy z Twittera.
 Dodatkowo do odfiltrowania interesujących nas statusów
-skorzystamy z [stream API](https://dev.twitter.com/docs/streaming-api):
+skorzystamy z [stream API](https://dev.twitter.com/docs/streaming-api).
+W pliku *tracking* wpisujemy tę linijkę:
 
-    :::ruby tracking
-    track=mongodb,couchdb,elasticsearch,neo4j,meteorjs,backbonejs,emberjs,rails
+    :::ruby
+    track=elasticsearch,emberjs,mongodb,couchdb,redis
 
-(Dlaczego filtrujemy? Co sekundę wysyłanych jest do Twittera ok. 1000
-nowych statusów. Większość z nich nie ma dla nas żadnego znaczenia.)
+Dlaczego filtrujemy? Odpowiedź: co sekundę wysyłanych jest do Twittera
+ok. 1000 nowych statusów.
 
-Więcej tweetów: jeśli dopiszemy słowo **wow** wpisywane w wielu
+*Więcej tweetów:* Jeśli dopiszemy słowo **wow** wpisywane w wielu
 statusach, zostaniemy zalani tweetami – **wow!**
 
-Najprościej będzie zacząć od pobrania statusów za pomocą programu *curl*:
+Najprościej będzie zacząć od pobierania statusów za pomocą programu *curl*:
 
     :::bash
     curl -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking \
@@ -464,7 +422,7 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
       puts message
     end
 
-    client.track('rails', 'mongodb', 'couchdb', 'redis', 'neo4j', 'elasticsearch', 'riak') do |status|
+    client.track('elasticsearch', 'emberjs', 'mongodb', 'couchdb', 'redis') do |status|
       handle_tweet status
     end
 
@@ -519,7 +477,7 @@ which fields are searchable and if/how they are tokenized.”
     }
 
     mappings = { }
-    keywords = %w{rails jquery mongodb couchdb redis neo4j elasticsearch basho meteorjs emberjs backbonejs d3js}
+    keywords = %w{elasticsearch emberjs mongodb couchdb redis}
 
     keywords.each do |keyword|
       mappings[keyword.to_sym] = tweets_mapping
@@ -553,7 +511,7 @@ Uuruchamiamy ten skrypt i sprawdzamy czy *mapping* zostało zapisane w bazie:
 Cały skrypt można obejrzeć na GitHubie –
 [create-index-percolate_tweets.rb](https://github.com/wbzyl/est/blob/master/create-index-percolate_tweets.rb).
 
-Dopiero po tych wstępnych robótkach ręcznych, zabieramy się za
+Dopiero po tych wstępnych robótkach, zabieramy się za
 skrypt zapisujący statusy indeksie *tweets* i w typach
 o nazwach takich samych jak słowa kluczowe.
 
@@ -647,7 +605,7 @@ o nazwach takich samych jak słowa kluczowe.
     end
 
     # Fetch statuses from Twitter and write them to ElasticSearch.
-    keywords = %w{rails jquery mongodb couchdb redis neo4j elasticsearch basho meteorjs emberjs backbonejs d3js}
+    keywords = %w{elasticsearch emberjs mongodb couchdb redis}
     client.track(*keywords) do |status|
       handle_tweet(status)
     end
@@ -655,20 +613,20 @@ o nazwach takich samych jak słowa kluczowe.
 Cały skrypt *fetch-tweets.rb* można podejrzeć
 [tutaj](https://github.com/wbzyl/est/blob/master/fetch-tweets.rb).
 
-Po uruchmieniu tego skryptu:
+Na konsoli uruchamiamy skrypt:
 
     :::bash konsola
     ruby fetch-tweets.rb
 
-i odczekaniu kilku minut, aż kilka statusów zostanie zapisanych w bazie,
-wykonujemy kilka prostych testów:
+czekamy aż kilka statusów zostanie zapisanych w Elasticsearch
+i wykonujemy kilka prostych zapytań korzystając z programu *curl*:
 
     :::bash
-    curl 'http://localhost:9200/tweets/_count'
-    curl 'http://localhost:9200/tweets/rails/_count'
-    curl 'http://localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=2&pretty=true'
-    curl 'http://localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty=true'
-    curl 'http://localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty=true'
+    curl 'localhost:9200/tweets/_count'
+    curl 'localhost:9200/tweets/redis/_count'
+    curl 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=2&pretty=true'
+    curl 'localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty=true'
+    curl 'localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty=true'
 
 Oczywiście można też podejrzeć statusy
 korzystając z aplikacji webowej [Elasticsearch Head](https://github.com/Aconex/elasticsearch-head).
@@ -691,25 +649,25 @@ implementations, such as statistical or date histogram facets.”
 Przykłady:
 
     :::bash
-    curl -X POST "http://localhost:9200/tweets/_count?q=couchdb&pretty=true"
-    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_count?q=couchdb&pretty=true"
+    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "query_string" : {"query" : "couchdb"} },
       "sort" : { "created_at" : { "order" : "desc" } }
     }'
-    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "query_string" : {"query" : "couchdb"} },
       "sort" : { "created_at" : { "order" : "desc" } },
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
-    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "match_all" : {} },
       "sort" : { "created_at" : { "order" : "desc" } },
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
-    curl -X POST "http://localhost:9200/tweets/_search?size=0&pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_search?size=0&pretty=true" -d '
     {
       "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
     }'
@@ -749,17 +707,17 @@ returned facets (*other*), and the total number of tokens in the facet
 Jeszcze jeden przykład:
 
     :::bash
-    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
        {
-         "query" : { "query_string" : {"query" : "couchdb"} },
+         "query" : { "query_string" : {"query" : "redis"} },
          "sort" : { "created_at" : { "order" : "desc" } },
-         "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags", size: 3 }, "global": true } }
+         "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags", size: 4 }, "global": true } }
        }'
 
 A teraz inny facet:
 
     :::bash
-    curl -X POST "http://localhost:9200/tweets/_search?pretty=true" -d '
+    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query" : { "match_all" : {} },
       "sort" : { "created_at" : { "order" : "desc" } },

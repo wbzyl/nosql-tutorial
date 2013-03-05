@@ -23,14 +23,16 @@ Tematy referatów:
 
 ## Co to jest „NoSQL”?
 
-Termin „NoSQL” można rozszyfrować jako ***Not only SQL***. Carlo
-Strozzi wprowadził ten termin w 1998 roku. W 2009 roku Eric Evans
-użył terminu NoSQL w kontekście „the emergence of a
-growing number of non-relational, distributed data stores”
-([wikipedia](http://en.wikipedia.org/wiki/NoSQL)).
+W 2009 roku Johan Oskarsson organizował konferencję
+poświęconą bazom danych, które pojawiły się po roku 2000.
+Informacje o konferencji chciał umieścić na Twitterze.
+Dlatego potrzebował łatwego do wyszukiwaniu w tweetach hashtaga.
+Użył *\#nosql* zaproponowanego przez Erica Evansa z Rackspace.
+
+Zobacz też artykuł [NoSQL](http://en.wikipedia.org/wiki/NoSQL) w Wikipedii.
 
 Więcej informacji o „NoSQL” zebrałem {%= link_to "tutaj", "/motywacja" %}.
-Dodatkowo warto przeczytać artykuł Teda Newarda,
+Warto też przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
 
 
