@@ -129,7 +129,9 @@ Podstawowe terminy to: **index** i **type** indeksu.
 <pre>http://localhost:9200/<b>⟨index⟩</b>/<b>⟨type⟩</b>/...
 </pre>
 
-**Składnia zapytań** – [Lucene Query Parser Syntax](http://lucene.apache.org/java/2_9_1/queryparsersyntax.html).
+Częścią Elasticsearch jest wyszukiwarka [Apache Lucene](http://lucene.apache.org/).
+Składnia zapytań Lucene jest opisana w dokumencie
+[Query Parser Syntax](http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html).
 
 
 <blockquote>
