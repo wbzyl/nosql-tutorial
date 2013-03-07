@@ -2,7 +2,8 @@
 
 ## 1. Elasticsearch
 
-Instalacja, instalacja wtyczek, własne skrypty.
+Instalacja, instalacja wtyczek, własne skrypty,
+[gist](https://gist.github.com/wbzyl/5099266).
 
 
 
