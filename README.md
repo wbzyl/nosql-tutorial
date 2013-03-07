@@ -3,7 +3,8 @@
 ## 1. Elasticsearch
 
 Instalacja, instalacja wtyczek, własne skrypty,
-[gist](https://gist.github.com/wbzyl/5099266).
+[gist](https://gist.github.com/wbzyl/5099266)
+(problemy z nfs na sigmie?)
 
 
 
