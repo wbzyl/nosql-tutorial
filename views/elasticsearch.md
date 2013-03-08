@@ -146,14 +146,14 @@ Przykładowy dokument:
 
     :::json book.json
     {
-      "isbn" : "0812504321",
-      "name" : "Call of the Wild",
-      "author" : {
-         "first_name" : "Jack",
-         "last_name" : "London"
+      "isbn": "0812504321",
+      "name": "Call of the Wild",
+      "author": {
+         "first_name": "Jack",
+         "last_name": "London"
        },
-       "pages" : 128,
-       "tags" : ["fiction", "children"]
+       "pages": 128,
+       "tags": ["fiction", "children"]
     }
 
 Dodajemy ten dokument do */amazon/books* (**/index/type**):
@@ -171,12 +171,12 @@ Jeszcze jeden dokument:
 
     :::json cd.json
     {
-       "asin" : "B00192IV0O",
-       "name" : "THE E.N.D. (Energy Never Dies)",
-       "artist" : "Black Eyed Peas",
-       "label" : "Interscope",
+       "asin": "B00192IV0O",
+       "name": "THE E.N.D. (Energy Never Dies)",
+       "artist": "Black Eyed Peas",
+       "label": "Interscope",
        "release_date": "2009-06-09",
-       "tags" : ["hip-hop", "pop-rap"]
+       "tags": ["hip-hop", "pop-rap"]
     }
 
 Ten dokument dodajemy do */amazon/cds* (**/index/type**):
@@ -228,7 +228,7 @@ Najpierw zapiszemy te dokumenty w ElasticSearch:
     :::bash
     curl -XPUT 'http://localhost:9200/twitter/users/kimchy' -d '
     {
-       "name" : "Shay Banon"
+       "name": "Shay Banon"
     }'
 
     curl -XPUT 'http://localhost:9200/twitter/tweets/1' -d '
@@ -257,14 +257,14 @@ Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
     :::bash
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
-       "query" : {
-          "match" : { "user": "kimchy" }
+       "query": {
+          "match": { "user": "kimchy" }
        }
     }'
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
-       "query" : {
-          "term" : { "user": "kimchy" }
+       "query": {
+          "term": { "user": "kimchy" }
        }
     }'
 
@@ -281,8 +281,8 @@ Wyciągamy wszystkie dokumenty z indeksu *twitter*:
     :::bash
     curl 'http://localhost:9200/twitter/_search?pretty=true' -d '
     {
-        "query" : {
-            "matchAll" : {}
+        "query": {
+            "matchAll": {}
         }
     }'
 
@@ -291,8 +291,8 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
     :::bash
     curl -XGET 'http://localhost:9200/twitter/users/_search?pretty=true' -d '
     {
-        "query" : {
-            "matchAll" : {}
+        "query": {
+            "matchAll": {}
         }
     }'
 
@@ -304,8 +304,8 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
 Czy poniższy przykład pozwala zrozumieć sens *multi tenancy*?
 
     :::bash
-    curl -XPUT 'http://localhost:9200/bilbo/info/1' -d '{ "name" : "Bilbo Baggins" }'
-    curl -XPUT 'http://localhost:9200/frodo/info/1' -d '{ "name" : "Frodo Baggins" }'
+    curl -XPUT 'http://localhost:9200/bilbo/info/1' -d '{ "name": "Bilbo Baggins" }'
+    curl -XPUT 'http://localhost:9200/frodo/info/1' -d '{ "name": "Frodo Baggins" }'
 
     curl -XPUT 'http://localhost:9200/bilbo/tweets/1' -d '
     {
@@ -325,8 +325,8 @@ Wyszukiwanie „multi”, po kilku indeksach:
     :::bash
     curl -XGET 'http://localhost:9200/bilbo,frodo/_search?pretty=true' -d '
     {
-        "query" : {
-            "matchAll" : {}
+        "query": {
+            "matchAll": {}
         }
     }'
 
@@ -656,47 +656,47 @@ Przykłady:
     curl -X POST "localhost:9200/tweets/_count?q=redis&pretty=true"
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "query_string" : {"query" : "redis"} },
-      "sort" : { "created_at" : { "order" : "desc" } }
+      "query": { "query_string": {"query": "redis"} },
+      "sort": { "created_at": { "order": "desc" } }
     }'
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "query_string" : {"query" : "redis"} },
-      "sort" : { "created_at" : { "order" : "desc" } },
-      "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
+      "query": { "query_string": {"query": "redis"} },
+      "sort": { "created_at": { "order": "desc" } },
+      "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "match_all" : {} },
-      "sort" : { "created_at" : { "order" : "desc" } },
-      "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
+      "query": { "match_all": {} },
+      "sort": { "created_at": { "order": "desc" } },
+      "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
     curl -X POST "localhost:9200/tweets/_search?size=0&pretty=true" -d '
     {
-      "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags" } } }
+      "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
 
 A tak wygląda „fasetowy” JSON:
 
     :::json
-    "facets" : {
-       "hashtags" : {
-         "_type" : "terms",
-         "missing" : 3240,
-         "total" : 2099,
-         "other" : 1279,
-         "terms" : [ {
-           "term" : "mongodb",
-           "count" : 198
+    "facets": {
+       "hashtags": {
+         "_type": "terms",
+         "missing": 3240,
+         "total": 2099,
+         "other": 1279,
+         "terms": [ {
+           "term": "mongodb",
+           "count": 198
          }, {
-           "term" : "rails",
-           "count" : 141
+           "term": "rails",
+           "count": 141
          }, {
-           "term" : "nosql",
-           "count" : 80
+           "term": "nosql",
+           "count": 80
          }, {
-           "term" : "job",
-           "count" : 80
+           "term": "job",
+           "count": 80
          } ]
        }
      }
@@ -713,9 +713,9 @@ Jeszcze jeden przykład:
     :::bash
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
        {
-         "query" : { "query_string" : {"query" : "redis"} },
-         "sort" : { "created_at" : { "order" : "desc" } },
-         "facets" : { "hashtags" : { "terms" :  { "field" : "hashtags", size: 4 }, "global": true } }
+         "query": { "query_string": {"query": "redis"} },
+         "sort": { "created_at": { "order": "desc" } },
+         "facets": { "hashtags": { "terms":  { "field": "hashtags", size: 4 }, "global": true } }
        }'
 
 A teraz inny facet:
@@ -723,23 +723,23 @@ A teraz inny facet:
     :::bash
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
     {
-      "query" : { "match_all" : {} },
-      "sort" : { "created_at" : { "order" : "desc" } },
-      "facets" : { "statuses_per_day" : { "date_histogram" :  { "field" : "created_at", "interval": "day" } } }
+      "query": { "match_all": {} },
+      "sort": { "created_at": { "order": "desc" } },
+      "facets": { "statuses_per_day": { "date_histogram":  { "field": "created_at", "interval": "day" } } }
     }'
 
 Tak wygląda *date_histogram* facet:
 
     :::json
-    "facets" : {
-      "statuses_per_day" : {
-        "_type" : "date_histogram",
-        "entries" : [ {
-          "time" : 1332201600000,
-          "count" : 2834
+    "facets": {
+      "statuses_per_day": {
+        "_type": "date_histogram",
+        "entries": [ {
+          "time": 1332201600000,
+          "count": 2834
         }, {
-          "time" : 1332288000000,
-          "count" : 384
+          "time": 1332288000000,
+          "count": 384
         } ]
       }
     }
@@ -1066,7 +1066,7 @@ Model:
 
           search.query do
             boolean do
-              #must { string params[:q].blank? ? "*" : params[:q] }
+              #must { string params[:q].blank? ? "*": params[:q] }
               must { string params[:q] } if params[:q].present?
               must { range :created_at, lte: Time.zone.now }
             end
@@ -1123,8 +1123,8 @@ Opcjonalnie możemy dopisać kryteria wyszukiwania, wszystko:
 
     :::json
     {
-       "query" : {
-         "match_all" : {}
+       "query": {
+         "match_all": {}
        }
     }
 
@@ -1133,8 +1133,8 @@ albo:
     :::json
     {
        "query": {
-          "query_string" : {
-             "query" : "some query string here"
+          "query_string": {
+             "query": "some query string here"
           }
        }
     }
@@ -1144,8 +1144,8 @@ Wtedy zmieniamy wywołanie *curl* na:
     :::bash
     curl -XGET 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true' -d '
     {
-       "query" : {
-         "match_all" : {}
+       "query": {
+         "match_all": {}
        }
     }'
 
@@ -1153,18 +1153,18 @@ Wynik wykonania tego polecenia, to przykładowo:
 
     :::json
     {
-      "_scroll_id" : "c2NhbjsxOzE6Q29xZ01qdkJTZHVRdTA1Ow=",
-      "took" : 10,
-      "timed_out" : false,
-      "_shards" : {
-        "total" : 1,
-        "successful" : 1,
-        "failed" : 0
+      "_scroll_id": "c2NhbjsxOzE6Q29xZ01qdkJTZHVRdTA1Ow=",
+      "took": 10,
+      "timed_out": false,
+      "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
       },
-      "hits" : {
-        "total" : 105,
-        "max_score" : 0.0,
-        "hits" : [ ]
+      "hits": {
+        "total": 105,
+        "max_score": 0.0,
+        "hits": [ ]
       }
     }
 
@@ -1178,18 +1178,18 @@ aż otrzymamy pustą tablicę *hits.hits*:
 
     :::json
     {
-      "_scroll_id" : "c2lZ1UTsxO3RvdGFsX2hpdHM6MTM5Ow=",
-      "took" : 128,
-      "timed_out" : false,
-      "_shards" : {
-        "total" : 1,
-        "successful" : 1,
-        "failed" : 0
+      "_scroll_id": "c2lZ1UTsxO3RvdGFsX2hpdHM6MTM5Ow=",
+      "took": 128,
+      "timed_out": false,
+      "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
       },
-      "hits" : {
-        "total" : 2024,
-        "max_score" : 0.0,
-        "hits" : [ ]
+      "hits": {
+        "total": 2024,
+        "max_score": 0.0,
+        "hits": [ ]
         ...
 
 Przykładowa implementacja tego algorytmu w NodeJS (v0.8.14)
@@ -1275,18 +1275,18 @@ gdzie w pliku *nosql-tweets.json* wpisałem:
 
     :::json tweets-nosql.json
     {
-        "type" : "twitter",
-        "twitter" : {
-            "user" : "wbzyl",
-            "password" : "sekret",
+        "type": "twitter",
+        "twitter": {
+            "user": "wbzyl",
+            "password": "sekret",
             "filter": {
                "tracks": ["elasticsearch", "mongodb", "couchdb", "rails"]
             }
         },
-        "index" : {
+        "index": {
             "index": "tweets",
-            "type" : "nosql",
-            "bulk_size" : 20
+            "type": "nosql",
+            "bulk_size": 20
         }
     }
 
@@ -1295,12 +1295,12 @@ Sprawdzanie statusu *River Twitter*:
     :::bash
     curl -XGET http://localhost:9200/_river/my_twitter_river/_status?pretty=true
     {
-      "_index" : "_river",
-      "_type" : "my_twitter_river",
-      "_id" : "_status",
-      "_version" : 5,
-      "exists" : true,
-      "_source" : {"ok":true,
+      "_index": "_river",
+      "_type": "my_twitter_river",
+      "_id": "_status",
+      "_version": 5,
+      "exists": true,
+      "_source": {"ok":true,
          "node":{"id":"aUJLtb_KSZibfW3IG9P8yQ","name":"Nobilus","transport_address":"inet[/192.168.4.4:9300]"}}
 
 A tak raportowane jest pobranie paczki z tweetami na konsoli:
@@ -1317,8 +1317,8 @@ Wyszukiwanie:
     curl 'http://localhost:9200/tweets/nosql/_search?q=text:mongodb&fields=user.name,text&pretty=true'
     curl 'http://localhost:9200/tweets/nosql/_search?pretty=true' -d '
     {
-        "query" : {
-            "match_all" : { }
+        "query": {
+            "match_all": { }
         }
     }'
 

@@ -10,28 +10,28 @@ Zapisujemy kilka dokumentów w ElasticSearch:
 Dane (**uwaga:** każdy JSON wpisujemy w jednym wierszu):
 
     :::json test.bulk
-    { "index": { "_type" : "steinhaus" } }
+    { "index": { "_type": "steinhaus" } }
     { "quote": "Idioci i geniusze są wolni od obowiązku rozumienia dowcipów.",
       "tags": ["ludzie", "dowcipy", "człowiek"] }
-    { "index": { "_type" : "steinhaus" } }
+    { "index": { "_type": "steinhaus" } }
     { "quote": "Unikaj skarżącego się na brak czasu, chce ci zabrać twój. ",
       "tags": ["ludzie", "czas", "człowiek"] }
-    { "index": { "_type" : "steinhaus" } }
+    { "index": { "_type": "steinhaus" } }
     { "quote": "Ludzie myślą, mówią i robią to, czego nie wolno robić, o czym nie wolno mówić ani myśleć.",
       "tags": ["ludzie", "myślenie"] }
-    { "index": { "_type" : "steinhaus" } }
+    { "index": { "_type": "steinhaus" } }
     { "quote": "Między duchem a materią pośredniczy matematyka.",
       "tags": ["materia", "duch", "matematyka"] }
-    { "index": { "_type" : "lec" } }
+    { "index": { "_type": "lec" } }
     { "quote": "Mężczyźni wolą kobiety ładne niż mądre, ponieważ łatwiej im przychodzi patrzenie niż myślenie.",
       "tags": ["ludzie", "kobiety", "mężczyźni"] }
-    { "index": { "_type" : "lec" } }
+    { "index": { "_type": "lec" } }
     { "quote": "Podrzuć własne marzenia swoim wrogom, może zginą przy ich realizacji.",
       "tags": ["ludzie", "myślenie", "marzenia"] }
-    { "index": { "_type" : "lec" } }
+    { "index": { "_type": "lec" } }
     { "quote": "By dojść do źródła, trzeba płynąć pod prąd.",
       "tags": ["źródło"] }
-    { "index": { "_type" : "lec" } }
+    { "index": { "_type": "lec" } }
     { "quote": "Chociaż krowie dasz kakao, nie wydoisz czekolady.",
       "tags": ["zwierzęta", "krowa", "doić"] }
 
@@ -49,21 +49,21 @@ Przeszukaj wszystkie dokumenty, zwróć cztery:
       {
         "size": 4,
         "sort": { "_score": {}  },
-        "query" : { "query_string" : {"query" : "do*"} }
+        "query": { "query_string": {"query": "do*"} }
       }'
 
 Tylko jedno pole:
 
     :::bash
     curl "localhost:9200/aphorisms/_search?pretty=true" -d '
-      { "query" : { "query_string" : {"query" : "quote:do*"} } }'
+      { "query": { "query_string": {"query": "quote:do*"} } }'
     curl "localhost:9200/aphorisms/_search?pretty=true" -d '
-      { "query" : { "query_string" : {"query" : "tags:do*"} } }'
+      { "query": { "query_string": {"query": "tags:do*"} } }'
     curl "localhost:9200/aphorisms/_search?fields=quote&pretty=true" -d '
-      { "query" : { "query_string" : {"query" : "tags:do*"} } }'
+      { "query": { "query_string": {"query": "tags:do*"} } }'
     curl "localhost:9200/aphorisms/_search?pretty=true" -d '
       { "fields": ["quote"],
-        "query" : { "query_string" : {"query" : "tags:do*"} } }'
+        "query": { "query_string": {"query": "tags:do*"} } }'
 
 
 ## Wyszukiwanie tylko w subdocuments
@@ -78,13 +78,13 @@ Przykładowe dokumenty:
 Dane *contacts.bulk*:
 
     :::json contacts.bulk
-    { "index": { "_type" : "private" } }
+    { "index": { "_type": "private" } }
     { "created_at": "1965-03-01", "name": { "last": "Grabczyk",  "first": "Agata" }  }
-    { "index": { "_type" : "private" } }
+    { "index": { "_type": "private" } }
     { "created_at": "1966-03-10", "name": { "last": "Korolczyk", "first": "Bartek" }  }
-    { "index": { "_type" : "private" } }
+    { "index": { "_type": "private" } }
     { "created_at": "1966-03-20", "name": { "last": "Maciejak",  "first": "Adam" }  }
-    { "index": { "_type" : "private" } }
+    { "index": { "_type": "private" } }
     { "created_at": "1965-03-01", "name": { "last": "Jaworska",  "first": "Basia" }  }
 
 Przykładowe zapytanie [Field Query](http://www.elasticsearch.org/guide/reference/query-dsl/field-query.html):
@@ -114,8 +114,8 @@ Terms facet:
       }'
       ... wyniki wyszukiwania ...
       }, {
-        "term" : "myślenie",
-        "count" : 2
+        "term": "myślenie",
+        "count": 2
       }, {
       ...
 
@@ -126,25 +126,25 @@ Wyszukiwanie w tagach *myślenie*:
       {
         "size": 4,
         "sort": { "_score": {}  },
-        "query" : { "term": { "tags": "myślenie" } }
+        "query": { "term": { "tags": "myślenie" } }
       }'
     ... wyniki wyszukiwania ...
     {
-      "took" : 0,
+      "took": 0,
       ...
-      "hits" : {
-        "total" : 2,
-        "max_score" : 1.2380183,
-        "hits" : [ {
-          "_index" : "aphorisms",
-          "_type" : "steinhaus",
-          "_id" : "j0JWnItaRfuY4vJbVWHUWw",
-          "_score" : 1.2380183, "_source" : { "quote": "Ludzie...", "tags": ["ludzie", "myślenie"] }
+      "hits": {
+        "total": 2,
+        "max_score": 1.2380183,
+        "hits": [ {
+          "_index": "aphorisms",
+          "_type": "steinhaus",
+          "_id": "j0JWnItaRfuY4vJbVWHUWw",
+          "_score": 1.2380183, "_source": { "quote": "Ludzie...", "tags": ["ludzie", "myślenie"] }
         }, {
-          "_index" : "aphorisms",
-          "_type" : "lec",
-          "_id" : "N_jMl9dtR4atAGxDWfL9iw",
-          "_score" : 0.9904146, "_source" : { "quote": "Podrzuć...", "tags": ["ludzie", "myślenie", "marzenia"] }
+          "_index": "aphorisms",
+          "_type": "lec",
+          "_id": "N_jMl9dtR4atAGxDWfL9iw",
+          "_score": 0.9904146, "_source": { "quote": "Podrzuć...", "tags": ["ludzie", "myślenie", "marzenia"] }
         } ]
       }
 
@@ -183,9 +183,9 @@ Zapytanie fasetowe:
       "facets": {
         "popular-domains": {
           "terms": {
-            "field"  : "u",
-            "script" : "term.replace(new RegExp(\"https?://\"), \"\").split(\"/\")[0]",
-            "lang"   : "javascript"
+            "field": "u",
+            "script": "term.replace(new RegExp(\"https?://\"), \"\").split(\"/\")[0]",
+            "lang": "javascript"
           }
         }
       }
@@ -211,7 +211,7 @@ Bez *lang* jest OK:
       "facets": {
         "popular-domains": {
           "terms": {
-            "field"  : "u"
+            "field": "u"
           }
         }
       }
