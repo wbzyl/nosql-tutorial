@@ -49,39 +49,39 @@ Przechodzimy do katalogu *mongo* i wykonujemy polecenie:
 
     :::bash
     cd mongo
-    git archive --format=tar --prefix=mongo-2.3.2/ be56edc259 | gzip > ~/rpmbuild/SOURCES/mongo-2.3.2.tar.gz
+    git archive --format=tar --prefix=mongo-2.4.0/ c40533e | gzip > ~/rpmbuild/SOURCES/mongo-2.4.0.tar.gz
 
-gdzie `be56edc259` to (ostatni) commit z 6.01.2013.
+gdzie `c40533e` to (ostatni) commit z 10.03.2013.
 
-Plik [mongo-2.3.2.spec](https://raw.github.com/wbzyl/disasters/master/mongod/mongo-2.3.2.spec)
+Plik [mongo-2.4.0.spec](https://raw.github.com/wbzyl/disasters/master/mongod/mongo-2.4.0.spec)
 zapisujemy w katalogu `~/rpmbuild/SPECS`.
 Przechodzimy do tego katalogu, gdzie wykonujemy polecenia:
 
     :::bash
-    rpmbuild -bi mongo-2.3.2.spec
-    rpmbuild -bl mongo-2.3.2.spec
+    rpmbuild -bi mongo-2.4.0.spec
+    rpmbuild -bl mongo-2.4.0.spec
 
 Jeśli powyższe polecenia wykonują się bez blędów, to budujemy pakiet SRC:
 
     :::bash
-    rpmbuild -bs mongo-2.3.2.spec
+    rpmbuild -bs mongo-2.4.0.spec
 
 a następnie pakiet RPM:
 
     :::bash
-    rpmbuild --rebuild mongo-2.3.2-2.fc16.src.rpm
+    rpmbuild --rebuild mongo-2.4.0-2.fc16.src.rpm
 
 Paczkę instalujemy / uaktualniamy korzystając z programu *yum*:
 
     :::bash
     cd RPMS/x86_64/
-    yum update mongo-2.3.3-2.fc16.x86_64.rpm mongo-server-2.3.2-2.fc16.x86_64.rpm
+    yum update mongo-2.3.3-2.fc16.x86_64.rpm mongo-server-2.4.0-2.fc16.x86_64.rpm
 
 *Uwaga:* Pakiety RPM powinniśmy budować za pomocą programu *mock*:
 
     :::bash
     sudo usermod -a -G mock wbzyl # dodajemy siebie do grupy mock
-    mock -r fedora-16-x86_64 --resultdir ../RPMS/ mongo-2.3.2-2.fc16.src.rpm
+    mock -r fedora-16-x86_64 --resultdir ../RPMS/ mongo-2.4.0-2.fc16.src.rpm
 
 Dlaczego?
 
