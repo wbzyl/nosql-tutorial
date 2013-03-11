@@ -75,7 +75,7 @@ Paczkę instalujemy / uaktualniamy korzystając z programu *yum*:
 
     :::bash
     cd RPMS/x86_64/
-    yum update mongo-2.3.3-2.fc16.x86_64.rpm mongo-server-2.4.0-2.fc16.x86_64.rpm
+    yum update mongo-2.4.0-2.fc16.x86_64.rpm mongo-server-2.4.0-2.fc16.x86_64.rpm
 
 *Uwaga:* Pakiety RPM powinniśmy budować za pomocą programu *mock*:
 
