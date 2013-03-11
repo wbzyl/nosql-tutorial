@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="600px"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="nosql-logo.svg"
+   inkscape:export-filename="/home/wbzyl/repos/tutorials/nosql-tutorial/public/svg/nosql-logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs2987" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7025"
+     inkscape:cx="402.84698"
+     inkscape:cy="300"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-width="1072"
+     inkscape:window-height="827"
+     inkscape:window-x="221"
+     inkscape:window-y="73"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <text
+       xml:space="preserve"
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Mono;-inkscape-font-specification:Latin Modern Mono"
+       x="164.26735"
+       y="175.06427"
+       id="text2993"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2995"
+         x="164.26735"
+         y="175.06427" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Mono;-inkscape-font-specification:Latin Modern Mono"
+       x="171.97943"
+       y="289.9743"
+       id="text2997"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2999"
+         x="171.97943"
+         y="289.9743" /></text>
+    <g
+       transform="scale(1.09912,0.90981876)"
+       style="font-size:117.98149872px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Mono;-inkscape-font-specification:Latin Modern Mono"
+       id="text3001" />
+    <g
+       transform="scale(1.043732,0.95810036)"
+       style="font-size:112.02565002px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Mono;-inkscape-font-specification:Latin Modern Mono"
+       id="text3007" />
+    <g
+       id="g3026"
+       transform="matrix(1.164963,0,0,1,-393.24856,-243.63684)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/wbzyl/repos/tutorials/nosql-tutorial/public/svg/nosql-logo.png">
+      <text
+         sodipodi:linespacing="125%"
+         id="text2999"
+         y="377.89203"
+         x="333.16196"
+         style="font-size:211.01426697px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;stroke:none;font-family:Latin Modern Mono Light;-inkscape-font-specification:'Latin Modern Mono Light,'"
+         xml:space="preserve"><tspan
+           y="377.89203"
+           x="333.16196"
+           id="tspan3001"
+           sodipodi:role="line">N</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3003"
+         y="515.16711"
+         x="332.39075"
+         style="font-size:211.01426697px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;stroke:none;font-family:Latin Modern Mono Light;-inkscape-font-specification:'Latin Modern Mono Light,'"
+         xml:space="preserve"><tspan
+           y="515.16711"
+           x="332.39075"
+           id="tspan3005"
+           sodipodi:role="line">O</tspan></text>
+      <text
+         transform="scale(1.0849937,0.92166434)"
+         sodipodi:linespacing="125%"
+         id="text3008"
+         y="410.32288"
+         x="416.09836"
+         style="font-size:228.10620117px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;stroke:none;font-family:Latin Modern Mono Light;-inkscape-font-specification:'Latin Modern Mono Light,'"
+         xml:space="preserve"><tspan
+           y="410.32288"
+           x="416.09836"
+           id="tspan3010"
+           sodipodi:role="line">S</tspan></text>
+      <g
+         style="fill:#000080"
+         transform="matrix(0.63887721,0,0,0.92290886,171.08208,20.514379)"
+         id="g3020">
+        <text
+           xml:space="preserve"
+           style="font-size:211.01426697px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;stroke:none;font-family:Latin Modern Mono Light;-inkscape-font-specification:'Latin Modern Mono Light,'"
+           x="444.21594"
+           y="533.68365"
+           id="text3012"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3014"
+             x="444.21594"
+             y="533.68365">Q</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:211.01426697px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;stroke:none;font-family:Latin Modern Mono Light;-inkscape-font-specification:'Latin Modern Mono Light,'"
+           x="552.9563"
+           y="531.36249"
+           id="text3016"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3018"
+             x="552.9563"
+             y="531.36249">L</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
