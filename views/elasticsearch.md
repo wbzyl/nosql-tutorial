@@ -269,7 +269,7 @@ Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
     }'
 
 Jaka jest różnica między wyszukiwaniem z **match**
-(w poprzednich wersjach – *text*) **term**?
+(w poprzednich wersjach zamiast *match* używano *text*) a z **term**?
 
 Sprawdzamy ile jest dokumentów w indeksie *twitter*:
 
