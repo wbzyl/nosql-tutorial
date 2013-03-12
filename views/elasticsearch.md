@@ -274,7 +274,7 @@ Jaka jest różnica między wyszukiwaniem z **match**
 Sprawdzamy ile jest dokumentów w indeksie *twitter*:
 
     :::bash
-    curl 'http://localhost:9200/twitter/_count
+    curl http://localhost:9200/twitter/_count
 
 Wyciągamy wszystkie dokumenty z indeksu *twitter*:
 

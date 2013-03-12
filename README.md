@@ -16,7 +16,7 @@ A tak można odpytać ES z Sigmy.
 Zapytania będą krótsze z taką definicją:
 
 ```sh
-export ES=http://sigma.ug.edu.pl:9200
+export ES=sigma.ug.edu.pl:9200
 ```
 
 Teraz zapytanie będzie wyglądać tak:
@@ -48,3 +48,4 @@ Złożony:
 Zmiana czego:
 
 * zmiana poglądów, przekonań
+help

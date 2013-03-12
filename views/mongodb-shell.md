@@ -6,15 +6,15 @@
 </blockquote>
 
 „The MongoDB interactive shell” to po polsku „powłoka (konsola ?) mongo”.
+Zobacz też [MongoDB Shell Enhancements for Hackers](http://tylerbrock.github.com/mongo-hacker/).
 
 Przed wejściem na *konsolę mongo*, musimy uruchomić serwer *mongod*:
 
     :::bash terminal
-    mongod.sh 27017
     mongo --port 27017
-      MongoDB shell version: 1.9.0
-      connecting to: 127.0.0.1:27017/test
-    >
+      MongoDB shell version: 2.5.0-pre-
+      connecting to: test
+      localhost(mongod-2.4.0-rc2-pre-) test>
 
 Domyślnie serwer nasłuchuje na porcie 27017.
 Oczywiście możemy wybrać inny port.
@@ -105,8 +105,8 @@ do powłoki *mongo*:
     add(2, 2)
     pi
 
-Zobacz też [Storing functions server-side](http://www.mongodb.org/display/DOCS/Server-side+Code+Execution#Server-sideCodeExecution-Storingfunctionsserverside)
-oraz [Server-side Code Execution](http://www.mongodb.org/display/DOCS/Server-side+Code+Execution).
+Zobacz też [Storing functions server-side](http://docs.mongodb.org/manual/applications/server-side-javascript/#storing-functions-server-side)
+oraz [Server-side Code Execution](http://docs.mongodb.org/manual/applications/server-side-javascript/).
 
 
 ## Operacje CRUD
