@@ -47,4 +47,4 @@ Złożony:
 
 Zmiana czego:
 
-* zmiana pogladów, przekonań
+* zmiana poglądów, przekonań
