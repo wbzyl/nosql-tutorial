@@ -59,14 +59,19 @@ Przechodzimy do tego katalogu, gdzie wykonujemy polecenia:
 
     :::bash
     rpmbuild -bi mongo-2.4.0.spec
+
+Jeśli powyższe polecenie kończy się komunikatem o niespakietowanych
+plikach, dodajemy je do pliku *mongo-2.4.0.spec* i sprawdzamy
+czy wszystko jest OK:
+
     rpmbuild -bl mongo-2.4.0.spec
 
-Jeśli powyższe polecenia wykonują się bez blędów, to budujemy pakiet SRC:
+Jeśli polecenie wykona się bez błędów, to budujemy pakiet SRC:
 
     :::bash
     rpmbuild -bs mongo-2.4.0.spec
 
-a następnie pakiet RPM:
+a następnie pakiety RPM:
 
     :::bash
     rpmbuild --rebuild mongo-2.4.0-2.fc16.src.rpm
