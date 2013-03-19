@@ -55,7 +55,7 @@ gdzie `c40533e` to (ostatni) commit z 10.03.2013.
 
 Plik [mongo-2.4.0.spec](https://raw.github.com/wbzyl/disasters/master/mongod/mongo-2.4.0.spec)
 zapisujemy w katalogu `~/rpmbuild/SPECS`.
-Przechodzimy do tego katalogu, gdzie wykonujemy polecenia:
+Przechodzimy do tego katalogu, gdzie wykonujemy polecenie:
 
     :::bash
     rpmbuild -bi mongo-2.4.0.spec
