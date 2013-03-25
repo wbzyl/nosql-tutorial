@@ -2,3 +2,4 @@
 /GeoIP/GeoLiteCity.dat
 /GeoIP/node_modules/
 /GeoIP/data/*.log
+/GeoIP/data/*.gz
