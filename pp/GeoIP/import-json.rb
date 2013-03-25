@@ -24,3 +24,12 @@ end
 h = a.map(&method(:to_j))
 
 puts h.inspect
+
+
+__END__
+
+array.map(&:name)
+array.map { |x| x.name }
+
+array.map(&method(:name))
+array.map { |x| name(x) }
