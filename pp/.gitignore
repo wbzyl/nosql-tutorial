@@ -3,3 +3,4 @@
 /GeoIP/node_modules/
 /GeoIP/data/*.log
 /GeoIP/data/*.gz
+/GeoIP/data/*.json
