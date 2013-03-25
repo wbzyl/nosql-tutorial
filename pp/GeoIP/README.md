@@ -6,6 +6,7 @@ GeoIP:
 * [geoip](https://github.com/cjheath/geoip) – gem for ruby
 * [GeoIP-lite](https://github.com/bluesmoon/node-geoip) – node module
   ([npm registry](https://npmjs.org/package/geoip-lite))
+* [oj](http://rubydoc.info/github/ohler55/oj/file/README.md) – optimized json
 
 MongoDB:
 
@@ -17,6 +18,7 @@ Instalujemy gemy:
     gem install geoip
     gem install mongo
     gem install bson_ext
+    gem install oj
 
 Moduły dla node instalujemy lokalnie:
 
