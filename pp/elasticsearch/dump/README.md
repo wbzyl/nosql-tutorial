@@ -1,8 +1,17 @@
-# Elasticsearch ⟿  MongoDB
+# Elasticsearch  ⟿    MongoDB
 
 Przerzucamy indeks *tweets* z Elasticsearch do MongoDB:
 
     node dump-tweets-for-mongodb.js | mongoimport -d test -c tweets
+
+## Node.js v0.10 & Restler
+
+* [How to change .setMaxListeners() in restler?](https://github.com/danwrong/restler/issues/111)
+  ⇒ [Invalid behaviour on Node.js v0.10.0](https://github.com/danwrong/restler/issues/110)
+  ⇒ [patched fork of Restler](https://github.com/QuePort/restler)
+* Restler issues:
+  - [Success and failure events fire too often](https://github.com/danwrong/restler/issues/112)
+  - [Changed EventEmitter inheritens to Node0.10 style](https://github.com/danwrong/restler/pull/113)
 
 ## Przerzucamy daty
 
