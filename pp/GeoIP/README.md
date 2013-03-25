@@ -5,6 +5,7 @@ GeoIP:
 * [GeoLite Free Downloadable Databases](http://dev.maxmind.com/geoip/geolite)
 * [geoip](https://github.com/cjheath/geoip) – gem for ruby
 * [GeoIP-lite](https://github.com/bluesmoon/node-geoip) – node module
+  ([npm registry](https://npmjs.org/package/geoip-lite))
 
 MongoDB:
 
