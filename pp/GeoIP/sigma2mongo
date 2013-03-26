@@ -1,0 +1,87 @@
+#! /usr/bin/env ruby
+
+# documentation
+#   http://trollop.rubyforge.org/
+# ARGF: Automatically Read from Files or Standard Input
+#
+
+require 'bundler/setup'
+
+require 'trollop'
+require 'oj'
+require 'mongo'
+
+require 'geoip'
+
+# handle options
+
+options = Trollop::options do
+  version "sigma2mongo 0.0.1 (c) 2013 Wlodek Bzyl"
+  banner <<-EOS
+Import JSON log data from Sigma into MongoDB.
+
+Example:
+  sigma2mongo --host 127.0.0.1 --db test --collection logs data/sigma.log
+  sigma2mongo data/sigma.log
+
+Options:
+EOS
+
+  opt :db,         "database to use", type: :string, default: "test"
+  opt :collection, "collection to use", type: :string, default: "sigma"
+  opt :host,       "mongo host to connect to", type: :string, default: "127.0.0.1"
+  opt :port,       "server port", type: :string, default: "27017"
+  opt :drop,       "drop collection first", default: true
+
+  opt :batch,      "batch size for bulk inserts", type: :integer, default: 4
+  opt :upsert,     "insert or update objects that already exist" # flag; default false
+end
+
+# transform hashified JSON
+
+geoip = GeoIP.new('GeoLiteCity.dat')
+
+def transform(geoip, hash)
+  hash.delete("Query")
+  hash.delete("Method")
+
+  city = geoip.city(hash['RemoteIP'])
+
+  hash['City'] = city.city_name
+  hash['Country'] = city.country_name
+  hash['LL'] = [city.latitude, city.longitude]
+
+  time_at = Time.at(hash['Time'])
+  hash['TimeAt'] = time_at.to_s
+  hash['Date'] = [time_at.year, time_at.month, time_at.day, time_at.hour, time_at.min, time_at.sec]
+
+  # p hash
+
+  hash
+end
+
+def append?(hash)
+  hash['Status'] == '200' && hash['RemoteIP'] != '127.0.0.1'
+end
+
+# connect to MongoDB
+
+include Mongo
+
+# write concern: https://github.com/mongodb/mongo-ruby-driver/wiki/Write-Concern
+  db = MongoClient.new(options[:host], options[:port], w: 1, wtimeout: 200, j: true).db(options[:db])
+coll = db.collection(options[:collection])
+
+coll.drop if options[:drop]
+
+batch = []
+ARGF.each_line do |line|
+  h = Oj.load(line)
+
+  batch << transform(geoip, h) if append?(h)
+
+  if batch.size > 0 && ( ARGF.eof? || batch.size % options[:batch] == 0 )
+    coll.insert(batch)
+    batch = []
+  end
+end

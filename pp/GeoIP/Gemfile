@@ -9,3 +9,5 @@ gem 'oj', '2.0.10'
 
 gem 'mongo', '1.8.3'
 gem 'bson_ext', '1.8.3'
+
+gem 'geoip', '1.2.1'
