@@ -11,3 +11,5 @@ gem 'mongo', '1.8.3'
 gem 'bson_ext', '1.8.3'
 
 gem 'geoip', '1.2.1'
+
+gem 'iconv'
