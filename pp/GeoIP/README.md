@@ -115,3 +115,25 @@ Przykładowy JSON zapisywany przez Nginx:
   }
 }
 ```
+
+Ściąga z *Time* dla Ruby:
+
+Przykład:
+
+```ruby
+timestamp =               "2013-01-13T20:26:23+01:00"
+o = Time.parse timestamp # 2013-01-13 20:26:23 +0100
+u = o.utc                # 2013-01-13 19:26:23 UTC
+
+o.utc? # false
+o.to_i # 1358105183 – miliseconds from Epoch
+o.to_a # [23, 26, 20, 13, 1, 2013, 0, 13, false, "CET"]
+
+u.utc? # true
+u.to_i # 1358105183
+u.to_a # [23, 26, 19, 13, 1, 2013, 0, 13, false, "UTC"]
+
+u.strftime "%F"    # "2013-01-13"
+u.strftime "%Y-%j" # "2013-013"
+u.strftime "%T"    # "19:26:23"
+```
