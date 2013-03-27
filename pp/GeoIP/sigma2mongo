@@ -3,7 +3,7 @@
 # documentation
 #   http://trollop.rubyforge.org/
 # ARGF: Automatically Read from Files or Standard Input
-#
+
 
 require 'bundler/setup'
 
@@ -12,7 +12,6 @@ require 'oj'
 require 'mongo'
 
 require 'geoip'
-require 'iconv'
 
 # handle options
 
@@ -22,8 +21,8 @@ options = Trollop::options do
 Import JSON log data from Sigma into MongoDB.
 
 Example:
-  sigma2mongo --host 127.0.0.1 --db test --collection logs data/sigma.log
-  sigma2mongo data/sigma.log
+  ./sigma2mongo --host 127.0.0.1 --db test --collection sigma data/sigma.json.log
+  ./sigma2mongo data/sigma.json.log
 
 Options:
 EOS
@@ -41,13 +40,6 @@ end
 # transform hashified JSON
 
 geoip = GeoIP.new('GeoLiteCity.dat')
-@converter = Iconv.new('ISO-8859-1//IGNORE', 'UTF-8')
-
-def recode(str)
-  @converter.iconv(str)
-rescue
-  "UNKNOWN"
-end
 
 def transform(geoip, hash)
   hash.delete("Query")
@@ -55,8 +47,13 @@ def transform(geoip, hash)
 
   city = geoip.city(hash['RemoteIP'])
 
-  hash['City'] = recode(city.city_name)
-  hash['Country'] = recode(city.country_name)
+  # http://www.ruby-doc.org/core-1.9.3/String.html#method-i-encode
+
+  city_name = city.city_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
+  hash['City'] = city_name
+  hash['Country'] = city.country_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
+  hash['CountryCode2'] = city.country_code2
+  hash['ContinentCode'] = city.continent_code
 
   hash['LL'] = [city.latitude, city.longitude]
 
@@ -64,7 +61,7 @@ def transform(geoip, hash)
   hash['TimeAt'] = time_at.to_s
   hash['Date'] = [time_at.year, time_at.month, time_at.day, time_at.hour, time_at.min, time_at.sec]
 
-  puts hash['City']
+  puts city_name
 
   hash
 end
