@@ -44,7 +44,15 @@ c.country_name  # Poland
 Use city database:
 
 ```ruby
+require 'geoip'
+
 c = GeoIP.new('GeoLiteCity.dat').city('inf.ug.edu.pl')
+# #<struct GeoIP::City request="inf.ug.edu.pl", ip="153.19.7.228",
+#   country_code2="PL", country_code3="POL", country_name="Poland",
+#   continent_code="EU", region_name="82", city_name="Gdansk", postal_code="",
+#   latitude=54.36080000000001, longitude=18.658299999999997,
+#   dma_code=nil, area_code=nil,
+#   timezone="Europe/Warsaw">
 c.city_name # Gdansk
 c.latitude  # 54.36080  szerokość
 c.longitude # 18.65829  długość
