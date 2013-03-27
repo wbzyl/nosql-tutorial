@@ -97,7 +97,13 @@ Program raportuje ze zostało zaimportowanych
 
 ## Tao
 
-Przykładowy JSON zapisywany przez Nginx:
+Do zapisania w MongoDB logów Nginx z Tao użyjemy tego skryptu:
+
+```sh
+tao2mongo -c tao < data/tao.json.log
+```
+
+Przykładowy JSON generowany przez Nginx:
 
 ```json
 {
@@ -136,8 +142,8 @@ polami pobranymi z bazy GeoIP:
 
   "city": "Gdansk",
   "ll": [ 54.36080000000001, 18.658299999999997],
-  "countr_name": "Poland",
-  "country_code2: "pl",
+  "country_name": "Poland",
+  "country_code2": "pl",
   "continent_code": "eu"
 }
 ```
