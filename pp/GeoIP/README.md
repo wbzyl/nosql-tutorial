@@ -140,7 +140,7 @@ polami pobranymi z bazy GeoIP:
   "http_referrer": "http://tao.inf.ug.edu.pl/",
   "http_user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20100101 Firefox/17.0",
 
-  "city": "Gdansk",
+  "city_name": "Gdansk",
   "ll": [ 54.36080000000001, 18.658299999999997],
   "country_name": "Poland",
   "country_code2": "pl",

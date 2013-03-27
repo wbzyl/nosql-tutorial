@@ -43,34 +43,31 @@ geoip = GeoIP.new('GeoLiteCity.dat')
 # http://www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
 
 def transform(geoip, hash)
-  # hash.delete("Query")
-  # hash.delete("Method")
+  h = hash.delete "fields"
+  h['timestamp'] = hash.delete "timestamp"
 
-  # city = geoip.city(hash['RemoteIP'])
+  city = geoip.city(h['remote_addr'])
 
-  # # http://www.ruby-doc.org/core-1.9.3/String.html#method-i-encode
+  h['ll'] = [city.latitude, city.longitude]
+  h['country_code2'] = city.country_code2
+  h['continent_code'] = city.continent_code
 
-  # city_name = city.city_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
-  # hash['City'] = city_name
-  # hash['Country'] = city.country_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
-  # hash['CountryCode2'] = city.country_code2
-  # hash['ContinentCode'] = city.continent_code
+  # http://www.ruby-doc.org/core-1.9.3/String.html#method-i-encode
+  h['city'] = city.city_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
+  h['country'] = city.country_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
 
-  # hash['LL'] = [city.latitude, city.longitude]
+  time = Time.parse(h['timestamp']).utc
+  h['time'] = time.to_a
+  hash['time_at'] = time.to_i
 
-  # time_at = Time.at(hash['Time'])
-  # hash['TimeAt'] = time_at.to_s
-  # hash['Date'] = [time_at.year, time_at.month, time_at.day, time_at.hour, time_at.min, time_at.sec]
-
-  # puts city_name
-  p hash
-
-  hash
+  puts "#{ h['remote_addr'] } => #{ h['city'] }"
+  h
 end
 
 def append?(hash)
-  hash['RemoteIP'] != '127.0.0.1'
-  false
+  fields = hash['fields']
+  # puts "#{ fields['status'] } && #{fields['request_method']}"
+  return fields['status'] == '200' && fields['request_method'] == 'GET'
 end
 
 # connect to MongoDB
@@ -93,17 +90,3 @@ ARGF.each_line do |line|
     batch = []
   end
 end
-
-__END__
-
-begin
-  # something which might raise an exception
-rescue SomeExceptionClass => some_variable
-  # code that deals with some exception
-rescue SomeOtherException => some_other_variable
-  # code that deals with some other exception
-else
-  # code that runs only if *no* exception was raised
-ensure
-  # ensure that this code always runs, no matter what
-end1
