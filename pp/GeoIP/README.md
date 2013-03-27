@@ -93,3 +93,25 @@ dokumentów.
 Możemy zaimportować dane korzystając z programu *mongoimport*.
 Program raportuje ze zostało zaimportowanych
 29470 dokumentów. Ale w kolekcji jest 29467 dokumentów.
+
+
+# Tao
+
+Przykładowy JSON zapisywany przez Nginx:
+
+```json
+{
+  "timestamp": "2013-01-13T20:26:23+01:00",
+  "fields": {
+     "remote_addr": "81.190.49.213",
+     "remote_user": "-",
+     "body_bytes_sent": "0",
+     "request_time": "0.000",
+     "status": "304", "request":
+     "GET /css/style.css?v=2 HTTP/1.1",
+     "request_method": "GET",
+     "http_referrer": "http://tao.inf.ug.edu.pl/",
+     "http_user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20100101 Firefox/17.0"
+  }
+}
+```
