@@ -82,7 +82,7 @@ coll.drop if options[:drop]
 
 batch = []
 ARGF.each_line do |line|
-  h = Oj.load(line)
+  h = Oj.load(line) rescue next
   batch << transform(geoip, h) if append?(h)
 
   if batch.size > 0 && ( ARGF.eof? || batch.size % options[:batch] == 0 )
