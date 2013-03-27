@@ -74,3 +74,22 @@ console.log(geo);
     city: 'Gdansk',
     ll: [ 54.35, 18.6667 ] } // [<latitude>, <longitude>]
 ```
+
+# Misc
+
+* [Aggregation Framework Examples](http://docs.mongodb.org/manual/tutorial/aggregation-examples/);
+  [the Zip Code Data Set](http://media.mongodb.org/zips.json)
+  plik zwiera JSONY z powtórzonym **_id**;
+
+W bazie dokumenty zapisujemy korzystając z tego skryptu:
+
+```sh
+./json2mongo -c zips --drop data/zips.json
+```
+
+Po wykonaniu tego polecenia, kolekcja *zips* składa się z 29467
+dokumentów.
+
+Możemy zaimportować dane korzystając z programu *mongoimport*.
+Program raportuje ze zostało zaimportowanych
+29470 dokumentów. Ale w kolekcji jest 29467 dokumentów.
