@@ -36,11 +36,11 @@ EOS
   opt :batch,      "batch size for bulk inserts", type: :integer, default: 400
 end
 
-# transform hashified JSON
+# use GeoIP to add geo data to documents
 
 geoip = GeoIP.new('GeoLiteCity.dat')
 
-# http://www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
+# flatten Nginx json log data
 
 def transform(geoip, hash)
   h = hash.delete "fields"
@@ -56,6 +56,7 @@ def transform(geoip, hash)
   h['city'] = city.city_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
   h['country'] = city.country_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
 
+  # http://www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
   time = Time.parse(h['timestamp']).utc
   h['time'] = time.to_a
   hash['time_at'] = time.to_i
