@@ -60,7 +60,6 @@ c.longitude # 18.65829  długość
 
 # Node.js
 
-
 GeoIP Lite with city data:
 
 ```js
@@ -75,6 +74,7 @@ console.log(geo);
     ll: [ 54.35, 18.6667 ] } // [<latitude>, <longitude>]
 ```
 
+
 # Misc
 
 * [Aggregation Framework Examples](http://docs.mongodb.org/manual/tutorial/aggregation-examples/);
@@ -84,7 +84,7 @@ console.log(geo);
 W bazie dokumenty zapisujemy korzystając z tego skryptu:
 
 ```sh
-./json2mongo -c zips --drop data/zips.json
+./json2mongo -c zipcodes --drop data/zips.json
 ```
 
 Po wykonaniu tego polecenia, kolekcja *zips* składa się z 29467
