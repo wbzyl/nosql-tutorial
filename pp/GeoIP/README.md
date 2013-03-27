@@ -152,8 +152,6 @@ polami pobranymi z bazy GeoIP:
 
 Ściąga z *Time* dla Ruby:
 
-Przykład:
-
 ```ruby
 timestamp =               "2013-01-13T20:26:23+01:00"
 o = Time.parse timestamp # 2013-01-13 20:26:23 +0100
