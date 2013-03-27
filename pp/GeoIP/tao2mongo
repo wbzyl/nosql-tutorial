@@ -80,13 +80,30 @@ coll = db.collection(options[:collection])
 
 coll.drop if options[:drop]
 
-batch = []
-ARGF.each_line do |line|
-  h = Oj.load(line) rescue next
-  batch << transform(geoip, h) if append?(h)
+# lazy enumerators in ruby 2.0.0
+#   http://ruby-doc.org/core-2.0/Enumerable.html#method-i-lazy
 
-  if batch.size > 0 && ( ARGF.eof? || batch.size % options[:batch] == 0 )
+batch = []
+
+ARGF.lazy.each_slice(options[:batch]) do |slice|
+  slice.each do |line|
+    h = Oj.load(line) rescue next
+    batch << transform(geoip, h) if append?(h)
+  end
+
+  if batch.size > 0
     coll.insert(batch)
     batch = []
   end
 end
+
+# batch = []
+# ARGF.each_line do |line|
+#   h = Oj.load(line) rescue next
+#   batch << transform(geoip, h) if append?(h)
+
+#   if batch.size > 0 && ( ARGF.eof? || batch.size % options[:batch] == 0 )
+#     coll.insert(batch)
+#     batch = []
+#   end
+# end
