@@ -49,8 +49,8 @@ def transform(geoip, hash)
   city = geoip.city(h['remote_addr'])
 
   h['ll'] = [city.latitude, city.longitude]
-  h['country_code2'] = city.country_code2
-  h['continent_code'] = city.continent_code
+  h['country_code2'] = city.country_code2.downcase
+  h['continent_code'] = city.continent_code.downcase
 
   # http://www.ruby-doc.org/core-1.9.3/String.html#method-i-encode
   h['city'] = city.city_name.encode('utf-8', 'iso-8859-1', invalid: :replace, undef: :replace)
