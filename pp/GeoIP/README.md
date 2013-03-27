@@ -148,6 +148,31 @@ polami pobranymi z bazy GeoIP:
 }
 ```
 
+Przykładowa agregacja na konsoli *mongo*:
+
+```js
+db.tao.aggregate(
+  { $group: {_id: "$country", total: {$sum: 1}} },
+  { $sort : {total: 1} }
+);
+  ...
+  {
+     "_id" : "China",
+     "total" : 1813
+  },
+  {
+     "_id" : "United States",
+     "total" : 9717
+  },
+  {
+    "_id" : "Poland",
+    "total" : 106646
+  }
+```
+
+Zob. [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/aggregation/)
+
+
 ## Ruby *Time* Cheatsheet
 
 Ściąga z *Time* dla Ruby:
