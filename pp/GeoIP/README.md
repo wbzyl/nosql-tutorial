@@ -249,7 +249,67 @@ coll remove _id: id
 # remove ALL DOCUMENTS
 coll.remove
 #=> {"n"=>3, "connectionId"=>351, "err"=>nil, "ok"=>1.0}
+```
 
+Importujemy dane:
 
+```sh
+mongoimport --drop -c imieniny --headerline --type csv data/imieniny.csv
+```
 
+Przekształcamy dane z takiego formatu
+
+```json
+{ "day"=>1, "month"=>1, "names"=>"Mieszka Mieczysława Marii"}
+```
+
+na taki format:
+
+```json
+{ "day"=>1, "month"=>1, "names"=> ["Mieszka", "Mieczysława", "Marii"] }
+```
+
+Robimy to w ten sposób:
+
+```ruby
+coll = db.collection "imieniny"
+# ... wykonanie tego polecenia trwa około jednej minuty
+coll.find({}, {snapshot: true}).each { |doc| doc["names"] = doc["names"].split(" "); coll.save(doc) }
+coll.count    #=> 364
+coll.find_one
+{"_id"=>BSON::ObjectId('5154..'), "day"=>18, "month"=>1, "names"=>["Piotra", "Małgorzaty"]}
+```
+
+Proste indeksy:
+
+```ruby
+coll.create_index("names") #=> "names_1"
+puts coll.find("names" => "Włodzimierza").to_a
+
+coll.find("names" => "Włodzimierza").explain
+{
+  "cursor"=>"BtreeCursor names_1",
+  "isMultiKey"=>true,
+  "n"=>2,
+  "nscannedObjects"=>2,
+  "nscanned"=>2,
+  "nscannedObjectsAllPlans"=>2,
+  "nscannedAllPlans"=>2,
+  ...
+}
+```
+
+Dla pól bez indeksów:
+
+```ruby
+coll.find("day" => 1).explai
+{
+  "cursor"=>"BasicCursor",
+  "isMultiKey"=>false, "n"=>11,
+  "nscannedObjects"=>364,
+  "nscanned"=>364,
+  "nscannedObjectsAllPlans"=>364,
+  "nscannedAllPlans"=>364,
+  ...
+}
 ```
