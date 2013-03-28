@@ -26,8 +26,48 @@ coll.aggregate([ {"$group" => {_id: 0, count: {"$sum" => 1}}} ])
 [{"_id"=>0, "count"=>364}]
 ```
 
-Nieco bardziej skomplikowane agregacje:
+Nieco bardziej skomplikowane agregacje.
+
+Jaka jest różnica między tymi agregacjami?
 
 ```ruby
+puts coll.aggregate([
+  {"$project" => {_id: 0, day: 1, month: 1, names: 1}},
+  {"$limit" => 4},
+  {"$unwind" => "$names"}
+])
 
+puts coll.aggregate([
+  {"$project" => {_id: 0, day: 1, month: 1, names: 1}},
+  {"$unwind" => "$names"},
+  {"$limit" => 4}
+])
+```
+
+Prosty pivot – *names* ↺ *date*:
+
+```ruby
+puts coll.aggregate([
+  {"$project" => { _id: 0, names: 1, month: 1, day: 1}},
+  {"$unwind"  => "$names"},
+  {"$group" => { _id: "$names", count: {"$sum" => 1}}},
+  {"$sort" => {count: -1}},
+  {"$limit" => 20}
+])
+```
+
+Ten sam wynik na dwa różne sposoby:
+
+```ruby
+puts coll.aggregate([
+  {"$project" => { _id: 0, names: 1, month: 1, day: 1}},
+  {"$unwind"  => "$names"},
+  {"$group" => { _id: "$names", dates: {"$addToSet" => {"m" => "$month", "d" => "$day"}}}},
+])
+
+puts coll.aggregate([
+  {"$project" => { _id: 0, names: 1, date: {m: "$month", d: "$day"} }},
+  {"$unwind"  => "$names"},
+  {"$group"   => { _id: "$names", dates: {"$addToSet" => "$date"} }},
+])
 ```
