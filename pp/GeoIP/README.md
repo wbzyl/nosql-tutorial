@@ -199,7 +199,7 @@ u.strftime "%T"    # "19:26:23"
 
 ## Ruby Mongo Driver Cheatsheet
 
-przykładowe polecenia:
+Przykładowe polecenia:
 
 ```ruby
 require "mongo"
