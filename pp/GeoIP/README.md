@@ -199,7 +199,7 @@ u.strftime "%T"    # "19:26:23"
 
 ## Ruby Mongo Driver Cheatsheet
 
-Lazy enumerators:
+przykładowe polecenia:
 
 ```ruby
 require "mongo"
@@ -216,14 +216,22 @@ require "time"
 coll = db.collection "animals"
 coll.insert name: "Figa", dob: Time.parse("1992-07-01")
 coll.insert name: "Bazylek", dob: Time.parse("2005-06-24")
+```
 
+Lazy evaluation (lazy enumerators):
+
+```ruby
+# lazy fetch
 coll.find.each { |row| puts row.inspect }
-
-# lazy evaluation
+# lazy fetch in batches
 coll.find.each_slice(10) do |slice|
   puts slice.inspect
 end
+```
 
+Dalsze przykłady:
+
+```ruby
 doc = coll.find_one name: /^B.zyl/
 doc.class # BSON::OrderedHash
 
