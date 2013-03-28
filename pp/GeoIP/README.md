@@ -178,6 +178,8 @@ Zob. [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/
 Ściąga z *Time* dla Ruby:
 
 ```ruby
+require 'time'
+
 timestamp =               "2013-01-13T20:26:23+01:00"
 o = Time.parse timestamp # 2013-01-13 20:26:23 +0100
 u = o.utc                # 2013-01-13 19:26:23 UTC
@@ -193,4 +195,61 @@ u.to_a # [23, 26, 19, 13, 1, 2013, 0, 13, false, "UTC"]
 u.strftime "%F"    # "2013-01-13"
 u.strftime "%Y-%j" # "2013-013"
 u.strftime "%T"    # "19:26:23"
+```
+
+## Ruby Mongo Driver Cheatsheet
+
+Lazy enumerators:
+
+```ruby
+require "mongo"
+include Mongo
+
+db = MongoClient.new("localhost", 27017, w: 1, wtimeout: 200, j: true).db("test")
+db.collection_names
+
+coll = db.collection "zipcodes"
+coll.find_one
+
+require "time"
+
+coll = db.collection "animals"
+coll.insert name: "Figa", dob: Time.parse("1992-07-01")
+coll.insert name: "Bazylek", dob: Time.parse("2005-06-24")
+
+coll.find.each { |row| puts row.inspect }
+
+# lazy evaluation
+coll.find.each_slice(10) do |slice|
+  puts slice.inspect
+end
+
+doc = coll.find_one name: /^B.zyl/
+doc.class # BSON::OrderedHash
+
+#    cursor
+coll.find.sort name: :desc
+coll.count
+
+coll.find( name: /^B.zyl/ ).to_a
+coll.find( dob: {"$gt" => Time.parse("2000-01-01")} ).to_a
+
+# update
+id = coll.insert name: "Burek", dob: Time.now
+id.class # BSON::ObjectId
+puts coll.find( _id: id ).to_a
+
+coll.update( { _id: id }, { "$set" => {name: "Burasek"} } )
+#=> {"updatedExisting"=>true, "n"=>1, "connectionId"=>351, "err"=>nil, "ok"=>1.0}
+
+# remove
+coll remove _id: id
+#=> {"n"=>1, "connectionId"=>351, "err"=>nil, "ok"=>1.0}
+
+# remove ALL DOCUMENTS
+coll.remove
+#=> {"n"=>3, "connectionId"=>351, "err"=>nil, "ok"=>1.0}
+
+
+
 ```

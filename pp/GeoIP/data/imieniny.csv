@@ -1,0 +1,365 @@
+day,month,names
+01,01,Mieszka Mieczysława Marii
+02,01,Izydora Bazylego Grzegorza
+03,01,Arlety Genowefy Danuty
+04,01,Tytusa Anieli Eugeniusza
+05,01,Hanny Szymona Edwarda
+06,01,Kacpra Melchiora Baltazara
+07,01,Juliana Lucjana Rajmunda
+08,01,Seweryna Mścisława Juliusza
+09,01,Marceliny Marianny Juliana
+10,01,Wilhelma Dobrosława Danuty
+11,01,Honoraty Teodozjusza Matyldy
+12,01,Grety Arkadiusza Rajmunda
+13,01,Bogumiły Weroniki Hilarego
+14,01,Feliksa Domosława Niny
+15,01,Pawła Arnolda Izydora
+16,01,Marcelego Włodzimierza Waldemara
+17,01,Antoniego Rościsława Jana
+18,01,Piotra Małgorzaty
+19,01,Henryka Mariusza Marty
+20,01,Fabiana Sebastiana
+21,01,Agnieszki Jarosława
+22,01,Anastazego Wincentego
+23,01,Ildefonsa Rajmunda
+24,01,Felicji Franciszka Rafała
+25,01,Pawła Miłosza Elwiry
+26,01,Tymoteusza Michała Tytusa
+27,01,Przybysława Anieli Jerzego
+28,01,Walerego Radomira Tomasza
+29,01,Zdzisława Franciszka Józefa
+30,01,Macieja Martyny Teofila
+31,01,Marceli Ludwiki Jana
+01,02,Brygidy Ignacego Seweryna
+02,02,Marii Miłosława
+03,02,Błażeja Oskara
+04,02,Andrzeja Weroniki Joanny
+05,02,Agaty Adelajdy Izydora
+06,02,Doroty Bogdana Pawła
+07,02,Ryszarda Teodora Romana
+08,02,Hieronima Sebastiana Ireny
+09,02,Apolonii Eryki Cyryla
+10,02,Elwiry Jacka Scholastyki
+11,02,Lucjana Olgierda Grzegorza
+12,02,Eulalii Radosława Modesta
+13,02,Grzegorza Katarzyny
+14,02,Cyryla Metodego Walentego
+15,02,Jowity Faustyna Zygfryda
+16,02,Danuty Julianny Daniela
+17,02,Aleksego Zbigniewa Łukasza
+18,02,Szymona Konstancji Flawiana
+19,02,Arnolda Konrada Marcelego
+20,02,Leona Ludomira Zenobiusza
+21,02,Eleonory Fortunata Roberta
+22,02,Marty Małgorzaty Piotra
+23,02,Romany Damiana Polikarpa
+24,02,Macieja Bogusza Sergiusza
+25,02,Wiktora Cezarego
+26,02,Mirosława Aleksandra
+27,02,Gabriela Anastazji
+28,02,Romana Ludomira Lecha
+01,03,Antoniny Radosława Dawida
+02,03,Heleny Halszki Pawła
+03,03,Maryny Kunegundy Tycjana
+04,03,Łucji Kazimierza Eugeniusza
+05,03,Adriana Fryderyka Teofila
+06,03,Róży Jordana Agnieszki
+07,03,Tomasza Perpetuy Felicyty
+08,03,Beaty Wincentego Jana
+09,03,Franciszki Brunona
+10,03,Cypriana Marcela Aleksandra
+11,03,Ludosława Konstantyna Benedykta
+12,03,Grzegorza Justyna Alojzego
+13,03,Bożeny Krystyny
+14,03,Leona Matyldy Łazarza
+15,03,Longina Klemensa Ludwiki
+16,03,Izabeli Oktawii Hilarego
+17,03,Patryka Zbigniewa Gertrudy
+18,03,Cyryla Edwarda Boguchwały
+19,03,Józefa Bogdana
+20,03,Klaudii Eufemii Maurycego
+21,03,Lubomira Benedykta
+22,03,Katarzyny Bogusława
+23,03,Pelagii Oktawiana Feliksa
+24,03,Marka Gabriela Katarzyny
+25,03,Marioli Wieäczysława Ireneusza
+26,03,Larysy Emanyela Teodora
+27,03,Lidii Ernesta
+28,03,Anieli Sykstusa Jana
+29,03,Wiktoryna Helmuta Eustachego
+30,03,Anieli Kwiryna Leonarda
+31,03,Beniamina Dobromierza Leonarda
+01,04,Teodory Grażyny Ireny
+02,04,Władysława Franciszka Teodozji
+03,04,Ryszarda Pankracego Ingi
+04,04,Izydora Wacława
+05,04,Ireny Wincentego
+06,04,Izoldy Celestyna Wilhelma
+07,04,Rufina Celestyna Jana
+08,04,Cezaryny Dionizego Julii
+09,04,Marii Dymitra Heliodora
+10,04,Michała Makarego
+11,04,Filipa Leona
+12,04,Juliusza Lubosława Zenona
+13,04,Przemysława Hermenegildy Marcina
+14,04,Bereniki Waleriana Justyny
+15,04,Ludwiny Wacławy Anastazji
+16,04,Kseni Cecylii Bernardety
+17,04,Rudolfa Roberta
+18,04,Bogusławy Apoloniusza
+19,04,Adolfa Tymona Leona
+20,04,Czesława Agnieszki Mariana
+21,04,Anzelma Bartosza Feliksa
+22,04,Kai Leonii Sotera
+23,04,Jerzego Wojciecha
+24,04,Horacego Feliksa Grzegorza
+25,04,Marka Jarosława
+26,04,Marzeny Klaudiusza Marii
+27,04,Zyty Teofila Felicji
+28,04,Piotra Walerii Witalisa
+29,04,Rity Katarzyny Bogusława
+30,04,Mariana Donaty Tamary
+01,05,Józefa Jeremiasza Filipa
+02,05,Zygmunta Atanazego Anatola
+03,05,Marii Antoniny
+04,05,Moniki Floriana Władysława
+05,05,Ireny Waldemara
+06,05,Judyty Jakuba Filipa
+07,05,Gizeli Ludmiły Benedykta
+08,05,Stanisława Lizy Wiktora
+09,05,Bożydara Grzegorza Karoliny
+10,05,Izydora Antoniny Symeona
+11,05,Igi Miry Władysławy
+12,05,Pankracego Dominika Achillesa
+13,05,Serwacego Roberta Glorii
+14,05,Bonifacego Dobiesława Macieja
+15,05,Zofii Nadziei Izydora
+16,05,Andrzeja Jędrzeja Szymona
+17,05,Paschalisa Sławomira Weroniki
+18,05,Eryka Feliksa Jana
+19,05,Iwa Piotra Celestyna
+20,05,Bazylego Bernardyna Aleksandra
+21,05,Wiktora Kryspina Tymoteusza
+22,05,Heleny Wiesławy Ryty
+23,05,Iwony Dezyderego Kryspina
+24,05,Joanny Zuzanny
+25,05,Grzegorza Urbana Magdaleny
+26,05,Filipa Pauliny
+27,05,Augustyna Juliana Magdaleny
+28,05,Jaromira Justa Justyny
+29,05,Magdaleny Bogumiły Urszuli
+30,05,Ferdynanda Karola Jana
+31,05,Anieli Petroneli
+01,06,Justyna Anieli Konrada
+02,06,Marianny Marcelina Piotra
+03,06,Leszka Tamary Karola
+04,06,Kwiryny Franciszka
+05,06,Waltera Bonifacego Walerii
+06,06,Norberta Laurentego Bogumiła
+07,06,Roberta Wiesława
+08,06,Medarda Maksyma Seweryna
+09,06,Pelagii Dominika Efrema
+10,06,Bogumiła Małgorzaty Diany
+11,06,Barnaby Radomiła Feliksa
+12,06,Janiny Onufrego Leona
+13,06,Lucjana Antoniego
+14,06,Bazylego Elwiry Michała
+15,06,Wita Jolanty
+16,06,Anny Aliny Benona Anety
+17,06,Laury Marcjana Alberta
+18,06,Marka Elżbiety
+19,06,Gerwazego Protazego
+20,06,Diny Bogny Florentyny
+21,06,Alicji Alojzego
+22,06,Pauliny Tomasza Jana
+23,06,Wandy Zenona
+24,06,Jana Danuty
+25,06,Łucji Wilhelma Doroty
+26,06,Jana Pawła
+27,06,Maryli Władysława Cyryla
+28,06,Leona Ireneusza
+29,06,Piotra Pawła
+30,06,Emilii Lucyny
+01,07,Haliny Mariana Marcina
+02,07,Jagody Urbama Marii
+03,07,Jacka Anatola Tomasza
+04,07,Odona Malwiny Elżbiety
+05,07,Marii Antoniego
+06,07,Gotarda Dominiki Łucji
+07,07,Cyryla Estery Metodego
+08,07,Edgara Elżbiety Eugeniusza
+09,07,Lukrecji Weroniki Zenona
+10,07,Sylwany Witalisa Antoniego
+11,07,Olgi Kaliny Benedykta
+12,07,Jana Brunona Bonifacego
+13,07,Henryka Kingi Andrzeja
+14,07,Ulryka Bonawentury Kamila
+15,07,Henryka Włodzimierza Dawida
+16,07,Mariki Benity Eustachego
+17,07,Anety Bogdana Jadwigi
+18,07,Erwina Kamila Szymona
+19,07,Wincentego Wodzisława Marcina
+20,07,Czesława Hieronioma Małgorzaty
+21,07,Daniela Dalidy Wawrzyäca
+22,07,Marii Magdaleny
+23,07,Stwosza Bogny Brygidy
+24,07,Kingi Krystyny
+25,07,Walentyny Krzysztofa Jakuba
+26,07,Anny Mirosławy Grażyny
+27,07,Lilii Julii Natalii
+28,07,Aidy Marceli Wiktora
+29,07,Olafa Marty Ludmiły
+30,07,Julity Piotra Aldony
+31,07,Ignacego Lubomira Heleny
+01,08,Nadii Justyna Juliana
+02,08,Kariny Gustawa Euzebiusza
+03,08,Lidii Augusta Nikodema
+04,08,Dominika Protazego Jana
+05,08,Oswalda Marii Mariana
+06,08,Sławy Jakuba Oktawiana
+07,08,Kajetana Doroty Sykstusa
+08,08,Cypriana Emiliana Dominika
+09,08,Romana Ryszarda Edyty
+10,08,Borysa Filomeny Wawrzyńca
+11,08,Klary Zuzanny Lecha
+12,08,Innocentego Lecha Euzebii
+13,08,Diany Hipolita Poncjana
+14,08,Alfreda Euzebiusza Maksymiliana
+15,08,Napoleona Stelii
+16,08,Rocha Stefana Joachima
+17,08,Żanny Mirona Jacka
+18,08,Ilony Bronisława Heleny
+19,08,Bolesława Juliana
+20,08,Bernarda Samuela Sobiesława
+21,08,Joanny Kazimiery Piusa
+22,08,Cezarego Tymoteusza
+23,08,Apolinarego Filipa
+24,08,Jerzego Bartosza Haliny
+25,08,Luizy Ludwika Józefa
+26,08,Marii Aleksandra
+27,08,Józefa Kolasantego
+28,08,Patrycji Wyszomira Augustyna
+29,08,Jana Sabiny Racibora
+30,08,Róży Szczęsnego Feliksa
+31,08,Ramony Rajmunda Bogdana
+01,09,Idziego Bronisława
+02,09,Stefana Wilhelma Juliana
+03,09,Izabeli Szymona Grzegorza
+04,09,Rozalii Róży
+05,09,Doroty Wawrzyńca Teodora
+06,09,Beaty Eugeniusza
+07,09,Reginy Melchiora Domosławy
+08,09,Marii Adrianny Serafiny
+09,09,Ścibora Sergiusza Piotra
+10,09,Łukasza Aldony Mścisława
+11,09,Jacka Prota Dagny Hiacynta
+12,09,Gwidona Radzimira Marii
+13,09,Eugenii Aureliusza Jana
+14,09,Roksany Bernarda Cypriana
+15,09,Albina Nikodema Marii
+16,09,Edyty Korneliusza Cypriana
+17,09,Franciszka Roberta Justyna
+18,09,Irmy Stanisława Ireny
+19,09,Januarego Konstancji Teodora
+20,09,Filipiny Eustachego Euzebii
+21,09,Jonasza Mateusza Hipolita
+22,09,Tomasza Maurycego Joachima
+23,09,Tekli Bogusława Linusa
+24,09,Gerarda Ruperta Tomiry
+25,09,Aurelii Władysława Kleofasa
+26,09,Wawrzyńca Kosmy Damiana
+27,09,Wincentego Mirabeli Justyny
+28,09,Wacława Tymona Marka
+29,09,Michała Gabriela Rafała
+30,09,Wery Honoriusza Hieronima
+01,10,Danuty Remigiusza Teresy
+02,10,Teofila Dionizego Sławomira
+03,10,Teresy Heliodora Jana
+04,10,Rozalii Edwina Franciszka
+05,10,Placyda Apolinarego
+06,10,Artura Brunona
+07,10,Marii Marka Mirelli
+08,10,Pelagii Brygidy Walerii
+09,10,Amolda Dionizego Wincentego
+10,10,Pauliny Danieli Leona
+11,10,Aldony Aleksandra Dobromiry
+12,10,Eustachego Maksymiliana Edwina
+13,10,Geralda Edwarda Honorata
+14,10,Liwii Kaliksta Bernarda
+15,10,Jadwigi Teresy Florentyny
+16,10,Gawła Ambrożego
+17,10,Wiktora Marity Ignacego
+18,10,Juliana Łukasza
+19,10,Ziemowita Jana Pawła
+20,10,Ireny Kleopatry Jana
+21,10,Urszuli Hilarego Jakuba
+22,10,Halki Filipa Salomei
+23,10,Marleny Seweryna Igi
+24,10,Rafała Marcina Antoniego
+25,10,Darii Wilhelminy Bonifacego
+26,10,Lucjana Ewarysta Damiana
+27,10,Iwony Sabiny
+28,10,Szymona Tadeusza
+29,10,Euzebii Wioletty Felicjana
+30,10,Zenobii Przemysława Edmunda
+31,10,Urbana Saturnina Krzysztofa
+02,11,Bohdany Bożydara
+03,11,Sylwii Marcina Huberta
+04,11,Karola Olgierda
+05,11,Elżbiety Sławomira Dominika
+06,11,Feliksa Leonarda Ziemowita
+07,11,Antoniego Żytomira Ernesta
+08,11,Seweryna Bogdana Klaudiusza
+09,11,Aleksandra Ludwika Teodora
+10,11,Leny Ludomira Leona
+11,11,Marcina Batłomieja Teodora
+12,11,Renaty Witolda Jozafata
+13,11,Mateusza Izaaka Stanisława
+14,11,Rogera Serafina Wawrzyäca
+15,11,Alberta Leopolda
+16,11,Gertrudy Edmunda Marii
+17,11,Salomei Grzegorza Elżbiety
+18,11,Romana Klaudyny Karoliny
+19,11,Seweryny Maksyma Salomei
+20,11,Anatola Sędzimira Rafała
+21,11,Janusza
+22,11,Cecylii Wszemiły Stefana
+23,11,Adelii Klemensa Felicyty
+24,11,Flory Emmy Chryzogona
+25,11,Erazma Katarzyny
+26,11,Delfiny Sylwestra Konrada
+27,11,Waleriana Wirgiliusza Maksyma
+28,11,Lesława Zdzisława Stefana
+29,11,Błażeja Saturnina
+30,11,Andrzeja Maury Konstantego
+01,12,Natalii Eligiusza Edmunda
+02,12,Balbiny Bibianny Pauliny
+03,12,Franciszka Ksawerego Kasjana
+04,12,Barbary Krystiana Jana
+05,12,Sabiny Krystyny Edyty
+06,12,Mikołaja Jaremy Emiliana
+07,12,Marcina Ambrożego Teodora
+08,12,Marii Światozara Makarego
+09,12,Wiesława Leokadii Joanny
+10,12,Julii Danieli Bogdana
+11,12,Damazego Waldemara Daniela
+12,12,Dagmary Aleksandra Ady
+13,12,Łucji Otylii
+14,12,Alfreda Izydora Jana
+15,12,Niny Celiny Waleriana
+16,12,Albiny Zdzisławy Alicji
+17,12,Olimpii Łazarza Floriana
+18,12,Gracjana Bogusława Laurencji
+19,12,Gabrieli Dariusza Eleonory
+20,12,Bogumiły Dominika
+21,12,Tomisława Seweryna Piotra
+22,12,Zenona Honoraty Franciszki
+23,12,Wiktorii Sławomiry Jana
+24,12,Adama Ewy Eweliny
+25,12,Anastazji Eugenii
+26,12,Dionizego Szczepana
+27,12,Jana Żanety Maksyma
+28,12,Teofilii Godzisława Cezarego
+29,12,Dawida Tomasza Dominika
+30,12,Rainera Eugeniusza Irmy
+31,12,Sylwestra Melanii Mariusza
