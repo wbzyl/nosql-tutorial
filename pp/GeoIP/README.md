@@ -267,13 +267,13 @@ mongoimport --drop -c imieniny --headerline --type csv data/imieniny.csv
 
 Przekształcamy dane z takiego formatu
 
-```json
+```ruby
 { "day"=>1, "month"=>1, "names"=>"Mieszka Mieczysława Marii"}
 ```
 
 na taki format:
 
-```json
+```ruby
 { "day"=>1, "month"=>1, "names"=> ["Mieszka", "Mieczysława", "Marii"] }
 ```
 
