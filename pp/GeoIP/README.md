@@ -310,7 +310,7 @@ coll.find("names" => "Włodzimierza").explain
 Dla pól bez indeksów:
 
 ```ruby
-coll.find("day" => 1).explai
+coll.find("day" => 1).explain
 {
   "cursor"=>"BasicCursor",
   "isMultiKey"=>false, "n"=>11,
