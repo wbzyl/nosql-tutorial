@@ -5,6 +5,15 @@
 
 ## Imieniny
 
+Pobieramy plik
+[imieniny.csv](https://raw.github.com/wbzyl/nosql-tutorial/master/pp/GeoIP/data/imieniny.csv)
+i za pomocą tego polecenia zapisujemy dane z tego pliku w bazie *test*
+i kolekcji *imieniny*:
+
+```sh
+mongoimport --drop --headerline --type csv --collection imieniny < imieniny.csv
+```
+
 Zaczynamy od sprawdzenia kolekcji *imieniny* w bazie *test*.
 Kolekcja liczy 364 dokumenty:
 
@@ -18,17 +27,44 @@ coll.count #=> 364
 coll.find_one
 #=>
 {
-  "_id"=>BSON::ObjectId('515432e29779eb41126947bc'),
-  "day"=>18, "month"=>1, "names"=>["Piotra", "Małgorzaty"]
+  "_id"=>BSON::ObjectId('51558a039779eb4112694a83'),
+  "day"=>1, "month"=>1, "names"=>"Mieszka Mieczysława Marii"
 }
 coll.aggregate([ {"$group" => {_id: 0, count: {"$sum" => 1}}} ])
 #=>
 [{"_id"=>0, "count"=>364}]
 ```
 
-Nieco bardziej skomplikowane agregacje.
+Zaczniemy od przekształcenia danych na taki format:
 
-Jaka jest różnica między tymi agregacjami?
+```ruby
+{
+  "_id"=>BSON::ObjectId('515432e29779eb41126947bc'),
+  "date"=>"18/01", "names"=>["Piotra", "Małgorzaty"]
+}
+```
+
+Zmienimy format danych na konsoli *irb*:
+
+```ruby
+coll.find({}, {snapshot: true}).each do |doc|
+  doc["names"] = doc["names"].split(" ")
+  doc["date"] = "%02d/%02d" % [doc["day"], doc["month"]]
+  doc.delete("day") ; doc.delete("month")
+  coll.save(doc)
+end
+coll.count    #=> 364
+coll.find_one
+#=>
+{
+  "_id"=>BSON::ObjectId('51558a039779eb4112694a94'),
+  "date"=>"18/01", "names"=>["Piotra", "Małgorzaty"]
+}
+```
+
+## Przykładowe agregacje
+
+1\. Jaka jest różnica między tymi agregacjami?
 
 ```ruby
 puts coll.aggregate([
@@ -44,9 +80,14 @@ puts coll.aggregate([
 ])
 ```
 
-Prosty pivot – *names* ↺ *date*:
+2\. Prosty pivot – *names* ↺ *date*, gdzie pole `date` utworzymy
+za pomocą operatora `$project` oraz
+[string operators](http://docs.mongodb.org/manual/reference/aggregation/#string-operators):
 
 ```ruby
+puts coll.aggregate([ {"$project" => { _id: 0, names: 1, date: { "$concat" => ["$day", "/", "$month"] }  }} ])
+
+
 puts coll.aggregate([
   {"$project" => { _id: 0, names: 1, month: 1, day: 1}},
   {"$unwind"  => "$names"},
