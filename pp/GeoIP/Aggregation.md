@@ -20,41 +20,27 @@ db = MongoClient.new("localhost", 27017, w: 1, wtimeout: 200, j: true).db("test"
 coll = db.collection("cal")
 coll.count #=> 364
 coll.find_one
-#=>
-{
-  "_id"=>BSON::ObjectId('51558a039779eb4112694a83'),
-  "day"=>1, "month"=>1, "names"=>"Mieszka Mieczysława Marii"
-}
-coll.aggregate([ {"$group" => {_id: 0, count: {"$sum" => 1}}} ])
-#=>
-[{"_id"=>0, "count"=>364}]
+#=>{"names"=>["Mieszka", "Mieczysława", "Marii"], "date"=>{"day"=>1, "month"=>1}}
 ```
 
-Zaczniemy zmiany formatu danych na:
+Zaczniemy od zmiany formatu danych na:
 
 ```ruby
-{
-  "_id"=>BSON::ObjectId('515432e29779eb41126947bc'),
-  "date"=>"18/01", "names"=>["Piotra", "Małgorzaty"]
-}
+{"date"=>"18/01", "names"=>["Piotra", "Małgorzaty"]}
 ```
 
 Format zmienimy na konsoli *irb*:
 
 ```ruby
 coll.find({}, {snapshot: true}).each do |doc|
-  doc["names"] = doc["names"].split(" ")
-  doc["date"] = "%02d/%02d" % [doc["day"], doc["month"]]
-  doc.delete("day") ; doc.delete("month")
+  date = doc.delete("date")
+  doc["date"] = "%02d/%02d" % [date["day"], date["month"]]
   coll.save(doc)
 end
-coll.count    #=> 364
+coll.count
+#=> 364
 coll.find_one
-#=>
-{
-  "_id"=>BSON::ObjectId('51558a039779eb4112694a94'),
-  "date"=>"18/01", "names"=>["Piotra", "Małgorzaty"]
-}
+#=> {"names"=>["Mieszka", "Mieczysława", "Marii"], "date"=>"01/01"}
 ```
 
 ## Przykładowe agregacje
@@ -123,7 +109,7 @@ puts coll.aggregate([
 
 4\. W którym miesiącu jest najwięcej imion?
 
-Zmieniamy oryginalny format danych na taki:
+Zmieniamy oryginalny format danych na taki („spłaszczamy” dokument)::
 
 ```ruby
 {"day"=>18, "month"=>1, "names"=>["Piotra", "Małgorzaty"]}
@@ -131,7 +117,7 @@ Zmieniamy oryginalny format danych na taki:
 Importujemy dane, ale tym razem do kolekcji *imiona*:
 
 ```sh
-mongoimport --drop --headerline --type csv --collection imiona < imieniny.csv
+mongoimport --drop --collection imiona < name_days.json
 ```
 
 Przekształcamy format danych do pożądanego formatu na konsoli *irb*:
@@ -140,7 +126,9 @@ Przekształcamy format danych do pożądanego formatu na konsoli *irb*:
 coll = db.collection("imiona")
 
 coll.find({}, {snapshot: true}).each do |doc|
-  doc["names"] = doc["names"].split(" ")
+  date = doc.delete("date")
+  doc["day"] = date["day"]
+  doc["month"] = date["month"]
   coll.save(doc)
 end
 coll.count    #=> 364
