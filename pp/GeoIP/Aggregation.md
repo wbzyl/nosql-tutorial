@@ -1,28 +1,23 @@
-# Aggregation Examples
-
-* imieniny
-* ...
-
-## Imieniny
+# Aggregation Example – Name Days
 
 Pobieramy plik
-[imieniny.csv](https://raw.github.com/wbzyl/nosql-tutorial/master/pp/GeoIP/data/imieniny.csv)
+[imieniny.csv](https://raw.github.com/wbzyl/nosql-tutorial/master/pp/GeoIP/data/name_days.json)
 i za pomocą tego polecenia zapisujemy dane z tego pliku w bazie *test*
-i kolekcji *imieniny*:
+i kolekcji *cal*:
 
 ```sh
-mongoimport --drop --headerline --type csv --collection imieniny < imieniny.csv
+mongoimport --drop --collection cal < name_days.json
 ```
 
-Zaczynamy od sprawdzenia kolekcji *imieniny* w bazie *test*.
-Kolekcja liczy 364 dokumenty:
+Zaczynamy od sprawdzenia czy kolekcja *cal* została zaimportowana.
+Kolekcja ta liczy 364 dokumenty:
 
 ```ruby
 require 'mongo'
 include Mongo
 
 db = MongoClient.new("localhost", 27017, w: 1, wtimeout: 200, j: true).db("test")
-coll = db.collection("imieniny")
+coll = db.collection("cal")
 coll.count #=> 364
 coll.find_one
 #=>

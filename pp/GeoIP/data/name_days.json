@@ -1,0 +1,364 @@
+{ "names" : [ "Mieszka", "Mieczysława", "Marii" ], "date" : { "day" : 1, "month" : 1 } }
+{ "names" : [ "Izydora", "Bazylego", "Grzegorza" ], "date" : { "day" : 2, "month" : 1 } }
+{ "names" : [ "Arlety", "Genowefy", "Danuty" ], "date" : { "day" : 3, "month" : 1 } }
+{ "names" : [ "Tytusa", "Anieli", "Eugeniusza" ], "date" : { "day" : 4, "month" : 1 } }
+{ "names" : [ "Hanny", "Szymona", "Edwarda" ], "date" : { "day" : 5, "month" : 1 } }
+{ "names" : [ "Kacpra", "Melchiora", "Baltazara" ], "date" : { "day" : 6, "month" : 1 } }
+{ "names" : [ "Juliana", "Lucjana", "Rajmunda" ], "date" : { "day" : 7, "month" : 1 } }
+{ "names" : [ "Seweryna", "Mścisława", "Juliusza" ], "date" : { "day" : 8, "month" : 1 } }
+{ "names" : [ "Marceliny", "Marianny", "Juliana" ], "date" : { "day" : 9, "month" : 1 } }
+{ "names" : [ "Wilhelma", "Dobrosława", "Danuty" ], "date" : { "day" : 10, "month" : 1 } }
+{ "names" : [ "Honoraty", "Teodozjusza", "Matyldy" ], "date" : { "day" : 11, "month" : 1 } }
+{ "names" : [ "Grety", "Arkadiusza", "Rajmunda" ], "date" : { "day" : 12, "month" : 1 } }
+{ "names" : [ "Bogumiły", "Weroniki", "Hilarego" ], "date" : { "day" : 13, "month" : 1 } }
+{ "names" : [ "Feliksa", "Domosława", "Niny" ], "date" : { "day" : 14, "month" : 1 } }
+{ "names" : [ "Pawła", "Arnolda", "Izydora" ], "date" : { "day" : 15, "month" : 1 } }
+{ "names" : [ "Marcelego", "Włodzimierza", "Waldemara" ], "date" : { "day" : 16, "month" : 1 } }
+{ "names" : [ "Antoniego", "Rościsława", "Jana" ], "date" : { "day" : 17, "month" : 1 } }
+{ "names" : [ "Piotra", "Małgorzaty" ], "date" : { "day" : 18, "month" : 1 } }
+{ "names" : [ "Henryka", "Mariusza", "Marty" ], "date" : { "day" : 19, "month" : 1 } }
+{ "names" : [ "Fabiana", "Sebastiana" ], "date" : { "day" : 20, "month" : 1 } }
+{ "names" : [ "Agnieszki", "Jarosława" ], "date" : { "day" : 21, "month" : 1 } }
+{ "names" : [ "Anastazego", "Wincentego" ], "date" : { "day" : 22, "month" : 1 } }
+{ "names" : [ "Ildefonsa", "Rajmunda" ], "date" : { "day" : 23, "month" : 1 } }
+{ "names" : [ "Felicji", "Franciszka", "Rafała" ], "date" : { "day" : 24, "month" : 1 } }
+{ "names" : [ "Pawła", "Miłosza", "Elwiry" ], "date" : { "day" : 25, "month" : 1 } }
+{ "names" : [ "Tymoteusza", "Michała", "Tytusa" ], "date" : { "day" : 26, "month" : 1 } }
+{ "names" : [ "Przybysława", "Anieli", "Jerzego" ], "date" : { "day" : 27, "month" : 1 } }
+{ "names" : [ "Walerego", "Radomira", "Tomasza" ], "date" : { "day" : 28, "month" : 1 } }
+{ "names" : [ "Zdzisława", "Franciszka", "Józefa" ], "date" : { "day" : 29, "month" : 1 } }
+{ "names" : [ "Macieja", "Martyny", "Teofila" ], "date" : { "day" : 30, "month" : 1 } }
+{ "names" : [ "Marceli", "Ludwiki", "Jana" ], "date" : { "day" : 31, "month" : 1 } }
+{ "names" : [ "Brygidy", "Ignacego", "Seweryna" ], "date" : { "day" : 1, "month" : 2 } }
+{ "names" : [ "Marii", "Miłosława" ], "date" : { "day" : 2, "month" : 2 } }
+{ "names" : [ "Błażeja", "Oskara" ], "date" : { "day" : 3, "month" : 2 } }
+{ "names" : [ "Andrzeja", "Weroniki", "Joanny" ], "date" : { "day" : 4, "month" : 2 } }
+{ "names" : [ "Agaty", "Adelajdy", "Izydora" ], "date" : { "day" : 5, "month" : 2 } }
+{ "names" : [ "Doroty", "Bogdana", "Pawła" ], "date" : { "day" : 6, "month" : 2 } }
+{ "names" : [ "Ryszarda", "Teodora", "Romana" ], "date" : { "day" : 7, "month" : 2 } }
+{ "names" : [ "Hieronima", "Sebastiana", "Ireny" ], "date" : { "day" : 8, "month" : 2 } }
+{ "names" : [ "Apolonii", "Eryki", "Cyryla" ], "date" : { "day" : 9, "month" : 2 } }
+{ "names" : [ "Elwiry", "Jacka", "Scholastyki" ], "date" : { "day" : 10, "month" : 2 } }
+{ "names" : [ "Lucjana", "Olgierda", "Grzegorza" ], "date" : { "day" : 11, "month" : 2 } }
+{ "names" : [ "Eulalii", "Radosława", "Modesta" ], "date" : { "day" : 12, "month" : 2 } }
+{ "names" : [ "Grzegorza", "Katarzyny" ], "date" : { "day" : 13, "month" : 2 } }
+{ "names" : [ "Cyryla", "Metodego", "Walentego" ], "date" : { "day" : 14, "month" : 2 } }
+{ "names" : [ "Jowity", "Faustyna", "Zygfryda" ], "date" : { "day" : 15, "month" : 2 } }
+{ "names" : [ "Danuty", "Julianny", "Daniela" ], "date" : { "day" : 16, "month" : 2 } }
+{ "names" : [ "Aleksego", "Zbigniewa", "Łukasza" ], "date" : { "day" : 17, "month" : 2 } }
+{ "names" : [ "Szymona", "Konstancji", "Flawiana" ], "date" : { "day" : 18, "month" : 2 } }
+{ "names" : [ "Arnolda", "Konrada", "Marcelego" ], "date" : { "day" : 19, "month" : 2 } }
+{ "names" : [ "Leona", "Ludomira", "Zenobiusza" ], "date" : { "day" : 20, "month" : 2 } }
+{ "names" : [ "Eleonory", "Fortunata", "Roberta" ], "date" : { "day" : 21, "month" : 2 } }
+{ "names" : [ "Marty", "Małgorzaty", "Piotra" ], "date" : { "day" : 22, "month" : 2 } }
+{ "names" : [ "Romany", "Damiana", "Polikarpa" ], "date" : { "day" : 23, "month" : 2 } }
+{ "names" : [ "Macieja", "Bogusza", "Sergiusza" ], "date" : { "day" : 24, "month" : 2 } }
+{ "names" : [ "Wiktora", "Cezarego" ], "date" : { "day" : 25, "month" : 2 } }
+{ "names" : [ "Mirosława", "Aleksandra" ], "date" : { "day" : 26, "month" : 2 } }
+{ "names" : [ "Gabriela", "Anastazji" ], "date" : { "day" : 27, "month" : 2 } }
+{ "names" : [ "Romana", "Ludomira", "Lecha" ], "date" : { "day" : 28, "month" : 2 } }
+{ "names" : [ "Antoniny", "Radosława", "Dawida" ], "date" : { "day" : 1, "month" : 3 } }
+{ "names" : [ "Heleny", "Halszki", "Pawła" ], "date" : { "day" : 2, "month" : 3 } }
+{ "names" : [ "Maryny", "Kunegundy", "Tycjana" ], "date" : { "day" : 3, "month" : 3 } }
+{ "names" : [ "Łucji", "Kazimierza", "Eugeniusza" ], "date" : { "day" : 4, "month" : 3 } }
+{ "names" : [ "Adriana", "Fryderyka", "Teofila" ], "date" : { "day" : 5, "month" : 3 } }
+{ "names" : [ "Róży", "Jordana", "Agnieszki" ], "date" : { "day" : 6, "month" : 3 } }
+{ "names" : [ "Tomasza", "Perpetuy", "Felicyty" ], "date" : { "day" : 7, "month" : 3 } }
+{ "names" : [ "Beaty", "Wincentego", "Jana" ], "date" : { "day" : 8, "month" : 3 } }
+{ "names" : [ "Franciszki", "Brunona" ], "date" : { "day" : 9, "month" : 3 } }
+{ "names" : [ "Cypriana", "Marcela", "Aleksandra" ], "date" : { "day" : 10, "month" : 3 } }
+{ "names" : [ "Ludosława", "Konstantyna", "Benedykta" ], "date" : { "day" : 11, "month" : 3 } }
+{ "names" : [ "Grzegorza", "Justyna", "Alojzego" ], "date" : { "day" : 12, "month" : 3 } }
+{ "names" : [ "Bożeny", "Krystyny" ], "date" : { "day" : 13, "month" : 3 } }
+{ "names" : [ "Leona", "Matyldy", "Łazarza" ], "date" : { "day" : 14, "month" : 3 } }
+{ "names" : [ "Longina", "Klemensa", "Ludwiki" ], "date" : { "day" : 15, "month" : 3 } }
+{ "names" : [ "Izabeli", "Oktawii", "Hilarego" ], "date" : { "day" : 16, "month" : 3 } }
+{ "names" : [ "Patryka", "Zbigniewa", "Gertrudy" ], "date" : { "day" : 17, "month" : 3 } }
+{ "names" : [ "Cyryla", "Edwarda", "Boguchwały" ], "date" : { "day" : 18, "month" : 3 } }
+{ "names" : [ "Józefa", "Bogdana" ], "date" : { "day" : 19, "month" : 3 } }
+{ "names" : [ "Klaudii", "Eufemii", "Maurycego" ], "date" : { "day" : 20, "month" : 3 } }
+{ "names" : [ "Lubomira", "Benedykta" ], "date" : { "day" : 21, "month" : 3 } }
+{ "names" : [ "Katarzyny", "Bogusława" ], "date" : { "day" : 22, "month" : 3 } }
+{ "names" : [ "Pelagii", "Oktawiana", "Feliksa" ], "date" : { "day" : 23, "month" : 3 } }
+{ "names" : [ "Marka", "Gabriela", "Katarzyny" ], "date" : { "day" : 24, "month" : 3 } }
+{ "names" : [ "Marioli", "Wieäczysława", "Ireneusza" ], "date" : { "day" : 25, "month" : 3 } }
+{ "names" : [ "Larysy", "Emanyela", "Teodora" ], "date" : { "day" : 26, "month" : 3 } }
+{ "names" : [ "Lidii", "Ernesta" ], "date" : { "day" : 27, "month" : 3 } }
+{ "names" : [ "Anieli", "Sykstusa", "Jana" ], "date" : { "day" : 28, "month" : 3 } }
+{ "names" : [ "Wiktoryna", "Helmuta", "Eustachego" ], "date" : { "day" : 29, "month" : 3 } }
+{ "names" : [ "Anieli", "Kwiryna", "Leonarda" ], "date" : { "day" : 30, "month" : 3 } }
+{ "names" : [ "Beniamina", "Dobromierza", "Leonarda" ], "date" : { "day" : 31, "month" : 3 } }
+{ "names" : [ "Teodory", "Grażyny", "Ireny" ], "date" : { "day" : 1, "month" : 4 } }
+{ "names" : [ "Władysława", "Franciszka", "Teodozji" ], "date" : { "day" : 2, "month" : 4 } }
+{ "names" : [ "Ryszarda", "Pankracego", "Ingi" ], "date" : { "day" : 3, "month" : 4 } }
+{ "names" : [ "Izydora", "Wacława" ], "date" : { "day" : 4, "month" : 4 } }
+{ "names" : [ "Ireny", "Wincentego" ], "date" : { "day" : 5, "month" : 4 } }
+{ "names" : [ "Izoldy", "Celestyna", "Wilhelma" ], "date" : { "day" : 6, "month" : 4 } }
+{ "names" : [ "Rufina", "Celestyna", "Jana" ], "date" : { "day" : 7, "month" : 4 } }
+{ "names" : [ "Cezaryny", "Dionizego", "Julii" ], "date" : { "day" : 8, "month" : 4 } }
+{ "names" : [ "Marii", "Dymitra", "Heliodora" ], "date" : { "day" : 9, "month" : 4 } }
+{ "names" : [ "Michała", "Makarego" ], "date" : { "day" : 10, "month" : 4 } }
+{ "names" : [ "Filipa", "Leona" ], "date" : { "day" : 11, "month" : 4 } }
+{ "names" : [ "Juliusza", "Lubosława", "Zenona" ], "date" : { "day" : 12, "month" : 4 } }
+{ "names" : [ "Przemysława", "Hermenegildy", "Marcina" ], "date" : { "day" : 13, "month" : 4 } }
+{ "names" : [ "Bereniki", "Waleriana", "Justyny" ], "date" : { "day" : 14, "month" : 4 } }
+{ "names" : [ "Ludwiny", "Wacławy", "Anastazji" ], "date" : { "day" : 15, "month" : 4 } }
+{ "names" : [ "Kseni", "Cecylii", "Bernardety" ], "date" : { "day" : 16, "month" : 4 } }
+{ "names" : [ "Rudolfa", "Roberta" ], "date" : { "day" : 17, "month" : 4 } }
+{ "names" : [ "Bogusławy", "Apoloniusza" ], "date" : { "day" : 18, "month" : 4 } }
+{ "names" : [ "Adolfa", "Tymona", "Leona" ], "date" : { "day" : 19, "month" : 4 } }
+{ "names" : [ "Czesława", "Agnieszki", "Mariana" ], "date" : { "day" : 20, "month" : 4 } }
+{ "names" : [ "Anzelma", "Bartosza", "Feliksa" ], "date" : { "day" : 21, "month" : 4 } }
+{ "names" : [ "Kai", "Leonii", "Sotera" ], "date" : { "day" : 22, "month" : 4 } }
+{ "names" : [ "Jerzego", "Wojciecha" ], "date" : { "day" : 23, "month" : 4 } }
+{ "names" : [ "Horacego", "Feliksa", "Grzegorza" ], "date" : { "day" : 24, "month" : 4 } }
+{ "names" : [ "Marka", "Jarosława" ], "date" : { "day" : 25, "month" : 4 } }
+{ "names" : [ "Marzeny", "Klaudiusza", "Marii" ], "date" : { "day" : 26, "month" : 4 } }
+{ "names" : [ "Zyty", "Teofila", "Felicji" ], "date" : { "day" : 27, "month" : 4 } }
+{ "names" : [ "Piotra", "Walerii", "Witalisa" ], "date" : { "day" : 28, "month" : 4 } }
+{ "names" : [ "Rity", "Katarzyny", "Bogusława" ], "date" : { "day" : 29, "month" : 4 } }
+{ "names" : [ "Mariana", "Donaty", "Tamary" ], "date" : { "day" : 30, "month" : 4 } }
+{ "names" : [ "Józefa", "Jeremiasza", "Filipa" ], "date" : { "day" : 1, "month" : 5 } }
+{ "names" : [ "Zygmunta", "Atanazego", "Anatola" ], "date" : { "day" : 2, "month" : 5 } }
+{ "names" : [ "Marii", "Antoniny" ], "date" : { "day" : 3, "month" : 5 } }
+{ "names" : [ "Moniki", "Floriana", "Władysława" ], "date" : { "day" : 4, "month" : 5 } }
+{ "names" : [ "Ireny", "Waldemara" ], "date" : { "day" : 5, "month" : 5 } }
+{ "names" : [ "Judyty", "Jakuba", "Filipa" ], "date" : { "day" : 6, "month" : 5 } }
+{ "names" : [ "Gizeli", "Ludmiły", "Benedykta" ], "date" : { "day" : 7, "month" : 5 } }
+{ "names" : [ "Stanisława", "Lizy", "Wiktora" ], "date" : { "day" : 8, "month" : 5 } }
+{ "names" : [ "Bożydara", "Grzegorza", "Karoliny" ], "date" : { "day" : 9, "month" : 5 } }
+{ "names" : [ "Izydora", "Antoniny", "Symeona" ], "date" : { "day" : 10, "month" : 5 } }
+{ "names" : [ "Igi", "Miry", "Władysławy" ], "date" : { "day" : 11, "month" : 5 } }
+{ "names" : [ "Pankracego", "Dominika", "Achillesa" ], "date" : { "day" : 12, "month" : 5 } }
+{ "names" : [ "Serwacego", "Roberta", "Glorii" ], "date" : { "day" : 13, "month" : 5 } }
+{ "names" : [ "Bonifacego", "Dobiesława", "Macieja" ], "date" : { "day" : 14, "month" : 5 } }
+{ "names" : [ "Zofii", "Nadziei", "Izydora" ], "date" : { "day" : 15, "month" : 5 } }
+{ "names" : [ "Andrzeja", "Jędrzeja", "Szymona" ], "date" : { "day" : 16, "month" : 5 } }
+{ "names" : [ "Paschalisa", "Sławomira", "Weroniki" ], "date" : { "day" : 17, "month" : 5 } }
+{ "names" : [ "Eryka", "Feliksa", "Jana" ], "date" : { "day" : 18, "month" : 5 } }
+{ "names" : [ "Iwa", "Piotra", "Celestyna" ], "date" : { "day" : 19, "month" : 5 } }
+{ "names" : [ "Bazylego", "Bernardyna", "Aleksandra" ], "date" : { "day" : 20, "month" : 5 } }
+{ "names" : [ "Wiktora", "Kryspina", "Tymoteusza" ], "date" : { "day" : 21, "month" : 5 } }
+{ "names" : [ "Heleny", "Wiesławy", "Ryty" ], "date" : { "day" : 22, "month" : 5 } }
+{ "names" : [ "Iwony", "Dezyderego", "Kryspina" ], "date" : { "day" : 23, "month" : 5 } }
+{ "names" : [ "Joanny", "Zuzanny" ], "date" : { "day" : 24, "month" : 5 } }
+{ "names" : [ "Grzegorza", "Urbana", "Magdaleny" ], "date" : { "day" : 25, "month" : 5 } }
+{ "names" : [ "Filipa", "Pauliny" ], "date" : { "day" : 26, "month" : 5 } }
+{ "names" : [ "Augustyna", "Juliana", "Magdaleny" ], "date" : { "day" : 27, "month" : 5 } }
+{ "names" : [ "Jaromira", "Justa", "Justyny" ], "date" : { "day" : 28, "month" : 5 } }
+{ "names" : [ "Magdaleny", "Bogumiły", "Urszuli" ], "date" : { "day" : 29, "month" : 5 } }
+{ "names" : [ "Ferdynanda", "Karola", "Jana" ], "date" : { "day" : 30, "month" : 5 } }
+{ "names" : [ "Anieli", "Petroneli" ], "date" : { "day" : 31, "month" : 5 } }
+{ "names" : [ "Justyna", "Anieli", "Konrada" ], "date" : { "day" : 1, "month" : 6 } }
+{ "names" : [ "Marianny", "Marcelina", "Piotra" ], "date" : { "day" : 2, "month" : 6 } }
+{ "names" : [ "Leszka", "Tamary", "Karola" ], "date" : { "day" : 3, "month" : 6 } }
+{ "names" : [ "Kwiryny", "Franciszka" ], "date" : { "day" : 4, "month" : 6 } }
+{ "names" : [ "Waltera", "Bonifacego", "Walerii" ], "date" : { "day" : 5, "month" : 6 } }
+{ "names" : [ "Norberta", "Laurentego", "Bogumiła" ], "date" : { "day" : 6, "month" : 6 } }
+{ "names" : [ "Roberta", "Wiesława" ], "date" : { "day" : 7, "month" : 6 } }
+{ "names" : [ "Medarda", "Maksyma", "Seweryna" ], "date" : { "day" : 8, "month" : 6 } }
+{ "names" : [ "Pelagii", "Dominika", "Efrema" ], "date" : { "day" : 9, "month" : 6 } }
+{ "names" : [ "Bogumiła", "Małgorzaty", "Diany" ], "date" : { "day" : 10, "month" : 6 } }
+{ "names" : [ "Barnaby", "Radomiła", "Feliksa" ], "date" : { "day" : 11, "month" : 6 } }
+{ "names" : [ "Janiny", "Onufrego", "Leona" ], "date" : { "day" : 12, "month" : 6 } }
+{ "names" : [ "Lucjana", "Antoniego" ], "date" : { "day" : 13, "month" : 6 } }
+{ "names" : [ "Bazylego", "Elwiry", "Michała" ], "date" : { "day" : 14, "month" : 6 } }
+{ "names" : [ "Wita", "Jolanty" ], "date" : { "day" : 15, "month" : 6 } }
+{ "names" : [ "Anny", "Aliny", "Benona", "Anety" ], "date" : { "day" : 16, "month" : 6 } }
+{ "names" : [ "Laury", "Marcjana", "Alberta" ], "date" : { "day" : 17, "month" : 6 } }
+{ "names" : [ "Marka", "Elżbiety" ], "date" : { "day" : 18, "month" : 6 } }
+{ "names" : [ "Gerwazego", "Protazego" ], "date" : { "day" : 19, "month" : 6 } }
+{ "names" : [ "Diny", "Bogny", "Florentyny" ], "date" : { "day" : 20, "month" : 6 } }
+{ "names" : [ "Alicji", "Alojzego" ], "date" : { "day" : 21, "month" : 6 } }
+{ "names" : [ "Pauliny", "Tomasza", "Jana" ], "date" : { "day" : 22, "month" : 6 } }
+{ "names" : [ "Wandy", "Zenona" ], "date" : { "day" : 23, "month" : 6 } }
+{ "names" : [ "Jana", "Danuty" ], "date" : { "day" : 24, "month" : 6 } }
+{ "names" : [ "Łucji", "Wilhelma", "Doroty" ], "date" : { "day" : 25, "month" : 6 } }
+{ "names" : [ "Jana", "Pawła" ], "date" : { "day" : 26, "month" : 6 } }
+{ "names" : [ "Maryli", "Władysława", "Cyryla" ], "date" : { "day" : 27, "month" : 6 } }
+{ "names" : [ "Leona", "Ireneusza" ], "date" : { "day" : 28, "month" : 6 } }
+{ "names" : [ "Piotra", "Pawła" ], "date" : { "day" : 29, "month" : 6 } }
+{ "names" : [ "Emilii", "Lucyny" ], "date" : { "day" : 30, "month" : 6 } }
+{ "names" : [ "Haliny", "Mariana", "Marcina" ], "date" : { "day" : 1, "month" : 7 } }
+{ "names" : [ "Jagody", "Urbama", "Marii" ], "date" : { "day" : 2, "month" : 7 } }
+{ "names" : [ "Jacka", "Anatola", "Tomasza" ], "date" : { "day" : 3, "month" : 7 } }
+{ "names" : [ "Odona", "Malwiny", "Elżbiety" ], "date" : { "day" : 4, "month" : 7 } }
+{ "names" : [ "Marii", "Antoniego" ], "date" : { "day" : 5, "month" : 7 } }
+{ "names" : [ "Gotarda", "Dominiki", "Łucji" ], "date" : { "day" : 6, "month" : 7 } }
+{ "names" : [ "Cyryla", "Estery", "Metodego" ], "date" : { "day" : 7, "month" : 7 } }
+{ "names" : [ "Edgara", "Elżbiety", "Eugeniusza" ], "date" : { "day" : 8, "month" : 7 } }
+{ "names" : [ "Lukrecji", "Weroniki", "Zenona" ], "date" : { "day" : 9, "month" : 7 } }
+{ "names" : [ "Sylwany", "Witalisa", "Antoniego" ], "date" : { "day" : 10, "month" : 7 } }
+{ "names" : [ "Olgi", "Kaliny", "Benedykta" ], "date" : { "day" : 11, "month" : 7 } }
+{ "names" : [ "Jana", "Brunona", "Bonifacego" ], "date" : { "day" : 12, "month" : 7 } }
+{ "names" : [ "Henryka", "Kingi", "Andrzeja" ], "date" : { "day" : 13, "month" : 7 } }
+{ "names" : [ "Ulryka", "Bonawentury", "Kamila" ], "date" : { "day" : 14, "month" : 7 } }
+{ "names" : [ "Henryka", "Włodzimierza", "Dawida" ], "date" : { "day" : 15, "month" : 7 } }
+{ "names" : [ "Mariki", "Benity", "Eustachego" ], "date" : { "day" : 16, "month" : 7 } }
+{ "names" : [ "Anety", "Bogdana", "Jadwigi" ], "date" : { "day" : 17, "month" : 7 } }
+{ "names" : [ "Erwina", "Kamila", "Szymona" ], "date" : { "day" : 18, "month" : 7 } }
+{ "names" : [ "Wincentego", "Wodzisława", "Marcina" ], "date" : { "day" : 19, "month" : 7 } }
+{ "names" : [ "Czesława", "Hieronioma", "Małgorzaty" ], "date" : { "day" : 20, "month" : 7 } }
+{ "names" : [ "Daniela", "Dalidy", "Wawrzyäca" ], "date" : { "day" : 21, "month" : 7 } }
+{ "names" : [ "Marii", "Magdaleny" ], "date" : { "day" : 22, "month" : 7 } }
+{ "names" : [ "Stwosza", "Bogny", "Brygidy" ], "date" : { "day" : 23, "month" : 7 } }
+{ "names" : [ "Kingi", "Krystyny" ], "date" : { "day" : 24, "month" : 7 } }
+{ "names" : [ "Walentyny", "Krzysztofa", "Jakuba" ], "date" : { "day" : 25, "month" : 7 } }
+{ "names" : [ "Anny", "Mirosławy", "Grażyny" ], "date" : { "day" : 26, "month" : 7 } }
+{ "names" : [ "Lilii", "Julii", "Natalii" ], "date" : { "day" : 27, "month" : 7 } }
+{ "names" : [ "Aidy", "Marceli", "Wiktora" ], "date" : { "day" : 28, "month" : 7 } }
+{ "names" : [ "Olafa", "Marty", "Ludmiły" ], "date" : { "day" : 29, "month" : 7 } }
+{ "names" : [ "Julity", "Piotra", "Aldony" ], "date" : { "day" : 30, "month" : 7 } }
+{ "names" : [ "Ignacego", "Lubomira", "Heleny" ], "date" : { "day" : 31, "month" : 7 } }
+{ "names" : [ "Nadii", "Justyna", "Juliana" ], "date" : { "day" : 1, "month" : 8 } }
+{ "names" : [ "Kariny", "Gustawa", "Euzebiusza" ], "date" : { "day" : 2, "month" : 8 } }
+{ "names" : [ "Lidii", "Augusta", "Nikodema" ], "date" : { "day" : 3, "month" : 8 } }
+{ "names" : [ "Dominika", "Protazego", "Jana" ], "date" : { "day" : 4, "month" : 8 } }
+{ "names" : [ "Oswalda", "Marii", "Mariana" ], "date" : { "day" : 5, "month" : 8 } }
+{ "names" : [ "Sławy", "Jakuba", "Oktawiana" ], "date" : { "day" : 6, "month" : 8 } }
+{ "names" : [ "Kajetana", "Doroty", "Sykstusa" ], "date" : { "day" : 7, "month" : 8 } }
+{ "names" : [ "Cypriana", "Emiliana", "Dominika" ], "date" : { "day" : 8, "month" : 8 } }
+{ "names" : [ "Romana", "Ryszarda", "Edyty" ], "date" : { "day" : 9, "month" : 8 } }
+{ "names" : [ "Borysa", "Filomeny", "Wawrzyńca" ], "date" : { "day" : 10, "month" : 8 } }
+{ "names" : [ "Klary", "Zuzanny", "Lecha" ], "date" : { "day" : 11, "month" : 8 } }
+{ "names" : [ "Innocentego", "Lecha", "Euzebii" ], "date" : { "day" : 12, "month" : 8 } }
+{ "names" : [ "Diany", "Hipolita", "Poncjana" ], "date" : { "day" : 13, "month" : 8 } }
+{ "names" : [ "Alfreda", "Euzebiusza", "Maksymiliana" ], "date" : { "day" : 14, "month" : 8 } }
+{ "names" : [ "Napoleona", "Stelii" ], "date" : { "day" : 15, "month" : 8 } }
+{ "names" : [ "Rocha", "Stefana", "Joachima" ], "date" : { "day" : 16, "month" : 8 } }
+{ "names" : [ "Żanny", "Mirona", "Jacka" ], "date" : { "day" : 17, "month" : 8 } }
+{ "names" : [ "Ilony", "Bronisława", "Heleny" ], "date" : { "day" : 18, "month" : 8 } }
+{ "names" : [ "Bolesława", "Juliana" ], "date" : { "day" : 19, "month" : 8 } }
+{ "names" : [ "Bernarda", "Samuela", "Sobiesława" ], "date" : { "day" : 20, "month" : 8 } }
+{ "names" : [ "Joanny", "Kazimiery", "Piusa" ], "date" : { "day" : 21, "month" : 8 } }
+{ "names" : [ "Cezarego", "Tymoteusza" ], "date" : { "day" : 22, "month" : 8 } }
+{ "names" : [ "Apolinarego", "Filipa" ], "date" : { "day" : 23, "month" : 8 } }
+{ "names" : [ "Jerzego", "Bartosza", "Haliny" ], "date" : { "day" : 24, "month" : 8 } }
+{ "names" : [ "Luizy", "Ludwika", "Józefa" ], "date" : { "day" : 25, "month" : 8 } }
+{ "names" : [ "Marii", "Aleksandra" ], "date" : { "day" : 26, "month" : 8 } }
+{ "names" : [ "Józefa", "Kolasantego" ], "date" : { "day" : 27, "month" : 8 } }
+{ "names" : [ "Patrycji", "Wyszomira", "Augustyna" ], "date" : { "day" : 28, "month" : 8 } }
+{ "names" : [ "Jana", "Sabiny", "Racibora" ], "date" : { "day" : 29, "month" : 8 } }
+{ "names" : [ "Róży", "Szczęsnego", "Feliksa" ], "date" : { "day" : 30, "month" : 8 } }
+{ "names" : [ "Ramony", "Rajmunda", "Bogdana" ], "date" : { "day" : 31, "month" : 8 } }
+{ "names" : [ "Idziego", "Bronisława" ], "date" : { "day" : 1, "month" : 9 } }
+{ "names" : [ "Stefana", "Wilhelma", "Juliana" ], "date" : { "day" : 2, "month" : 9 } }
+{ "names" : [ "Izabeli", "Szymona", "Grzegorza" ], "date" : { "day" : 3, "month" : 9 } }
+{ "names" : [ "Rozalii", "Róży" ], "date" : { "day" : 4, "month" : 9 } }
+{ "names" : [ "Doroty", "Wawrzyńca", "Teodora" ], "date" : { "day" : 5, "month" : 9 } }
+{ "names" : [ "Beaty", "Eugeniusza" ], "date" : { "day" : 6, "month" : 9 } }
+{ "names" : [ "Reginy", "Melchiora", "Domosławy" ], "date" : { "day" : 7, "month" : 9 } }
+{ "names" : [ "Marii", "Adrianny", "Serafiny" ], "date" : { "day" : 8, "month" : 9 } }
+{ "names" : [ "Ścibora", "Sergiusza", "Piotra" ], "date" : { "day" : 9, "month" : 9 } }
+{ "names" : [ "Łukasza", "Aldony", "Mścisława" ], "date" : { "day" : 10, "month" : 9 } }
+{ "names" : [ "Jacka", "Prota", "Dagny", "Hiacynta" ], "date" : { "day" : 11, "month" : 9 } }
+{ "names" : [ "Gwidona", "Radzimira", "Marii" ], "date" : { "day" : 12, "month" : 9 } }
+{ "names" : [ "Eugenii", "Aureliusza", "Jana" ], "date" : { "day" : 13, "month" : 9 } }
+{ "names" : [ "Roksany", "Bernarda", "Cypriana" ], "date" : { "day" : 14, "month" : 9 } }
+{ "names" : [ "Albina", "Nikodema", "Marii" ], "date" : { "day" : 15, "month" : 9 } }
+{ "names" : [ "Edyty", "Korneliusza", "Cypriana" ], "date" : { "day" : 16, "month" : 9 } }
+{ "names" : [ "Franciszka", "Roberta", "Justyna" ], "date" : { "day" : 17, "month" : 9 } }
+{ "names" : [ "Irmy", "Stanisława", "Ireny" ], "date" : { "day" : 18, "month" : 9 } }
+{ "names" : [ "Januarego", "Konstancji", "Teodora" ], "date" : { "day" : 19, "month" : 9 } }
+{ "names" : [ "Filipiny", "Eustachego", "Euzebii" ], "date" : { "day" : 20, "month" : 9 } }
+{ "names" : [ "Jonasza", "Mateusza", "Hipolita" ], "date" : { "day" : 21, "month" : 9 } }
+{ "names" : [ "Tomasza", "Maurycego", "Joachima" ], "date" : { "day" : 22, "month" : 9 } }
+{ "names" : [ "Tekli", "Bogusława", "Linusa" ], "date" : { "day" : 23, "month" : 9 } }
+{ "names" : [ "Gerarda", "Ruperta", "Tomiry" ], "date" : { "day" : 24, "month" : 9 } }
+{ "names" : [ "Aurelii", "Władysława", "Kleofasa" ], "date" : { "day" : 25, "month" : 9 } }
+{ "names" : [ "Wawrzyńca", "Kosmy", "Damiana" ], "date" : { "day" : 26, "month" : 9 } }
+{ "names" : [ "Wincentego", "Mirabeli", "Justyny" ], "date" : { "day" : 27, "month" : 9 } }
+{ "names" : [ "Wacława", "Tymona", "Marka" ], "date" : { "day" : 28, "month" : 9 } }
+{ "names" : [ "Michała", "Gabriela", "Rafała" ], "date" : { "day" : 29, "month" : 9 } }
+{ "names" : [ "Wery", "Honoriusza", "Hieronima" ], "date" : { "day" : 30, "month" : 9 } }
+{ "names" : [ "Danuty", "Remigiusza", "Teresy" ], "date" : { "day" : 1, "month" : 10 } }
+{ "names" : [ "Teofila", "Dionizego", "Sławomira" ], "date" : { "day" : 2, "month" : 10 } }
+{ "names" : [ "Teresy", "Heliodora", "Jana" ], "date" : { "day" : 3, "month" : 10 } }
+{ "names" : [ "Rozalii", "Edwina", "Franciszka" ], "date" : { "day" : 4, "month" : 10 } }
+{ "names" : [ "Placyda", "Apolinarego" ], "date" : { "day" : 5, "month" : 10 } }
+{ "names" : [ "Artura", "Brunona" ], "date" : { "day" : 6, "month" : 10 } }
+{ "names" : [ "Marii", "Marka", "Mirelli" ], "date" : { "day" : 7, "month" : 10 } }
+{ "names" : [ "Pelagii", "Brygidy", "Walerii" ], "date" : { "day" : 8, "month" : 10 } }
+{ "names" : [ "Amolda", "Dionizego", "Wincentego" ], "date" : { "day" : 9, "month" : 10 } }
+{ "names" : [ "Pauliny", "Danieli", "Leona" ], "date" : { "day" : 10, "month" : 10 } }
+{ "names" : [ "Aldony", "Aleksandra", "Dobromiry" ], "date" : { "day" : 11, "month" : 10 } }
+{ "names" : [ "Eustachego", "Maksymiliana", "Edwina" ], "date" : { "day" : 12, "month" : 10 } }
+{ "names" : [ "Geralda", "Edwarda", "Honorata" ], "date" : { "day" : 13, "month" : 10 } }
+{ "names" : [ "Liwii", "Kaliksta", "Bernarda" ], "date" : { "day" : 14, "month" : 10 } }
+{ "names" : [ "Jadwigi", "Teresy", "Florentyny" ], "date" : { "day" : 15, "month" : 10 } }
+{ "names" : [ "Gawła", "Ambrożego" ], "date" : { "day" : 16, "month" : 10 } }
+{ "names" : [ "Wiktora", "Marity", "Ignacego" ], "date" : { "day" : 17, "month" : 10 } }
+{ "names" : [ "Juliana", "Łukasza" ], "date" : { "day" : 18, "month" : 10 } }
+{ "names" : [ "Ziemowita", "Jana", "Pawła" ], "date" : { "day" : 19, "month" : 10 } }
+{ "names" : [ "Ireny", "Kleopatry", "Jana" ], "date" : { "day" : 20, "month" : 10 } }
+{ "names" : [ "Urszuli", "Hilarego", "Jakuba" ], "date" : { "day" : 21, "month" : 10 } }
+{ "names" : [ "Halki", "Filipa", "Salomei" ], "date" : { "day" : 22, "month" : 10 } }
+{ "names" : [ "Marleny", "Seweryna", "Igi" ], "date" : { "day" : 23, "month" : 10 } }
+{ "names" : [ "Rafała", "Marcina", "Antoniego" ], "date" : { "day" : 24, "month" : 10 } }
+{ "names" : [ "Darii", "Wilhelminy", "Bonifacego" ], "date" : { "day" : 25, "month" : 10 } }
+{ "names" : [ "Lucjana", "Ewarysta", "Damiana" ], "date" : { "day" : 26, "month" : 10 } }
+{ "names" : [ "Iwony", "Sabiny" ], "date" : { "day" : 27, "month" : 10 } }
+{ "names" : [ "Szymona", "Tadeusza" ], "date" : { "day" : 28, "month" : 10 } }
+{ "names" : [ "Euzebii", "Wioletty", "Felicjana" ], "date" : { "day" : 29, "month" : 10 } }
+{ "names" : [ "Zenobii", "Przemysława", "Edmunda" ], "date" : { "day" : 30, "month" : 10 } }
+{ "names" : [ "Urbana", "Saturnina", "Krzysztofa" ], "date" : { "day" : 31, "month" : 10 } }
+{ "names" : [ "Bohdany", "Bożydara" ], "date" : { "day" : 2, "month" : 11 } }
+{ "names" : [ "Sylwii", "Marcina", "Huberta" ], "date" : { "day" : 3, "month" : 11 } }
+{ "names" : [ "Karola", "Olgierda" ], "date" : { "day" : 4, "month" : 11 } }
+{ "names" : [ "Elżbiety", "Sławomira", "Dominika" ], "date" : { "day" : 5, "month" : 11 } }
+{ "names" : [ "Feliksa", "Leonarda", "Ziemowita" ], "date" : { "day" : 6, "month" : 11 } }
+{ "names" : [ "Antoniego", "Żytomira", "Ernesta" ], "date" : { "day" : 7, "month" : 11 } }
+{ "names" : [ "Seweryna", "Bogdana", "Klaudiusza" ], "date" : { "day" : 8, "month" : 11 } }
+{ "names" : [ "Aleksandra", "Ludwika", "Teodora" ], "date" : { "day" : 9, "month" : 11 } }
+{ "names" : [ "Leny", "Ludomira", "Leona" ], "date" : { "day" : 10, "month" : 11 } }
+{ "names" : [ "Marcina", "Batłomieja", "Teodora" ], "date" : { "day" : 11, "month" : 11 } }
+{ "names" : [ "Renaty", "Witolda", "Jozafata" ], "date" : { "day" : 12, "month" : 11 } }
+{ "names" : [ "Mateusza", "Izaaka", "Stanisława" ], "date" : { "day" : 13, "month" : 11 } }
+{ "names" : [ "Rogera", "Serafina", "Wawrzyäca" ], "date" : { "day" : 14, "month" : 11 } }
+{ "names" : [ "Alberta", "Leopolda" ], "date" : { "day" : 15, "month" : 11 } }
+{ "names" : [ "Gertrudy", "Edmunda", "Marii" ], "date" : { "day" : 16, "month" : 11 } }
+{ "names" : [ "Salomei", "Grzegorza", "Elżbiety" ], "date" : { "day" : 17, "month" : 11 } }
+{ "names" : [ "Romana", "Klaudyny", "Karoliny" ], "date" : { "day" : 18, "month" : 11 } }
+{ "names" : [ "Seweryny", "Maksyma", "Salomei" ], "date" : { "day" : 19, "month" : 11 } }
+{ "names" : [ "Anatola", "Sędzimira", "Rafała" ], "date" : { "day" : 20, "month" : 11 } }
+{ "names" : [ "Janusza" ], "date" : { "day" : 21, "month" : 11 } }
+{ "names" : [ "Cecylii", "Wszemiły", "Stefana" ], "date" : { "day" : 22, "month" : 11 } }
+{ "names" : [ "Adelii", "Klemensa", "Felicyty" ], "date" : { "day" : 23, "month" : 11 } }
+{ "names" : [ "Flory", "Emmy", "Chryzogona" ], "date" : { "day" : 24, "month" : 11 } }
+{ "names" : [ "Erazma", "Katarzyny" ], "date" : { "day" : 25, "month" : 11 } }
+{ "names" : [ "Delfiny", "Sylwestra", "Konrada" ], "date" : { "day" : 26, "month" : 11 } }
+{ "names" : [ "Waleriana", "Wirgiliusza", "Maksyma" ], "date" : { "day" : 27, "month" : 11 } }
+{ "names" : [ "Lesława", "Zdzisława", "Stefana" ], "date" : { "day" : 28, "month" : 11 } }
+{ "names" : [ "Błażeja", "Saturnina" ], "date" : { "day" : 29, "month" : 11 } }
+{ "names" : [ "Andrzeja", "Maury", "Konstantego" ], "date" : { "day" : 30, "month" : 11 } }
+{ "names" : [ "Natalii", "Eligiusza", "Edmunda" ], "date" : { "day" : 1, "month" : 12 } }
+{ "names" : [ "Balbiny", "Bibianny", "Pauliny" ], "date" : { "day" : 2, "month" : 12 } }
+{ "names" : [ "Franciszka", "Ksawerego", "Kasjana" ], "date" : { "day" : 3, "month" : 12 } }
+{ "names" : [ "Barbary", "Krystiana", "Jana" ], "date" : { "day" : 4, "month" : 12 } }
+{ "names" : [ "Sabiny", "Krystyny", "Edyty" ], "date" : { "day" : 5, "month" : 12 } }
+{ "names" : [ "Mikołaja", "Jaremy", "Emiliana" ], "date" : { "day" : 6, "month" : 12 } }
+{ "names" : [ "Marcina", "Ambrożego", "Teodora" ], "date" : { "day" : 7, "month" : 12 } }
+{ "names" : [ "Marii", "Światozara", "Makarego" ], "date" : { "day" : 8, "month" : 12 } }
+{ "names" : [ "Wiesława", "Leokadii", "Joanny" ], "date" : { "day" : 9, "month" : 12 } }
+{ "names" : [ "Julii", "Danieli", "Bogdana" ], "date" : { "day" : 10, "month" : 12 } }
+{ "names" : [ "Damazego", "Waldemara", "Daniela" ], "date" : { "day" : 11, "month" : 12 } }
+{ "names" : [ "Dagmary", "Aleksandra", "Ady" ], "date" : { "day" : 12, "month" : 12 } }
+{ "names" : [ "Łucji", "Otylii" ], "date" : { "day" : 13, "month" : 12 } }
+{ "names" : [ "Alfreda", "Izydora", "Jana" ], "date" : { "day" : 14, "month" : 12 } }
+{ "names" : [ "Niny", "Celiny", "Waleriana" ], "date" : { "day" : 15, "month" : 12 } }
+{ "names" : [ "Albiny", "Zdzisławy", "Alicji" ], "date" : { "day" : 16, "month" : 12 } }
+{ "names" : [ "Olimpii", "Łazarza", "Floriana" ], "date" : { "day" : 17, "month" : 12 } }
+{ "names" : [ "Gracjana", "Bogusława", "Laurencji" ], "date" : { "day" : 18, "month" : 12 } }
+{ "names" : [ "Gabrieli", "Dariusza", "Eleonory" ], "date" : { "day" : 19, "month" : 12 } }
+{ "names" : [ "Bogumiły", "Dominika" ], "date" : { "day" : 20, "month" : 12 } }
+{ "names" : [ "Tomisława", "Seweryna", "Piotra" ], "date" : { "day" : 21, "month" : 12 } }
+{ "names" : [ "Zenona", "Honoraty", "Franciszki" ], "date" : { "day" : 22, "month" : 12 } }
+{ "names" : [ "Wiktorii", "Sławomiry", "Jana" ], "date" : { "day" : 23, "month" : 12 } }
+{ "names" : [ "Adama", "Ewy", "Eweliny" ], "date" : { "day" : 24, "month" : 12 } }
+{ "names" : [ "Anastazji", "Eugenii" ], "date" : { "day" : 25, "month" : 12 } }
+{ "names" : [ "Dionizego", "Szczepana" ], "date" : { "day" : 26, "month" : 12 } }
+{ "names" : [ "Jana", "Żanety", "Maksyma" ], "date" : { "day" : 27, "month" : 12 } }
+{ "names" : [ "Teofilii", "Godzisława", "Cezarego" ], "date" : { "day" : 28, "month" : 12 } }
+{ "names" : [ "Dawida", "Tomasza", "Dominika" ], "date" : { "day" : 29, "month" : 12 } }
+{ "names" : [ "Rainera", "Eugeniusza", "Irmy" ], "date" : { "day" : 30, "month" : 12 } }
+{ "names" : [ "Sylwestra", "Melanii", "Mariusza" ], "date" : { "day" : 31, "month" : 12 } }
