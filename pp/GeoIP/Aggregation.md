@@ -113,3 +113,41 @@ puts coll.aggregate([
 {"_id"=>"Marii", "count"=>16}
 {"_id"=>"Jana", "count"=>21}
 ```
+
+4\. Ile jest różnych imion?
+
+```ruby
+puts coll.aggregate([
+  {"$project" => { _id: 0, names: 1}},
+  {"$unwind" => "$names" },
+  {"$group" => {_id: 0, total: {"$sum" => 1}}}
+])
+#=>
+{"_id"=>0, "total"=>1022}
+```
+
+4\. W którym miesiącu jest najwięcej imion?
+
+Zmieniamy oryginalny format danych na taki:
+
+```ruby
+{"day"=>18, "month"=>1, "names"=>["Piotra", "Małgorzaty"]}
+```
+Importujemy dane, ale tym razem do kolekcji *imiona*:
+
+```sh
+mongoimport --drop --headerline --type csv --collection imiona < imieniny.csv
+```
+
+Przekształcamy dane na konsoli *irb*:
+
+```ruby
+coll = db.collection("imiona")
+
+coll.find({}, {snapshot: true}).each do |doc|
+  doc["names"] = doc["names"].split(" ")
+  coll.save(doc)
+end
+coll.count    #=> 364
+coll.find_one
+```
