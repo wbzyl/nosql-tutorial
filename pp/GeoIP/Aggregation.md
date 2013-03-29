@@ -68,47 +68,43 @@ coll.find_one
 
 ```ruby
 puts coll.aggregate([
-  {"$project" => {_id: 0, day: 1, month: 1, names: 1}},
+  {"$project" => {_id: 0, date: 1, names: 1}},
   {"$limit" => 4},
   {"$unwind" => "$names"}
 ])
 
 puts coll.aggregate([
-  {"$project" => {_id: 0, day: 1, month: 1, names: 1}},
+  {"$project" => {_id: 0, date: 1, names: 1}},
   {"$unwind" => "$names"},
   {"$limit" => 4}
 ])
 ```
 
-2\. Prosty pivot – *names* ↺ *date*, gdzie pole `date` utworzymy
-za pomocą operatora `$project` oraz
-[string operators](http://docs.mongodb.org/manual/reference/aggregation/#string-operators):
+2\. Prosty pivot – *names* ↺ *date*:
 
 ```ruby
-puts coll.aggregate([ {"$project" => { _id: 0, names: 1, date: { "$concat" => ["$day", "/", "$month"] }  }} ])
+{ "date"=>"18/01", "names"=>["Piotra", "Małgorzaty"] }
+{ "name"=>"Agnieszki", "dates"=>["20/04", "06/03", "21/01"] }
+```
 
+Aggregacja:
 
+```ruby
 puts coll.aggregate([
-  {"$project" => { _id: 0, names: 1, month: 1, day: 1}},
+  {"$project" => { _id: 0, names: 1, date: 1}},
   {"$unwind"  => "$names"},
-  {"$group" => { _id: "$names", count: {"$sum" => 1}}},
-  {"$sort" => {count: -1}},
-  {"$limit" => 20}
+  {"$group" => { _id: "$names", dates: {"$addToSet" => "$date"}}},
+  {"$project" => { name: "$_id", dates: 1, _id: 0}}
 ])
 ```
 
-Ten sam wynik na dwa różne sposoby:
+3\. Ile razy X obchodzi imieniny?
 
 ```ruby
 puts coll.aggregate([
-  {"$project" => { _id: 0, names: 1, month: 1, day: 1}},
+  {"$project" => { _id: 0, names: 1, date: 1}},
   {"$unwind"  => "$names"},
-  {"$group" => { _id: "$names", dates: {"$addToSet" => {"m" => "$month", "d" => "$day"}}}},
-])
-
-puts coll.aggregate([
-  {"$project" => { _id: 0, names: 1, date: {m: "$month", d: "$day"} }},
-  {"$unwind"  => "$names"},
-  {"$group"   => { _id: "$names", dates: {"$addToSet" => "$date"} }},
+  {"$group" => { _id: "$names", count: {"$sum" => 1}}},
+  {"$sort" => {count: 1}}
 ])
 ```
