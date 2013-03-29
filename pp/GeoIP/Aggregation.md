@@ -107,4 +107,9 @@ puts coll.aggregate([
   {"$group" => { _id: "$names", count: {"$sum" => 1}}},
   {"$sort" => {count: 1}}
 ])
+#=>
+{"_id"=>"Piotra", "count"=>9}
+{"_id"=>"Grzegorza", "count"=>9}
+{"_id"=>"Marii", "count"=>16}
+{"_id"=>"Jana", "count"=>21}
 ```
