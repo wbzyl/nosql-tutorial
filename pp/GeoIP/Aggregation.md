@@ -9,8 +9,8 @@ i kolekcji *cal*:
 mongoimport --drop --collection cal < name_days.json
 ```
 
-Zaczynamy od sprawdzenia czy kolekcja *cal* została zaimportowana.
-Kolekcja ta liczy 364 dokumenty:
+Zaczynamy od sprawdzenia czy cała kolekcja, 364 dokumenty,
+*cal* została zaimportowana:
 
 ```ruby
 require 'mongo'
