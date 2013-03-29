@@ -35,7 +35,7 @@ coll.aggregate([ {"$group" => {_id: 0, count: {"$sum" => 1}}} ])
 [{"_id"=>0, "count"=>364}]
 ```
 
-Zaczniemy od przekształcenia danych na taki format:
+Zaczniemy zmiany formatu danych na:
 
 ```ruby
 {
@@ -44,7 +44,7 @@ Zaczniemy od przekształcenia danych na taki format:
 }
 ```
 
-Zmienimy format danych na konsoli *irb*:
+Format zmienimy na konsoli *irb*:
 
 ```ruby
 coll.find({}, {snapshot: true}).each do |doc|
