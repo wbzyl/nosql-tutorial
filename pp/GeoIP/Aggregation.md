@@ -107,7 +107,7 @@ puts coll.aggregate([
 
 4\. W którym miesiącu jest najwięcej imion?
 
-Zmieniamy oryginalny format danych na taki („spłaszczamy” dokument)::
+Zmieniamy oryginalny format danych na taki („spłaszczamy” dokument):
 
 ```ruby
 {"day"=>18, "month"=>1, "names"=>["Piotra", "Małgorzaty"]}
