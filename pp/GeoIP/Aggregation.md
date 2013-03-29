@@ -139,7 +139,7 @@ Importujemy dane, ale tym razem do kolekcji *imiona*:
 mongoimport --drop --headerline --type csv --collection imiona < imieniny.csv
 ```
 
-Przekształcamy dane na konsoli *irb*:
+Przekształcamy format danych do pożądanego formatu na konsoli *irb*:
 
 ```ruby
 coll = db.collection("imiona")
@@ -151,3 +151,32 @@ end
 coll.count    #=> 364
 coll.find_one
 ```
+
+Agregacja:
+
+```ruby
+totals = coll.aggregate([
+  {"$project" => { _id: 0, names: 1, month: 1}},
+  {"$unwind" => "$names" },
+  {"$group" => {_id: "$month", total: {"$sum" => 1}}},
+  {"$sort" => {_id: 1}}
+])
+# sprawdzenie
+totals.reduce(0) {|acc, doc| acc + doc["total"] }
+#=> powinno być 1022
+puts totals
+#=>
+{"_id"=>1,  "total"=>88}
+{"_id"=>2,  "total"=>78}
+{"_id"=>3,  "total"=>87}
+{"_id"=>4,  "total"=>82}
+{"_id"=>5,  "total"=>88}
+{"_id"=>6,  "total"=>78}
+{"_id"=>7,  "total"=>90}
+{"_id"=>8,  "total"=>87}
+{"_id"=>9,  "total"=>88}
+{"_id"=>10, "total"=>87}
+{"_id"=>11, "total"=>80}
+{"_id"=>12, "total"=>89}
+```
+
