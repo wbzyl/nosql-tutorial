@@ -1,7 +1,7 @@
 # Aggregation Example – Name Days
 
 Pobieramy plik
-[imieniny.csv](https://raw.github.com/wbzyl/nosql-tutorial/master/pp/GeoIP/data/name_days.json)
+[name_days.json](https://raw.github.com/wbzyl/nosql-tutorial/master/pp/GeoIP/data/name_days.json)
 i za pomocą tego polecenia zapisujemy dane z tego pliku w bazie *test*
 i kolekcji *cal*:
 
