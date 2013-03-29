@@ -37,10 +37,8 @@ coll.find({}, {snapshot: true}).each do |doc|
   doc["date"] = "%02d/%02d" % [date["day"], date["month"]]
   coll.save(doc)
 end
-coll.count
-#=> 364
-coll.find_one
-#=> {"names"=>["Mieszka", "Mieczysława", "Marii"], "date"=>"01/01"}
+coll.count #=> 364
+coll.find_one #=> {"names"=>["Mieszka", "Mieczysława", "Marii"], "date"=>"01/01"}
 ```
 
 ## Przykładowe agregacje
