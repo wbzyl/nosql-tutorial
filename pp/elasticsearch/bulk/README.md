@@ -1,5 +1,8 @@
 # Bulk Opertions Examples
 
+* [API / Bulk](http://www.elasticsearch.org/guide/reference/api/bulk/)
+* [API / Bulk UDP](http://www.elasticsearch.org/guide/reference/api/bulk-udp/)
+
 The Elasticsearch REST API expects the following JSON structure:
 
 ```json
@@ -45,7 +48,7 @@ Steinhaus data, *steinhaus.bulk*:
 **TODO**
 
 
-## Indexing
+## Index
 
 First, delete the *ideas* index:
 
@@ -120,3 +123,36 @@ curl -s -XPOST localhost:9200/_bulk --data-binary @create-ideas.bulk ; echo
   ]
 }
 ```
+
+## Bulk UDP
+
+> The idea is to provide a low latency UDP service
+> that allows to easily index data
+> that **is not of critical nature**.
+
+Konfiguracja (*/etc/elasticsearch/elasticsearch.yml*):
+
+```
+bulk.udp.enabled: true
+```
+
+Use the *szymborska.bulk* file:
+
+```json
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 1 } }
+{ "quote": "Tyle wiemy o sobie, ile nas sprawdzono.", "tags": ["idea", "lechery"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 2 } }
+{ "quote": "Kto patrzy z góry, ten najłatwiej się myli.", "tags": ["above", "mistake"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 3 } }
+{ "quote": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami.", "tags": ["life"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 4 } }
+{ "quote": "Cud pierwszy lepszy: krowy są krowami.", "tags": ["miracle", "cow"] }
+```
+
+Index data (use the *netcat* utility):
+
+```sh
+cat szymborska.bulk | nc -w 0 -u localhost 9700
+```
+
+(*-w* – timeout, *_u* – use UDP)
