@@ -1,6 +1,9 @@
 # Bulk Opertions Examples in Ruby
 
-* Ruby [UDPSocket](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/socket/rdoc/UDPSocket.html)
+Ruby:
+
+* [UDPSocket](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/socket/rdoc/UDPSocket.html)
+* [Tire](https://github.com/karmi/tire) gem
 
 The Elasticsearch REST API expects the following JSON structure:
 
