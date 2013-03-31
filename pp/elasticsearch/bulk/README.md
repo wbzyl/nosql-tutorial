@@ -130,7 +130,7 @@ curl -s -XPOST localhost:9200/_bulk --data-binary @create-ideas.bulk ; echo
 > that allows to easily index data
 > that **is not of critical nature**.
 
-Konfiguracja (*/etc/elasticsearch/elasticsearch.yml*):
+Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
 
 ```
 bulk.udp.enabled: true
