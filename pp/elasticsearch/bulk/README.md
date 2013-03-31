@@ -155,4 +155,4 @@ Index data (use the *netcat* utility):
 cat szymborska.bulk | nc -w 0 -u localhost 9700
 ```
 
-(*-w* – timeout, *_u* – use UDP)
+Opcje: *-w* – timeout, *-u* – use UDP.
