@@ -2,6 +2,8 @@
 
 * [API / Bulk](http://www.elasticsearch.org/guide/reference/api/bulk/)
 * [API / Bulk UDP](http://www.elasticsearch.org/guide/reference/api/bulk-udp/)
+* The data source –
+  [Stanisław Jerzy Lec, Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html).
 
 The Elasticsearch REST API expects the following JSON structure:
 
@@ -12,9 +14,6 @@ Depending on the usage some fields are optional.
 
 
 ## The sample data
-
-Data source:
-[Stanisław Jerzy Lec – Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html).
 
 Lec data, *lec.bulk*:
 
