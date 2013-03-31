@@ -1,0 +1,2 @@
+{ "delete" : { "_index" : "ideas", "_type" : "lec", "_id" : "1" } }
+{ "delete" : { "_index" : "ideas", "_type" : "lec", "_id" : "2" } }
