@@ -105,7 +105,7 @@ Use the *create-ideas.bulk* file:
 
 ```json
 { "create": { "_index": "ideas", "_type": "lec", "_id": 1 } }
-{ "quote": "Czas robi swoje. A ty człowieku?.", "tags": ["man", "time"] }
+{ "quote": "Czas robi swoje. A ty człowieku?", "tags": ["man", "time"] }
 { "create": { "_index": "ideas", "_type": "lec", "_id": 4 } }
 { "quote": "Bądź realistą: nie mów prawdy.", "tags": ["idea", "truth"] }
 ```
