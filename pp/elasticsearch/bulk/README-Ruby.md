@@ -1,6 +1,5 @@
 # Bulk Opertions Examples in Ruby
 
-* [UDPSocket](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/socket/rdoc/UDPSocket.html)
 * Karel Minarik, [Tire](https://github.com/karmi/tire) gem
 * Russs Olsen, *Design Patterns in Ruby*, Addison-Wesley 2008
 
@@ -20,15 +19,18 @@ Depending on the usage some fields are optional.
 
 # Implementacja: Template Pattern
 
-TODO
+**TODO**
 
 
 # Implementacja: Strategy Pattern
 
-TODO
+**TODO**
 
 
 ## Bulk UDP
+
+* Ruby STDLIB, [UDPSocket](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/socket/rdoc/UDPSocket.html)
+* [Elasticsearch Bulk UDP API](http://www.elasticsearch.org/guide/reference/api/bulk-udp/)
 
 Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
 
@@ -56,6 +58,12 @@ cat szymborska.bulk | nc -w 0 -u localhost 9700
 ```
 
 Opcje: *-w* – timeout, *-u* – use UDP.
+
+
+## Bulk API
+
+* Ruby STDLIB, [Net::HTTP](http://ruby-doc.org/stdlib-2.0/libdoc/net/http/rdoc/Net/HTTP.html)
+* [Elasticsearch Bulk API](http://www.elasticsearch.org/guide/reference/api/bulk/)
 
 
 ## Index
