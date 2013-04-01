@@ -1,9 +1,9 @@
 # Bulk Opertions Examples in Ruby
 
-Ruby:
-
 * [UDPSocket](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/socket/rdoc/UDPSocket.html)
-* [Tire](https://github.com/karmi/tire) gem
+* Karel Minarik, [Tire](https://github.com/karmi/tire) gem
+* Russs Olsen, *Design Patterns in Ruby*, Addison-Wesley 2008
+
 
 The Elasticsearch REST API expects the following JSON structure:
 
@@ -16,6 +16,46 @@ Depending on the usage some fields are optional.
 ## Mapping
 
 **TODO**
+
+
+# Implementacja: Template Pattern
+
+TODO
+
+
+# Implementacja: Strategy Pattern
+
+TODO
+
+
+## Bulk UDP
+
+Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
+
+```
+bulk.udp.enabled: true
+```
+
+Use the *szymborska.bulk* file:
+
+```json
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 1 } }
+{ "quote": "Tyle wiemy o sobie, ile nas sprawdzono.", "tags": ["idea", "lechery"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 2 } }
+{ "quote": "Kto patrzy z góry, ten najłatwiej się myli.", "tags": ["above", "mistake"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 3 } }
+{ "quote": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami.", "tags": ["life"] }
+{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 4 } }
+{ "quote": "Cud pierwszy lepszy: krowy są krowami.", "tags": ["miracle", "cow"] }
+```
+
+Index data (use the *netcat* utility):
+
+```sh
+cat szymborska.bulk | nc -w 0 -u localhost 9700
+```
+
+Opcje: *-w* – timeout, *-u* – use UDP.
 
 
 ## Index
@@ -93,36 +133,3 @@ curl -s -XPOST localhost:9200/_bulk --data-binary @create-ideas.bulk ; echo
   ]
 }
 ```
-
-## Bulk UDP
-
-> The idea is to provide a low latency UDP service
-> that allows to easily index data
-> that **is not of critical nature**.
-
-Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
-
-```
-bulk.udp.enabled: true
-```
-
-Use the *szymborska.bulk* file:
-
-```json
-{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 1 } }
-{ "quote": "Tyle wiemy o sobie, ile nas sprawdzono.", "tags": ["idea", "lechery"] }
-{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 2 } }
-{ "quote": "Kto patrzy z góry, ten najłatwiej się myli.", "tags": ["above", "mistake"] }
-{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 3 } }
-{ "quote": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami.", "tags": ["life"] }
-{ "index": { "_index": "ideas", "_type": "szymborska", "_id": 4 } }
-{ "quote": "Cud pierwszy lepszy: krowy są krowami.", "tags": ["miracle", "cow"] }
-```
-
-Index data (use the *netcat* utility):
-
-```sh
-cat szymborska.bulk | nc -w 0 -u localhost 9700
-```
-
-Opcje: *-w* – timeout, *-u* – use UDP.
