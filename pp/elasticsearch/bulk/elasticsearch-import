@@ -1,0 +1,68 @@
+#! /usr/bin/env ruby
+
+# documentation
+#   http://trollop.rubyforge.org/
+# ARGF: Automatically Read from Files or Standard Input
+
+
+require 'bundler/setup'
+
+require 'trollop'
+require 'oj'
+
+# handle options
+
+options = Trollop::options do
+  version "elasticsearch-import 0.0.1 (c) 2013 Wlodek Bzyl"
+  banner <<-EOS
+Import JSON data into Elasticsearch.
+
+When importing JSON documents, each document must be a separate line of the input file.
+
+Example:
+  ./elasticsearch-import --host 127.0.0.1 --db test --collection tao data/tao.json.log
+  ./elasticsearch-import data/tao.json.log
+
+Options:
+EOS
+
+  opt :index,      "index to use", type: :string, default: "tests"
+  opt :type,       "type to use", type: :string, default: "test"
+  opt :host,       "elasticsearch host to connect to", type: :string, default: "127.0.0.1"
+  opt :port,       "http server port", type: :string, default: "9200"
+  opt :udpport,    "udp server port", type: :string, default: "9700"
+
+  opt :drop,       "drop type first", default: true
+  opt :batch,      "batch size for bulk inserts", type: :integer, default: 100
+end
+
+
+coll.drop if options[:drop]
+
+# lazy enumerators in ruby 2.0.0
+#   http://ruby-doc.org/core-2.0/Enumerable.html#method-i-lazy
+
+batch = []
+
+ARGF.lazy.each_slice(options[:batch]) do |slice|
+  slice.each do |line|
+    h = Oj.load(line) rescue next
+    batch << transform(geoip, h)
+  end
+
+  if batch.size > 0
+    coll.insert(batch)
+    batch = []
+  end
+end
+
+# batch = []
+# ARGF.each_line do |line|
+#   h = Oj.load(line) rescue next
+#   batch << transform(geoip, h) if append?(h)
+
+#   if batch.size > 0 && ( ARGF.eof? || batch.size % options[:batch] == 0 )
+#     coll.insert(batch)
+#     batch = []
+#   end
+# end
