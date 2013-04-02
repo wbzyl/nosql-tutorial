@@ -1,0 +1,12 @@
+source "https://rubygems.org"
+
+ruby "2.0.0"
+
+gem "trollop", "2.0"
+gem "main", "5.2.0"
+
+gem 'oj', '2.0.10'
+
+gem 'tire', '0.5.7'
+
+gem 'colored'
