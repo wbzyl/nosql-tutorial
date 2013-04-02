@@ -1,0 +1,41 @@
+#! /usr/bin/env ruby
+
+# documentation
+#   http://trollop.rubyforge.org/
+# ARGF: Automatically Read from Files or Standard Input
+
+require 'bundler/setup'
+
+require 'trollop'
+require 'oj'
+require 'colored'
+
+options = Trollop::options do
+  version "check-bulk-file 0.0.1 (c) 2013 Wlodek Bzyl"
+  banner <<-EOS
+Check if each line of FILE contains a valid JSON.
+
+Example:
+  ./check-bulk-file data.json
+
+Options:
+EOS
+end
+
+invalid = []
+
+ARGF.each do |line|
+  begin
+    Oj.load(line)
+  rescue
+    invalid << "%6s: %s" % [ARGF.lineno, line]
+  end
+end
+
+unless invalid.empty?
+  puts "These JSONS are not valid:".red
+  puts invalid
+else
+  puts "All JSONS are valid.".green
+end
+
