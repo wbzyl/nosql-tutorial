@@ -4,12 +4,12 @@ def to_tsv(file_name, title, author, pre, post)
   lines = IO.readlines(file_name)
   text = lines[pre...-post].join()
   paragraphs = text.split("\n\n")
-  paragraphs.each do |p|
-    puts "#{title}\t#{author}\t#{p.gsub(/\s+/,' ')}"
+  paragraphs.each_with_index do |p,n|
+    puts "#{n+1}\t#{title}\t#{author}\t#{p.gsub(/\s+/,' ')}"
   end
 end
 
-puts "title\tauthor\tp" # headerline
+puts "n\ttitle\tauthor\tp" # headerline
 
 to_tsv("the-idiot.txt", "The Idiot", "Dostoyevsky, Fyodor", 47, 368)
 to_tsv("the-man-who-knew-too-much.txt", "The Man Who Knew Too Much", "Chesterton, Gilbert K", 51, 368)
