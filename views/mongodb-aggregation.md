@@ -52,22 +52,36 @@ Oto przykładowy dokument zapisany przez skrypt w bazie *test*
 w kolekcji *dostojewski*:
 
     :::js
+    coll.find({word: "morning"}).limit(1)
     {
-      "_id" : ObjectId("4f2e956fe138237e61000079"),
-      "word": "morning",
-      "para": 4,                                     // numer akapitu ze słowem "morning"
-      "letters": ["g", "i", "m", "n", "o", "r"]      // posortowane i unikalne
-    }
+      "_id" : ObjectId("5166f63075c8ae1f2e000057"),
+      "word" : "morning",
+      "para" : 32,                                    // numer akapitu ze słowem "morning"
+      "letters" : [ "g", "i", "m", "n", "o", "r" ] }  // posortowane i unikalne
 
-Zadanie 1. Ile jest słów zawierających daną literę?
+Kolekcja *dostojewski* jest dotępna do testów na maszynie wirtualnej
+na moim koncie:
 
-Zadanie 2. Ile jest akapitów zawierających daną literę?
+    :::bash
+    mongo --norc -u student -p sesja2013 153.19.1.202/test
 
-Zadanie 3. Ile jest akapitów zawierających dane słowo?
+Można też pobrać kolekcję *dostojewski* w formacie JSON i zaimportować
+ją do swojej bazy. W tym celu wykonujemy na konsoli:
 
-Zadanie 4. Dla danego zestawu liter, ile słów można z nich utworzyć.
+    :::bash
+    mongoexport -u student -p sesja2013 -h 153.19.1.202 -d test -c dostojewski | \
+      mongoimport -d test -c dostojewski
 
-Zadanie 5. W języku angielskim jest pięć samogłosek: a, e, i, o, u.
+
+**Zadanie 1.** Ile jest słów zawierających daną literę?
+
+**Zadanie 2.** Ile jest akapitów zawierających daną literę?
+
+**Zadanie 3.** Ile jest akapitów zawierających dane słowo?
+
+**Zadanie 4.** Dla danego zestawu liter, ile słów można z nich utworzyć.
+
+**Zadanie 5.** W języku angielskim jest pięć samogłosek: a, e, i, o, u.
 Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
