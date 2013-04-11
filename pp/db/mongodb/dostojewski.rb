@@ -52,12 +52,16 @@ end
 book = lines.delete_if(&:empty?)[12..-56]
 logger.info "liczba wczytanych akapitów: #{book.length}"
 
+
 # MongoDB
 
 connection = Mongo::Connection.new("localhost", 27017)
+# connection.drop_database(dbname)
 
-connection.drop_database(dbname)
 db = connection.db(dbname)
+# db.authenticate("username", "password") # authenticate
+
+db.drop_collection(collection)
 
 coll = db.collection(collection)
 
