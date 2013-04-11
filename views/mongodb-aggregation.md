@@ -20,7 +20,7 @@ Różności:
   [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
 
 
-## Zadania z $group
+## Agregowanie danych za pomocą .group()
 
 **Warning:**
 The `db.collection.group()` method does not work with sharded clusters.
@@ -89,10 +89,11 @@ Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
+Przydatny link:
 
-## Funkcja agregująca *group*
+* [db.collection.group()](http://docs.mongodb.org/manual/reference/method/db.collection.group/)
 
-W przykładzie poniżej będziemy grupować po atrybucie *para*:
+W poniższym przykładzie grupujemy dokumenty po atrybucie *para*:
 
     :::js
     db.dostojewski.findOne()
