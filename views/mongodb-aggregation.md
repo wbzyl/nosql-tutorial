@@ -65,8 +65,7 @@ Plik ze *stop words* można pobrać z repozytorium Gnome:
     git clone git://git.gnome.org/tracker
     ls -l tracker/data/language/stopwords.en
 
-Oto przykładowy dokument zapisany przez skrypt w bazie *test*
-w kolekcji *dostojewski*:
+Oto przykładowy dokument z tej kolekcji:
 
     :::js
     coll.find({word: "morning"}).limit(1)
@@ -75,6 +74,7 @@ w kolekcji *dostojewski*:
       "word" : "morning",
       "para" : 32,                                    // numer akapitu ze słowem "morning"
       "letters" : [ "g", "i", "m", "n", "o", "r" ] }  // posortowane i unikalne
+
 
 **Zadanie 1.** Ile jest słów zawierających daną literę?
 
