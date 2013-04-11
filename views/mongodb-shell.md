@@ -8,16 +8,33 @@
 „The MongoDB interactive shell” to po polsku „powłoka (konsola ?) mongo”.
 Zobacz też [MongoDB Shell Enhancements for Hackers](http://tylerbrock.github.com/mongo-hacker/).
 
-Przed wejściem na *konsolę mongo*, musimy uruchomić serwer *mongod*:
-
     :::bash terminal
     mongo --port 27017
       MongoDB shell version: 2.5.0-pre-
       connecting to: test
       localhost(mongod-2.4.0-rc2-pre-) test>
 
-Domyślnie serwer nasłuchuje na porcie 27017.
-Oczywiście możemy wybrać inny port.
+Oczywiście przed wejściem na konsolę *mongo*,
+musimy uruchomić daemona *mongod*;
+domyślnie daemon nasłuchuje na porcie 27017.
+
+
+### mongod na Sigmie (32-bit czy 64-bit?)
+
+Jeśli korzystamy z *mongod* na Sigmie, to uruchamiając *mongod*,
+w linii poleceń podajemy ścieżki do katalogu na bazy danych
+ścieżkę do pliku PID. Przykładowo:
+
+    :::bash
+    dbpath=$HOME/.data/var/lib/mongodb/
+    pidfilepath=$HOME/.data/var/lib/mongod.pid
+    mkdir -p $dbpath
+    mongod --dbpath $dbpath --pidfilepath $pidfilepath
+
+**TODO:** sprawdzić czy ten opis działa.
+
+
+### konsola mongo
 
 Konsola mongo jest interpreterem języka Javascript:
 
