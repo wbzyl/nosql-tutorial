@@ -20,6 +20,10 @@ Różności:
   [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
 
 
+Poniżej skorzystamy z funkcji agregującej *group*.
+Frameworkiem i map-reduce zjmiemy się później.
+
+
 ## Agregowanie danych za pomocą .group()
 
 **Warning:**
