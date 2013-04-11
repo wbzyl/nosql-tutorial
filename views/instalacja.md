@@ -342,9 +342,9 @@ Następnie w katalogu *mongo* wykonujemy kolejno polecenia:
 
     :::bash
     cd mongo
-    git checkout r2.3.2
-    scons all                             # build all binaries with v8
-    scons --prefix=$HOME/.mongodb install
+    git checkout r2.4.1
+    scons all
+    scons --prefix=$HOME/.mongo install
     git checkout master
 
 **Uwaga:** Od wersji 2.3.1 MongoDB korzysta z silnika JavaScript „V8” (Chrome).
@@ -358,77 +358,32 @@ Pobieramy paczkę dla naszego systemu ze strony
 [MongoDB Downloads](http://www.mongodb.org/downloads). Przykładowo:
 
     :::bash
-    wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-latest.tgz
+    wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.4.1.tgz          # 64-bit, Linux
+    wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-v2.4-latest.tgz # 64-bit, Linux
 
 Odpakowujemy archiwum:
 
-    tar zxvf mongodb-linux-x86_64-latest.tgz
+    tar zxvf linux/mongodb-linux-x86_64-v2.4-latest.tgz
 
 Kopiujemy pliki wykonywalne do odpowiednich katalogów:
 
-    mv mongodb-linux-x86_64-2.0.2/bin $HOME/.mongodb/bin
+    mkdir -p $HOME/.mongo
+    mv mongodb-linux-x86_64-2.4.1/bin $HOME/.mongo/bin
 
 I już!
 
 
 ## Testujemy instalację
 
-Tworzymy katalogi na swoje bazy i na plik *mongodb.pid*:
+Tak uruchamiamy demona *mongod* na domyślnym porcie:
 
     :::bash
-    mkdir $HOME/.data/var/lib/mongodb -p
-    mkdir $HOME/.data/var/run
-
-Dopiero teraz uruchamiamy demona *mongod* (poniżej wpisuję domyślny port):
-
-    :::bash
+    dbpath=$HOME/.data/var/lib/mongodb
+    mkdir -p $dbpath
     mongod --dbpath=$HOME/.data/var/lib/mongodb --port=27017
-      Mon Jan  7 21:34:41.812 [initandlisten] MongoDB starting : pid=16536 port=27017 ..
-      Mon Jan  7 21:34:41.813 [initandlisten]
-      Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
-      Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
-      Mon Jan  7 21:34:41.813 [initandlisten]
-      Mon Jan  7 21:34:41.813 [initandlisten] db version v2.3.2-pre-, pdfile version 4.5
-      Mon Jan  7 21:34:41.813 [initandlisten] git version: be56edc259bb5c0e3bb862c69a6303705ef453f4
-      Mon Jan  7 21:34:41.813 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen ..
-      Mon Jan  7 21:34:41.813 [initandlisten] allocator: tcmalloc
-      Mon Jan  7 21:34:41.813 [initandlisten] options: { dbpath: "/home/wbzyl/.data/var/lib/mongodb", port: 27017 }
-      Mon Jan  7 21:34:41.895 [initandlisten] journal dir=/home/wbzyl/.data/var/lib/mongodb/journal
-      Mon Jan  7 21:34:41.927 [initandlisten] recover : no journal files present, no recovery needed
-      Mon Jan  7 21:34:44.092 [initandlisten] preallocateIsFaster=true 25.74
-      Mon Jan  7 21:34:46.198 [initandlisten] preallocateIsFaster=true 24.46
-      Mon Jan  7 21:34:49.403 [initandlisten] preallocateIsFaster=true 26.52
-      Mon Jan  7 21:34:49.403 [initandlisten] preallocateIsFaster check took 7.476 secs
-      Mon Jan  7 21:34:49.403 [initandlisten] preallocating a journal file..
-      Mon Jan  7 21:34:52.020 [initandlisten]     File Preallocator Progress: 870318080/1073741824  81%
-      Mon Jan  7 21:35:00.285 [initandlisten] preallocating a journal file..
-      Mon Jan  7 21:35:03.073 [initandlisten]     File Preallocator Progress: 870318080/1073741824  81%
-      Mon Jan  7 21:35:10.966 [initandlisten] preallocating a journal file..
-      Mon Jan  7 21:35:13.129 [initandlisten]     File Preallocator Progress: 796917760/1073741824  74%
-      Mon Jan  7 21:35:22.214 [FileAllocator] allocating new datafile..
-      Mon Jan  7 21:35:22.214 [FileAllocator] creating directory /home/wbzyl/.data/var/lib/mongodb/_tmp
-      Mon Jan  7 21:35:22.340 [FileAllocator] done allocating datafile ..
-      Mon Jan  7 21:35:22.341 [FileAllocator] allocating new datafile ..
-      Mon Jan  7 21:35:23.848 [FileAllocator] done allocating datafile ..
-      Mon Jan  7 21:35:23.885 [initandlisten] command local.$cmd command: ..
-      Mon Jan  7 21:35:23.886 [websvr] admin web console waiting for connections on port 28017
-      Mon Jan  7 21:35:23.951 [initandlisten] waiting for connections on port 27017
 
-
-Uruchamiamy powłokę *mongo*:
-
-    :::bash
-    mongo --port 27017
-      MongoDB shell version: 2.3.2-pre-
-      connecting to: 127.0.0.1:27017/test
-      Server has startup warnings:
-      Mon Jan  7 21:34:41.813 [initandlisten]
-      Mon Jan  7 21:34:41.813 [initandlisten] ** NOTE: This is a development version (2.3.2-pre-) of MongoDB.
-      Mon Jan  7 21:34:41.813 [initandlisten] **       Not recommended for production.
-      Mon Jan  7 21:34:41.813 [initandlisten]
-      localhost(mongod-2.3.2-pre-) test>
-
-W powłoce wpisujemy i wykonujemy kilka poleceń:
+Nastepnie uruchamiamy program *mongo* – powłoka Javascript dla MongoDB,
+gdzie wpisujemy i wykonujemy kilka poleceń:
 
     :::text
     help
@@ -452,38 +407,53 @@ Teraz możemy przećwiczyć więcej prostych przykładów:
 
 ## Gdzie są moje bazy?
 
-Podobnie, jak to zrobiliśmy dla CouchDB, przeniesiemy bazy MongoDB
-na swoje konto, na przykład do katalogu *$HOME/.data/var/lib/mongodb*:
+Ścieżkę do katalogu z bazami podaliśmy powyżej:
 
-    mkdir $HOME/.data/var/lib/mongodb -p
+    ls -l $HOME/.data/var/lib/mongodb
+      -rw------- 1 matwb users  16777216 04-09 11:20 admin.0
+      -rw------- 1 matwb users  33554432 04-08 20:42 admin.1
+      -rw------- 1 matwb users   2097152 04-09 11:20 admin.ns
+      drwxr-xr-x 2 matwb users      4096 04-09 17:32 journal/
+      drwxr-xr-x 3 matwb users      4096 03-27 19:02 local/
+      -rw------- 1 matwb users  16777216 04-09 16:22 local.0
+      -rw------- 1 matwb users   2097152 04-09 16:22 local.ns
+      -rwxr-xr-x 1 matwb users         5 04-09 16:22 mongod.lock*
+      drwxr-xr-x 3 matwb users      4096 03-27 22:30 test/
+      -rw------- 1 matwb users  16777216 04-10 22:34 test.0
+      -rw------- 1 matwb users   2097152 04-10 22:34 test.ns
+      drwxr-xr-x 2 matwb users      4096 04-10 22:34 _tmp/
 
-Teraz przy każdym uruchomieniu *mongod* musimy podać ten katalog.
+    ls -l $HOME/.data/var/lib/mongodb/journal
+      -rw------- 1 matwb users 134217728 04-10 22:34 j._0
+      -rw------- 1 matwb users        88 04-10 22:34 lsn
+      -rw------- 1 matwb users 134217728 04-08 20:44 prealloc.1
+      -rw------- 1 matwb users 134217728 04-08 20:44 prealloc.2
+
+Teraz przy każdym uruchomieniu *mongod* powinniśmy podać ten katalog.
 Nie jest to wygodne. Pozbędziemy się tego kłopotu uruchamiając demona
 *mongod* za pomocą prostego skryptu
-[mongod.sh](https://gist.github.com/1967489).
+[mongod.sh](https://gist.github.com/wbzyl/1967489).
 
 
 ## Logrotate
 
-Journal i bazy MongoDB zajmują sporo miejsca na dysku (3 GB!):
+Logi z czasem zajmują dużo miejsca na dysku.
+Dlatego trzeba je systematycznie rotować.
 
-    ls -l ~/.data/var/lib/mongodb/journal/
-      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 j._0
-      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 prealloc.1
-      -rw-------. 1 wbzyl wbzyl 1073741824 01-07 21:35 prealloc.2
-
-Logi z czasem też. Dlatego od czasu do czasu ręcznie rotujemy logi:
+Ręczne rotowanie logów jest możliwe:
 
     :::bash
     mongo
     use admin
     db.runCommand("logRotate");
 
-Ale wygodniej jest rotować pliki log za pomocą *logrotate*.
+Ale nie jest to wygodne.
+Wygodniej jest rotować logi za pomocą programu *logrotate*.
+
 W tym celu w katalogu */etc/logrotate.d/*
 umieszczamy plik *mongodb* o następującej zawartości:
 
-    /home/wbzyl/.data/var/log/mongodb/*.log {
+    /home/wbzyl/.data/var/log/mongo/*.log {
       su wbzyl wbzyl
       daily
       rotate 4
@@ -493,7 +463,7 @@ umieszczamy plik *mongodb* o następującej zawartości:
       notifempty
       missingok
       postrotate
-        /bin/kill -USR1 `cat /home/wbzyl/.data/var/run/mongodb.pid 2>/dev/null` 2> /dev/null || true
+        /bin/kill -USR1 `cat /home/wbzyl/.data/var/run/mongo.pid 2>/dev/null` 2> /dev/null || true
       endscript
     }
 
@@ -501,7 +471,7 @@ Oczywiście powyżej w dyrektywie `su` wpisujemy **swoje** dane.
 Sprawdzamy jak to działa:
 
     :::bash
-    logrotate -d /etc/logrotate.d/mongodb
+    logrotate -d /etc/logrotate.d/mongo
 
 I to wszystko!
 
@@ -516,7 +486,7 @@ MongoDB & Ruby:
 
 * [Mongoid](http://mongoid.org/) –
   provides an elegant way to persist and query Ruby objects to documents in MongoDB
-* [Ruby driver for MongoDB](http://github.com/mongodb/mongo-ruby-driver)
+* [Ruby driver for MongoDB](http://github.com/mongo/mongo-ruby-driver)
 * Daniel Wertheim.
   - [Simple-MongoDB – Part 1, Getting started](http://daniel.wertheim.se/2010/04/12/simple-mongodb-part-1-getting-started/)
   - [Simple-MongoDB – Part 2, Anonymous types, JSON, Embedded entities
