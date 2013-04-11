@@ -89,8 +89,6 @@ samogłosek, itd.
 
 ## Funkcja agregująca *group*
 
-Jak działa funkcja *group* wyjaśnimy na prostych przykładach.
-
 W przykładzie poniżej będziemy grupować po atrybucie *para*:
 
     :::js
