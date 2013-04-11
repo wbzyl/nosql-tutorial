@@ -10,30 +10,53 @@ Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących)
 
 * [Aggregation Framework](http://docs.mongodb.org/manual/applications/aggregation/)
 * [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/aggregation/)
-* [Aggregation Framework Examples](http://docs.mongodb.org/manual/tutorial/aggregation-examples/)
+* [Aggregation Framework Examples (in Javascript)](http://docs.mongodb.org/manual/tutorial/aggregation-examples/)
+* [Aggregation Framework Examples (in Ruby)](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
-Przykłady:
+Różności:
 
-* Kristina Chodorow.
-  - [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
-  - [SQL to MongoDB: An Updated Mapping](http://www.snailinaturtleneck.com/blog/2011/12/09/sql-to-mongodb-an-updated-mapping/)
+* [SQL to Aggregation Framework Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
+* Kristina Chodorow,
+  [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
 
 
 ## Zadania na grupowanie
 
-W zadaniach będziemy korzystać z kolekcji *dostojewski*.
-Kolekcję tę tworzymy korzystając ze skryptu
-{%= link_to "aggregation.rb", "/db/mongodb/aggregation.rb" %}
-z wykłądu {%= link_to "Język zapytań", "/mongodb-queries" %}.
+W poniższych zadaniach będziemy grupować dokumenty
+z kolekcji *dostojewski*.
 
-Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
+Kolekcję tworzymy korzystając ze skryptu
+{%= link_to "dostojewski.rb", "/db/mongodb/dostojewski.rb" %}:
 
-    :::json
+    :::bash
+    ./dostojewski
+    I, [2013-04-11T19:13:32.708516 #6469]  INFO -- : liczba wczytanych stopwords: 742
+    I, [2013-04-11T19:13:32.896611 #6469]  INFO -- : liczba wczytanych akapitów: 5260
+    I, [2013-04-11T19:14:14.286420 #6469]  INFO -- : MongoDB:
+    I, [2013-04-11T19:14:14.286546 #6469]  INFO -- : 	  database: test
+    I, [2013-04-11T19:14:14.286587 #6469]  INFO -- : 	collection: dostojewski
+    I, [2013-04-11T19:14:14.287123 #6469]  INFO -- : 	     count: 87510
+
+Skrypt korzysta z pliku *stopwords.en* zwierającego
+najczęściej występujące słowa, które nie niosą żadnej treści.
+Każde [stop word](http://pl.wikipedia.org/wiki/Wikipedia:Stopwords)
+jest zapisane w osobnym wierszu.
+
+Plik ze *stop words* można pobrać z repozytorium Gnome:
+
+    :::bash
+    git clone git://git.gnome.org/tracker
+    ls -l tracker/data/language/stopwords.en
+
+Oto przykładowy dokument zapisany przez skrypt w bazie *test*
+w kolekcji *dostojewski*:
+
+    :::js
     {
       "_id" : ObjectId("4f2e956fe138237e61000079"),
       "word": "morning",
-      "para": 4,                                     # numer akapitu ze słowem "morning"
-      "letters": ["g", "i", "m", "n", "o", "r"]      # posortowane i unikalne
+      "para": 4,                                     // numer akapitu ze słowem "morning"
+      "letters": ["g", "i", "m", "n", "o", "r"]      // posortowane i unikalne
     }
 
 Zadanie 1. Ile jest słów zawierających daną literę?
@@ -207,7 +230,7 @@ could use a key function to generate the key:
 This function will generate keys like this one:
 
     :::json
-    {day: 1}
+    {"day": 1}
 
 Przyda się? Do generowania *keyf*?
 
