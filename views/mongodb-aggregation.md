@@ -20,12 +20,29 @@ Różności:
   [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
 
 
-## Zadania na grupowanie
+## Zadania z $group
+
+**Warning:**
+The `db.collection.group()` method does not work with sharded clusters.
+Use the aggregation framework or map-reduce in sharded environments.
 
 W poniższych zadaniach będziemy grupować dokumenty
 z kolekcji *dostojewski*.
 
-Kolekcję tworzymy korzystając ze skryptu
+Kolekcja *dostojewski* jest dotępna do testów na maszynie wirtualnej
+na moim koncie:
+
+    :::bash
+    mongo --norc -u student -p sesja2013 153.19.1.202/test
+
+Można też pobrać kolekcję *dostojewski* w formacie JSON i zaimportować
+ją do swojej bazy. W tym celu wykonujemy na konsoli:
+
+    :::bash
+    mongoexport -u student -p sesja2013 -h 153.19.1.202 -d test -c dostojewski | \
+      mongoimport -d test -c dostojewski
+
+Albo można utworzyc kolekcję *dostojewski* za pomocą skryptu
 {%= link_to "dostojewski.rb", "/db/mongodb/dostojewski.rb" %}:
 
     :::bash
@@ -58,20 +75,6 @@ w kolekcji *dostojewski*:
       "word" : "morning",
       "para" : 32,                                    // numer akapitu ze słowem "morning"
       "letters" : [ "g", "i", "m", "n", "o", "r" ] }  // posortowane i unikalne
-
-Kolekcja *dostojewski* jest dotępna do testów na maszynie wirtualnej
-na moim koncie:
-
-    :::bash
-    mongo --norc -u student -p sesja2013 153.19.1.202/test
-
-Można też pobrać kolekcję *dostojewski* w formacie JSON i zaimportować
-ją do swojej bazy. W tym celu wykonujemy na konsoli:
-
-    :::bash
-    mongoexport -u student -p sesja2013 -h 153.19.1.202 -d test -c dostojewski | \
-      mongoimport -d test -c dostojewski
-
 
 **Zadanie 1.** Ile jest słów zawierających daną literę?
 
