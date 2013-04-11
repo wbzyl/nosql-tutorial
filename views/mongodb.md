@@ -116,11 +116,6 @@ data even when the primary node is down.
 
 ## Deployment topologies
 
-Przykład jak to można zrobić dla dwóch *shards*
-(*replica set* = 2 kopie + 1 arbiter) i 3 *config servers*.
-
-{%= image_tag "/images/mongodb-sharded-cluster.png", :alt => "[MongoDB sharded cluster]" %}
-
 Minimum deployment requirements:
 
 1. Each member of a replica set, whether it’s a complete replica or an arbiter,
@@ -133,20 +128,29 @@ that all config servers in the config cluster reside on distinct machines.
 
 (źródło, K. Banker, *MongoDB in Action*)
 
-Jak widać potrzebne są 4 komputery.
+Przykład jak to można zrobić dla dwóch *shards*
+(*replica set* = 2 kopie + 1 arbiter) i 3 *config servers*.
+
+{%= image_tag "/images/mongodb-sharded-cluster.png", :alt => "[MongoDB sharded cluster]" %}
+
+Jak widać wystarczą 4 komputery.
 
 
 ## Manuale, samouczki, ściągi…
 
-* [The MongoDB Manual](http://docs.mongodb.org/manual/).
-  ([single page html](http://docs.mongodb.org/master/single/index.html), źródło [github](https://github.com/mongodb/docs)).
+* Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf).
+* [The MongoDB Manual](http://docs.mongodb.org/manual/);
+  [single page html](http://docs.mongodb.org/master/single/index.html),
+  źródło [github](https://github.com/mongodb/docs).
 * Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb).
   oznaczone etykietką *mongodb*.
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf).
-* Karl Seguin. [Learn Mongo](http://mongly.com/) – interaktywny samouczek.
-* Krótki opis gemu [Mongo](http://api.mongodb.org/ruby/current/index.html).
-  i dłuższy samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
-* [NoSQL DZone](http://dzone.com/mz/nosql).
+* Drivery:
+  - [Ruby MongoDB Driver API](http://api.mongodb.org/ruby/current/index.html);
+  samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
+  - [The Node.JS MongoDB Driver Manual](http://mongodb.github.io/node-mongodb-native/)
+
+[NoSQL DZone](http://dzone.com/mz/nosql).
 
 
 ## Historia
