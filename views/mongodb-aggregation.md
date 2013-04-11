@@ -20,11 +20,11 @@ Różności:
   [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
 
 
-Poniżej skorzystamy z funkcji agregującej *group*.
-Frameworkiem i map-reduce zjmiemy się później.
+Poniżej skorzystamy z **funkcji agregującej *group()***.
+Frameworkiem i map-reduce zajmiemy się później.
 
 
-## Agregowanie danych za pomocą .group()
+## Agregowanie danych za pomocą group()
 
 **Warning:**
 The `db.collection.group()` method does not work with sharded clusters.
