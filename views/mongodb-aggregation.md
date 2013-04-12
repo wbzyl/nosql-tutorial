@@ -6,51 +6,46 @@
  <p class="author">– David Ogilvy</p>
 </blockquote>
 
-Dane grupujemy za pomocą funkcji agregujących (podsumowujących, grupujących):
+W MongoDB do [agregacji](http://docs.mongodb.org/manual/aggregation/) (grupowania) danych używamy
+frameworka do agregacji, [Aggregation Framework](http://docs.mongodb.org/manual/applications/aggregation/),
+lub [Map-Reduce](http://docs.mongodb.org/manual/core/map-reduce/).
 
-* [Aggregation Framework](http://docs.mongodb.org/manual/applications/aggregation/)
+Oto linki do odpowiednich stron podręcznika MongoDB:
+
 * [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/aggregation/)
 * [Aggregation Framework Examples (in Javascript)](http://docs.mongodb.org/manual/tutorial/aggregation-examples/)
 * [Aggregation Framework Examples (in Ruby)](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
-Różności:
+Jeśli dane do agregowania są w jednym *shardzie*, to do agregacji
+możemy użyć funkcji [group](http://docs.mongodb.org/manual/reference/command/group/)
+(lub [db.collection.group()](http://docs.mongodb.org/manual/reference/method/db.collection.group/)).
 
-* [SQL to Aggregation Framework Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
-* Kristina Chodorow,
-  [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
-
-
-Poniżej skorzystamy z **funkcji agregującej *group()***.
-Frameworkiem i map-reduce zajmiemy się później.
+Przykłady w których będziemy korzystać z frameworka lub map-reduce pojawią
+się później. Teraz skorzystamy z funkcji agregującej *group()*.
 
 
 ## Agregowanie danych za pomocą group()
 
-**Warning:**
-The `db.collection.group()` method does not work with sharded clusters.
-Use the aggregation framework or map-reduce in sharded environments.
-
-W poniższych zadaniach będziemy grupować dokumenty
-z kolekcji *dostojewski*.
-
-Kolekcja *dostojewski* jest dotępna do testów na maszynie wirtualnej
-na moim koncie:
+W poniższych przykładach będziemy grupować dokumenty z kolekcji
+*dostojewski*.
+Kolekcja ta jest dotępna do testów na mojej maszynie wirtualnej:
 
     :::bash
     mongo --norc -u student -p sesja2013 153.19.1.202/test
 
-Można też pobrać kolekcję *dostojewski* w formacie JSON i zaimportować
-ją do swojej bazy. W tym celu wykonujemy na konsoli:
+Całą kolekcję w formacie JSON można też pobrać z maszyny
+wirtualnej i zaimpoortować do swojej bazy MongoDB.
+W tym celu wykonujemy na konsoli:
 
     :::bash
     mongoexport -u student -p sesja2013 -h 153.19.1.202 -d test -c dostojewski | \
       mongoimport -d test -c dostojewski
 
-Albo można utworzyc kolekcję *dostojewski* za pomocą skryptu
+W końcu, można też utworzyc samemu tę kolekcję korzystając ze skryptu
 {%= link_to "dostojewski.rb", "/db/mongodb/dostojewski.rb" %}:
 
     :::bash
-    ./dostojewski
+    ./dostojewski.rb
     I, [2013-04-11T19:13:32.708516 #6469]  INFO -- : liczba wczytanych stopwords: 742
     I, [2013-04-11T19:13:32.896611 #6469]  INFO -- : liczba wczytanych akapitów: 5260
     I, [2013-04-11T19:14:14.286420 #6469]  INFO -- : MongoDB:
@@ -63,22 +58,24 @@ najczęściej występujące słowa, które nie niosą żadnej treści.
 Każde [stop word](http://pl.wikipedia.org/wiki/Wikipedia:Stopwords)
 jest zapisane w osobnym wierszu.
 
-Plik ze *stop words* można pobrać z repozytorium Gnome:
+Plik ze *stop words* pobieramy z repozytorium Gnome:
 
     :::bash
     git clone git://git.gnome.org/tracker
     ls -l tracker/data/language/stopwords.en
 
-Oto przykładowy dokument z tej kolekcji:
+Oto przykładowy dokument z kolekcji *dostojewski*:
 
     :::js
     coll.find({word: "morning"}).limit(1)
     {
-      "_id" : ObjectId("5166f63075c8ae1f2e000057"),
-      "word" : "morning",
-      "para" : 32,                                    // numer akapitu ze słowem "morning"
-      "letters" : [ "g", "i", "m", "n", "o", "r" ] }  // posortowane i unikalne
+      "_id": ObjectId("5166f63075c8ae1f2e000057"),
+      "word": "morning",
+      "para": 32,                                  // numer akapitu ze słowem "morning"
+      "letters": [ "g", "i", "m", "n", "o", "r" ]  // posortowane i unikalne
+    }
 
+Przykładowe zadania na grupowanie:
 
 **Zadanie 1.** Ile jest słów zawierających daną literę?
 
@@ -93,11 +90,10 @@ Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
-Przydatny link:
 
-* [db.collection.group()](http://docs.mongodb.org/manual/reference/method/db.collection.group/)
+## Przykładowe grupowania na rozgrzewkę
 
-W poniższym przykładzie grupujemy dokumenty po atrybucie *para*:
+Poniżej będziemy grupować dokumenty po atrybucie *para*:
 
     :::js
     db.dostojewski.findOne()
@@ -108,7 +104,7 @@ W poniższym przykładzie grupujemy dokumenty po atrybucie *para*:
         "letters" : [ "d", "i", "o", "t" ]
     }
 
-Dla każdego akapitu, dla którego *para* ϵ [1022, 1024) zliczamy liczbę
+Dla każdego akapitu, dla którego *para* ϵ [1022, 1024) zliczymy liczbę
 słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
 
     :::js
@@ -134,8 +130,8 @@ słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
       }
     ]
 
-Następny przykład. Grupowanie względem atrybutu *letters*:
-dla każdego zestawu liter, jego licznik wystąpień
+Teraz będziemy grupować względem atrybutu *letters*:
+dla każdego zestawu liter dodamy jego licznik wystąpień:
 
     :::js group.js
     var res = db.dostojewski.group({
@@ -202,16 +198,17 @@ jeszcze przydadzą do jakiegoś grupowania?
     // there is no bulk insertion for the mongo < 2.1; działa też na cursorach
     // res.forEach(function(obj) { db.results.insert(obj) });
 
-**Uwaga 1:** Wszystkie te polecenia możemy wpisać w pliku,
+**Uwaga 1:** Wszystkie polecenia możemy wpisać w pliku,
 na przykład *group.js* i wykonać je w taki sposób:
 
     :::bash
-    mongo --shell gutenberg group.js
+    mongo --shell test group.js  # lokalnie, baza bez autoryzacji
+    mongo --shell -u student -p sesja2013 153.19.1.202/test group.js
 
-albo taki sposób:
+albo w taki:
 
     :::bash
-    mongo --shell gutenberg
+    mongo --shell test
     > load('group.js')
 
 **Uwaga 2:** W pliku *src/mongo/shell/utils.js* zdefiniowano
@@ -225,14 +222,7 @@ wiele użytecznych funkcji, na przykład:
     db.results.find({count: {$gt: 300}}).forEach(function(o) { printjson(o.letters); });
 
 
-## Zadanie 1, 2, 3, 4
-
-**TODO**
-
-
-## Zadanie 5
-
-Przykład z keyf?
+## TODO: przykład użycia *keyf*
 
 *keyf* – a JavaScript function that, when applied to a document, generates a key
 for that document. This is useful when the key for grouping needs to be calculated.
@@ -256,3 +246,10 @@ Przyda się? Do generowania *keyf*?
 
     :::js
     word.split("").filter(function(c) { return /[aeiou]/.test(c); })
+
+
+## Różności
+
+* [SQL to Aggregation Framework Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
+* Kristina Chodorow,
+  [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
