@@ -65,6 +65,15 @@ Zadania 2–3 pochodzą z rozdziału 2
 książki A. Rajaramana i J. Ullmana, [Mining of Massive Datasets](http://infolab.stanford.edu/~ullman/mmds.html).
 
 
+<blockquote>
+ {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
+ <p>
+  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
+  Napisz najprawdziwsze zdanie, jakie znasz.
+ </p>
+ <p class="author">— Ernest Hemingway</p>
+</blockquote>
+
 # Egzamin
 
 Na ocenę db z egzaminu należy przygotować
@@ -89,19 +98,13 @@ Typowe zastosowania dokumentowych baz danych:
 * CRM(?)
 
 
+{%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
 
-<blockquote>
- {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
- <p>
-  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
-  Napisz najprawdziwsze zdanie, jakie znasz.
- </p>
- <p class="author">— Ernest Hemingway</p>
-</blockquote>
+# Zadania różne
 
-# Zadania różne…
+## UFO
 
-1\. (CouchDB) Pobieramy dane w formacie TSV o pojawieniach się UFO w USA,
+Pobieramy dane w formacie TSV o pojawieniach się UFO w USA,
 dane o katastrofach, oraz danych tekstowych ze stacji meteo na lotnisku w Rębiechowie
 i danych w formacie [GPX](http://www.topografix.com/GPX/1/0/gpx.xsd)
 z wycieczki w okolicach Zakopanego, dane w formacie JSON zawierający uri zdjęć
@@ -111,52 +114,6 @@ ze współrzędnymi GEO:
 
 Dane pochodzą z serwisu [Infochimps](http://www.infochimps.com/).
 Dane o UFO zostały „cleaned up”. Dane są zapisane w formacie TSV.
-
-50,000+ tweets zebranych w kwietniu 2012, plik *tweets.json.gz*.
-Słowa kluczowe: rails, elasticsearch, redis, mongodb, couchdb, jquery.
-
-Zapisać dane w jednej z baz: Elasticsearch albo MongoDB, albo CouchDB.
-Następnie wyeksportować z tej bazy dane do pliku w formacie JSON.
-Na koniec zapisać dane w formacie w JSON w pozostałych dwóch bazach.
-
-{%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
-
-W repozytorium jest też skrypt importujący dane *flickr_search.json*
-do bazy CouchDB. Najpierw tworzymy w Futonie bazę *tatry*, a następnie
-wykonujemy:
-
-    :::bash terminal
-    node import.js
-
-Skrypt ten jest zmienioną wersją skryptu D. Thompsona:
-
-    :::js import.js
-    var cradle = require("cradle")
-    , util = require("util")
-    , fs = require("fs");
-
-    var connection = new(cradle.Connection)("localhost", 5984);
-    var db = connection.database('tatry');
-
-    data = fs.readFileSync("flickr_search.json", "utf-8");
-    flickr = JSON.parse(data);
-
-    for(p in flickr.photos.photo) {
-      photo = flickr.photos.photo[p];
-      photo.geometry = {"type": "Point", "coordinates": [photo.longitude, photo.latitude]};
-      photo.image_url_medium =
-        "http://farm"+photo.farm+".static.flickr.com/"+photo.server+"/"+photo.id+"_"+photo.secret+"_m.jpg";
-
-      db.save(photo.id, photo, function(er, ok) {
-        if (er) {
-          util.puts("Error: " + er);
-          return;
-        }
-      });
-    }
-
-
-### Nieco informacji o danych
 
 Dane o UFO zawierają następujące pola:
 
@@ -192,13 +149,53 @@ Dane z katastrofami zawierają następujące pola:
 </tbody>
 </table>
 
-Na Infochimps znajdziemy dużo interesujących danych, na przykład:
+Na Infochimps znajdziemy inne interesujące dane, na przykład:
 
 * [The First Billion Digits of Pi](http://www.infochimps.com/datasets/the-first-billion-digits-of-pi)
 * [Word List - 350,000+ Simple English Words (Excel readable)](http://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable)
 
 
-2\. (**MongoDB**) Ze strony [Zasoby](http://korpus.pl/index.php?page=download)
+## Flickr
+
+W repozytorium z notatkami wykładów znajdzimey skrypt importujący dane
+*flickr_search.json* do bazy CouchDB.
+
+Najpierw tworzymy w Futonie bazę *tatry*, a następnie wykonujemy:
+
+    :::bash terminal
+    node import.js
+
+Skrypt ten jest zmienioną wersją skryptu D. Thompsona:
+
+    :::js import.js
+    var cradle = require("cradle")
+    , util = require("util")
+    , fs = require("fs");
+
+    var connection = new(cradle.Connection)("localhost", 5984);
+    var db = connection.database('tatry');
+
+    data = fs.readFileSync("flickr_search.json", "utf-8");
+    flickr = JSON.parse(data);
+
+    for(p in flickr.photos.photo) {
+      photo = flickr.photos.photo[p];
+      photo.geometry = {"type": "Point", "coordinates": [photo.longitude, photo.latitude]};
+      photo.image_url_medium =
+        "http://farm"+photo.farm+".static.flickr.com/"+photo.server+"/"+photo.id+"_"+photo.secret+"_m.jpg";
+
+      db.save(photo.id, photo, function(er, ok) {
+        if (er) {
+          util.puts("Error: " + er);
+          return;
+        }
+      });
+    }
+
+
+## Poliqarp & MongoDB
+
+Ze strony [Zasoby](http://korpus.pl/index.php?page=download)
 Korpusu Języka Polskiego IPI PAN pobieramy wersję źródłową (XML)
 „Słownika frekwencyjnego” [frek.xces.tar.bz2](http://korpus.pl/download/frek.xces.tar.bz2).
 Po pobraniu archiwum rozpakowujemy je:
@@ -339,27 +336,43 @@ Wyszukiwarki:
  <p class="author">[The Tao of Programming 4.1]</p>
 </blockquote>
 
-3\. (**CouchDB**) Baza „książki” zawiera dokumenty z informacjami o książkach,
-na przykład:
+## Dane z projektu „Open Street Maps”
 
-    :::javascript
+Dane są do pobrania ze strony [Overpass API](http://www.overpass-api.de/).
+Do oczyszczenia i transformacji pobranych danych użyłem programu
+[jq](http://stedolan.github.io/jq/).
+
+Przykładowe dane dla prostokąta `[ll, ur] = [[49,14], [55,24]]`,
+obejmującego całą Polskę, zostały pobrane za pomocą programu *wget*:
+
+    :::bash
+    wget 'http://overpass-api.de/api/interpreter?data=[out:json];node(49,14,55,24)[amenity];out;' -O poland.json
+
+Następnie pobrano dane z tablicy `elements`, które poddano transformacji:
+
+    :::bash
+    cat poland.json | \
+    jq -c '.elements[] | {_id: .id, tags, location: {type: "Point", coordinates: [.lon, .lat]}}' \
+      > osm-data_poland-amenities.json
+
+Oto przykładowy JSON z oczyszczonej kolekcji:
+
+    :::json
     {
-      "_id": "3194d86ab7cb2c1465fa5fea901f4c55",
-      "_rev": "1-2724eb06ca15197e71e13e1b46b75aee",
-      "isbn": "1844571696",
-      "isbn13": "",
-      "book_id": "100_shakespeare_films_a01"
+      "_id": 21315878
+      "location": {
+        "type": "Point",
+        "coordinates": [ 15.8698636, 49.2201447 ]
+      },
+      "tags": {
+        "amenity": "pub",
+        "name": "Sýpky"
+      }
     }
 
-Bazę *books* oraz inne bazy można przeglądać (oraz replikować)
-w trakcie zajęć pod adresem:
-
-     http://wbzyl.inf.ug.edu.pl:5984/_utils/
-
-Inne dokumenty mogą zawierać inne pola: *publisher*, *authors*, *title*.
-
-Napisać widok wyliczający ile i jakie pola zawarte są w dokumentach tej bazy.
-Niektóre pola są puste. Uwzględnić to w rachunkach.
+Pole `tag`, oprócz pola `amenity` może zawierać inne pola.
+Przykładowo `name`, `religion`, `description`, `cargo`.
+Na początek należałoby zagregować wszystkie te pola.
 
 
 ## Różności…
