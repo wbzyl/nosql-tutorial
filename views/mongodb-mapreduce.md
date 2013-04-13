@@ -281,34 +281,45 @@ Dla wersji MongoDB v2.4.1 (1.5 * 10^6 liczb losowych):
 (Zrzuty ekranu programu „monitor systemu”.)
 
 
+<blockquote>
+<p>{%= image_tag "/images/Man-Who-Knew-Too-Much.jpg", :alt => "[Gilbert Keith Chesterton, The Man Who Knew Too Much]" %}</p>
+</blockquote>
+
 ## Word Count
 
-Zaczynamy od zapisania w bazie *test* w kolekcji *chesterton*
-(976) akapitów z książki G.K. Chestertona, „The Man Who Knew Too Much”.
+Kolekcja *books* zawiera wszystkie akapity tych książek:
 
-    :::bash
-    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
-       http://www.gutenberg.org/cache/epub/1720/pg1720.txt -v -d test -c chesterton
+1. Fyodor Dostoyevsky, *The Idiot*.
+2. Gilbert Keith Chesterton, *The Man Who Knew Too Much*.
+3. Leo Tolstoy, *War and Peace*.
+4. Arthur Conan Doyle, *The Sign of the Four*.
 
-Przykładowy dokument z kolekcji *chesterton*:
+Jak utworzone tą kolekcję opisano tutaj
+[4 Books from Project Gutenberg](https://github.com/nosql/map-reduce/blob/master/docs/wbzyl.md).
+Kolekcja tak składa się z 18786 dokumentów.
+Oto przykładowy dokument z tej kolekcji:
 
-    :::javascript
+    :::js
     {
-      "_id" : ObjectId("4de5e745e138230694000054"),
-      "paragraph" : "And he carried off the two rifles without casting a glance at the stranger...",
-      "count" : 83,
-      "title" : "the man who knew too much"
+      "n": 8,                                // akapit #8
+      "title": "The Man Who Knew Too Much",  // z tej książki
+      "author": "Chesterton, Gilbert K",     // tego autora
+      "p": "\"A scientific interest, I suppose?\" observed March."
     }
 
-Kod poniższego MapReduce różni się od *wc.js* tylko tym, że w wyrażeniu
+
+Kod tego MapReduce różni się od kodu *wc.js* tylko tym, że w wyrażeniu
 regularnym użytym w metodzie *match* dodano litery z Latin-1,
 polskie diakrytyki (i nieco innych liter):
 
-    :::javascript chesterton.js
+    :::javascript 4books.js
     m = function() {
-      this.paragraph.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g).forEach(function(word) {
-        emit(word, 1);
-      });
+      res = this.p.toLowerCase().match(/[\w\u00C0-\u017F]+/g);
+      if (res) {
+        res.forEach(function(word) {
+          emit(word, 1);
+        });
+      }
     };
     r = function(key, values) {
       return Array.sum(values);
@@ -318,155 +329,36 @@ polskie diakrytyki (i nieco innych liter):
 
 Uruchamiamy powyższe MapReduce:
 
-    mongo chesterton.js --shell
+    mongo 4books.js --shell
 
-Po wykonaniu kodu (kilka sekund), *printjson* wypisuje
+Po wykonaniu kodu (kilkanaście sekund), *printjson* wypisze
 na konsoli coś takiego:
 
-    :::javascript
+    :::js
     {
       "result" : "wc",
-      "timeMillis" : 1139,
+      "timeMillis" : 13206,
       "counts" : {
-        "input" : 976,
-        "emit" : 60573,
-         "reduce" : 3264,
-         "output" : 6323
+        "input" : 18786,
+        "emit" : 925055,
+        "reduce" : 103894,
+        "output" : 22433
       },
       "ok" : 1,
     }
 
 Na koniec sprawdzamy co się wyliczyło:
 
-    :::javascript
-    db.wc.find().sort({value: -1})
-      { "_id" : "the", "value" : 3840 }
-      { "_id" : "a", "value" : 1941 }
-      { "_id" : "and", "value" : 1873 }
-      { "_id" : "of", "value" : 1833 }
-      { "_id" : "to", "value" : 1295 }
-      { "_id" : "he", "value" : 1174 }
-      { "_id" : "in", "value" : 1099 }
-      { "_id" : "it", "value" : 970 }
-
-
-### Word Segmentaion
-
-Funkcja map powyżej jest prymitywną implementacją algorytmu „word segmentation”,
-czyli podziału tekstu na słowa. Powinniśmy ją zastąpić jakimś „prawdziwym”
-tokenizerem.
-
-Poniżej skorzystam z dwóch modułów dla NodeJS,
-[MongoDB Native NodeJS Driver](https://github.com/christkv/node-mongodb-native/)
-oraz [Natural](https://github.com/NaturalNode/natural).
-Ten ostatni moduł implementuje kilka „tokenizerów”:
-
-Zaczniemy od instalacji modułów:
-
-    :::bash
-    npm install -g natural
-    npm install -g mongodb --mongodb:native
-
-Zapiszemy w bazie *gutenberg* w kolekcji *chesterton* akapity z książki
-G. K. Chestertona, *The Man Who Knew Too Much*:
-
-    :::bash
-    ./gutenberg2mongo.rb the-man-who-knew-too-much.txt \
-        http://www.gutenberg.org/cache/epub/1720/pg1720.txt -c chesterton
-
-Następnie do każdego dokumentu dodamy pole *words*:
-
-    :::javascript add-words-to-chest.js
-    {
-      "_id" : ObjectId("4de5e745e138230694000054"),
-      "paragraph" : "And he carried off the two rifles without casting a glance at the stranger...",
-      "words" : ["and", "he", "carried", "off", "the", "two", …],
-      "count" : 83,
-      "title" : "the man who knew too much"
-    }
-
-Napiszemy skrypt dla *node*, który to zrobi. W skrypcie skorzystamy
-z drivera *mongodb* ([Node.JS MongoDB Driver Manual](http://mongodb.github.com/node-mongodb-native/contents.html)):
-
-    :::js add-words-to-chesterton.js
-    var natural = require('natural')
-    , tokenizer = new natural.WordTokenizer()
-    , assert = require('assert')
-    , mongoClient = require('mongodb').MongoClient;
-
-    mongoClient.connect("mongodb://localhost:27017/gutenberg", {native_parser: true}, function(err, db) {
-      assert.equal(null, err);
-
-      var collection = db.collection('chesterton');
-      var cursor = collection.find({}, {snapshot: true});
-      cursor.each(function(err, doc) {
-        assert.equal(null, err);
-
-        if (doc == null) {
-          db.close();
-        } else {
-          var words = tokenizer.tokenize(doc.paragraph);
-          doc.words = words;
-          collection.save(doc, {w: 1}, function(err, result) {
-            assert.equal(null, err);
-
-          });
-          // console.dir(doc);
-        };
-      });
-    });
-
-*Uwaga o funkcji **save** użytej powyżej:*
-„Simple full document replacement function.
-Not recommended for efficiency, **use atomic operators
-and update** instead for more efficient operations.”
-
-Zmienimy funkcję map, tak by korzystała z listy słów *words*:
-
-    :::javascript natural-chesterton.js
-    var conn = new Mongo();
-    db = conn.getDB("gutenberg");
-    m = function() {
-      this.words.forEach(function(word) {
-        emit(word.toLowerCase(), 1);
-      });
-    };
-    r = function(key, values) {
-      return Array.sum(values);
-    };
-    res = db.chesterton.mapReduce(m, r, {out: "wc"});
-    printjson(res);
-
-Więcej o pisaniu skryptów na konsolę *mongo* –
-[Write Scripts for the mongo Shell](http://docs.mongodb.org/manual/tutorial/write-scripts-for-the-mongo-shell/).
-
-Teraz możemy uruchomić obliczenia MapReduce:
-
-    :::bash terminal
-    mongo gutenberg natural-chesterton.js --shell
-      {
-          "result" : "wc",
-          "timeMillis" : 448,
-          "counts" : {
-              "input" : 976,
-              "emit" : 60579,
-              "reduce" : 3264,
-              "output" : 6336
-          },
-          "ok" : 1,
-      }
-
-Sprawdzamy wyniki na konsoli *mongo*:
-
-    :::js konsola
-    db.wc.count()  //=> 6336
-    db.wc.find().sort({ value: -1 })
-
-**Zadanie:** Usunąć z tekstu książki wszystkie
-[stop words](http://en.wikipedia.org/wiki/Stop_words)
-(zawiera linki do angielskich i polskich „stop words”).
-*Pytanie:* Ile jest akapitów składających się wyłącznie
-z „stop words”?
+    :::js
+    db.wc.find().sort({value: -1}).limit(8)
+      { "_id": "the", "value": 51325 }
+      { "_id": "and", "value": 32694 }
+      { "_id": "to", "value": 25825 }
+      { "_id": "of", "value": 23464 }
+      { "_id": "a", "value": 18561 }
+      { "_id": "he", "value": 16287 }
+      { "_id": "in", "value": 14365 }
+      { "_id": "that", "value": 13688 }
 
 
 ## „Pivot” dokumentów kolekcji *Rock*
