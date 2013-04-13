@@ -361,51 +361,37 @@ Na koniec sprawdzamy co się wyliczyło:
       { "_id": "that", "value": 13688 }
 
 
-## „Pivot” dokumentów kolekcji *Rock*
+## „Pivot” dokumentów kolekcji *rock*
 
-Zaczynamy od instalacji modułu *couchapp* dla *node*:
+Wszystkie dokumenty z kolekcji *rock* można pobrać z maszyny
+wirtualnej:
 
     :::bash
-    npm install -g couchapp
+    mongoexport -u student -p sesja2013 -c rock -h 153.19.1.202 > rock.json
 
-Aby przenieść bazę *rock* z CouchDB do MongoDB użyjemy
-widoku i funkcji listowej.
+Termin **pivot** można przetłumaczyć jako „obracać”.
 
-W bazie CouchDB zapiszemy widok i funkcję listową korzystając
-ze skryptu {%= link_to "rock.js", "/doc/scripts/rock.js" %}
-({%= link_to "kod", "/db/mongodb/rock.js" %}).
-Instrukcja użycia skryptu jest w komentarzu na końcu pliku.
+Przedstawioną poniżej zmianę kształtu dokumentów,
+można określić jako obrót.
 
-Funkcja listowa generuje, po jednym w wierszu,
-dokumenty przekonwertowane na format JSON.
-Następnie odpytamy funkcję listową za pomocą programu *curl*.
-Otrzymane JSON-y zapisujemy w kolekcji *rock* korzystając
-z programu *mongoimport*.
+Przykładowy dokument z kolekcji *rock* (bez pól *_id*, *similar* i *tracks*):
 
-Termin *pivot* można przetłumaczyć jako „obracać”.
-Przedstawioną poniżej zmianę formatu dokumentu, można
-określić jako obrót.
+    :::js
+    db.rock.findOne({name: 'Led Zeppelin'}, {_id: 0, similar: 0, tracks: 0})
+      {
+        "name" : "Led Zeppelin",
+        "tags" : [
+          "classicrock", "rock", "hardrock",
+          "70s", "progressiverock", "blues",
+          "ledzeppelin", "british", "bluesrock", "heavymetal"
+        ]
+      }
 
-Przykładowy dokument z kolekcji *rock*:
-
-    :::javascript
-    db.rock.findOne({name: 'Led Zeppelin'})
-    {
-       "_id" : "ledzeppelin",
-       "name" : "Led Zeppelin",
-       "tags" : [
-           "classicrock", "rock", "hardrock",
-           "70s", "progressiverock", "blues",
-           "ledzeppelin", "british", "bluesrock", "heavymetal"
-       ]
-    }
-
-Z dokumentów chcemy utworzyć kolekcję *genres* zawierającą
+Z oryginalnych dokumentów chcemy utworzyć kolekcję *genres* zawierającą
 dokumenty „obrócone”:
 
-    :::javascript
+    :::js
     {
-      _id: ObjectId(),
       tag: "classicrock",
       names: [ "Led Zeppelin", ... ]
     }
