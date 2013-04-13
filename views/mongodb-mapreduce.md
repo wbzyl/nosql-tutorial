@@ -110,9 +110,14 @@ Zapiszemy dwa przykładowe dokumenty w kolekcji *books*:
 Funkcje *m* (map) i *r* (reduce) zdefiniowane poniżej, wysyłamy do kolekcji *books*:
 
     :::js wc.js
-    db.books.mapReduce(m, r, {out: "wc"});
+    coll = db.books;
+    coll.mapReduce(m, r, {out: "wc"});
 
-Po wykonaniu obliczeń wyniki zapisujemy w kolekcji *wc*.
+Po wykonaniu obliczeń wyniki zostaną we wskazanej kolekcji; tutaj *wc*.
+Możemy też wyniki zapamiętać w zmiennej:
+
+    :::js
+    var res = coll.mapReduce(m, r, {out: {inline: 1}});
 
 Funkcja map:
 
@@ -190,12 +195,12 @@ zdefiniowane powyżej:
 Od wersji 2.3.1+ MongoDB używa silnika JavaScript o nazwie „V8”.
 Wcześniejsze wersje korzystały z silnika „SpiderMonkey”.
 
-W wersji V8 użytej w MongoDB zaimplementowano funkcję *reduce*.
-Oto prosty przykład:
+Silnik Javascript V8 implementuje funkcję *reduce*.
+Oto prosty przykład użycia tej funkcji:
 
     :::js
-    [1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
-      return previousValue + currentValue;
+    [1, 2, 3, 4].reduce(function(acc, currentValue, index, array) {
+      return acc + currentValue;
     });
 
 Powyższy kod wylicza 10.
@@ -203,8 +208,8 @@ Powyższy kod wylicza 10.
 A wykonanie tego kodu:
 
     :::js
-    [1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
-      return previousValue + currentValue;
+    [1, 2, 3, 4].reduce(function(acc, currentValue, index, array) {
+      return acc + currentValue;
     }, 10);
 
 daje 20.
@@ -221,7 +226,7 @@ w kolekcji czterech liczb losowych z przedziału [0, 1):
     db.big.find().limit(8);
 
 Później liczbę 4 zastąpimy liczbami 10^6 i 10^7. Dopiero dla kolekcji
-takich rozmiarów nazwa *big* jest adekwatna.
+takich rozmiarów nazwa *big* będzie adekwatna.
 
 
 ### MapReduce
@@ -233,10 +238,10 @@ Definiujemy funkcję map – *m* i funkcję reduce – *r*:
        emit("answer", { min: this.x, max: this.x });
     };
     r =  function(key, values) {
-      var value = values.reduce(function(prev, cur) {
-        if (cur.min < prev.min) prev.min = cur.min;
-        if (cur.max > prev.max) prev.max = cur.max;
-        return prev;
+      var value = values.reduce(function(acc, cur) {
+        if (cur.min < acc.min) acc.min = cur.min;
+        if (cur.max > acc.max) acc.max = cur.max;
+        return acc;
       }, {min: 1, max: 0});
       return value;
     };
@@ -245,24 +250,35 @@ i uruchamiamy MapReduce:
 
     :::js
     res = db.big.mapReduce(m, r, { out: {inline: 1} });
-      {
-        "results": [
-          {
-            "_id": "answer",
-            "value": {
-              "min": 0.029445646097883582,
-              "max": 0.8922047016676515
-            }
-          }
-        ],
-        ...
-      }
+    {
+      "results": [
+        {
+          "_id": "answer",
+          "value": { "min": 0.000000197906, "max": 0.999999092658 }
+        }
+      ],
+      "timeMillis": 53347,
+      "counts": {
+        "input": 1500000, "emit": 1500000, "reduce": 15000, "output": 1
+      },
+      "ok": 1,
+    }
 
-Obliczenia dla kolekcji big składającej się z 10^6 liczb losowych
-trwają około 25 s (na moim komputerze).
-A tak wygląda wykorzystanie procesora w trakcie obliczeń:
+Obliczenia dla kolekcji big składającej się z 1.5*10^6 liczb losowych
+trwały 54,3 s.
 
-{%= image_tag "/images/mapreduce-wykorzystanie-procesora.png", :alt => "[Big MapReduce, 10^6 liczb losowych]" %}
+A tak wyglądało wykorzystanie procesora w trakcie obliczeń.
+
+Dla wersji MongoDB < v2.4 (10^6 liczb losowych):
+
+{%= image_tag "/images/mapreduce-wykorzystanie-procesora.png", :alt => "[Big MapReduce, 10^6 liczb losowych, MongoDB < 2.4]" %}
+
+Dla wersji MongoDB v2.4.1 (1.5 * 10^6 liczb losowych):
+
+{%= image_tag "/images/mapreduce-v8-monitor-systemu.png", :alt => "[Big MapReduce, 10^6 liczb losowych, MongoDB 2.4.1]" %}
+
+
+(Zrzuty ekranu programu „monitor systemu”.)
 
 
 ## Word Count
