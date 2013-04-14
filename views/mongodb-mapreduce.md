@@ -295,10 +295,10 @@ Kolekcja *books* zawiera wszystkie akapity tych książek:
 3. Leo Tolstoy, *War and Peace*.
 4. Arthur Conan Doyle, *The Sign of the Four*.
 
-Jak utworzone tą kolekcję opisano tutaj
+Jak utworzone kolekcję opisano tutaj
 [4 Books from Project Gutenberg](https://github.com/nosql/map-reduce/blob/master/docs/wbzyl.md).
-Kolekcja tak składa się z 18786 dokumentów.
-Oto przykładowy dokument z tej kolekcji:
+Kolekcja zawiera 18786 dokumentów.
+Oto przykładowy dokument:
 
     :::js
     {
@@ -325,7 +325,7 @@ polskie diakrytyki (i nieco innych liter):
     r = function(key, values) {
       return Array.sum(values);
     };
-    res = db.chesterton.mapReduce(m, r, {out: "wc"});
+    res = db.books.mapReduce(m, r, {out: "wc"});
     printjson(res);
 
 Uruchamiamy powyższe MapReduce:
@@ -394,13 +394,14 @@ dokumenty „obrócone”:
     :::js
     {
       tag: "classicrock",
-      names: [ "Led Zeppelin", ... ]
+      names: [ "Led Zeppelin", "Cream", "Jeff Beck", "Ten Years After", ... ]
     }
 
 Argument *value* może być skalarem lub obiektem.
 Użyjemy obiektu z tablicą wewnątrz.
 
-Próba zwrócenia tablicy w argumencie *values* funkcji reduce
+Dlaczego „ukrywamy” tablicę w obiekcie.
+Ponieważ próba zwrócenia tablicy w argumencie *values* funkcji reduce
 kończy się takim błędem (MongoDB v2.4.1):
 
     :::js
@@ -410,13 +411,13 @@ kończy się takim błędem (MongoDB v2.4.1):
       "ok": 0
     }
 
-Dlatego „ukrywamy” tablicę wstawiając ją do obiektu
-*value*. Funkcja map *m* generuje taką listę klucz:wartość:
+Tablicę wstawiamy ją do obiektu *value*.
+Poniższa funkcja map *m* będzie generować taką listę `klucz:wartość`:
 
-    "classicrock: : { "names": ["Led Zeppelin"] }
-    "rock" :        { "names": ["Led Zeppelin"] }
+    "classicrock:{"names": ["Led Zeppelin"]}
+    "rock":      {"names": ["Led Zeppelin"]}
     ...
-    "heavymetal" :  { "names": ["Led Zeppelin"] }
+    "heavymetal":{"names": ["Led Zeppelin"]}
 
 Kod funkcji map:
 
@@ -433,14 +434,16 @@ Funkcja reduce jest wywoływana z takimi tablicami *values*:
     :::js
     [{"names":["Led Zeppelin","Cream"]}, ..., {"names":["Eric Clapton","Jeff Beck","Sweet"]}]
 
-Dlatego w funkcji reduce bedziemy potrebować funkcji
-która „spłaszczy” tablice tablic do tablicy (*flatten*).
-Funkcję taką łatwo napisać korzystając z funkcji Javascript *reduce*:
+Dlatego w funkcji reduce, aby zachować „typ” argumentu *value* musimy
+„spłaszczyć” tablice tablic napisów do tablicy napisów (*flatten*).
+Funkcję taką łatwo napisać korzystając
+z [funkcji *reduce* Javascript](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce#Example.3A_Flatten_an_array_of_arrays):
 
     :::js
     [[1,2], [2,4,5], [6]].reduce(function(acc, x) {
       return acc.concat(x);
     })
+    //=> [1,2,3,4,5,6]
 
 Kod funkcji reduce:
 
