@@ -396,26 +396,59 @@ dokumenty „obrócone”:
       names: [ "Led Zeppelin", ... ]
     }
 
-### MapReduce
-
 Argument *value* może być skalarem lub obiektem.
 Użyjemy obiektu z tablicą wewnątrz.
-(Takie ograniczenie było w MongoDB 1.9.0.)
 
-Tablicę wstawiamy do obiektu *value*:
+Próba zwrócenia tablicy w argumencie *values* funkcji reduce
+kończy się takim błędem (MongoDB v2.4.1):
 
-    :::javascript pivot.js
+    :::js
+    Sun Apr 14 19:42:00.377 JavaScript execution failed: map reduce failed:{
+      "errmsg": "exception: reduce -> multiple not supported yet",
+      "code": 10075,
+      "ok": 0
+    }
+
+Dlatego „ukrywamy” tablicę wstawiając ją do obiektu
+*value*. Funkcja map *m* generuje taką listę klucz:wartość:
+
+    "classicrock: : { "names": ["Led Zeppelin"] }
+    "rock" :        { "names": ["Led Zeppelin"] }
+    ...
+    "heavymetal" :  { "names": ["Led Zeppelin"] }
+
+Kod funkcji map:
+
+    :::js pivot.js
     m = function() {
       var value = { names: [ this.name ] };
       this.tags.forEach(function(tag) {
         emit(tag, value);
       });
     };
+
+Funkcja reduce jest wywoływana z takimi tablicami *values*:
+
+    :::js
+    [{"names":["Led Zeppelin","Cream"]}, ..., {"names":["Eric Clapton","Jeff Beck","Sweet"]}]
+
+Dlatego w funkcji reduce bedziemy potrebować funkcji
+która „spłaszczy” tablice tablic do tablicy (*flatten*).
+Funkcję taką łatwo napisać korzystając z funkcji Javascript *reduce*:
+
+    :::js
+    [[1,2], [2,4,5], [6]].reduce(function(acc, x) {
+      return acc.concat(x);
+    })
+
+Kod funkcji reduce:
+
+    :::js pivot.js
     r = function(key, values) {
-      var list = values.reduce(function(a, b) {
-        return a.concat(b.names);
+      var a = values.reduce(function(acc, x) {
+        return acc.concat(x.names);
       }, []);
-      return { names: list };
+      return { names: a };
     };
     f = function(key, value) {
       return value.names;       // a to po co?
@@ -429,15 +462,11 @@ Tablicę wstawiamy do obiektu *value*:
 Po wykonaniu na konsoli *mongo* powyższego MapReduce,
 w kolekcji *pivot* znajdziemy dokumenty w formacie:
 
-    :::javascript
-    printjson(db.pivot.findOne());
+    :::js
+    db.pivot.findOne();
       {
-         "_id" : "00s",
-         "value" : [
-              "Queen + Paul Rodgers",
-              "Izzy Stradlin",
-              "Gilby Clarke"
-         ]
+        "_id" : "00s",
+        "value" : [ "Queen", "Izzy Stradlin" ]
       }
 
 a miały mieć format:
@@ -446,7 +475,7 @@ a miały mieć format:
     {
       _id: ObjectId(),
       tag: "00s",
-      names: [ "Queen + Paul Rodgers", "Izzy Stradlin" ]
+      names: [ "Queen", "Izzy Stradlin" ]
     }
 
 Nazwy pól zmienimy w pętli. Dokument z nowymi nazwami pól
@@ -463,8 +492,7 @@ zapiszemy w nowej kolekcji o nazwie *genre*:
 No a teraz możemy przyjrzeć się wynikom:
 
     :::js
-    db.pivot.find().pretty()
-    db.pivot.find().pretty()
+    db.genres.find().pretty()
 
 
 ## SPAM
