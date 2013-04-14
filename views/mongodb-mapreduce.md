@@ -225,8 +225,9 @@ w kolekcji czterech liczb losowych z przedziału [0, 1):
     db.big.count();
     db.big.find().limit(8);
 
-Później liczbę 4 zastąpimy liczbami 10^6 i 10^7. Dopiero dla kolekcji
-takich rozmiarów nazwa *big* będzie adekwatna.
+Później liczbę 4 zastąpimy liczbami 10^6 i 1.5*10^6.
+Dopiero dla kolekcji takich rozmiarów nazwa *big*
+będzie adekwatna.
 
 
 ### MapReduce
