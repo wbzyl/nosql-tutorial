@@ -23,8 +23,12 @@
   w należytym odprawianiu nabożeństwa.
 </blockquote>
 
-* [CouchDB](https://blogs.apache.org/couchdb/) – blog
-* [CouchDB](http://couchdb.apache.org/) – info
+* [Apache CouchDB](https://blogs.apache.org/couchdb/) – blog
+* [Apache CouchDB](http://couchdb.apache.org/) – info
+
+Po instalacji Apache CouchDB 1.3 manual jest dostępny z tego URI:
+
+    http://localhost:5984/_utils/docs/
 
 Co to są [dokumentowe bazy danych] [document-oriented database]?
 Dlaczego korzystamy z dokumentowych baz danych:
@@ -39,7 +43,7 @@ Co jest ciekawego w CouchDB opisuje Daniel Alexiuc w artykule
 (pod mylącym tytułem) [Enterprise Web Application Architecture 2.0 and
 kittens](http://justsomejavaguy.blogspot.com/2010/02/enterprise-web-application-architecture.html).
 Przypowieść o CouchDB,
-[The Parable of CouchDB](http://www.iriscouch.com/blog/2011/06/the-parable-of-couchdb)
+[The Parable of CouchDB](http://www.iriscouch.com/blog/2011/06/the-parable-of-couchdb).
 
 
 ## Dlaczego CouchDB?
@@ -82,8 +86,8 @@ Przypowieść o CouchDB,
 * CouchDB + Membase = [Couchbase](http://blog.couchbase.com/hello-couchbase) – luty 2011;
   zob. też „white paper“ –
   [NoSQL Database Technology](http://www.couchbase.com/sites/default/files/uploads/all/whitepapers/NoSQL-Whitepaper.pdf)
-* Ostatnia stabilna wersja 1.0.3 – kwiecień 2011
 * [Free CouchDB hosting](http://www.iriscouch.com/) – kwiecień 2011
+* Ostatnia stabilna wersja 1.3.0 – marzec 2013
 
 
 ## REST API dla CouchDB
