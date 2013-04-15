@@ -142,6 +142,13 @@ not: [ 1 ]
 wit: [ 1 ]
 </pre>
 
+<blockquote>
+<h3>MongoDB Resources</h3>
+<p>{%= image_tag "/images/logo-mongodb.png", :alt => "[MongoDB Resources]" %}</p>
+<p>W <a href="http://api.mongodb.org/js/current/index.html">JavaScript Docs</a>
+  zdefiniowano <i>Array.sum</i> i kilka innych użytecznych funkcji.</p>
+</blockquote>
+
 Funkcja reduce:
 
     :::javascript wc.js
@@ -216,6 +223,17 @@ częściowych obliczeń:
 
     :::js
     r(key, [ v1, v2 ]) == r(key, [ v2, v1 ])                   // przemienność
+
+
+## Specyfikacja funkcji finalize
+
+Prototyp funkcji finalize:
+
+    :::js
+    function(key, value) {
+       ...
+       return object;
+    }
 
 
 <blockquote>
