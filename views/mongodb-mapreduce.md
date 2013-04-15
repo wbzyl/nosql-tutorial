@@ -179,6 +179,45 @@ zdefiniowane powyżej:
       { "_id" : "wit", "value" : 1 }
 
 
+## Specyfikacja funkcji map i reduce
+
+Wszystkie wymagania dla funkcji map i reduce
+są opisane tutaj:
+
+* [db.collection.mapReduce()](http://docs.mongodb.org/manual/reference/method/db.collection.mapReduce/)
+
+Prototyp funkcji map:
+
+    :::js
+    m = function() {
+       // this – odwołanie do bieżącego dokumentu
+       ...
+       emit(key, value);
+    }
+
+Prototyp funkcji reduce:
+
+    :::js
+    r = function(key, values) {
+       ...
+       return result;
+    }
+
+1\. Elementy tablicy *values* to emitowane *value*.
+Ponieważ funkcja reduce może być wywoływana wielokrotnie, muszą być
+spełnione warunki (dlaczego?):
+
+    :::js
+    r(key, [ v1, r(key, [v2, v3]) ] == r(key, [ v1, v2, v3 ])  // zgodność typów
+    r(key, [ reduce(key, values) ]) == reduce(key, values)     // idempotentność
+
+Funkcja reduce musi wyliczać ten sam wynik niezależnie od kolejności
+częściowych obliczeń:
+
+    :::js
+    r(key, [ v1, v2 ]) == r(key, [ v2, v1 ])                   // przemienność
+
+
 <blockquote>
  <h3>ECMA 5 &amp; V8</h3>
  <p>{%= image_tag "/images/v8.png", :alt => "[V8]" %}
