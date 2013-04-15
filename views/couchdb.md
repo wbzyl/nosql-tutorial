@@ -30,7 +30,7 @@ Po instalacji Apache CouchDB 1.3 manual jest dostępny z tego URI:
 
     http://localhost:5984/_utils/docs/
 
-Co to są [dokumentowe bazy danych] [document-oriented database]?
+Co to są dokumentowe bazy danych?
 Dlaczego korzystamy z dokumentowych baz danych:
 „Another advantage of document oriented databases is **the ease of
 usage and programming** so that untrained business users, for example,
@@ -81,7 +81,7 @@ Przypowieść o CouchDB,
 * Restful API – kwiecień 2006
 * Pierwsza dostępna wersja 0.2 – sierpień 2006
 * Przejście z XML na JSON, Javascript językiem zapytań – sierpień 2007
-* [Map/Reduce][map-reduce] – luty 2008
+* MapReduce – luty 2008
 * Wychodzi wersja 0.11 (ostatnia przed wersją 1.0) – kwiecień 2010
 * CouchDB + Membase = [Couchbase](http://blog.couchbase.com/hello-couchbase) – luty 2011;
   zob. też „white paper“ –

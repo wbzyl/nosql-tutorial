@@ -58,7 +58,7 @@ means that **if you can talk to a node in the cluster**,
 it can read and write data.
 
 <blockquote>
-  <h3>Are you left or right-brained?</h3>
+  <h2>Left or right-brained?</h2>
   {%= image_tag "/images/hands.jpg", :alt => "[Are you left or right-brained?]" %}
   <p>Prof. R. Wiseman, Neuropsychologist and Magician, suggests easy
   and entertaining ways to discover whether you are
