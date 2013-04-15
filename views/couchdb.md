@@ -60,6 +60,16 @@ Przypowieść o CouchDB,
 [The US Departments of Education and Defense use CouchDB as part of their Learning Registry Research Program](http://www.couchbase.com/case-studies/learningregistry)
 
 
+## CouchApps
+
+* Mikeal Rogers.
+  [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+* Benoit Chesneau.
+  [Erica](https://github.com/benoitc/erica)
+* Dale Harvey.
+  [PouchDB](http://pouchdb.com/) ([github](https://github.com/daleharvey/pouchdb))
+
+
 ## Trochę faktów z historii CouchDB
 
 * [Damien Katz](http://damienkatz.net/) – autor
@@ -74,7 +84,6 @@ Przypowieść o CouchDB,
   [NoSQL Database Technology](http://www.couchbase.com/sites/default/files/uploads/all/whitepapers/NoSQL-Whitepaper.pdf)
 * Ostatnia stabilna wersja 1.0.3 – kwiecień 2011
 * [Free CouchDB hosting](http://www.iriscouch.com/) – kwiecień 2011
-* [CouchDB Release 1.1 Feature Guide](http://docs.couchbase.org/couchdb-release-1.1/) – czerwiec 2011
 
 
 ## REST API dla CouchDB
@@ -82,7 +91,6 @@ Przypowieść o CouchDB,
 Dokumentacja:
 
 * [CouchDB Reference](http://wiki.apache.org/couchdb/Reference)
-* [Couchbase HTTP API Reference](http://www.couchbase.org/sites/default/files/uploads/all/documentation/couchbase-api.html)
 * [HTTP_view_API, Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options)
 
 CRUD to skrót od pierwszych liter słów: Create, Read, Update, Delete.
@@ -144,18 +152,18 @@ Teraz możemy przeklikać przykłady z artykułu Holta.
 
 * J. Chris Anderson, Jan Lehnardt, Noah Slater.
   [CouchDB: The Definitive Guide][couchdb]
-* [BrowserCouch Tutorial](http://hg.toolness.com/browser-couch/raw-file/blog-post/tutorial.html)
 * [CouchApp.org: Simple JavaScript Applications with CouchDB](http://couchapp.org/page/index) –
   utilities to make standalone CouchDB application development simple
 * [Nginx As a Reverse Proxy](http://wiki.apache.org/couchdb/Nginx_As_a_Reverse_Proxy)
-* [Relaxed.tv](http://relaxed.tv/) – CouchDB Movietime!
 
+<!--
 Cykl artykułów, Jan Lehnardt. *What’s new in CouchDB*:
 
 * Part 1: [Nice URLs with Rewrite Rules and Virtual Hosts](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-one-nice-urls-rewrite-rules-and-virtual-hosts)
 * Part 2: [Views; JOINs Redux, Raw Collation for Speed](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-two-views-joins-redux-raw-collation-speed)
 * Part 3: [New Features in Replication](http://blog.couchbase.com/what%E2%80%99s-new-apache-couchdb-011-%E2%80%94-part-three-new-features-replication)
 * Part 4: [Security’n stuff: Users, Authentication, Authorisation and Permissions](http://blog.couchbase.com/what%E2%80%99s-new-couchdb-10-%E2%80%94-part-4-security%E2%80%99n-stuff-users-authentication-authorisation-and-permissions)
+-->
 
 Pozostałe linki:
 
@@ -164,13 +172,11 @@ Pozostałe linki:
    * [Basics](http://wiki.apache.org/couchdb/Basics) – C, Ruby, Javascript…
    * [HowTo Guides](http://wiki.apache.org/couchdb/How-To_Guides)
 * Caolan McMahon. [Blog](http://caolanmcmahon.com/)
-   * [On _designs undocumented](http://caolanmcmahon.com/on_designs_undocumented.html)
+   * [On _designs undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented/)
 * Javascript templates:
    * [Announcing Handlebars.js](http://yehudakatz.com/2010/09/09/announcing-handlebars-js/)
 * CouchDB korzysta z [CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/CommonJS),
   [Modules/1.0](http://wiki.commonjs.org/wiki/Modules/1.0)
-  (przykładowa implementacja –  D. Flanagan,
-  [A module loader with simple dependency management](http://www.davidflanagan.com/2009/11/a-module-loader.html))
 * [GeoCouch: The future is now](http://vmx.cx/cgi-bin/blog/index.cgi/geocouch-the-future-is-now:2010-05-03:en,CouchDB,Python,Erlang,geo) ([Geo Demo](http://vmx.iriscouch.com/blocks/_design/geodemo/index.html))
 * [What’s wrong with Ruby libraries for CouchDB?](http://gist.github.com/503660)
 * [A gentle introduction to CouchDB for relational practitioners](http://www.xaprb.com/blog/2010/09/07/a-gentle-introduction-to-couchdb-for-relational-practitioners/)
