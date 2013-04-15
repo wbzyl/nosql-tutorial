@@ -10,7 +10,8 @@
 @header-a-color: #9E0B41;
 
 @h1-color: #CC3E18;
-@h23-color: #181419;
+@h2-color: #4A073C;
+@h3-color: #181419;
 
 @article-background-color: white;
 @blockquote-background-color: #FFF7F5;
@@ -86,7 +87,7 @@ h1 {
 }
 
 h2, h3 {
-  color: @h23-color;
+  color: @h3-color;
 }
 
 // main
@@ -107,9 +108,12 @@ body {
 
 blockquote {
   font-size: 1.4rem;
-  h3 {
-    text-align: center;
-    background-color: #DEDEDE;
+  padding-bottom: 1em;
+  h2, h3 {
+    text-align: left;
+    margin-left: 0.9em;
+    background-color: #EFEFEF;
+    color: @h2-color;
     .border-radius(6px); }
 }
 
