@@ -11,6 +11,6 @@ r = function(key, values) {
   return Array.sum(values);
 };
 
-var res = db.books.mapReduce(m, r, {out: "wc"});
+res = db.books.mapReduce(m, r, {out: "wc"});
 
 printjson(res);
