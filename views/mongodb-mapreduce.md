@@ -203,15 +203,15 @@ Prototyp funkcji reduce:
        return result;
     }
 
-1\. Elementy tablicy *values* to emitowane *value*.
-Ponieważ funkcja reduce może być wywoływana wielokrotnie, muszą być
-spełnione warunki (dlaczego?):
+1\. Elementy tablicy *values* to emitowane *value*
+i funkcja reduce może być wywoływana wielokrotnie, dlatego muszą być
+spełnione warunki:
 
     :::js
     r(key, [ v1, r(key, [v2, v3]) ] == r(key, [ v1, v2, v3 ])  // zgodność typów
     r(key, [ reduce(key, values) ]) == reduce(key, values)     // idempotentność
 
-Funkcja reduce musi wyliczać ten sam wynik niezależnie od kolejności
+2\. Funkcja reduce musi wyliczać ten sam wynik niezależnie od kolejności
 częściowych obliczeń:
 
     :::js
