@@ -103,6 +103,7 @@ Tak jak to opisano w GeoCouch README przechodzimy na gałąź 1.3.x:
     git checkout --track origin/1.3.x
 
     ./bootstrap
+
     # ./configure --prefix=$HOME/.couchdb # 32-bity, programy będą instalowane w katalogu $HOME/.couchdb/bin
     ./configure --prefix=$HOME/.couchdb --with-erlang=/usr/lib64/erlang/usr/include # 64-bity
     make

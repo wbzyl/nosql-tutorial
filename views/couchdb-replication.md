@@ -29,7 +29,7 @@ W tym celu, w Futonie, klikamy w zakładkę (po prawej stronie) *Replicator*.
 Zaczynamy od pobrania listy z nazwami baz:
 
     :::bash
-    curl http://couch.ug.edu.pl:5984/_all_dbs
+    curl http://couch.inf.ug.edu.pl:5984/_all_dbs
 
 i wybieramy bazy, które nas interesują, na przykład:
 
