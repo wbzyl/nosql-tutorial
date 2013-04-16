@@ -91,6 +91,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
+1. {%= link_to "Erlang ← Erica", "/erlang-couchapp" %}
 1. {%= link_to "GeoCouch", "/couchdb-geo" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
