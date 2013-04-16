@@ -4,7 +4,7 @@ Replikujemy bazę *ls*:
 
     :::bash
     curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-      -d '{"source":"http://wbzyl.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
+      -d '{"source":"http://couch.inf.ug.edu.pl:5984/ls","target":"ls","create_target":true}'
     {"ok":true,"session_id":"fb84...",
      "source_last_seq":5,
      "history":[{"session_id":"fb84...",
@@ -28,25 +28,26 @@ W tym celu, w Futonie, klikamy w zakładkę (po prawej stronie) *Replicator*.
 
 Zaczynamy od pobrania listy z nazwami baz:
 
-    curl http://sigma.ug.edu.pl:5984/_all_dbs
+    :::bash
+    curl http://couch.ug.edu.pl:5984/_all_dbs
 
 i wybieramy bazy, które nas interesują, na przykład:
 
-    gutenberg ksiazki ls
+    gutenberg ls
 
-Oczywiście do replikacji użyjemy prostego skryptu *couchdb-replicate-from-tau.sh*:
+Oczywiście do replikacji użyjemy prostego skryptu *couchdb-replicate-from-couch.sh*:
 
-    :::bash couchdb-replicate-from-tau.sh
-    #!/bin/bash
+    :::bash couchdb-replicate-from-couch.sh
+    #! /bin/bash
     for i in "$@"
     do
-      tau=http://couch.inf.ug.edu.pl/$i
-      echo "replicate: $tau -> $i"
+      couch=http://couch.inf.ug.edu.pl/$i
+      echo "replicate: $couch -> $i"
       curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-        -d "{\"source\":\"$tau\",\"target\":\"$i\",\"create_target\":true}"
+        -d "{\"source\":\"$couch\",\"target\":\"$i\",\"create_target\":true}"
     done
 
 Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
 
     :::bash
-    ./couchdb-replicate-from-tau.sh gutenberg plugin ls
+    ./couchdb-replicate-from-couch.sh gutenberg ls

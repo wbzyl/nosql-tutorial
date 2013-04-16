@@ -84,7 +84,7 @@ GeoCouch implementuje standard [GeoJSON](http://geojson.org/geojson-spec.html).
 W standardzie zdefiniowano wiele typów *Geometry*.
 Najprostszy typ to *Point*. Oto przykład:
 
-    :::json
+    :::js
     {
       "type": "Point",
       "coordinates": [100.0, 0.0]  // longitude, latitude (długość, szerokość)
@@ -159,7 +159,7 @@ Pobieramy przykładowy dokument z bazy:
 
 Oto wynik:
 
-    :::json
+    :::js
     {
         _id: "717a1e4c809daa85f957863e070014c1",
         _rev: "1-e3f7e43e154f263194d4bedca630039c",

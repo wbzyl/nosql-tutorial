@@ -67,7 +67,7 @@ Zaczynamy od utworzenia bazy:
 1. Przykładowy numer portu *5984* należy zmienić na taki jaki mamy
   ustawiony w swojej konfiguracji CouchDB.
 2. W poniższych przykładach, zamiast fikcyjnego numeru rewizji
-   **?-XXXX** należy wstawić numer rewizji dokumentu.
+   **?-XXXX** należy wstawić aktualny numer rewizji dokumentu.
 
 
 ## CRUD na dokumentach
