@@ -67,9 +67,13 @@ Przypowieść o CouchDB,
 ## CouchApps
 
 * Mikeal Rogers.
-  [node.couchapp.js](https://github.com/mikeal/node.couchapp.js)
+  [node.couchapp.js](https://github.com/mikeal/node.couchapp.js).
+  Ostatnia wersja działa z Node.js v0.10, ale każde polecenie kończy się
+  komunikatem o błędzie
 * Benoit Chesneau.
-  [Erica](https://github.com/benoitc/erica)
+  [Erica](https://github.com/benoitc/erica):
+  - [Filesystem Mapping](http://couchapp.org/page/filesystem-mapping)
+  - [Getting Started](http://www.couchapp.org/page/getting-started)
 * Dale Harvey.
   [PouchDB](http://pouchdb.com/) ([github](https://github.com/daleharvey/pouchdb))
 

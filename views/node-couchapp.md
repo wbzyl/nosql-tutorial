@@ -16,22 +16,26 @@ Poniżej opisuję jak to można zrobić korzystając z modułu
 
     git clone git://github.com/mikeal/node.couchapp.js.git
     cd node.couchapp.js
-    npm install -g .
+    npm install
+    npm link .
 
 Moduł ten nie nadaje się do zapisywania dokumentów w bazie CouchDB,
 dlatego do zapisywania dokumentów w bazie użyjemy modułów
 [CouchClient](https://github.com/creationix/couch-client)
 i [Cradle](https://github.com/cloudhead/cradle):
 
-    npm install couch-client
-    npm install cradle
+    npm install -g couch-client
+    npm install -g cradle
 
+Może:
+
+    npm install -g request
 
 ## Zapisywanie danych w bazie
 
 Zajmiemy się następującymi przypadkami danych zapisanych w plikach:
-
 * format JSON; dane gotowe do umieszczenia
+
   hurtem w bazie; plik przykładowy
   {%= link_to "places.json", "/node/db/places.json" %}
   ({%= link_to "źródło", "/doc/node/db/places.json" %})
