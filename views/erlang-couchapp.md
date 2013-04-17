@@ -12,6 +12,8 @@ Na razie te linki powinny nam wystarczyć:
 
 - [Filesystem Mapping](http://couchapp.org/page/filesystem-mapping)
 - [Getting Started](http://www.couchapp.org/page/getting-started)
+- Darwin Biler,
+  [Couchapp push testdb: You are not a server admin error](http://www.darwinbiler.com/couchapp-push-testdb-you-are-not-a-server-admin-error/)
 - [Using couchapp with multiple design documents](http://couchapp.org/page/multiple-design-docs)
 
 
