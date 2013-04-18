@@ -1,10 +1,12 @@
 #### {% title "Replikacja – jakie to proste!" %}
 
-Replikujemy bazę *ls*:
+Bazy możemy replikować za pomocą programu *curl*:
 
     :::bash
-    curl -X POST http://127.0.0.1:5984/_replicate -H "Content-Type: application/json" \
-      -d '{"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}'
+    curl -X POST http://127.0.0.1:5984/_replicate \
+        -H "Content-Type: application/json" \
+        -d '{"source":"http://couch.inf.ug.edu.pl/ls","target":"ls","create_target":true}'
+
     {"ok":true,"session_id":"fb84...",
      "source_last_seq":5,
      "history":[{"session_id":"fb84...",
@@ -19,23 +21,11 @@ Replikujemy bazę *ls*:
         "docs_written":5,
         "doc_write_failures":0}]}
 
-A teraz replikujemy – między sobą – swoje bazy danych.
+lub możemy wkorzystać w tym celu Futona – zakładka *Replicator*.
 
-W tym celu, w Futonie, klikamy w zakładkę (po prawej stronie) *Replicator*.
-
-
-## Replikujemy bazy z CouchDB na Sigmie
-
-Zaczynamy od pobrania listy z nazwami baz:
-
-    :::bash
-    curl http://couch.inf.ug.edu.pl/_all_dbs
-
-i wybieramy bazy, które nas interesują, na przykład:
-
-    gutenberg ls
-
-Oczywiście do replikacji użyjemy prostego skryptu *couchdb-replicate-from-couch.sh*:
+Wklepywanie danych nie hańbi, ale możemy sobie oszczędzić żmudnego
+wklepywania korzystając z prostego skryptu. Na początek, coś takiego powinno
+wystarczyć:
 
     :::bash couchdb-replicate-from-couch.sh
     #! /bin/bash
@@ -47,7 +37,18 @@ Oczywiście do replikacji użyjemy prostego skryptu *couchdb-replicate-from-couc
         -d "{\"source\":\"$couch\",\"target\":\"$i\",\"create_target\":true}"
     done
 
-Teraz aby skopiować bazy na swój komputer wystarczy wykonać:
+Jeśli skrypt nazwiemy *couchdb-replicate-from-couch.sh*, to
+to polecenie:
 
     :::bash
     ./couchdb-replicate-from-couch.sh gutenberg ls
+
+zreplikuje bazy *gutenberg* i *ls* z komputera *couch.inf.ug.edu.pl*
+do naszego CouchDB.
+
+Dla przypomnienia, listę z nazwami baz możemy pobrać tak:
+
+    :::bash
+    curl couch.inf.ug.edu.pl/_all_dbs
+
+
