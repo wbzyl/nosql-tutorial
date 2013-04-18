@@ -216,7 +216,7 @@ spełnione warunki:
 
     :::js
     r(key, [ v1, r(key, [v2, v3]) ] == r(key, [ v1, v2, v3 ])  // zgodność typów
-    r(key, [ reduce(key, values) ]) == reduce(key, values)     // idempotentność
+    r(key, [ r(key, values) ]) == r(key, values)               // idempotentność
 
 2\. Funkcja reduce musi wyliczać ten sam wynik niezależnie od kolejności
 częściowych obliczeń:
