@@ -99,6 +99,8 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
+1. {%= link_to "Ściąga z API", "/couchdb-api-cheatsheet" %}
+
 
 <!--
 1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}

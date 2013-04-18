@@ -364,6 +364,4 @@ Odpowiedź jest TAK. I można to zrobić na kilka sposobów.
 * [Enable Cross-Origin Resource Sharing](http://enable-cors.org/)
 
 
-
 [couchdb]: http://books.couchdb.org/relax/ "CouchDB: The Definitive Guide"
-[couchdb wiki]: http://wiki.apache.org/couchdb/ "Couchdb Wiki"

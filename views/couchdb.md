@@ -96,11 +96,6 @@ Przypowieść o CouchDB,
 
 ## REST API dla CouchDB
 
-Dokumentacja:
-
-* [CouchDB Reference](http://wiki.apache.org/couchdb/Reference)
-* [HTTP_view_API, Quering Options](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options)
-
 CRUD to skrót od pierwszych liter słów: Create, Read, Update, Delete.
 Poniżej zobaczymy jak korzystając z programu *curl*
 **utworzyć** nową bazę danych, **usunąć** bazę, **pobrać informację** o bazie,
@@ -175,11 +170,6 @@ Cykl artykułów, Jan Lehnardt. *What’s new in CouchDB*:
 
 Pozostałe linki:
 
-* [CouchDB Wiki][couchdb wiki].
-   * [Reference](http://wiki.apache.org/couchdb/Reference) – API, Views, Configuration, Security
-   * [Basics](http://wiki.apache.org/couchdb/Basics) – C, Ruby, Javascript…
-   * [HowTo Guides](http://wiki.apache.org/couchdb/How-To_Guides)
-   * [Rewriting urls](http://wiki.apache.org/couchdb/Rewriting_urls)
 * Caolan McMahon. [Blog](http://caolanmcmahon.com/)
    * [On _designs undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented/)
 * Javascript templates:
@@ -196,5 +186,4 @@ Pozostałe linki:
 * Steve Krenzel. [Finding Friends](http://stevekrenzel.com/articles/finding-friends)
 
 
-[couchdb wiki]: http://wiki.apache.org/couchdb/ "Couchdb Wiki"
 [couchdb]: http://guide.couchdb.org/ "CouchDB: The Definitive Guide"

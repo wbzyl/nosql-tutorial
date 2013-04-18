@@ -315,11 +315,6 @@ Więcej informacji o *Geocouch*:
   [CouchDB: The Definitive Guide][couchdb]
 * Lena Herrmann.
   [CouchDB http API docs](https://github.com/lenalena/couchdb-http-api-docs)
-* [CouchDB Wiki][couchdb wiki].
-   * [Reference](http://wiki.apache.org/couchdb/Reference) – API, Views, Configuration, Security
-   * [Basics](http://wiki.apache.org/couchdb/Basics) – C, Ruby, Javascript…
-   * [HowTo Guides](http://wiki.apache.org/couchdb/How-To_Guides)
-* [CouchDB Implementation](http://horicky.blogspot.com/2008/10/couchdb-implementation.html)
 * CouchDB korzysta z [CommonJS Spec Wiki](http://wiki.commonjs.org/wiki/CommonJS),
   [Modules/1.0](http://wiki.commonjs.org/wiki/Modules/1.0);
   przykładowa implementacja – D. Flanagan,
