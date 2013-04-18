@@ -1,4 +1,4 @@
-#### {% title "Korzystamy z RESTFUL API" %}
+#### {% title "Korzystamy z REST API" %}
 
 Korzystamy z dokumentacji API CouchDB:
 [HTTP Document API](http://wiki.apache.org/couchdb/HTTP_Document_API).

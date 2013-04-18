@@ -179,6 +179,7 @@ Pozostałe linki:
    * [Reference](http://wiki.apache.org/couchdb/Reference) – API, Views, Configuration, Security
    * [Basics](http://wiki.apache.org/couchdb/Basics) – C, Ruby, Javascript…
    * [HowTo Guides](http://wiki.apache.org/couchdb/How-To_Guides)
+   * [Rewriting urls](http://wiki.apache.org/couchdb/Rewriting_urls)
 * Caolan McMahon. [Blog](http://caolanmcmahon.com/)
    * [On _designs undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented/)
 * Javascript templates:

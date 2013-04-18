@@ -88,7 +88,7 @@ Warto też przeczytać artykuł Teda Newarda,
 
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
 1. {%= link_to "Replikacja – jakie to proste!", "/couchdb-replication" %}
-1. {%= link_to "Korzystamy z RESTFUL API", "/couchdb-crud" %}
+1. {%= link_to "Korzystamy z REST API", "/couchdb-crud" %}
 1. {%= link_to "Funkcje Show", "/couchdb-show" %}
 1. {%= link_to "NodeJS ← Couchapp + CouchClient + Cradle", "/node-couchapp" %}
 1. {%= link_to "Erlang ← Erica", "/erlang-couchapp" %}
@@ -98,17 +98,14 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
-1. {%= link_to "Rewrite – przepisywanie adresów URL", "/couchdb-rewrite" %}
-1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
-1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 
 <!--
-
+1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
 1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
 1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
 1. {%= link_to "Apache", "/couchdb-apache" %}
-
+1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
 -->
 
 
