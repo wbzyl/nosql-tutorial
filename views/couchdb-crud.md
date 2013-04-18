@@ -60,7 +60,7 @@ Informacje o zespole skopiowałem ze strony A. Reisner’a
 Zaczynamy od utworzenia bazy:
 
     :::bash
-    curl -X PUT localhost:5984/lz/
+    curl -X PUT localhost:5984/lz
 
 **Uwagi:**
 
@@ -210,9 +210,9 @@ Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev
          {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
       ]}
 
-Do dosania okładek wystarczą wypisane powyżej rewizje.
+Do dossania okładek wystarczą wypisane powyżej rewizje.
 
-Ale, gdyby były potrzebne całe dokumenty, to możemy je pobrać tak:
+Uwaga: Całe dokumenty możemy pobrać dopisując do powyższego url `?include_docs=true`:
 
     :::bash
     curl -X GET localhost:5984/lz/_all_docs?include_docs=true
