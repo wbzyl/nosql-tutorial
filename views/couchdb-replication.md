@@ -50,5 +50,3 @@ Dla przypomnienia, listę z nazwami baz możemy pobrać tak:
 
     :::bash
     curl couch.inf.ug.edu.pl/_all_dbs
-
-
