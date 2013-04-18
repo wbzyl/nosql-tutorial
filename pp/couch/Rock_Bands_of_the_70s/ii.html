@@ -2,16 +2,23 @@
 <meta charset="utf-8" />
 <title>Led Zeppelin II</title>
 
-<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
 $(function() {
+
   var ul = $('#songs');
+  console.log(ul);
+
   $.getJSON('/lz/led-zeppelin-ii', function(data) {
-    /* a bit of debugging */
-    console.log(ul);
     console.log(data);
-    $.each(data.tracks, function(i,e) { ul.append('<li>'+e+'</li>') });
+
+    data.tracks.forEach(function(x) {
+      console.log(x);
+      ul.append('<li>'+x+'</li>');
+    });
+
   });
+
 });
 </script>
 

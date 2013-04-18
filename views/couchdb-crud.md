@@ -126,7 +126,8 @@ Dodawanie pojedynczo rekordów do bazy jest męczące.
 ułatwia wprowadzanie (usuwanie, uaktualnianie – też) naraz wielu rekordów:
 
     :::bash
-    curl -X POST -H "Content-Type: application/json" --data @lz.json localhost:5984/lz/_bulk_docs
+    curl -X POST -H "Content-Type: application/json" \
+      --data @lz.json localhost:5984/lz/_bulk_docs
 
 gdzie w pliku *lz.json* wpisujemy:
 
@@ -199,7 +200,8 @@ dwa wywołania programu *curl*:
 
 ## _all_docs – pobieramy info z rewizjami
 
-Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev*:
+Aby dodać załacznik do zapisanego w bazie dokumentu potrzebujemy
+jego rewizji. Wszystkie rewizje można pobrać w taki sposób:
 
     :::bash
     curl -X GET localhost:5984/lz/_all_docs
@@ -210,26 +212,20 @@ Aby dodać okładki do dokumentów w bazie będziemy potrzebować wartości *rev
          {"id":"led-zeppelin-iii","key":"led-zeppelin-iii","value":{"rev":"1-3cfe..."}}
       ]}
 
-Do dossania okładek wystarczą wypisane powyżej rewizje.
+Na przykład, aby dodać okładkę *led-zeppelin-i.jpg* do dokumentu *led-zeppelin-i*
+wykonujemy na konsoli (wpisujemy całą rewizję):
 
-Uwaga: Całe dokumenty możemy pobrać dopisując do powyższego url `?include_docs=true`:
+    :::bash
+    curl -X PUT localhost:5984/lz/led-zeppelin-i/cover.jpg?rev=1-ab9b... \
+       -H "Content-Type: image/jpg" \
+       --data-binary @led-zeppelin-i.jpg
+
+**Uwaga 1:* Całe dokumenty możemy pobrać dopisując do powyższego url `?include_docs=true`:
 
     :::bash
     curl -X GET localhost:5984/lz/_all_docs?include_docs=true
-      {"total_rows":3, "offset":0,
-       "rows":[
-         {"id":"led-zeppelin-i",  "key":"led-zeppelin-i",  "value":{"rev":"4-b6b2..."},
-          "doc": {
-            "_id":"led-zeppelin-i",
-            "_rev":"4-b6b2",
-            "title":"Led Zeppelin I",
-            "released":"January 12, 1969",
-            "songs":["Good Times Bad Times", ...],
-            "_attachments": {
-              "index.html":{"content_type":"text/html","revpos":9,"length":152,"stub":true}, ...
-      ...
 
-**Uwaga:** powyższe URI możemy wpisywać bezpośrednio w przeglądarce.
+**Uwaga 2:** Powyższe URI można bezpośrednio przeklikać do przeglądarki.
 
 
 ## Wersjonowanie dokumentów: update ≡ replace ?
@@ -268,7 +264,8 @@ Aby usunąć dokument z „led-zeppelin-i” z bazy wystarczy wykonać polecen
 
 ### Get
 
-Pobieranie dokumentu też jest proste:
+Pobieranie dokumentu też jest proste. Tak pobierzemy ostatnią wersję
+(rewizję) dokumentu:
 
     :::bash
     curl -X GET localhost:5984/lz/led-zeppelin-i
@@ -286,7 +283,8 @@ Czy można użyć kopiowania do czegoś sensownego?
 
 # Dziwny przykład
 
-Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-i*:
+Dodamy do dokumentu *led-zeppelin-i* załącznik.
+Załącznikiem będzie ten plik HTML:
 
     :::html i.html
     <!doctype html>
@@ -297,17 +295,17 @@ Dodamy do dokumentu plik html jak załącznik do dokumentu *led-zeppelin-i*:
       <img src="/lz/led-zeppelin-i/led-zeppelin-i.jpg" alt="cover">
     </p>
 
-za pomocą polecenia:
+Załącznik dodamy, tak jak zwykle, za pomocą programu *curl*:
 
     :::bash
     curl -X PUT localhost:5984/lz/led-zeppelin-i/index.html?rev=2-XXXX \
       -H "Content-Type: text/html" --data @i.html
 
-i po wpisaniu w przeglądarce:
+Tera po wkilkaniu w przeglądarce tego adresu:
 
     http://localhost:5984/lz/led-zeppelin-i/index.html
 
-widzimy stronę z obrazkiem. Dziwne, nieprawdaż.
+zobaczymy stronę z obrazkiem. Dziwne, nieprawdaż.
 
 
 # Pokrętny przykład
@@ -319,15 +317,17 @@ Do dokumentu *led-zeppelin-ii* dodamy załącznik *ii.html*:
     <meta charset="utf-8" />
     <title>Led Zeppelin II</title>
 
-    <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script>
     $(function() {
       var ul = $('#songs');
+      console.log(ul);
       $.getJSON('/lz/led-zeppelin-ii', function(data) {
-        /* a bit of debugging */
-        console.log(ul);
         console.log(data);
-        $.each(data.tracks, function(i,e) { ul.append('<li>'+e+'</li>') });
+        data.tracks.forEach(function(x) {
+          console.log(x);
+          ul.append('<li>'+x+'</li>');
+        });
       });
     });
     </script>
