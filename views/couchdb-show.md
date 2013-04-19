@@ -58,8 +58,8 @@ Oto prosty przykład wyjaśniający jak to zrobić.
 
 Caolan McMahon, [Blog](http://caolanmcmahon.com/):
 
-- [On _designs undocumented](http://caolanmcmahon.com/on_designs_undocumented.html)
 - [CommonJS modules in CouchDB](http://caolanmcmahon.com/posts/commonjs_modules_in_couchdb)
+- [On _designs undocumented](http://caolanmcmahon.com/posts/on__designs_undocumented/)
 
 Poniżej definiujemy funkcję show o nazwie *quotation*:
 
@@ -104,12 +104,17 @@ Przy okazji przyjrzyjmy się nagłówkom żądania i odpowiedzi.
 
 Wysyłamy nagłówki:
 
-    :::javascript
+    :::js
     function(doc, req) {
+      // log sends output to the couch.log file
+      //
+      // log(JSON.stringify(req));
+      // log(toJSON(req));
+
       return {
-        body : '<foo>' + doc.quotation + '</foo>',
+        body : '<p>' + doc.quotation + '</p>',
         headers : {
-          "Content-Type" : "application/xml",
+          "Content-Type" : "application/html",
           "X-My-Own-Header": "you can set your own headers"
         }
       }
@@ -117,7 +122,7 @@ Wysyłamy nagłówki:
 
 Odczytujemy opcje wywołania przekazane do funkcji show:
 
-    :::javascript aye.json
+    :::json aye.json
     {
       "shows" : {
         "aye" : "function(doc, req) {

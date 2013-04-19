@@ -76,6 +76,7 @@ Przypowieść o CouchDB,
   - [Getting Started](http://www.couchapp.org/page/getting-started)
 * Dale Harvey.
   [PouchDB](http://pouchdb.com/) ([github](https://github.com/daleharvey/pouchdb))
+* [Map/Reduce debugging](http://wiki.apache.org/couchdb/Troubleshooting#Map.2BAC8-Reduce_debugging)
 
 
 ## Trochę faktów z historii CouchDB
