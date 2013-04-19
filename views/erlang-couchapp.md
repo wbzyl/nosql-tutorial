@@ -209,3 +209,6 @@ Erica:
     ==> miles_davis (push)
     ==> Successfully pushed. You can browse it at:
         http://127.0.0.1:5984/miles_davis/_design/miles_davis/index.html
+
+**Uwaga:** Do konwersji z formatu MP3 na OGG użyłem programu
+*soundconverter*.
