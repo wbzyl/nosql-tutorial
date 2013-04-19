@@ -93,37 +93,119 @@ So need to make and mange design docs for couchdb?
      cat miasta/_id
        _design/miasta
 
-W katalogu *show* tworzymy plik *aye.js* o zawartości:
+Usuwamy katalog *by_type* i w odpowiednich katalogach
+zapisujemy pliki *info.js*, *map.js* i *reduce.js*:
 
-    :::js
+    |-- shows
+    |   `-- info.js
+    `-- views
+        `-- stat
+            |-- map.js
+            `-- reduce.js
+
+Zawartość pliku *info.js*:
+
+    :::js shows/info.js
     function(doc, req) {
       return {
         headers: { "Content-Type": "text/plain" },
-        body: "Aye aye: " + req.query["q"] + "!\n"
+        body: "city: " + doc.city + "\ncountry_id: " + doc.country_id + "\n"
       };
     };
 
-Po wpisaniu kodu funkcji, zapiszemy ją w bazie:
+pliku *map.js*:
+
+    :::js views/stat/map.js
+    function map(doc) {
+      // log(toJSON(doc.city) + ": " + toJSON(doc.country_id));
+      if (doc.country_id) {
+        emit(doc.country_id, null);
+      }
+    }
+
+pliku *reduce.js*:
+
+    :::js views/stat/reduce.js
+    _count
+
+Po wpisaniu kodu funkcji, zapiszemy je w bazie *miasta*:
 
     :::bash
     erica push http://localhost:5984/miasta
 
-Funkcja show zostanie zapisana w *_design/miasta* w bazie *miasta*.
-
-Możemy wykonać funkcję show, np. w taki sposób:
+Teraz możemy wykonać funkcję show, np. w taki sposób:
 
     :::bash
-    curl -q localhost:5984/miasta/_design/miasta/_show/aye/x?q=Captain
-    curl -v localhost:5984/miasta/_design/miasta/_show/aye/x?q=Captain
+    curl -q localhost:5984/miasta/_design/miasta/_show/info/3c829a6e4ee216ded0ae1d7e2600c3d3
+    curl -v localhost:5984/miasta/_design/miasta/_show/info/3c829a6e4ee216ded0ae1d7e2600c3d3
+
+gdzie `3c829a6e4ee216ded0ae1d7e2600c3d3` to *id* istniejącego w bazie dokumentu.
+
+Widoki MapReduce uruchamiamy tak:
+
+    :::bash
+    curl localhost:5984/miasta/_design/miasta/_view/stat
+    curl localhost:5984/miasta/_design/miasta/_view/stat?group_level=1
+    curl localhost:5984/miasta/_design/miasta/_view/stat?key=197
+
+Musimy chwilę poczekać, aż widok *stat* zostanie wyliczony (kilkanaście sekund):
+
+    :::js
+    {"rows":[
+      {"key" : null, "value" : 39336}
+    ]}
+
+Następne polecenia z *curl* zwracają wyniki praktycznie natychmiast.
 
 Jeśli uruchomimy webowy UI:
 
     :::bash
     erica web
 
-to będziemy mogli edytować pliki show, views, lists i dodawać attachments.
+to będziemy mogli edytować pliki show, views, lists i dodawać załączniki.
 
 Zazwyczaj po edycji zapisujemy zmiany w CouchDB:
 
     :::bash
     erica push http://localhost:5984/miasta
+
+
+## Załączniki – Miles Davis
+
+Oto przykład z załącznikami:
+
+    :::bash
+    curl -X PUT localhost:5984/miles_davis
+
+    erica create-app appid=miles_davis
+    cd miles_davis
+    cp ...so_what.ogg _attachments/
+    touch _attachments/index.html
+
+Zawartość pliku *index.html*:
+
+    :::html _attachments/index.html
+    <!doctype html public "♥♥♥">
+    <html lang=pl>
+      <head>
+        <meta charset=utf-8>
+        <title>Miles Davis</title>
+        <style>
+          body { margin: 2em; background: #E2DF9A; }
+        </style>
+      </head>
+      <body>
+        <h3>So what?</h3>
+        <audio src="so_what.ogg" controls>
+          <a href="so_what.ogg">Download song</a>
+        </audio>
+      </body>
+    </html>
+
+Erica:
+
+    :::bash
+    erica push miles_davis
+    ==> miles_davis (push)
+    ==> Successfully pushed. You can browse it at:
+        http://127.0.0.1:5984/miles_davis/_design/miles_davis/index.html

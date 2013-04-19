@@ -153,10 +153,12 @@ Przykład funkcji show renderującej różne reprezentacje dokumentu
       "shows" : {
         "aye" : "function(doc, req) {
            provides('html', function() {
-             return '<h2>Aye aye: ' + req.query['q'] + '</h2><p>' + doc.quotation + '</p>';
+             return '<h2>Aye aye: ' + req.query['q'] +
+                 '</h2><p>' + doc.quotation + '</p>';
            });
            provides('xml', function() {
-             return '<aye><hej>Aye aye: ' + req.query['q'] + '</hej><you>' + doc.quotation + '</you></aye>';
+             return '<aye><hej>Aye aye: ' + req.query['q'] +
+                 '</hej><you>' + doc.quotation + '</you></aye>';
            });
         }"
       }
