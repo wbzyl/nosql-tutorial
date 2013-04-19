@@ -136,16 +136,21 @@ Oczywiście operacje CRUD możemy zaprogramować i wykonać
 używając swojego ulubionego języka programowania.
 
 
-## Plugin Reference
+## jQuery Plugin Reference
 
 * Bradley Holt,
   [CouchDB jQuery Plugin Reference](http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/)
+* [jquery.couch.js](http://daleharvey.github.io/jquery.couch.js-docs/symbols/index.html)
 
 Wchodzimy na stronę:
 
     http://couch.inf.ug.edu.pl/plugin/ref/index.html
 
-Na konsoli przeglądarki wpisujemy:
+lub:
+
+    http://localhost:5984
+
+Następnie na konsoli przeglądarki wpisujemy:
 
     $.couch.urlPrefix = "http://couch.inf.ug.edu.pl";
 
