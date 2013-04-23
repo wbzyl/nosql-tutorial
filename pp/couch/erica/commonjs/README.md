@@ -34,7 +34,7 @@ i dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 {"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
 {"_id":"2","quote":"Podrzuć własne marzenia swoim wrogom….","tags":["ludzie","myślenie","marzenia"]}
 {"_id":"3","quote":"By dojść do źródła, trzeba płynąć pod prąd.","tags":["źródło"]}
-{"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["zwierzęta","krowa","doić"]}
+{"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["krowa","doić"]}
 ```
 
 Na tym kończymy konfigurację. Wrzucamy aplikację na CouchDB:
