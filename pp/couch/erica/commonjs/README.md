@@ -203,7 +203,6 @@ Wykonujemy `erica push` i sprawdzamy jak to działa (logi, przeglądarka):
 ```
 http://localhost:5984/commonjs/_design/default/_show/quotation/1
 http://localhost:5984/commonjs/_design/default/_show/quotation/2
-
 ```
 
 ### Kompilowane szablony HTML
