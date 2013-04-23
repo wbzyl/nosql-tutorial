@@ -201,11 +201,12 @@ Na koniec dodajemy funkcję *shows/quotation.js*:
 ```js
 function(doc, req) {
   var Mustache = require('lib/mustache');
-  // this == design document
+  // this == /commonjs/_design/default
   var template = this.templates['quotation.html'];
   log("template:\n" + template);
 
-  return "<h3>quotation</h3>";
+  var html = Mustache.to_html(template, {quotation: doc.quotation});
+  return html;
 }
 ```
 
