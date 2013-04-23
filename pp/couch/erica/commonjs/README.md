@@ -219,7 +219,7 @@ function(doc, req) {
 
   return compiledTemplate(doc);
 }
-
+```
 
 
 ## TODO: Funkcje *list*
