@@ -1,6 +1,6 @@
 # Erica
 
-1\. [CommonJS Modules / 1.1.1] [commonjs]
+1\. [CommonJS Modules / 1.1.1] [commonjs]:
 
 ```sh
 erica create-app appid=commonjs
