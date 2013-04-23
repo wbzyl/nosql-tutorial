@@ -111,7 +111,7 @@ git clone git://github.com/janl/mustache.js.git
 
 Sprawdzamy na konsoli *node*, czy szablony działają:
 
-```
+```js
 var Mustache = require('./mustache.js/mustache.js');
 Mustache
     { name: 'mustache.js',
