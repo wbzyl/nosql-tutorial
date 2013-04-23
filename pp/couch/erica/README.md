@@ -5,11 +5,34 @@
 ```sh
 erica create-app appid=commonjs
 ```
+
+[Konfiguracja](http://couchapp.org/page/couchapp-config, *.couchapprc*:
+
+```json
+{
+  "env" : {
+    "default" : {
+      "db" : "http://localhost:5984/commonjs"
+    },
+    "production" : {
+      "db" : "http://admin:password@couch.inf.ug.edu.pl/commonjs"
+    }
+  }
+}
+
+*_id*:
+
+```
+_design/default
+```
+
 Dodajemy cztery dokumenty do katalogu `_docs`:
 
 ```sh
 erica -v push commonjs
 ```
+
+2\. CommonJs Modules.
 
 [Module] [commonjs] `lib/math.js`
 
