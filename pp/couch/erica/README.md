@@ -25,6 +25,26 @@ exports.add = function() {
 
 [Module] [node modules] `lib/circle.js`:
 
+```js
+var PI = Math.PI;
+
+exports.area = function (r) {
+  return PI * r * r;
+};
+exports.circumference = function (r) {
+  return 2 * PI * r;
+};
+```
+
+Przykład użycia, na konsoli *node*:
+
+```js
+var math = require('./math.js');
+var circle = require('./circle.js');
+
+math.add(1,2,3,4);
+circle.area(4);
+```
 
 <!-- links -->
 
