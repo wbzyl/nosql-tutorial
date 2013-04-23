@@ -158,7 +158,7 @@ do katalogu *lib/*:
 cp .../mustache.js lib/mustache.js
 ```
 
-### Szablony HTML
+### szablon.html.mustache
 
 Zaczynamy od zapisania w katalogu *templates* pliku *quotation.html.mustache*:
 
@@ -203,7 +203,7 @@ http://localhost:5984/commonjs/_design/default/_show/quotation/1
 http://localhost:5984/commonjs/_design/default/_show/quotation/2
 ```
 
-### Kompilowane szablony HTML
+### kompilowane szablony
 
 W funkcji *shows/quotation.js* możemy uzyć skopilowanego szablonu:
 
