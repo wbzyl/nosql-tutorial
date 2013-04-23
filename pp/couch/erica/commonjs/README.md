@@ -44,9 +44,9 @@ erica -v push
 ```
 
 
-## CommonJs Modules
+## CommonJS Modules
 
-[Module] [commonjs] `lib/math.js`
+[Moduł] [commonjs] *math.js* zapisujemy w katalogu `lib/`:
 
 ```js
 exports.add = function() {
@@ -58,14 +58,11 @@ exports.add = function() {
 };
 ```
 
-Na konsoli *node* sprawdzamy nasz moduł:
+Na konsoli *node* sprawdzamy moduł:
 
 ```js
-var math = require('./math.js');
-var circle = require('./circle.js');
-
+var math = require('./math');
 math.add(1,2,3,4);
-circle.area(4);
 ```
 
 Jeśli nie ma błędów, przechodzimy dalej.
@@ -73,14 +70,14 @@ Jeśli nie ma błędów, przechodzimy dalej.
 
 ## Funkcje *show*
 
-Zaczynamy od utworzenia takiej funkcji *shows/sum.js*:
+Zaczynamy od prostej funkcji *shows/sum.js*:
 
 ```js
 function(doc, req) {
   var math = require('lib/math');
   log(math.add.toString());
 
-  return "<p>∑_{i=1}^4 i = " + math.add(1,2,3,4) + "</p>";
+  return "<p>1 + 2 + 3 + 4 = " + math.add(1,2,3,4) + "</p>";
 }
 ```
 
