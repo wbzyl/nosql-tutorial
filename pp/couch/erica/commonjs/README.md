@@ -70,11 +70,11 @@ Jeśli nie ma błędów, przechodzimy dalej.
 
 ## Funkcje *show*
 
-Zaczynamy od prostej funkcji *shows/sum.js*:
+Zaczynamy od funkcji *shows/sum.js* korzystającej z modułu *math.js*:
 
 ```js
 function(doc, req) {
-  var math = require('lib/math');
+  var math = require('lib/math'); // ścieżka względem _design/default
   log(math.add.toString());
 
   return "<p>1 + 2 + 3 + 4 = " + math.add(1,2,3,4) + "</p>";
@@ -133,39 +133,33 @@ var view = {
      return 2 + 4;
   }
 };
+
 var output = Mustache.render("{{title}} spends {{calc}}", view);
-output
-//=> 'Joe spends 6'
+output;
+
+var compiledTemplate = Mustache.compile("{{title}} spends {{calc}}", view);
+var output = compiledTemplate(view);
+output;
+
 ```
-Jeśli szablony działają, to kopiujemy plik *mustache.js*
-do katalogu *lib*:
+
+Jeśli szablon i skompilowany szablon zwracają napis:
+
+```
+'Joe spends 6'
+```
+
+to oznaczo to że wszystkie pliki są na swoich miejscach.
+
+Jeśli coś nie działa, to sprawdzamy logi CouchDB.
+
+Jeśli wszystko jest OK, to kopiujemy plik *mustache.js*
+do katalogu *lib/*:
 
 ```
 cp .../mustache.js lib/mustache.js
 ```
 
-Dodajemy następną funkcję *shows/info.js*:
-
-```js
-function(doc, req) {
-  var Mustache = require('lib/mustache');
-  var name = Mustache.name;
-  var version = Mustache.version;
-
-  log(name + ": ", + version); // szukamy wierszy zawierających ' Log :: '
-
-  return "<h3>read module: " + name + ", version: " + version + "</h3>";
-}
-```
-wykonujemy `erica push` i oglądamy wyniki w przeglądarce:
-
-```
-http://localhost:5984/commonjs/_design/default/_show/sum
-```
-
-Jeśli coś nie działa, to sprawdzamy logi CouchDB.
-
-Jeśli wszystko działa to zabieramy się za szablony.
 
 Zaczynamy od zapisania w katalogu *templates* pliku *quotation.html.mustache*
 o zawartości:
