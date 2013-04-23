@@ -159,7 +159,7 @@ function(doc, req) {
   return "<h3>read module: " + name + ", version: " + version + "</h3>";
 }
 ```
-i wykonujemy `erica push` i oglądamy wyniki w przeglądarce:
+wykonujemy `erica push` i oglądamy wyniki w przeglądarce:
 
 ```
 http://localhost:5984/commonjs/_design/default/_show/sum
