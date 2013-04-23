@@ -1,12 +1,13 @@
-# Erica
+# Erica & [CommonJS Modules / 1.1.1] [commonjs]:
 
-[CommonJS Modules / 1.1.1] [commonjs]:
+Zaczynamy od wygenerowania aplikacji:
+i jej [konfiguracji](http://couchapp.org/page/couchapp-config):
 
 ```sh
 erica create-app appid=commonjs
 ```
 
-[Konfiguracja](http://couchapp.org/page/couchapp-config), *.couchapprc*:
+Podmienimy zawartość dwóch plików: *.couchapprc*:
 
 ```json
 {
@@ -21,17 +22,23 @@ erica create-app appid=commonjs
 }
 ```
 
-*_id*:
+oraz *_id*:
 
 ```
 _design/default
 ```
 
-Dodajemy cztery dokumenty do katalogu `_docs`:
+Dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs`:
 
-```sh
-erica -v push commonjs
-```
+```json
+{"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
+{"_id":"2","quote":"Podrzuć własne marzenia swoim wrogom….","tags":["ludzie","myślenie","marzenia"]}
+{"_id":"3","quote":"By dojść do źródła, trzeba płynąć pod prąd.","tags":["źródło"]}
+{"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["zwierzęta","krowa","doić"]}
+
+
+Pozostaje wykonać `erica -v push`.
+
 
 ## CommonJs Modules
 
