@@ -97,7 +97,7 @@ Jeśli na konsoli widzimy żródło funkcji *add*
 i funkcja *add* wylicza 10, oznacza to że wszystko działa.
 
 
-### Szablony Mustache
+### [Szablony Mustache.js](https://github.com/janl/mustache.js)
 
 Teraz czas na wąsate szablony.
 
@@ -143,15 +143,13 @@ output;
 
 ```
 
-Jeśli szablon i skompilowany szablon zwracają napis:
+Sprawdzamy, czy szablon i skompilowany szablon zwracają napis:
 
 ```
 'Joe spends 6'
 ```
 
-to oznaczo to że wszystkie pliki są na swoich miejscach.
-
-Jeśli coś nie działa, to sprawdzamy logi CouchDB.
+Jeśli coś nie działa, sprawdzamy logi CouchDB.
 
 Jeśli wszystko jest OK, to kopiujemy plik *mustache.js*
 do katalogu *lib/*:
