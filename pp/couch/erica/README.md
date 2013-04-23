@@ -19,6 +19,7 @@ erica create-app appid=commonjs
     }
   }
 }
+```
 
 *_id*:
 
