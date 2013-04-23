@@ -224,6 +224,30 @@ function(doc, req) {
 Czy to coś daje? Chyba tak. Dlaczego?
 
 
+### Szablony Handlebars
+
+* [CommonJS Handlebars](http://kan.so/packages/details/handlebars)
+
+Przykład ze strony [wycats/handlebars.js](https://github.com/wycats/handlebars.js/):
+
+```js
+var Handlebars = require('./handlebars');
+
+var source = "<p>Hello, my name is {{name}}. I am from {{hometown}}. I have " +
+    "{{kids.length}} kids:</p>" +
+    "<ul>{{#kids}}<li>{{name}} is {{age}}</li>{{/kids}}</ul>";
+
+var template = Handlebars.compile(source);
+
+var data = { "name": "Alan", "hometown": "Somewhere, TX",
+    "kids": [{"name": "Jimmy", "age": "12"}, {"name": "Sally", "age": "4"}]};
+var result = template(data);
+
+// <p>Hello, my name is Alan. I am from Somewhere, TX. I have 2 kids:</p>
+// <ul><li>Jimmy is 12</li><li>Sally is 4</li></ul>
+```
+
+
 ## TODO: Funkcje *list*
 
 
