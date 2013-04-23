@@ -160,9 +160,9 @@ do katalogu *lib/*:
 cp .../mustache.js lib/mustache.js
 ```
 
+### Szablony HTML
 
-Zaczynamy od zapisania w katalogu *templates* pliku *quotation.html.mustache*
-o zawartości:
+Zaczynamy od zapisania w katalogu *templates* pliku *quotation.html.mustache*:
 
 ```html
 <!doctype html>
@@ -179,15 +179,14 @@ o zawartości:
 </html>
 ```
 
-W katalogu *_attachments* dodajemy plik *application.js*
-o zawartości:
+Do katalogu *_attachments* dodajemy plik *application.js* o zawartości:
 
 ```css
 /* Vitamin C */
 body { margin: 4em; background-color: #FF9900; }
 ```
 
-Na koniec dodajemy funkcję *shows/quotation.js*:
+Na koniec tworzymy funkcję *shows/quotation.js*:
 
 ```js
 function(doc, req) {
@@ -199,11 +198,12 @@ function(doc, req) {
 }
 ```
 
-Wykonujemy `erica push` i sprawdzamy jak to działa
-(logi, przeglądarka):
+Wykonujemy `erica push` i sprawdzamy jak to działa (logi, przeglądarka):
 
 ```
 http://localhost:5984/commonjs/_design/default/_show/quotation/1
+http://localhost:5984/commonjs/_design/default/_show/quotation/4
+
 ```
 
 
