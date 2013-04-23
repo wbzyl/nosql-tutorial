@@ -28,16 +28,20 @@ oraz *_id*:
 _design/default
 ```
 
-Dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs`:
+Dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 
 ```json
 {"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
 {"_id":"2","quote":"Podrzuć własne marzenia swoim wrogom….","tags":["ludzie","myślenie","marzenia"]}
 {"_id":"3","quote":"By dojść do źródła, trzeba płynąć pod prąd.","tags":["źródło"]}
 {"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["zwierzęta","krowa","doić"]}
+```
 
+Pozostaje wrzucić aplikację do CouchDB:
 
-Pozostaje wykonać `erica -v push`.
+```sh
+erica -v push
+```
 
 
 ## CommonJs Modules
