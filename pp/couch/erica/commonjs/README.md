@@ -28,7 +28,7 @@ oraz *_id*:
 _design/default
 ```
 
-Dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
+i dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 
 ```json
 {"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
@@ -37,7 +37,7 @@ Dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 {"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["zwierzęta","krowa","doić"]}
 ```
 
-Pozostaje wrzucić aplikację do CouchDB:
+Na tym kończymy konfigurację. Wrzucamy aplikację na CouchDB:
 
 ```sh
 erica -v push
