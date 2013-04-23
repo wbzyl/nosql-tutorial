@@ -50,28 +50,15 @@ erica -v push
 
 ```js
 exports.add = function() {
-    var sum = 0, i = 0, args = arguments, l = args.length;
-    while (i < l) {
-        sum += args[i++];
-    }
-    return sum;
+  var sum = 0, i = 0, args = arguments, l = args.length;
+  while (i < l) {
+    sum += args[i++];
+  }
+  return sum;
 };
 ```
 
-[Module] [node modules] `lib/circle.js`:
-
-```js
-var PI = Math.PI;
-
-exports.area = function (r) {
-  return PI * r * r;
-};
-exports.circumference = function (r) {
-  return 2 * PI * r;
-};
-```
-
-Przykład użycia, na konsoli *node*:
+Na konsoli *node* sprawdzamy nasz moduł:
 
 ```js
 var math = require('./math.js');
@@ -81,16 +68,19 @@ math.add(1,2,3,4);
 circle.area(4);
 ```
 
+Jeśli nie ma błędów, przechodzimy dalej.
+
+
 ## Funkcje *show*
 
-*shows/sum.js*:
+Zaczynamy od utworzenia takiej funkcji *shows/sum.js*:
 
 ```js
 function(doc, req) {
   var math = require('lib/math');
   log(math.add.toString());
 
-  return "<h3>sum_1^4 i = ?</h3>";
+  return "<p>∑_{i=1}^4 i = " + math.add(1,2,3,4) + "</p>";
 }
 ```
 
