@@ -193,7 +193,6 @@ o zawartości:
 ```css
 /* Vitamin C */
 body { margin: 4em; background-color: #FF9900; }
-
 ```
 
 Na koniec dodajemy funkcję *shows/quotation.js*:
