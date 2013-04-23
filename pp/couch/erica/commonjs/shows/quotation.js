@@ -4,5 +4,9 @@ function(doc, req) {
   var Mustache = require('lib/mustache');
   var template = this.templates['quotation.html']; // this == design document
 
-  return Mustache.render(template, doc);
+  var compiledTemplate = Mustache.compile(template); // funkcja
+  log("compiled Template:\n" + compiledTemplate.toString());
+
+  //return Mustache.render(template, doc);
+  return compiledTemplate(doc);
 }

@@ -202,9 +202,25 @@ Wykonujemy `erica push` i sprawdzamy jak to działa (logi, przeglądarka):
 
 ```
 http://localhost:5984/commonjs/_design/default/_show/quotation/1
-http://localhost:5984/commonjs/_design/default/_show/quotation/4
+http://localhost:5984/commonjs/_design/default/_show/quotation/2
 
 ```
+
+### Kompilowane szablony HTML
+
+W funkcji *shows/quotation.js* możemy uzyć skopilowanego szablonu:
+
+```js
+function(doc, req) {
+  log(doc.quote);
+
+  var Mustache = require('lib/mustache');
+  var template = this.templates['quotation.html']; // this == design document
+  var compiledTemplate = Mustache.compile(template); // funkcja
+
+  return compiledTemplate(doc);
+}
+
 
 
 ## TODO: Funkcje *list*
