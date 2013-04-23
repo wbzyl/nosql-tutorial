@@ -27,9 +27,10 @@ i [Cradle](https://github.com/cloudhead/cradle):
     npm install -g couch-client
     npm install -g cradle
 
-Może:
+Być może czasami warto by było skorzystać z modułu *request*:
 
     npm install -g request
+
 
 ## Zapisywanie danych w bazie
 
