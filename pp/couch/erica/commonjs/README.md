@@ -221,6 +221,8 @@ function(doc, req) {
 }
 ```
 
+Czy to coś daje? Chyba tak. Dlaczego?
+
 
 ## TODO: Funkcje *list*
 
