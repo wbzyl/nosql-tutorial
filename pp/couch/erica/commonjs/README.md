@@ -200,15 +200,21 @@ Na koniec dodajemy funkcję *shows/quotation.js*:
 
 ```js
 function(doc, req) {
-  var Mustache = require('lib/mustache');
-  // this == /commonjs/_design/default
-  var template = this.templates['quotation.html'];
-  log("template:\n" + template);
+  log(doc.quote);
 
-  var html = Mustache.to_html(template, {quotation: doc.quotation});
-  return html;
+  var Mustache = require('lib/mustache');
+  var template = this.templates['quotation.html']; // this == design document
+  return Mustache.render(template, doc);
 }
 ```
+
+Wykonujemy `erica push` i sprawdzamy jak to działa
+(logi, przeglądarka):
+
+```
+http://localhost:5984/commonjs/_design/default/_show/quotation/1
+```
+
 
 ## TODO: Funkcje *list*
 
@@ -217,8 +223,3 @@ function(doc, req) {
 
 [commonjs]: <http://wiki.commonjs.org/wiki/Modules/1.1.1> "CommonJS Modules / 1.1.1"
 [node modules]: <http://nodejs.org/docs/latest/api/modules.html> "Node.js Modules"
-
-<!--
-  var html = mustache.to_html(template, {quotation: doc.quotation});
-  return html;
--->

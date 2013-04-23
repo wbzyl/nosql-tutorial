@@ -1,8 +1,8 @@
 function(doc, req) {
-  var Mustache = require('lib/mustache');
-  // this == design document
-  var template = this.templates['quotation.html'];
-  log("template:\n" + template);
+  log(doc.quote);
 
-  return "<h3>quotation</h3>";
+  var Mustache = require('lib/mustache');
+  var template = this.templates['quotation.html']; // this == design document
+
+  return Mustache.render(template, doc);
 }
