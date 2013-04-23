@@ -6,7 +6,7 @@
 erica create-app appid=commonjs
 ```
 
-[Konfiguracja](http://couchapp.org/page/couchapp-config, *.couchapprc*:
+[Konfiguracja](http://couchapp.org/page/couchapp-config), *.couchapprc*:
 
 ```json
 {
