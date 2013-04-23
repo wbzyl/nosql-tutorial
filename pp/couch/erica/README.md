@@ -1,6 +1,6 @@
 # Erica
 
-1\. [CommonJS Modules / 1.1.1] [commonjs]:
+[CommonJS Modules / 1.1.1] [commonjs]:
 
 ```sh
 erica create-app appid=commonjs
@@ -33,7 +33,7 @@ Dodajemy cztery dokumenty do katalogu `_docs`:
 erica -v push commonjs
 ```
 
-2\. CommonJs Modules.
+## CommonJs Modules
 
 [Module] [commonjs] `lib/math.js`
 
@@ -69,6 +69,58 @@ var circle = require('./circle.js');
 math.add(1,2,3,4);
 circle.area(4);
 ```
+
+## Funkcje *show*
+
+*shows/sum.js*:
+
+```js
+function(doc, req) {
+  var math = require('lib/math');
+  log(math.add.toString());
+
+  return "<h3>sum_1^4 i = ?</h3>";
+}
+```
+
+Teraz wykonujemy `erica push` i wynik do obejrzenia powinien być tutaj:
+
+```
+http://localhost:5984/commonjs/_design/default/_show/sum
+```
+
+Jednocześnie podglądamy co jest zapisywane w logach:
+
+```
+tail -f ~/.data/var/log/couchdb/couch.log
+```
+
+Jeśli na konsoli widzimy żródło funkcji *add*
+i funkcja *add* wylicza 10, oznacza to że wszystko działa.
+
+
+### Szablony Mustache
+
+Teraz czas na wąsate szablony.
+
+Sprawdzamy czy został wczytany moduł:
+
+```js
+function(doc, req) {
+  var math = require('lib/math');
+  // log(toJSON(req));
+  log(math.toString());
+  // log(math.toSource());
+  // this == design document
+  var template = this.templates['quotation.html'];
+  var html = mustache.to_html(template, {quotation: doc.quotation});
+  return html;
+}
+```
+
+
+## TODO: Funkcje *list*
+
 
 <!-- links -->
 

@@ -1,3 +1,10 @@
 {
-    "env": {}
+  "env" : {
+    "default" : {
+      "db" : "http://localhost:5984/commonjs"
+    },
+    "production" : {
+      "db" : "http://admin:password@couch.inf.ug.edu.pl/commonjs"
+    }
+  }
 }
