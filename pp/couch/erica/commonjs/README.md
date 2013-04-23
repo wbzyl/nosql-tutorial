@@ -1,6 +1,6 @@
 # Erica & [CommonJS Modules / 1.1.1] [commonjs]
 
-Zaczynamy od wygenerowania aplikacji:
+Zaczynamy od wygenerowania aplikacji
 i jej [konfiguracji](http://couchapp.org/page/couchapp-config):
 
 ```sh
