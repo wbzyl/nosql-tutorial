@@ -219,7 +219,7 @@ function(doc, req) {
 }
 ```
 
-Czy to coś daje? Chyba tak. Dlaczego? Jak to sprawdzić?
+Czy kompilacja coś daje? Chyba tak. Co? Dlaczego? Jak to sprawdzić?
 
 
 ### Szablony Handlebars
