@@ -38,7 +38,7 @@ _design/default
 
 Według mnie daje to czytelniejsze adresy URL.
 
-Dodamy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
+Dodamy jeszcze cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 
 ```json
 {"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
