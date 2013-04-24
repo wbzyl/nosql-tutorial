@@ -38,7 +38,7 @@ _design/default
 
 Według mnie daje to czytelniejsze adresy URL.
 
-Dodamy jeszcze cztery dokumenty,
+Dodamy jeszcze cztery dokumenty:
 *1.json*, *2.json*, *3.json*, *4.json* do katalogu `_docs`:
 
 ```json
