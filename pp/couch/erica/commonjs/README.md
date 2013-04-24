@@ -7,7 +7,7 @@ i jej [konfiguracji](http://couchapp.org/page/couchapp-config):
 erica create-app appid=commonjs
 ```
 
-Podmienimy zawartość dwóch plików: *.couchapprc*:
+W pliku: *.couchapprc* dodamy atrybut "default":
 
 ```json
 {
@@ -21,14 +21,24 @@ Podmienimy zawartość dwóch plików: *.couchapprc*:
   }
 }
 ```
+Po tej zmianie, oba polecenia robią to samo:
 
-oraz *_id*:
+```sh
+erica push commonjs
+erica push
+```
+
+Zamieniamy wygenerowaną nazwę dokumentu design z
+`_design/commonjs`. W tym celu podmieniamy
+zawartość pliku *_id* na:
 
 ```
 _design/default
 ```
 
-i dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
+Według mnie daje to czytelniejsze adresy URL.
+
+Dodamy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 
 ```json
 {"_id":"1","quote":"Mężczyźni wolą kobiety ładne niż mądre…","tags":["ludzie","kobiety","mężczyźni"]}
@@ -37,7 +47,9 @@ i dodajemy cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 {"_id":"4","quote":"Chociaż krowie dasz kakao, nie wydoisz czekolady.","tags":["krowa","doić"]}
 ```
 
-Na tym kończymy konfigurację. Wrzucamy aplikację na CouchDB:
+tak aby można było testować funkcje show, list i widoki.
+
+Na tym kończymy konfigurację. Pozostała wrzucić aplikację na CouchDB:
 
 ```sh
 erica -v push
