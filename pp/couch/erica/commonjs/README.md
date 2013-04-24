@@ -49,7 +49,8 @@ Dodamy jeszcze cztery dokumenty, *{1,2,3,4}.json* do katalogu `_docs/`:
 
 tak aby można było testować funkcje show, list i widoki.
 
-Na tym kończymy konfigurację. Pozostała wrzucić aplikację na CouchDB:
+Na tym kończymy konfigurację.
+Pozostało tylko wrzucić aplikację na CouchDB:
 
 ```sh
 erica -v push
