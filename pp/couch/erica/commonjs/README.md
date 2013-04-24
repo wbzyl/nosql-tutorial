@@ -1,7 +1,7 @@
 # [Erica](https://github.com/benoitc/erica) & [CommonJS Modules / 1.1.1] [commonjs]
 
 Zaczynamy od wygenerowania aplikacji
-i jej [konfiguracji](http://couchapp.org/page/couchapp-config):
+i zmiany jej [domyślnych ustawień](http://couchapp.org/page/couchapp-config):
 
 ```sh
 erica create-app appid=commonjs
