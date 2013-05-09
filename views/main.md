@@ -37,12 +37,6 @@ Warto też przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
 
 
-## ElasticSearch
-
-1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
-1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
-
-
 ## MongoDB
 
 1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
@@ -53,15 +47,6 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 1. {%= link_to "Wyszukiwanie pełno tekstowe (od v2.4)", "/mongodb-full-text-search" %}
-
-<!--
-1. {%= link_to "Rails3 i MongoDB", "/mongodb-rails3" %}
-1. {%= link_to "Masters & Slaves", "/mongodb-masters-slaves" %}
-1. {%= link_to "Replikacja", "/mongodb-replikacja" %}
-1. {%= link_to "Sharding", "/mongodb-sharding" %}
-1. {%= link_to "Sterowniki NodeJS i Ruby dla MongoDB", "/mongo" %}
--->
-
 
 <blockquote>
  <p>
@@ -102,32 +87,18 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Ściąga z API", "/couchdb-api-cheatsheet" %}
 
 
-<!--
-1. {%= link_to "KansoJS framework dla CouchDB", "/couchdb-kansojs" %}
-1. {%= link_to "CouchApp", "/couchdb-couchapp" %}
-1. {%= link_to "Autentykacja", "/couchdb-authentication" %}
-1. {%= link_to "Apache", "/couchdb-apache" %}
-1. {%= link_to "ElasticSearch – odjazdowy „sweet spot”", "/couchdb-elasticsearch" %}
--->
+## ElasticSearch
+
+1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
+1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
 
 
-## Redis
-
-1. {%= link_to "Oswajamy bazę Redis", "/redis" %}
-
-
-## Laboratorium
+## Laboratoria
 
 *  {%= link_to "Instalacja ze źródeł programów CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
 *  {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
 *  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
-
-
-## REST Tools
-
-* [Postman – REST Client dla Chrome](https://chrome.google.com/webstore/)
-* [REST Console dla Chrome](https://chrome.google.com/webstore/)
 
 
 <blockquote>
@@ -145,22 +116,11 @@ Warto też przeczytać artykuł Teda Newarda,
   </p>
 </blockquote>
 
-## Przykładowe bazy danych
-
-* {%= link_to "Bazy CouchDB", "/couchdb-databases" %}
-* {%= link_to "Kolekcje MongoDB", "/mongodb-databases" %}
-* {%= link_to "Redis", "/redis-databases" %}
-
-Raw data:
-
-* [Raw Data na data.gov](https://explore.data.gov/catalog/raw/)
-
 
 ## Różne rzeczy
 
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
-1. {%= link_to "NodeJS", "/node" %}
 1. {%= link_to "D3.js", "/d3js" %}
 1. Jimmy Lin, Chris Dyer,
    [Data-Intensive Text Processing with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html)
