@@ -37,17 +37,6 @@ Warto też przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
 
 
-## MongoDB
-
-1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
-1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
-1. {%= link_to "Język zapytań", "/mongodb-queries" %}
-1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
-1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
-1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
-1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
-1. {%= link_to "Wyszukiwanie pełno tekstowe (od v2.4)", "/mongodb-full-text-search" %}
-
 <blockquote>
  <p>
    Humphry Davy zauważył, że gdy był pod wpływem gazu rozweselającego,
@@ -68,6 +57,18 @@ Warto też przeczytać artykuł Teda Newarda,
  </p>
  <p class=""author">— S. Snow, Operations without pain</p>
 </blockquote>
+
+## MongoDB
+
+1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
+1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
+1. {%= link_to "Język zapytań", "/mongodb-queries" %}
+1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
+1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
+1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
+1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
+1. {%= link_to "Wyszukiwanie pełno tekstowe (od v2.4)", "/mongodb-full-text-search" %}
+
 
 ## CouchDB
 
