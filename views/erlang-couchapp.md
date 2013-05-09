@@ -16,6 +16,9 @@ Na razie te linki powinny nam wystarczyć:
   [Couchapp push testdb: You are not a server admin error](http://www.darwinbiler.com/couchapp-push-testdb-you-are-not-a-server-admin-error/)
 - [Using couchapp with multiple design documents](http://couchapp.org/page/multiple-design-docs)
 
+**TODO:** Erica & CommonJS Modules / 1.1.1 (uzupełnić i poprawić
+co trzeba w pliku<br>*pp/couch/erica/commonjs/README.md*).
+
 
 ## Zapisywanie danych w bazie
 
