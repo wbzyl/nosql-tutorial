@@ -102,6 +102,16 @@ Typowe zastosowania dokumentowych baz danych:
 
 # Zadania różne
 
+
+## Data Science
+
+Bill Howe, [Introduction to Data Science](https://class.coursera.org/datasci-001/class/index).
+
+* [assignments](https://class.coursera.org/datasci-001/assignment/index)
+* [repozytorium z assignments](https://github.com/uwescience/datasci_course_materials):
+  assignment3 zawiera zadania na MapReduce
+
+
 ## UFO
 
 Pobieramy dane w formacie TSV o pojawieniach się UFO w USA,
