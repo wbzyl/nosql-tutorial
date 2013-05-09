@@ -94,13 +94,6 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
 
 
-## Laboratoria
-
-*  {%= link_to "Instalacja ze źródeł CouchDB, MongoDB, Redis oraz ElasticSearch", "/instalacja" %}
-*  {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
-*  {%= link_to "Zadania", "/zadania" %}
-
-
 <blockquote>
  <p>
   In the relational databases world the data modeling process was
@@ -115,6 +108,12 @@ Warto też przeczytać artykuł Teda Newarda,
   [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
   </p>
 </blockquote>
+
+## Laboratoria
+
+*  {%= link_to "Instalacja ze źródeł CouchDB, MongoDB, Redis oraz ElasticSearch", "/instalacja" %}
+*  {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
+*  {%= link_to "Zadania", "/zadania" %}
 
 
 ## Różne rzeczy
