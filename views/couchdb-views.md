@@ -1,4 +1,4 @@
-#### {% title "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)" %}
+#### {% title "Widok ≡ Map+Reduce" %}
 
 Definicja z Wikipedii: „MapReduce jest opatentowaną przez Google
 platformą do przetwarzania równoległego dużych zbiorów danych

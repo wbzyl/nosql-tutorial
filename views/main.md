@@ -79,7 +79,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Erlang ← Erica", "/erlang-couchapp" %}
 1. {%= link_to "GeoCouch", "/couchdb-geo" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
-1. {%= link_to "Widok ≡ Map&#x200a;►Reduce (opcjonalnie)", "/couchdb-views" %}
+1. {%= link_to "View ≡ Map+Reduce", "/couchdb-views" %}
 1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
@@ -95,9 +95,8 @@ Warto też przeczytać artykuł Teda Newarda,
 
 ## Laboratoria
 
-*  {%= link_to "Instalacja ze źródeł programów CouchDB, MongoDB, Redis oraz wyszukiwarki ElasticSearch", "/instalacja" %}
-*  {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
-*  {%= link_to "Instalacja NodeJS i NPM", "/nodejs_npm" %}
+*  {%= link_to "Instalacja ze źródeł CouchDB, MongoDB, Redis oraz ElasticSearch", "/instalacja" %}
+*  {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
 
@@ -127,3 +126,4 @@ Warto też przeczytać artykuł Teda Newarda,
 1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)
 1. Data Visualisation –
    [A Carefully Selected List of Recommended Tools](http://selection.datavisualization.ch/)
+1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}

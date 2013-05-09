@@ -1,4 +1,4 @@
-#### {% title "NodeJS i NPM" %}
+#### {% title "NodeJS+NPM" %}
 
 <blockquote>
  {%= image_tag "/images/oil-paint.jpg", :alt => "[oil paint]" %}
