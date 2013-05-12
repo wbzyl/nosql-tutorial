@@ -101,16 +101,16 @@ in whatever method you’ve specified.”
 
 ### Prosty przykład
 
-Zapiszemy dwa przykładowe dokumenty w kolekcji *books*:
+Zapiszemy dwa przykładowe dokumenty w kolekcji *phrases*:
 
     :::js wc.js
-    db.books.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
-    db.books.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
+    db.phrases.insert({ _id: 1, filename: "hamlet.txt",  content: "to be or not to be" });
+    db.phrases.insert({ _id: 2, filename: "phrases.txt", content: "to wit" });
 
-Funkcje *m* (map) i *r* (reduce) zdefiniowane poniżej, wysyłamy do kolekcji *books*:
+Funkcje *m* (map) i *r* (reduce) zdefiniowane poniżej, wysyłamy do kolekcji *phrases*:
 
     :::js wc.js
-    coll = db.books;
+    coll = db.phrases;
     coll.mapReduce(m, r, {out: "wc"});
 
 Po wykonaniu obliczeń wyniki zostaną we wskazanej kolekcji; tutaj *wc*.
