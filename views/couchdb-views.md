@@ -169,6 +169,9 @@ z tego że program erica ma zaimplementowany prosty serwer www:
       Erica Web started on "http://127.0.0.1:48289"
       ==> Successfully pushed. You can browse it at: http://127.0.0.1:5984/ls/_design/app
 
+
+### Zrozumieć MapReduce
+
 <blockquote>
  {%= image_tag "/images/hands.jpg", :alt => "[Love and Art]" %}
  <p>
@@ -177,10 +180,13 @@ z tego że program erica ma zaimplementowany prosty serwer www:
  <p class="author"><a href="http://www.googleplussuomi.com/timelinetest.php?googleid=114514155722976658302&sort=share">[stara mądrość]</a></p>
 </blockquote>
 
-Jak przebiega wyliczanie widoków będziemy mogli podejrzeć
-w logach CouchDB po dopisaniu funkcji *log()* w funkcji reduce.
+Jak przebiegają wyliczanie map i reduce w widokach?
+Możemy to podejrzeć zaglądając do logów CouchDB.
 
-Zaczynamy od podmiany funkcji *_sum* na wersję napisaną w Javascripcie:
+W tym celu skorzystamy z funkcji *log()* CouchDB, która
+zapisuje wartości przekazanych argumentów w logu.
+Podmieniamy funkcję *_sum* na wersję napisaną w Javascripcie
+z dopisanymi wywołaniami *log*:
 
     :::js reduce.js
     function(keys, values, rereduce) {
@@ -190,7 +196,7 @@ Zaczynamy od podmiany funkcji *_sum* na wersję napisaną w Javascripcie:
         return sum(values);
     }
 
-Po uruchomieniu widoku w logach znajdziemy:
+Po uruchomieniu widoku w logu znajdziemy:
 
     Log :: REREDUCE: false
     Log :: KEYS: [
@@ -258,7 +264,7 @@ W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisan
 * view compaction
 
 
-## Korzystamy z opcje w zapytaniach do widoków
+## Korzystamy z opcji w zapytaniach do widoków
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
@@ -300,11 +306,13 @@ Dla przykładu, zapytanie:
 zwraca:
 
     :::json
-    {"total_rows":19,"offset":14,"rows":[
-      {"id":"1","key":"wiedza","value":null},
-      {"id":"5","key":"wn\u0119trze","value":null},
-      {"id":"1","key":"wszech\u015bwiat","value":null},
-      {"id":"2","key":"wszyscy","value":null}
+    {"total_rows":39,"offset":31,"rows":[
+    {"id":"15","key":"widzieć","value":null},
+    {"id":"1","key":"wiedza","value":null},
+    {"id":"5","key":"wnętrze","value":null},
+    {"id":"1","key":"wszechświat","value":null},
+    {"id":"2","key":"wszyscy","value":null},
+    {"id":"13","key":"wynalazki","value":null}
     ]}
 
 Jeśli to zapytanie wpiszemy w przeglądarce, to nie musimy stosować
@@ -312,7 +320,7 @@ takich trików z cytowaniem. Wpisujemy po prostu:
 
     http://localhost:5984/ls/_design/app/_view/by_tag?reduce=false&startkey="w"&endkey="w\ufff0"
 
-(Na przykład przeglądarka Chrome sama koduje zapytanie.)
+Na przykład przeglądarki Firefox i Chrome same kodują zapytania.
 
 Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedzi:
 
@@ -487,7 +495,7 @@ to co to zmienia?
 Na szybkim komputerze trwa to co najmniej minutę.
 
 
-# View Collation
+## View Collation
 
 *Collation* to kolejność zestawiania, albo schemat uporządkowania.
 
@@ -547,60 +555,12 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## Bazy na Twitterze
+# Przykłady różne
 
-Następujący widok:
+… ten wykład jest już przydługi… poniższe przykłady należałoby przenieść
+do nowego wykładu.
 
-    :::javascript total.js
-    var couchapp = require('couchapp');
-
-    ddoc = {
-        _id: '_design/test'
-      , views: {}
-    }
-    module.exports = ddoc;
-
-    ddoc.views.total = {
-      map: function(doc) {
-        emit(doc.user.screen_name, 1);
-      },
-      reduce: function(keys, values, rereduce) {
-        log('----');
-        log('REREDUCE: ' + rereduce);
-        log('KEYS: ' + JSON.stringify(keys));
-        log('VALUES: ' + JSON.stringify(values));
-        return sum(values);
-      }
-    }
-
-zapiszmy w bazie *statuses* (podzbiór bazy *nosql*):
-
-    :::bash
-    couchapp push total.js http://localhost:5984/nosql
-
-Teraz go odpytajmy w ten sposób
-
-    :::bash
-    curl 'http://localhost:5984/nosql/_design/test/_view/total?group=true'
-
-Po wciśnięciu *Enter*, natychmiat przechodzimy na konsolę, gdzie
-uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
-Tutaj może być pomocne wciskanie na zmianę Ctrl+S i Ctrl+Q.
-
-Zwróćmy uwagę, że *couchdb*, z własnej inicjatywy, dopisał do tablicy
-*keys* *id* przetwarzanego dokumentu:
-
-    [key1, id1], [key2, id2], ...
-
-Innymi słowy, *id1*, to *_id* dokumentu zawierającego klucz *key1*,
-*id2*, to *_id* dokumentu – *key1*, itd.
-Jeśli dopiszemy do zapytania *rereduce=false*, to możemy użyć
-listy *keys* do utworzenia linku do dokumentu.
-
-Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
-
-
-### Movies
+## TODO: Movies
 
 W bazie *movies* zapiszemy następujący widok:
 
@@ -645,7 +605,11 @@ uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
 Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
 
 
-# Złączenia – czyli co wynika z *Collation Specification*
+## Złączenia w bazach CouchDB
+
+**TODO:** osobny wykład.
+
+…czyli co wynika z *Collation Specification*
 
 Przykłady poniżej pochodzą z artykułu
 Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
@@ -657,7 +621,8 @@ między postami a komentarzami:
 Dodatkowo warto zajrzeć do [CouchDB JOINs
 Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
 
-## Sposób 1: komentarze inline
+
+### Sposób 1: komentarze inline
 
 Utworzymy bazę *blog-1* zawierającą następujące dokumenty:
 
@@ -716,7 +681,7 @@ the same time, some of them will get a 409 Conflict error on step 3
 (that's optimistic concurrency in action).”
 
 
-## Sposób 2: komentarze w osobnych dokumentach
+### Sposób 2: komentarze w osobnych dokumentach
 
 Utworzymy bazę *blog-2* w której zapiszemy osobno posty i komentarze:
 
@@ -917,7 +882,7 @@ Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
 i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
 
 
-# *Rock* – programujemy po stronie klienta
+## *Rock* – programowanie po stronie klienta
 
 Do tej pory kodziliśmy po stronie serwera (ang. *server side programming*).
 Poniżej będzie przykład kodzenia po stronie klienta (ang. *client side programming*),
