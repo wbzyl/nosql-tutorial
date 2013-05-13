@@ -41,14 +41,6 @@ są zwykłymi dokumentami. Tym co je wyróżnia jest identyfikator
 zaczynający się od **_design/**, na przykład *_design/default*.
 Widoki zapisujemy w polu *views* dokumentów projektowych.
 
-* John P. Wood,
-  [CouchDB: A Case Study](http://johnpwood.net/2009/06/15/couchdb-a-case-study/);
-  zob. też części 2–6.
-* Jesse Hallett,
-  [Database Queries the CouchDB Way](http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html)
-
-**TODO:** lista obecności do CouchDB + include the Couch library in a web page
-
 
 ## Baza *ls*
 
@@ -65,7 +57,12 @@ Dla przypomnienia, format przykładowego dokumentu:
       "tags": ["wiedza", "nauka", "wszechświat"]
     }
 
-Samą bazę replikujemy z Sigmy.
+Bazę (16 dokumentów + 1 dokument _design) replikujemy z mojego serwera
+[couch](http://couch.inf.ug.edu.pl/_utils/database.html?ls).
+Zakładam, że zreplikowaną bazę nazwano *ls*:
+
+    :::
+    (remote) http://couch.inf.ug.edu.pl/ls -> (local) ls
 
 
 ## Widok ≈ Map + Reduce (opcjonalne)
@@ -84,7 +81,8 @@ wykonywanych, funkcji:
 * `map(doc)` – funkcja wykonywana jest na każdym dokumencie
   rezultatem każdego wywołania funkcji powinno być
   „do nothing” albo „*emit(key,value)*”
-* `reduce(keys,values,rereduce)` – CouchDB zaczyna od tzw. „shuffle step”:
+* `reduce(keys,values,rereduce)` – wywołanie tej funkcji
+  poprzedza tzw. „shuffle step”:
   *keys* i *values* są sortowane i grupowane; po wykonaniu
   „shuffle step” argument *rereduce* ustawiany jest na *false*,
   *keys* na *null* i funkcja jest wykonywana tyle razy aż *values*
@@ -92,29 +90,34 @@ wykonywanych, funkcji:
 
 Zobacz też przykłady zapytań z *group* i *group_level* poniżej.
 
-Przykład: zapiszemy w bazie dwa widoki: *by_date* i *by_tag*:
+Zaczynamy od utworzenia szablonu aplikacji za pomocą programu
+[erica](https://github.com/benoitc/erica):
 
-    :::javascript ls_views.js
-    var couchapp = require('couchapp');
-    ddoc = {
-        _id: '_design/app'
-      , views: {}
-    }
-    module.exports = ddoc;
+    :::bash
+    erica create-app appid=ls lang=javascript
+      ==> Couch (create-app)
+      Writing ls/_id
+      Writing ls/language
+      Writing ls/.couchapprc
+      Writing ls/views/by_type/map.js
 
-    ddoc.views.by_date = {
-      map: function(doc) {
+W katalogu *ls/views* zapiszemy dwa widoki: *by_date*.
+
+*map.js*:
+
+    :::js by_date/map.js
+      function(doc) {
         emit(doc.created_at, doc.quotation.length);
       },
       reduce: "_sum"
     }
-    ddoc.views.by_tag = {
-      map: function(doc) {
-        for (var k in doc.tags)
-          emit(doc.tags[k], null);
-      },
-      reduce: "_count"
-    }
+
+*reduce.js*:
+
+    :::js by_date/reduce.js
+    _sum
+
+i usuwamy wygenrowany vidok *by_type/map.js*.
 
 Powyżej użyłem funkcji reduce napisanych w języku Erlang
 i dostępnych w widokach pisanych w Javascript.
@@ -124,7 +127,7 @@ W wersji 1.1.x CouchDb są trzy takie funkcje:
 * `_sum` – zwraca sumę wartości „mapped values”
 * `_stats` – zwraca statystyki „mapped values” (sum, count, min, max, …)
 
-Później pokażemy jak można te funkcje zaimplementować samemu w Javascripcie.
+TODO: przykładowa implementacja *_sum* w Javascripcie.
 
 Widok zapiszemy w bazie wykonujac polecenie:
 
@@ -146,6 +149,16 @@ Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
 
 Co oznaczają te odpowiedzi? Jak konstruujemy te uri?
 Jak zmienią się odpowiedzi, gdy wymienimy funkcję reduce na *_sum*?
+
+
+Jeszcze jeden widok *by_tag*:
+
+    map: function(doc) {
+      for (var k in doc.tags)
+        emit(doc.tags[k], null);
+    },
+    reduce: "_count"
+
 
 
 ## Map&#x200a;►Reduce + opcje w zapytaniach
