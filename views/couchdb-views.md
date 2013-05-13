@@ -75,8 +75,7 @@ W CouchDB są dwa rodzaje widoków:
 Tymczasowe widoki będziemy pisać i odpytywać w Futonie, a do widoków
 permanentnych wykorzystamy *node.couchapp.js*.
 
-**Pierwsze przybliżenie.** Widok składa się z dwóch, kolejno
-wykonywanych, funkcji:
+Widok w CouchDB składa się z dwóch, kolejno wykonywanych, funkcji:
 
 * `map(doc)` – funkcja wykonywana jest na każdym dokumencie
   rezultatem każdego wywołania funkcji powinno być
