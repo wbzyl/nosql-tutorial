@@ -169,6 +169,14 @@ z tego że program erica ma zaimplementowany prosty serwer www:
       Erica Web started on "http://127.0.0.1:48289"
       ==> Successfully pushed. You can browse it at: http://127.0.0.1:5984/ls/_design/app
 
+<blockquote>
+ {%= image_tag "/images/hands.jpg", :alt => "[Love and Art]" %}
+ <p>
+  Wszystko da się zrozumieć poza miłością i sztuką.
+ </p>
+ <p class="author"><a href="http://www.googleplussuomi.com/timelinetest.php?googleid=114514155722976658302&sort=share">[stara mądrość]</a></p>
+</blockquote>
+
 Jak przebiega wyliczanie widoków będziemy mogli podejrzeć
 w logach CouchDB po dopisaniu funkcji *log()* w funkcji reduce.
 
@@ -242,6 +250,12 @@ Oto równoważny kod Javascript:
 
 Powyżej używamy wartości *rereduce* do wyboru kodu obliczającego liczbę
 znaczników (*values==[null,...,null]* jeśli *rereduce==false*).
+
+W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
+
+* debugowanie widoków
+* view cleanup
+* view compaction
 
 
 ## Korzystamy z opcje w zapytaniach do widoków
@@ -533,48 +547,7 @@ Porządek dokumentów określony jest przez
 Dlatego mówimy *view collation*, a nie *view sorting*.
 
 
-## Obiecane rzeczy
-
-Widok **by_tag** zawiera funkcję reduce *_count*.
-
-Poniżej równoważny kod Javascript:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      if (rereduce) {
-        return sum(values);
-      } else {
-        return values.length;
-      }
-    }
-
-Kod Javascript równoważny funkcji *_sum*:
-
-    :::javascript
-    function(keys, values, rereduce) {
-      sum(values);
-    }
-
-W dokumentacji [HTTP view](http://wiki.apache.org/couchdb/HTTP_view_API) opisano:
-
-* debugowanie widoków
-* view cleanup
-* view compaction
-
-
-<blockquote>
- <p>
-  Wszystko da się zrozumieć poza miłością i sztuką.
- </p>
- <p class="author">[stara mądrość]</p>
-</blockquote>
-
-## Zrozumieć funkcje Reduce
-
-Najłatwiej zrozumieć o co chodzi parze Map & Reduce przyglądając
-się temu co jest zapisywane w logach CouchDB.
-
-### Bazy na Twitterze
+## Bazy na Twitterze
 
 Następujący widok:
 
