@@ -100,15 +100,13 @@ Zaczynamy od utworzenia szablonu aplikacji za pomocą programu *erica*:
       Writing ls/.couchapprc
       Writing ls/views/by_type/map.js
 
-W katalogu *ls/views* zapiszemy dwa widoki: *by_date*.
+W katalogu *ls/views* zapiszemy widok: *by_date*.
 
 *map.js*:
 
     :::js by_date/map.js
-      function(doc) {
-        emit(doc.created_at, doc.quotation.length);
-      },
-      reduce: "_sum"
+    function(doc) {
+      emit(doc.created_at, doc.quotation.length);
     }
 
 *reduce.js*:
@@ -116,7 +114,21 @@ W katalogu *ls/views* zapiszemy dwa widoki: *by_date*.
     :::js by_date/reduce.js
     _sum
 
-i usuwamy wygenrowany vidok *by_type/map.js*.
+Następnie usuwamy wygenerowany widok *by_type/map.js*
+i podmieniamy zawartość wygenerowanego pliku *_id* na:
+
+    _design/app
+
+a zawartość pliku *.couchapprc* – na:
+
+    :::json
+    {
+      "env" : {
+        "default" : {
+          "db" : "http://localhost:5984/ls"
+        }
+      }
+    }
 
 Powyżej użyłem funkcji reduce napisanych w języku Erlang
 i dostępnych w widokach pisanych w Javascript.
@@ -126,41 +138,113 @@ W wersji 1.1.x CouchDb są trzy takie funkcje:
 * `_sum` – zwraca sumę wartości „mapped values”
 * `_stats` – zwraca statystyki „mapped values” (sum, count, min, max, …)
 
-TODO: przykładowa implementacja *_sum* w Javascripcie.
+**Uwaga:** Widok *by_date* jest już zapisany w bazie. Został
+zreplikowany razem z dokumentami. Dlatego poniższy krok możemy pominąć.
 
-Widok zapiszemy w bazie wykonujac polecenie:
+Zapisujemy widok w bazie wykonujac, **z katalogu z aplikacją**, push:
 
     :::bash
-    couchapp push ls_views.js http://localhost:5984/ls
+    erica -v push
 
-Tyle przygotowań. Teraz zabierzemy się za odpytywanie widoków.
+
+### Odpytywanie widoków
+
+Na konsoli:
 
     :::bash
     curl http://localhost:5984/ls/_design/app/_view/by_date
     {"rows":[
-      {"key": null, "value": 351}
+      {"key": null, "value": 788}
     ]}
+
+i w **Futonie**.
+
+Jak zmienią się wyliczane wyniki, gdy wymienimy funkcję reduce na **_count**?
+
+**Uwaga:** Tę poprawkę w kodzie możemy wykonać w Futonie. Możemy też skorzystać
+z tego że program erica ma zaimplementowany prosty serwer www:
+
+    erica web
+      ==> ls (web)
+      Erica Web started on "http://127.0.0.1:48289"
+      ==> Successfully pushed. You can browse it at: http://127.0.0.1:5984/ls/_design/app
+
+Jak przebiega wyliczanie widoków będziemy mogli podejrzeć
+w logach CouchDB po dopisaniu funkcji *log()* w funkcji reduce.
+
+Zaczynamy od podmiany funkcji *_sum* na wersję napisaną w Javascripcie:
+
+    :::js reduce.js
+    function(keys, values, rereduce) {
+        log('REREDUCE: ' + rereduce);
+        log('KEYS: ' + JSON.stringify(keys));
+        log('VALUES: ' + JSON.stringify(values));
+        return sum(values);
+    }
+
+Po uruchomieniu widoku w logach znajdziemy:
+
+    Log :: REREDUCE: false
+    Log :: KEYS: [
+             [[2009,6,15],"3"], [[2010,0,1],"1"],  [[2010,0,1],"4"],  [[2010,0,31],"8"],
+             [[2010,0,31],"9"], [[2010,1,20],"2"], [[2010,1,28],"6"], [[2010,1,28],"7"],
+             [[2010,3,1],"14"], [[2010,3,1],"15"], [[2010,3,4],"16"], [[2010,11,31],"5"],
+             [[2011,1,12],"10"],[[2011,2,10],"11"],[[2011,2,10],"12"],[[2011,2,10],"13"]
+           ]
+    Log :: VALUES: [30,70,37,34,60,55,27,67,52,51,32,31,57,55,89,41]
+
+    Index update finished for db: ls idx: _design/app
+
+    Log :: REREDUCE: false
+    Log :: KEYS: [
+             [[2011,2,10],"13"],[[2011,2,10],"12"],[[2011,2,10],"11"],[[2011,1,12],"10"],
+             [[2010,11,31],"5"],[[2010,3,4],"16"], [[2010,3,1],"15"], [[2010,3,1],"14"],
+             [[2010,1,28],"7"], [[2010,1,28],"6"], [[2010,1,20],"2"], [[2010,0,31],"9"],
+             [[2010,0,31],"8"], [[2010,0,1],"4"],  [[2010,0,1],"1"],  [[2009,6,15],"3"]
+           ]
+    Log :: VALUES: [41,89,55,57,31,32,51,52,67,27,55,60,34,37,70,30]
+
+
+### *by_tag* – jeszcze jeden widok
+
+*map.js*:
+
+    :::js
+    function(doc) {
+      for (var k in doc.tags)
+        emit(doc.tags[k], null);
+    }
+
+*reduce.js*
+
+    _count
+
+Odpytujemy ten widok na konsoli:
 
     curl http://localhost:5984/ls/_design/app/_view/by_tag
     {"rows":[
       {"key": null, "value": 19}
     ]}
 
-Co oznaczają te odpowiedzi? Jak konstruujemy te uri?
-Jak zmienią się odpowiedzi, gdy wymienimy funkcję reduce na *_sum*?
+i w **Futonie**.
+
+Widok *by_tag* korzysta z funkcji *_count* napisanej w języku Erlang.
+Oto równoważny kod Javascript:
+
+    :::js
+    function(keys, values, rereduce) {
+      if (rereduce) {
+        return sum(values);
+      } else {
+        return values.length;
+      }
+    }
+
+Powyżej używamy wartości *rereduce* do wyboru kodu obliczającego liczbę
+znaczników (*values==[null,...,null]* jeśli *rereduce==false*).
 
 
-Jeszcze jeden widok *by_tag*:
-
-    map: function(doc) {
-      for (var k in doc.tags)
-        emit(doc.tags[k], null);
-    },
-    reduce: "_count"
-
-
-
-## Map&#x200a;►Reduce + opcje w zapytaniach
+## Korzystamy z opcje w zapytaniach do widoków
 
 Odpytując widoki możemy doprecyzować co nas interesuje,
 dopisując do zapytania *querying options*.
