@@ -72,8 +72,9 @@ W CouchDB są dwa rodzaje widoków:
 * tymczasowe (*temporary views*)
 * permanentne (*permanent views*)
 
-Tymczasowe widoki będziemy pisać i odpytywać w Futonie, a do widoków
-permanentnych wykorzystamy *node.couchapp.js*.
+Tymczasowe widoki będziemy pisać i odpytywać w Futonie,
+a do widoków permanentnych wykorzystamy program
+[Erica](https://github.com/benoitc/erica).
 
 Widok w CouchDB składa się z dwóch, kolejno wykonywanych, funkcji:
 
@@ -89,8 +90,7 @@ Widok w CouchDB składa się z dwóch, kolejno wykonywanych, funkcji:
 
 Zobacz też przykłady zapytań z *group* i *group_level* poniżej.
 
-Zaczynamy od utworzenia szablonu aplikacji za pomocą programu
-[erica](https://github.com/benoitc/erica):
+Zaczynamy od utworzenia szablonu aplikacji za pomocą programu *erica*:
 
     :::bash
     erica create-app appid=ls lang=javascript
