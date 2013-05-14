@@ -666,7 +666,10 @@ Odpytywanie widoku *rating_avg* na konsoli:
 
 ## Złączenia w bazach CouchDB
 
-**TODO:** osobny wykład.
+**TODO:**
+
+1. Osobny wykład.
+2. Zainstalować wtyczkę [**JSONView**](http://jsonview.com/) do Firefoksa.
 
 …czyli co wynika z *Collation Specification*.
 
@@ -732,8 +735,8 @@ między postami i komentarzami?
 
 Aby dodać komentarz do posta, należy:
 
-1. pobrać dokument post z bazy
-2. dodać nowy komentarz do struktury JSON
+1. pobrać dokument z bazy
+2. dodać nowy komentarz do dokumentu
 3. umieścić uaktualniony dokument w bazie
 
 „Now if you have multiple client processes adding comments at roughly
@@ -775,7 +778,7 @@ oraz komentarzy:
           "type": "comment",
           "post": "01",
           "author": "agatka",
-          "content": "thanks!"
+          "content": "Thanks!"
         },
         {
           "_id": "12",
@@ -807,9 +810,7 @@ Dokumenty zapisujemy w bazie:
     curl -X POST -H "Content-Type: application/json" -d @blog-2-posts.json http://localhost:5984/blog-2/_bulk_docs
     curl -X POST -H "Content-Type: application/json" -d @blog-2-comments.json http://localhost:5984/blog-2/_bulk_docs
 
-Do bazy dodamy widok **/_design/app/by_post**.
-
-Odpytanie widoku daje komentarze zgrupowane po zawartości pola *post*:
+Do bazy dodamy widok **/_design/app/by_post**:
 
     :::javascript
     function(doc) {
@@ -818,41 +819,30 @@ Odpytanie widoku daje komentarze zgrupowane po zawartości pola *post*:
       }
     }
 
-Ale jeśli zamierzamy pobrać wszystkie komentarze do posta "02",
-to możemy to zrobic tak:
+Odpytanie tego widoku daje komentarze zgrupowane po zawartości pola *post*:
+
+    http://localhost:5984/blog-2/_design/app/_view/by_post
+    {"total_rows":4,"offset":0,"rows":[
+    {"id":"11","key":"01","value":{"author":"agatka","content":"Thanks!"}},
+    {"id":"12","key":"01","value":{"author":"bolek","content":"Very very nice idea..."}},
+    {"id":"13","key":"02","value":{"author":"lolek","content":"If God would exists..."}},
+    {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...."}}
+    ]}
+
+Dlatego wszystkie komentarze do posta "02" pobieramy tak:
 
     http://localhost:5984/blog-2/_design/app/_view/by_post?key="02"
     {"total_rows":4,"offset":2,"rows":[
       {"id":"13","key":"02","value":{"author":"lolek","content":"If God would exists..."}},
-      {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...sorry..."}}
+      {"id":"14","key":"02","value":{"author":"bolek","content":"Fixed...."}}
     ]}
 
 Jeśli teraz pobierzemy post "02", to mamy komplet.
 Dwa żądania HTTP i mamy post i wszystkie do niego komentarze.
 
-<!--
+Niestety to o jedno żądanie HTPP za dużo! Dlaczego?
 
-Przeglądanie wszystkich komentarzy posortowanych po polu *author*
-umożliwi nam widok *_design/app/by_author*:
-
-    :::javascript
-    function(doc) {
-      if (doc.type == "comment") {
-        emit(doc.author, {post: doc.post, content: doc.content});
-      }
-    }
-
-Po zapisaniu widoku pod nazwą *by_author* i odpytaniu dostajemy:
-
-    http://localhost:5984/blog-2/_design/app/_view/by_author
-    {"total_rows":4,"offset":0,"rows":[
-      {"id":"11","key":"agatka","value":{"post":"01","content":"thanks..."}},
-      {"id":"12","key":"bolek","value":{"post":"01","content":"Very very nice..."}},
-      {"id":"14","key":"bolek","value":{"post":"02","content":"Fixed...sorry..."}},
-      {"id":"13","key":"lolek","value":{"post":"02","content":"If God would exists..."}}
-    ]}
-
-Przechowywanie osobno postów i komentarzy do nich też ma wady:
+Przechowywanie osobno postów i komentarzy ma też wady:
 
 „Imagine you want to display a blog post with all the associated
 comments on the same web page. With our first approach, we needed
@@ -861,17 +851,27 @@ the document. With this second approach, we need two requests: a GET
 request to the post document, and a GET request to the view that
 returns all comments for the post.”
 
--->
 
-### Using the power of view collation
+### Ultimate solution – using the power of collation
 
 „What we'd probably want then would be a way to join the blog post and
 the various comments together to be able to retrieve them with
 **a single HTTP request**.”
 
-Rozważmy taki widok
-(TODO: key *doc* zamienić na *null* i skorzystać z *include_docs=true*;
-jest OK bo nie ma funkcji reduce):
+Rozważmy taki widok (baza *blog-2*):
+
+    :::javascript
+    function(doc) {
+      if (doc.type == "post") {
+        emit([doc._id, 0], null);
+      } else if (doc.type == "comment") {
+        emit([doc.post, 1], null);
+      }
+    }
+
+<!--
+    Key *doc* zamienić na *null* i skorzystać z *include_docs=true*;
+    jest OK bo nie ma funkcji reduce:
 
     :::javascript
     function(doc) {
@@ -881,68 +881,36 @@ jest OK bo nie ma funkcji reduce):
         emit([doc.post, 1], doc);
       }
     }
+-->
 
-Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/povc*.
+Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/join*.
 
 Teraz odpytajmy ten widok, tak:
 
-    http://localhost:5984/blog-2/_design/app/_view/povc?key=["02",0]
-    {"total_rows":6,"offset":3,"rows":[
-      {"id":"02","key":["02",0],
-       "value":{"_id":"02","_rev":"1-6844...",
-          "type":"post",
-          "author":"jacek",
-          "title":"Restricting Access",
-          "content":"You will learn how to lock down the site."}}
-    ]}
+    http://localhost:5984/blog-2/_design/app/_view/join?key=["02",0]&include_docs=true
+      {
+         "total_rows":6, "offset":3, "rows": [
+           {
+             "id": "02", "key": ["02",0], "value": null,
+             "doc":{
+               "_id":"02", "_rev":"1-6844c44b92b8facdd1a72d294baac302",
+                type": "post", "author": "jacek", "title": "Restricting Access",
+                "content": "You will learn how to lock down the site."
+             }
+           }
+         ]
+      }
 
 albo tak:
 
-    http://localhost:5984/blog-2/_design/app/_view/povc?key=["02",1]
-    {"total_rows":6,"offset":4,"rows":[
-      {"id":"13","key":["02",1],
-       "value":{"_id":"13","_rev":"1-15dc...",
-       "type":"comment",
-       "post":"02",
-       "author":"lolek",
-       "content":"If God would exists...."}},
-      {"id":"14","key":["02",1],
-       "value":{"_id":"14","_rev":"1-676a...",
-       "type":"comment",
-       "post":"02",
-       "author":"bolek",
-       "content":"Fixed...sorry..."}}
-    ]}
-
-albo tak:
-
-    http://localhost:5984/blog-2/_design/app/_view/povc?startkey=["02"]&endkey=["03"]
-    {"total_rows":6,"offset":3,"rows":[
-      {"id":"02","key":["02",0],
-       "value":{"_id":"02","_rev":"1-6844...",
-       "type":"post",
-       "author":"jacek",
-       "title":"Restricting Access",
-       "content":"You will learn how to lock down the site."}},
-      {"id":"13","key":["02",1],
-       "value":{"_id":"13","_rev":"1-15dc...",
-       "type":"comment",
-       "post":"02",
-       "author":"lolek",
-       "content":"If God would exists..."}},
-      {"id":"14","key":["02",1],
-       "value":{"_id":"14","_rev":"1-676a...",
-       "type":"comment",
-       "post":"02",
-       "author":"bolek",
-       "content":"Fixed...sorry..."}}
-    ]}
+    http://localhost:5984/blog-2/_design/app/_view/join?key=["02",1]&include_docs=true
+    http://localhost:5984/blog-2/_design/app/_view/join?startkey=["02"]&endkey=["03"]&include_docs=true
 
 Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
 i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
 
 
-## *Rock* – programowanie po stronie klienta
+## TODO: *Rock* – programowanie po stronie klienta
 
 Do tej pory kodziliśmy po stronie serwera (ang. *server side programming*).
 Poniżej będzie przykład kodzenia po stronie klienta (ang. *client side programming*),
