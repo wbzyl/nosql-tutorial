@@ -25,7 +25,8 @@
 #    Starsze książki nie mają takich nagłówków, np. William Shakespeare.
 #    albo mają inne – wtedy skrypt nie działa.
 
-require 'rubygems' unless defined? Gem
+# require 'rubygems' unless defined? Gem
+require 'bundler/setup'
 
 # http://ruby-doc.org/stdlib/libdoc/optparse/rdoc/classes/OptionParser.html
 # http://stackoverflow.com/questions/166347/how-do-i-use-ruby-for-shell-scripting
