@@ -363,7 +363,7 @@ Poniżej podaję „wersję przeglądarkową” zapytań oraz zwracane odpowiedz
       {"id":"9","key":[2010,0,31],"value":60}
     ]}
 
-ale *limit* z *reduce* się nie lubią:
+ale *limit* z *reduce* się nie lubią (bug?):
 
     http://localhost:5984/ls/_design/app/_view/by_date?startkey=[2010,0,31]&limit=2&reduce=true
     {"rows":[
@@ -447,29 +447,53 @@ projektu Gutenberg.
 Do pobierania tekstu, podziału go na akpity i zapisaniu
 ich w bazie użyto skryptu
 {%= link_to "gutenberg2couchdb.rb", "/mapreduce/couch/gutenberg2couchdb.rb" %}
-({%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}).
+({%= link_to "źródło", "/doc/couchdb/db/gutenberg2couchdb.rb" %}):
 
-A teraz obiecany kanoniczny przykład użycia MapReduce:
+    :::bash
+    bundle exec ./gutenberg2couchdb.rb -p 5984 \
+      the-man-who-knew-too-much.txt http://www.gutenberg.org/cache/epub/1720/pg1720.txt
+    bundle exec ./gutenberg2couchdb.rb --help
+    ... instalujemy jeszcze kilka książek z listy ...
 
-    :::javascript wc.js
-    var couchapp = require('couchapp');
-    ddoc = {
-        _id: '_design/app'
-      , views: {}
+A teraz obiecany kanoniczny przykład użycia MapReduce,
+czyli zliczanie częstości występowania słów.
+
+Do zapisania w bazie widoku, użyjemy programu *erica*:
+
+    :::bash
+    erica create-app appid=gutenberg lang=javascript
+      ==> couch (create-app)
+      Writing gutenberg/_id
+      Writing gutenberg/language
+      Writing gutenberg/.couchapprc
+      Writing gutenberg/views/by_type/map.js
+
+Podmieniamy wygenerowaną zawartość pliku *_id* na:
+
+    _design/app
+
+i usuwamy wygenerowany widok *by_type* i dodajemy widok *wc*:
+
+    views/
+    `-- wc
+        |-- map.js
+        `-- reduce.js
+
+*map.js*:
+
+    :::js map.js
+    function(doc) {
+      var words = doc.text.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g);
+      words.forEach(function(word) {
+        emit([word, doc.title], 1);
+      });
     }
-    module.exports = ddoc;
 
-    ddoc.views.wc = {
-      map: function(doc) {
-        var words = doc.text.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g);
-        words.forEach(function(word) {
-          emit([word, doc.title], 1);
-        });
-      },
-      reduce: "_sum"
-    }
+*reduce.js*:
 
-**Uwaga:** zakres `\u00C0-\u01fF` obejmuje następujące litery
+    _sum
+
+**Uwaga:** zakres `\u00C0-\u01fF` obejmuje następujące znaki
 z [Unicode 6.0 Character Code Charts](http://www.unicode.org/charts/):
 
 * [Latin-1 Suplement](http://www.unicode.org/charts/PDF/U0080.pdf)
@@ -479,33 +503,38 @@ z [Unicode 6.0 Character Code Charts](http://www.unicode.org/charts/):
 Zapisujemy widoki w bazie:
 
     :::bash
-    couchapp push wc.js http://Admin:Pass@localhost:5984/gutenberg
+    erica -v push http://localhost:5984/gutenberg
+    // erica -v push http://Admin:Pass@localhost:5984/gutenberg
 
 Odpytujemy widok *wc* w Futonie.
 Eksperymentujemy z różnymi ustawieniami **Grouping** oraz **Reduce**.
 
-Jeśli w kodzie widoku zmienimy wiersz z *emit* na:
+*Uwaga:* Przy pierwszym zapytaniu CouchDB wylicza widok.
+Na szybkim komputerze trwa to kilka minut.
 
-    :::javascript
-    emit([word, doc.title], 1);
+**Zadanie:** Utworzyć nowy widok, z taką funkcją *map*:
 
-to co to zmienia?
+    :::js map.js
+    function(doc) {
+      var words = doc.text.toLowerCase().match(/[A-Za-z\u00C0-\u017F]+/g);
+      words.forEach(function(word) {
+        emit([doc.title, word], 1);
+      });
+    }
 
-*Uwaga:* Przy pierwszym zapytaniu CouchDB generuje widok.
-Na szybkim komputerze trwa to co najmniej minutę.
+i funkcją reduce *_sum*. Czym różni się ten widok od poprzedniego widoku?
 
 
 ## View Collation
 
 *Collation* to kolejność zestawiania, albo schemat uporządkowania.
+W [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification)
+opisano jak działa sortowanie zaimplementowanie w CouchDB.
 
 Widoki są zestawiane/sortowane po zawartości pola *key*.
 
-W [Collaction Specification](http://wiki.apache.org/couchdb/View_collation#Collation_Specification).
-opisano jak działa sortowanie zaimplementowanie w CouchDB.
-
-Poniższy przykład, który to próbuje wyjaśnić, pochodzi z [CouchDB
-Wiki](http://wiki.apache.org/couchdb/View_collation).
+Poniższy przykład, który to próbuje wyjaśnić, pochodzi
+z [CouchDB Wiki](http://wiki.apache.org/couchdb/View_collation).
 
 W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
 
@@ -514,42 +543,69 @@ W Futonie tworzymy bazę *coll*, w której zapiszemy dokumenty:
     ...
     { "x": "~" }
 
-Skorzystamy z modułu *couch-client* dla NodeJS i ze skryptu:
+Do zapisania dokumentów w bazie użyjemy modułu
+[Cradle](https://github.com/cloudhead/cradle) dla Node.js
+i tego skryptu:
 
     :::javascript collation.js
-    var cc = require('couch-client');
-    var coll = cc("http://localhost:5984/coll");
+    var cradle = require('cradle');      // wcześniej instalujemy "cradle"
+    var conn = new(cradle.Connection);
+    var db = conn.database('coll');
 
-    for (var i=32; i<=126; i++) {
-      coll.save({"x": String.fromCharCode(i)}, function(err, doc) {
-        if (err) throw err;
-        console.log("saved %s", JSON.stringify(doc));
-      });
-    };
+    db.exists(function (err, exists) {
+      if (err) {
+        console.log('error', err);
+      } else if (exists) {
+        for (var i = 32; i <= 126; i++) {
+          db.save({"x": String.fromCharCode(i)}, function(err, res) {
+            if (err) throw err;
+          });
+        };
+      } else {
+        console.log('database does not exists.');
+        console.log('rerun the script to populate the \"coll\" database');
+        db.create();
+      }
+    });
 
-Teraz wystarczy wykonać na konsoli:
+Teraz, aby zapisać dokumenty w bazie *coll* wystarczy wykonać na konsoli:
 
     :::bash
     node collation.js
 
-i dokumenty znajdą się w bazie.
+Pozostaje jeszcze utworzyć widok.
+Najwygodniej będzie go utworzyć w Futonie.
+Przechodzimy do zakładki *View » Temporary View* (widok tymczasowy)
+gdzie wpisujemy taką funkcją map:
 
-Na początek, kilka prostych zapytań. Zapytania wpisujemy w przeglądarce:
+    :::js
+    function(doc) {
+      emit(doc.x, null);
+    }
 
-    http://localhost:5984/coll/_all_docs?startkey="64"&limit=4
-    http://localhost:5984/coll/_all_docs?startkey="64"&limit=2&descending=true
-    http://localhost:5984/coll/_all_docs?startkey="64"&endkey="68"
+(bez funkcji reduce).
+Następnie zapisujemy widok w *_design/app* i nazwywamy go *one*.
 
-Jeśli odpytujemy widok (tymczasowy na konsoli; konieczne są uprawnienia Admina):
+Oto kilka prostych zapytań pokazujących różnicę między
+collation i sortowaniem.
+
+Poniższe zapytania wpisujemy w przeglądarce:
+
+    http://localhost:5984/coll/_design/app/_view/one?startkey="A"
+    http://localhost:5984/coll/_design/app/_view/one?startkey="A"&limit=8
+    http://localhost:5984/coll/_design/app/_view/one?startkey="A"&limit=8&descending=true
+    http://localhost:5984/coll/_all_docs?startkey="A"&endkey="E"
+
+A tak odpytujemy widok tymczasowy na konsoli:
 
     :::bash
-    curl -X POST http://Admin:Pass@localhost:5984/coll/_temp_view \
+    curl -X POST http://localhost:5984/coll/_temp_view \
       -H "Content-Type: application/json" -d '
     {
-      "map": "function(doc) { emit(doc.x); }"
+      "map": "function(doc) { emit(doc.x, null); }"
     }'
 
-to zwracana lista dokumentów jest posortowana po kluczu (tutaj, po *doc.x*).
+Zwracana lista dokumentów jest posortowana po kluczu (tutaj, po *doc.x*).
 Porządek dokumentów określony jest przez
 [unicode collation algorithm](http://www.unicode.org/reports/tr10/).
 Dlatego mówimy *view collation*, a nie *view sorting*.
@@ -560,66 +616,69 @@ Dlatego mówimy *view collation*, a nie *view sorting*.
 … ten wykład jest już przydługi… poniższe przykłady należałoby przenieść
 do nowego wykładu.
 
-## TODO: Movies
+<!-- http://www.alanwood.net/unicode/arrows.html -->
 
-W bazie *movies* zapiszemy następujący widok:
 
-    :::javascript movies.js
-    var couchapp = require('couchapp');
+## Movies
 
-    ddoc = {
-        _id: '_design/test'
-      , views: {}
+Zaczynamy od replikcji bazy *movies* (9579 dokumentów, ok. 16 MB) do
+swojego CouchDB:
+
+    (remote) http://couch.inf.ug.edu.pl/movies ↭ (local) movies
+
+W bazie *movies* zapiszemy następujący widok
+(ponownie skorzystamy z zakładki *View » Temporary View* w Futonie):
+
+    :::javascript
+    // Map Function
+    function(doc) {
+      emit(doc.rating, {"count": 1, "rating_total": doc.rating});
     }
-    module.exports = ddoc;
+    // Reduce Function
+    function(keys, values, rereduce) {
+      log('REREDUCE: ' + rereduce);
+      log('KEYS: ' + keys);
+      log('VALUES: ' + JSON.stringify(values));
 
-    ddoc.views.rating_avg = {
-      map: function(doc) {
-        emit(doc.rating, {"count": 1, "rating_total": doc.rating});
-      },
-      reduce: function(keys, values, rereduce) {
-        log('REREDUCE: ' + rereduce);
-        log('KEYS: ' + keys);
-        // log('VALUES: ' + values); => [object Object],[object Object],...
-        var count = 0;
-        values.forEach(function(element) { count += element.count; });
-        var rating = 0;
-        values.forEach(function(element) { rating += element.rating_total; });
-        return {"count": count, "rating_total": rating};
-      }
+      var count = 0;
+      values.forEach(function(element) { count += element.count; });
+      var rating = 0;
+      values.forEach(function(element) { rating += element.rating_total; });
+
+      return {"count": count, "rating_total": rating};
     }
 
-Tak go zapiszemy w bazie:
+Widok zapisujemy w *_design/app* pod nazwą *rating_avg*.
+
+*Uwaga:* Ponownie zapisujemy różne rzeczy w logach CouchDB.
+W trakcie obliczeń warto je śledzić.
+
+Aby wyliczyć widok w Futonie w zakładce *View* wybieramy *rating_avg*
+i czekamy ok. minuty na przeliczenie widoku przez CouchDB.
+Następnie odpytujemy widok *rating_avg* w Futonie.
+
+Odpytywanie widoku *rating_avg* na konsoli:
 
     :::bash
-    couchapp push movies.js http://localhost:5984/movies
-
-a tak go odpytamy:
-
-    :::bash
-    curl http://localhost:5984/movies/_design/test/_view/rating_avg
-
-Po wciśnięciu enter, natychmiat przechodzimy na konsolę, gdzie
-uruchomiliśmy *couchdb*, aby podejrzeć co się wylicza.
-
-Następnie, już na spokojnie, odpytujemy widok *rating_avg* w Futonie.
+    curl localhost:5984/movies/_design/app/_view/rating_avg  # average rating ≅ 7.67
+    curl localhost:5984/movies/_design/app/_view/rating_avg?group_level=1
 
 
 ## Złączenia w bazach CouchDB
 
 **TODO:** osobny wykład.
 
-…czyli co wynika z *Collation Specification*
+…czyli co wynika z *Collation Specification*.
 
 Przykłady poniżej pochodzą z artykułu
 Christophera Lenza, [CouchDB „Joins”](http://www.cmlenz.net/archives/2007/10/couchdb-joins),
-gdzie autor omawia trzy sposoby modelowania powiązań
-między postami a komentarzami:
+gdzie autor omawia trzy sposoby
+**modelowania powiązań między postami a komentarzami**:
 „How you’d go about modeling a simple blogging system with «post» and
 «comments» entities, where any blog post might have many comments.”
 
-Dodatkowo warto zajrzeć do [CouchDB JOINs
-Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
+Dodatkowo warto zajrzeć do
+[CouchDB JOINs Redux](http://blog.couchone.com/post/446015664/whats-new-in-apache-couchdb-0-11-part-two-views).
 
 
 ### Sposób 1: komentarze inline
@@ -668,9 +727,10 @@ Do bazy dodamy widok zwracający wszystkie komentarze, posortowane po polu *auth
 
 -->
 
-Jakie problemy stwarza takie podejście?
+Jakie są argumenty za i przeciw takiej implementacji powiązań
+między postami i komentarzami?
 
-Odpowiedź: Aby dodać komentarz do posta, należy:
+Aby dodać komentarz do posta, należy:
 
 1. pobrać dokument post z bazy
 2. dodać nowy komentarz do struktury JSON
