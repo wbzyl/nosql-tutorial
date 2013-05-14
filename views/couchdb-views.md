@@ -7,7 +7,11 @@ CouchDB ma swoją wersję platformy MapReduce
 (a MongoDB swoją). Przyjrzyjmy się jak zaimplementowano
 MapReduce w CouchDB.
 
-## Luźne uwagi o SQL i MapReduce
+* [Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html)
+* [Introduction to CouchDB Views](http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views)
+  (CouchDB Wiki)
+
+## SQL a MapReduce
 
 CouchDB jest dokumentową, a nie relacyjną bazą danych. W relacyjnych
 bazach zapisujemy „rekordy”, w bazach dokumentowych – „obiekty”.
@@ -235,10 +239,17 @@ Po uruchomieniu widoku w logu znajdziemy:
 
 Odpytujemy ten widok na konsoli:
 
+    :::bash
     curl http://localhost:5984/ls/_design/app/_view/by_tag
     {"rows":[
       {"key": null, "value": 19}
     ]}
+
+i jeszcze dwa zapytania:
+
+    :::bash
+    curl http://localhost:5984/ls/_design/app/_view/by_tag?reduce=false
+    curl 'http://localhost:5984/ls/_design/app/_view/by_tag?reduce=false&include_docs=true'
 
 i w **Futonie**.
 
@@ -619,6 +630,80 @@ do nowego wykładu.
 <!-- http://www.alanwood.net/unicode/arrows.html -->
 
 
+## *Rock* – wykonywanie kodu po stronie klienta
+
+Do tej pory pisaliśmy kod, który uruchamialiśmy po stronie serwera.
+W przykładzie poniżej, kod wykonamy po stronie klienta –
+na konsoli przeglądarki.
+
+Skorzystamy z biblioteki *jquery.couch.js* (wykorzystanej też w Futonie).
+
+Zaczniemy od utworzenia w bazie *rock*, w zakładce
+*View » Temporary View* widoku,
+który po przetestowaniu, zapiszemy w *_design/app* jako *connections*.
+
+Funkcja map do wklejenia w oknie *Map Function*:
+
+    :::javascript
+    function(doc) {
+      for (var who in doc.similar)
+        emit(doc._id, doc.similar[who]);
+    }
+
+Funkcja reduce do wklejenia w oknie *Reduce Function*:
+
+    _count
+
+Po zapisaniu widoku w bazie, odpytujemy go w Futonie i na konsoli:
+
+    :::bash
+    curl http://localhost:5984/rock/_design/app/_view/connections
+    curl http://localhost:5984/rock/_design/app/_view/connections?reduce=false
+    curl http://localhost:5984/rock/_design/app/_view/connections?group=true
+
+Poniższy kod wpiszemy i wykonamy na konsoli przeglądarki,
+czyli wykonamy go **po stronie klienta**.
+
+W przeglądarce, w zakładce z Futonem otwieramy okno z konsolą,
+gdzie wpisujemy:
+
+    :::javascript
+    db = $.couch.db('rock');
+
+    db.view('app/connections', {
+      reduce: false,
+      success: function(data) {
+        var rows = data.rows;
+        rows.forEach(function(o){
+          console.log(JSON.stringify(o));
+        });
+      }
+    });
+
+I jeszcze jedno zapytanie do wykonania na konsoli przeglądarki:
+
+    :::javascript
+    db = $.couch.db('rock');
+
+    db.view('app/connections', {
+      reduce: false,
+      key: 'jimmypage',
+      success: function(data) {
+        console.log( data.rows.map(function(o) { return o.value; }) );
+      }
+    });
+
+Oto wynik wykonania tego zapytania:
+
+    :::js
+    [
+      "coverdalepage", "free", "humblepie", "iangillan", "jeffbeck",
+      "jimmypagetheblackcrowes", "johnpauljones", "keithrichards", "ledzeppelin", "micktaylor",
+      "pageplant", "pattravers", "robertplant", "robertplantandthestrangesensation", "robintrower",
+      "rorygallagher", "tenyearsafter", "thefirm", "thehoneydrippers", "theyardbirds"
+    ]
+
+
 ## Movies
 
 Zaczynamy od replikcji bazy *movies* (9579 dokumentów, ok. 16 MB) do
@@ -649,9 +734,7 @@ W bazie *movies* zapiszemy następujący widok
     }
 
 Widok zapisujemy w *_design/app* pod nazwą *rating_avg*.
-
-*Uwaga:* Ponownie zapisujemy różne rzeczy w logach CouchDB.
-W trakcie obliczeń warto je śledzić.
+(Zapisujemy też różne rzeczy w logu CouchDB.)
 
 Aby wyliczyć widok w Futonie w zakładce *View* wybieramy *rating_avg*
 i czekamy ok. minuty na przeliczenie widoku przez CouchDB.
@@ -664,12 +747,7 @@ Odpytywanie widoku *rating_avg* na konsoli:
     curl localhost:5984/movies/_design/app/_view/rating_avg?group_level=1
 
 
-## Złączenia w bazach CouchDB
-
-**TODO:**
-
-1. Osobny wykład.
-2. Zainstalować wtyczkę [**JSONView**](http://jsonview.com/) do Firefoksa.
+# Złączenia w bazach CouchDB
 
 …czyli co wynika z *Collation Specification*.
 
@@ -860,7 +938,8 @@ the various comments together to be able to retrieve them with
 
 Rozważmy taki widok (baza *blog-2*):
 
-    :::javascript
+    :::javascript map.js
+    // Funkcja Map
     function(doc) {
       if (doc.type == "post") {
         emit([doc._id, 0], null);
@@ -869,23 +948,8 @@ Rozważmy taki widok (baza *blog-2*):
       }
     }
 
-<!--
-    Key *doc* zamienić na *null* i skorzystać z *include_docs=true*;
-    jest OK bo nie ma funkcji reduce:
-
-    :::javascript
-    function(doc) {
-      if (doc.type == "post") {
-        emit([doc._id, 0], doc);
-      } else if (doc.type == "comment") {
-        emit([doc.post, 1], doc);
-      }
-    }
--->
-
-Jak on działa? Aby to zobaczyć, zapiszmy widok jako *_design/app/join*.
-
-Teraz odpytajmy ten widok, tak:
+Jak on działa? Aby to zobaczyć, zapiszmy widok w *_design/app*
+jako *join* i odpytajmy go:
 
     http://localhost:5984/blog-2/_design/app/_view/join?key=["02",0]&include_docs=true
       {
@@ -901,7 +965,7 @@ Teraz odpytajmy ten widok, tak:
          ]
       }
 
-albo tak:
+a nastepnie odpytajmy go tak i tak:
 
     http://localhost:5984/blog-2/_design/app/_view/join?key=["02",1]&include_docs=true
     http://localhost:5984/blog-2/_design/app/_view/join?startkey=["02"]&endkey=["03"]&include_docs=true
@@ -910,68 +974,7 @@ Bingo! To jest to! Zapytanie zwraca nam post (tutaj z *id* równym "02")
 i wszystkie komentarze do niego w **jednym żądaniu HTTP**.
 
 
-## TODO: *Rock* – programowanie po stronie klienta
+## TODO
 
-Do tej pory kodziliśmy po stronie serwera (ang. *server side programming*).
-Poniżej będzie przykład kodzenia po stronie klienta (ang. *client side programming*),
-gdzie skorzystamy z biblioteki *jquery.couch.js* (wykorzystanej też w Futonie).
-
-Zaczniemy od utworzenia tymczasowego widoku, który po przetestowaniu,
-zapiszemy w design document *test* pod nazwą *connection*:
-
-Funkcja map do wklejenia w *temporary view*:
-
-    :::javascript
-    function(doc) {
-      for (var who in doc.similar)
-        emit(doc.id, doc.similar[who]);
-    }
-
-Po zapisaniu widoku w bazie, odpytujemy go w przeglądarce:
-
-    http://localhost:5984/rock/_design/test/_view/connection
-
-Poniższy kod wpiszemy i wykonywamy w Firefoxie
-na konsoli rozszerzenia *Firebug*, czyli wykonamy go **po stronie klienta**.
-(Jeśli korzystamy z Google Chrome to kod wykonujemy na konsoli
-wbudowanej w tę przeglądarkę.)
-
-W przeglądarce, w zakładce z Futonem otwieramy okno z konsolą,
-gdzie wpisujemy:
-
-    :::javascript
-    var db = $.couch.db('rock')
-
-Następnie wpsiujemy i wykonujemy na konsoli:
-
-    :::javascript
-    db.view('test/connection', {
-      success: function(data) {
-        console.log( data.rows.map(function(o){ return o.value; }) );
-    }})
-
-I jeszcze raz na konsoli, tym razem zapytanie z jednym parametrem:
-
-    :::javascript
-    db.view("test/connection", {
-      key: 'jimmypage',
-      success: function(data) {
-        console.log( data.rows.map(function (o) { return o.value; }) );
-    }})
-
-Zobacz też Caolan McMahon,
-[Writing for node and the browser](http://caolanmcmahon.com/posts/writing_for_node_and_the_browser#/posts/writing_for_node_and_the_browser)
-
-
-## Linki
-
-CouchDB stuff:
-
-* [Interactive CouchDB](http://labs.mudynamics.com/wp-content/uploads/2009/04/icouch.html)
-* [Introduction to CouchDB Views](http://wiki.apache.org/couchdb/Introduction_to_CouchDB_views)
-
-Nieco Mongo docs:
-
-* [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
-* [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
-* [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
+1. Wyciąć rozdział ze złączeniami do osobnego wykładu.
+2. Zainstalować wtyczkę [**JSONView**](http://jsonview.com/) do Firefoksa.
