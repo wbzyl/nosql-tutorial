@@ -20,6 +20,7 @@ Tematy referatów:
 * **Wizualizacja danych**:
   - [d3.js](http://bost.ocks.org/mike/d3/workshop/);
     [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
+  - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
 * [Overpass API](http://www.overpass-api.de/) – Open Street Map data
 
 
