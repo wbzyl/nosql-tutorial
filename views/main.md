@@ -129,3 +129,5 @@ Warto też przeczytać artykuł Teda Newarda,
 1. Data Visualisation –
    [A Carefully Selected List of Recommended Tools](http://selection.datavisualization.ch/)
 1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
+1. Dan Foreman-Mackey.
+   [The open source report card](http://osrc.dfm.io/) – ciekawe!
