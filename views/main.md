@@ -83,7 +83,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "GeoCouch", "/couchdb-geo" %}
 1. {%= link_to "Szablony Mustache w CouchDB", "/couchdb-mustache" %}
 1. {%= link_to "View ≡ Map+Reduce", "/couchdb-views" %}
-1. {%= link_to "Generator przemówień i inne zastosowania…", "/couchdb-gp" %}
+1. {%= link_to "Zastosowania różne… generator przemówień…", "/couchdb-gp" %}
 1. {%= link_to "Funkcje Lists", "/couchdb-lists" %}
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}

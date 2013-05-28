@@ -1,4 +1,4 @@
-#### {% title "Generator przemówień i inne zastosowania…" %}
+#### {% title "Zastosowania różne…" %}
 
 <blockquote>
  <p>
@@ -8,87 +8,83 @@
  <p class="author"><a href="https://developer.mozilla.org/en-US/">[MDC]</a></p>
 </blockquote>
 
-Widok *markow*:
+## Generator przemówień
 
-    :::javascript markov.js
-    var couchapp = require('couchapp');
-    ddoc = {
-        _id: '_design/wc'
-      , views: {}
-    }
-    module.exports = ddoc;
+Widok *app/markov*.
 
-    ddoc.views.markov = {
-      map: function(doc) {
-          var words = doc.text.toLowerCase().
-            split(/\W+/).
-            filter(function(w) {
-              return w.length > 0;
-            });
+Funkcja map.
 
-          words.forEach(function(word, i) {
-            if (words.slice(i, 4+i).length > 3) {
-              emit(words.slice(i, 4+i), null);
-            };
-          });
-      },
-      reduce: "_count"
-    }
+    :::js
+    function(doc) {
+      words = doc.p.match(/[\w\u00C0-\u017F\-,.?!;:'"]+/g);
+      words.unshift("★", "★");
+      words.push("◀");
+      for (var i = 3, len = words.length; i <= len; i++) {
+        emit(words.slice(i-3,i), 1);
+      }
+    };
 
-Co generuje ten widok?
+Funkcja reduce.
 
-    http://localhost:5984/gutenberg/_design/wc/_view/markov?startkey=["young"]&endkey=["young",{}]&group_level=2
-      {"rows":[
-      {"key":["young","a"],"value":3},
-      {"key":["young","accept"],"value":1},
-      {"key":["young","adair"],"value":4},
-      {"key":["young","aide"],"value":1},
-      {"key":["young","alec"],"value":2},
-      ...
+    :::js
+    _count
 
-Skrypt *markov.rb* (tylko dla Ruby 1.9.2):
+Odpytywanie widoku *app/markov*:
 
-    :::ruby markov.rb
-    #!/usr/bin/env ruby
+    :::bash
+    http://localhost:5984/wb/_design/app/_view/markov  #! {"key":null, "value":407268}
+    http://localhost:5984/wb/_design/app/_view/markov?reduce=false&limit=16
 
-    require 'couchrest'
+    http://localhost:5984/wb/_design/app/_view/markov?group_level=1&limit=32
+    http://localhost:5984/wb/_design/app/_view/markov?group_level=2&limit=32
+    http://localhost:5984/wb/_design/app/_view/markov?group_level=3&limit=32
+
+    http://localhost:5984/wb/_design/app/_view/markov?group_level=3&startkey=["zza"]&limit=32
+
+    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★"]&group_level=2&limit=32
+    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&group_level=3&limit=128
+
+    # użyte w skrypcie poniżej
+    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&endkey=["★","★",{}]&group_level=3
+
+
+## Generate random paragraph
+
+Skrypt:
+
+    :::ruby
+    #! /usr/bin/env ruby
+    # -*- coding: utf-8 -*-
+
+    require 'bundler/setup'
+    require 'couchrest' # v1.2.0
 
     couch = CouchRest.new("http://localhost:5984")
-    DB = couch.database('gutenberg')
+    DB = couch.database('wb')
+
     WORD_MEMOIZER = {}
 
-    def probable_follower_for(word)
-      WORD_MEMOIZER[word] ||= DB.view('wc/markov', :startkey=>[word], :endkey=>[word,{}], :group_level=>2)
-      row = WORD_MEMOIZER[word]['rows'].sample # get random row (Ruby 1.9.2)
-      row['key'][1]
+    def probable_follower_for(start)
+      WORD_MEMOIZER[start] ||= DB.view('app/markov', startkey: start, :endkey=>[start, {}].flatten, :group_level=>3)
+      row = WORD_MEMOIZER[start]['rows'].sample # get random row (Ruby v1.9.2+)
+      return row['key'][1,2]
     end
 
-    word = ARGV[0]
-
-    max_words = 44
-    counter = 0
-    while word && counter < max_words
-      print word, " "
-      word = probable_follower_for(word)
-      counter += 1
+    bigram = ["★", "★"]
+    while true
+      bigram = probable_follower_for(bigram)
+      if bigram[1] == "◀"
+        break
+      else
+        print "#{bigram[1]} "
+      end
     end
-    print "\n"
-
-**Uwaga:** Jak będzie działał program jeśli zmienimy powyżej *group_level*:
-
-    group_level=3
-
-a jak dla:
-
-    group_level=4
 
 
-Program uruchamiamy z wiersza poleceń, dla przykładu:
+### Unicode Tables
 
-    ./markov.rb young
-    ./markov.rb young
-    ./markov.rb words
-    ./markov.rb words
+* [Unicode Table](http://www.tamasoft.co.jp/en/general-info/unicode.html)
+* U+2605 (★), U+25C0 (◀); see [Miscellaneous Symbols](http://www.unicode.org/charts/PDF/U2600.pdf)
 
 
 <blockquote>
