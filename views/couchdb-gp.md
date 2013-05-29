@@ -50,9 +50,9 @@ Odpytywanie widoku *app/markov*:
 
 ## Generate random paragraph
 
-Skrypt:
+Skrypt *generate-paragraph.rb*:
 
-    :::ruby
+    :::ruby generate-paragraph.rb
     #! /usr/bin/env ruby
     # -*- coding: utf-8 -*-
     require 'bundler/setup'
@@ -84,6 +84,11 @@ Skrypt:
 
     generator = Generator.new("http://localhost:5984", "wb")
     generator.run
+
+Skrypt uruchamiamy tak:
+
+    :::bash
+    ./generate-paragraph.rb | fmt
 
 
 ### Unicode Tables
