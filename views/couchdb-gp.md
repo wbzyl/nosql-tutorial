@@ -90,6 +90,10 @@ Skrypt uruchamiamy tak:
     :::bash
     ./generate-paragraph.rb | fmt
 
+*TODO:* Jak działa skrypt?
+
+    :::
+
 
 ### Unicode Tables
 
