@@ -1,18 +1,17 @@
 #### {% title "Zastosowania różne…" %}
 
 <blockquote>
- <p>
-  To ease the strain on our keyboards Mozilla recently introduced
-  a handy forEach method for arrays: <i>array.forEach(print);</i>
- </p>
- <p class="author"><a href="https://developer.mozilla.org/en-US/">[MDC]</a></p>
+ {%= image_tag "/images/trigrams.jpg", :alt => "[Trigrams]" %}
 </blockquote>
 
-## Generator przemówień
 
-Widok *app/markov*.
+## Generator losowych akapitów
 
-Funkcja map.
+…znany też pod nazwą generatora przemówień, to program generujący
+tekst korzystający z [n-gramów](http://en.wikipedia.org/wiki/N-gram).
+
+Użyjemy widoku CouchDB *app/markov* w którym zapiszemy
+następującą funkcję map:
 
     :::js
     function(doc) {
@@ -20,37 +19,59 @@ Funkcja map.
       words.unshift("★", "★");
       words.push("◀");
       for (var i = 3, len = words.length; i <= len; i++) {
-        emit(words.slice(i-3,i), 1);
+        emit(words.slice(i-3,i), null);
       }
     };
 
-Funkcja reduce.
+Jak widać, na początku akapitu dodajemy dwie „gwiazdki”
+(tak zaznaczamy początek akapitu), a na końcu „trójkąt”
+(a tak – koniec akapitu).
+Tak wydłużony akapit dzielimy na *trigramy*, które
+zapisujemy w widoku *app/markov*. Na przykład, z akapitu:
 
-    :::js
-    _count
+    ★ ★ - A słowo stało się ciałem! ◀
 
-Odpytywanie widoku *app/markov*:
+tworzymy następujące trigramy:
+
+    ★ ★ -
+    ★ - A
+    - A słowo
+    A słowo stało
+    słowo stało się
+    stało się ciałem!
+    się ciałem! ◀
+
+Teraz, poniższe zapytanie wygeneruje listę pierwszych słów akapitów:
 
     :::bash
-    http://localhost:5984/wb/_design/app/_view/markov  #! {"key":null, "value":407268}
-    http://localhost:5984/wb/_design/app/_view/markov?reduce=false&limit=16
+    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&endkey=["★","★",{}]
 
-    http://localhost:5984/wb/_design/app/_view/markov?group_level=1&limit=32
-    http://localhost:5984/wb/_design/app/_view/markov?group_level=2&limit=32
-    http://localhost:5984/wb/_design/app/_view/markov?group_level=3&limit=32
+Skrypt *generate-paragraph.rb* „pobiera” z widoku listę wszystkich trigramów
+zaczynających się od bigramu, na przykład – `["we", "drzwiach"]`:
 
-    http://localhost:5984/wb/_design/app/_view/markov?group_level=3&startkey=["zza"]&limit=32
+    {"total_rows":407268,"offset":355049,"rows":[
+    {"id":"368a8d7d65caf0d871f99fb51c8aa824","key":["we","drzwiach","głównego"],"value":null},
+    {"id":"1c05db1cf5b3f8137fbea24de781b5dd","key":["we","drzwiach","i"],"value":null},
+    {"id":"1c05db1cf5b3f8137fbea24de7f21de7","key":["we","drzwiach","i"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51c68b507","key":["we","drzwiach","i"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51cf64351","key":["we","drzwiach","i"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51cda220d","key":["we","drzwiach","komory,"],"value":null},
+    {"id":"1c05db1cf5b3f8137fbea24de7412c7e","key":["we","drzwiach","na"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51c3ddf11","key":["we","drzwiach","pojawiła"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51cf32eb0","key":["we","drzwiach","sieni,"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51cadf900","key":["we","drzwiach","sieni."],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51c5b215a","key":["we","drzwiach","spojrzał"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51c20024f","key":["we","drzwiach","ukazało"],"value":null},
+    {"id":"368a8d7d65caf0d871f99fb51c8975eb","key":["we","drzwiach","widziałem,"],"value":null}
+    ]}
 
-    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★"]&group_level=2&limit=32
-    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&group_level=3&limit=128
+Z pobranej listy losowany jest trigram, na przykład: `["we","drzwiach","sieni"]`.
+Słowo *sieni* wypisujemy i odpytujemy ponownie widok. Ale tym razem używamy
+bigramu `["drzwiach", "sieni"]`. Powtarzamy losowanie, wpisujemy wylosowane słowo itd.
 
-    # użyte w skrypcie poniżej
-    http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&endkey=["★","★",{}]&group_level=3
-
-
-## Generate random paragraph
-
-Skrypt *generate-paragraph.rb*:
+Wypisywane zaczynamy od bigramu reprezentującego początek akapitu
+`["★","★"]`, a Kończymy po napotkaniu trigramu zawierającego znak
+końca kapitu `◀`.
 
     :::ruby generate-paragraph.rb
     #! /usr/bin/env ruby
@@ -76,7 +97,7 @@ Skrypt *generate-paragraph.rb*:
       end
     private
       def probable_follower_for(start)
-        view = @db.view('app/markov', startkey: start, :endkey=>[start, {}].flatten, :group_level=>3)
+        view = @db.view('app/markov', startkey: start, :endkey=>[start, {}].flatten)
         row = view['rows'].sample # get random row (Ruby v1.9.2+)
         return row['key'][1,2]
       end
@@ -90,9 +111,18 @@ Skrypt uruchamiamy tak:
     :::bash
     ./generate-paragraph.rb | fmt
 
-*TODO:* Jak działa skrypt?
+Oto wygenerowany akapit:
 
-    :::
+    Pan Czarniecki umyślnie podesłał języka, aby nas w Suchej
+    obtarli. Wielu go widziało.
+
+
+### Natural Language Corpus Data
+
+* [Google Books Ngram Viewer](http://storage.googleapis.com/books/ngrams/books/datasetsv2.html)
+* Peter Norvig, [Natural Language Corpus Data](http://norvig.com/ngrams):
+  - [shakespeare.txt](http://norvig.com/ngrams/shakespeare.txt) –
+  - [Natural Language Corpus Data](http://norvig.com/ngrams/ch14.pdf)
 
 
 ### Unicode Tables

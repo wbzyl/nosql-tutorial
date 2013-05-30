@@ -24,7 +24,7 @@ class Generator
 private
 
   def probable_follower_for(start)
-    view = @db.view('app/markov', startkey: start, :endkey=>[start, {}].flatten, :group_level=>3)
+    view = @db.view('app/markov', startkey: start, :endkey=>[start, {}].flatten)
     row = view['rows'].sample # get random row (Ruby v1.9.2+)
     return row['key'][1,2]
   end
