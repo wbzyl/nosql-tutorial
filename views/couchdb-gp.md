@@ -127,6 +127,9 @@ Oto wygenerowany akapit:
 * [Google Books Ngram Viewer](http://storage.googleapis.com/books/ngrams/books/datasetsv2.html)
 * Peter Norvig, [Natural Language Corpus Data](http://norvig.com/ngrams):
   - [shakespeare.txt](http://norvig.com/ngrams/shakespeare.txt) –
+  the complete works of Shakespeare, tokenized so that there
+  is a space between words and punctuation
+  (from John DeNero)
   - [Natural Language Corpus Data](http://norvig.com/ngrams/ch14.pdf)
 
 I jeszcze jeden „szekspirowski” przykład:
