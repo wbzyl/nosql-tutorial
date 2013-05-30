@@ -10,8 +10,9 @@
 …znany też pod nazwą generatora przemówień, to program generujący
 tekst korzystający z [n-gramów](http://en.wikipedia.org/wiki/N-gram).
 
-Użyjemy widoku CouchDB *app/markov* w którym zapiszemy
-następującą funkcję map:
+Wszystkie akapity z ksiązki „Potop” H. Sienkiewicza zapisane są
+w bazie *wb*. Zapiszemy w niej widok *app/markov* o takiej
+funkcji map:
 
     :::js
     function(doc) {
@@ -22,6 +23,8 @@ następującą funkcję map:
         emit(words.slice(i-3,i), null);
       }
     };
+
+(widok bez funkcji reduce.)
 
 Jak widać, na początku akapitu dodajemy dwie „gwiazdki”
 (tak zaznaczamy początek akapitu), a na końcu „trójkąt”
