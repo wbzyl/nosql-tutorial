@@ -1,4 +1,4 @@
-#### {% title "Zastosowania różne…" %}
+#### {% title "Kilka zastosowań widoków" %}
 
 <blockquote>
  {%= image_tag "/images/trigrams.jpg", :alt => "[Trigrams]" %}
