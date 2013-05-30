@@ -65,7 +65,6 @@ Bazę (16 dokumentów + 1 dokument _design) replikujemy z mojego serwera
 [couch](http://couch.inf.ug.edu.pl/_utils/database.html?ls).
 Zakładam, że zreplikowaną bazę nazwano *ls*:
 
-    :::
     (remote) http://couch.inf.ug.edu.pl/ls -> (local) ls
 
 
