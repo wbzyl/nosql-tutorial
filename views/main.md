@@ -12,6 +12,7 @@ Tematy referatów:
 * **Wprowadzenie do Neo4j**:
   - [Using a Graph Database with Ruby. Part I: Introduction](http://rubysource.com/using-a-graph-database-with-ruby-part-i-introduction/)
   - [Using a Graph Database with Ruby, Part II: Integration](http://rubysource.com/using-a-graph-database-with-ruby-part-ii-integration/)
+  - [On Importing Data into Neo4j](http://jexp.de/blog/2013/05/on-importing-data-in-neo4j-blog-series/)
   - [Visualizing Fraud Data with Cambridge Intelligence](http://vimeo.com/64827612)
 * **Co to jest Hadoop?**
 * **Redis = Data Structure Engine**:
