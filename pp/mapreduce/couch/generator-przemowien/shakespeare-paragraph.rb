@@ -31,6 +31,6 @@ private
 
 end
 
-generator = Generator.new("http://localhost:5984", "wb")
+generator = Generator.new("http://localhost:5984", "shakespeare")
 generator.run
 print "\n"

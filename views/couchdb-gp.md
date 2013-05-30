@@ -41,37 +41,42 @@ tworzymy następujące trigramy:
     stało się ciałem!
     się ciałem! ◀
 
-Teraz, poniższe zapytanie wygeneruje listę pierwszych słów akapitów:
+Takie odpytanie widoku:
 
     :::bash
     http://localhost:5984/wb/_design/app/_view/markov?startkey=["★","★"]&endkey=["★","★",{}]
 
+wygeneruje listę pierwszych słów akapitów (dlaczego?).
+
 Skrypt *generate-paragraph.rb* „pobiera” z widoku listę wszystkich trigramów
-zaczynających się od bigramu, na przykład – `["we", "drzwiach"]`:
+zaczynających się od bigramu. Przykładowo dla bigramu `["we", "drzwiach"]`
+zostanie pobrana taka lista:
 
     {"total_rows":407268,"offset":355049,"rows":[
-    {"id":"368a8d7d65caf0d871f99fb51c8aa824","key":["we","drzwiach","głównego"],"value":null},
-    {"id":"1c05db1cf5b3f8137fbea24de781b5dd","key":["we","drzwiach","i"],"value":null},
-    {"id":"1c05db1cf5b3f8137fbea24de7f21de7","key":["we","drzwiach","i"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51c68b507","key":["we","drzwiach","i"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51cf64351","key":["we","drzwiach","i"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51cda220d","key":["we","drzwiach","komory,"],"value":null},
-    {"id":"1c05db1cf5b3f8137fbea24de7412c7e","key":["we","drzwiach","na"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51c3ddf11","key":["we","drzwiach","pojawiła"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51cf32eb0","key":["we","drzwiach","sieni,"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51cadf900","key":["we","drzwiach","sieni."],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51c5b215a","key":["we","drzwiach","spojrzał"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51c20024f","key":["we","drzwiach","ukazało"],"value":null},
-    {"id":"368a8d7d65caf0d871f99fb51c8975eb","key":["we","drzwiach","widziałem,"],"value":null}
+    {"id":"368aaa824","key":["we","drzwiach","głównego"],"value":null},
+    {"id":"1c051b5dd","key":["we","drzwiach","i"],"value":null},
+    {"id":"1c0521de7","key":["we","drzwiach","i"],"value":null},
+    {"id":"368a8b507","key":["we","drzwiach","i"],"value":null},
+    {"id":"368a64351","key":["we","drzwiach","i"],"value":null},
+    {"id":"368aa220d","key":["we","drzwiach","komory,"],"value":null},
+    {"id":"1c0512c7e","key":["we","drzwiach","na"],"value":null},
+    {"id":"368addf11","key":["we","drzwiach","pojawiła"],"value":null},
+    {"id":"368a32eb0","key":["we","drzwiach","sieni,"],"value":null},
+    {"id":"368adf900","key":["we","drzwiach","sieni."],"value":null},
+    {"id":"368ab215a","key":["we","drzwiach","spojrzał"],"value":null},
+    {"id":"368a0024f","key":["we","drzwiach","ukazało"],"value":null},
+    {"id":"368a975eb","key":["we","drzwiach","widziałem,"],"value":null}
     ]}
 
-Z pobranej listy losowany jest trigram, na przykład: `["we","drzwiach","sieni"]`.
-Słowo *sieni* wypisujemy i odpytujemy ponownie widok. Ale tym razem używamy
-bigramu `["drzwiach", "sieni"]`. Powtarzamy losowanie, wpisujemy wylosowane słowo itd.
+Z tej listy losowany jest trigram. Jeśli wylosowano
+`["we","drzwiach","sieni"]`, to słowo *sieni* wypisujemy. Następnie
+ponownie odpytujemy widok, ale tym razem używamy „przesuniętego”
+bigramu `["drzwiach", "sieni"]`.  Powtarzamy losowanie, wpisujemy
+wylosowane słowo itd.
 
 Wypisywane zaczynamy od bigramu reprezentującego początek akapitu
-`["★","★"]`, a Kończymy po napotkaniu trigramu zawierającego znak
-końca kapitu `◀`.
+`["★","★"]`, a kończymy po napotkaniu trigramu zawierającego znak
+końca kapitu `◀`
 
     :::ruby generate-paragraph.rb
     #! /usr/bin/env ruby
@@ -80,9 +85,9 @@ końca kapitu `◀`.
     require 'couchrest'
 
     class Generator
-      def initialize(couch, db)
-        couch = CouchRest.new("http://localhost:5984")
-        @db = couch.database('wb')
+      def initialize(uri, db)
+        couch = CouchRest.new(uri)
+        @db = couch.database(db)
       end
       def run
         bigram = ["★", "★"]
@@ -123,6 +128,13 @@ Oto wygenerowany akapit:
 * Peter Norvig, [Natural Language Corpus Data](http://norvig.com/ngrams):
   - [shakespeare.txt](http://norvig.com/ngrams/shakespeare.txt) –
   - [Natural Language Corpus Data](http://norvig.com/ngrams/ch14.pdf)
+
+I jeszcze jeden „szekspirowski” przykład:
+
+    ./shakespeare-paragraph.rb  | fmt
+    How now , my lord , when you come to this ?
+
+**Pytanie:** Jak generować rymowany tekst?
 
 
 ### Unicode Tables
