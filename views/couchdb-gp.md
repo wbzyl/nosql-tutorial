@@ -10,8 +10,8 @@
 …znany też pod nazwą generatora przemówień, to program generujący
 tekst korzystający z [n-gramów](http://en.wikipedia.org/wiki/N-gram).
 
-Wszystkie akapity z ksiązki „Potop” H. Sienkiewicza zapisane są
-w bazie *wb*. Zapiszemy w niej widok *app/markov* o takiej
+Każdy akapit z książki „Potop” H. Sienkiewicza zapisano w bazie *wb*
+jako osobny dokument. Do bazy dodajemy widok *app/markov* o takiej
 funkcji map:
 
     :::js
