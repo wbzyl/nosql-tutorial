@@ -32,7 +32,7 @@ client = MongoClient.new('localhost', 27017)
 db     = client['test']
 coll   = db['trigrams']
 
-line = Line.new('text')
+line = Line.new('text8')
 
 trigram = [line.get_word, line.get_word, line.get_word]
 
@@ -46,7 +46,7 @@ while true
     break
   else
     trigram.push(word).shift
-    puts "#{trigram}"
+    # puts "#{trigram}"
     coll.insert( { _id: n, t: trigram} )
     n += 1
   end
