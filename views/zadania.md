@@ -23,7 +23,7 @@ Aby zaliczyć laboratorium należy wykonać poniższe dwa zadania.
   Przykładowe dane: baza danych z kodami pocztowymi ze
   strony [Sejmometr](http://sejmometr.pl/api).
   Opis tego co zostało zrobione należy umieścić w tym repozytorium:
-  [Data Refine](https://github.com/nosql/data-refine) (team – Data Wranglers).
+  [Data Refine](https://github.com/nosql/data-refine).
 * Zapisać dane w w bazach: MongoDB, CouchDB i Elasticsearch.
   (Oczywiście, należy napisać skrypt, który to za nas zrobi.)
 * Przenieść zapisane dane do bazy PostgreSQL.
@@ -32,7 +32,7 @@ Aby zaliczyć laboratorium należy wykonać poniższe dwa zadania.
 
 * Przygotować funkcje map oraz reduce dla swoich danych (MongoDB, CouchDB).
 * Dodać opis tego co zostało zrobione do tego repozytorium:
-  [map-reduce](https://github.com/nosql/map-reduce) (team – Map Reducers).
+  [map-reduce](https://github.com/nosql/map-reduce).
   W pliku *README.md* dopisać się do spisu treści.
   Przykład:
   [MapReduce multiple MongoDB collections into one](http://www.pal-blog.de/entwicklung/mongodb/2013/mapreduce-multiple-mongodb-collections-into-one.html).
