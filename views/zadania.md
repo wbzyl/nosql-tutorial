@@ -8,7 +8,9 @@
  <p class="author"><a href="http://www.canonical.org/~kragen/tao-of-programming.html">The Tao of Programming 2.1</a></p>
 </blockquote>
 
-Aby zaliczyć laboratorium należy:
+Aby zaliczyć laboratorium należy wykonać poniższe dwa zadania.
+
+### Zadanie 1
 
 * Wyszukać w sieci ciekawe dane.
 * Oczyścić dane za pomocą jednego z narzędzi:
@@ -21,16 +23,16 @@ Aby zaliczyć laboratorium należy:
   Przykładowe dane: baza danych z kodami pocztowymi ze
   strony [Sejmometr](http://sejmometr.pl/api).
   Opis tego co zostało zrobione należy umieścić w tym repozytorium:
-  [Data Refine](https://github.com/nosql/data-refine) (team – Data Wranglers).
+  [Data Refine](https://github.com/nosql/data-refine).
 * Zapisać dane w w bazach: MongoDB, CouchDB i Elasticsearch.
   (Oczywiście, należy napisać skrypt, który to za nas zrobi.)
 * Przenieść zapisane dane do bazy PostgreSQL.
 
-Na lepszą ocenę należy:
+### Zadanie 2
 
 * Przygotować funkcje map oraz reduce dla swoich danych (MongoDB, CouchDB).
 * Dodać opis tego co zostało zrobione do tego repozytorium:
-  [map-reduce](https://github.com/nosql/map-reduce) (team – Map Reducers).
+  [map-reduce](https://github.com/nosql/map-reduce).
   W pliku *README.md* dopisać się do spisu treści.
   Przykład:
   [MapReduce multiple MongoDB collections into one](http://www.pal-blog.de/entwicklung/mongodb/2013/mapreduce-multiple-mongodb-collections-into-one.html).
@@ -56,9 +58,6 @@ liczb całkowitych wyliczy:
 (b) średnią z liczb z tego zbioru,
 (c) liczby które występują najczęściej w tym zbiorze,
 (d) liczbę różnych liczb z tego zbioru.
-
-Jaka jest efektwność zaimplementowanych algorytmów?
-Zobacz [2.5 Efficiency of Cluster-Computing Algorithms](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf).
 
 Zadania 2–3 pochodzą z rozdziału 2
 [Large-Scale File Systems and Map-Reduce](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf)
