@@ -133,8 +133,8 @@ Full info z logów:
     {
       "_id" : { "$oid" : "4e42314c7fb325c5f9090e72" },
       "time" : { "$date" : 1312960845000 },
-      "hostname" : "inf.ug.edu.pl",
-      "client" : "213.77.77.4",
+      "hostname" : "ii.gda.edu",
+      "client" : "222.77.77.44",
       "request" : "GET /index.php?url=err/404.php HTTP/1.1",
       "status" : "200",
       "responsesize" : "8380",
@@ -147,7 +147,7 @@ Tylko te pola będą potrzebne do poniższego przykładu:
     {
       "_id" : { "$oid" : "4e42314c7fb325c5f9090e72" },
       "time" : { "$date" : 1312960845000 },
-      "client" : "213.77.77.4",
+      "client" : "222.77.77.44",
     }
 
 Pierwszy przebieg:
