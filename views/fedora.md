@@ -113,7 +113,7 @@ an easy way to install elasticsearch on fedora/rhel based systems.
 
 Niestety instalacja opisana w *README.md* nie działa. Musiałem ją nieco zmodyfikować.
 
-1\. Symlink SPEC i żródła:
+1\. Tworzymy link symboliczny do SPEC i źródeł:
 
     :::bash
     cd rpmbuild
