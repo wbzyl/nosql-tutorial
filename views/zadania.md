@@ -22,7 +22,7 @@ Skorzystamy z danych udostępnionych na ten konkurs przez
 
 * [Train.zip](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/download/Train.zip) – 2.19 GB
 
-Archiwum *Test.zip* zawiera plik *Train.csv* (6.8 GB).
+Archiwum *Train.zip* zawiera plik *Train.csv* (6.8 GB).
 Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 
 * `Id` – Unique identifier for each question
@@ -38,6 +38,10 @@ Przykładowy rekord:
     <p>Rene</p>
     ","firefox"
 
+Zadanie polega na zaimportowaniu danych z pliku *Train.csv* do baz
+MongoDB i PostgreSQL. Po zaimportowaniu należy zliczyć liczbę
+zimportowanych rekordów. Dodatkowo należy zliczyć liczbę różnych
+tagów.
 
 
 ### Zadanie 2
