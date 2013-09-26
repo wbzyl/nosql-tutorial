@@ -7,7 +7,7 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
-Tematy referatów:
+Proponowane tematy referatów:
 
 * **Co to jest Hadoop?**
 * **Wprowadzenie do Neo4j**:
@@ -19,6 +19,7 @@ Tematy referatów:
   - [d3.js](http://bost.ocks.org/mike/d3/workshop/);
     [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
   - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
+  - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
 
 
 ## Co to jest „NoSQL”?
