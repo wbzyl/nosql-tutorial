@@ -39,10 +39,8 @@ Przykładowy rekord:
     ","firefox"
 
 Zadanie polega na zaimportowaniu danych z pliku *Train.csv* do baz
-MongoDB i PostgreSQL uruchomionych na **swoim komputerze*.
-Po zaimportowaniu należy zliczyć liczbę
-zimportowanych rekordów. Dodatkowo należy zliczyć liczbę różnych
-tagów.
+MongoDB i PostgreSQL uruchomionych na **swoim komputerze*.  Następnie
+należy zliczyć liczbę zaimportowanych rekordów oraz liczbę różnych tagów.
 
 
 ### Zadanie 2
