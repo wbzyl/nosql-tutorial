@@ -123,7 +123,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
 1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
 
-Użyteczne informacje:
+Użyteczne linki:
 
 1. Jimmy Lin, Chris Dyer,
    [Data-Intensive Text Processing with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html)
@@ -133,3 +133,5 @@ Użyteczne informacje:
 1. [Overpass API](http://www.overpass-api.de/) – Open Street Map data
 1. Dan Foreman-Mackey.
    [The open source report card](http://osrc.dfm.io/) – ciekawe!
+1. Alberto Diego Prieto Löfkrantz.
+   [Do you know Cassandra?](http://blogs.atlassian.com/2013/09/do-you-know-cassandra)
