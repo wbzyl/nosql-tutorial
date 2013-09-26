@@ -23,11 +23,12 @@ My skorzystamy z udostępnionych przez Facebook danych:
 * [Train.zip](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/download/Train.zip) – 2.19 GB
 
 Archiwum *Test.zip* zawiera plik *Train.csv* (6.8 GB).
-Każdy rekord zawiera cztery pola:
+Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 
-```
-"Id","Title","Body","Tags"
-```
+* `Id` – Unique identifier for each question
+* `Title` – The question's title
+* `Body` – The body of the question
+* `Tags` – The tags associated with the question (all lowercase, should not contain tabs '\t' or ampersands '&')
 
 Przykładowy rekord:
 
