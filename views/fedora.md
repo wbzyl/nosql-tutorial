@@ -104,6 +104,45 @@ Status MongoDB sprawdzamy w taki sposób:
     systemctl status mongod.service
 
 
+## ElasticSearch
+
+Pobieramy gotowy RPM ze strony [Download | Elasticsearch](http://www.elasticsearch.org/download/).
+
+Możemy też skorzystać z [Elasticsearch RPMs](https://github.com/tavisto/elasticsearch-rpms) –
+an easy way to install elasticsearch on fedora/rhel based systems.
+
+Niestety instalacja opisana w *README.md* nie działa. Musiałem ją nieco zmodyfikować.
+
+1\. Symlink SPEC i żródła:
+
+    :::bash
+    cd rpmbuild
+    cp ${repo}/SPECS/elasticsearch.spec SPECS/elasticsearch.spec
+    ln -s ${repo}/SOURCES/* SOURCES/
+
+2\. Edytujemy plik *elasticsearch.spec* wpisując aktualną
+wersję [elasticsearch]()
+
+3\. Pobieramy źródła:
+
+    :::bash
+    spectool -g SPECS/elasticsearch.spec
+
+4\. Budujemy SRPM i instalujemy
+
+    :::bash
+    rpmbuild -bs SPECS/elasticsearch.spec
+    sudo yum install RPMS/x86_64/elasticsearch-0.90.5-1.fc16.x86_64.rpm
+
+5\. Postępując w podobny sposób budujemy NOARCH dla wybranych
+wtyczek i instalujemy je za pomocą programu *yum*:
+
+    :::bash
+    sudo yum install RPMS/noarch/elasticsearch-plugin-lang-javascript-1.1.0-2.fc16.noarch.rpm
+    sudo yum install RPMS/noarch/elasticsearch-plugin-river-wikipedia-1.1.0-2.fc16.noarch.rpm
+
+
+
 ## CouchDB
 
 Postępujemy podobnie jak w przypadku MongoDB. Korzystamy
@@ -184,19 +223,3 @@ Nginx:
 Teraz CouchDB jest dostępny pod takim URI:
 
     http://couch.local
-
-
-## ElasticSearch
-
-[Elasticsearch RPMs](https://github.com/tavisto/elasticsearch-rpms) –
-an easy way to install elasticsearch on fedora/rhel based systems.
-
-
-## Redis
-
-TODO.
-
-
-## PostgreSQL
-
-TODO.

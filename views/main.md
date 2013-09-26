@@ -9,20 +9,16 @@
 
 Tematy referatów:
 
+* **Co to jest Hadoop?**
 * **Wprowadzenie do Neo4j**:
   - [Using a Graph Database with Ruby. Part I: Introduction](http://rubysource.com/using-a-graph-database-with-ruby-part-i-introduction/)
   - [Using a Graph Database with Ruby, Part II: Integration](http://rubysource.com/using-a-graph-database-with-ruby-part-ii-integration/)
   - [On Importing Data into Neo4j](http://jexp.de/blog/2013/05/on-importing-data-in-neo4j-blog-series/)
   - [Visualizing Fraud Data with Cambridge Intelligence](http://vimeo.com/64827612)
-* **Co to jest Hadoop?**
-* **Redis = Data Structure Engine**:
-  - [Redis tutorial, April 2010](http://simonwillison.net/static/2010/redis-tutorial/)
-  - [Redis: Zero to Master in 30 minutes](http://openmymind.net/2011/11/8/Redis-Zero-To-Master-In-30-Minutes-Part-1/)
 * **Wizualizacja danych**:
   - [d3.js](http://bost.ocks.org/mike/d3/workshop/);
     [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
   - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
-* [Overpass API](http://www.overpass-api.de/) – Open Street Map data
 
 
 ## Co to jest „NoSQL”?
@@ -129,6 +125,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)
 1. Data Visualisation –
    [A Carefully Selected List of Recommended Tools](http://selection.datavisualization.ch/)
+1. [Overpass API](http://www.overpass-api.de/) – Open Street Map data
 1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
 1. Dan Foreman-Mackey.
    [The open source report card](http://osrc.dfm.io/) – ciekawe!
