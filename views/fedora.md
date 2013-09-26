@@ -113,7 +113,7 @@ an easy way to install elasticsearch on fedora/rhel based systems.
 
 Niestety instalacja opisana w *README.md* nie działa. Musiałem ją nieco zmodyfikować.
 
-1\. Tworzymy link symboliczny do SPEC i źródeł:
+1\. Tworzymy link symboliczny do pliku SPEC i źródeł:
 
     :::bash
     cd rpmbuild
@@ -121,20 +121,20 @@ Niestety instalacja opisana w *README.md* nie działa. Musiałem ją nieco zmod
     ln -s ${repo}/SOURCES/* SOURCES/
 
 2\. Edytujemy plik *elasticsearch.spec* wpisując aktualną
-wersję [elasticsearch]()
+wersję [Elasticsearch](www.elasticsearch.org/download/).
 
-3\. Pobieramy źródła:
+3\. Pobieramy źródła Elasticsearch:
 
     :::bash
     spectool -g SPECS/elasticsearch.spec
 
-4\. Budujemy SRPM i instalujemy
+4\. Budujemy plik SRPM i instalujemy Elasticsearch:
 
     :::bash
     rpmbuild -bs SPECS/elasticsearch.spec
     sudo yum install RPMS/x86_64/elasticsearch-0.90.5-1.fc16.x86_64.rpm
 
-5\. Postępując w podobny sposób budujemy NOARCH dla wybranych
+5\. Postępując w podobny sposób budujemy pliki NOARCH dla wybranych
 wtyczek i instalujemy je za pomocą programu *yum*:
 
     :::bash
