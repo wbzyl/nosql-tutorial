@@ -110,8 +110,6 @@ Warto też przeczytać artykuł Teda Newarda,
 
 ## Laboratoria
 
-*  {%= link_to "Instalacja ze źródeł CouchDB, MongoDB, Redis oraz ElasticSearch", "/instalacja" %}
-*  {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
 *  {%= link_to "Zadania", "/zadania" %}
 
 
@@ -120,12 +118,17 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
 1. {%= link_to "Mustache – wąsate szablony", "/mustache" %}
 1. {%= link_to "D3.js", "/d3js" %}
+1. {%= link_to "Instalacja ze źródeł CouchDB, MongoDB, Redis oraz ElasticSearch", "/instalacja" %}
+1. {%= link_to "NodeJS+NPM", "/nodejs_npm" %}
+1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
+
+Użyteczne informacje:
+
 1. Jimmy Lin, Chris Dyer,
    [Data-Intensive Text Processing with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html)
 1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)
 1. Data Visualisation –
    [A Carefully Selected List of Recommended Tools](http://selection.datavisualization.ch/)
 1. [Overpass API](http://www.overpass-api.de/) – Open Street Map data
-1. {%= link_to "Przygotowywanie paczek RPM dla Fedory 16+", "/fedora" %}
 1. Dan Foreman-Mackey.
    [The open source report card](http://osrc.dfm.io/) – ciekawe!
