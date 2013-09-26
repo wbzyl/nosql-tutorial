@@ -59,6 +59,11 @@ avg. no. of tags/question: 2.89
 3 : 28.65
 4 : 19.1
 
+PostgreSQL:
+
+create table RAW_TRAIN(ID BIGINT PRIMARY KEY, TITLE TEXT, BODY TEXT, TAGS TEXT);
+copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
+
 -->
 
 
