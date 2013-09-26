@@ -33,7 +33,7 @@ Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 Przykładowy rekord:
 
     :::csv
-    "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor (vim), […]</p>
+    "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor […]</p>
 
     <p>Rene</p>
     ","firefox"
