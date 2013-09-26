@@ -8,42 +8,69 @@
  <p class="author"><a href="http://www.canonical.org/~kragen/tao-of-programming.html">The Tao of Programming 2.1</a></p>
 </blockquote>
 
-Aby zaliczyć laboratorium należy wykonać poniższe dwa zadania.
+Aby zaliczyć laboratorium należy przeczytać
+[The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
+i wykonać zadania 1 i 2:
 
 ### Zadanie 1
 
+Kaggle challenge.
+
+
+### Zadanie 2
+
 * Wyszukać w sieci ciekawe dane.
-* Oczyścić dane za pomocą jednego z narzędzi:
+* Jeśli to konieczne, oczyścić dane za pomocą jednego z narzędzi:
   [Google Refine](http://code.google.com/p/google-refine/)
   ([Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
   [Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
   [Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk))
   lub
   [Data Wrangler](http://vis.stanford.edu/wrangler/).
-  Przykładowe dane: baza danych z kodami pocztowymi ze
-  strony [Sejmometr](http://sejmometr.pl/api).
-  Opis tego co zostało zrobione należy umieścić w tym repozytorium:
-  [Data Refine](https://github.com/nosql/data-refine).
-* Zapisać dane w w bazach: MongoDB, CouchDB i Elasticsearch.
-  (Oczywiście, należy napisać skrypt, który to za nas zrobi.)
-* Przenieść zapisane dane do bazy PostgreSQL.
+* Zapisać dane w jednej z baz: MongoDB, CouchDB lub Elasticsearch.
+  (Oczywiście, należy uzyć skryptu, który to za nas zrobi.)
+* Obmyśleć, zaprogramować i wykonać prostą aggregację na danych
+  zapisanych w bazie.
+  Dodać opis tego co zostało zrobione do tego repozytorium
+  [Data Refine 2](https://github.com/nosql/aggregations-2).
+  Jeśli dane były czyszczone, to dodać opis jak i co oraz dlaczego
+  dane były czyszczone.
 
-### Zadanie 2
 
-* Przygotować funkcje map oraz reduce dla swoich danych (MongoDB, CouchDB).
+<blockquote>
+ {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
+ <p>
+  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
+  Napisz najprawdziwsze zdanie, jakie znasz.
+ </p>
+ <p class="author">— Ernest Hemingway</p>
+</blockquote>
+
+# Egzamin
+
+Na ocenę dst z egzaminu należy wykonać zadanie 3 poniżej.
+
+### Zadanie 3
+
+* Przygotować funkcje map oraz reduce w MongoDB lub CouchDB.
+  Dla danych zapisanych w Elasticsearch przygotować
+  [faceted search](http://www.elasticsearch.org/guide/reference/api/search/facets/))
 * Dodać opis tego co zostało zrobione do tego repozytorium:
-  [map-reduce](https://github.com/nosql/map-reduce).
-  W pliku *README.md* dopisać się do spisu treści.
-  Przykład:
-  [MapReduce multiple MongoDB collections into one](http://www.pal-blog.de/entwicklung/mongodb/2013/mapreduce-multiple-mongodb-collections-into-one.html).
+  [map-reduce](https://github.com/nosql/mapreduce-2).
 
-Do eksperymentów można skorzystać z tych danych wzorcowych:
+Do eksperymentów można użyć tych danych wzorcowych:
 
 * [PUMA: Purdue MapReduce Benchmarks Suite](http://web.ics.purdue.edu/~fahmad/benchmarks.htm)
 * [PUMA Benchmarks and dataset downloads](http://web.ics.purdue.edu/~fahmad/benchmarks/datasets.htm)
 
+Na wyższą ocenę należy przygotować w zespole 4–5 osobowym aplikację
+wykorzystujacą jedną z baz danych NoSQL albo
+przygotować prezentację
+jednego z tematów podanych na stronie głównej tego wykładu.
 
-## Przykładowe zadania z MapReduce
+
+
+# Przykładowe zadania z MapReduce
 
 1\. Znaleźć najczęściej występujące słowa w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
 (ok. 1 GB).
@@ -62,39 +89,6 @@ liczb całkowitych wyliczy:
 Zadania 2–3 pochodzą z rozdziału 2
 [Large-Scale File Systems and Map-Reduce](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf)
 książki A. Rajaramana i J. Ullmana, [Mining of Massive Datasets](http://infolab.stanford.edu/~ullman/mmds.html).
-
-
-<blockquote>
- {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
- <p>
-  Wszystko, co musisz zrobić, to napisać jedno prawdziwe zdanie.
-  Napisz najprawdziwsze zdanie, jakie znasz.
- </p>
- <p class="author">— Ernest Hemingway</p>
-</blockquote>
-
-# Egzamin
-
-Na ocenę db z egzaminu należy przygotować
-w zespole (4–5 osobowym) aplikację
-wykorzystujacą jedną z baz danych NoSQL.
-
-Na ocenę bdb należy przygotować prezentację
-jednego z tematów podanych na stronie głównej tego wykładu.
-
-Typowe zastosowania dokumentowych baz danych:
-
-* Contact Address/Phone Book
-* Forum/Discussion
-* Bug Tracking
-* Document Collaboration/Wiki
-* Customer Call Tracking
-* Expense Reporting
-* To-Dos
-* Time Sheets
-* E-mail
-* Help/Reference Desk
-* CRM(?)
 
 
 {%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
