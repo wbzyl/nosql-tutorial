@@ -32,12 +32,11 @@ Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 
 Przykładowy rekord:
 
-```
-"2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor (vim), […]</p>
+    :::csv
+    "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor (vim), […]</p>
 
-<p>Rene</p>
-","firefox"
-```
+    <p>Rene</p>
+    ","firefox"
 
 
 
