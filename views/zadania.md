@@ -17,8 +17,8 @@ i wykonać zadania 1 i 2:
 Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
 W sierpniu 2013 Facebook ogłosił konkurs
 [Identify keywords and tags from millions of text questions](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction).
-
-My skorzystamy z udostępnionych przez Facebook danych:
+Skorzystamy z danych udostępnionych na ten konkurs przez
+[Stack Exchange](http://stackexchange.com/):
 
 * [Train.zip](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/download/Train.zip) – 2.19 GB
 
