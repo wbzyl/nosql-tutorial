@@ -32,7 +32,7 @@ Kaggle challenge.
 * Obmyśleć, zaprogramować i wykonać prostą aggregację na danych
   zapisanych w bazie.
   Dodać opis tego co zostało zrobione do tego repozytorium
-  [Data Refine 2](https://github.com/nosql/aggregations-2).
+  [Aggregations-2](https://github.com/nosql/aggregations-2).
   Jeśli dane były czyszczone, to dodać opis jak i co oraz dlaczego
   dane były czyszczone.
 
@@ -56,7 +56,7 @@ Na ocenę dst z egzaminu należy wykonać zadanie 3 poniżej.
   Dla danych zapisanych w Elasticsearch przygotować
   [faceted search](http://www.elasticsearch.org/guide/reference/api/search/facets/))
 * Dodać opis tego co zostało zrobione do tego repozytorium:
-  [map-reduce](https://github.com/nosql/mapreduce-2).
+  [MapReduce-2](https://github.com/nosql/mapreduce-2).
 
 Do eksperymentów można użyć tych danych wzorcowych:
 
