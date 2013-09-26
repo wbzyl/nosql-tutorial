@@ -42,6 +42,25 @@ Zadanie polega na zaimportowaniu danych z pliku *Train.csv* do baz
 MongoDB i PostgreSQL uruchomionych na **swoim komputerze**.  Następnie
 należy zliczyć liczbę zaimportowanych rekordów oraz liczbę różnych tagów.
 
+<!--
+
+no. of rows: 6,034,195
+min. value for Id: 1
+max. value for Id: 6,034,195
+no. of unique tags: 42,048
+no. of occurrences of tags: 17,409,994
+max. no. of tags/question: 5
+avg. no. of tags/question: 2.89
+
+% of questions with specified no. of tags:
+
+1 : 13.76
+2 : 26.65
+3 : 28.65
+4 : 19.1
+
+-->
+
 
 ### Zadanie 2
 
