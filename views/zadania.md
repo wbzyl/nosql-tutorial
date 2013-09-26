@@ -14,7 +14,30 @@ i wykonać zadania 1 i 2:
 
 ### Zadanie 1
 
-Kaggle challenge.
+Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
+W sierpniu 2013 Facebook ogłosił konkurs
+[Identify keywords and tags from millions of text questions](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction).
+
+My skorzystamy z udostępnionych przez Facebook danych:
+
+* [Train.zip](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/download/Train.zip) – 2.19 GB
+
+Archiwum *Test.zip* zawiera plik *Train.csv* (6.8 GB).
+Każdy rekord zawiera cztery pola:
+
+```
+"Id","Title","Body","Tags"
+```
+
+Przykładowy rekord:
+
+```
+"2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor (vim), […]</p>
+
+<p>Rene</p>
+","firefox"
+```
+
 
 
 ### Zadanie 2
