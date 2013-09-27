@@ -40,9 +40,13 @@ Przykładowy rekord:
 
 Zadanie polega na zaimportowaniu danych z pliku *Train.csv* do baz
 MongoDB i PostgreSQL uruchomionych na **swoim komputerze**.  Następnie
-należy zliczyć liczbę zaimportowanych rekordów oraz liczbę różnych tagów.
+należy zliczyć liczbę zaimportowanych rekordów
+(imported 6\_034\_195 objects) oraz liczbę różnych tagów.
 
 <!--
+
+2013-09-27T13:04:45.582+0200 check 9 6034196
+2013-09-27T13:04:45.689+0200
 
 no. of rows: 6,034,195
 min. value for Id: 1
