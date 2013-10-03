@@ -30,7 +30,7 @@ Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 * `Body` – The body of the question
 * `Tags` – The tags associated with the question (all lowercase, should not contain tabs '\t' or ampersands '&')
 
-Przykładowy rekord:
+Przykładowy JSON:
 
     :::csv
     "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor […]</p>
@@ -38,10 +38,83 @@ Przykładowy rekord:
     <p>Rene</p>
     ","firefox"
 
-Zadanie polega na zaimportowaniu danych z pliku *Train.csv* do baz
-MongoDB i PostgreSQL uruchomionych na **swoim komputerze**.  Następnie
-należy zliczyć liczbę zaimportowanych rekordów
-(imported 6\_034\_195 objects) oraz liczbę różnych tagów.
+Losowo wybrane 101 JSON–ów zapisałem w pliku [fb101.json]().
+Można użyć ich do testowania swoich rozwiązań.
+
+☀☀☀
+
+*Zadanie 1a* polega na zaimportowaniu danych z pliku *Train.csv* do baz:
+
+* MongoDB (do kolekcji *facebook* w bazie *test*)
+* CouchDB
+* Elasticsearch
+* PostgreSQL (do tabelki *facebook*)
+
+uruchomionych na **swoim komputerze**.
+
+*Zadanie 1b.* Zliczyć liczbę zaimportowanych rekordów
+(Odpowiedź: imported 6\_034\_195 objects).
+
+*Zadanie 1c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
+na tablicę napisów z tagami następnie zliczyć wszystkie tagi
+i wszystkie różne tagi. Napisać program, który to zrobi
+korzystając z jednego ze sterowników. Lista sterowników
+jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
+
+*Zadanie 1d.* Wyszukać w sieci dane zawierające
+[obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
+Zapisać dane w bazie *MongoDB*.
+
+Przykład. Poniższe dane zapisujemy w pliku *places.json*:
+
+    :::json places.json
+    {"_id": "oakland",  "loc":{"type":"Point","coordinates":[-122.270833,37.804444]}}
+    {"_id": "augsburg", "loc":{"type":"Point","coordinates":[10.898333,48.371667]}}
+    {"_id": "namibia",  "loc":{"type":"Point","coordinates":[17.15,-22.566667]}}
+    {"_id": "australia","loc":{"type":"Point","coordinates":[135,-25]}}
+    {"_id": "brasilia", "loc":{"type":"Point","coordinates":[-52.95,-10.65]}}
+
+Importujemy je do kolekcji *places* w bazie *test*:
+
+    :::bash
+    mongoimport -c places < places.json
+
+Logujemy się do bazy za pomocą *mongo*. Po zalogowaniu
+dodajemy geo-indeks do kolekcji *places*:
+
+    :::js
+    db.places.ensureIndex({"loc" : "2dsphere"})
+
+Przykładowe zapytanie z *$near*:
+
+    :::js
+    db.places.find({ loc: {$near: {$geometry: origin}} })
+    var origin = {type: "Point", coordinates: [0,0]}
+
+Na stronie [GeoCouch](http://wbzyl.inf.ug.edu.pl/nosql/couchdb-geo)
+znajdziemy dane z kolekcji *places* naniesione na mapkę.
+Korzystając z tej mapki możemy sprawdzić
+(biorąc poprawkę na różne skale na osiach i odwzorowanie powierzchni Ziemi na prostokąt)
+czy wyniki są prawidłowe:
+
+    :::json
+    {"_id": "namibia"}
+    {"_id": "augsburg"}
+    {"_id": "brasilia"}
+    {"_id": "oakland"}
+    {"_id": "australia"}
+
+Dla danych zapisanych w bazie przygotować 4–8 różnych
+[Geospatial Queries](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
+(co najmniej po jednym dla obiektów Point, LineString i Polygon).
+W przykładach należy użyć każdego z tych operatorów:
+**$geoWithin**, **$geoIntersect**, **$near**.
+
+☀☀☀
+
+Rozwiązania dla baz MongoDB&PostgreSQL należy przedstawić do
+18.10.2013 (**deadline**).
+
 
 <!--
 
