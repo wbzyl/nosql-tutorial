@@ -44,6 +44,8 @@ i w powłoce wpisujemy:
     :::js
     db.auth({user: "student", pwd: "pass"})
 
+    show collections
+
 Dlaczego taka autentykacja+autoryzacja działa tak jak to opisano
 w pierwszym akapicie? Ponieważ korzystamy z tzw.
 [localhost-exception](http://docs.mongodb.org/manual/tutorial/add-user-administrator/#localhost-exception).
