@@ -41,7 +41,7 @@ Przykładowy JSON:
 Losowo wybrane 101 JSON–ów zapisałem w pliku [fb101.json]().
 Można użyć ich do testowania swoich rozwiązań.
 
-☀☀☀
+   ☀☀☀
 
 *Zadanie 1a* polega na zaimportowaniu danych z pliku *Train.csv* do baz:
 
@@ -110,7 +110,7 @@ Dla danych zapisanych w bazie przygotować 4–8 różnych
 W przykładach należy użyć każdego z tych operatorów:
 **$geoWithin**, **$geoIntersect**, **$near**.
 
-☀☀☀
+   ☀☀☀
 
 Rozwiązania dla baz MongoDB&PostgreSQL należy przedstawić do
 18.10.2013 (**deadline**).
