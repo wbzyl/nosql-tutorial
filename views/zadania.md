@@ -65,7 +65,15 @@ jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Zapisać dane w bazie *MongoDB*.
 
-Przykład. Poniższe dane zapisujemy w pliku *places.json*:
+Dla zapisanych danych przygotować 6–9 różnych
+[Geospatial Queries](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
+(co najmniej po jednym dla obiektów Point, LineString i Polygon).
+W przykładach należy użyć każdego z tych operatorów:
+**$geoWithin**, **$geoIntersect**, **$near**.
+
+Przykład pokazujący o co chodzi w tym zadaniu.
+
+Poniższe dane zapisujemy w pliku *places.json*:
 
     :::json places.json
     {"_id": "oakland",  "loc":{"type":"Point","coordinates":[-122.270833,37.804444]}}
@@ -103,12 +111,6 @@ czy wyniki są prawidłowe:
     {"_id": "brasilia"}
     {"_id": "oakland"}
     {"_id": "australia"}
-
-Dla danych zapisanych w bazie przygotować 4–8 różnych
-[Geospatial Queries](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
-(co najmniej po jednym dla obiektów Point, LineString i Polygon).
-W przykładach należy użyć każdego z tych operatorów:
-**$geoWithin**, **$geoIntersect**, **$near**.
 
    ☀☀☀
 
