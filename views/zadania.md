@@ -38,7 +38,7 @@ Przykładowy JSON:
     <p>Rene</p>
     ","firefox"
 
-Losowo wybrane 101 JSON–ów zapisałem w pliku [fb101.json]().
+Losowo wybrane 101 JSON–ów zapisałem w pliku [fb101.json](/data/wbzyl/places.json).
 Można użyć ich do testowania swoich rozwiązań.
 
    ☀☀☀
