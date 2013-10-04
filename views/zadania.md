@@ -129,7 +129,7 @@ czy wyniki są prawidłowe:
    ☀☀☀
 
 Rozwiązania dla baz MongoDB&PostgreSQL należy przedstawić do
-18.10.2013 (**deadline**).
+4.11.2013 (**deadline**).
 
 
 <!--
