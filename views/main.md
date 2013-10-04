@@ -74,7 +74,8 @@ Warto też przeczytać artykuł Teda Newarda,
 
 1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
 1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
-1. {%= link_to "Zabezpieczamy MongoDB w minutę", "/security" %}
+1. {%= link_to "Zabezpieczamy MongoDB w kwadrans", "/security" %}
+1. {%= link_to "GridFS w kwadrans", "/gridfs" %}
 1. {%= link_to "Język zapytań", "/mongodb-queries" %}
 1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
