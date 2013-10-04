@@ -27,7 +27,9 @@ Proponowane tematy referatów:
 * Bill Ruh,
   [How the industrial internet will help you to stop worrying and love the data](http://gigaom.com/2013/10/02/how-the-industrial-internet-will-help-you-to-stop-worrying-and-love-the-data/) – zob. wykres, data collection and aggregation, extensibility and customizability
 * [word2vec](https://code.google.com/p/word2vec/)
-* [Machine Learning na Coursera]()
+* Andrew Ng,
+  [Stanford Machine Learning](https://www.coursera.org/course/ml)
+  na [Coursera](https://www.coursera.org/)
 
 
 ## Co to jest „NoSQL”?
