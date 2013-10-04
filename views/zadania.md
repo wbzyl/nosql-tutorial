@@ -75,6 +75,11 @@ Ile procent całego pliku stanowi:
 * najczęściej występujące słowo w tym pliku
 * 10, 100, 1000 najczęściej występujących słów w tym pliku
 
+*Wskazówka:* Zaczynamy od wykonania tego polecenia:
+
+    :::sh
+    tr -cs '[:alnum:]' '\n' < text8 > text8.txt
+
 *Zadanie 1e.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Zapisać dane w bazie *MongoDB*.
