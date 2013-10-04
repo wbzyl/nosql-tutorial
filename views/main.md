@@ -27,7 +27,8 @@ Proponowane tematy referatów:
 * Bill Ruh,
   [How the industrial internet will help you to stop worrying and love the data](http://gigaom.com/2013/10/02/how-the-industrial-internet-will-help-you-to-stop-worrying-and-love-the-data/) – zob. wykres, data collection and aggregation, extensibility and customizability
 * Tomas Mikolov, Ilya Sutskever, Quoc Le, Jeff Dean,
-  [word2vec](https://code.google.com/p/word2vec/)
+  [word2vec](https://code.google.com/p/word2vec/); zob. artykuł na Google Open Source Blog
+  [Learning the meaning behind words](http://google-opensource.blogspot.com/2013/08/learning-meaning-behind-words.html)
 * Andrew Ng,
   [Stanford Machine Learning](https://www.coursera.org/course/ml)
   na [Coursera](https://www.coursera.org/)
