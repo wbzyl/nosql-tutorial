@@ -22,6 +22,12 @@ Proponowane tematy referatów:
   - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
 
 
+## 8.10.2013 – zaczynamy!
+
+* Bill Ruh,
+  [How the industrial internet will help you to stop worrying and love the data](http://gigaom.com/2013/10/02/how-the-industrial-internet-will-help-you-to-stop-worrying-and-love-the-data/) – zob. wykres, data collection and aggregation, extensibility and customizability
+
+
 ## Co to jest „NoSQL”?
 
 W 2009 roku Johan Oskarsson organizował konferencję

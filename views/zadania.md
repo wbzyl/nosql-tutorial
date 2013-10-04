@@ -62,7 +62,20 @@ i wszystkie różne tagi. Napisać program, który to zrobi
 korzystając z jednego ze sterowników. Lista sterowników
 jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 
-*Zadanie 1d.* Wyszukać w sieci dane zawierające
+*Zadanie 1d.* Ściągnąć plik *text8* ze strony
+[Matt Mahoney](http://mattmahoney.net/dc/) (po rozpakowaniu 100MB):
+
+    :::sh
+    wget http://mattmahoney.net/dc/text8.zip -O text8.gz
+
+Zapisać wszystkie słowa w bazie MongoDB.
+Następnie zliczyć liczbę słów oraz liczbę różnych słów w tym pliku.
+Ile procent całego pliku stanowi:
+
+* najczęściej występujące słowo w tym pliku
+* 10, 100, 1000 najczęściej występujących słów w tym pliku
+
+*Zadanie 1e.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Zapisać dane w bazie *MongoDB*.
 
