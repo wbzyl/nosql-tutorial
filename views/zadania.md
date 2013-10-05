@@ -135,6 +135,12 @@ czy wyniki są prawidłowe:
 
 Rozwiązania dla baz MongoDB i PostgreSQL należy przedstawić do 4.11.2013 (**deadline**).
 
+**Uwaga:** do opisów dodać kilka liczb. Przykładowo, ile czasu trwał
+import (skorzystać z polecenia *time*), ile miejsca zajmują kolekcje
+(bez indeksów i z indeksami), wykorzystanie pamięci w trakcie importu
+(zrzut ekranu z programu monitor systemu;
+na przykład *gnome-system-monitor* lub podobny) itp.
+
 
 <!--
 
