@@ -40,6 +40,7 @@ Lista wszystkich [wtyczek „front ends”](http://www.elasticsearch.org/guide/a
 ElasticSearch driver dla języka Ruby:
 
 * Karel Minarik:
+  - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
   - [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
   - [Elasticsearch, Tire, and Nested queries/associations with ActiveRecord](http://stackoverflow.com/questions/11692560/elasticsearch-tire-and-nested-queries-associations-with-activerecord/11711477#11711477)
 
