@@ -39,19 +39,16 @@ Przykładowy JSON:
     ","firefox"
 
 Losowo wybrane 101 JSON–ów zapisałem w pliku
-[fb101.json](https://github.com/nosql/aggregations-2/blob/master/data/wbzyl/places.json).
+[fb101.json](https://github.com/nosql/aggregations-2/blob/master/data/wbzyl/fb101.json).
 Można użyć ich do testowania swoich rozwiązań.
 
    ☀☀☀
 
-*Zadanie 1a* polega na zaimportowaniu danych z pliku *Train.csv* do baz:
+*Zadanie 1a* polega na zaimportowaniu, do systemów baz danych
+uruchomionych na **swoim komputerze**, danych z pliku *Train.csv* bazy:
 
-* MongoDB (do kolekcji *facebook* w bazie *test*)
-* CouchDB
-* Elasticsearch
-* PostgreSQL (do tabelki *facebook*)
-
-uruchomionych na **swoim komputerze**.
+* MongoDB
+* PostgreSQL – opcjonalnie dla znających fanów SQL
 
 *Zadanie 1b.* Zliczyć liczbę zaimportowanych rekordów
 (Odpowiedź: imported 6\_034\_195 objects).
