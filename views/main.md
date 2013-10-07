@@ -20,6 +20,7 @@ Proponowane tematy referatów:
     [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
   - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
   - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
+  - [Neo4j GraphGist](http://gist.neo4j.org/) – share documents includeing Cypher queries
 
 
 ## 8.10.2013 – zaczynamy!
