@@ -238,20 +238,6 @@ to jak się zmieni kolekcja *animals*? Wskazówka:
     db.animals.update
 
 
-## Zrób to sam
-
-Pobrać ze strony [MongoDB Quick Reference Cards](http://www.10gen.com/reference)
-„Quick Reference Card: Queries”.
-
-1\. Na przykładzie przykładowej kolekcji *Animals* przerobić polecenia z tej ściągi.
-
-2\. Wejść na stronę [Handy resources for learning MongoDB](http://mongly.com).
-Kliknąć w „The MongoDB Interactive Tutorial”. Przejść cały samouczek.
-
-3\. Cursors. Queries, limits, skips. Przejrzeć [dokumentację](http://www.mongodb.org/display/DOCS/Home).
-Przeczytać [samouczek](http://www.mongodb.org/display/DOCS/Tutorial).
-
-
 ## Typy danych
 
 Dokumenty MongoDB są „JSON-like”. Oznacza to, że oprócz sześciu typów
@@ -279,6 +265,17 @@ Data:
 
 * Kristina Chodorow.
   [Popping Timestamps into ObjectIds](http://www.snailinaturtleneck.com/blog/2011/12/20/querying-for-timestamps-using-objectids/)
+
+
+## Zrób to sam
+
+Pobrać ze strony [MongoDB Quick Reference Cards](http://www.10gen.com/reference)
+„Quick Reference Card: Queries”.
+
+1\. Na przykładzie przykładowej kolekcji *Animals* przerobić polecenia z tej ściągi.
+
+2\. Cursors. Queries, limits, skips. Przejrzeć [dokumentację](http://www.mongodb.org/display/DOCS/Home).
+Przeczytać [samouczek](http://www.mongodb.org/display/DOCS/Tutorial).
 
 
 ## Dokumentacja
