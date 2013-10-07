@@ -1,4 +1,4 @@
-### {% title "Interaktywna powłoka mongo" %}
+### {% title "Interaktywna konsola mongo" %}
 
 <blockquote>
  {%= image_tag "/images/mongo-tree.jpg", :alt => "[Mongo tree]" %}
@@ -18,6 +18,7 @@ Oczywiście przed wejściem na konsolę *mongo*,
 musimy uruchomić daemona *mongod*;
 domyślnie daemon nasłuchuje na porcie 27017.
 
+<!--
 
 ### mongod na Sigmie (32-bit czy 64-bit?)
 
@@ -33,10 +34,11 @@ w linii poleceń podajemy ścieżki do katalogu na bazy danych
 
 **TODO:** sprawdzić czy ten opis działa.
 
+-->
 
 ### konsola mongo
 
-Konsola mongo jest interpreterem języka Javascript:
+Na konsoli mamy dostęp do interpretera języka Javascript:
 
     > 2+2
     4
@@ -46,7 +48,7 @@ Konsola mongo jest interpreterem języka Javascript:
     512
     >
 
-Możemy na konsoli wpisać kod funkcji:
+Przykładowo, możemy wpisać kod funkcji:
 
     :::js
     function factorial(n) {
@@ -60,8 +62,8 @@ i następnie ją wykonać:
     factorial(10)
     3628800
 
-Pomoc możemy uzyskać na kilka sposobów. Na początek
-wpiszemy `help`:
+Pomoc na konsoli możemy uzyskać na kilka sposobów. 
+Zaczynamy od wpisania `help`:
 
     help
       db.help()                    help on db methods
