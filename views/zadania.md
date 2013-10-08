@@ -138,6 +138,10 @@ import (skorzystać z polecenia *time*), ile miejsca zajmują kolekcje
 (zrzut ekranu z programu monitor systemu;
 na przykład *gnome-system-monitor* lub podobny) itp.
 
+Rozwiązania zadania należy przygotować jako
+[pull request](https://help.github.com/articles/using-pull-requests)
+repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
+
 
 <!--
 
@@ -169,22 +173,26 @@ copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
 
 ### Zadanie 2
 
-* Wyszukać w sieci ciekawe dane.
-* Jeśli to konieczne, oczyścić dane za pomocą jednego z narzędzi:
-  [Google Refine](http://code.google.com/p/google-refine/)
-  ([Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
-  [Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
-  [Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk))
-  lub
-  [Data Wrangler](http://vis.stanford.edu/wrangler/).
-* Zapisać dane w jednej z baz: MongoDB, CouchDB lub Elasticsearch.
-  (Oczywiście, należy uzyć skryptu, który to za nas zrobi.)
-* Obmyśleć, zaprogramować i wykonać prostą aggregację na danych
-  zapisanych w bazie.
-  Dodać opis tego co zostało zrobione do tego repozytorium
-  [Aggregations-2](https://github.com/nosql/aggregations-2).
-  Jeśli dane były czyszczone, to dodać opis jak i co oraz dlaczego
-  dane były czyszczone.
+Wyszukać w sieci ciekawe dane.
+Następnie zapisać je **w każdej** z baz: MongoDB, CouchDB i Elasticsearch.
+(Oczywiście, należy uzyć skryptu, który to za nas zrobi.)
+
+I teraz najważniejsze: obmyśleć, zaprogramować i wykonać prostą
+aggregację na danych zapisanych w każdej z baz.
+
+Jeśli to konieczne, oczyścić wcześniej dane za pomocą jednego z narzędzi:
+[Google Refine](http://code.google.com/p/google-refine/)
+([Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
+[Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
+[Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk)),
+[Data Wrangler](http://vis.stanford.edu/wrangler/) lub za pomocą
+skryptu.
+
+Również rozwiązania tego zadania należy przygotować jako
+[pull request](https://help.github.com/articles/using-pull-requests)
+repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).<br>
+*Uwaga:* Jeśli dane były czyszczone,
+to dodać opis jak i co oraz dlaczego były czyszczone.
 
 
 <blockquote>
