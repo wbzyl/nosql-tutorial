@@ -129,6 +129,11 @@ Warto też przeczytać artykuł Teda Newarda,
 *  {%= link_to "Zadania", "/zadania" %}
 
 
+## DATA
+
+* [Europarl Parallel Corpus](http://statmt.org/europarl/)
+
+
 ## Różne rzeczy
 
 1. {%= link_to "Spidermonkey", "/couchdb-spidermonkey" %}
