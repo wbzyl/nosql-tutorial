@@ -113,10 +113,14 @@ Indeksy:
     db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
 
 
+<!--
+
 ## Wyszukiwanie w sub-dokumentach
 
 * [Dot Notation (Reaching into Objects)](http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29)
 * [Multikeys](http://www.mongodb.org/display/DOCS/Multikeys)
+
+-->
 
 
 ## The wonderful world of GEO spatial indexes in MongoDB
