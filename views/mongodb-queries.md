@@ -35,7 +35,8 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
       I, [2012-02-06T20:35:25.147812 #32687]  INFO -- : 	collection: dostojewski
       I, [2012-02-06T20:35:25.148334 #32687]  INFO -- : 	     count: 81865
 
-W książce jest 244575 słów. Zatem liczba „stopwords” to ok. 66%.
+Program *wc* pokazuje, że w książce jest 244575 słów.
+Zatem liczba „stopwords” to ok. 66%.
 
 
 ## Przykładowe zapytania
