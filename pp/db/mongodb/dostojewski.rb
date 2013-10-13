@@ -66,17 +66,23 @@ db.drop_collection(collection)
 coll = db.collection(collection)
 
 data.each_with_index do |para, n|
-  words = para.gsub(/[!?;:"'().,\[\]*]/, "").gsub("--", " ").downcase.split(/\s+/)
+  words = para
+    .gsub(/[!?;:"'().,\[\]*]/, "")
+    .gsub("--", " ")
+    .gsub("_", " ")
+    .gsub("\ufeff", "") # remove zero width no-break space in the title
+    .downcase.split(/\s+/)
   words.each do |word|
     if stop.include?(word)
       logger.debug "skipped stopword: #{word}"
     else
+      next if word.empty?
       letters = word.split("").sort.uniq
       coll.insert({
-                    word: word,
-                    para: n,
-                    letters: letters
-                  })
+        word: word,
+        para: n,
+        letters: letters
+      })
       logger.debug "word: #{word}, para: #{n}, letters: #{letters}\n"
     end
   end

@@ -23,26 +23,26 @@ Dokumenty te utworzymy z angielskiej wersji tekstu powieści
 z serwisu [Free eBooks by Project Gutenberg](http://www.gutenberg.org/ebooks/2638).
 
 Kolekcję nazwiemy *dostojewski*.
-Do zapisania danych w kolekcji użyjemy prostego skryptu w Ruby
-{%= link_to "aggregation.rb", "db/mongodb/aggregation.rb" %}.
+Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
+{%= link_to "dostojewski.rb", "db/mongodb/dostojewski.rb" %}.
 
     :::bash terminal
-    ruby aggregation.rb
+    ruby dostojewski.rb
       I, [2012-02-06T20:34:56.602793 #32687]  INFO -- : liczba wczytanych stopwords: 742
-      I, [2012-02-06T20:34:56.620884 #32687]  INFO -- : liczba wczytanych akapitów: 5261
+      I, [2012-02-06T20:34:56.620884 #32687]  INFO -- : liczba wczytanych akapitów: 5260
       I, [2012-02-06T20:35:25.147644 #32687]  INFO -- : MongoDB:
       I, [2012-02-06T20:35:25.147754 #32687]  INFO -- : 	  database: gutenberg
       I, [2012-02-06T20:35:25.147812 #32687]  INFO -- : 	collection: dostojewski
-      I, [2012-02-06T20:35:25.148334 #32687]  INFO -- : 	     count: 80399
+      I, [2012-02-06T20:35:25.148334 #32687]  INFO -- : 	     count: 81865
 
-W książce jest 243731 słów. Zatem liczba „stopwords” to 163332 (ok. 67%).
+W książce jest 244575 słów. Zatem liczba „stopwords” to ok. 66%.
 
 
-## Język zapytań MongoDB
+## Przykładowe zapytania
 
 Przechodzimy na konsolę Mongo:
 
-    :::bash terminal
+    :::bash
     mongo gutenberg
 
 Zliczanie z *count* i *distinct*:
