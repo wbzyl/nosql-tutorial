@@ -1,7 +1,11 @@
 #### {% title "MongoDB – język zapytań" %}
 
-* [Querying](http://www.mongodb.org/display/DOCS/Querying)
-* [Advanced Queries](http://www.mongodb.org/display/DOCS/Advanced+Queries)
+* [Querying](http://docs.mongodb.org/manual/tutorial/query-documents/)
+* [Data Model Examples and Patterns](http://docs.mongodb.org/manual/applications/data-models/)
+
+Transakcje w MongoDB:
+
+* [Perform Two Phase Commits](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/)
 
 Zaczniemy od przygotowania kolekcji.
 W kolekcji zapiszemy dokumenty:
