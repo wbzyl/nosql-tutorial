@@ -1,12 +1,12 @@
 #### {% title "GridFS 101" %}
 
-Duże i szczególnie bardzo duże pliki możemy zapisać
-w MongoDB korzystając z mechanizmu GridFS.
+Duże i bardzo duże pliki czasami zapisujemy w MongoDB
+korzystając z mechanizmu GridFS.
 
-Jak zapisywać wplik, wypisywać listę plików
-oraz wyciągać plik zapisany wcześniej w GridFS?
+Jak zapisywać plik w bazie, wypisywać listę plików
+oraz wyciągać plik wcześniej zapisany za pomocą mechanizmu GridFS?
+
 Najprościej jest skorzystać z programu *mongofiles*.
-
 Poniższe polecenia wykonujemy na konsoli:
 
     :::bash

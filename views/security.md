@@ -13,7 +13,7 @@ Zaczynamy od dopisania opcji *--auth* do wywołania serwera *mongod*.
 Następnie logujemy się za pomocą programu *mongo* do bazy z *localhost*.
 Po zalogowaniu [wykonujemy](http://docs.mongodb.org/manual/reference/security/):
 
-    :::bash
+    :::js
     use test
     db.addUser({user: "student", pwd: "pass", roles: ["read"]})
 
