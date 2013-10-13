@@ -46,12 +46,12 @@ Przechodzimy na konsolę Mongo:
     :::bash
     mongo gutenberg
 
-Zapytanie z *count* i *distinct*:
+Zapytania z *count* i *distinct*:
 
     :::js
     db.dostojewski.count()
     db.dostojewski.distinct("word").sort()
-    db.dostojewski.distinct("letters").sort()  //     48
+    db.dostojewski.distinct("letters").sort()
 
 Jak policzyć liczbę różnych słów i liter? Skorzystamy
 z funkcji JavaScript:
