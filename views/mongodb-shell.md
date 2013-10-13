@@ -62,7 +62,7 @@ i następnie ją wykonać:
     factorial(10)
     3628800
 
-Pomoc na konsoli możemy uzyskać na kilka sposobów. 
+Pomoc na konsoli możemy uzyskać na kilka sposobów.
 Zaczynamy od wpisania `help`:
 
     help
@@ -156,10 +156,10 @@ Uwaga: w przykładach poniżej pomijam znak zachęty `>`.
     contact.emails = ["burek@psy.pl", "batman@dogs.pl"]
     db.dogs.update( {name: "Burek"}, contact )  // raczej replace
 
-Do update korzystamy z tzw. *modifiers*:
+Wykonując update często korzystamy z tzw. *modifiers*:
 
     db.dogs.update( {name: "Batman"}, { $set: {favorite_language: "Ruby"} } )
-    db.dogs.update( {name: "Batman"}, { $unset: {favorite_language: "Ruby"} } )
+    db.dogs.update( {name: "Batman"}, { $unset: {favorite_language: null} } )      // null lub cokolwiek
     db.dogs.update( {name: "Batman"}, { $addToSet: {emails: "janosik@psy.pl"} } )
     db.dogs.update( {name: "Batman"}, { $addToSet: {emails: "janosik@psy.pl"} } )  // jeszcze raz to samo
 
@@ -167,6 +167,12 @@ Do update korzystamy z tzw. *modifiers*:
 
     :::javascript
     var x = db.dogs.findOne()
+    printjson(x)
+
+    // wykonać na konsoli:
+    //   x = db.dogs.find(); printjson(x);
+    //   db.dogs.findOne
+
     x.name = "Janosik"
     db.dogs.update( { "_id": x._id }, x )
 
@@ -177,9 +183,9 @@ Ostatni wiersz możemy uprościć, korzystajac z funkcji pomocniczej *save*:
 **Delete:**
 
     :::javascript
-    db.dogs.remove( {name: "Batman"} )
+    db.dogs.remove( {name: "Batman"} )  // delete doc
     db.dogs.find()
-    db.dogs.drop()
+    db.dogs.drop()                      // delete collections
 
 
 ## Kolekcja *Animals*
@@ -200,11 +206,12 @@ wpisujemy obiekty, **po jednym w wierszu**:
 Importujemy JSON-y do bazy:
 
     :::bash
-    mongoimport --host localhost --db test --collection animals --type json --file animals.json
+    mongoimport --help
+    mongoimport --drop --collection animals animals.json
 
 Sprawdzamy w powłoce co się zaimportowało:
 
-    $ mongo --port 27017
+    mongo --port 27017
     db.animals.find()
     { "_id" : ObjectId("4dc2a101a558cc3ecba98584"), "name" : "Maksiu", "email" : "maxymilian@psy.pl", "dob" : ISODate("2000-01-31T00:00:00Z") }
     { "_id" : ObjectId("4dc2a3f4a558cc3ecba98588"), "name" : "Cwaniak", "email" : "scooby@dogs.com", "dob" : ISODate("2006-06-05T23:00:00Z") }
@@ -225,13 +232,13 @@ Jeszcze kilka przykładów z *find*:
 I przykład z tzw. *upsert*:
 
     :::javascript
-    db.animals.update( {name: /^B/}, {"$inc": {total_emails: 1}}, true )
+    db.animals.update( {name: /^B/}, {$inc: {total_emails: 1}}, true )
 
 Trzeci argument ustawiony na *true* zmienia „update” na „upsert”.
 Jeśli ustawimy też czwarty argument na true:
 
     :::javascript
-    db.animals.update( {name: /^B/}, {"$inc": {total_emails: 1}}, true )
+    db.animals.update( {name: /^B/}, {$inc: {total_emails: 1}}, true, true )
 
 to jak się zmieni kolekcja *animals*? Wskazówka:
 

@@ -1,0 +1,8 @@
+{ "name": "Burek",    "email": "burasek@psy.pl",     "dob": { "$date": 949276800000  } }
+{ "name": "Maksiu",   "email": "maxymilian@psy.pl",  "dob": { "$date": 949276800000  } }
+{ "name": "Szef",     "email": "general@psy.pl",     "dob": { "$date": 1301439600000 } }
+{ "name": "Cwaniak",  "email": "scooby@dogs.com",    "dob": { "$date": 1149548400000 } }
+{ "name": "Bazylek",  "email": "bazyl@koty.pl",      "dob": { "$date": 1119567600000 } }
+{ "name": "Benek",    "email": "benus@koty.pl",      "dob": { "$date": 1149548400000 } }
+{ "name": "Behemoth", "email": "behemotek@cats.ru",  "dob": { "$date": 1220223600000 } }
+{ "name": "Profesor", "email": "profi@cats.com",     "dob": { "$date": 1220223600000 } }
