@@ -49,3 +49,10 @@ i w powłoce wpisujemy:
 Dlaczego taka autentykacja+autoryzacja działa tak jak to opisano
 w pierwszym akapicie? Ponieważ korzystamy z tzw.
 [localhost-exception](http://docs.mongodb.org/manual/tutorial/add-user-administrator/#localhost-exception).
+
+**Uwaga:** Dodatkowo należy usunąć zmienną *EDITOR* ze środowiska:
+
+    :::bash
+    unset EDITOR
+
+Dlaczego należy to zrobić? Była o tym mowa na wykładzie.

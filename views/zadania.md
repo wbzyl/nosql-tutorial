@@ -30,7 +30,7 @@ Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 * `Body` – The body of the question
 * `Tags` – The tags associated with the question (all lowercase, should not contain tabs '\t' or ampersands '&')
 
-Przykładowy JSON:
+Przykładowy rekord CSV z pliku *Train.csv*:
 
     :::csv
     "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor […]</p>
@@ -38,9 +38,9 @@ Przykładowy JSON:
     <p>Rene</p>
     ","firefox"
 
-Losowo wybrane 101 JSON–ów zapisałem w pliku
+Do testowania swoich rozwiązań można skorzystać ze 101 JSON–ów
 [fb101.json](https://github.com/nosql/aggregations-2/blob/master/data/wbzyl/fb101.json).
-Można użyć ich do testowania swoich rozwiązań.
+Wybrałem je losowo po zapisaniu rekordów z *Train.csv* w bazie MongoDB.
 
    ☀☀☀
 

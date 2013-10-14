@@ -6,13 +6,16 @@
 </blockquote>
 
 „The MongoDB interactive shell” to po polsku „powłoka (konsola ?) mongo”.
-Zobacz też [MongoDB Shell Enhancements for Hackers](http://tylerbrock.github.com/mongo-hacker/).
 
-    :::bash terminal
-    mongo --port 27017
-      MongoDB shell version: 2.5.0-pre-
-      connecting to: test
-      localhost(mongod-2.4.0-rc2-pre-) test>
+Warto zainstalować [MongoDB Shell Enhancements for Hackers](http://tylerbrock.github.com/mongo-hacker/).
+Po instalacji, wypisywane dokumenty będą kolorowane, a w prompcie
+mamy nazwę komputera, wersję mongo z której korzystamy i nazwę
+bazy danych z którą się połączyliśmy:
+
+    :::bash
+    mongo --quiet --port 27017
+      Mongo-Hacker 0.0.3
+      localhost(mongod-2.5.2) test>
 
 Oczywiście przed wejściem na konsolę *mongo*,
 musimy uruchomić daemona *mongod*;
@@ -36,7 +39,7 @@ w linii poleceń podajemy ścieżki do katalogu na bazy danych
 
 -->
 
-### konsola mongo
+### Konsola mongo
 
 Na konsoli mamy dostęp do interpretera języka Javascript:
 
@@ -170,15 +173,25 @@ Wykonując update często korzystamy z tzw. *modifiers*:
     printjson(x)
 
     // wykonać na konsoli:
-    //   x = db.dogs.find(); printjson(x);
+    //   x = db.dogs.find()
+    //   printjson(x)
+    //   printjson
     //   db.dogs.findOne
 
     x.name = "Janosik"
     db.dogs.update( { "_id": x._id }, x )
 
-Ostatni wiersz możemy uprościć, korzystajac z funkcji pomocniczej *save*:
+Trochę to skomplikowane.
+Możemy uprościć update korzystajac z funkcji pomocniczej *save*:
 
     db.dogs.save( x )
+
+**Uwaga:** Jeśli będziemy potrzebować transakcji w MongoDB, to mamy pecha.
+Albo musimy je sami oprogramować, na przykład tak jak to opisano
+w [Perform Two Phase Commits](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/).
+Albo mamy szczęście i wystarczy nam jeden z wielu
+[atomic update modifiers](http://docs.mongodb.org/manual/reference/operator/update/).
+
 
 **Delete:**
 
@@ -223,7 +236,7 @@ Sprawdzamy w powłoce co się zaimportowało:
 
 Jakieś uwagi? Link do dokumentacji [JSON](http://www.json.org/json-pl.html).
 
-Jeszcze kilka przykładów z *find*:
+Jeszcze kilka przykładów z *find* (wyszukiwanie w tablicy):
 
     :::javascript
     db.animals.find( {emails: /dogs/} )

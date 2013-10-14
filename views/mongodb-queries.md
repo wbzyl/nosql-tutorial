@@ -1,14 +1,20 @@
-#### {% title "MongoDB – język zapytań" %}
+#### {% title "MongoDB – proste agregacje" %}
+
+Powtórka:
 
 * [Querying](http://docs.mongodb.org/manual/tutorial/query-documents/)
 * [Data Model Examples and Patterns](http://docs.mongodb.org/manual/applications/data-models/)
 
-Transakcje w MongoDB:
+Proste agregacje/grupowania:
 
-* [Perform Two Phase Commits](http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/)
+* [Aggregation Commands](http://docs.mongodb.org/manual/reference/command/nav-aggregation/):
+  *count*, *distinct*, *group*.
 
-Zaczniemy od przygotowania kolekcji.
-W kolekcji zapiszemy dokumenty:
+       ☀☀☀
+
+Zaczniemy od przygotowania kolekcji, której dokumentów użyjemy w przykładach poniżej.
+
+W kolekcji zapiszemy dokumenty w formacie:
 
     :::js
     {
@@ -18,8 +24,8 @@ W kolekcji zapiszemy dokumenty:
       "letters": ["g", "i", "m", "n", "o", "r"] // litery "morning" w kolejności alfabetycznej, bez powtórzeń
     }
 
-Dokumenty te utworzymy z angielskiej wersji tekstu powieści
-*Idiota* Fiodora Dostojewskiego. Tekst pobrałem
+Dokumenty te wygenerujemy korzystając z angielskiej wersji tekstu powieści
+*Idiota* Fiodora Dostojewskiego. Tekst pobrano
 z serwisu [Free eBooks by Project Gutenberg](http://www.gutenberg.org/ebooks/2638).
 
 Kolekcję nazwiemy *dostojewski*.
