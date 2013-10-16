@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="600px"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="data-cleaning.svg"
+   inkscape:export-filename="/home/wbzyl/repos/tutorials/nosql-tutorial/public/images/data-cleaning.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs2987">
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path3944"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.44"
+     inkscape:cx="288.19444"
+     inkscape:cy="300"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1050"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       y="113.19446"
+       x="597.95032"
+       height="76.388885"
+       width="145.27481"
+       id="rect2995"
+       style="fill:#ff80b2;fill-rule:evenodd;stroke:none" />
+    <rect
+       y="115.97222"
+       x="418.63205"
+       height="76.388885"
+       width="145.27481"
+       id="rect2996"
+       style="fill:#afdde9;fill-rule:evenodd;stroke:none" />
+    <text
+       xml:space="preserve"
+       style="font-size:37.98327637px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="46.101353"
+       y="158.87823"
+       id="text2998"
+       sodipodi:linespacing="100%"
+       transform="scale(0.94958187,1.0530951)"><tspan
+         sodipodi:role="line"
+         id="tspan3000"
+         x="46.101353"
+         y="158.87823">WWW</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26.58829308px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="685.52039"
+       y="154.32024"
+       id="text3002"
+       sodipodi:linespacing="100%"
+       transform="scale(0.94958187,1.0530951)"><tspan
+         sodipodi:role="line"
+         id="tspan3004"
+         x="685.52039"
+         y="154.32024">EDA</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26.58829308px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="455.16614"
+       y="154.32024"
+       id="text3006"
+       sodipodi:linespacing="100%"
+       transform="scale(0.94958187,1.0530951)"><tspan
+         sodipodi:role="line"
+         id="tspan3008"
+         x="455.16614"
+         y="154.32024">Clean Data</tspan></text>
+    <path
+       style="fill:#916f7c"
+       d=""
+       id="path3022"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#c8b7be;stroke:none"
+       d="m 183.16569,153.33334 0,-37.15278 72.01122,0 72.01122,0 0,37.15278 0,37.15277 -72.01122,0 -72.01122,0 0,-37.15277 z"
+       id="path3024"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:26.58829308px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="216.48288"
+       y="154.32024"
+       id="text3010"
+       sodipodi:linespacing="100%"
+       transform="scale(0.94958187,1.0530951)"><tspan
+         sodipodi:role="line"
+         id="tspan3012"
+         x="216.48288"
+         y="154.32024">Raw Data</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.94958186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleOutL)"
+       d="m 130.81666,155.90278 45.08528,0"
+       id="path3796"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.94958186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleOutL)"
+       d="m 331.82189,155.90278 79.52544,0"
+       id="path4244"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.94958186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleOutL)"
+       d="m 567.26728,155.90278 c 22.54264,0 22.54264,0 22.54264,0"
+       id="path4246"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.94958186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#TriangleOutL)"
+       d="m 666.20445,109.72216 0,-34.722166 -415.78653,0 0,35.416606"
+       id="path5166"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="332.63889"
+       y="143.05556"
+       id="text5532"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan5534"
+         x="332.63889"
+         y="143.05556" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="328.47223"
+       y="144.44444"
+       id="text5536"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan5538"
+         x="328.47223"
+         y="144.44444" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18.99163818px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+       x="352.85873"
+       y="139.79958"
+       id="text5540"
+       sodipodi:linespacing="100%"
+       transform="scale(0.94958187,1.0530951)"><tspan
+         sodipodi:role="line"
+         id="tspan5542"
+         x="352.85873"
+         y="139.79958">PIPELINES</tspan></text>
+    <g
+       id="g5556"
+       transform="matrix(0.90170572,0,0,1,-17.589074,-63.194444)">
+      <text
+         sodipodi:linespacing="100%"
+         id="text5544"
+         y="245.83333"
+         x="385.41666"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+         xml:space="preserve"><tspan
+           y="245.83333"
+           x="385.41666"
+           id="tspan5546"
+           sodipodi:role="line">wrangling</tspan></text>
+      <text
+         sodipodi:linespacing="100%"
+         id="text5548"
+         y="265.27777"
+         x="395.86588"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+         xml:space="preserve"><tspan
+           y="265.27777"
+           x="395.86588"
+           id="tspan5550"
+           sodipodi:role="line">munging</tspan></text>
+      <text
+         sodipodi:linespacing="100%"
+         id="text5552"
+         y="284.72223"
+         x="392.70181"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Norwester;-inkscape-font-specification:Norwester Condensed"
+         xml:space="preserve"><tspan
+           y="284.72223"
+           x="392.70181"
+           id="tspan5554"
+           sodipodi:role="line">cleaning</tspan></text>
+    </g>
+  </g>
+</svg>

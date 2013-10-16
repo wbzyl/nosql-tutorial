@@ -18,7 +18,7 @@ i wykonać zadania 1 i 2:
 
 Co to jest [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
 
-TODO: diagram.
+{%= image_tag "/images/data-cleaning.png", :alt => "[Data Cleaning]" %}
 
 Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
 W sierpniu 2013 Facebook ogłosił konkurs
