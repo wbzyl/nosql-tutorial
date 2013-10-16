@@ -70,8 +70,8 @@ jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 <blockquote>
  {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
  <p>
-  <i>Exploratory Data Analysis</i> is an attitude, a state of flexibility, a
-  willingness to look for those things that we believe are not there,
+  <i>Exploratory Data Analysis</i> (EDA) is an attitude, a state of flexibility,
+  a willingness to look for those things that we believe are not there,
   as well as those we believe to be there.
  </p>
  <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
@@ -90,10 +90,23 @@ Ile procent całego pliku stanowi:
 * najczęściej występujące słowo w tym pliku
 * 10, 100, 1000 najczęściej występujących słów w tym pliku
 
-*Wskazówka:* Zaczynamy od wykonania tego polecenia:
+*Wskazówka:* Zaczynamy od prostego EDA. Sprawdzamy, czy plik *text8*
+zawiera wyłącznie znaki alfanumeryczne i białe:
 
     :::sh
-    tr -cs '[:alnum:]' '\n' < text8 > text8.txt
+    tr --delete '[:alnum:][:blank:]' < text8 > deleted.txt
+    ls -l deleted.txt
+      -rw-rw-r--. 1 wbzyl wbzyl 0 10-16 12:58 deleted.txt # rozmiar 0 -> OK
+    rm deleted.txt
+
+Dopiero teraz wykonujemy te polecenia:
+
+    :::bash
+    wc text8
+      0         17005207 100000000 text8
+    tr --squeeze-repeats '[:blank:]' '\n' < text8 > text8.txt
+    wc text8.txt
+      17005207  17005207 100000000 text8.txt  # powtórzone 17005207 -> OK
 
 *Zadanie 1e.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
