@@ -12,7 +12,13 @@ Aby zaliczyć laboratorium należy przeczytać
 [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
 i wykonać zadania 1 i 2:
 
+
+
 ### Zadanie 1
+
+Co to jest [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
+
+TODO: diagram.
 
 Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
 W sierpniu 2013 Facebook ogłosił konkurs
@@ -33,7 +39,8 @@ Każdy rekord zawiera cztery pola `"Id","Title","Body","Tags"`:
 Przykładowy rekord CSV z pliku *Train.csv*:
 
     :::csv
-    "2","How can I prevent firefox from closing when I press ctrl-w","<p>In my favorite editor […]</p>
+    "2","How can I prevent firefox from closing when I press ctrl-w",
+    "<p>In my favorite editor […]</p>
 
     <p>Rene</p>
     ","firefox"
@@ -58,6 +65,17 @@ na tablicę napisów z tagami następnie zliczyć wszystkie tagi
 i wszystkie różne tagi. Napisać program, który to zrobi
 korzystając z jednego ze sterowników. Lista sterowników
 jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
+
+
+<blockquote>
+ {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
+ <p>
+  <i>Exploratory Data Analysis</i> is an attitude, a state of flexibility, a
+  willingness to look for those things that we believe are not there,
+  as well as those we believe to be there.
+ </p>
+ <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
+</blockquote>
 
 *Zadanie 1d.* Ściągnąć plik *text8.zip* ze strony
 [Matt Mahoney](http://mattmahoney.net/dc/textdata.html) (po rozpakowaniu 100MB):
