@@ -1,4 +1,4 @@
-#### {% title "MongoDB – proste agregacje" %}
+#### {% title "MongoDB – proste grupowania" %}
 
 Powtórka:
 
