@@ -7,9 +7,9 @@ Powtórka:
 
 Proste agregacje/grupowania:
 
-* [Aggregation Commands](http://docs.mongodb.org/manual/reference/command/nav-aggregation/):
-  *count*, *distinct*, *group*.
-
+* [Aggregation Commands](http://docs.mongodb.org/master/reference/command/nav-aggregation/):
+  *count*, *distinct*
+.
        ☀☀☀
 
 Zaczniemy od przygotowania kolekcji, której dokumentów użyjemy w przykładach poniżej.
