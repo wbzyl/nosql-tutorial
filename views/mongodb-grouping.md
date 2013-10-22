@@ -41,6 +41,22 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
     I, [2013-10-22T14:04:56.038708 #1509]  INFO -- : 	collection: dostojewski
     I, [2013-10-22T14:04:56.039258 #1509]  INFO -- : 	     count: 80346
 
+Na koniec dodamy index:
+
+    :::js
+    db.dostojewski.ensureIndex({'word': 1})  // ?
+    db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
+
+*Uwaga:* Skrypt korzysta z pliku *stopwords.en* zwierającego
+najczęściej występujące słowa, które nie niosą żadnej treści.
+Każde [stop word](http://pl.wikipedia.org/wiki/Wikipedia:Stopwords)
+jest zapisane w osobnym wierszu.<br>
+Plik ze *stop words* pobieramy z repozytorium Gnome:
+
+    :::bash
+    git clone git://git.gnome.org/tracker
+    ls -l tracker/data/language/stopwords.en
+
 Program *wc* pokazuje, że w książce jest 244575 słów.
 Zatem liczba „stopwords” to ok. 66%.
 
