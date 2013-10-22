@@ -10,6 +10,7 @@ logger = Logger.new(STDERR)
 logger.level = Logger::INFO  # set the default level: INFO, WARN
 
 require 'mongo'
+include Mongo
 
 # English stopwords from Tracker, http://projects.gnome.org/tracker/
 # GitHub: git clone git://git.gnome.org/tracker ; cd data/languages/
@@ -42,20 +43,28 @@ end
 
 # read the file content in the „DOS” paragraph mode and remove empty paragraphs
 
+# data[4065]
+# => "\nGania began, but did not finish. The two--father and son--stood before\r\none another, both unspeakably agitated, especially Gania.\r\n\r"
+# data[4065].gsub!(/\s+/, " ")
+# => " Gania began, but did not finish. The two--father and son--stood before one another, both unspeakably agitated, especially Gania. "
+
 data = IO.readlines(filename, "\n\r") # read DOS file; UNIX .readlines(filename, "")
 lines = data.map do |para|
-  para.gsub(/\s+/, " ").strip
+  para.gsub!(/\s+/, " ").strip
 end
 
-# strip legal info (preamble and postable)
+# delete empty strings and strip legal info (preamble and postable)
 
-book = lines.delete_if(&:empty?)[12..-56]
-logger.info "liczba wczytanych akapitów: #{book.length}"
+lines.delete("")
+book = lines[12..-56]
+logger.info "liczba wczytanych akapitów: #{book.size}"
 
+# updated to MongoDB Driver 1.9.2
 
-# MongoDB
+# connection = Mongo::Connection.new("localhost", 27017)
+# connection.drop_database(dbname)
 
-connection = Mongo::Connection.new("localhost", 27017)
+connection = MongoClient.new("localhost", 27017)
 # connection.drop_database(dbname)
 
 db = connection.db(dbname)
@@ -65,7 +74,7 @@ db.drop_collection(collection)
 
 coll = db.collection(collection)
 
-data.each_with_index do |para, n|
+book.each_with_index do |para, n|
   words = para
     .gsub(/[!?;:"'().,\[\]*]/, "")
     .gsub("--", " ")

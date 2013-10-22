@@ -34,12 +34,12 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
 
     :::bash terminal
     ruby dostojewski.rb
-      I, [2012-02-06T20:34:56.602793 #32687]  INFO -- : liczba wczytanych stopwords: 742
-      I, [2012-02-06T20:34:56.620884 #32687]  INFO -- : liczba wczytanych akapitów: 5260
-      I, [2012-02-06T20:35:25.147644 #32687]  INFO -- : MongoDB:
-      I, [2012-02-06T20:35:25.147754 #32687]  INFO -- : 	  database: gutenberg
-      I, [2012-02-06T20:35:25.147812 #32687]  INFO -- : 	collection: dostojewski
-      I, [2012-02-06T20:35:25.148334 #32687]  INFO -- : 	     count: 81865
+    I, [2013-10-22T14:04:06.654823 #1509]  INFO -- : liczba wczytanych stopwords: 742
+    I, [2013-10-22T14:04:06.766109 #1509]  INFO -- : liczba wczytanych akapitów: 5260
+    I, [2013-10-22T14:04:56.038536 #1509]  INFO -- : MongoDB:
+    I, [2013-10-22T14:04:56.038645 #1509]  INFO -- : 	  database: test
+    I, [2013-10-22T14:04:56.038708 #1509]  INFO -- : 	collection: dostojewski
+    I, [2013-10-22T14:04:56.039258 #1509]  INFO -- : 	     count: 80346
 
 Program *wc* pokazuje, że w książce jest 244575 słów.
 Zatem liczba „stopwords” to ok. 66%.
@@ -55,27 +55,20 @@ Przechodzimy na konsolę Mongo:
 Zapytania z *count* i *distinct*:
 
     :::js
-    db.dostojewski.count()
-    db.dostojewski.distinct("word").sort()
-    db.dostojewski.distinct("letters").sort()
-
-Jak policzyć liczbę różnych słów i liter? Skorzystamy
-z funkcji JavaScript:
-
-    :::js
-    db.dostojewski.distinct("word").length     // 10_137
-    db.dostojewski.distinct("letters").length  //     48
+    db.dostojewski.count()                     // 80_346
+    db.dostojewski.distinct("word").length     //  9_857
+    db.dostojewski.distinct("letters").sort()  
+    db.dostojewski.distinct("letters").length  //     39
 
 Proste zapytania z rzutowaniem i sortowaniem:
 
     :::js
-    db.dostojewski.find({}, {word: 1, _id: 0}).sort({word: 1}).limit(20)
+    db.dostojewski.find({}, {word: 1, _id: 0}).sort({word: 1}).limit(10)
     db.dostojewski.find({}, {_id: 0}).sort({word: -1}).skip(32060).limit(10)
     db.dostojewski.find({word: /^x/}, {_id: 0}).sort({word: -1}).limit(20)
     db.dostojewski.find({letters: "x"}, {_id: 0})     // it – iterate over result set
-    db.dostojewski.find({"letters.2": "x"}, {_id: 0})
 
-Tablice:
+Wyszukiwanie w tablicach:
 
     :::js
     db.dostojewski.find( {"letters.2": "x"}, {_id: 0} )
