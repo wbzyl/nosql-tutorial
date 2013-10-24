@@ -6,6 +6,14 @@
  <p class="author">– David Ogilvy</p>
 </blockquote>
 
+**Nowe rzeczy w MongoDB v. 2.5.3:**
+
+* [Aggregation Operations Now Return Cursors](http://docs.mongodb.org/master/release-notes/2.6/#aggregation-operations-now-return-cursors)
+* [User Defined Roles](http://docs.mongodb.org/master/release-notes/2.6/#user-defined-roles) –
+  MongoDB uses a role-based approach to authorization.
+  A *role* grants privileges to act on various resources to the user with that role
+
+
 W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/)
 (grupowania) danych używamy:
 
