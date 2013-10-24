@@ -174,7 +174,7 @@ Rozwiązania zadania należy przygotować jako
 repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
 
 
-#### TL;TR
+#### TL;DR
 
 * Przykład EDA – konkurs
   [Kaggle bulldozers: Basic cleaning](http://danielfrg.github.io/blog/2013/03/07/kaggle-bulldozers-basic-cleaning/),<br>
