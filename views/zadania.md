@@ -174,6 +174,16 @@ Rozwiązania zadania należy przygotować jako
 repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
 
 
+#### TL;TR
+
+* Przykład EDA – konkurs
+  [Kaggle bulldozers: Basic cleaning](http://danielfrg.github.io/blog/2013/03/07/kaggle-bulldozers-basic-cleaning/),<br>
+  [nagroda dla najlepszego rozwiązania $10,000](http://www.kaggle.com/c/bluebook-for-bulldozers/data)
+* Interesujące dane –
+  [Detecting Insults in Social Commentary](http://www.kaggle.com/c/detecting-insults-in-social-commentary/),<br>
+  [3948 rekordów](http://www.kaggle.com/c/detecting-insults-in-social-commentary/data)
+
+
 <!--
 
 2013-09-27T13:04:45.582+0200 check 9 6034196
