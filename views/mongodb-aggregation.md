@@ -1,4 +1,4 @@
-#### {% title "MongoDB – grupowania z group" %}
+#### {% title "MongoDB – Aggregation Framework" %}
 
 <blockquote>
  {%= image_tag "/images/ogilvy-david.png", :alt => "[David Ogilvy]" %}
@@ -6,20 +6,25 @@
  <p class="author">– David Ogilvy</p>
 </blockquote>
 
-W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/) (grupowania) danych używamy
-frameworka do agregacji:
+W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/)
+(grupowania) danych używamy:
 
+* polecenia [group](http://docs.mongodb.org/master/reference/command/group/#dbcmd.group)
 * [Aggregation Framework](http://docs.mongodb.org/master/core/aggregation-pipeline/)
+
+lub
+
 * [Map-Reduce](http://docs.mongodb.org/master/core/map-reduce/)
 
-Link do przykładów korzystających z frameworka:
+Linki do przykładów korzystających z frameworka:
 
-* [Aggregation Framework Examples](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples) (w Ruby)
+* [w Javascript](https://github.com/nosql/aggregations-2/blob/master/Aggregation-Framework-Examples-in-Javascript.md)
+* [w Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
-Przykłady w których będziemy korzystać z Map-Reduce pojawią
-się później. 
+Przykłady z Map-Reduce pojawią się później.
 
-Teraz, w ramach wprowadzenia, użyjemy funkcji agregującej *group*.
+
+## Przykłady z *group*
 
 W poniższych przykładach będziemy grupować dokumenty z kolekcji
 *dostojewski*. Kolekcję tę utworzyliśmy na poprzednim wykładzie.
@@ -56,9 +61,6 @@ Kilka zadań na rozgrzewkę. Jak to rozwiązać?
 Wobec tego jest 32 podzbiorów samogłosek (włączając podzbiór pusty).
 Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
-
-
-## Przykłady grupowań z *group*
 
 Dla każdego akapitu, dla którego *para* ϵ [1022, 1024) zliczymy liczbę
 słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.

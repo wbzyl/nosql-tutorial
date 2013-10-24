@@ -78,11 +78,11 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Zabezpieczamy MongoDB w kwadrans", "/security" %}
 1. {%= link_to "GridFS w kwadrans", "/gridfs" %}
 1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
-1. {%= link_to "Grupowanie z group", "/mongodb-aggregation" %}
+1. {%= link_to "Aggregation Framework", "/mongodb-aggregation" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
-1. {%= link_to "Wyszukiwanie pełno tekstowe (od v2.4)", "/mongodb-full-text-search" %}
+1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
 
 
 ## CouchDB
