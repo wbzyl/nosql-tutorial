@@ -181,7 +181,8 @@ repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
   [nagroda dla najlepszego rozwiązania $10,000](http://www.kaggle.com/c/bluebook-for-bulldozers/data)
 * Interesujące dane –
   [Detecting Insults in Social Commentary](http://www.kaggle.com/c/detecting-insults-in-social-commentary/),<br>
-  [3948 rekordów](http://www.kaggle.com/c/detecting-insults-in-social-commentary/data)
+  [3948 rekordów](http://www.kaggle.com/c/detecting-insults-in-social-commentary/data);
+  zob. też Andreas Mueller [Machine Learning with scikit-learn](http://amueller.github.io/sklearn_tutorial/)
 
 
 <!--
