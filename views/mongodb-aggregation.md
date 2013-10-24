@@ -1,4 +1,4 @@
-#### {% title "MongoDB – grupowanie" %}
+#### {% title "MongoDB – grupowania z group" %}
 
 <blockquote>
  {%= image_tag "/images/ogilvy-david.png", :alt => "[David Ogilvy]" %}
@@ -6,65 +6,32 @@
  <p class="author">– David Ogilvy</p>
 </blockquote>
 
-W MongoDB do [agregacji](http://docs.mongodb.org/manual/aggregation/) (grupowania) danych używamy
-frameworka do agregacji, [Aggregation Framework](http://docs.mongodb.org/manual/applications/aggregation/),
-lub [Map-Reduce](http://docs.mongodb.org/manual/core/map-reduce/).
+W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/) (grupowania) danych używamy
+frameworka do agregacji:
 
-Oto linki do odpowiednich stron podręcznika MongoDB:
+* [Aggregation Framework](http://docs.mongodb.org/master/core/aggregation-pipeline/)
+* [Map-Reduce](http://docs.mongodb.org/master/core/map-reduce/)
 
-* [Aggregation Framework Reference](http://docs.mongodb.org/manual/reference/aggregation/)
-* [Aggregation Framework Examples (in Javascript)](http://docs.mongodb.org/manual/tutorial/aggregation-examples/)
-* [Aggregation Framework Examples (in Ruby)](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
+Link do przykładów korzystających z frameworka:
 
-Jeśli dane do agregowania są w jednym *shardzie*, to do agregacji
-możemy użyć funkcji [group](http://docs.mongodb.org/manual/reference/command/group/)
-(lub [db.collection.group()](http://docs.mongodb.org/manual/reference/method/db.collection.group/)).
+* [Aggregation Framework Examples](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples) (w Ruby)
 
-Przykłady w których będziemy korzystać z frameworka lub map-reduce pojawią
-się później. Teraz skorzystamy z funkcji agregującej *group()*.
+Przykłady w których będziemy korzystać z Map-Reduce pojawią
+się później. 
 
-
-## Agregowanie danych za pomocą group()
+Teraz, w ramach wprowadzenia, użyjemy funkcji agregującej *group*.
 
 W poniższych przykładach będziemy grupować dokumenty z kolekcji
-*dostojewski*.
+*dostojewski*. Kolekcję tę utworzyliśmy na poprzednim wykładzie.
+
+<!--
 Kolekcja ta jest dotępna do testów na mojej maszynie wirtualnej:
 
     :::bash
     mongo --norc -u student -p sesja2013 153.19.1.202/test
+-->
 
-Całą kolekcję w formacie JSON można też pobrać z maszyny
-wirtualnej i zaimpoortować do swojej bazy MongoDB.
-W tym celu wykonujemy na konsoli:
-
-    :::bash
-    mongoexport -u student -p sesja2013 -h 153.19.1.202 -d test -c dostojewski | \
-      mongoimport -d test -c dostojewski
-
-W końcu, można też utworzyc samemu tę kolekcję korzystając ze skryptu
-{%= link_to "dostojewski.rb", "/db/mongodb/dostojewski.rb" %}:
-
-    :::bash
-    ./dostojewski.rb
-    I, [2013-04-11T19:13:32.708516 #6469]  INFO -- : liczba wczytanych stopwords: 742
-    I, [2013-04-11T19:13:32.896611 #6469]  INFO -- : liczba wczytanych akapitów: 5260
-    I, [2013-04-11T19:14:14.286420 #6469]  INFO -- : MongoDB:
-    I, [2013-04-11T19:14:14.286546 #6469]  INFO -- : 	  database: test
-    I, [2013-04-11T19:14:14.286587 #6469]  INFO -- : 	collection: dostojewski
-    I, [2013-04-11T19:14:14.287123 #6469]  INFO -- : 	     count: 87510
-
-Skrypt korzysta z pliku *stopwords.en* zwierającego
-najczęściej występujące słowa, które nie niosą żadnej treści.
-Każde [stop word](http://pl.wikipedia.org/wiki/Wikipedia:Stopwords)
-jest zapisane w osobnym wierszu.
-
-Plik ze *stop words* pobieramy z repozytorium Gnome:
-
-    :::bash
-    git clone git://git.gnome.org/tracker
-    ls -l tracker/data/language/stopwords.en
-
-Oto przykładowy dokument z kolekcji *dostojewski*:
+Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
 
     :::js
     coll.find({word: "morning"}).limit(1)
@@ -75,7 +42,7 @@ Oto przykładowy dokument z kolekcji *dostojewski*:
       "letters": [ "g", "i", "m", "n", "o", "r" ]  // posortowane i unikalne
     }
 
-Przykładowe zadania na grupowanie:
+Kilka zadań na rozgrzewkę. Jak to rozwiązać?
 
 **Zadanie 1.** Ile jest słów zawierających daną literę?
 
@@ -91,18 +58,7 @@ Ile jest słów zawierających wszystkie samogłoski, ile – bez
 samogłosek, itd.
 
 
-## Przykładowe grupowania na rozgrzewkę
-
-Poniżej będziemy grupować dokumenty po atrybucie *para*:
-
-    :::js
-    db.dostojewski.findOne()
-    {
-        "_id" : ObjectId("4f70883be1382375ac000001"),
-        "word" : "idiot",
-        "para" : 0,
-        "letters" : [ "d", "i", "o", "t" ]
-    }
+## Przykłady grupowań z *group*
 
 Dla każdego akapitu, dla którego *para* ϵ [1022, 1024) zliczymy liczbę
 słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
@@ -118,15 +74,15 @@ słów, liczbę liter oraz średnią długość słowa dla słów tego akapitu.
     [
       {
           "para" : 1022,
-          "word_count" : 24,
-          "total_words_len" : 150,
-          "avg_word_len" : 6.25
+          "word_count" : 11,
+          "total_words_len" : 72,
+          "avg_word_len" : 6.54
       },
       {
           "para" : 1023,
-          "word_count" : 14,
-          "total_words_len" : 83,
-          "avg_word_len" : 5.928571428571429
+          "word_count" : 5,
+          "total_words_len" : 40,
+          "avg_word_len" : 8
       }
     ]
 

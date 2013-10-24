@@ -77,8 +77,8 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
 1. {%= link_to "Zabezpieczamy MongoDB w kwadrans", "/security" %}
 1. {%= link_to "GridFS w kwadrans", "/gridfs" %}
-1. {%= link_to "Język zapytań", "/mongodb-queries" %}
-1. {%= link_to "Agregacja danych", "/mongodb-aggregation" %}
+1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
+1. {%= link_to "Grupowanie z group", "/mongodb-aggregation" %}
 1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}

@@ -32,12 +32,12 @@ Na koniec restartujemy demona *mongod*. I już!
 Teraz zdalnie logujemy się do bazy tak:
 
     :::bash
-    mongo --quiet -u student -p pass 153.19.7.108:27017/test
+    mongo --quiet -u student -p pass 192.168.2.108:27017/test
 
 albo tak:
 
     :::bash
-    mongo 153.19.7.108:27017/test
+    mongo 192.168.2.108:27017/test
 
 i w powłoce wpisujemy:
 
