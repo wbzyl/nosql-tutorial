@@ -132,6 +132,9 @@ Warto też przeczytać artykuł Teda Newarda,
 ## DATA
 
 * [Europarl Parallel Corpus](http://statmt.org/europarl/)
+* [GetGlue](http://getglue.com/) – your app for TV movies and sports;
+  [GetGlue sample](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz) –
+  1.4 GB, 19831300 JSON–ów
 
 
 ## Różne rzeczy
