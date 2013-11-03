@@ -79,7 +79,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "GridFS w kwadrans", "/gridfs" %}
 1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
 1. {%= link_to "Aggregation Framework", "/mongodb-aggregation" %}
-1. {%= link_to "Kopiowanie baz danych", "/mongodb-copydatabases" %}
+1. {%= link_to "Kopiowanie baz danych i kolekcji", "/mongodb-copydatabases" %}
 1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
