@@ -1,4 +1,4 @@
-#### {% title "Kopiowanie baz danych" %}
+#### {% title "Kopiowanie baz danych i kolekcji" %}
 
 <blockquote>
 <p>{%= image_tag "/images/copy-database-icon.png", :alt => "copy database" %}</p>
@@ -6,11 +6,13 @@
 
 Dokumentacja:
 
-* [Copy Database Commands](http://www.mongodb.org/display/DOCS/Copy+Database+Commands)
+* [Copy Databases Between Instances](http://docs.mongodb.org/manual/tutorial/copy-databases-between-instances/)
+* [cloneCollection](http://docs.mongodb.org/master/reference/command/cloneCollection/)
+
+### Kopiowanie bazy danych
 
 Powłoka *mongo* zawiera dwa polecenia do kopiowania baz danych z jednego
 serwera na drugi: *copyDatabase* oraz *cloneDatabase*.
-(Ale brak polecenia do kopiowania kolekcji.)
 
 Druga metoda jest łatwiejsza w użyciu. Przykładowo:
 
@@ -25,6 +27,16 @@ kopiuje bazę *books* z podanego serwera.
 
 Do kopiowania kolekcji można użyć potoku utworzonego z programów
 *mongoexport* (pobierz) i *mongoimport* (zapisz).
+
+
+### Kopiowanie kolekcji
+
+Ale tylko między różnymi bazami danych i do bieżącej instacji *mongod*.
+Na przykład (od wersji 2.4.6, sprawdzić):
+
+    :::js
+    db.cloneCollection("<hostname>", "<collection>", { <query> })
+
 
 <!--
 Oczywiście przed kopiowaniem należy uruchomić MongoDB na Tao:
