@@ -1,4 +1,4 @@
-#### {% title "MapReduce w przykładach" %}
+#### {% title "Platforma obliczeniowa MapReduce" %}
 
 <blockquote>
  <h3>There’s no speed limit</h3>
@@ -13,8 +13,12 @@ Word Count, Pivot Data, Spam.
 
 Podstawowa dokumentacja:
 
-* [MapReduce](http://docs.mongodb.org/manual/applications/map-reduce/)
-* [Troubleshooting MapReduce](http://docs.mongodb.org/manual/applications/map-reduce/#map-reduce-troubleshooting)
+* [MapReduce](http://docs.mongodb.org/master/core/map-reduce/)
+* [Aggregation Mechanics](http://docs.mongodb.org/master/core/aggregation-mechanics/)
+* [Aggregation Examples](http://docs.mongodb.org/master/applications/aggregation/):
+  - [Map-Reduce Examples](http://docs.mongodb.org/master/tutorial/map-reduce-examples/)
+  - [Troubleshoot the Map Function](http://docs.mongodb.org/master/tutorial/troubleshoot-map-function/)
+  - [Troubleshoot the Reduce Function](http://docs.mongodb.org/master/tutorial/troubleshoot-reduce-function/)
 
 
 ## Dlaczego MapReduce?
@@ -191,7 +195,7 @@ zdefiniowane powyżej:
 Wszystkie wymagania dla funkcji map i reduce
 są opisane tutaj:
 
-* [db.collection.mapReduce()](http://docs.mongodb.org/manual/reference/method/db.collection.mapReduce/)
+* [db.collection.mapReduce()](http://docs.mongodb.org/master/reference/method/db.collection.mapReduce/)
 
 Prototyp funkcji map:
 

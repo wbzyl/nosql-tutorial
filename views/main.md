@@ -80,7 +80,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
 1. {%= link_to "Aggregation Framework", "/mongodb-aggregation" %}
 1. {%= link_to "Kopiowanie baz danych i kolekcji", "/mongodb-copydatabases" %}
-1. {%= link_to "MapReduce w przykładach", "/mongodb-mapreduce" %}
+1. {%= link_to "Platforma obliczeniowa MapReduce", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
 
@@ -134,7 +134,7 @@ Warto też przeczytać artykuł Teda Newarda,
 * [Europarl Parallel Corpus](http://statmt.org/europarl/)
 * [GetGlue](http://getglue.com/) – your app for TV movies and sports;
   [GetGlue sample](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz) –
-  1.4 GB, 19831300 JSON–ów
+  1.4 GB, 19_831_300 JSON–ów
 
 
 ## Różne rzeczy
