@@ -213,28 +213,39 @@ copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
 -->
 
 
-### Zadanie 2
+### Zadanie 2 (+1M)
 
-Wyszukać w sieci ciekawe dane.
-Następnie zapisać je **w każdej** z baz: MongoDB, CouchDB i Elasticsearch.
-(Oczywiście, należy uzyć skryptu, który to za nas zrobi.)
+1\. Wyszukać w sieci dane zawierające co najmniej 1_000_000 rekordów/jsonów.
 
-I teraz najważniejsze: obmyśleć, zaprogramować i wykonać prostą
-aggregację na danych zapisanych w każdej z baz.
+2\. Dane zapisać w bazach MongoDB i Elasticsearch.
 
-Jeśli to konieczne, oczyścić wcześniej dane za pomocą jednego z narzędzi:
-[Google Refine](http://code.google.com/p/google-refine/)
-([Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
-[Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
-[Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk)),
-[Data Wrangler](http://vis.stanford.edu/wrangler/) lub za pomocą
-skryptu.
+3\. Wymyśleć i opisać cztery agregacje – po dwie dla każdej z baz.
+
+4\. Zaprogramować i wykonać wszystkie aggregacje.
+
+5\. Wyniki przedstawić w postaci graficznej (wykresów, itp.).
 
 Również rozwiązania tego zadania należy przygotować jako
 [pull request](https://help.github.com/articles/using-pull-requests)
 repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).<br>
-*Uwaga:* Jeśli dane były czyszczone,
-to dodać opis jak i co oraz dlaczego były czyszczone.
+
+    ☀☀☀
+
+Termin rozwiązania tego zadania upływa 31.12.2013 (deadline).
+
+
+#### TL;DR
+
+Do czyszczenia danych, jeśli okaże się to konieczne,
+można użyć jednego z tych narzędzi:
+[Google Refine](http://code.google.com/p/google-refine/)
+[Data Wrangler](http://vis.stanford.edu/wrangler/).
+
+Szczególnie polecam obejrzenie tych filmów:
+[Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
+[Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
+[Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk).
+
 
 
 <blockquote>
