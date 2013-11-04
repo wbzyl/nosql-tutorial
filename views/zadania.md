@@ -238,10 +238,10 @@ Termin rozwiązania tego zadania upływa **31.12.2013**.
 
 Do czyszczenia danych, jeśli okaże się to konieczne,
 można użyć jednego z tych narzędzi:
-[Google Refine](http://code.google.com/p/google-refine/)
+[Google Refine](http://code.google.com/p/google-refine/) lub
 [Data Wrangler](http://vis.stanford.edu/wrangler/).
 
-Szczególnie polecam obejrzenie tych filmów:
+Szczególnie polecam obejrzenie tych trzech krótkich filmów:
 [Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
 [Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
 [Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk).
