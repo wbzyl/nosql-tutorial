@@ -231,7 +231,7 @@ repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).<br>
 
     ☀☀☀
 
-Termin rozwiązania tego zadania upływa 31.12.2013 (deadline).
+Termin rozwiązania tego zadania upływa **31.12.2013**.
 
 
 #### TL;DR
