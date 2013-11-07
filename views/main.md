@@ -85,6 +85,14 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
 
 
+## ElasticSearch
+
+1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
+1. {%= link_to "Wtyczki ElasticSearch", "/elasticsearch-plugins" %}
+1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
+1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
+
+
 ## CouchDB
 
 1. {%= link_to "Oswajamy CouchDB", "/couchdb" %}
@@ -101,12 +109,6 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "CouchDB & Ruby", "/couchdb-ruby" %}
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
 1. {%= link_to "Ściąga z API", "/couchdb-api-cheatsheet" %}
-
-
-## ElasticSearch
-
-1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
-1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
 
 
 <blockquote>
