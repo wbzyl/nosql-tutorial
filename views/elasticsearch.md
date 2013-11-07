@@ -10,7 +10,7 @@
 
 Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
-Podręczne linki do *ElasticSearch*:
+Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Guides](http://www.elasticsearch.org/guide/):
@@ -19,35 +19,31 @@ Podręczne linki do *ElasticSearch*:
   - [Query](http://www.elasticsearch.org/guide/reference/query-dsl/)
   - [Mapping](http://www.elasticsearch.org/guide/reference/mapping/)
   - [Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html);
-  [Real time analytics of big data with Elasticsearch](http://www.slideshare.net/karmi/realtime-analytic-with-elasticsearch-new-media-inspiration-2013)
-  ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
-* [Setting up ElasticSearch ](http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html)
+* [es2unix](https://github.com/elasticsearch/es2unix) – Elasticsearch API consumable by the command line
 
-[Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) elasticsearch
-i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
+[Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
+i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
 Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
 
-    bin/plugin -install mobz/elasticsearch-head
+    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
 
 i wchodzimy na stronę *ElasticSearch-Head*:
 
     xdg-open http://localhost:9200/_plugin/head/
 
 Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
-Lista wszystkich [wtyczek „front ends”](http://www.elasticsearch.org/guide/appendix/clients.html).
 
 ElasticSearch driver dla języka Ruby:
 
 * Karel Minarik:
   - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
-  - **retired** [Tire](https://github.com/karmi/tire) – a rich Ruby API and DSL for the ElasticSearch search engine/database
-  - [Elasticsearch-Ruby](https://github.com/elasticsearch/elasticsearch-ruby)
-  - [Elasticsearch, Tire, and Nested queries/associations with ActiveRecord](http://stackoverflow.com/questions/11692560/elasticsearch-tire-and-nested-queries-associations-with-activerecord/11711477#11711477)
-
-Instalacja na Fedorze:
-
-* [Elasticsearch RPMs](https://github.com/tavisto/elasticsearch-rpms)
+  - [Elasticsearch-Ruby](https://github.com/elasticsearch/elasticsearch-ruby) –
+    a rich Ruby API and DSL for the ElasticSearch search engine/database:
+    * elasticsearch (0.4.1)
+    * elasticsearch-api (0.4.1)
+    * elasticsearch-transport (0.4.1)
+  - **retired** [Tire](https://github.com/karmi/tire)
 
 Różne:
 
@@ -59,6 +55,8 @@ Różne:
   - [Route requests to ElasticSearch to authenticated user's own index](https://gist.github.com/986390) (wersja dla Nginx)
 * Clinton Gormley.
   [Terms of endearment – the ElasticSearch Query DSL explained](http://www.elasticsearch.org/tutorials/2011/08/28/query-dsl-explained.html)
+  [Real time analytics of big data with Elasticsearch](http://www.slideshare.net/karmi/realtime-analytic-with-elasticsearch-new-media-inspiration-2013)
+  ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
 
 Przykładowe aplikacje:
 
