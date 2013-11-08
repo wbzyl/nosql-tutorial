@@ -82,84 +82,55 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
     :::ruby fetch-tweets-simple.rb
     require "bundler/setup"
 
-    require 'tweetstream'   # http://rdoc.info/github/tweetstream/tweetstream
+    require 'twitter'  # needs version ~> 5.0.0.rc1
     require 'colored'
-
-    # --- credentials.yml
-    #
-    # twitter:
-    #   login: me
-    #   password: secret
-    #   consumer_key: AAAAAAAAAAAAAAAAAAAAA
-    #   consumer_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    #   oauth_token: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    #   oauth_token_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-    # github:
-    #   login: me
-    #   password: secret
-    #   key: BBBBBBBBBBBBBBBBBBBB
-    #   secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    require 'yaml'
 
     credentials = ARGV
-    unless filename
-      puts "\nUsage:\n\t#{__FILE__} credentials.yml\n\n"
+    unless credentials[0]
+      puts "\nUsage:"
+      puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
+      puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n"
       exit(1)
     end
 
     begin
-      raw_config = File.read("#{ENV['HOME']}/#{credentials}")
-      twitter = YAML.load(raw_config)['twitter']
+      raw_config = File.read File.expand_path(credentials[0])
+      twitter = YAML.load(raw_config)
     rescue
-      puts "\n\tError: problems with #{ENV['HOME']}/.credentials/services.yml\n".red
+      puts "\n\tError: problems with #{credentials}\n".red
       exit(1)
-    end
-
-    filename = ARGV
-    unless (filename)
-      puts "\nUsage:\n\t#{__FILE__} credentials.yml\n\n"
-      exit(1)
-    end
-
-    # parse credentials
-
-    TweetStream.configure do |config|
-      config.consumer_key       = 'abcdefghijklmnopqrstuvwxyz'
-      config.consumer_secret    = '0123456789'
-      config.oauth_token        = 'abcdefghijklmnopqrstuvwxyz'
-      config.oauth_token_secret = '0123456789'
-      config.auth_method        = :oauth
-    end
-
-    TweetStream.configure do |config|
-      config.username = user
-      config.password = password
-      config.auth_method = :basic
     end
 
     def handle_tweet(s)
       puts "#{s[:created_at].to_s.cyan}:\t#{s[:text].yellow}"
     end
 
-    client = TweetStream::Client.new
+    # https://dev.twitter.com/apps
 
-    client.on_error do |message|
-      puts message
+    client = Twitter::Streaming::Client.new do |config|
+      config.consumer_key        = twitter['consumer_key']
+      config.consumer_secret     = twitter['consumer_secret']
+      config.access_token        = twitter['oauth_token']
+      config.access_token_secret = twitter['oauth_token_secret']
     end
 
-    client.track('mongodb', 'elasticsearch', 'couchdb', 'neo4j',
-        'redis', 'emberjs', 'meteorjs', 'd3js') do |status|
+    topics = ['mongodb', 'elasticsearch', 'couchdb', 'neo4j', 'redis', 'emberjs', 'meteorjs', 'd3js']
+
+    client.filter(track: topics.join(",")) do |status|
       handle_tweet status
     end
 
 Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
     :::bash
-    ruby nosql-tweets.rb MyTwitterUserName MyPassword
+    ruby fetch-tweets-simple.rb ~/twitter.yml
 
-W skrypcie {%= link_to "nosql-tweets.rb", "/elasticsearch/nosql-tweets.rb" %},
-który zostanie wykorzystany na wykładzie, inaczej rozwiązano
-podawanie swoich danych. Użyto też autentykacji OAuth.
+**TODO:**
+W skrypcie {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %},
+który zostanie wykorzystany na wykładzie, dodano zapisywanie
+stausów w bazie ElasticSearch.
+
 
 
 ## Twitter Stream ⟿ ElasticSearch

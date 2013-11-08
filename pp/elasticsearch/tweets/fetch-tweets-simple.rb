@@ -1,6 +1,8 @@
 require "bundler/setup"
 
-require 'tweetstream'   # http://rdoc.info/github/tweetstream/tweetstream
+# https://github.com/sferik/twitter, http://rdoc.info/github/sferik/twitter
+
+require 'twitter'  # requires version ~> 5.0.0.rc1
 require 'colored'
 
 require 'yaml'
@@ -19,7 +21,7 @@ credentials = ARGV
 unless credentials[0]
   puts "\nUsage:"
   puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
-  puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml"
+  puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n"
   exit(1)
 end
 
@@ -31,28 +33,23 @@ rescue
   exit(1)
 end
 
-# https://dev.twitter.com/apps
-#
-#   My applications: Elasticsearch NoSQL
-
-TweetStream.configure do |config|
-  config.consumer_key       = twitter['consumer_key']
-  config.consumer_secret    = twitter['consumer_secret']
-  config.oauth_token        = twitter['oauth_token']
-  config.oauth_token_secret = twitter['oauth_token_secret']
-  config.auth_method        = :oauth
-end
-
 def handle_tweet(s)
   puts "#{s[:created_at].to_s.cyan}:\t#{s[:text].yellow}"
 end
 
-client = TweetStream::Client.new
+# https://dev.twitter.com/apps
+#
+#   My applications: Elasticsearch NoSQL
 
-client.on_error do |message|
-  puts message
+client = Twitter::Streaming::Client.new do |config|
+  config.consumer_key        = twitter['consumer_key']
+  config.consumer_secret     = twitter['consumer_secret']
+  config.access_token        = twitter['oauth_token']
+  config.access_token_secret = twitter['oauth_token_secret']
 end
 
-client.track('wow', 'mongodb', 'elasticsearch', 'couchdb', 'neo4j', 'redis', 'emberjs', 'meteorjs', 'd3js') do |status|
+topics = ['mongodb', 'elasticsearch', 'couchdb', 'neo4j', 'redis', 'emberjs', 'meteorjs', 'd3js']
+
+client.filter(track: topics.join(",")) do |status|
   handle_tweet status
 end
