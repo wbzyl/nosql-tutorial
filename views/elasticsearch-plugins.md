@@ -35,7 +35,12 @@ Instalacja 2:
     :::bash
     mkdir -p /tmp/hello-elasticsearch
     cd /tmp
-    curl -# -L -k https://gist.github.com/gists/dc733632435da2149963/download | tar xv --strip=1 -C /tmp/hello-elasticsearch
+    curl -s -L -k https://gist.github.com/gists/dc733632435da2149963/download | \
+      tar xv --strip=1 -C /tmp/hello-elasticsearch
     zip -mj hello-elasticsearch.zip /tmp/hello-elasticsearch/*
     plugin -install hello-elasticsearch -url file:///tmp/hello-elasticsearch.zip
 
+Instalacja 3 z repozytorium *wbzyl/hello-elasticsearch* na Github:
+
+    :::bash
+    sudo /usr/share/elasticsearch/bin/plugin -install wbzyl/hello-elasticsearch
