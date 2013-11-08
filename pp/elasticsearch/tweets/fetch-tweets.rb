@@ -1,8 +1,10 @@
 # encoding: utf-8
+
 require 'tweetstream'
 require 'tire'
-require 'yaml'
 require 'colored'
+
+require 'yaml'
 
 begin
   raw_config = File.read("#{ENV['HOME']}/.credentials/services.yml")

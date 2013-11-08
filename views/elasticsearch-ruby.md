@@ -79,15 +79,56 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl* powyżej.
 Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
 (opcja *-uAnyTwitterUser:Password* w poleceniu *curl* powyżej).
 
-    :::ruby nosql-tweets.rb
-    # encoding: utf-8
-    require 'tweetstream'
+    :::ruby fetch-tweets-simple.rb
+    require "bundler/setup"
+
+    require 'tweetstream'   # http://rdoc.info/github/tweetstream/tweetstream
     require 'colored'
 
-    user, password = ARGV
-    unless (user && password)
-      puts "\nUsage:\n\t#{__FILE__} <AnyTwitterUser> <Password>\n\n"
+    # --- credentials.yml
+    #
+    # twitter:
+    #   login: me
+    #   password: secret
+    #   consumer_key: AAAAAAAAAAAAAAAAAAAAA
+    #   consumer_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    #   oauth_token: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    #   oauth_token_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    # github:
+    #   login: me
+    #   password: secret
+    #   key: BBBBBBBBBBBBBBBBBBBB
+    #   secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    credentials = ARGV
+    unless filename
+      puts "\nUsage:\n\t#{__FILE__} credentials.yml\n\n"
       exit(1)
+    end
+
+    begin
+      raw_config = File.read("#{ENV['HOME']}/#{credentials}")
+      twitter = YAML.load(raw_config)['twitter']
+    rescue
+      puts "\n\tError: problems with #{ENV['HOME']}/.credentials/services.yml\n".red
+      exit(1)
+    end
+
+    filename = ARGV
+    unless (filename)
+      puts "\nUsage:\n\t#{__FILE__} credentials.yml\n\n"
+      exit(1)
+    end
+
+    # parse credentials
+
+    TweetStream.configure do |config|
+      config.consumer_key       = 'abcdefghijklmnopqrstuvwxyz'
+      config.consumer_secret    = '0123456789'
+      config.oauth_token        = 'abcdefghijklmnopqrstuvwxyz'
+      config.oauth_token_secret = '0123456789'
+      config.auth_method        = :oauth
     end
 
     TweetStream.configure do |config|
@@ -106,7 +147,8 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
       puts message
     end
 
-    client.track('elasticsearch', 'emberjs', 'mongodb', 'couchdb', 'redis') do |status|
+    client.track('mongodb', 'elasticsearch', 'couchdb', 'neo4j',
+        'redis', 'emberjs', 'meteorjs', 'd3js') do |status|
       handle_tweet status
     end
 
