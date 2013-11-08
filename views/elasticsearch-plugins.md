@@ -44,3 +44,37 @@ Instalacja 3 z repozytorium *wbzyl/hello-elasticsearch* na Github:
 
     :::bash
     sudo /usr/share/elasticsearch/bin/plugin -install wbzyl/hello-elasticsearch
+
+
+
+## Imieniny – prosta aplikacja w formie „site plugin”
+
+Eksport danych z MongoDB, konwersja na format wymagany przez ElasticSearch
+bulk API:
+
+    :::
+    mongoexport
+
+Przykładowy „przeplatany” JSON:
+
+    :::json
+    ???
+
+Format danych dla bulk import, dla *kiedy*:
+
+    :::json
+    { "index": { "_type": "kiedy" } }
+    { "day" : 28, "month" : 1, "names" : [ "Walerego", "Radomira", "Tomasza" ] }
+
+dla *kto*:
+
+    :::bash
+    { "index": { "_type": "kto" } }
+    { "name": "Walerego", "day" : 28, "month" : 1 }
+
+Porządki i import danych do ElasticSearch:
+
+    :::bash
+    curl -X DELETE localhost:9200/imieniny
+    curl -X POST   localhost:9200/imieniny/_bulk' --data-binary @imieniny.bulk
+    curl -X POST   localhost:9200/_refresh

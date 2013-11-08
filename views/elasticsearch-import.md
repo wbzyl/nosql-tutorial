@@ -110,26 +110,3 @@ Przykład (korzystamy z narzędzia *netcat*):
     cat szymborska.bulk | nc -w 0 -u localhost 9700
 
 Użyteczne opcje programu *nc*: *-w* – timeout, *-u* – use UDP.
-
-
-
-## TODO? przenieść do wykładu z ES plugins
-
-    :::bash
-    curl -X DELETE localhost:9200/imieniny
-    curl -X POST   localhost:9200/imieniny/_bulk' --data-binary @imieniny.bulk
-    curl -X POST   localhost:9200/_refresh
-
-Sample JSON:
-
-Format danych dla bulk import, dla *kiedy*:
-
-    :::json
-    { "index": { "_type": "kiedy" } }
-    { "day" : 28, "month" : 1, "names" : [ "Walerego", "Radomira", "Tomasza" ] }
-
-dla *kto*:
-
-    :::bash
-    { "index": { "_type": "kto" } }
-    { "name": "Walerego", "day" : 28, "month" : 1 }
