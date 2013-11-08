@@ -1,4 +1,4 @@
-#### {% title "Wyszukiwanie z ElasticSearch" %}
+#### {% title "ElasticSearch & Ruby" %}
 
 <blockquote>
  {%= image_tag "/images/daniel_kahneman.jpg", :alt => "[Daniel Kahneman]" %}
@@ -10,32 +10,42 @@
  <p class="author">— Daniel Kahneman</p>
 </blockquote>
 
-# ElasticSearch & Ruby + Tire
-
-Takie eksperymentowanie z ElasticSearch rest API pozwala sprawdzić,
-czy dobrze je rozumiemy oraz czy poprawnie zainstalowaliśmy sam program.
-Dalsze takie próby są nużące i wyniki nie są są zajmujące.
+Eksperymentowanie na prostych danych z ElasticSearch rest API pozwala
+sprawdzić, czy dobrze je rozumiemy. Przy okazji upewniamy się, czy
+poprawnie zainstalowaliśmy sam program.
+Ale dalsze takie próby są nużące i wyniki nie są są zajmujące.
 
 Dlatego, do następnych prób użyjemy większej liczby rzeczywistych
-(i dlatego zajmujących) danych. Naszymi danymi będą statusy z Twittera.
-Dodatkowo do odfiltrowania interesujących nas statusów
-skorzystamy z [stream API](https://dev.twitter.com/docs/streaming-api).
+*i dlatego zajmujących* danych.
+
+Będziemy zbierać statusy z Twittera.
+Nie będziemy zbierać ich „jak leci”, tylko
+odfiltrujemy te które zawierają interesujące nas słowa.
+
+Do filtrowania statusów skorzystamy
+z [stream API](https://dev.twitter.com/docs/streaming-api):
+
+* [public streams](https://dev.twitter.com/docs/streaming-apis/streams/public)
+* [POST statuses/filter](https://dev.twitter.com/docs/api/1.1/post/statuses/filter) –
+  tutaj należy skorzystać z **Oauth tool** za pomocą którego
+  generujemy przykładowe zapytanie dla programu *curl*
+
 W pliku *tracking* wpisujemy tę linijkę:
 
     :::ruby
-    track=elasticsearch,emberjs,mongodb,couchdb,redis
+    track=mongodb,elasticsearch,couchdb,neo4j,redis,emberjs,meteorjs,d3js
 
-Dlaczego filtrujemy? Odpowiedź: co sekundę wysyłanych jest do Twittera
-ok. 1000 nowych statusów.
-
-*Więcej tweetów:* Jeśli dopiszemy słowo **wow** wpisywane w wielu
+**Uwaga:** Jeśli do listy dopiszemy słowo **wow**, wpisywane w wielu
 statusach, zostaniemy zalani tweetami – **wow!**
+
+<!-- już nie działa
 
 Najprościej będzie zacząć od pobierania statusów za pomocą programu *curl*:
 
     :::bash
-    curl -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking \
+    curl -s -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking \
       -uAnyTwitterUser:Password
+-->
 
 Jak widać statusy zawierają wiele pól i tylko kilka z nich zawiera
 interesujące dane. Niestety, na konsoli trudno jest czytać interesujące nas fragmenty.
@@ -43,10 +53,11 @@ Są one wymieszane z jakimiś technicznymi rzeczami, np.
 *profile_sidebar_fill_color*, *profile_use_background_image* itp.
 
 Dlatego, przed wypisaniem statusu na ekran, powinniśmy go „oczyścić”
-ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby. W skrypcie
-skorzystamy z następujących gemów:
+ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
 
-    gem install tire tweetstream colored # oj
+Poniżej będziemy korzystać z następujących gemów:
+
+    gem install elasticsearch tweetstream colored oj
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 

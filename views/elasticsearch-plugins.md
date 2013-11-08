@@ -13,8 +13,10 @@ Co to są **site plugins**:
 „Plugins can have »sites« in them, any plugin that exists under the
 *plugins* directory with a *_site* directory, its content will be
 statically served when hitting
+
     /_plugin/[plugin_name]/
-url. Those can be added even after the process has started.”
+
+URL. Those can be added even after the process has started.”
 
 Pierwszą wtyczkę nazwiemy *hello_es*. Będzie to tzw. „site plugin”,
 prosta aplikacja HTML korzystająca z jQuery.
@@ -44,7 +46,6 @@ Instalacja 3 z repozytorium *wbzyl/hello-elasticsearch* na Github:
 
     :::bash
     sudo /usr/share/elasticsearch/bin/plugin -install wbzyl/hello-elasticsearch
-
 
 
 ## Imieniny – prosta aplikacja w formie „site plugin”

@@ -76,9 +76,138 @@ Przykład:
 Więcej przykładów umieściłem w katalogu *pp/elasticsearch/bulk*.
 
 
-## Mappings
+<blockquote>
+  <p><b>Mapping types</b> are containers for documents, in a similar way to how tables in a relational
+  database are containers for rows. They are often called simply types, because you'd put
+  different types of documents in different mapping types.</p>
+  <p class="author"><a href="http://www.manning.com/hinman/">Elasticsearch in Action</a></p>
+</blockquote>
 
-**TODO** przykład z tweets!
+## Mapping types
+
+„You can think of a mapping like a schema in a relational database,
+because it contains information about each field. For example,
+«artist» would be a string, while «price» could be an integer.”
+
+Na przykład, poniższe polecenie wypisze typy przypisane automatycznie
+przez Elasticsearch dokumentom z *concepts/lec*:
+
+    :::bash
+    curl -s localhost:9200/concepts/lec/_mapping | jq .
+
+Oto wynik:
+
+    :::json
+    {
+      "lec": {
+        "properties": {
+          "tags": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string"
+          }
+        }
+      }
+    }
+
+Typy pól:
+
+* *core types* – *string*, *numeric*, *date*, *boolean*
+* *arrays* i *multi fields*
+* predefiniowane typy – *_ttl*, *timestamp*
+
+A tak definiujemy swoje „mapping”:
+
+    :::bash
+    curl -s -XPUT localhost:9200/concepts/lec/_mapping -d '
+    {
+      "lec": {
+        "properties": {
+          "tags": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "quote": {
+            "type": "string",
+            "analyzer": "snowball"
+          }
+        }
+      }
+    }'
+
+Oto wynik:
+
+    :::json
+    {
+      "status": 400,
+      "error": "MergeMappingException[Merge failed with failures …"
+    }
+
+Niestety nie udało się uaktualnić typów. W takiej sytuacji musimy
+usunąć indes *concepts*. Następnie toworzymy pusty index
+w którym zapisujemy powyżej zdefiniowane mapping.
+Dopiero na końcu zapisujemy dane:
+
+    :::bash
+    curl -s -XDELETE localhost:9200/concepts
+    curl -s -XPOST localhost:9200/concepts
+    curl -s -XPUT localhost:9200/concepts/lec/_mapping -d '
+    {
+      "lec": {
+        "properties": {
+          "tags": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "quote": {
+            "type": "string",
+            "analyzer": "snowball"
+          }
+        }
+      }
+    }'
+    curl localhost:9200/concepts/_bulk --data-binary @concepts.bulk
+
+Sprawdzamy nasze mapping:
+
+    :::bash
+    curl -s localhost:9200/concepts/lec/_mapping
+
+Oto wynik:
+
+    :::json
+    {
+      "lec": {
+        "properties": {
+          "tags": {
+            "index_options": "docs",
+            "omit_norms": true,
+            "index": "not_analyzed",
+            "type": "string"
+          },
+          "quote": {
+            "analyzer": "snowball",
+            "type": "string"
+          }
+        }
+      }
+    }
+
+I mamy to o co prosiliśmy. No, prawie!
+
+Przykładowe zapytania, w których korzystamy
+z [Lucene Query Syntax](http://www.lucenetutorial.com/lucene-query-syntax.html):
+
+    :::bash
+    curl -s 'localhost:9200/concepts/lec/_search?q=kakao'         | jq '.hits.hits[]'
+    curl -s 'localhost:9200/concepts/lec/_search?q=quote:kakao'   | jq '.hits.hits[]'
+    curl -s 'localhost:9200/concepts/lec/_search?q=tags:kakao'    | jq '.hits.hits[]'
+    curl -s 'localhost:9200/concepts/lec/_search?q=tags:krowie'   | jq '.hits.hits[]'
+    curl -s 'localhost:9200/concepts/lec/_search?q=quote:chocia*' | jq '.hits.hits[]' # polskie literki… bug?
+
+**TODO:** Zainstalować i użyć
+[Morfologik (Polish) Analysis Plugin for ElasticSearch ](https://github.com/monterail/elasticsearch-analysis-morfologik)
 
 
 ## Bulk UDP
@@ -92,7 +221,7 @@ Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
     :::json
     bulk.udp.enabled: true
 
-*szymborska.bulk*:
+Przykładowe dane *szymborska.bulk*:
 
     :::json
     { "index": { "_index": "ideas", "_type": "szymborska", "_id": 1 } }
@@ -104,9 +233,26 @@ Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
     { "index": { "_index": "ideas", "_type": "szymborska", "_id": 4 } }
     { "quote": "Cud pierwszy lepszy: krowy są krowami.", "tags": ["miracle", "cow"] }
 
-Przykład (korzystamy z narzędzia *netcat*):
+Przykład pokazujący jak skorzystać z protokołu UDP importując dane do
+Elasticsearch. W przykładize poniżej korzystamy z narzędzia *netcat*:
 
     :::bash
-    cat szymborska.bulk | nc -w 0 -u localhost 9700
+    cat szymborska.bulk | nc -w 5 -u localhost 9700
 
-Użyteczne opcje programu *nc*: *-w* – timeout, *-u* – use UDP.
+Użyteczne opcje programu *nc*: *-w* – timeout (w sekundach), *-u* – use UDP.
+
+Proste wyszukiwanie w zaimportowanych danych:
+
+    :::bash
+    curl -s 'localhost:9200/ideas/_search?q=Kto' | jq .
+
+Inne wyszukiwanie:
+
+    :::bash
+    curl -s -XPOST 'localhost:9200/ideas/szymborska/_search?pretty' -d '{
+      "query": {
+        "query_string": {
+          "query": "gó*"
+        }
+      }
+    }'

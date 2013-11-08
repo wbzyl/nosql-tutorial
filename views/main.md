@@ -88,8 +88,8 @@ Warto też przeczytać artykuł Teda Newarda,
 ## ElasticSearch
 
 1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
-1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
 1. {%= link_to "Hurtowy import danych do ElasticSearch", "/elasticsearch-import" %}
+1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
 1. {%= link_to "ElasticSearch w przykładach", "/elasticsearch-by-example" %}
 1. {%= link_to "Wtyczki ElasticSearch", "/elasticsearch-plugins" %}
 

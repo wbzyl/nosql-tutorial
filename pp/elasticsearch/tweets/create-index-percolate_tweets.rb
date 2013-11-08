@@ -1,5 +1,12 @@
 # encoding: utf-8
-require 'tire'
+
+require "rubygems"
+require "bundler/setup"
+
+require "elasticsearch"
+require "tweetstream"
+require "colored"
+require "oj"
 
 tweets_mapping =  {
   :properties => {
@@ -13,11 +20,16 @@ tweets_mapping =  {
 }
 
 mappings = { }
-keywords = %w{rails jquery mongodb couchdb redis neo4j elasticsearch basho meteorjs emberjs backbonejs d3js}
+keywords = %w[
+  mongodb elasticsearch couchdb neo4j redis emberjs meteorjs d3js
+]
 
 keywords.each do |keyword|
   mappings[keyword.to_sym] = tweets_mapping
 end
+
+
+__END__
 
 Tire.index('tweets') do
   delete
