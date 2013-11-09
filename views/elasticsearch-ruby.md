@@ -135,6 +135,8 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
 **TODO:** dodać prostą aplikację do przeszukiwania tweetów: site plugin + jQuery.
 
+**TODO:** [Elasticsearch v1.0.0 zmiany w percolator API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html)
+
 ----
 
 W skrypcie {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %},
