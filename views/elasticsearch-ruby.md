@@ -126,14 +126,13 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
     :::bash
     ruby fetch-tweets-simple.rb ~/twitter.yml
 
+
+## Twitter Stream ⟿ ElasticSearch
+
 **TODO:**
 W skrypcie {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %},
 który zostanie wykorzystany na wykładzie, dodano zapisywanie
 stausów w bazie ElasticSearch.
-
-
-
-## Twitter Stream ⟿ ElasticSearch
 
 Teraz zabierzemy się za zapisywanie oczyszczonych statusów
 w ElasticSearch.  W tym celu napiszemy skrypt w Ruby i skorzystamy
