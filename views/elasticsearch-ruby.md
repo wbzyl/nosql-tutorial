@@ -129,7 +129,14 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
 ## Twitter Stream ⟿ ElasticSearch
 
-**TODO:**
+----
+
+**TODO:** **retire tire, uaktualnić notatki do gemów twitter + elasticsearch**
+
+**TODO:** dodać prostą aplikację do przeszukiwania tweetów: site plugin + jQuery.
+
+----
+
 W skrypcie {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %},
 który zostanie wykorzystany na wykładzie, dodano zapisywanie
 stausów w bazie ElasticSearch.
