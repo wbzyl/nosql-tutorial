@@ -21,7 +21,7 @@ credentials = ARGV
 unless credentials[0]
   puts "\nUsage:"
   puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
-  puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n"
+  puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
   exit(1)
 end
 
@@ -48,7 +48,9 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['oauth_token_secret']
 end
 
-topics = ['mongodb', 'elasticsearch', 'couchdb', 'neo4j', 'redis', 'emberjs', 'meteorjs', 'd3js']
+topics = %w[
+  mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
+]
 
 client.filter(track: topics.join(",")) do |status|
   handle_tweet status

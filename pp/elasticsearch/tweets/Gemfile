@@ -4,10 +4,9 @@ gem "elasticsearch", "~> 0.4.1"
 gem "twitter",       "= 5.0.0.rc1"
 
 gem "colored",       "~> 1.2"
-gem "oj",            "~> 2.1.7"
-
-gem "curb",          "~> 0.8.5"
 
 # https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md#using-hash-wrappers
 
-gem "hashie",        "~> 2.0.5"
+# gem "hashie",        "~> 2.0.5"
+
+# gem "curb",          "~> 0.8.5"
