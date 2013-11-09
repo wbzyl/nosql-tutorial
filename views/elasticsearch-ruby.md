@@ -351,28 +351,30 @@ implementations, such as statistical or date histogram facets.”
 * *date* lub *time*
 * *be analyzed as a single token*
 
-Przykłady:
+Przykłady (żądanie GET jest domyślne):
 
     :::bash
-    curl -X POST "localhost:9200/tweets/_count?q=redis&pretty=true"
-    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
+    curl -s -X GET "localhost:9200/tweets/_count?q=redis&pretty=true"
+    curl -s -X GET "localhost:9200/tweets/_search?q=redis&pretty=true"
+
+    curl -s -X GET "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query": { "query_string": {"query": "redis"} },
       "sort": { "created_at": { "order": "desc" } }
     }'
-    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
+    curl -s "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query": { "query_string": {"query": "redis"} },
       "sort": { "created_at": { "order": "desc" } },
       "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
-    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
+    curl -s "localhost:9200/tweets/_search?pretty=true" -d '
     {
       "query": { "match_all": {} },
       "sort": { "created_at": { "order": "desc" } },
       "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
-    curl -X POST "localhost:9200/tweets/_search?size=0&pretty=true" -d '
+    curl -s "localhost:9200/tweets/_search?size=0&pretty=true" -d '
     {
       "facets": { "hashtags": { "terms":  { "field": "hashtags" } } }
     }'
