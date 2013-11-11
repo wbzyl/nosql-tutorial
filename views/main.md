@@ -25,6 +25,13 @@ Proponowane tematy referatów:
 
 ## 8.10.2013 – zaczynamy!
 
+**[2013.1]:**
+
+* [DB-Engines Ranking](http://db-engines.com/en/ranking) –
+  popularity ranking of database management systems
+
+**[2013.10]:**
+
 * Bill Ruh,
   [How the industrial internet will help you to stop worrying and love the data](http://gigaom.com/2013/10/02/how-the-industrial-internet-will-help-you-to-stop-worrying-and-love-the-data/) – zob. wykres, data collection and aggregation, extensibility and customizability
 * Tomas Mikolov, Ilya Sutskever, Quoc Le, Jeff Dean,
