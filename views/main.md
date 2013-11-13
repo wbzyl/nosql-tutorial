@@ -16,8 +16,10 @@ Proponowane tematy referatów:
   - [On Importing Data into Neo4j](http://jexp.de/blog/2013/05/on-importing-data-in-neo4j-blog-series/)
   - [Visualizing Fraud Data with Cambridge Intelligence](http://vimeo.com/64827612)
 * **Wizualizacja danych**:
-  - [d3.js](http://bost.ocks.org/mike/d3/workshop/);
-    [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
+  - [d3.js](http://bost.ocks.org/mike/d3/workshop/):
+    - [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
+    - Malcolm Maclean, [D3 Tips and Tricks](https://leanpub.com/D3-Tips-and-Tricks/read)
+    - Scott Murray, [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345)
   - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
   - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
   - [Neo4j GraphGist](http://gist.neo4j.org/) – share documents includeing Cypher queries
