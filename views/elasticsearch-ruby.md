@@ -38,15 +38,6 @@ W pliku *tracking* wpisujemy tę linijkę:
 **Uwaga:** Jeśli do listy dopiszemy słowo **wow**, wpisywane w wielu
 statusach, zostaniemy zalani tweetami – **wow!**
 
-<!-- już nie działa
-
-Najprościej będzie zacząć od pobierania statusów za pomocą programu *curl*:
-
-    :::bash
-    curl -s -X POST https://stream.twitter.com/1/statuses/filter.json -d @tracking \
-      -uAnyTwitterUser:Password
--->
-
 Jak widać statusy zawierają wiele pól i tylko kilka z nich zawiera
 interesujące dane. Niestety, na konsoli trudno jest czytać interesujące nas fragmenty.
 Są one wymieszane z jakimiś technicznymi rzeczami, np.
@@ -57,13 +48,13 @@ ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
 
 Poniżej będziemy korzystać z następujących gemów:
 
-    gem install elasticsearch tweetstream colored oj
+    gem install elasticsearch twitter colored oj
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 
 <blockquote>
 <p>
-  <h3><a href="https://dev.twitter.com/docs/streaming-api/concepts#access-rate-limiting">Ważne!</a></h3>
+  <h3>Access Rate Limiting</h3>
   <p>Each account may create only one standing connection to the
   Streaming API. Subsequent connections from the same account may
   cause previously established connections to be
@@ -72,12 +63,10 @@ Poniżej będziemy korzystać z następujących gemów:
   address. Continually failing connections will result in your IP
   address being blacklisted from all Twitter access.
 </p>
+  <p class="author"><a href="https://dev.twitter.com/docs/rate-limiting/1.1">…more on rate limiting</a></p>
 </blockquote>
 
-Zaczniemy od skryptu działającego podobnie do polecenia z *curl* powyżej.
-
-Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
-(opcja *-uAnyTwitterUser:Password* w poleceniu *curl* powyżej).
+Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
     :::ruby fetch-tweets-simple.rb
     require "bundler/setup"
@@ -120,6 +109,15 @@ Aby uzyskać dostęp do stream API wymagana jest weryfikacja<br>
     client.filter(track: topics.join(",")) do |status|
       handle_tweet status
     end
+
+Szablon pliku YAML z *credentials*:
+
+    :::yaml
+    ---
+    consumer_key: AAAAAAAAAAAAAAAAAAAAA
+    consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    oauth_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+    oauth_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
