@@ -142,27 +142,28 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
 ----
 
-W skrypcie {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %},
-który zostanie wykorzystany na wykładzie, dodano zapisywanie
-stausów w bazie ElasticSearch.
+Do pobierania statusów i zapisywania ich w bazie Elasticsearch wykorzystamy skrypt
+{%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}.
 
-Teraz zabierzemy się za zapisywanie oczyszczonych statusów
-w ElasticSearch.  W tym celu napiszemy skrypt w Ruby i skorzystamy
-z wygodnego DSL dla ElasticSearch oferowanego przez gem Tire.
+Przed zapisaniem w bazie JSON-a ze statusem
+usuwamy z niego niepotrzebne nam pola i spłaszczamy jego strukturę.
 
-Z Twitterem możemy zestawić tylko jeden strumień (co można wyczytać
-w dokumentacji do API Twittera).
-Dlatego zbierzemy wszystkie statusy z interesujących nas kategorii – rails,
-mongodb itd. do jednego strumienia.
-Rozdzielimy je na typy, na chwilę przed zapisaniem w bazie.
-Wykorzystamy w tym celu mechanizm perkolacji.
+*Uwaga:* Z Twitterem możemy zestawić tylko jeden strumień
+(co można wyczytać w dokumentacji do API Twittera; sprawdzić to dla v1.1 API).
+Dlatego zbierzemy wszystkie statusy z interesujących nas kategorii do jednego strumienia.
+Rozdzielimy go na poszczególne typy, przed zapisaniem w bazie.
+Wykorzystamy w tym celu [perkolację](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html).
+
+**Uwaga:** W wersji 1.0.0 Elasticsearch percolator zamieniono na
+[distributed percolator](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html).
 
 Co oznacza *percolation*? przenikanie, przefiltrowanie, perkolacja?
 „Let's define callback for percolation.
 Whenewer a new document is saved in the index, this block will be executed,
 and we will have access to matching queries in the `Tweet#matches` property.”
 
-Przy okazji zdefinujemy *mapping* dla statusów zapisywanych w bazie ElasticSearch.
+Zanim zaczniemy zapisywać statusy w bazie,
+zdefinujemy *mapping* i zapiszemy go w bazie ElasticSearch.
 
 Co to jest *mapping*?
 „Mapping is the process of defining how a document should be mapped to
@@ -170,164 +171,55 @@ the Search Engine, including its searchable characteristics such as
 which fields are searchable and if/how they are tokenized.”
 
     :::ruby create-index-percolate_tweets.rb
-    # encoding: utf-8
-    require 'tire'
+    require "bundler/setup"
 
-    tweets_mapping =  {
+    require "elasticsearch"
+    require "colored"
+
+    mapping =  {
       :properties => {
-        :text          => { :type => 'string', :boost => 2.0,            :analyzer => 'snowball'       },
-        :screen_name   => { :type => 'string', :index => 'not_analyzed',                               },
-        :created_at    => { :type => 'date',                                                           },
-        :hashtags      => { :type => 'string', :index => 'not_analyzed', :index_name => 'hashtag'      },
-        :urls          => { :type => 'string', :index => 'not_analyzed', :index_name => 'url'          },
-        :user_mentions => { :type => 'string', :index => 'not_analyzed', :index_name => 'user_mention' }
+        :text          => { :type    => 'string', :boost => 2.0,            :analyzer => 'snowball'       },
+        :screen_name   => { :type    => 'string', :index => 'not_analyzed'                                },
+        :created_at    => { :type    => 'date'                                                            },
+        :hashtags      => { :type    => 'string', :index => 'not_analyzed', :index_name => 'hashtag'      },
+        :urls          => { :type    => 'string', :index => 'not_analyzed', :index_name => 'url'          },
+        :user_mentions => { :type    => 'string', :index => 'not_analyzed', :index_name => 'user_mention' },
+        :_ttl          => { :enabled => true,     :default => "30d"                                       }
       }
     }
 
-    mappings = { }
-    keywords = %w{elasticsearch emberjs mongodb couchdb redis}
+    topics = %w[
+      mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
+    ]
 
-    keywords.each do |keyword|
-      mappings[keyword.to_sym] = tweets_mapping
+    elasticsearch_client = Elasticsearch::Client.new log: true
+
+    elasticsearch_client.perform_request :put,   '/tweets'  # create ‘tweets’ index
+
+    topics.each do |keyword|
+      elasticsearch_client.indices.put_mapping index: 'tweets', type: keyword, body: mapping
     end
 
-    Tire.index('tweets') do
-      delete
-      create :mappings => mappings
+    elasticsearch_client.indices.refresh index: 'tweets'
+
+    # register several queries for percolation against the tweets index
+    topics.each do |keyword|
+      elasticsearch_client.index index: '_percolator', type: 'tweets', id: keyword, body: { query: { query_string: { query: keyword } } }
     end
 
-    Tire.index('tweets').refresh
+    elasticsearch_client.indices.refresh index: '_percolator'
 
-    # Register several queries for percolation against the tweets index.
-
-    Tire.index('tweets') do
-      keywords.each do |keyword|
-        register_percolator_query(keyword) { string keyword }
-      end
-    end
-
-    # Refresh the `_percolator` index for immediate access.
-
-    Tire.index('_percolator').refresh
-
-Uuruchamiamy ten skrypt i sprawdzamy czy *mapping* zostało zapisane w bazie:
+Teraz uruchamiamy skrypt *create-index-percolate_tweets.rb*,
+sprawdzamy czy *mapping* zostało zapisane w bazie
+i uruchamiamy skrypt *fetch-tweets.rb*:
 
     :::bash
     ruby create-index-percolate_tweets.rb
     curl 'http://localhost:9200/tweets/_mapping?pretty=true'
-
-Cały skrypt można obejrzeć na GitHubie –
-[create-index-percolate_tweets.rb](https://github.com/wbzyl/est/blob/master/create-index-percolate_tweets.rb).
-
-Dopiero po tych wstępnych robótkach, zabieramy się za
-skrypt zapisujący statusy indeksie *tweets* i w typach
-o nazwach takich samych jak słowa kluczowe.
-
-    :::ruby fetch-tweets.rb
-    # encoding: utf-8
-    require 'tweetstream'
-    require 'tire'
-    require 'yaml'
-    require 'colored'
-
-    begin
-      raw_config = File.read("#{ENV['HOME']}/.credentials/services.yml")
-      twitter = YAML.load(raw_config)['twitter']
-    rescue
-      puts "\n\tError: problems with #{ENV['HOME']}/.credentials/services.yml\n".red
-      exit(1)
-    end
-
-    # https://dev.twitter.com/apps  (app: Tao Streams)
-    TweetStream.configure do |config|
-      config.consumer_key       = twitter['consumer_key']
-      config.consumer_secret    = twitter['consumer_secret']
-      config.oauth_token        = twitter['oauth_token']
-      config.oauth_token_secret = twitter['oauth_token_secret']
-      config.auth_method        = :oauth
-    end
-
-    # Tire part.
-
-    # Let's define a class to hold our data in *ElasticSearch*.
-    class Tweet
-      include Tire::Model::Persistence
-
-      # property :id
-      property :text
-      property :screen_name
-      property :created_at
-      property :hashtags
-      property :urls
-      property :user_mentions
-
-      # Let's define callback for percolation.
-      # Whenewer a new document is saved in the index, this block will be executed,
-      # and we will have access to matching queries in the `Tweet#matches` property.
-      #
-      # Below, we will just print the text field of matching query.
-      on_percolate do
-        if matches.empty?
-          puts "'#{text}' from @#{screen_name}"
-        else
-          puts "'#{text.green}' from @#{screen_name.yellow}"
-        end
-      end
-    end
-
-    puts "\nYou can check out the statuses in your index with curl:\n".magenta
-    puts "  curl 'http://localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4&pretty=true'\n".yellow
-
-    # Strip off fields we are not interested in.
-    # Flatten and clean up entities.
-
-    def handle_tweet(s)
-      # tweetstream >= v2.0.0
-      hashtags = s.hashtags.to_a.map { |o| o["text"] }
-      urls = s.urls.to_a.map { |o| o["expanded_url"] }
-      user_mentions = s.user_mentions.to_a.map { |o| o["screen_name"] }
-
-      h = Tweet.new id: s[:id].to_s,
-        text: s[:text],
-        screen_name: s[:user][:screen_name],
-        created_at: s[:created_at],
-        hashtags: hashtags,
-        urls: urls,
-        user_mentions: user_mentions
-
-      types = h.percolate
-      puts "matched queries: #{types}".cyan
-
-      types.to_a.each do |type|
-        Tweet.document_type type
-        h.save
-      end
-    end
-
-    # TweetStream part.
-
-    client = TweetStream::Client.new
-
-    client.on_error do |message|
-      puts message.red
-    end
-
-    # Fetch statuses from Twitter and write them to ElasticSearch.
-    keywords = %w{elasticsearch emberjs mongodb couchdb redis}
-    client.track(*keywords) do |status|
-      handle_tweet(status)
-    end
-
-Cały skrypt *fetch-tweets.rb* można podejrzeć
-[tutaj](https://github.com/wbzyl/est/blob/master/fetch-tweets.rb).
-
-Na konsoli uruchamiamy skrypt:
-
-    :::bash konsola
     ruby fetch-tweets.rb
 
-czekamy aż kilka statusów zostanie zapisanych w Elasticsearch
-i wykonujemy kilka prostych zapytań korzystając z programu *curl*:
+Czekamy aż kilka statusów zostanie zapisanych w Elasticsearch
+i wykonujemy na konsoli kilka prostych zapytań korzystając:
 
     :::bash
     curl 'localhost:9200/tweets/_count'
@@ -336,11 +228,8 @@ i wykonujemy kilka prostych zapytań korzystając z programu *curl*:
     curl 'localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty=true'
     curl 'localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty=true'
 
-Oczywiście można też podejrzeć statusy
-korzystając z aplikacji webowej [Elasticsearch Head](https://github.com/Aconex/elasticsearch-head).
 
-
-## Faceted search, czyli wyszukiwanie fasetowe
+## TODO: Faceted search, czyli wyszukiwanie fasetowe
 
 [Co to jest?](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html)
 „Facets provide aggregated data based on a search query. In the
