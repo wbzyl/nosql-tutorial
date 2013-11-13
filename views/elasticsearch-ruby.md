@@ -188,7 +188,8 @@ which fields are searchable and if/how they are tokenized.”
 
     # register several queries for percolation against the tweets index
     topics.each do |keyword|
-      elasticsearch_client.index index: '_percolator', type: 'tweets', id: keyword, body: { query: { query_string: { query: keyword } } }
+      elasticsearch_client.index index: '_percolator', type: 'tweets', id: keyword,
+          body: { query: { query_string: { query: keyword } } }
     end
     elasticsearch_client.indices.refresh index: '_percolator'
 
