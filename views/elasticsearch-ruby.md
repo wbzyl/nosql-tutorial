@@ -83,7 +83,6 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     unless credentials[0]
       puts "\nUsage:"
       puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
-      puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
       exit(1)
     end
 
@@ -91,7 +90,7 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
       raw_config = File.read File.expand_path(credentials[0])
       twitter = YAML.load(raw_config)
     rescue
-      puts "\n\tError: problems with #{credentials}\n".red
+      puts "\n\tError: problems with reading o parsing #{credentials}\n".red
       exit(1)
     end
 
