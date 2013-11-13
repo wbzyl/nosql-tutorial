@@ -132,23 +132,12 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
 ## Twitter Stream ⟿ ElasticSearch
 
-----
-
-**TODO:** **retire tire, uaktualnić notatki do gemów twitter + elasticsearch**
-
-**TODO:** dodać prostą aplikację do przeszukiwania tweetów: site plugin + jQuery.
-
-**TODO:** [Elasticsearch v1.0.0 zmiany w percolator API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html)
-
-----
-
-Do pobierania statusów i zapisywania ich w bazie Elasticsearch wykorzystamy skrypt
+Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
 {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}.
+Przed zapisaniem w bazie JSON-a ze statusem, skrypt
+usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
 
-Przed zapisaniem w bazie JSON-a ze statusem
-usuwamy z niego niepotrzebne nam pola i spłaszczamy jego strukturę.
-
-*Uwaga:* Z Twitterem możemy zestawić tylko jeden strumień
+**Uwaga:** Z Twitterem możemy zestawić tylko jeden strumień
 (co można wyczytać w dokumentacji do API Twittera; sprawdzić to dla v1.1 API).
 Dlatego zbierzemy wszystkie statusy z interesujących nas kategorii do jednego strumienia.
 Rozdzielimy go na poszczególne typy, przed zapisaniem w bazie.
@@ -187,26 +176,20 @@ which fields are searchable and if/how they are tokenized.”
         :_ttl          => { :enabled => true,     :default => "30d"                                       }
       }
     }
-
     topics = %w[
       mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
     ]
-
     elasticsearch_client = Elasticsearch::Client.new log: true
-
     elasticsearch_client.perform_request :put,   '/tweets'  # create ‘tweets’ index
-
     topics.each do |keyword|
       elasticsearch_client.indices.put_mapping index: 'tweets', type: keyword, body: mapping
     end
-
     elasticsearch_client.indices.refresh index: 'tweets'
 
     # register several queries for percolation against the tweets index
     topics.each do |keyword|
       elasticsearch_client.index index: '_percolator', type: 'tweets', id: keyword, body: { query: { query_string: { query: keyword } } }
     end
-
     elasticsearch_client.indices.refresh index: '_percolator'
 
 Teraz uruchamiamy skrypt *create-index-percolate_tweets.rb*,
@@ -218,8 +201,8 @@ i uruchamiamy skrypt *fetch-tweets.rb*:
     curl 'http://localhost:9200/tweets/_mapping?pretty=true'
     ruby fetch-tweets.rb
 
-Czekamy aż kilka statusów zostanie zapisanych w Elasticsearch
-i wykonujemy na konsoli kilka prostych zapytań korzystając:
+Czekamy aż kilka statusów zostanie zapisanych w bazie
+i wykonujemy na konsoli kilka prostych zapytań:
 
     :::bash
     curl 'localhost:9200/tweets/_count'
@@ -227,6 +210,9 @@ i wykonujemy na konsoli kilka prostych zapytań korzystając:
     curl 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=2&pretty=true'
     curl 'localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty=true'
     curl 'localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty=true'
+
+Do wygodnego przeglądania statusów możemy użyć aplikacji
+[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch), którą instalujemy jako *site plugin*.
 
 
 ## TODO: Faceted search, czyli wyszukiwanie fasetowe
