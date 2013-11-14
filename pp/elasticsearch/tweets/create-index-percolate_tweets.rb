@@ -10,6 +10,7 @@ require "colored"
 #   body: { rails: { properites: { created_at: { type: "date", format: "YYYY-MM-dd HH:mm:ss Z" } } } }
 
 mapping = {
+  _ttl:            { enabled: true,  default: '12w'                                          },
   properties: {
     created_at:    { type: 'date',   format:  'YYYY-MM-dd HH:mm:ss Z', store: true           },
     text:          { type: 'string', boost:    2.0,                    analyzer:  'snowball' },
@@ -17,7 +18,6 @@ mapping = {
     hashtags:      { type: 'string', index:   'not_analyzed'                                 },
     urls:          { type: 'string', index:   'not_analyzed'                                 },
     user_mentions: { type: 'string', index:   'not_analyzed'                                 }
-#   _ttl:          { enabled: true,  default: '12w'                                          }
   }
 }
 

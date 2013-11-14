@@ -165,15 +165,15 @@ which fields are searchable and if/how they are tokenized.”
     require "elasticsearch"
     require "colored"
 
-    mapping =  {
-      :properties => {
-        :text          => { :type    => 'string', :boost => 2.0,            :analyzer => 'snowball'       },
-        :screen_name   => { :type    => 'string', :index => 'not_analyzed'                                },
-        :created_at    => { :type    => 'date'                                                            },
-        :hashtags      => { :type    => 'string', :index => 'not_analyzed', :index_name => 'hashtag'      },
-        :urls          => { :type    => 'string', :index => 'not_analyzed', :index_name => 'url'          },
-        :user_mentions => { :type    => 'string', :index => 'not_analyzed', :index_name => 'user_mention' },
-        :_ttl          => { :enabled => true,     :default => "30d"                                       }
+    mapping = {
+      _ttl:            { enabled: true,  default: '12w'                                          },
+      properties: {
+        created_at:    { type: 'date',   format:  'YYYY-MM-dd HH:mm:ss Z', store: true           },
+        text:          { type: 'string', boost:    2.0,                    analyzer:  'snowball' },
+        screen_name:   { type: 'string', index:   'not_analyzed'                                 },
+        hashtags:      { type: 'string', index:   'not_analyzed'                                 },
+        urls:          { type: 'string', index:   'not_analyzed'                                 },
+        user_mentions: { type: 'string', index:   'not_analyzed'                                 }
       }
     }
     topics = %w[
@@ -218,7 +218,7 @@ Do wygodnego przeglądania statusów możemy użyć aplikacji
 
 ## TODO: Faceted search, czyli wyszukiwanie fasetowe
 
-[Co to jest?](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html)
+[Co to jest?](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets.html)
 „Facets provide aggregated data based on a search query. In the
 simplest case, a terms facet can return facet counts for various facet
 values for a specific field. ElasticSearch supports more facet
