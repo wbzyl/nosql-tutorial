@@ -18,8 +18,9 @@ statically served when hitting
 
 URL. Those can be added even after the process has started.”
 
-Pierwszą wtyczkę nazwiemy *hello_es*. Będzie to tzw. „site plugin”,
+Pierwszą wtyczkę nazwiemy *hello-elasticsearch*. Będzie to tzw. „site plugin”,
 prosta aplikacja HTML korzystająca z jQuery.
+Autorem wtyczki jest Karel Minarik.
 
 Zaczniemy od wtyczki o nazwie *hello-elasticsearch*. Po instalacji
 **wtyczko-aplikacja** jest dostępna z takiego url:
