@@ -1,28 +1,17 @@
 # -*- coding: utf-8 -*-
 require "bundler/setup"
 
-# https://github.com/sferik/twitter, http://rdoc.info/github/sferik/twitter
+# https://github.com/sferik/twitter,
+# http://rdoc.info/github/sferik/twitter
+require 'twitter'  # we need at least this version 5.0.0.rc1
 
-require 'twitter'  # requires version ~> 5.0.0.rc1
 require 'colored'
 require 'elasticsearch'
 
 require 'yaml'
 
-# Let’s define a class to hold our data in ElasticSearch.
-
 class Tweet
   attr_accessor :status, :id
-
-  # class << self
-  #   attr_accessor :client
-  #   # def client=(c)
-  #   #   @client = c
-  #   # end
-  #   # def client
-  #   #   puts "client: #{@client}"
-  #   # end
-  # end
 
   def initialize(status)
     @id = status[:id].to_s
@@ -31,16 +20,16 @@ class Tweet
 
 private
 
-  # strip off fields we are not interested in; flatten and clean up entities
+  # strip off fields we are not interested in
+  # flatten and clean up entities
   def cleanup(s)
-    # :text, :screen_name, :created_at, :hashtags, :urls, :user_mentions
-
+    # use these fields:
+    #   :created_at, :text, :screen_name,
+    #   :hashtags, :urls, :user_mentions
     hashtags = s.hashtags.to_a.map { |o| o["text"] }
     urls = s.urls.to_a.map { |o| o["expanded_url"] }
     user_mentions = s.user_mentions.to_a.map { |o| o["screen_name"] }
-
-    h = Hash.new
-    h = {
+    {
       text: s[:text],
       screen_name: s[:user][:screen_name],
       created_at: s[:created_at],
@@ -71,7 +60,6 @@ rescue
 end
 
 # https://dev.twitter.com/apps
-#
 #   My applications: Elasticsearch NoSQL
 
 twitter_client = Twitter::Streaming::Client.new do |config|
@@ -83,7 +71,12 @@ end
 
 elasticsearch_client = Elasticsearch::Client.new
 
-topics = ['mongodb', 'elasticsearch', 'couchdb', 'neo4j', 'redis', 'emberjs', 'meteorjs', 'rails', 'd3js']
+topics = %w[
+  deeplearning
+  mongodb elasticsearch couchdb neo4j redis
+  emberjs meteorjs rails
+  d3js
+]
 
 twitter_client.filter(track: topics.join(",")) do |status|
   tweet = Tweet.new(status)
