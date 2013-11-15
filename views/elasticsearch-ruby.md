@@ -295,9 +295,9 @@ A tak wygląda „fasetowy” JSON:
 * `total` : the total number of terms in the facet
 * `other` : the number of terms not included in the returned facet
 
-Effectively `other = total - terms`.
+Effectively `other = total – terms`.
 
-Jeszcze jeden przykład:
+**TODO:** Jeszcze jeden przykład:
 
     :::bash
     curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
