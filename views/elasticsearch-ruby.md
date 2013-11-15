@@ -297,39 +297,45 @@ A tak wygląda „fasetowy” JSON:
 
 Effectively `other = total – terms`.
 
-**TODO:** Jeszcze jeden przykład:
+I jeszcze jedno wyszukiwanie facetowe:
 
     :::bash
-    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
-       {
-         "query": { "query_string": {"query": "redis"} },
-         "sort": { "created_at": { "order": "desc" } },
-         "facets": { "hashtags": { "terms":  { "field": "hashtags", size: 4 }, "global": true } }
-       }'
+    curl -s 'localhost:9200/tweets/_search?pretty' -d '
+    {
+      "query": { "query_string": {"query": "redis"} },
+      "sort": { "created_at": { "order": "desc" } },
+      "facets": { "hashtags": { "terms":  { "field": "hashtags", size: 4 }, "global": true } }
+    }'
 
-A teraz inny facet:
+A teraz zupełnie inny facet,
+[date histogram facet](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets-date-histogram-facet.html):
 
     :::bash
-    curl -X POST "localhost:9200/tweets/_search?pretty=true" -d '
+    curl -s 'localhost:9200/tweets/_search?pretty' -d '
     {
       "query": { "match_all": {} },
       "sort": { "created_at": { "order": "desc" } },
-      "facets": { "statuses_per_day": { "date_histogram":  { "field": "created_at", "interval": "day" } } }
+      "facets": {
+         "statuses_per_day": {
+            "date_histogram":  { "field": "created_at", "interval": "30m" }
+         }
+      }
     }'
 
-Tak wygląda *date_histogram* facet:
+Oto wynik wyszukiwania z *date histogram*:
 
     :::json
-    "facets": {
-      "statuses_per_day": {
-        "_type": "date_histogram",
-        "entries": [ {
-          "time": 1332201600000,
-          "count": 2834
-        }, {
-          "time": 1332288000000,
-          "count": 384
-        } ]
+    "facets" : {
+      "statuses_per_day" : {
+        "_type" : "date_histogram",
+        "entries" : [
+          { "time" : 1384497000000, "count" : 45 },
+          { "time" : 1384498800000, "count" : 81 },
+          { "time" : 1384500600000, "count" : 98 },
+          { "time" : 1384502400000, "count" : 95 },
+          { "time" : 1384504200000, "count" : 95 },
+          ...
+        ]
       }
     }
 
@@ -391,9 +397,10 @@ MongoDB River Plugin for ElasticSearch:
 Przykład pokazujący jak to działa:
 
     :::bash
-    curl -X GET 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true'
+    curl -s 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty'
 
-Opcjonalnie możemy dopisać kryteria wyszukiwania, wszystko:
+Opcjonalnie możemy dopisać kryteria wyszukiwania. Na przykład,
+wyszukujemy wszystko:
 
     :::json
     {
@@ -402,13 +409,13 @@ Opcjonalnie możemy dopisać kryteria wyszukiwania, wszystko:
        }
     }
 
-albo:
+albo cokolwiek:
 
     :::json
     {
        "query": {
           "query_string": {
-             "query": "some query string here"
+             "query": "cokolwiek"
           }
        }
     }
@@ -416,7 +423,7 @@ albo:
 Wtedy zmieniamy wywołanie *curl* na:
 
     :::bash
-    curl -XGET 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty=true' -d '
+    curl -s 'localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=4&pretty' -d '
     {
        "query": {
          "match_all": {}
@@ -445,7 +452,7 @@ Wynik wykonania tego polecenia, to przykładowo:
 Teraz wykonujemy tyle razy polecenie:
 
     :::bash
-    curl -XGET 'localhost:9200/_search/scroll?scroll=10m&pretty=true' \
+    curl -s 'localhost:9200/_search/scroll?scroll=10m&pretty' \
       -d 'przeklikujemy ostatnią wersję _scroll_id'
 
 aż otrzymamy pustą tablicę *hits.hits*:
@@ -466,7 +473,7 @@ aż otrzymamy pustą tablicę *hits.hits*:
         "hits": [ ]
         ...
 
-Przykładowa implementacja tego algorytmu w NodeJS (v0.8.14)
+Przykładowa implementacja tego algorytmu w NodeJS (v0.10.22)
 + moduł [Restler](https://github.com/danwrong/restler) (v2.0.1):
 
     :::js dump-tweets.js
@@ -494,10 +501,11 @@ Skrypt ten uruchamiamy tak:
     :::bash
     node dump-tweets.js
 
-Oczywiście wcześniej musimy umieścić dane w indeksie *tweets*.
-JTZ? Opisałem to w [README tutaj](https://github.com/wbzyl/est).
+**Uwaga 1:** Należy załatać plik *restler.js*.
+Łata jest w katalogu *pp/elasticsearch/dump* z repozytorium
+z notatkami do wykładu.
 
-**Uwaga:** Korzystając z tego skryptu, możemy łatwo przenieść
+**Uwaga 2:** Korzystając z tego skryptu, możemy łatwo przenieść
 dane z Elasticsearch do MongoDB:
 
     :::bash
