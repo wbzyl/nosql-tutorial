@@ -266,32 +266,36 @@ Od prostych zapytań do zapytań z fasetami:
 A tak wygląda „fasetowy” JSON:
 
     :::json
-"facets" : {
-    "hashtags" : {
-      "_type" : "terms",
-      "missing" : 167,
-      "total" : 198,
-      "other" : 127,
-      "terms" : [
-        { "term" : "dbts2013", "count" : 13 },
-        { "term" : "nosql", "count" : 9 },
-        { "term" : "couchdb", "count" : 9 },
-        { "term" : "mongodb", "count" : 7 },
-        { "term" : "Rails", "count" : 7 },
-        { "term" : "cassandra", "count" : 6 },
-        { "term" : "redis", "count" : 5 },
-        { "term" : "rails", "count" : 5 },
-        { "term" : "jobs", "count" : 5 },
-        { "term" : "d3js", "count" : 5 }
-       ]
-    }
-  }
+    { ... cut ...
+      "facets" : {
+         "hashtags" : {
+            "_type" : "terms",
+            "missing" : 167,
+            "total" : 198,
+            "other" : 127,
+            "terms" : [
+               { "term" : "dbts2013", "count" : 13 },
+               { "term" : "nosql", "count" : 9 },
+               { "term" : "couchdb", "count" : 9 },
+               { "term" : "mongodb", "count" : 7 },
+               { "term" : "Rails", "count" : 7 },
+               { "term" : "cassandra", "count" : 6 },
+               { "term" : "redis", "count" : 5 },
+               { "term" : "rails", "count" : 5 },
+               { "term" : "jobs", "count" : 5 },
+               { "term" : "d3js", "count" : 5 }
+            ]
+          }
+        }
+      }
 
-[Search API – Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html):
-The facet also returns the number of documents which have no value for
-the field (*missing*), the number of facet values not included in the
-returned facets (*other*), and the total number of tokens in the facet
-(*total*).
+[Search API – Facets](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets.html):
+
+* `missing` : the number of documents which have no value for the faceted field
+* `total` : the total number of terms in the facet
+* `other` : the number of terms not included in the returned facet
+
+Effectively `other = total - terms`.
 
 Jeszcze jeden przykład:
 
