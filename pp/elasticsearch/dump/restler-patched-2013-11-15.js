@@ -298,7 +298,7 @@ function request(url, options) {
   var request = new Request(url, options);
   request.on('error', function() {});
   process.nextTick(request.run.bind(request));
-  return request;
+ 	return request;
 }
 
 function get(url, options) {
