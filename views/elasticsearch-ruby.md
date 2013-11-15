@@ -501,9 +501,9 @@ Skrypt ten uruchamiamy tak:
     :::bash
     node dump-tweets.js
 
-**Uwaga 1:** Należy załatać plik *restler.js*.
-Łata jest w katalogu *pp/elasticsearch/dump* z repozytorium
-z notatkami do wykładu.
+**Uwaga 1:** Moduł ma „buga“. Przed uruchomieniem skryptu należy
+załatać plik *restler.js*. Łata jest w katalogu
+*pp/elasticsearch/dump* z repozytorium z notatkami do wykładu.
 
 **Uwaga 2:** Korzystając z tego skryptu, możemy łatwo przenieść
 dane z Elasticsearch do MongoDB:
