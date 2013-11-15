@@ -1,8 +1,6 @@
 require "bundler/setup"
 
-# https://github.com/sferik/twitter, http://rdoc.info/github/sferik/twitter
-
-require 'twitter'  # requires version ~> 5.0.0.rc1
+require 'twitter'  # use version 5.0.0.rc1
 require 'colored'
 
 require 'yaml'
@@ -38,7 +36,6 @@ def handle_tweet(s)
 end
 
 # https://dev.twitter.com/apps
-#
 #   My applications: Elasticsearch NoSQL
 
 client = Twitter::Streaming::Client.new do |config|
@@ -49,7 +46,9 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 topics = %w[
-  mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
+  deeplearning
+  mongodb elasticsearch couchdb neo4j redis
+  emberjs meteorjs rails d3js
 ]
 
 client.filter(track: topics.join(",")) do |status|

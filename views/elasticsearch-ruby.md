@@ -71,18 +71,15 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     :::ruby fetch-tweets-simple.rb
     require "bundler/setup"
 
-    # https://github.com/sferik/twitter, http://rdoc.info/github/sferik/twitter
-
-    require 'twitter'  # requires version ~> 5.0.0.rc1
+    require 'twitter'  # use version 5.0.0.rc1
     require 'colored'
-
     require 'yaml'
 
     credentials = ARGV
-
     unless credentials[0]
       puts "\nUsage:"
       puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
+      puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
       exit(1)
     end
 
@@ -90,7 +87,7 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
       raw_config = File.read File.expand_path(credentials[0])
       twitter = YAML.load(raw_config)
     rescue
-      puts "\n\tError: problems with reading o parsing #{credentials}\n".red
+      puts "\n\tError: problems with #{credentials}\n".red
       exit(1)
     end
 
@@ -99,7 +96,7 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     end
 
     # https://dev.twitter.com/apps
-
+    #   My applications: Elasticsearch NoSQL
     client = Twitter::Streaming::Client.new do |config|
       config.consumer_key        = twitter['consumer_key']
       config.consumer_secret     = twitter['consumer_secret']
@@ -108,9 +105,10 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     end
 
     topics = %w[
-      mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
+      deeplearning
+      mongodb elasticsearch couchdb neo4j redis
+      emberjs meteorjs rails d3js
     ]
-
     client.filter(track: topics.join(",")) do |status|
       handle_tweet status
     end
@@ -159,37 +157,44 @@ Co to jest *mapping*?
 the Search Engine, including its searchable characteristics such as
 which fields are searchable and if/how they are tokenized.”
 
-    :::ruby create-index-percolate_tweets.rb
+    :::ruby create-mapping-and-percolate.rb
     require "bundler/setup"
 
     require "elasticsearch"
     require "colored"
 
     mapping = {
-      _ttl:            { enabled: true,  default: '12w'                                          },
+      _ttl:            { enabled: true,  default: '16w'                               },
       properties: {
-        created_at:    { type: 'date',   format:  'YYYY-MM-dd HH:mm:ss Z', store: true           },
-        text:          { type: 'string', boost:    2.0,                    analyzer:  'snowball' },
-        screen_name:   { type: 'string', index:   'not_analyzed'                                 },
-        hashtags:      { type: 'string', index:   'not_analyzed'                                 },
-        urls:          { type: 'string', index:   'not_analyzed'                                 },
-        user_mentions: { type: 'string', index:   'not_analyzed'                                 }
+        created_at:    { type: 'date',   format: 'YYYY-MM-dd HH:mm:ss Z'              },
+        text:          { type: 'string', index:  'analyzed',    analyzer:  'snowball' },
+        screen_name:   { type: 'string', index:  'not_analyzed'                       },
+        hashtags:      { type: 'string', index:  'not_analyzed'                       },
+        urls:          { type: 'string', index:  'not_analyzed'                       },
+        user_mentions: { type: 'string', index:  'not_analyzed'                       }
       }
     }
+
     topics = %w[
-      mongodb elasticsearch couchdb neo4j redis emberjs meteorjs rails d3js
+      deeplearning
+      mongodb elasticsearch couchdb neo4j redis
+      emberjs meteorjs rails
+      d3js
     ]
+
     elasticsearch_client = Elasticsearch::Client.new log: true
-    elasticsearch_client.perform_request :put,   '/tweets'  # create ‘tweets’ index
-    topics.each do |keyword|
-      elasticsearch_client.indices.put_mapping index: 'tweets', type: keyword, body: mapping
+    elasticsearch_client.perform_request :put, '/tweets'       # create ‘tweets’ index
+
+    topics.each do |topic|
+      elasticsearch_client.indices.put_mapping index: 'tweets', type: topic,
+          body: { topic: mapping }
     end
     elasticsearch_client.indices.refresh index: 'tweets'
 
     # register several queries for percolation against the tweets index
-    topics.each do |keyword|
-      elasticsearch_client.index index: '_percolator', type: 'tweets', id: keyword,
-          body: { query: { query_string: { query: keyword } } }
+    topics.each do |topic|
+      elasticsearch_client.index index: '_percolator', type: 'tweets', id: topic,
+          body: { query: { query_string: { query: topic } } }
     end
     elasticsearch_client.indices.refresh index: '_percolator'
 
