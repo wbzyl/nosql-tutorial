@@ -23,6 +23,9 @@ Proponowane tematy referatów:
   - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
   - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
   - [Neo4j GraphGist](http://gist.neo4j.org/) – share documents includeing Cypher queries
+* **Map Tiles, Geocoding**:
+  - [CloudMade](http://cloudmade.com/) –
+  the Location Platform Serving OEMs, Enterprises & Developers
 
 
 ## 8.10.2013 – zaczynamy!
