@@ -6,9 +6,6 @@ Dokumentacja:
 * [bulk UDP API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk-udp.html)
 * [jq](http://stedolan.github.io/jq/) – a lightweight and flexible command-line JSON processor
 * cytaty wybrano z tej strony [Stanisław Jerzy Lec, Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html)
-* [stream2es](https://github.com/elasticsearch/stream2es) –
-  stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
-
 
 The Elasticsearch REST API expects the following JSON structure:
 

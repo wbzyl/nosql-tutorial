@@ -13,6 +13,7 @@ Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
+* [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch-rest-api-spec)
 * [Guides](http://www.elasticsearch.org/guide/):
   - [Setup](http://www.elasticsearch.org/guide/reference/setup/)
   - [API](http://www.elasticsearch.org/guide/reference/api/)
@@ -21,6 +22,9 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
   - [Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html)
   - [Plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html)
 * [es2unix](https://github.com/elasticsearch/es2unix) – Elasticsearch API consumable by the command line
+* [stream2es](https://github.com/elasticsearch/stream2es) –
+  stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
+
 
 [Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
