@@ -13,6 +13,8 @@ Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
+* [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-stempel) –
+  this plugin includes the **polish** analyzer and **polish_stem** token filter.
 * [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch-rest-api-spec)
 * [Guides](http://www.elasticsearch.org/guide/):
   - [Setup](http://www.elasticsearch.org/guide/reference/setup/)
