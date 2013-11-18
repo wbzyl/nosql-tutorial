@@ -12,7 +12,7 @@ var iterate = function(data) {  // funkcja rekurencyjna
     });
 };
 
-rest.get('http://localhost:9200/tweets/_search?search_type=scan&scroll=10m&size=32')
+rest.get('http://localhost:9200/tmp/_search?search_type=scan&scroll=10m&size=32')
   .on('success', function(data, response) {
     iterate(data);
 });
