@@ -37,9 +37,9 @@ private
       text: s[:text],
       screen_name: s[:user][:screen_name],
       created_at: s[:created_at],
-      hashtags: hashtags.to_a,
-      urls: urls.to_a,
-      user_mentions: user_mentions.to_a
+      hashtags: hashtags,
+      urls: urls,
+      user_mentions: user_mentions
     }
   end
 end
