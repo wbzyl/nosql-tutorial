@@ -35,7 +35,7 @@ Na koniec, kilka użytecznych poleceń:
 Czasami warto wkleić podobną linijkę do pliku SPEC na końcu sekcji *%install*:
 
     :::bash
-    rm -rf $RPM_BUILD_ROOT/usr/include/mongo
+    rm -rf $RPM_BUILD_ROOT/usr/include/mongodb
 -->
 
 ## MongoDB
@@ -49,44 +49,44 @@ Przechodzimy do katalogu *mongo* i wykonujemy polecenie:
 
     :::bash
     cd mongo
-    git archive --format=tar --prefix=mongo-2.4.0/ c40533e | gzip > ~/rpmbuild/SOURCES/mongo-2.4.0.tar.gz
+    git archive --format=tar --prefix=mongodb-2.5.4/ r2.5.4 | gzip > ~/rpmbuild/SOURCES/mongodb-2.5.4.tar.gz
 
 gdzie `c40533e` to (ostatni) commit z 10.03.2013.
 
-Plik [mongo-2.4.0.spec](https://raw.github.com/wbzyl/disasters/master/mongod/mongo-2.4.0.spec)
+Plik [mongodb-2.5.4.spec](https://raw.github.com/wbzyl/disasters/master/mongod/mongodb-2.5.4.spec)
 zapisujemy w katalogu `~/rpmbuild/SPECS`.
 Przechodzimy do tego katalogu, gdzie wykonujemy polecenie:
 
     :::bash
-    rpmbuild -bi mongo-2.4.0.spec
+    rpmbuild -bi mongodb-2.5.4.spec
 
 Jeśli powyższe polecenie kończy się komunikatem o niespakietowanych
-plikach, dodajemy je do pliku *mongo-2.4.0.spec* i sprawdzamy
+plikach, dodajemy je do pliku *mongodb-2.5.4.spec* i sprawdzamy
 czy wszystko jest OK:
 
-    rpmbuild -bl mongo-2.4.0.spec
+    rpmbuild -bl mongodb-2.5.4.spec
 
 Jeśli polecenie wykona się bez błędów, to budujemy pakiet SRC:
 
     :::bash
-    rpmbuild -bs mongo-2.4.0.spec
+    rpmbuild -bs mongodb-2.5.4.spec
 
 a następnie pakiety RPM:
 
     :::bash
-    rpmbuild --rebuild mongo-2.4.0-2.fc16.src.rpm
+    rpmbuild --rebuild mongodb-2.5.4-1.fc16.src.rpm
 
 Paczkę instalujemy / uaktualniamy korzystając z programu *yum*:
 
     :::bash
     cd RPMS/x86_64/
-    yum update mongo-2.4.0-2.fc16.x86_64.rpm mongo-server-2.4.0-2.fc16.x86_64.rpm
+    yum update mongodb-2.5.4-2.fc16.x86_64.rpm mongo-server-2.5.4-1.fc16.x86_64.rpm
 
 *Uwaga:* Pakiety RPM powinniśmy budować za pomocą programu *mock*:
 
     :::bash
     sudo usermod -a -G mock wbzyl # dodajemy siebie do grupy mock
-    mock -r fedora-16-x86_64 --resultdir ../RPMS/ mongo-2.4.0-2.fc16.src.rpm
+    mock -r fedora-16-x86_64 --resultdir ../RPMS/ mongodb-2.5.4-1.fc16.src.rpm
 
 Dlaczego?
 
