@@ -38,7 +38,9 @@ Proponowane tematy referatów:
   „We've been rendering GeoJSON files for a while now, but now it's
   even easier to preview them if you edit them in the web view. Simply
   click the "Preview" button while editing to view a live preview of
-  the file as you've edited it.”
+  the file as you've edited it.”. Przykłady:
+  - [Chicago zipcodes](https://github.com/smartchicago/chicago-atlas/blob/master/db/import/zipcodes.geojson)
+  zob. też [MapBox](https://www.mapbox.com/tour/) – fast and beautiful maps
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
 
