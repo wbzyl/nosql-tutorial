@@ -31,8 +31,14 @@ Proponowane tematy referatów:
 
 ## 8.10.2013 – zaczynamy!
 
-**[2013.1]:**
 
+**[2013.11]:**
+
+* [GeoJSON Previewing](https://github.com/blog/1638-geojson-previewing):
+  „We've been rendering GeoJSON files for a while now, but now it's
+  even easier to preview them if you edit them in the web view. Simply
+  click the "Preview" button while editing to view a live preview of
+  the file as you've edited it.”
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
 
