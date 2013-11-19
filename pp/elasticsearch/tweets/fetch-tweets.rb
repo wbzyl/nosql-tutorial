@@ -10,7 +10,7 @@ require 'elasticsearch'
 
 require 'yaml'
 
-class Tweet
+class Status
   attr_accessor :status, :id
 
   def initialize(status)
@@ -26,6 +26,10 @@ private
     # use these fields:
     #   :created_at, :text, :screen_name,
     #   :hashtags, :urls, :user_mentions
+
+    # puts "#{s.methods(all: false)}".red
+    puts "language: #{s.lang}".red
+    puts "#hashtags: #{s.hashtags.size}".bold if s.hashtags.any? 
     hashtags = s.hashtags.to_a.map { |o| o["text"] }
     urls = s.urls.to_a.map { |o| o["expanded_url"] }
     user_mentions = s.user_mentions.to_a.map { |o| o["screen_name"] }
@@ -33,9 +37,9 @@ private
       text: s[:text],
       screen_name: s[:user][:screen_name],
       created_at: s[:created_at],
-      hashtags: hashtags,
-      urls: urls,
-      user_mentions: user_mentions
+      hashtags: hashtags.to_a,
+      urls: urls.to_a,
+      user_mentions: user_mentions.to_a
     }
   end
 end
@@ -79,7 +83,7 @@ topics = %w[
 ]
 
 twitter_client.filter(track: topics.join(",")) do |status|
-  tweet = Tweet.new(status)
+  tweet = Status.new(status)
   result = elasticsearch_client.percolate index: 'tweets', body: { doc: tweet.status }
 
   puts "#{tweet.status[:created_at].to_s.cyan}:  #{tweet.status[:text].yellow}"
