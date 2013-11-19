@@ -8,7 +8,8 @@
  <p class="author">— John Cage (1912–1992)</p>
 </blockquote>
 
-Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
+Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search)
+i [What is Elasticsearch?](http://www.elasticsearch.org/overview/).
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
