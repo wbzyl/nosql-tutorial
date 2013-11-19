@@ -40,7 +40,8 @@ Proponowane tematy referatów:
   click the "Preview" button while editing to view a live preview of
   the file as you've edited it.”. Przykłady:
   - [Chicago zipcodes](https://github.com/smartchicago/chicago-atlas/blob/master/db/import/zipcodes.geojson)
-  zob. też [MapBox](https://www.mapbox.com/tour/) – fast and beautiful maps
+  zob. też [MapBox](https://www.mapbox.com/tour/) – fast and beautiful maps,
+* [GeoJSONLint](http://geojsonlint.com/)
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
 
