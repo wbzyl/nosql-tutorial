@@ -31,6 +31,9 @@ Proponowane tematy referatów:
 
 ## 8.10.2013 – zaczynamy!
 
+**[2013.12]:**
+
+* [Redesigned percolator](http://www.elasticsearch.org/blog/percolator-redesign-blog-post/) in Elasticsearch
 
 **[2013.11]:**
 
