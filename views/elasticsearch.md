@@ -59,23 +59,17 @@ Gem elasticsearch korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 Różne:
 
 * Karel Minarik
-  - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html)
-  - [Your Data, Your Search, ElasticSearch (EURUKO 2011)](http://www.slideshare.net/karmi/your-data-your-search-elasticsearch-euruko-2011)
-  - [Reversed or “Real Time” Search in ElasticSearch](http://karmi.github.com/tire/play/percolated-twitter.html) –
+  - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
+  - [Reversed or “Real Time” Search in ElasticSearch](http://karmi.github.com/retire/play/percolated-twitter.html) –
   czyli „percolated twitter”
   - [Route requests to ElasticSearch to authenticated user's own index](https://gist.github.com/986390) (wersja dla Nginx)
-* Clinton Gormley.
-  [Terms of endearment – the ElasticSearch Query DSL explained](http://www.elasticsearch.org/tutorials/2011/08/28/query-dsl-explained.html)
-  [Real time analytics of big data with Elasticsearch](http://www.slideshare.net/karmi/realtime-analytic-with-elasticsearch-new-media-inspiration-2013)
-  ([Designing Dashboards & Data Visualisations in Web Apps ](http://www.slideshare.net/destraynor/designing-dashboards-data-visualisations-in-web-apps))
 
 Przykładowe aplikacje:
 
 * Karel Minarik.
-  - [JavaScript Web Applications and elasticsearch ](http://www.elasticsearch.org/tutorials/2012/08/22/javascript-web-applications-and-elasticsearch.html) (plugin)
   - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
   [demo](http://karmi.github.com/elasticsearch-paramedic/)
-  - [Search Your Gmail Messages with ElasticSearch and Ruby](http://ephemera.karmi.cz/) (Sinatra)
+  - [Search Your Gmail Messages with ElasticSearch and Ruby](http://karmi.tumblr.com/post/5510326335/gmail-elasticsearch-ruby) (Sinatra)
 
 * [Seemespeak](https://github.com/seemespeak/seemespeak) –
   [Rails 4.0.1 app](http://rumble.seemespeak.org/)
@@ -136,7 +130,7 @@ na przykład na:
 …czyli kilka przykładów ze strony
 [Your Data, Your Search](http://www.elasticsearch.org/blog/2010/02/12/yourdatayoursearch.html).
 
-Podstawowe terminy to: **index** i **type** indeksu.
+Podstawowe terminy to: **index** i **type**.
 
 **Interpretacja URI w zapytaniach kierowanych do ElasticSearch:**
 
