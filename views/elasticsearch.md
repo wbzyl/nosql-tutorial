@@ -45,15 +45,14 @@ Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elastics
 ElasticSearch driver dla języka Ruby:
 
 * Karel Minarik:
-  - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
   - [Elasticsearch-Ruby](https://github.com/elasticsearch/elasticsearch-ruby) –
     a rich Ruby API and DSL for the ElasticSearch search engine/database:
     * [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
     * [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
     * [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
   - **retired** [Tire](https://github.com/karmi/tire)
-
-  - aplikacje, wtyczki:
+  - aplikacje, wtyczki itd.:
+    - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
     - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
     - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
     [demo](http://karmi.github.com/elasticsearch-paramedic/)
