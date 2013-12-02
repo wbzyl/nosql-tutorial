@@ -53,26 +53,13 @@ ElasticSearch driver dla języka Ruby:
     * [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
   - **retired** [Tire](https://github.com/karmi/tire)
 
+  - aplikacje, wtyczki:
+    - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
+    - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
+    [demo](http://karmi.github.com/elasticsearch-paramedic/)
+    - [Search Your Gmail Messages with ElasticSearch and Ruby](http://karmi.tumblr.com/post/5510326335/gmail-elasticsearch-ruby) (Sinatra)
+
 Gem elasticsearch korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
-
-
-Różne:
-
-* Karel Minarik
-  - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
-  - [Reversed or “Real Time” Search in ElasticSearch](http://karmi.github.com/retire/play/percolated-twitter.html) –
-  czyli „percolated twitter”
-  - [Route requests to ElasticSearch to authenticated user's own index](https://gist.github.com/986390) (wersja dla Nginx)
-
-Przykładowe aplikacje:
-
-* Karel Minarik.
-  - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
-  [demo](http://karmi.github.com/elasticsearch-paramedic/)
-  - [Search Your Gmail Messages with ElasticSearch and Ruby](http://karmi.tumblr.com/post/5510326335/gmail-elasticsearch-ruby) (Sinatra)
-
-* [Seemespeak](https://github.com/seemespeak/seemespeak) –
-  [Rails 4.0.1 app](http://rumble.seemespeak.org/)
 
 
 ## Przykładowa instalacja ze źródeł
