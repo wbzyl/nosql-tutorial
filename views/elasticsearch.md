@@ -118,6 +118,12 @@ Częścią Elasticsearch jest wyszukiwarka [Apache Lucene](http://lucene.apache.
 Składnia zapytań Lucene jest opisana w dokumencie
 [Query Parser Syntax](http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html).
 
+Tworzenie i usuwanie indeksu o nazwie *tweets*:
+
+    :::bash
+    curl -XPUT localhost:9200/tweets
+    curl -XDELETE localhost:9200/tweets
+
 
 <blockquote>
  <p>Field names with the <b>same name</b> across types are highly
