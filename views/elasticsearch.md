@@ -90,15 +90,12 @@ in the browser.
 
 W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*.
 
-Dopisujemy do *Query* ścieżkę *_search*:
-
-    http://localhost:9200/_search
-
-W okienku *Validate JSON* wpisujemy, na przykład:
+W okienku *Validate JSON* wpisujemy, przykładowo:
 
     :::json
+    {"query":{"match_all":{}}}
+    {"query":{"match":{"hashtags":"redis"}}}
     {"query":{"query_string":{"query":"mongo*"}}}
-
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
