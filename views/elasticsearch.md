@@ -67,12 +67,13 @@ Rozpakowujemy archiwum z ostatnią wersją
 [ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
 
     :::bash
-    tar xvf elasticsearch-0.90.6.tar.gz
+    tar xvf elasticsearch-0.90.7.tar.gz
 
 A tak uruchamiamy *elasticsearch*:
 
     :::bash
-    elasticsearch-0.90.6/bin/elasticsearch -f
+    cd elasticsearch-0.90.7
+    bin/elasticsearch -f
 
 I już! Domyślnie ElasticSearch nasłuchuje na porcie 9200:
 
@@ -87,24 +88,14 @@ in the browser.
 
 ## Ściąga z Elasticsearch-Head
 
-W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*,
-a w zakładce *Any Request* zmieniamy **POST** na **GET**.
+W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*.
 
-Następnie dopisujemy do *Query* ścieżkę *_search*:
-
-    http://localhost:9200/_search
-
-W okienku *Validate JSON* wpisujemy, na przykład:
+W okienku *Validate JSON* wpisujemy, przykładowo:
 
     :::json
+    {"query":{"match_all":{}}}
+    {"query":{"match":{"hashtags":"redis"}}}
     {"query":{"query_string":{"query":"mongo*"}}}
-
-W *Result Transformer*, podmieniamy instrukcję z *return*
-na przykład na:
-
-    :::js
-    return root.hits.hits;
-
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
@@ -126,6 +117,12 @@ Podstawowe terminy to: **index** i **type**.
 Częścią Elasticsearch jest wyszukiwarka [Apache Lucene](http://lucene.apache.org/).
 Składnia zapytań Lucene jest opisana w dokumencie
 [Query Parser Syntax](http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html).
+
+Tworzenie i usuwanie indeksu o nazwie *tweets*:
+
+    :::bash
+    curl -XPUT localhost:9200/tweets
+    curl -XDELETE localhost:9200/tweets
 
 
 <blockquote>
