@@ -176,6 +176,7 @@ Warto też przeczytać artykuł Teda Newarda,
 
 Użyteczne linki:
 
+1. [Data Science Weekly](http://www.datascienceweekly.org/newsletters)
 1. Jimmy Lin, Chris Dyer,
    [Data-Intensive Text Processing with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html)
 1. [A List of Data Science and Machine Learning Resources](http://conductrics.com/data-science-resources/)

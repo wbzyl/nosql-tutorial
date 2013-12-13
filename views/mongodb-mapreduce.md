@@ -20,6 +20,12 @@ Podstawowa dokumentacja:
   - [Troubleshoot the Map Function](http://docs.mongodb.org/master/tutorial/troubleshoot-map-function/)
   - [Troubleshoot the Reduce Function](http://docs.mongodb.org/master/tutorial/troubleshoot-reduce-function/)
 
+Różne rzeczy:
+
+* [τ – DataTau](http://www.datatau.com/)
+* Ilya Katsov,
+  [MapReduce Patterns, Algorithms, and Use Cases](https://highlyscalable.wordpress.com/2012/02/01/mapreduce-patterns/)
+
 
 ## Dlaczego MapReduce?
 
