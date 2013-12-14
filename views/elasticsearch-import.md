@@ -4,7 +4,6 @@ Dokumentacja:
 
 * [bulk API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html)
 * [bulk UDP API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk-udp.html)
-* [jq](http://stedolan.github.io/jq/) – a lightweight and flexible command-line JSON processor
 * cytaty wybrano z tej strony [Stanisław Jerzy Lec, Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html)
 
 The Elasticsearch REST API expects the following JSON structure:
@@ -37,7 +36,12 @@ Jak to zrobić? Skorzystamy z narzędzia [jq](https://github.com/stedolan/jq):
     cat concepts.js | \
       jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
 
-Zanim zapiszemy dane w bazie, usuniemy indeks *concepts*:
+To samo co powyżej, ale bez *cat*: 
+
+    :::bash
+    < concepts.js jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
+
+Zanim zapiszemy dane w bazie, usuwamy indeks *concepts* (dlaczego?):
 
     :::bash
     curl -s -XDELETE localhost:9200/concepts ; echo  # add newline

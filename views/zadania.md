@@ -12,6 +12,13 @@ Aby zaliczyć laboratorium należy przeczytać
 [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
 i wykonać zadania 1 i 2:
 
+Narzędzia przydatne w trakcie EDA:
+
+* [JQ](http://stedolan.github.io/jq/) – 
+  a lightweight and flexible command-line JSON processor
+* [CSVKIT](http://csvkit.readthedocs.org/en/latest/) –
+  a suite of utilities for converting to and working with CSV, 
+  the king of tabular file formats
 
 
 ### Zadanie 1
