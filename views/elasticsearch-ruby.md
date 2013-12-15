@@ -10,17 +10,10 @@
  <p class="author">— Daniel Kahneman</p>
 </blockquote>
 
-Eksperymentowanie na prostych danych z ElasticSearch rest API pozwala
-sprawdzić, czy dobrze je rozumiemy. Przy okazji upewniamy się, czy
-poprawnie zainstalowaliśmy sam program.
-Ale dalsze takie próby są nużące i wyniki nie są są zajmujące.
-
-Dlatego, do następnych prób użyjemy większej liczby rzeczywistych
-*i dlatego zajmujących* danych.
-
+Do eksperymentów poniżej użyjemy rzeczywistych danych.
 Będziemy zbierać statusy z Twittera.
 Nie będziemy zbierać ich „jak leci”, tylko
-odfiltrujemy te które zawierają interesujące nas słowa.
+te które zawierają interesujące nas słowa kluczowe.
 
 Do filtrowania statusów skorzystamy
 z [stream API](https://dev.twitter.com/docs/streaming-api):
@@ -78,7 +71,7 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     credentials = ARGV
     unless credentials[0]
       puts "\nUsage:"
-      puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
+      puts "\truby #{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
       puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
       exit(1)
     end
