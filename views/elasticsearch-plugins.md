@@ -18,16 +18,22 @@ statically served when hitting
 
 URL. Those can be added even after the process has started.”
 
-Pierwszą wtyczkę nazwiemy *hello-elasticsearch*. Będzie to tzw. „site plugin”,
-prosta aplikacja HTML korzystająca z jQuery.
+Pierwszą wtyczkę site plugin, którą zainstalujemy będzie *hello-elasticsearch*.
+Wtyczka ta to prosta aplikacja HTML korzystająca z jQuery.
 Autorem wtyczki jest Karel Minarik.
 
-Zaczniemy od wtyczki o nazwie *hello-elasticsearch*. Po instalacji
-**wtyczko-aplikacja** jest dostępna z takiego url:
-
-    http://localhost:9200/_plugin/hello-elasticsearch/
-
-Instalacja z repozytorium *wbzyl/hello-elasticsearch* na Github:
+Instalacja jest prosta dla wtyczek które mamy w repozytoriach
+na serwerze *gighub.com*. Dla wtyczki z repozytorium *wbzyl/hello-elasticsearch*
+wykonujemy na terminalu:
 
     :::bash
     sudo /usr/share/elasticsearch/bin/plugin --install wbzyl/hello-elasticsearch
+
+Po instalacji aplikacja będzie dostępna z tego url:
+
+    http://localhost:9200/_plugin/hello-elasticsearch/
+
+
+### Wtyczka wbzyl/tweets-elasticsearch
+
+Prezentacja statusów zebranych przez skrypt *fetch-tweets.rb*.

@@ -64,7 +64,7 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
     :::ruby fetch-tweets-simple.rb
     require "bundler/setup"
 
-    require 'twitter'  # use version 5.0.0.rc1
+    require 'twitter'  # version at least 5.0.0
     require 'colored'
     require 'yaml'
 
@@ -216,7 +216,7 @@ Do wygodnego przeglądania statusów możemy użyć aplikacji
 
 ## Faceted search, czyli wyszukiwanie fasetowe
 
-[Co to jest?](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets.html)
+[Co to są fasety?](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets.html)
 „Facets provide aggregated data based on a search query. In the
 simplest case, a terms facet can return facet counts for various facet
 values for a specific field. ElasticSearch supports more facet
