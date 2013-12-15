@@ -18,7 +18,7 @@ statically served when hitting
 
 URL. Those can be added even after the process has started.”
 
-Pierwszą wtyczkę site plugin, którą będziemy instalować będzie
+Pierwszą wtyczkę site plugin, którą zainstalujemy będzie
 *hello-elasticsearch*. Wtyczka ta to prosta aplikacja HTML
 korzystająca z jQuery. Autorem jej jest Karel Minarik.
 
