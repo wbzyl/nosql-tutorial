@@ -20,7 +20,7 @@ URL. Those can be added even after the process has started.”
 
 Pierwszą wtyczkę site plugin, którą zainstalujemy będzie
 *hello-elasticsearch*. Wtyczka ta to prosta aplikacja HTML
-korzystająca z jQuery. Autorem jej jest Karel Minarik.
+korzystająca z jQuery. Autorem jej jest Karel Minarik.
 
 Instalacja jest prosta dla wtyczek z repozytoriów
 na serwerze *github.com*.
