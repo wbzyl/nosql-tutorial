@@ -283,7 +283,7 @@ Szczególnie polecam obejrzenie tych trzech krótkich filmów:
 
 # Egzamin
 
-Na ocenę dst z egzaminu należy wykonać zadanie 3 poniżej.
+Na ocenę db z egzaminu należy wykonać zadanie 3 poniżej.
 
 ### Zadanie 3
 
