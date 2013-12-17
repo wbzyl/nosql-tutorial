@@ -35,6 +35,7 @@ Proponowane tematy referatów:
 
 * Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
   [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
+* Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
 * [Redesigned percolator](http://www.elasticsearch.org/blog/percolator-redesign-blog-post/) in Elasticsearch
 
 **[2013.11]:**
