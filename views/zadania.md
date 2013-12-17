@@ -14,10 +14,10 @@ i wykonać zadania 1 i 2:
 
 Narzędzia przydatne w trakcie EDA:
 
-* [JQ](http://stedolan.github.io/jq/) – 
+* [JQ](http://stedolan.github.io/jq/) –
   a lightweight and flexible command-line JSON processor
 * [CSVKIT](http://csvkit.readthedocs.org/en/latest/) –
-  a suite of utilities for converting to and working with CSV, 
+  a suite of utilities for converting to and working with CSV,
   the king of tabular file formats
 
 
@@ -179,6 +179,23 @@ na przykład *gnome-system-monitor* lub podobny) itp.
 Rozwiązania zadania należy przygotować jako
 [pull request](https://help.github.com/articles/using-pull-requests)
 repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
+
+
+<blockquote>
+ {%= image_tag "/images/why_manage_your_data.png", :alt => "[Why Manage Your Data]" %}
+ <p>
+  You’ll know when you’ve gotten past the data management stage: your
+ code starts to become shorter, dealing more with mathematical
+ transforms and less with handling exceptions in the data. It’s nice
+ to come to this stage. It’s a bit like those fights in Lord of the
+ Rings, where you spend a lot of time crossing the murky swamp full of
+ nasty creatures, which isn’t that much of a challenge, but you could
+ die if you don’t pay attention. Then you get out of the swamp and
+ into the evil lair and that’s when things get interesting, short and
+ quick.
+ </p>
+ <p class="author"><a href="http://kaushikghose.wordpress.com/2013/09/26/data-management/">Data Management</a></p>
+</blockquote>
 
 
 #### TL;DR
