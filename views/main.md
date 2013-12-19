@@ -33,6 +33,8 @@ Proponowane tematy referatów:
 
 **[2013.12]:**
 
+* [6 dataset lists curated by data scientists](http://blog.mortardata.com/post/67652898761/6-dataset-lists-curated-by-data-scientists)
+* [Where can I find large datasets open to the public?](http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public)
 * Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
   [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
 * Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
