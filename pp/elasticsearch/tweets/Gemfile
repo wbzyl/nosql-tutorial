@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
-gem "elasticsearch", "~> 0.4.3"
-gem "twitter",       "~> 5.3.0"
+gem "elasticsearch", "~> 0.4.5"
+gem "twitter",       "~> 5.5.1"
 
 gem "colored",       "~> 1.2"
 
