@@ -31,6 +31,12 @@ Proponowane tematy referatów:
 
 ## 8.10.2013 – zaczynamy!
 
+**[2014.01]:**
+
+* [Relative links in markup files](https://github.com/blog/1395-relative-links-in-markup-files).
+  13 stycznia znikły wszystkie obrazki w waszych pracach.
+  Proszę zamienić *absolute* url w obrazkach na *relative*.
+
 **[2013.12]:**
 
 * [6 dataset lists curated by data scientists](http://blog.mortardata.com/post/67652898761/6-dataset-lists-curated-by-data-scientists)
