@@ -34,8 +34,9 @@ Proponowane tematy referatów:
 **[2014.01]:**
 
 * [Relative links in markup files](https://github.com/blog/1395-relative-links-in-markup-files).
-  13 stycznia znikły wszystkie obrazki w waszych pracach.
-  Proszę zamienić *absolute* url w obrazkach na *relative*.
+  W styczniu znikły niektóre obrazki w waszych pracach.
+  Jeśli tak jest w waszych commitach, to proszę to poprawić
+  zamieniając *absolute* url na *relative*.
 
 **[2013.12]:**
 
