@@ -20,3 +20,7 @@ Zmiana czego:
 * zmiana poglądów, przekonań
 
 Zastąpić co czym.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/wbzyl/nosql-tutorial/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
