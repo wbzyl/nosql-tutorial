@@ -287,6 +287,11 @@ Na ocenę db z egzaminu należy wykonać zadanie 3 poniżej.
 
 ### Zadanie 3
 
+Na początek, przygotować funkcje map i reduce, za które
+wyszukają wszystkie anagramy w pliku
+{%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}.
+
+
 * Przygotować funkcje map oraz reduce w MongoDB lub CouchDB.
   Dla danych zapisanych w Elasticsearch przygotować
   [faceted search](http://www.elasticsearch.org/guide/reference/api/search/facets/))

@@ -22,4 +22,6 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'sinatra-static-assets'
   gem.add_runtime_dependency 'sinatra-filler'
+
+  # gem.add_runtime_dependency 'rack'
 end
