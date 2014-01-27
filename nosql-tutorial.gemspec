@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Wlodek Bzyl"]
   gem.email         = ["matwb@ug.gda.pl"]
-  gem.description = %q{Notatki do wykładu „NoSQL data persistence”. 2012/2013}
+  gem.description = %q{Notatki do wykładu „NoSQL data persistence”. 2013/14}
   gem.summary     = %q{Notatki do wykładu „NoSQL data persistence”}
   gem.homepage      = "http://tao.inf.ug.edu.pl"
 
