@@ -16,9 +16,18 @@ Narzędzia przydatne w trakcie EDA:
 
 * [JQ](http://stedolan.github.io/jq/) –
   a lightweight and flexible command-line JSON processor
+* [JSON2CSV](https://github.com/jehiah/json2csv)
 * [CSVKIT](http://csvkit.readthedocs.org/en/latest/) –
   a suite of utilities for converting to and working with CSV,
   the king of tabular file formats
+
+[Learn X in Y minutes](http://learnxinyminutes.com/):
+
+* [X=Go](http://learnxinyminutes.com/docs/go/), Y≈30 min.
+  [The Go Programming Language](http://golang.org/)
+* [7 command-line tools for data science](http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html);
+  zob. przykład pokazujący jak importować dane do bazy SQLite
+* []()
 
 
 ### Zadanie 1
