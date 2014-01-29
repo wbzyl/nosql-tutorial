@@ -27,7 +27,7 @@ Narzędzia przydatne w trakcie EDA:
   [The Go Programming Language](http://golang.org/)
 * [7 command-line tools for data science](http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html);
   zob. przykład pokazujący jak importować dane do bazy SQLite
-* []()
+* [Working with data on the command line](http://www.datamazing.co.uk/2014/01/25/working-with-data-on-the-command-line)
 
 
 ### Zadanie 1
