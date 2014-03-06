@@ -20,6 +20,8 @@ Narzędzia przydatne w trakcie EDA:
 * [CSVKIT](http://csvkit.readthedocs.org/en/latest/) –
   a suite of utilities for converting to and working with CSV,
   the king of tabular file formats
+* [Elasticdump](https://github.com/taskrabbit/elasticsearch-dump) –
+  import and export tool for Elasticsearch
 
 [Learn X in Y minutes](http://learnxinyminutes.com/):
 
