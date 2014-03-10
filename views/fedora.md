@@ -108,6 +108,11 @@ Status MongoDB sprawdzamy w taki sposób:
 
 Pobieramy gotowy RPM ze strony [Download | Elasticsearch](http://www.elasticsearch.org/download/).
 
+Fedora 19+ + systemd:
+
+* [Announcing Deb and Rpm Repositories](http://www.elasticsearch.org/blog/apt-and-yum-repositories/)
+* [Running As a Service on Linux](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html)
+
 
 ## CouchDB
 
