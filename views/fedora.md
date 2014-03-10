@@ -113,6 +113,16 @@ Fedora 19+ + systemd:
 * [Announcing Deb and Rpm Repositories](http://www.elasticsearch.org/blog/apt-and-yum-repositories/)
 * [Running As a Service on Linux](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html)
 
+Klaster monitorujemy korzystając z wtyczki *Marvel*:
+
+    :::bash
+    sudo /usr/share/elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+    sudo sytemctld restart elasticsearch
+
+Wchodzimy na stronę:
+
+    http://localhost:9200/_plugin/marvel/
+
 
 ## CouchDB
 
