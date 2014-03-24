@@ -294,36 +294,31 @@ Szczególnie polecam obejrzenie tych trzech krótkich filmów:
 
 # Egzamin
 
-Na ocenę db z egzaminu należy wykonać zadanie 3 poniżej.
+Na egzamin należy wykonać zadanie 3.
 
 ### Zadanie 3
 
-Na początek, przygotować funkcje map i reduce, za które
-wyszukają wszystkie anagramy w pliku
-{%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}.
+Przygotować funkcje map i reduce, które:
 
+* wyszukają wszystkie anagramy w pliku
+  {%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}
+* wyszukają najczęściej występujące słowa
+  w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
+  (ok. 1 GB)
 
-* Przygotować funkcje map oraz reduce w MongoDB lub CouchDB.
-  Dla danych zapisanych w Elasticsearch przygotować
-  [faceted search](http://www.elasticsearch.org/guide/reference/api/search/facets/))
-* Dodać opis tego co zostało zrobione do tego repozytorium:
-  [MapReduce-2](https://github.com/nosql/mapreduce-2).
+Na ocenę bdb należy zoptymizować obliczenia MapReduce
+tak jak to opisał Antoine Girbal’s w artykule
+[How to speed up MongoDB Map Reduce by 20x](http://edgystuff.tumblr.com/post/54709368492/how-to-speed-up-mongodb-map-reduce-by-20x).
 
-Do eksperymentów można użyć tych danych wzorcowych:
-
-* [PUMA: Purdue MapReduce Benchmarks Suite](http://web.ics.purdue.edu/~fahmad/benchmarks.htm)
-* [PUMA Benchmarks and dataset downloads](http://web.ics.purdue.edu/~fahmad/benchmarks/datasets.htm)
-
-Na wyższą ocenę należy przygotować w zespole 4–5 osobowym aplikację
-wykorzystujacą jedną z baz danych NoSQL albo
-przygotować prezentację
-jednego z tematów podanych na stronie głównej tego wykładu.
-
+Wyniki przedstawić w postaci **prezentacji HTML** (6–10 slajdów).
+Link do prezentacji dodać do pliku *README.md*
+[MapReduce-2](https://github.com/nosql/mapreduce-2).
 
 
 # Przykładowe zadania z MapReduce
 
-1\. Znaleźć najczęściej występujące słowa w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
+1\. Znaleźć najczęściej występujące słowa
+w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
 (ok. 1 GB).
 
 2\. Matrix-Vector Multiplication by Map-Reduce. Przeczytać rozdziały
@@ -341,11 +336,15 @@ Zadania 2–3 pochodzą z rozdziału 2
 [Large-Scale File Systems and Map-Reduce](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf)
 książki A. Rajaramana i J. Ullmana, [Mining of Massive Datasets](http://infolab.stanford.edu/~ullman/mmds.html).
 
-
 {%= image_tag "/images/es-mongo-couch.png", :alt => "[ES - Mongo - Couch]" %}
 
-# Zadania różne
+Do eksperymentów z obliczeniami MapReduce można użyć tych danych wzorcowych:
 
+* [PUMA: Purdue MapReduce Benchmarks Suite](http://web.ics.purdue.edu/~fahmad/benchmarks.htm)
+* [PUMA Benchmarks and dataset downloads](http://web.ics.purdue.edu/~fahmad/benchmarks/datasets.htm)
+
+
+# Zadania różne
 
 ## Data Science
 
