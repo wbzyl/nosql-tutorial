@@ -264,6 +264,11 @@ Również rozwiązania tego zadania należy przygotować jako
 [pull request](https://help.github.com/articles/using-pull-requests)
 repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).<br>
 
+Na wyższą ocenę należy zoptymizować agregacje.
+Na przykład tak jak to opisano w artykule Paula Done’a,
+[How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
+
+
     ☀☀☀
 
 Termin rozwiązania tego zadania upływa **31.12.2013**.
