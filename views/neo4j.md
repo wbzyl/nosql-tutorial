@@ -33,3 +33,6 @@ Być może będziemy musieli zainstalować aktualną wersję Javy z Oracle
 
 
 ## Import danych
+
+* [Neo4j 2.1 – Graph ETL for Everyone](http://neo4j.com/blog/neo4j-2-1-graph-etl/)
+  (ang. ETL – Extract, Transform and Load)
