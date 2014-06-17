@@ -31,6 +31,12 @@ Być może będziemy musieli zainstalować aktualną wersję Javy z Oracle
     *          soft    nofile  40000
     *          hard    nofile  40000
 
+Wchodzimy na stronę:
+
+   http://localhost:7474/
+
+gdzie ogarniamy podstawy grafowych baz danych.
+
 
 ## Import danych
 
