@@ -1,7 +1,10 @@
 #### {% title "Oswajamy Neo4j" %}
 
-* grafy
-* dokumentacja
+* [Graf](http://pl.wikipedia.org/wiki/Graf_%28matematyka%29) – definicje na Wikipedii.
+* [Dokumentacja](http://docs.neo4j.org/):
+  - [wersja 2.1.2](http://neo4j.com/docs/2.1.2/)
+* [Książki](http://neo4j.com/books/).
+
 
 ## Szybka instalacja
 
@@ -21,13 +24,12 @@ Teraz możemy już uruchomić serwer *neo4j*:
     :::bash
     bin/neo4j start
 
-Być może będziemy musieli zainstalować aktualną wersję Javy
-i zwiększyć limity na pliki:
+Być może będziemy musieli zainstalować aktualną wersję Javy z Oracle
+(zob. alternatives w Fedorze) i zwiększyć limity na pliki:
 
     :::bash /etc/security/limits.conf
     *          soft    nofile  40000
     *          hard    nofile  40000
-
 
 
 ## Import danych
