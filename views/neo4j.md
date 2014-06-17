@@ -33,7 +33,7 @@ Być może będziemy musieli zainstalować aktualną wersję Javy z Oracle
 
 Wchodzimy na stronę:
 
-   http://localhost:7474/
+    http://localhost:7474/
 
 gdzie ogarniamy podstawy grafowych baz danych.
 
