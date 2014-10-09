@@ -7,70 +7,29 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
-Proponowane tematy referatów:
+Wizualizacja danych:
 
-* **Co to jest Hadoop?**
-* **Wprowadzenie do Neo4j**:
-  - [Using a Graph Database with Ruby. Part I: Introduction](http://rubysource.com/using-a-graph-database-with-ruby-part-i-introduction/)
-  - [Using a Graph Database with Ruby, Part II: Integration](http://rubysource.com/using-a-graph-database-with-ruby-part-ii-integration/)
-  - [On Importing Data into Neo4j](http://jexp.de/blog/2013/05/on-importing-data-in-neo4j-blog-series/)
-  - [Visualizing Fraud Data with Cambridge Intelligence](http://vimeo.com/64827612)
-* **Wizualizacja danych**:
-  - [d3.js](http://bost.ocks.org/mike/d3/workshop/):
-    - [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
-    - Malcolm Maclean, [D3 Tips and Tricks](https://leanpub.com/D3-Tips-and-Tricks/read)
-    - Scott Murray, [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345)
-  - [Let’s Make a Map](http://bost.ocks.org/mike/map/)
-  - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
-  - [Neo4j GraphGist](http://gist.neo4j.org/) – share documents includeing Cypher queries
-  - [c3.js](http://c3js.org/) – d3-based reusable chart library
-* **Map Tiles, Geocoding**:
-  - [CloudMade](http://cloudmade.com/) –
-  the Location Platform Serving OEMs, Enterprises & Developers
+- [d3.js](http://bost.ocks.org/mike/d3/workshop/):
+  - [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
+  - Malcolm Maclean, [D3 Tips and Tricks](https://leanpub.com/D3-Tips-and-Tricks/read)
+  - Scott Murray, [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345)
+- [c3.js](http://c3js.org/) – d3-based reusable chart library
+- [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
+  - [GeoJSONLint](http://geojsonlint.com/)
 
+Indeks „TIOBE” dla baz danych:
 
-## 8.10.2013 – zaczynamy!
-
-**[2014.01]:**
-
-* [Relative links in markup files](https://github.com/blog/1395-relative-links-in-markup-files).
-  W styczniu znikły niektóre obrazki w waszych pracach.
-  Jeśli tak jest w waszych commitach, to proszę to poprawić
-  zamieniając *absolute* url na *relative*.
-
-**[2013.12]:**
-
-* [6 dataset lists curated by data scientists](http://blog.mortardata.com/post/67652898761/6-dataset-lists-curated-by-data-scientists)
-* [Where can I find large datasets open to the public?](http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public)
-* Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
-  [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
-* Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
-* [Redesigned percolator](http://www.elasticsearch.org/blog/percolator-redesign-blog-post/) in Elasticsearch
-
-**[2013.11]:**
-
-* [GeoJSON Previewing](https://github.com/blog/1638-geojson-previewing):
-  „We've been rendering GeoJSON files for a while now, but now it's
-  even easier to preview them if you edit them in the web view. Simply
-  click the "Preview" button while editing to view a live preview of
-  the file as you've edited it.”. Przykłady:
-  - [Chicago zipcodes](https://github.com/smartchicago/chicago-atlas/blob/master/db/import/zipcodes.geojson),
-  [Chicago zipcodes centroids](https://github.com/smartchicago/chicago-atlas/blob/master/db/import/zipcode_centroids.geojson)
-  zob. też [MapBox](https://www.mapbox.com/tour/) – fast and beautiful maps,
-* [GeoJSONLint](http://geojsonlint.com/)
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
 
-**[2013.10]:**
 
-* Bill Ruh,
-  [How the industrial internet will help you to stop worrying and love the data](http://gigaom.com/2013/10/02/how-the-industrial-internet-will-help-you-to-stop-worrying-and-love-the-data/) – zob. wykres, data collection and aggregation, extensibility and customizability
-* Tomas Mikolov, Ilya Sutskever, Quoc Le, Jeff Dean,
-  [word2vec](https://code.google.com/p/word2vec/); zob. artykuł na Google Open Source Blog
-  [Learning the meaning behind words](http://google-opensource.blogspot.com/2013/08/learning-meaning-behind-words.html)
-* Andrew Ng,
-  [Stanford Machine Learning](https://www.coursera.org/course/ml)
-  na [Coursera](https://www.coursera.org/)
+## 10.10.2014 – zaczynamy!
+
+* Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
+  [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
+* [6 dataset lists curated by data scientists](http://blog.mortardata.com/post/67652898761/6-dataset-lists-curated-by-data-scientists)
+* [Where can I find large datasets open to the public?](http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public)
+* Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
 
 
 ## Co to jest „NoSQL”?
