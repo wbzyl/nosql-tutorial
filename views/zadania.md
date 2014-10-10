@@ -102,14 +102,12 @@ W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 Następnie dane zapisać w bazie *MongoDB*.
 
 Dla zapisanych danych przygotować co najmniej 6 różnych
-[Geospatial Queries](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
+[geospatial queries](http://docs.mongodb.org/manual/reference/operator/query-geospatial/)
 (w tym, co najmniej po jednym, dla obiektów Point, LineString i Polygon).
-W przykładach należy użyć wszystkich
-[geospatial commands](http://docs.mongodb.org/manual/reference/command/nav-geospatial/).
 
 Przykład pokazujący o co chodzi w tym zadaniu.
 
-Poniższe dane zapisujemy w pliku *places.geojson*:
+Poniższe dane zapisujemy w pliku *places.json*:
 
     :::json places.json
     {"_id":"oakland",  loc:{"type":"Point","coordinates":[-122.270833,37.804444]}}
@@ -132,25 +130,19 @@ dodajemy geo-indeks do kolekcji *places*:
 Przykładowe zapytanie z *$near*:
 
     :::js
-    db.places.find({ loc: {$near: {$geometry: origin}} })
     var origin = {type: "Point", coordinates: [0,0]}
+    db.places.find({ loc: {$near: {$geometry: origin}} })
 
-Na stronie [GeoCouch](http://wbzyl.inf.ug.edu.pl/nosql/couchdb-geo)
-znajdziemy dane z kolekcji *places* naniesione na mapkę.
-Korzystając z tej mapki możemy sprawdzić
-(biorąc poprawkę na różne skale na osiach i odwzorowanie powierzchni Ziemi na prostokąt)
-czy wyniki są prawidłowe:
+Wyniki zapytania zapisać w pliku i przekształcić
+za pomocą programu **Jq** na [GeoJSON](http://geojson.org/geojson-spec.html).
+Wynik zapisać do pliku z rozszerzeniem **.geojson**.
+Po push na Github, serwer wyświetli zamiast zawartości mapkę.
+Oto przykład, [places.geojson][https://github.com/nosql/aggregations-3/data/wbzyl/places.geojson].
 
-    :::json
-    {"_id": "namibia"}
-    {"_id": "augsburg"}
-    {"_id": "brasilia"}
-    {"_id": "oakland"}
-    {"_id": "australia"}
+Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
+i mapkę umieścić w pliku z rozwiązaniem zadania.
 
    ☀☀☀
-
-Rozwiązania dla baz MongoDB i PostgreSQL należy przedstawić do 4.11.2013 (**deadline**).
 
 **Uwaga:** Do opisów dodać kilka liczb. Przykładowo, ile czasu trwał
 import (skorzystać z polecenia *time*), ile miejsca zajmują kolekcje
@@ -160,7 +152,7 @@ na przykład *gnome-system-monitor* lub podobny) itp.
 
 Rozwiązania zadania należy przygotować jako
 [pull request](https://help.github.com/articles/using-pull-requests)
-repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).
+repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).
 
 
 <blockquote>
