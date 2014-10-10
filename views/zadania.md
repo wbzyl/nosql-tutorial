@@ -73,17 +73,19 @@ Wybrałem je losowo po zapisaniu rekordów z *Train.csv* w bazie MongoDB.
 uruchomionych na **swoim komputerze**, danych z pliku *Train.csv* bazy:
 
 * MongoDB
-* PostgreSQL – opcjonalnie dla znających fanów SQL
+* PostgreSQL
 
 *Zadanie 1b.* Zliczyć liczbę zaimportowanych rekordów
-(Odpowiedź: imported 6\_034\_195 objects).
+(Odpowiedź: powinno ich być 6\_034\_195).
 
 *Zadanie 1c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
 na tablicę napisów z tagami następnie zliczyć wszystkie tagi
-i wszystkie różne tagi. Napisać program, który to zrobi
-korzystając z jednego ze sterowników. Lista sterowników
-jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
+i wszystkie różne tagi.
 
+W tym zadaniu należy napisać program, który to zrobi.
+W przypadku MongoDB należy użyć jednego ze sterowników
+ze  strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
+W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 
 <blockquote>
  {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
@@ -95,57 +97,26 @@ jest na stronie [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
  <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
 </blockquote>
 
-*Zadanie 1d.* Ściągnąć plik *text8.zip* ze strony
-[Matt Mahoney](http://mattmahoney.net/dc/textdata.html) (po rozpakowaniu 100MB):
-
-    :::sh
-    wget http://mattmahoney.net/dc/text8.zip -O text8.gz
-
-Zapisać wszystkie słowa w bazie MongoDB.
-Następnie zliczyć liczbę słów oraz liczbę różnych słów w tym pliku.
-Ile procent całego pliku stanowi:
-
-* najczęściej występujące słowo w tym pliku
-* 10, 100, 1000 najczęściej występujących słów w tym pliku
-
-*Wskazówka:* Zaczynamy od prostego EDA. Sprawdzamy, czy plik *text8*
-zawiera wyłącznie znaki alfanumeryczne i białe:
-
-    :::sh
-    tr --delete '[:alnum:][:blank:]' < text8 > deleted.txt
-    ls -l deleted.txt
-      -rw-rw-r--. 1 wbzyl wbzyl 0 10-16 12:58 deleted.txt # rozmiar 0 -> OK
-    rm deleted.txt
-
-Dopiero teraz wykonujemy te polecenia:
-
-    :::bash
-    wc text8
-      0         17005207 100000000 text8
-    tr --squeeze-repeats '[:blank:]' '\n' < text8 > text8.txt
-    wc text8.txt
-      17005207  17005207 100000000 text8.txt  # powtórzone 17005207 -> OK
-
 *Zadanie 1e.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
-Zapisać dane w bazie *MongoDB*.
+Następnie dane zapisać w bazie *MongoDB*.
 
-Dla zapisanych danych przygotować 6–9 różnych
+Dla zapisanych danych przygotować co najmniej 6 różnych
 [Geospatial Queries](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
-(co najmniej po jednym dla obiektów Point, LineString i Polygon).
-W przykładach należy użyć każdego z tych operatorów:
-**$geoWithin**, **$geoIntersect**, **$near**.
+(w tym, co najmniej po jednym, dla obiektów Point, LineString i Polygon).
+W przykładach należy użyć wszystkich
+[geospatial commands](http://docs.mongodb.org/manual/reference/command/nav-geospatial/).
 
 Przykład pokazujący o co chodzi w tym zadaniu.
 
-Poniższe dane zapisujemy w pliku *places.json*:
+Poniższe dane zapisujemy w pliku *places.geojson*:
 
     :::json places.json
-    {"_id": "oakland",  "loc":{"type":"Point","coordinates":[-122.270833,37.804444]}}
-    {"_id": "augsburg", "loc":{"type":"Point","coordinates":[10.898333,48.371667]}}
-    {"_id": "namibia",  "loc":{"type":"Point","coordinates":[17.15,-22.566667]}}
-    {"_id": "australia","loc":{"type":"Point","coordinates":[135,-25]}}
-    {"_id": "brasilia", "loc":{"type":"Point","coordinates":[-52.95,-10.65]}}
+    {"_id":"oakland",  loc:{"type":"Point","coordinates":[-122.270833,37.804444]}}
+    {"_id":"augsburg", loc:{"type":"Point","coordinates":[10.898333,48.371667]}}
+    {"_id":"namibia",  loc:{"type":"Point","coordinates":[17.15,-22.566667]}}
+    {"_id":"australia",loc:{"type":"Point","coordinates":[135,-25]}}}
+    {"_id":"brasilia", loc:{"type":"Point","coordinates":[-52.95,-10.65]}}
 
 Importujemy je do kolekcji *places* w bazie *test*:
 
