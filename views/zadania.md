@@ -136,8 +136,8 @@ Przykładowe zapytanie z *$near*:
 Wyniki zapytania zapisać w pliku i przekształcić
 za pomocą programu **Jq** na [GeoJSON](http://geojson.org/geojson-spec.html).
 Wynik zapisać do pliku z rozszerzeniem **.geojson**.
-Po push na Github, serwer wyświetli zamiast zawartości mapkę.
-Oto przykład, [places.geojson][https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
+Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
+[places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
 
 Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
 i mapkę umieścić w pliku z rozwiązaniem zadania.
