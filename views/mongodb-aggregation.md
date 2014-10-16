@@ -156,8 +156,8 @@ albo w taki:
     mongo --shell test
     > load('group.js')
 
-**Uwaga 2:** W pliku *src/mongo/shell/utils.js* zdefiniowano
-wiele użytecznych funkcji, na przykład:
+**Uwaga 2:** W pliku [utils.js](https://github.com/mongodb/mongo/blob/master/src/mongo/shell/utils.js)
+zdefiniowano wiele użytecznych funkcji, na przykład:
 
     :::js
     Array.unique([1, 4, 2, 1, 4]);  //=> [1, 4, 2]
