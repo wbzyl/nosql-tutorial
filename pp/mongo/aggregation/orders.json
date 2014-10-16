@@ -1,0 +1,5 @@
+{ "_id" : 1, "cust_id" : "abc1", "ord_date" : { "$date" : "2012-11-02T18:04:11.102+0100" }, "status" : "A", "amount" : 50 }
+{ "_id" : 2, "cust_id" : "xyz1", "ord_date" : { "$date" : "2013-10-01T19:04:11.102+0200" }, "status" : "A", "amount" : 100 }
+{ "_id" : 3, "cust_id" : "xyz1", "ord_date" : { "$date" : "2013-10-12T19:04:11.102+0200" }, "status" : "D", "amount" : 25 }
+{ "_id" : 4, "cust_id" : "xyz1", "ord_date" : { "$date" : "2013-10-11T19:04:11.102+0200" }, "status" : "D", "amount" : 125 }
+{ "_id" : 5, "cust_id" : "abc1", "ord_date" : { "$date" : "2013-11-12T18:04:11.102+0100" }, "status" : "A", "amount" : 25 }
