@@ -24,13 +24,6 @@ Linki do przykładów korzystających z Aggregation Framework w:
 W poniższych przykładach będziemy grupować dokumenty z kolekcji
 *dostojewski*. Kolekcję tę utworzyliśmy na poprzednim wykładzie.
 
-<!--
-Kolekcja ta jest dotępna do testów na mojej maszynie wirtualnej:
-
-    :::bash
-    mongo --norc -u student -p sesja2013 153.19.1.202/test
--->
-
 Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
 
     :::js
@@ -155,8 +148,7 @@ jeszcze przydadzą do jakiegoś grupowania?
 na przykład *group.js* i wykonać je w taki sposób:
 
     :::bash
-    mongo --shell test group.js  # lokalnie, baza bez autoryzacji
-    mongo --shell -u student -p sesja2013 153.19.1.202/test group.js
+    mongo --shell test group.js
 
 albo w taki:
 
