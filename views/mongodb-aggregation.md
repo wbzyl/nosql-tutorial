@@ -156,7 +156,7 @@ albo w taki:
     mongo --shell test
     > load('group.js')
 
-**Uwaga 2:** W pliku [utils.js](https://github.com/mongodb/mongo/blob/master/src/mongo/shell/utils.js)
+**Uwaga 2:** W pliku [types.js](https://github.com/mongodb/mongo/blob/master/src/mongo/shell/types.js)
 zdefiniowano wiele użytecznych funkcji, na przykład:
 
     :::js
