@@ -6,30 +6,17 @@
  <p class="author">– David Ogilvy</p>
 </blockquote>
 
-**Nowe rzeczy w MongoDB v. 2.5.3:**
-
-* [Aggregation Operations Now Return Cursors](http://docs.mongodb.org/master/release-notes/2.6/#aggregation-operations-now-return-cursors)
-* [User Defined Roles](http://docs.mongodb.org/master/release-notes/2.6/#user-defined-roles) –
-  MongoDB uses a role-based approach to authorization.
-  A *role* grants privileges to act on various resources to the user with that role
-
-
 W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/)
 (grupowania) danych używamy:
 
-* polecenia [group](http://docs.mongodb.org/master/reference/command/group/#dbcmd.group)
-* [Aggregation Framework](http://docs.mongodb.org/master/core/aggregation-pipeline/)
+1. polecenia [group](http://docs.mongodb.org/master/reference/command/group/#dbcmd.group)
+2. [Aggregation Framework](http://docs.mongodb.org/manual/core/aggregation-pipeline/)
+3. polecenia [mapReduce](http://docs.mongodb.org/master/core/map-reduce/)
 
-lub
+Linki do przykładów korzystających z Aggregation Framework w:
 
-* [Map-Reduce](http://docs.mongodb.org/master/core/map-reduce/)
-
-Linki do przykładów korzystających z frameworka:
-
-* [w Javascript](https://github.com/nosql/aggregations-2/blob/master/Aggregation-Framework-Examples-in-Javascript.md)
-* [w Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
-
-Przykłady z Map-Reduce pojawią się później.
+* [JavaScript](https://github.com/nosql/aggregations-3/blob/master/Aggregations_in_JS.md)
+* [Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
 
 ## Przykłady z *group*
