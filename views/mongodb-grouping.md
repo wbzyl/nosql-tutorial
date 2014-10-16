@@ -121,21 +121,12 @@ albo równoważnie:
     :::js
     db.dostojewski.find({ $where: "function() {return (this.word.length >= 12) && (this.word.length <= 15)}" })
 
-<!--
-
-## Wyszukiwanie w sub-dokumentach
-
-* [Dot Notation (Reaching into Objects)](http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29)
-* [Multikeys](http://www.mongodb.org/display/DOCS/Multikeys)
-
--->
-
 
 ## The wonderful world of GEO spatial indexes in MongoDB
 
 Przykłady dla Node.js + sterownik node-mongodb-native:
 
-* [The wonderful world of GEO spatial indexes in MongoDB](http://christiankvalheim.com/post/35293863731/the-wonderful-world-of-geo-spatial-indexes-in-mongodb)
+* [The wonderful world of GEO spatial indexes in MongoDB](http://blog.nodeknockout.com/post/35215504793/the-wonderful-world-of-geospatial-indexes-in-mongodb)
 
 Najpierw instalujemy moduł:
 
