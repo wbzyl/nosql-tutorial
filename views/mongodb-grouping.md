@@ -5,12 +5,12 @@ Powtórka:
 * [Querying](http://docs.mongodb.org/manual/tutorial/query-documents/)
 * [Data Model Examples and Patterns](http://docs.mongodb.org/manual/applications/data-models/)
 
-Proste agregacje/grupowania:
+[Aggregation Commands](http://docs.mongodb.org/master/reference/command/nav-aggregation/):
+  *aggregate*, *count*, *distinct*, *group*, *mapReduce*.
 
-* [Aggregation Commands](http://docs.mongodb.org/master/reference/command/nav-aggregation/):
-  *count*, *distinct*
-.
+
        ☀☀☀
+
 
 Zaczniemy od przygotowania kolekcji, której dokumentów użyjemy w przykładach poniżej.
 
@@ -37,14 +37,14 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
     I, [2013-10-22T14:04:06.654823 #1509]  INFO -- : liczba wczytanych stopwords: 742
     I, [2013-10-22T14:04:06.766109 #1509]  INFO -- : liczba wczytanych akapitów: 5260
     I, [2013-10-22T14:04:56.038536 #1509]  INFO -- : MongoDB:
-    I, [2013-10-22T14:04:56.038645 #1509]  INFO -- : 	  database: test
-    I, [2013-10-22T14:04:56.038708 #1509]  INFO -- : 	collection: dostojewski
-    I, [2013-10-22T14:04:56.039258 #1509]  INFO -- : 	     count: 80346
+    I, [2013-10-22T14:04:56.038645 #1509]  INFO -- :      database: test
+    I, [2013-10-22T14:04:56.038708 #1509]  INFO -- :    collection: dostojewski
+    I, [2013-10-22T14:04:56.039258 #1509]  INFO -- :         count: 80346
 
 Na koniec dodamy index:
 
     :::js
-    db.dostojewski.ensureIndex({'word': 1})  // ?
+    db.dostojewski.ensureIndex({'word': 1})
     db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
 
 *Uwaga:* Skrypt korzysta z pliku *stopwords.en* zwierającego
@@ -73,7 +73,7 @@ Zapytania z *count* i *distinct*:
     :::js
     db.dostojewski.count()                     // 80_346
     db.dostojewski.distinct("word").length     //  9_857
-    db.dostojewski.distinct("letters").sort()  
+    db.dostojewski.distinct("letters").sort()
     db.dostojewski.distinct("letters").length  //     39
 
 Proste zapytania z rzutowaniem i sortowaniem:
@@ -120,13 +120,6 @@ albo równoważnie:
 
     :::js
     db.dostojewski.find({ $where: "function() {return (this.word.length >= 12) && (this.word.length <= 15)}" })
-
-Indeksy:
-
-    :::js
-    db.dostojewski.ensureIndex({'word': 1})  // ?
-    db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
-
 
 <!--
 
