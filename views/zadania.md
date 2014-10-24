@@ -215,17 +215,20 @@ copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
 
 1\. Wyszukać w sieci dane zawierające co najmniej 1_000_000 rekordów/jsonów.
 
-2\. Dane zapisać w bazach MongoDB i Elasticsearch.
+2\. Dane zapisać w bazie MongoDB.
 
-3\. Wymyśleć i opisać cztery agregacje – po dwie dla każdej z baz.
+3\. Przygotować w JavaScript co najmniej cztery agregacje korzystające
+ z Aggregation Pipeline.
 
-4\. Zaprogramować i wykonać wszystkie aggregacje.
+4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w_innym
+ niż JavaScript języku programowania. Skorzystać z jednego z driverów
+ wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
-5\. Wyniki przedstawić w postaci graficznej (wykresów, itp.).
+5\. Wyniki przedstawić w postaci tabelek, graficznej (wykresów, itp.).
 
 Również rozwiązania tego zadania należy przygotować jako
 [pull request](https://help.github.com/articles/using-pull-requests)
-repozytorium [aggregations-2](https://github.com/nosql/aggregations-2).<br>
+repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).<br>
 
 Na wyższą ocenę należy zoptymizować agregacje.
 Na przykład tak jak to opisano w artykule Paula Done’a,
@@ -233,8 +236,6 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 
     ☀☀☀
-
-Termin rozwiązania tego zadania upływa **31.12.2013**.
 
 
 #### TL;DR
