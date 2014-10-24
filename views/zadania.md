@@ -510,7 +510,7 @@ Bez indeksu *explain* wypisuje:
     db.toks.ensureIndex({"lex.base": 1})
     db.toks.find({"lex.base": "ziemski"}).explain()
 
-**Zadanie 0.** Zaggregować co się da (Aggregation Framework *v2.2+*, MapReduce).
+**Zadanie 0.** Zaggregować co się da (Aggregation Pipeline *v2.6+*, MapReduce).
 
 **Zadanie 1.** Usunąć z bazy *toks* duplikaty. Przykładowo, zastąpić
 wszystkie 9 dokumentów:

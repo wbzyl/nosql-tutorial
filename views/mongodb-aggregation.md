@@ -1,4 +1,4 @@
-#### {% title "MongoDB – Aggregation Framework" %}
+#### {% title "MongoDB – Aggregation Pipeline" %}
 
 <blockquote>
  {%= image_tag "/images/ogilvy-david.png", :alt => "[David Ogilvy]" %}
@@ -10,10 +10,10 @@ W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/)
 (grupowania) danych używamy:
 
 1. polecenia [group](http://docs.mongodb.org/master/reference/command/group/#dbcmd.group)
-2. [Aggregation Framework](http://docs.mongodb.org/manual/core/aggregation-pipeline/)
+2. [Aggregation Pipeline](http://docs.mongodb.org/manual/core/aggregation-pipeline/)
 3. polecenia [mapReduce](http://docs.mongodb.org/master/core/map-reduce/)
 
-Linki do przykładów korzystających z Aggregation Framework w:
+Linki do przykładów korzystających z Aggregation Pipeline w:
 
 * [JavaScript](https://github.com/nosql/aggregations-3/blob/master/Aggregations_in_JS.md)
 * [Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
@@ -195,6 +195,6 @@ Przyda się? Do generowania *keyf*?
 
 ## Różności
 
-* [SQL to Aggregation Framework Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
+* [SQL to Aggregation Pipeline Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
 * Kristina Chodorow,
   [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
