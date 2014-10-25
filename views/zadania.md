@@ -23,6 +23,11 @@ Narzędzia przydatne w trakcie EDA:
 * [Elasticdump](https://github.com/taskrabbit/elasticsearch-dump) –
   import and export tool for Elasticsearch
 
+GitHub:
+
+* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Writing on GitHub](https://help.github.com/articles/writing-on-github/)
+
 [Learn X in Y minutes](http://learnxinyminutes.com/):
 
 * [X=Go](http://learnxinyminutes.com/docs/go/), Y≈30 min.
