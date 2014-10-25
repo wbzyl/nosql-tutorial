@@ -97,7 +97,7 @@ W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
  <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
 </blockquote>
 
-*Zadanie 1e.* Wyszukać w sieci dane zawierające
+*Zadanie 1d.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Następnie dane zapisać w bazie *MongoDB*.
 
@@ -147,7 +147,7 @@ i mapkę umieścić w pliku z rozwiązaniem zadania.
 **Uwaga:** Do opisów dodać kilka liczb. Przykładowo, ile czasu trwał
 import (skorzystać z polecenia *time*), ile miejsca zajmują kolekcje
 (bez indeksów i z indeksami), wykorzystanie pamięci w trakcie importu
-(zrzut ekranu z programu monitor systemu;
+zrzut ekranu z programu monitor systemu; tabelkę z czasami, wykres tip.
 na przykład *gnome-system-monitor* lub podobny) itp.
 
 Rozwiązania zadania należy przygotować jako
