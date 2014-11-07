@@ -286,7 +286,7 @@ tak jak to opisał Antoine Girbal’s w artykule
 
 Wyniki przedstawić w postaci **prezentacji HTML** (6–10 slajdów).
 Link do prezentacji dodać do pliku *README.md*
-[MapReduce-2](https://github.com/nosql/mapreduce-2).
+[MapReduce-3](https://github.com/nosql/mapreduce-3).
 
 
 # Przykładowe zadania z MapReduce
