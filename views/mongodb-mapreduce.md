@@ -111,7 +111,7 @@ in whatever method you’ve specified.”
 
 ### Prosty przykład: *word count*
 
-Zliczymy liczbę wystąpień każdego słowa w tych dwóch napisach
+Zliczymy liczbę wystąpień każdego słowa w tych dwóch napisach:
 
     to be or not to be
     to wit
