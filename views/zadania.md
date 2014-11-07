@@ -284,9 +284,8 @@ Na ocenę bdb należy zoptymizować obliczenia MapReduce
 tak jak to opisał Antoine Girbal’s w artykule
 [How to speed up MongoDB Map Reduce by 20x](http://edgystuff.tumblr.com/post/54709368492/how-to-speed-up-mongodb-map-reduce-by-20x).
 
-Wyniki przedstawić w postaci **prezentacji HTML** (6–10 slajdów).
-Link do prezentacji dodać do pliku *README.md*
-[MapReduce-3](https://github.com/nosql/mapreduce-3).
+Wykonać pull request do repozytorium [MapReduce-3](https://github.com/nosql/mapreduce-3)
+z linkiem do rozwiązania zadania dopisanym w pliku *README.md*.
 
 
 # Przykładowe zadania z MapReduce
