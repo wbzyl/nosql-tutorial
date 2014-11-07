@@ -109,7 +109,12 @@ in whatever method you’ve specified.”
 (*K. Chodorow*, „Scaling MongoDB”, s. 38)
 
 
-### Prosty przykład
+### Prosty przykład: *word count*
+
+Zliczymy liczbę wystąpień każdego słowa w tych dwóch napisach
+
+    to be or not to be
+    to wit
 
 Zapiszemy dwa przykładowe dokumenty w kolekcji *phrases*:
 
