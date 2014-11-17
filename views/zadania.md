@@ -69,7 +69,7 @@ Przykładowy rekord CSV z pliku *Train.csv*:
     ","firefox"
 
 Do testowania swoich rozwiązań można skorzystać ze 101 JSON–ów
-[fb101.json](https://github.com/nosql/aggregations-2/blob/master/data/wbzyl/fb101.json).
+[fb101.json](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/fb101.json).
 Wybrałem je losowo po zapisaniu rekordów z *Train.csv* w bazie MongoDB.
 
    ☀☀☀
