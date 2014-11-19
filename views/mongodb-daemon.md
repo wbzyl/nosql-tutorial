@@ -15,7 +15,7 @@ i uruchomić mongo w taki sposób:
     :::bash
     mongod --config mongod.conf --bind_ip 127.0.0.1
     ps ux | grep mongod
-    tail -f LOGPATH
+    tail -f …scieżka do pliku log…
 
 A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
