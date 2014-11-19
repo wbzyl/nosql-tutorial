@@ -4,7 +4,7 @@
 
 *Uwaga:* Niektóre opcje zmieniały nazwy lub występowały tylko
 w pewnych wersjach *mongod*. Poniżej korzystamy z opcji
-dla wersji **2.8.8-rc0**.
+dla wersji [2.8.8-rc0](http://docs.mongodb.org/manual/reference/configuration-options/).
 
 ## Uruchamianie
 
@@ -13,31 +13,32 @@ wpisać część opcji w pliku konfiguracyjnym *mongod.conf*
 i uruchomić mongo w taki sposób:
 
     :::bash
-    mongod --config mongod.conf --bind_ip 127.0.0.1
+    mongod --config mongod.yml --bind_ip 127.0.0.1
     ps ux | grep mongod
     tail -f …scieżka do pliku log…
 
 A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
-    #   Where to log
-    logpath=/var/log/mongodb/mongod.log
-    logappend=true
-    #   Verbose logging output.
-    verbose=true
-    #   Fork and run in background
-    fork=true
-    #   Location of database
-    dbpath=/var/lib/mongo
-    #   Location of pidfile
-    pidfilepath=/var/run/mongodb/mongod.pid
-    #   Each database will be stored in a separate (very convenient when making backups)
-    directoryperdb=true
-    #   Enables periodic logging of CPU utilization and I/O wait
-    cpu=true
-    #   Comma separated list of IP addresses to listen on.
-    # bind_ip=127.0.0.1
-    #   Specify port number to listen on.
-    # port=27017
+    :::yaml
+    # new format for versions 2.4+
+    # http://docs.mongodb.org/manual/reference/configuration-options/
+
+    systemLog:
+      destination: file
+      path: "/nosql/var/log/mongodb/mongod.log"
+      logAppend: true
+      timeStampFormat: iso8601-utc
+
+    processManagement:
+      fork: true
+      pidFilePath: "/nosql/var/run/mongodb/mongod.pid"
+
+    storage:
+      dbPath: "/nosql/var/lib/mongodb"
+      journal:
+          enabled: true
+    # see: http://docs.mongodb.org/manual/reference/configuration-options/#storage.directoryPerDB
+    # directoryPerDB: true
 
 Powyższe ścieżki są przykładowe. Należy wstawić swoje.
 
