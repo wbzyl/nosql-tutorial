@@ -1,6 +1,6 @@
 #### {% title "mongod – starting/stopping/profiling" %}
 
-… z linii poleceń Bash.
+… na konsoli Bash.
 
 *Uwaga:* Niektóre opcje zmieniały nazwy lub występowały tylko
 w pewnych wersjach *mongod*. Poniżej korzystamy z opcji
