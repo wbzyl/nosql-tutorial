@@ -30,6 +30,8 @@ A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
     dbpath=/var/lib/mongo
     #   Location of pidfile
     pidfilepath=/var/run/mongodb/mongod.pid
+    #   Each database will be stored in a separate (very convenient when making backups)
+    directoryperdb=true
     #   Enables periodic logging of CPU utilization and I/O wait
     cpu=true
     #   Comma separated list of IP addresses to listen on.
