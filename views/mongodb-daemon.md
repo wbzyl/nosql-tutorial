@@ -25,9 +25,9 @@ A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
     systemLog:
       destination: file
-      path: "/nosql/var/log/mongodb/mongod.log"
+      path: "/nosql/var/log/mongodb/mongodb.log"
       logAppend: true
-      timeStampFormat: iso8601-utc
+      timeStampFormat: "iso8601-utc"
 
     processManagement:
       fork: true
@@ -100,9 +100,19 @@ Logowanie informacji *ProfilingStatus* też jest ważne:
 
 ## Zatrzymywanie
 
-Te trzy linijki, należy zamienić na prosty skrypt Bash:
+Z konsoli *mongo*:
+
+    :::js
+    use admin
+    db.shutdownServer()
+
+albo z konsoli Bash:
 
     :::bash
+    # NUMER_PROCESU odczytujemy z pliku z PID
+    kill  -2 NUMER_PROCESU      # SIGINT
+    kill -15 NUMER_PROCESU      # SIGTERM
     ps ux | grep mongod
-    kill -1 NUMER_PROCESU
-    ps ux | grep mongod
+
+(Oczywiście, zamiast wpisywania takich rzeczy należy przygotować
+sobie prosty skrypt, który to za nas zrobi.)
