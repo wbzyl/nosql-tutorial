@@ -1,4 +1,4 @@
-#### {% title "Uruchamianie i zatrzymywanie demona mongod" %}
+#### {% title "mongod – starting/stopping/profiling/" %}
 
 … z linii poleceń Bash.
 
