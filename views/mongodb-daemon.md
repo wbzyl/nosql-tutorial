@@ -85,7 +85,7 @@ Kilka przykładów:
     db.setLogLevel(1, "networking")
     db.getLogComponents().networking
 
-Profiling (też ważne):
+Logowanie informacji *ProfilingStatus* też jest ważne:
 
     db.getProfilingStatus()
     {
