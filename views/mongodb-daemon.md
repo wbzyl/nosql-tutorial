@@ -1,4 +1,4 @@
-#### {% title "mongod – starting/stopping/profiling/" %}
+#### {% title "mongod – starting/stopping/profiling" %}
 
 … z linii poleceń Bash.
 
