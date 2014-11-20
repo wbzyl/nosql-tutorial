@@ -116,3 +116,26 @@ albo z konsoli Bash:
 
 (Oczywiście, zamiast wpisywania takich rzeczy należy przygotować
 sobie prosty skrypt, który to za nas zrobi.)
+
+
+## Kompresja danych z WiredTiger
+
+Przykładowy plik konfiguracyjny w YAML dla WiredTiger:
+
+    :::yaml
+    storage:
+      dbPath: "/ssd/db/wt_snappy"
+      engine: "wiredtiger"
+      # use snappy
+      # snappy is significantly lighter in terms of resource usage versus zlib
+      #
+      # wiredtiger:
+      #   collectionConfig: "block_compressor=zlib" # zlib
+      #   collectionConfig: "block_compressor="     # none
+
+    systemLog:
+      destination: file
+      path: "/data/wt_snappy/mongodb.log"
+
+    processManagement:
+      fork: true
