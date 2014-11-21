@@ -124,18 +124,16 @@ Przykładowy plik konfiguracyjny w YAML dla WiredTiger:
 
     :::yaml
     storage:
-      dbPath: "/ssd/db/wt_snappy"
+      dbPath: "/ssd/db/mongodb"
       engine: "wiredtiger"
-      # use snappy
-      # snappy is significantly lighter in terms of resource usage versus zlib
-      #
+      wiredtiger:
+        collectionConfig: "block_compressor=zlib"
       # wiredtiger:
-      #   collectionConfig: "block_compressor=zlib" # zlib
       #   collectionConfig: "block_compressor="     # none
 
-    systemLog:
-      destination: file
-      path: "/data/wt_snappy/mongodb.log"
+    # systemLog:
+    #   destination: file
+    #   path: "/data/wt_snappy/mongodb.log"
 
-    processManagement:
-      fork: true
+    # processManagement:
+    #   fork: true
