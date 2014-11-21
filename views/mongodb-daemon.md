@@ -13,32 +13,34 @@ wpisać część opcji w pliku konfiguracyjnym *mongod.conf*
 i uruchomić mongo w taki sposób:
 
     :::bash
-    mongod --config mongod.yml --bind_ip 127.0.0.1
+    mongod --config mongod.conf.yml
     ps ux | grep mongod
     tail -f …scieżka do pliku log…
 
 A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
-    :::yaml
+    :::yaml mongod.conf.yml
     # new format for versions 2.4+
     # http://docs.mongodb.org/manual/reference/configuration-options/
 
-    systemLog:
-      destination: file
-      path: "/nosql/var/log/mongodb/mongodb.log"
-      logAppend: true
-      timeStampFormat: "iso8601-utc"
-
-    processManagement:
-      fork: true
-      pidFilePath: "/nosql/var/run/mongodb/mongod.pid"
-
     storage:
-      dbPath: "/nosql/var/lib/mongodb"
+      dbPath: "/var/lib/mongodb"
       journal:
-          enabled: true
-    # see: http://docs.mongodb.org/manual/reference/configuration-options/#storage.directoryPerDB
-    # directoryPerDB: true
+        enabled: true
+
+    net:
+      bindIp: 127.0.0.1
+      port: 27017
+
+    # systemLog:
+    #   destination: file
+    #   path: "/var/log/mongod/mongod.log"
+    #   logAppend: true
+    #   timeStampFormat: "iso8601-utc"
+
+    # processManagement:
+    #   fork: true
+    #   pidFilePath: "/var/run/mongod/mongod.pid"
 
 Powyższe ścieżki są przykładowe. Należy wstawić swoje.
 
@@ -49,35 +51,18 @@ Możemy to zmienić to na konsoli *mongo*:
     db.getLogComponents()
     {
       "verbosity": 1,
-      "accessControl": {
-        "verbosity": -1
-      },
-      "commands": {
-        "verbosity": -1
-      },
-      "control": {
-        "verbosity": -1
-      },
-      "geo": {
-        "verbosity": -1
-      },
-      "indexing": {
-        "verbosity": -1
-      },
-      "networking": {
-        "verbosity": -1
-      },
-      "query": {
-        "verbosity": -1
-      },
+
+      "writes":        { "verbosity": -1 },
+      "accessControl": { "verbosity": -1 },
+      "commands":      { "verbosity": -1 },
+      "control":       { "verbosity": -1 },
+      "geo":           { "verbosity": -1 },
+      "indexing":      { "verbosity": -1 },
+      "networking":    { "verbosity": -1 },
+      "query":         { "verbosity": -1 },
       "storage": {
         "verbosity": -1,
-        "journaling": {
-          "verbosity": -1
-        }
-      },
-      "writes": {
-        "verbosity": -1
+        "journaling": { "verbosity": -1 }
       }
     }
 
@@ -132,9 +117,16 @@ z włączoną kompresją Zlib:
       # wiredtiger:
       #   collectionConfig: "block_compressor="     # none
 
-    # systemLog:
-    #   destination: file
-    #   path: "/data/wt_snappy/mongodb.log"
+    net:
+      bindIp: 127.0.0.1
+      port: 27017
 
-    # processManagement:
-    #   fork: true
+    systemLog:
+      destination: file
+      path: "/var/log/mongod/mongod.log"
+      timeStampFormat: "iso8601-utc"
+      logAppend: true
+
+    processManagement:
+      fork: true
+      pidFilePath: "/var/run/mongod/mongod.pid"
