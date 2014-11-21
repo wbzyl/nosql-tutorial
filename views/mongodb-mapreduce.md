@@ -436,11 +436,7 @@ Na koniec sprawdzamy co się wyliczyło:
 
 ## „Pivot” dokumentów kolekcji *rock*
 
-Wszystkie dokumenty z kolekcji *rock* można pobrać z maszyny
-wirtualnej:
-
-    :::bash
-    mongoexport -u student -p sesja2013 -c rock -h 153.19.1.202 > rock.json
+*Uwaga:* Użyty poniżej plik *rock.json* umieściłem w katalogu *pp* repozytorium.
 
 Termin **pivot** można przetłumaczyć jako „obracać”.
 
