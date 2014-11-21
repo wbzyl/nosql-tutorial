@@ -1,0 +1,23 @@
+storage:
+  dbPath: "/home/wbzyl/.data/var/lib/mongodb"
+  engine: "wiredtiger"
+  wiredtiger:
+    collectionConfig: "block_compressor=zlib"
+  # wiredtiger:
+  #   collectionConfig: "block_compressor="     # none
+
+net:
+  bindIp: 127.0.0.1
+  port: 27017
+
+# systemLog:
+#   destination: file
+#   path: "/home/wbzyl/.data/var/log/mongod/mongod.log"
+#   timeStampFormat: "iso8601-utc"
+#   logAppend: true
+
+# processManagement:
+#   fork: true
+#   pidFilePath: "/home/wbzyl/.data/var/run/mongod/mongod.pid"
+
+# mkdir -p $HOME/.data/var/{lib/mongodb,log/mongod,/run/mongod}
