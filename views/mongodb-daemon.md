@@ -120,7 +120,8 @@ sobie prosty skrypt, który to za nas zrobi.)
 
 ## Kompresja danych z WiredTiger
 
-Przykładowy plik konfiguracyjny w YAML dla WiredTiger:
+Przykładowy plik konfiguracyjny YAML dla WiredTiger
+z włączoną kompresją Zlib:
 
     :::yaml
     storage:
