@@ -20,7 +20,7 @@ i uruchomić mongo w taki sposób:
 A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
     :::yaml mongod.conf.yml
-    # new format for versions 2.4+
+    # new format for versions 2.6+
     # http://docs.mongodb.org/manual/reference/configuration-options/
 
     storage:
@@ -130,3 +130,5 @@ z włączoną kompresją Zlib:
     processManagement:
       fork: true
       pidFilePath: "/var/run/mongod/mongod.pid"
+
+Zobacz [MongoDB 2.8 – New WiredTiger Storage Engine Adds Compression](http://comerford.cc/wordpress/2014/11/12/mongodb-2-8-new-wiredtiger-storage-engine-adds-compression/).
