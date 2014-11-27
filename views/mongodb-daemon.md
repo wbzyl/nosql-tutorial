@@ -115,8 +115,8 @@ zob. [index and collection-level options](http://source.wiredtiger.com/2.4.1/str
     :::sh
     mongod --dbpath /ssd/db/mongodb  --storageEngine wiredTiger \
       --wiredTigerCollectionConfig "block_compressor=bzip2" \
-      --wiredTigerEngineConfig "async=(enabled=true,threads=4),statistics=(fast),create=true" \
-      --bind_ip 0.0.0.0
+      --wiredTigerEngineConfig "async=(enabled=true,threads=4),statistics=(fast)" \
+      --bind_ip 127.0.0.0
 
 Jeśli nie ma błędów, to przygotowujemy plik konfiguracyjny
 *mongod.conf.yml* w formacie YAML:
@@ -129,9 +129,9 @@ Jeśli nie ma błędów, to przygotowujemy plik konfiguracyjny
        collectionConfig: "block_compressor=bzip2"
        engineConfig: "statistics=(fast),checkpoint=(wait=120,log_size=1GB)"
 
-    net:
-      bindIp: 127.0.0.1
-      port: 27017
+    # net:
+    #   bindIp: 0.0.0.0
+    #   port: 27017
 
     # systemLog:
     #   destination: file
