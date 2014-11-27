@@ -147,5 +147,5 @@ Teraz, aby uruchomić *mongod+WT* wystarczy wpisać na konsoli:
 
     :::sh
     mongod -f mongod.conf.yml
-1
+
 Zobacz [MongoDB 2.8 – New WiredTiger Storage Engine Adds Compression](http://comerford.cc/wordpress/2014/11/12/mongodb-2-8-new-wiredtiger-storage-engine-adds-compression/).
