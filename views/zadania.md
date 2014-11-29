@@ -216,7 +216,7 @@ copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
 -->
 
 
-### Zadanie 2 (+1M)
+### Zadanie 2
 
 1\. Wyszukać w sieci dane zawierające co najmniej 1_000_000 rekordów/jsonów.
 
