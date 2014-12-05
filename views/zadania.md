@@ -277,8 +277,8 @@ Przygotować funkcje map i reduce, które:
 * wyszukają wszystkie anagramy w pliku
   {%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}
 * wyszukają najczęściej występujące słowa
-  w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
-  (ok. 1 GB)
+  z [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/)
+  aktualny plik z artykułami, ok. 1.3 GB
 
 Na ocenę bdb należy zoptymizować obliczenia MapReduce
 tak jak to opisał Antoine Girbal’s w artykule
