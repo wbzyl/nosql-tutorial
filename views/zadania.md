@@ -290,9 +290,7 @@ z linkiem do rozwiązania zadania dopisanym w pliku *README.md*.
 
 # Przykładowe zadania z MapReduce
 
-1\. Znaleźć najczęściej występujące słowa
-w [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/20130101/)
-(ok. 1 GB).
+1\. Znaleźć najczęściej występujące słowa „Wikipedia data PL” (ok. 1.3 GB).
 
 2\. Matrix-Vector Multiplication by Map-Reduce. Przeczytać rozdziały
 [2.3.1, 2.3.10–11](http://infolab.stanford.edu/~ullman/mmds/ch2a.pdf) i zaimplementować
