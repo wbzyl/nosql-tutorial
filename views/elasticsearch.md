@@ -11,6 +11,7 @@
 Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
+
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-stempel) –
   this plugin includes the **polish** analyzer and **polish_stem** token filter.
@@ -31,6 +32,7 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
 [ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby):
+
 * [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
 * [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
 * [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
