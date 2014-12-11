@@ -51,7 +51,7 @@ Rozpakowujemy archiwum z ostatnią wersją
 
 W katalogu *config* podmieniamy plik konfigurujący na:
 
-    :::bash elasticsearch.yml
+    :::yaml elasticsearch.yml
     cluster.name: nosql
     node.name: "John Cage"
     index.number_of_shards: 1
@@ -84,6 +84,22 @@ Domyślnie ElasticSearch nasłuchuje na porcie 9200:
 ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
+
+
+## Instalujemy wtyczkę Marvel
+
+[Marvel](http://www.elasticsearch.org/overview/marvel/) –
+monitor your cluster’s heartbeat.
+
+Marvel to wtyczka do Elasticsearch.
+Każdą wtyczkę instalujemy korzystając z programu *plugin*:
+
+    :::bash
+    bin/plugin -i elasticsearch/marvel/latest
+
+Wtyczka jes dosßepna tutaj:
+
+    http://localhost:9200/_plugin/marvel/kibana/index.html
 
 
 <blockquote>
