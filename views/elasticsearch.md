@@ -31,13 +31,13 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 [Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
-[ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby):
+[ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby), v1.0.6:
 
-* [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
-* [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
-* [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
+* [elasticsearch](http://rubydoc.info/gems/elasticsearch)
+* [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport)
+* [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api)
 
-Gem elasticsearch korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
+Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
 
 ## Przykładowa instalacja ze źródeł
@@ -46,35 +46,45 @@ Rozpakowujemy archiwum z ostatnią wersją
 [ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
 
     :::bash
-    tar xvf elasticsearch-0.90.7.tar.gz
+    tar xvf elasticsearch-1.4.1.tar.gz
+    cd elasticsearch-1.4.1
 
-A tak uruchamiamy *elasticsearch*:
+W katalogu *config* podmieniamy plik konfigurujący na:
+
+    :::bash elasticsearch.yml
+    cluster.name: nosql
+    node.name: "John Cage"
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+
+I uruchamiamy *elasticsearch*:
 
     :::bash
-    cd elasticsearch-0.90.7
-    bin/elasticsearch -f
+    bin/elasticsearch
 
-I już! Domyślnie ElasticSearch nasłuchuje na porcie 9200:
+I już! Po chwili powinien się uruchomic ES:
+
+    [INFO ][node                     ] [John Cage] version[1.4.1], pid[17491]
+    [INFO ][node                     ] [John Cage] initializing ...
+    [INFO ][plugins                  ] [John Cage] loaded [], sites []
+    [INFO ][node                     ] [John Cage] initialized
+    [INFO ][node                     ] [John Cage] starting ...
+    [INFO ][transport                ] [John Cage] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, \
+        publish_address {inet[/192.168.0.103:9300]}
+    [INFO ][discovery                ] [John Cage] nosql/iTWWzHpwRUOlNQkQM7pKGQ
+    [INFO ][cluster.service          ] [John Cage] new_master \
+        [John Cage][iTWWzHpwRUOlNQkQM7pKGQ][localhost.localdomain][inet[/192.168.0.103:9300]], \
+        reason: zen-disco-join (elected_as_master)
+
+Domyślnie ElasticSearch nasłuchuje na porcie 9200:
 
     :::bash
     xdg-open http://localhost:9200
 
 ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
-Jeśli preferujemy pracę w przeglądarce, to użyteczny
-może być dodatek do Firefoks o nazwie
-[JSONView](http://jsonview.com/) – that helps you view JSON documents
-in the browser.
+Dlatego wygodnie jest już teraz zainstalować
+dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
-## Ściąga z Elasticsearch-Head
-
-W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*.
-
-W okienku *Validate JSON* wpisujemy, przykładowo:
-
-    :::json
-    {"query":{"match_all":{}}}
-    {"query":{"match":{"hashtags":"redis"}}}
-    {"query":{"query_string":{"query":"mongo*"}}}
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
