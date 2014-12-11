@@ -332,6 +332,15 @@ Wyszukiwanie „multi”, po kilku indeksach:
     }'
 
 
+## ES cluster health
+
+Od czasu do czasu powinniśmy zapytać się ES o zdrowie:
+
+    curl -s http://localhost:9200/_cluster/health
+
+Dlaczego?
+
+
 <!--
 Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
 
