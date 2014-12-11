@@ -8,16 +8,15 @@
  <p class="author">— John Cage (1912–1992)</p>
 </blockquote>
 
-Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search)
-i [What is Elasticsearch?](http://www.elasticsearch.org/overview/).
+Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
-
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-stempel) –
   this plugin includes the **polish** analyzer and **polish_stem** token filter.
-* [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch-rest-api-spec)
-* [Guides](http://www.elasticsearch.org/guide/):
+* [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch/tree/master/rest-api-spec)
+* [Guides](http://www.elasticsearch.org/guide/)
+* [References](http://www.elasticsearch.org/guide/en/elasticsearch/reference/):
   - [Setup](http://www.elasticsearch.org/guide/reference/setup/)
   - [API](http://www.elasticsearch.org/guide/reference/api/)
   - [Query](http://www.elasticsearch.org/guide/reference/query-dsl/)
@@ -28,35 +27,13 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 * [stream2es](https://github.com/elasticsearch/stream2es) –
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
 
-
 [Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
-Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
-
-    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
-
-i wchodzimy na stronę *ElasticSearch-Head*:
-
-    xdg-open http://localhost:9200/_plugin/head/
-
-Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
-
-ElasticSearch driver dla języka Ruby:
-
-* Karel Minarik:
-  - [Elasticsearch-Ruby](https://github.com/elasticsearch/elasticsearch-ruby) –
-    a rich Ruby API and DSL for the ElasticSearch search engine/database:
-    * [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
-    * [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
-    * [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
-  - **retired** [Tire](https://github.com/karmi/tire)
-  - aplikacje, wtyczki itd.:
-    - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
-    - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
-    - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
-    [demo](http://karmi.github.com/elasticsearch-paramedic/)
-    - [Search Your Gmail Messages with ElasticSearch and Ruby](http://karmi.tumblr.com/post/5510326335/gmail-elasticsearch-ruby) (Sinatra)
+[ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby):
+* [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
+* [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
+* [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
 
 Gem elasticsearch korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
@@ -325,3 +302,16 @@ Wyszukiwanie „multi”, po kilku indeksach:
             "matchAll": {}
         }
     }'
+
+
+<!--
+Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
+
+    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
+
+i wchodzimy na stronę *ElasticSearch-Head*:
+
+    xdg-open http://localhost:9200/_plugin/head/
+
+Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
+-->
