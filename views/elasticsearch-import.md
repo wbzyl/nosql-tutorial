@@ -3,7 +3,6 @@
 Dokumentacja:
 
 * [bulk API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html)
-* [bulk UDP API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk-udp.html)
 * cytaty wybrano z tej strony [Stanisław Jerzy Lec, Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html)
 
 The Elasticsearch REST API expects the following JSON structure:
@@ -33,10 +32,10 @@ poprzedzić JSONE-em z „action and metadata”, przykładowo takim:
 Jak to zrobić? Skorzystamy z narzędzia [jq](https://github.com/stedolan/jq):
 
     :::bash
-    cat concepts.js | \
+    cat concepts.json | \
       jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
 
-To samo co powyżej, ale bez *cat*: 
+To samo co powyżej, ale bez *cat*:
 
     :::bash
     < concepts.js jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
