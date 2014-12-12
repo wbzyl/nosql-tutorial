@@ -7,6 +7,15 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
+**Big data open challenges:**
+
+- [Facebook’s Top Open Data Problems](https://research.facebook.com/blog/1522692927972019/facebook-s-top-open-data-problems/)
+
+Indeks „TIOBE” dla baz danych:
+
+* [DB-Engines Ranking](http://db-engines.com/en/ranking) –
+  popularity ranking of database management systems
+
 Wizualizacja danych:
 
 - [d3.js](http://bost.ocks.org/mike/d3/workshop/):
@@ -16,11 +25,6 @@ Wizualizacja danych:
 - [c3.js](http://c3js.org/) – d3-based reusable chart library
 - [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
   - [GeoJSONLint](http://geojsonlint.com/)
-
-Indeks „TIOBE” dla baz danych:
-
-* [DB-Engines Ranking](http://db-engines.com/en/ranking) –
-  popularity ranking of database management systems
 
 
 ## 10.10.2014 – zaczynamy!
