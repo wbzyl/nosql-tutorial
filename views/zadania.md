@@ -85,7 +85,8 @@ uruchomionych na **swoim komputerze**, danych z pliku *Train.csv* bazy:
 
 *Zadanie 1c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
 na tablicę napisów z tagami następnie zliczyć wszystkie tagi
-i wszystkie różne tagi.
+i wszystkie różne tagi. Na koniec wypisać 10 najczęściej i 10 najrzadziej
+występujących tagów (wyniki przedstawić graficznie).
 
 W tym zadaniu należy napisać program, który to zrobi.
 W przypadku MongoDB należy użyć jednego ze sterowników
