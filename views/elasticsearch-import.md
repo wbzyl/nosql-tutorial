@@ -3,7 +3,6 @@
 Dokumentacja:
 
 * [bulk API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html)
-* [bulk UDP API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk-udp.html)
 * cytaty wybrano z tej strony [Stanisław Jerzy Lec, Cytaty](http://cytaty.eu/autor/stanislawjerzylec.html)
 
 The Elasticsearch REST API expects the following JSON structure:
@@ -33,10 +32,10 @@ poprzedzić JSONE-em z „action and metadata”, przykładowo takim:
 Jak to zrobić? Skorzystamy z narzędzia [jq](https://github.com/stedolan/jq):
 
     :::bash
-    cat concepts.js | \
+    cat concepts.json | \
       jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
 
-To samo co powyżej, ale bez *cat*: 
+To samo co powyżej, ale bez *cat*:
 
     :::bash
     < concepts.js jq --compact-output '{ "index": { "_type": "lec" } }, .' > concepts.bulk
@@ -212,51 +211,3 @@ z [Lucene Query Syntax](http://www.lucenetutorial.com/lucene-query-syntax.html)
 
 **TODO:** Zainstalować i użyć
 [Morfologik (Polish) Analysis Plugin for ElasticSearch ](https://github.com/monterail/elasticsearch-analysis-morfologik)
-
-
-## Bulk UDP
-
-> The idea is to provide a low latency UDP service
-> that allows to easily index data
-> that **is not of critical nature**.
-
-Konfiguracja, */etc/elasticsearch/elasticsearch.yml*:
-
-    :::json
-    bulk.udp.enabled: true
-
-Przykładowe dane *szymborska.bulk*:
-
-    :::json
-    { "index": { "_index": "ideas", "_type": "szymborska", "_id": 1 } }
-    { "quote": "Tyle wiemy o sobie, ile nas sprawdzono.", "tags": ["idea", "lechery"] }
-    { "index": { "_index": "ideas", "_type": "szymborska", "_id": 2 } }
-    { "quote": "Kto patrzy z góry, ten najłatwiej się myli.", "tags": ["above", "mistake"] }
-    { "index": { "_index": "ideas", "_type": "szymborska", "_id": 3 } }
-    { "quote": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami.", "tags": ["life"] }
-    { "index": { "_index": "ideas", "_type": "szymborska", "_id": 4 } }
-    { "quote": "Cud pierwszy lepszy: krowy są krowami.", "tags": ["miracle", "cow"] }
-
-Przykład pokazujący jak skorzystać z protokołu UDP importując dane do
-Elasticsearch. W przykładize poniżej korzystamy z narzędzia *netcat*:
-
-    :::bash
-    cat szymborska.bulk | nc -w 5 -u localhost 9700
-
-Użyteczne opcje programu *nc*: *-w* – timeout (w sekundach), *-u* – use UDP.
-
-Proste wyszukiwanie w zaimportowanych danych:
-
-    :::bash
-    curl -s 'localhost:9200/ideas/_search?q=Kto' | jq .
-
-Inne wyszukiwanie:
-
-    :::bash
-    curl -s -XPOST 'localhost:9200/ideas/szymborska/_search?pretty' -d '{
-      "query": {
-        "query_string": {
-          "query": "gó*"
-        }
-      }
-    }'

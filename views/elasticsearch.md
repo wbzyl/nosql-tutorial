@@ -8,16 +8,16 @@
  <p class="author">— John Cage (1912–1992)</p>
 </blockquote>
 
-Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search)
-i [What is Elasticsearch?](http://www.elasticsearch.org/overview/).
+Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
 * [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-stempel) –
   this plugin includes the **polish** analyzer and **polish_stem** token filter.
-* [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch-rest-api-spec)
-* [Guides](http://www.elasticsearch.org/guide/):
+* [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch/tree/master/rest-api-spec)
+* [Guides](http://www.elasticsearch.org/guide/)
+* [References](http://www.elasticsearch.org/guide/en/elasticsearch/reference/):
   - [Setup](http://www.elasticsearch.org/guide/reference/setup/)
   - [API](http://www.elasticsearch.org/guide/reference/api/)
   - [Query](http://www.elasticsearch.org/guide/reference/query-dsl/)
@@ -28,37 +28,16 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 * [stream2es](https://github.com/elasticsearch/stream2es) –
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
 
-
 [Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
 
-Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
+[ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby), v1.0.6:
 
-    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
+* [elasticsearch](http://rubydoc.info/gems/elasticsearch)
+* [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport)
+* [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api)
 
-i wchodzimy na stronę *ElasticSearch-Head*:
-
-    xdg-open http://localhost:9200/_plugin/head/
-
-Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
-
-ElasticSearch driver dla języka Ruby:
-
-* Karel Minarik:
-  - [Elasticsearch-Ruby](https://github.com/elasticsearch/elasticsearch-ruby) –
-    a rich Ruby API and DSL for the ElasticSearch search engine/database:
-    * [elasticsearch](http://rubydoc.info/gems/elasticsearch) (v0.4.1)
-    * [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport) (v0.4.1)
-    * [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api) (v0.4.1)
-  - **retired** [Tire](https://github.com/karmi/tire)
-  - aplikacje, wtyczki itd.:
-    - [What is Elasticsearch?](http://www.slideshare.net/karmi/elasticsearch-rubyshift-2013)
-    - [Data Visualization with ElasticSearch and Protovis](http://www.elasticsearch.org/blog/data-visualization-with-elasticsearch-and-protovis)
-    - [Paramedic](https://github.com/karmi/elasticsearch-paramedic);
-    [demo](http://karmi.github.com/elasticsearch-paramedic/)
-    - [Search Your Gmail Messages with ElasticSearch and Ruby](http://karmi.tumblr.com/post/5510326335/gmail-elasticsearch-ruby) (Sinatra)
-
-Gem elasticsearch korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
+Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
 
 ## Przykładowa instalacja ze źródeł
@@ -67,35 +46,61 @@ Rozpakowujemy archiwum z ostatnią wersją
 [ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
 
     :::bash
-    tar xvf elasticsearch-0.90.7.tar.gz
+    tar xvf elasticsearch-1.4.1.tar.gz
+    cd elasticsearch-1.4.1
 
-A tak uruchamiamy *elasticsearch*:
+W katalogu *config* podmieniamy plik konfigurujący na:
+
+    :::yaml elasticsearch.yml
+    cluster.name: nosql
+    node.name: "John Cage"
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+
+I uruchamiamy *elasticsearch*:
 
     :::bash
-    cd elasticsearch-0.90.7
-    bin/elasticsearch -f
+    bin/elasticsearch
 
-I już! Domyślnie ElasticSearch nasłuchuje na porcie 9200:
+I już! Po chwili powinien się uruchomic ES:
+
+    [INFO ][node                     ] [John Cage] version[1.4.1], pid[17491]
+    [INFO ][node                     ] [John Cage] initializing ...
+    [INFO ][plugins                  ] [John Cage] loaded [], sites []
+    [INFO ][node                     ] [John Cage] initialized
+    [INFO ][node                     ] [John Cage] starting ...
+    [INFO ][transport                ] [John Cage] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, \
+        publish_address {inet[/192.168.0.103:9300]}
+    [INFO ][discovery                ] [John Cage] nosql/iTWWzHpwRUOlNQkQM7pKGQ
+    [INFO ][cluster.service          ] [John Cage] new_master \
+        [John Cage][iTWWzHpwRUOlNQkQM7pKGQ][localhost.localdomain][inet[/192.168.0.103:9300]], \
+        reason: zen-disco-join (elected_as_master)
+
+Domyślnie ElasticSearch nasłuchuje na porcie 9200:
 
     :::bash
     xdg-open http://localhost:9200
 
 ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
-Jeśli preferujemy pracę w przeglądarce, to użyteczny
-może być dodatek do Firefoks o nazwie
-[JSONView](http://jsonview.com/) – that helps you view JSON documents
-in the browser.
+Dlatego wygodnie jest już teraz zainstalować
+dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
-## Ściąga z Elasticsearch-Head
 
-W zakładce *Structured Query* warto wstawić „✔” przy *Show query source*.
+## Instalujemy wtyczkę Marvel
 
-W okienku *Validate JSON* wpisujemy, przykładowo:
+[Marvel](http://www.elasticsearch.org/overview/marvel/) –
+monitor your cluster’s heartbeat.
 
-    :::json
-    {"query":{"match_all":{}}}
-    {"query":{"match":{"hashtags":"redis"}}}
-    {"query":{"query_string":{"query":"mongo*"}}}
+Marvel to wtyczka do Elasticsearch.
+Każdą wtyczkę instalujemy korzystając z programu *plugin*:
+
+    :::bash
+    bin/plugin -i elasticsearch/marvel/latest
+
+Wtyczka jes dosßepna tutaj:
+
+    http://localhost:9200/_plugin/marvel/kibana/index.html
+
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
@@ -325,3 +330,25 @@ Wyszukiwanie „multi”, po kilku indeksach:
             "matchAll": {}
         }
     }'
+
+
+## ES cluster health
+
+Od czasu do czasu powinniśmy zapytać się ES o zdrowie:
+
+    curl -s http://localhost:9200/_cluster/health
+
+Dlaczego?
+
+
+<!--
+Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
+
+    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
+
+i wchodzimy na stronę *ElasticSearch-Head*:
+
+    xdg-open http://localhost:9200/_plugin/head/
+
+Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
+-->
