@@ -209,6 +209,7 @@ Na koniec zapytamy klaster ElasticSearch o zdrowie:
 
     :::bash
     curl -s 'http://localhost:9200/_cluster/health' | jq .
+    curl -s 'http://localhost:9200/_cluster/health?format=yaml'  # YAML, v1.4+
 
 Czy Elasticsearch ma REST API?
 
@@ -251,14 +252,14 @@ Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
     :::bash
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
-       "query": {
-          "match": { "user": "kimchy" }
-       }
+      "query": {
+        "match": { "user": "kimchy" }
+      }
     }'
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
        "query": {
-          "term": { "user": "kimchy" }
+         "term": { "user": "kimchy" }
        }
     }'
 
@@ -285,9 +286,9 @@ Albo – dokumenty typu *users* z indeksu *twitter*:
     :::bash
     curl -XGET 'http://localhost:9200/twitter/users/_search?pretty=true' -d '
     {
-        "query": {
-            "matchAll": {}
-        }
+      "query": {
+        "matchAll": {}
+      }
     }'
 
 
