@@ -40,7 +40,7 @@ i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/refe
 Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
 
-## Przykładowa instalacja ze źródeł
+## Przykładowa instalacja z paczki
 
 Rozpakowujemy archiwum z ostatnią wersją
 [ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
@@ -84,6 +84,15 @@ Domyślnie ElasticSearch nasłuchuje na porcie 9200:
 ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
+
+## Instalujemy wtyczkę Stempel
+
+Każdą wtyczkę instalujemy korzystając z programu *plugin*:
+
+    :::bash
+    bin/plugin -i -install elasticsearch/elasticsearch-analysis-stempel/2.4.1
+
+Wersja 2.4.1 wtyczki działa z wersjami 1.4 *elasticsearch*.
 
 
 <blockquote>
