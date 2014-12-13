@@ -85,14 +85,24 @@ ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
-## Instalujemy wtyczkę Stempel
+## Instalujemy wtyczki Stempel i Head
 
 Każdą wtyczkę instalujemy korzystając z programu *plugin*:
 
     :::bash
     bin/plugin -i -install elasticsearch/elasticsearch-analysis-stempel/2.4.1
 
-Wersja 2.4.1 wtyczki działa z wersjami 1.4 *elasticsearch*.
+Wersja 2.4.1 działa z wersjami 1.4 *elasticsearch*.
+
+Wtyczka Head to „a web front end for an ElasticSearch cluster”:
+
+    bin/plugin -install mobz/elasticsearch-head
+
+i wchodzimy na stronę wtyczki Head:
+
+    xdg-open http://localhost:9200/_plugin/head/
+
+Więcej informacji – [What is this?](http://mobz.github.com/elasticsearch-head/).
 
 
 <blockquote>
@@ -333,16 +343,3 @@ Od czasu do czasu powinniśmy zapytać się ES o zdrowie:
     curl -s http://localhost:9200/_cluster/health
 
 Dlaczego?
-
-
-<!--
-Doinstalowujemy wtyczkę *ElasticSearch-Head* (a web front end for an ElasticSearch cluster):
-
-    /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head  # ścieżka dla wersji 0.90
-
-i wchodzimy na stronę *ElasticSearch-Head*:
-
-    xdg-open http://localhost:9200/_plugin/head/
-
-Więcej informacji o tej wtyczce [What is this?](http://mobz.github.com/elasticsearch-head/).
--->
