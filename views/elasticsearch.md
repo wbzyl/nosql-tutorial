@@ -10,6 +10,10 @@
 
 Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/seia/search).
 
+Książka:
+
+* [Elasticsearch – The Definitive Guide](http://www.elasticsearch.org/blog/elasticsearch-definitive-guide/)
+
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
