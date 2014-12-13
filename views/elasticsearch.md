@@ -86,22 +86,6 @@ Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
 
-## Instalujemy wtyczkę Marvel
-
-[Marvel](http://www.elasticsearch.org/overview/marvel/) –
-monitor your cluster’s heartbeat.
-
-Marvel to wtyczka do Elasticsearch.
-Każdą wtyczkę instalujemy korzystając z programu *plugin*:
-
-    :::bash
-    bin/plugin -i elasticsearch/marvel/latest
-
-Wtyczka jes dosßepna tutaj:
-
-    http://localhost:9200/_plugin/marvel/kibana/index.html
-
-
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
   <b>a small number</b> of documents matching your query.
