@@ -90,7 +90,7 @@ dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 Każdą wtyczkę instalujemy korzystając z programu *plugin*:
 
     :::bash
-    bin/plugin -i -install elasticsearch/elasticsearch-analysis-stempel/2.4.1
+    bin/plugin -install elasticsearch/elasticsearch-analysis-stempel/2.4.1
 
 Wersja 2.4.1 działa z wersjami 1.4 *elasticsearch*.
 
