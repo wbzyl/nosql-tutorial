@@ -30,6 +30,8 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
   - [analysis](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis.html)
 * [Modules](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules.html):
   - [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html)
+  - [text scoring in scripts](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-advanced-scripting.html) –
+  df, tf, ttf
 
 Misc tools:
 
