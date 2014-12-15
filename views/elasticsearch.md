@@ -21,13 +21,18 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
   this plugin includes the **polish** analyzer and **polish_stem** token filter.
 * [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch/tree/master/rest-api-spec)
 * [Guides](http://www.elasticsearch.org/guide/)
-* [References](http://www.elasticsearch.org/guide/en/elasticsearch/reference/):
-  - [Setup](http://www.elasticsearch.org/guide/reference/setup/)
-  - [API](http://www.elasticsearch.org/guide/reference/api/)
-  - [Query](http://www.elasticsearch.org/guide/reference/query-dsl/)
-  - [Mapping](http://www.elasticsearch.org/guide/reference/mapping/)
-  - [Facets](http://www.elasticsearch.org/guide/reference/api/search/facets/index.html)
-  - [Plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html)
+* [References](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/index.html):
+  - [setup](http://www.elasticsearch.org/guide/reference/setup/)
+  - [search API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search.html)
+    - [aggregations](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html)
+  - [query dsl](http://www.elasticsearch.org/guide/reference/query-dsl/)
+  - [mapping](http://www.elasticsearch.org/guide/reference/mapping/)
+  - [analysis](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis.html)
+* [Modules](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules.html):
+  - [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html)
+
+Misc tools:
+
 * [es2unix](https://github.com/elasticsearch/es2unix) – Elasticsearch API consumable by the command line
 * [stream2es](https://github.com/elasticsearch/stream2es) –
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
