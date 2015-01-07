@@ -96,7 +96,7 @@ ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
-## Instalujemy wtyczki Stempel i Head
+## Instalujemy wtyczki Stempel, Head i Marvel
 
 Każdą wtyczkę instalujemy korzystając z programu *plugin*:
 
@@ -113,7 +113,19 @@ i wchodzimy na stronę wtyczki Head:
 
     xdg-open http://localhost:9200/_plugin/head/
 
-Więcej informacji – [What is this?](http://mobz.github.com/elasticsearch-head/).
+Więcej informacji – [What is elasticsearch-head?](http://mobz.github.com/elasticsearch-head/).
+
+[Marvel is a management and monitoring tool for Elasticsearch](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html),
+which is free for development use. It comes with an interactive
+console called **Sense**, which makes it easy to talk to Elasticsearch
+directly from your browser:
+
+    bin/plugin -i elasticsearch/marvel/latest
+
+You probably don’t want Marvel to monitor your local cluster, so you
+can disable data collection with this command:
+
+    echo 'marvel.agent.enabled: false' >> config/elasticsearch.yml
 
 
 <blockquote>
