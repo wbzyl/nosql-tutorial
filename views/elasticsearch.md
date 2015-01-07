@@ -127,6 +127,10 @@ can disable data collection with this command:
 
     echo 'marvel.agent.enabled: false' >> config/elasticsearch.yml
 
+i wchodzimy na stronę wtyczki Marvel:
+
+    xdg-open http://localhost:9200/_plugin/marvel/sense
+
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
