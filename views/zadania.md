@@ -288,7 +288,7 @@ tak jak to opisał Antoine Girbal’s w artykule
 *Uwaga:* W MongoDB v2.8.0-rc3 usunięto wielowątkowość z funkcji MapReduce.
 Łatwo można ją dodać z powrotem, zob.
 [ScopedThread is not defined in rc3 mongo shell](https://jira.mongodb.org/browse/SERVER-13485).
-[Jako pierwsi zwrócili na to uwagę M. Miotk i P. Acewicz-Hepfner.]
+[Jako pierwsi zwrócili uwagę na to zachowanie MapReduce M. Miotk i P. Acewicz-Hepfner.]
 
 
 # Przykładowe zadania z MapReduce
