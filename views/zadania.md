@@ -240,6 +240,11 @@ Na wyższą ocenę należy zoptymizować agregacje.
 Na przykład tak jak to opisano w artykule Paula Done’a,
 [How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
 
+*Uwaga:* W MongoDB v2.8.0-rc3 usunięto wielowątkowość z funkcji MapReduce.
+Łatwo można ją dodać z powrotem, zob.
+[ScopedThread is not defined in rc3 mongo shell](https://jira.mongodb.org/browse/SERVER-13485).
+[Jako pierwsi zwrócili na to uwagę M. Miotk i P. Acewicz-Hepfner.]
+
 
     ☀☀☀
 
