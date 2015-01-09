@@ -240,11 +240,6 @@ Na wyższą ocenę należy zoptymizować agregacje.
 Na przykład tak jak to opisano w artykule Paula Done’a,
 [How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
 
-*Uwaga:* W MongoDB v2.8.0-rc3 usunięto wielowątkowość z funkcji MapReduce.
-Łatwo można ją dodać z powrotem, zob.
-[ScopedThread is not defined in rc3 mongo shell](https://jira.mongodb.org/browse/SERVER-13485).
-[Jako pierwsi zwrócili na to uwagę M. Miotk i P. Acewicz-Hepfner.]
-
 
     ☀☀☀
 
@@ -289,6 +284,11 @@ Przygotować funkcje map i reduce, które:
 Na ocenę bdb należy zoptymizować obliczenia MapReduce
 tak jak to opisał Antoine Girbal’s w artykule
 [How to speed up MongoDB Map Reduce by 20x](http://edgystuff.tumblr.com/post/54709368492/how-to-speed-up-mongodb-map-reduce-by-20x).
+
+*Uwaga:* W MongoDB v2.8.0-rc3 usunięto wielowątkowość z funkcji MapReduce.
+Łatwo można ją dodać z powrotem, zob.
+[ScopedThread is not defined in rc3 mongo shell](https://jira.mongodb.org/browse/SERVER-13485).
+[Jako pierwsi zwrócili na to uwagę M. Miotk i P. Acewicz-Hepfner.]
 
 
 # Przykładowe zadania z MapReduce
