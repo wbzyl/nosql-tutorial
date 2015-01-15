@@ -1,7 +1,5 @@
 source "https://rubygems.org"
 
-ruby "2.0.0"
-
 gem "trollop", "2.0"
 gem "main", "5.2.0"
 
