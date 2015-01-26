@@ -38,6 +38,7 @@ Misc tools:
 * [es2unix](https://github.com/elasticsearch/es2unix) – Elasticsearch API consumable by the command line
 * [stream2es](https://github.com/elasticsearch/stream2es) –
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
+* [elasticdump](https://github.com/taskrabbit/elasticsearch-dump) – import and export tools for Elasticsearch
 
 [Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
 i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
