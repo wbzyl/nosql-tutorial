@@ -36,6 +36,11 @@ GitHub:
   zob. przykład pokazujący jak importować dane do bazy SQLite
 * [Working with data on the command line](http://www.datamazing.co.uk/2014/01/25/working-with-data-on-the-command-line)
 
+Big datasets:
+
+* [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
+  sentences from 11_038 books
+
 
 ### Zadanie 1
 
