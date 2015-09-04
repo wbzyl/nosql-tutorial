@@ -41,11 +41,12 @@ Big datasets:
 * [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
   sentences from 11_038 books
 * [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
+  a dedicated repository that collects collections to practice/use in MongoDB.
 
 Data sharing:
 
 * [How to share data with a statistician](https://github.com/jtleek/datasharing)
-  a dedicated repository that collects collections to practice/use in MongoDB
+
 
 
 ### Zadanie 1
