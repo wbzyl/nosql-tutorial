@@ -10,7 +10,7 @@
 
 Aby zaliczyć laboratorium należy przeczytać
 [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
-i wykonać zadania 1 i 2:
+i wykonać zadania 1, 2 i 3.
 
 Narzędzia przydatne w trakcie EDA:
 
@@ -40,13 +40,17 @@ Big datasets:
 
 * [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
   sentences from 11_038 books
+* [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
 
 Data sharing:
 
 * [How to share data with a statistician](https://github.com/jtleek/datasharing)
-
+  a dedicated repository that collects collections to practice/use in MongoDB
 
 ### Zadanie 1
+
+
+### Zadanie 2
 
 Co to jest [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
 
@@ -83,23 +87,23 @@ Wybrałem je losowo po zapisaniu rekordów z *Train.csv* w bazie MongoDB.
 
    ☀☀☀
 
-*Zadanie 1a* polega na zaimportowaniu, do systemów baz danych
+*Zadanie 2a* polega na zaimportowaniu, do systemów baz danych
 uruchomionych na **swoim komputerze**, danych z pliku *Train.csv* bazy:
 
 * MongoDB
 * PostgreSQL
 
-*Zadanie 1b.* Zliczyć liczbę zaimportowanych rekordów
+*Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów
 (Odpowiedź: powinno ich być 6\_034\_195).
 
-*Zadanie 1c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
+*Zadanie 2c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
 na tablicę napisów z tagami następnie zliczyć wszystkie tagi
 i wszystkie różne tagi. Na koniec wypisać 10 najczęściej i 10 najrzadziej
 występujących tagów (wyniki przedstawić graficznie).
 
 W tym zadaniu należy napisać program, który to zrobi.
 W przypadku MongoDB należy użyć jednego ze sterowników
-ze  strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
+ze strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 
 <blockquote>
@@ -112,7 +116,7 @@ W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
  <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
 </blockquote>
 
-*Zadanie 1d.* Wyszukać w sieci dane zawierające
+*Zadanie 2d.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Następnie dane zapisać w bazie *MongoDB*.
 
@@ -225,32 +229,8 @@ copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
 
 -->
 
-
-### Zadanie 2
-
-1\. Wyszukać w sieci dane zawierające co najmniej 1_000_000 rekordów/jsonów.
-
-2\. Dane zapisać w bazie MongoDB.
-
-3\. Przygotować w JavaScript co najmniej cztery agregacje korzystające
- z Aggregation Pipeline.
-
-4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w_innym
- niż JavaScript języku programowania. Skorzystać z jednego z driverów
- wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
-
-5\. Wyniki przedstawić w postaci tabelek, graficznej (wykresów, itp.).
-
-Również rozwiązania tego zadania należy przygotować jako
-[pull request](https://help.github.com/articles/using-pull-requests)
-repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).<br>
-
-Na wyższą ocenę należy zoptymizować agregacje.
-Na przykład tak jak to opisano w artykule Paula Done’a,
-[How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
-
-
     ☀☀☀
+
 
 
 #### TL;DR
@@ -278,9 +258,34 @@ Szczególnie polecam obejrzenie tych trzech krótkich filmów:
 
 # Egzamin
 
-Na egzamin należy wykonać zadanie 3.
+Na egzamin należy wykonać zadanie 4 i 5 (na ocenę bdb).
 
-### Zadanie 3
+
+### Zadanie 4
+
+1\. Wyszukać w sieci *interesujące* dane zawierające co najmniej 1_000_000 rekordów/jsonów.
+
+2\. Dane zapisać w bazie MongoDB.
+
+3\. Przygotować w JavaScript co najmniej cztery agregacje korzystające
+ z Aggregation Pipeline.
+
+4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w_innym
+ niż JavaScript języku programowania. Skorzystać z jednego z driverów
+ wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
+
+5\. Wyniki przedstawić w postaci tabelek, graficznej (wykresów, itp.).
+
+Również rozwiązania tego zadania należy przygotować jako
+[pull request](https://help.github.com/articles/using-pull-requests)
+repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).<br>
+
+Na wyższą ocenę należy zoptymizować agregacje.
+Na przykład tak jak to opisano w artykule Paula Done’a,
+[How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
+
+
+### Zadanie 5
 
 Przygotować funkcje map i reduce, które:
 
@@ -289,8 +294,12 @@ Przygotować funkcje map i reduce, które:
 * wyszukają najczęściej występujące słowa
   z [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/)
   aktualny plik z artykułami, ok. 1.3 GB
+* dorzucić swoje dwa przykłady z map i reduce; zob. poniżej
+ _Przykładowe zadania z MapReduce_
 
-Na ocenę bdb należy zoptymizować obliczenia MapReduce
+
+<!--
+Dodatkowo należy zoptymalizować obliczenia MapReduce
 tak jak to opisał Antoine Girbal’s w artykule
 [How to speed up MongoDB Map Reduce by 20x](http://edgystuff.tumblr.com/post/54709368492/how-to-speed-up-mongodb-map-reduce-by-20x).
 
@@ -298,6 +307,7 @@ tak jak to opisał Antoine Girbal’s w artykule
 Łatwo można ją dodać z powrotem, zob.
 [ScopedThread is not defined in rc3 mongo shell](https://jira.mongodb.org/browse/SERVER-13485).
 [Jako pierwsi zwrócili uwagę na to zachowanie MapReduce M. Miotk i P. Acewicz-Hepfner.]
+-->
 
 
 # Przykładowe zadania z MapReduce
