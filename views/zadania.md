@@ -47,7 +47,15 @@ Data sharing:
 * [How to share data with a statistician](https://github.com/jtleek/datasharing)
   a dedicated repository that collects collections to practice/use in MongoDB
 
+
 ### Zadanie 1
+
+* Zainstalować na swoim komputerze bazę [Neo4j](http://neo4j.com/).
+* Przeczytać artykuł [Import 10M Stack Overflow Questions into Neo4j In Just 3 Minutes](http://neo4j.com/blog/import-10m-stack-overflow-questions)
+ i wykonać kod z tego artykułu.
+* Opisać wszystkio to co się zdarzyło w jakimś repozytorium
+ w pliku _README.adoc_
+ (w formacie [AsciiDoc](http://asciidoctor.org)).
 
 
 ### Zadanie 2
