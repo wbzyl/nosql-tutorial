@@ -8,10 +8,6 @@
  <p class="author"><a href="http://www.canonical.org/~kragen/tao-of-programming.html">The Tao of Programming 2.1</a></p>
 </blockquote>
 
-Aby zaliczyć laboratorium należy przeczytać
-[The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
-i wykonać zadania 1, 2 i 3.
-
 Narzędzia przydatne w trakcie EDA:
 
 * [JQ](http://stedolan.github.io/jq/) –
@@ -26,6 +22,7 @@ Narzędzia przydatne w trakcie EDA:
 GitHub:
 
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [AsciiDoctor Documentation](http://asciidoctor.org/docs)
 * [Writing on GitHub](https://help.github.com/articles/writing-on-github/)
 
 [Learn X in Y minutes](http://learnxinyminutes.com/):
@@ -47,6 +44,16 @@ Data sharing:
 
 * [How to share data with a statistician](https://github.com/jtleek/datasharing)
 
+Różne rzeczy:
+
+* [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
+
+
+## Zaliczenie
+
+Co powinny zawierać pliki z rozwiązaniami:
+
+* TODO
 
 
 ### Zadanie 1
@@ -265,9 +272,7 @@ Szczególnie polecam obejrzenie tych trzech krótkich filmów:
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
 
-# Egzamin
-
-Na egzamin należy wykonać zadanie 4 i 5 (na ocenę bdb).
+## Egzamin
 
 
 ### Zadanie 4
@@ -296,12 +301,12 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 ### Zadanie 5
 
-Przygotować funkcje map i reduce, które:
+Napisać kilka, trzy lub cztery wystarczą, funkcji map-reduce.
+
+Przykładowo napisać funkcje, które:
 
 * wyszukają wszystkie anagramy w pliku
   {%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}
 * wyszukają najczęściej występujące słowa
   z [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/)
-  aktualny plik z artykułami, ok. 1.3 GB
-* dorzucić swoje dwa przykłady z map i reduce; zob. poniżej
- _Przykładowe zadania z MapReduce_
+  (aktualny plik z artykułami, ok. 1.3 GB)
