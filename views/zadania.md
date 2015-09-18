@@ -41,6 +41,15 @@ Różne rzeczy:
 
 * [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
 
+<blockquote>
+ {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
+ <p>
+  <i>Exploratory Data Analysis</i> (EDA) is an attitude, a state of flexibility,
+  a willingness to look for those things that we believe are not there,
+  as well as those we believe to be there.
+ </p>
+ <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
+</blockquote>
 
 ## Zaliczenie
 
@@ -55,16 +64,6 @@ Co powinny zawierać pliki z rozwiązaniami:
  i procesorów w trakcie importu etc.
 * opis rozwiązania powinien zawierać tabelki, wykresy, zrzuty ekranu etc.
 
-
-<blockquote>
- {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
- <p>
-  <i>Exploratory Data Analysis</i> (EDA) is an attitude, a state of flexibility,
-  a willingness to look for those things that we believe are not there,
-  as well as those we believe to be there.
- </p>
- <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
-</blockquote>
 
 ### Zadanie 1
 
