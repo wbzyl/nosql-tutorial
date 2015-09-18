@@ -56,6 +56,16 @@ Co powinny zawierać pliki z rozwiązaniami:
 * opis rozwiązania powinien zawierać tabelki, wykresy, zrzuty ekranu etc.
 
 
+<blockquote>
+ {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
+ <p>
+  <i>Exploratory Data Analysis</i> (EDA) is an attitude, a state of flexibility,
+  a willingness to look for those things that we believe are not there,
+  as well as those we believe to be there.
+ </p>
+ <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
+</blockquote>
+
 ### Zadanie 1
 
 * Zainstalować na swoim komputerze bazę [Neo4j](http://neo4j.com/).
@@ -210,16 +220,6 @@ W przypadku MongoDB należy użyć jednego ze sterowników
 ze strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 
-
-<blockquote>
- {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
- <p>
-  <i>Exploratory Data Analysis</i> (EDA) is an attitude, a state of flexibility,
-  a willingness to look for those things that we believe are not there,
-  as well as those we believe to be there.
- </p>
- <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
-</blockquote>
 
 *Zadanie 2d.* Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
