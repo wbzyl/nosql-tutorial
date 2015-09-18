@@ -277,7 +277,7 @@ i mapkę umieścić w pliku z rozwiązaniem zadania.
 ## Egzamin
 
 
-### Zadanie 4
+### Zadanie 3
 
 1\. Wyszukać w sieci *interesujące* dane zawierające co najmniej 1_000_000 rekordów/jsonów.
 
@@ -291,7 +291,7 @@ i mapkę umieścić w pliku z rozwiązaniem zadania.
  wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
 
-### Zadanie 5
+### Zadanie 4
 
 Napisać **trzy** lub **cztery** pary funkcji map-reduce dla dowolnego dużego,
 czyli zawierającego co najmniej 1_000_000 rekordów/jsonów, zbioru danych.
