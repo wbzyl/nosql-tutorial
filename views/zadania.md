@@ -59,6 +59,8 @@ Co powinny zawierać pliki z rozwiązaniami:
  i procesorów w trakcie importu etc.
 * opis rozwiązania powinien zawierać tabelki, wykresy, zrzuty ekranu etc.
 
+W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
+
 
 ### Zadanie 1
 
@@ -201,6 +203,11 @@ Duże i niezbyt duże zbiory danych:
   [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
 * [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
   anonymous Ratings Data from the Jester Online Joke Recommender System
+* [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/)
+  by Jure Leskovec: Online Reviews (Amazon, Movies, Beer)
+* [GeoNames](http://www.geonames.org/export/) i [Postal Codes](http://www.geonames.org/postal-codes/)
+* [GetGlue and Timestamped Event Data](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz)
+  (ok. 11 GB). Dane pochodzą z lat 2007–2012 – tylko filmy i przedstawienia TV.
 
 
 *Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów.
