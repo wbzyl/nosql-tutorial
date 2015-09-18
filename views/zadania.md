@@ -172,12 +172,12 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 -->
 
-*Zadanie 2a* Zaimportować, do systemów baz danych wymienionych poniżej
+*Zadanie 2a* Zaimportować, do systemów baz danych:
 
 * MongoDB
 * PostgreSQL
 
-jakieś dane wymienione poniżej.
+jeden ze zbiorów danych wymienionych poniżej.
 
 Duże i niezbyt duże zbiory danych:
 
