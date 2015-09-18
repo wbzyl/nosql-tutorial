@@ -172,7 +172,7 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 -->
 
-*Zadanie 2a* Zaimportować, do systemów baz danych:
+*Zadanie 2a.* Zaimportować, do systemów baz danych:
 
 * MongoDB
 * PostgreSQL
