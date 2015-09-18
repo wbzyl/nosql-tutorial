@@ -32,10 +32,6 @@ GitHub:
   zob. przykład pokazujący jak importować dane do bazy SQLite
 * [Working with data on the command line](http://www.datamazing.co.uk/2014/01/25/working-with-data-on-the-command-line)
 
-Data sharing:
-
-* [How to share data with a statistician](https://github.com/jtleek/datasharing)
-
 Różne rzeczy:
 
 * [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
@@ -97,6 +93,10 @@ Przeczytać artykuł [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Ex
 {%= image_tag "/images/data-cleaning.png", :alt => "[Data Cleaning]" %}
 
 <!--
+Data sharing:
+
+* [How to share data with a statistician](https://github.com/jtleek/datasharing)
+
 Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
 W sierpniu 2013 Facebook ogłosił konkurs
 [Identify keywords and tags from millions of text questions](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction).
