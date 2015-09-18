@@ -33,21 +33,6 @@ GitHub:
   zob. przykład pokazujący jak importować dane do bazy SQLite
 * [Working with data on the command line](http://www.datamazing.co.uk/2014/01/25/working-with-data-on-the-command-line)
 
-Big and not so big datasets:
-
-* [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
-  sentences from 11_038 books
-* [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
-  a dedicated repository that collects collections to practice/use in MongoDB.
-* [I have every publicly available Reddit comment for research. ~ 1.7 billion
-  comments @ 250 GB compressed. Any interest in this?](https://www.reddit.com/r/datasets/comments/3bxlg7/i_have_every_publicly_available_reddit_comment)
-  Get one month of comments @ 5.5 GB compressed.
-* [GrouLens data](http://grouplens.org/datasets):
-  - [MovieLens data](http://grouplens.org/datasets/movielens);
-  [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
-* [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
-  anonymous Ratings Data from the Jester Online Joke Recommender System
-
 Data sharing:
 
 * [How to share data with a statistician](https://github.com/jtleek/datasharing)
@@ -61,7 +46,14 @@ Różne rzeczy:
 
 Co powinny zawierać pliki z rozwiązaniami:
 
-* TODO
+* informacje o komputerze na którym były wykonywane obliczenia: jaki procesor,
+ ile pamięci RAM, jaki dysk (HD, SSD)
+* jaki system operacyjny + wersja
+* wersje użytych programów, sterowników, bibliotek etc.
+* czasy wykonania poleceń (użyć polecenia _time_), ile miejsca
+ zajmują zaimportowane dane, wykorzystanie RAM (_gnome-system-monitor_)
+ i procesorów w trakcie importu etc.
+* opis rozwiązania powinien zawierać tabelki, wykresy, zrzuty ekranu etc.
 
 
 ### Zadanie 1
@@ -92,10 +84,11 @@ Co powinny zawierać pliki z rozwiązaniami:
  <p class="author"><a href="http://kaushikghose.wordpress.com/2013/09/26/data-management/">Data Management</a></p>
 </blockquote>
 
-Co to jest [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
+Przeczytać artykuł [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
 
 {%= image_tag "/images/data-cleaning.png", :alt => "[Data Cleaning]" %}
 
+<!--
 Na [Kaggle](https://www.kaggle.com/) znajdziemy dużo interesujących danych.
 W sierpniu 2013 Facebook ogłosił konkurs
 [Identify keywords and tags from millions of text questions](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction).
@@ -127,24 +120,96 @@ Wybrałem je losowo po zapisaniu rekordów z *Train.csv* w bazie MongoDB.
 
    ☀☀☀
 
-*Zadanie 2a* polega na zaimportowaniu, do systemów baz danych
-uruchomionych na **swoim komputerze**, danych z pliku *Train.csv* bazy:
+* Przykład EDA – konkurs
+  [Kaggle bulldozers: Basic cleaning](http://danielfrg.github.io/blog/2013/03/07/kaggle-bulldozers-basic-cleaning/),<br>
+  [nagroda dla najlepszego rozwiązania $10,000](http://www.kaggle.com/c/bluebook-for-bulldozers/data)
+* Interesujące dane –
+  [Detecting Insults in Social Commentary](http://www.kaggle.com/c/detecting-insults-in-social-commentary/),<br>
+  [3948 rekordów](http://www.kaggle.com/c/detecting-insults-in-social-commentary/data);
+  zob. też Andreas Mueller [Machine Learning with scikit-learn](http://amueller.github.io/sklearn_tutorial/)
+
+
+2013-09-27T13:04:45.582+0200 check 9 6034196
+2013-09-27T13:04:45.689+0200
+
+no. of rows: 6,034,195
+min. value for Id: 1
+max. value for Id: 6,034,195
+no. of unique tags: 42,048
+no. of occurrences of tags: 17,409,994
+max. no. of tags/question: 5
+avg. no. of tags/question: 2.89
+
+% of questions with specified no. of tags:
+
+1 : 13.76
+2 : 26.65
+3 : 28.65
+4 : 19.1
+
+PostgreSQL:
+
+create table RAW_TRAIN(ID BIGINT PRIMARY KEY, TITLE TEXT, BODY TEXT, TAGS TEXT);
+copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
+
+Do czyszczenia danych, jeśli okaże się to konieczne,
+można użyć jednego z tych narzędzi:
+[Google Refine](http://code.google.com/p/google-refine/) lub
+[Data Wrangler](http://vis.stanford.edu/wrangler/).
+
+Szczególnie polecam obejrzenie tych trzech krótkich filmów:
+[Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
+[Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
+[Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk).
+
+Również rozwiązania tego zadania należy przygotować jako
+[pull request](https://help.github.com/articles/using-pull-requests)
+repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).<br>
+
+Na wyższą ocenę należy zoptymizować agregacje.
+Na przykład tak jak to opisano w artykule Paula Done’a,
+[How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
+
+-->
+
+*Zadanie 2a* Zaimportować, do systemów baz danych wymienionych poniżej
 
 * MongoDB
 * PostgreSQL
 
-*Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów
-(Odpowiedź: powinno ich być 6\_034\_195).
+jakieś dane wymienione poniżej.
 
-*Zadanie 2c.* (Zamiana formatu danych.) Zamienić string zawierający tagi
-na tablicę napisów z tagami następnie zliczyć wszystkie tagi
-i wszystkie różne tagi. Na koniec wypisać 10 najczęściej i 10 najrzadziej
-występujących tagów (wyniki przedstawić graficznie).
+Duże i niezbyt duże zbiory danych:
 
-W tym zadaniu należy napisać program, który to zrobi.
+* [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
+  sentences from 11_038 books
+* [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
+  a dedicated repository that collects collections to practice/use in MongoDB.
+* [I have every publicly available Reddit comment for research. ~ 1.7 billion
+  comments @ 250 GB compressed. Any interest in this?](https://www.reddit.com/r/datasets/comments/3bxlg7/i_have_every_publicly_available_reddit_comment)
+  Get one month of comments @ 5.5 GB compressed.
+* [GrouLens data](http://grouplens.org/datasets):
+  - [MovieLens data](http://grouplens.org/datasets/movielens);
+  [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
+* [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
+  anonymous Ratings Data from the Jester Online Joke Recommender System
+
+
+*Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów.
+
+*Zadanie 2c.* Policzyć kilka prostych agregacji na zaimportowanych danych.
+Wyniki przedstawić graficznie lub w postaci tabelki.
+
+Przykładowo można zliczyć wszystkie tagi i wszystkie różne tagi, policzyć 100
+najczęściej i 100 najrzadziej występujących tagów.
+
+W tym zadaniu należy napisać dwa proste skrypty,
+po jednym dla MongoDB i PostgreSQL, który to policzą.
+
 W przypadku MongoDB należy użyć jednego ze sterowników
 ze strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
+
 
 <blockquote>
  {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
@@ -160,20 +225,20 @@ W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Następnie dane zapisać w bazie *MongoDB*.
 
-Dla zapisanych danych przygotować co najmniej 6 różnych
+Dla zapisanych danych przygotować co najmniej 4 różne
 [geospatial queries](http://docs.mongodb.org/manual/reference/operator/query-geospatial/)
-(w tym, co najmniej po jednym, dla obiektów Point, LineString i Polygon).
+(co najmniej po jednym, dla obiektów Point, LineString i Polygon).
 
 Przykład pokazujący o co chodzi w tym zadaniu.
 
-Poniższe dane zapisujemy w pliku *places.json*:
+Poniższe dane zapisujemy w pliku places.json:
 
     :::json places.json
-    {"_id":"oakland",  loc:{"type":"Point","coordinates":[-122.270833,37.804444]}}
-    {"_id":"augsburg", loc:{"type":"Point","coordinates":[10.898333,48.371667]}}
-    {"_id":"namibia",  loc:{"type":"Point","coordinates":[17.15,-22.566667]}}
-    {"_id":"australia",loc:{"type":"Point","coordinates":[135,-25]}}}
-    {"_id":"brasilia", loc:{"type":"Point","coordinates":[-52.95,-10.65]}}
+    {"_id": "oakland",  loc: {"type": "Point", "coordinates": [-122.270833,37.804444]}}
+    {"_id": "augsburg", loc: {"type": "Point", "coordinates": [10.898333,48.371667]}}
+    {"_id": "namibia",  loc: {"type": "Point", "coordinates": [17.15,-22.566667]}}
+    {"_id": "australia",loc: {"type": "Point", "coordinates": [135,-25]}}}
+    {"_id": "brasilia", loc: {"type": "Point", "coordinates": [-52.95,-10.65]}}
 
 Importujemy je do kolekcji *places* w bazie *test*:
 
@@ -200,75 +265,6 @@ Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
 
 Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
 i mapkę umieścić w pliku z rozwiązaniem zadania.
-
-   ☀☀☀
-
-**Uwaga:** Do opisów dodać kilka liczb. Przykładowo, ile czasu trwał
-import (skorzystać z polecenia *time*), ile miejsca zajmują kolekcje
-(bez indeksów i z indeksami), wykorzystanie pamięci w trakcie importu
-zrzut ekranu z programu monitor systemu; tabelkę z czasami, wykres tip.
-na przykład *gnome-system-monitor* lub podobny) itp.
-
-Rozwiązania zadania należy przygotować jako
-[pull request](https://help.github.com/articles/using-pull-requests)
-repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).
-
-
-
-#### TL;DR
-
-* Przykład EDA – konkurs
-  [Kaggle bulldozers: Basic cleaning](http://danielfrg.github.io/blog/2013/03/07/kaggle-bulldozers-basic-cleaning/),<br>
-  [nagroda dla najlepszego rozwiązania $10,000](http://www.kaggle.com/c/bluebook-for-bulldozers/data)
-* Interesujące dane –
-  [Detecting Insults in Social Commentary](http://www.kaggle.com/c/detecting-insults-in-social-commentary/),<br>
-  [3948 rekordów](http://www.kaggle.com/c/detecting-insults-in-social-commentary/data);
-  zob. też Andreas Mueller [Machine Learning with scikit-learn](http://amueller.github.io/sklearn_tutorial/)
-
-
-<!--
-
-2013-09-27T13:04:45.582+0200 check 9 6034196
-2013-09-27T13:04:45.689+0200
-
-no. of rows: 6,034,195
-min. value for Id: 1
-max. value for Id: 6,034,195
-no. of unique tags: 42,048
-no. of occurrences of tags: 17,409,994
-max. no. of tags/question: 5
-avg. no. of tags/question: 2.89
-
-% of questions with specified no. of tags:
-
-1 : 13.76
-2 : 26.65
-3 : 28.65
-4 : 19.1
-
-PostgreSQL:
-
-create table RAW_TRAIN(ID BIGINT PRIMARY KEY, TITLE TEXT, BODY TEXT, TAGS TEXT);
-copy RAW_TEST from '/home/wbzyl/NN/Facebook-Kaggle/train.csv' csv header;
-
--->
-
-    ☀☀☀
-
-
-
-#### TL;DR
-
-Do czyszczenia danych, jeśli okaże się to konieczne,
-można użyć jednego z tych narzędzi:
-[Google Refine](http://code.google.com/p/google-refine/) lub
-[Data Wrangler](http://vis.stanford.edu/wrangler/).
-
-Szczególnie polecam obejrzenie tych trzech krótkich filmów:
-[Intro 1](http://www.youtube.com/watch?v=B70J_H_zAWM),
-[Intro 2](http://www.youtube.com/watch?v=cO8NVCs_Ba0),
-[Intro 3](https://www.youtube.com/watch?v=5tsyz3ibYzk).
-
 
 
 <blockquote>
@@ -298,23 +294,13 @@ Szczególnie polecam obejrzenie tych trzech krótkich filmów:
 
 5\. Wyniki przedstawić w postaci tabelek, graficznej (wykresów, itp.).
 
-Również rozwiązania tego zadania należy przygotować jako
-[pull request](https://help.github.com/articles/using-pull-requests)
-repozytorium [aggregations-3](https://github.com/nosql/aggregations-3).<br>
-
-Na wyższą ocenę należy zoptymizować agregacje.
-Na przykład tak jak to opisano w artykule Paula Done’a,
-[How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
-
 
 ### Zadanie 5
 
-Napisać kilka, trzy lub cztery wystarczą, funkcji map-reduce.
+Napisać **trzy** lub **cztery** pary funkcji map-reduce dla dowolnego dużego,
+czyli zawierającego co najmniej 1_000_000 rekordów/jsonów, zbioru danych.
 
-Przykładowo napisać funkcje, które:
-
-* wyszukają wszystkie anagramy w pliku
-  {%= link_to 'word_list.txt', '/doc/data/word_list.txt' %}
-* wyszukają najczęściej występujące słowa
-  z [Wikipedia data PL](http://dumps.wikimedia.org/plwiki/)
-  (aktualny plik z artykułami, ok. 1.3 GB)
+Na przykład napisać parę funkcji map-reduce, które wyszukają najczęściej
+występujące słowa w pliku [Wikipedia data
+PL](http://dumps.wikimedia.org/plwiki/) (aktualny plik z artykułami, ok. 1.3
+GB).
