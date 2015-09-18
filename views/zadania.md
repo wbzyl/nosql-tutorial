@@ -291,8 +291,6 @@ i mapkę umieścić w pliku z rozwiązaniem zadania.
  niż JavaScript języku programowania. Skorzystać z jednego z driverów
  wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
-5\. Wyniki przedstawić w postaci tabelek, graficznej etc.
-
 
 ### Zadanie 5
 
