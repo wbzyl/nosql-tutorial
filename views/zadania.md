@@ -231,7 +231,7 @@ Dla zapisanych danych przygotować co najmniej 4 różne
 
 Przykład pokazujący o co chodzi w tym zadaniu.
 
-Poniższe dane zapisujemy w pliku places.json:
+Poniższe obiekty Point zapisujemy w pliku places.json:
 
     :::json places.json
     {"_id": "oakland",  loc: {"type": "Point", "coordinates": [-122.270833,37.804444]}}
