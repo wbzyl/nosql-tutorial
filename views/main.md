@@ -27,12 +27,10 @@ Wizualizacja danych:
   - [GeoJSONLint](http://geojsonlint.com/)
 
 
-## 10.10.2014 – zaczynamy!
+## 9.10.2015 – zaczynamy!
 
 * Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
   [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
-* [6 dataset lists curated by data scientists](http://blog.mortardata.com/post/67652898761/6-dataset-lists-curated-by-data-scientists)
-* [Where can I find large datasets open to the public?](http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public)
 * Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
 
 
@@ -86,7 +84,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
 
 
-## ElasticSearch
+## Elastic / ElasticSearch
 
 1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
 1. {%= link_to "Hurtowy import danych do ElasticSearch", "/elasticsearch-import" %}
