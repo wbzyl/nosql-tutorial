@@ -3,7 +3,7 @@
 Korzystamy z dokumentacji API CouchDB:
 [HTTP Document API](http://wiki.apache.org/couchdb/HTTP_Document_API).
 
-Pzykładowe dokumenty będziemy zapisywać w bazie o nazwie **lz**.
+Przykładowe dokumenty będziemy zapisywać w bazie o nazwie **lz**.
 Umieścimy w niej trochę danych o zespole rockowym „Led Zeppelin”.
 Informacje o zespole skopiowałem ze strony A. Reisner’a
 [Led Zeppelin site](http://ledzeppelin.alexreisner.com/discography.html).
