@@ -144,7 +144,6 @@ Jak widać wystarczą 4 komputery.
   źródło [github](https://github.com/mongodb/docs).
 * Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb).
   oznaczone etykietką *mongodb*.
-* Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf).
 * Drivery:
   - [Ruby MongoDB Driver API](http://api.mongodb.org/ruby/current/index.html);
   samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
