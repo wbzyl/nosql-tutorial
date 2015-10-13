@@ -152,11 +152,6 @@ Jak widać wystarczą 4 komputery.
 [NoSQL DZone](http://dzone.com/mz/nosql).
 
 
-## Historia
-
-* [History of MongoDB](http://www.snailinaturtleneck.com/blog/2010/08/23/history-of-mongodb/)
-
-
 ## Schemas & Embedded/Non-Embedded Docs
 
 * [Schema Design](http://www.mongodb.org/display/DOCS/Schema+Design)
