@@ -26,9 +26,11 @@ A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
     # http://docs.mongodb.org/manual/reference/configuration-options/
 
     storage:
-      dbPath: "/var/lib/mongodb"
-      journal:
-        enabled: true
+      dbPath: "/data/var/lib/mongodb"
+      engine: "wiredTiger"
+      wiredTiger:
+        collectionConfig:
+          blockCompressor: zlib
 
     net:
       bindIp: 127.0.0.1
@@ -36,13 +38,13 @@ A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
     # systemLog:
     #   destination: file
-    #   path: "/var/log/mongod/mongod.log"
-    #   logAppend: true
+    #   path: "/data/var/log/mongod/mongod.log"
     #   timeStampFormat: "iso8601-utc"
+    #   logAppend: true
 
     # processManagement:
     #   fork: true
-    #   pidFilePath: "/var/run/mongod/mongod.pid"
+    #   pidFilePath: "/data/var/run/mongod/mongod.pid"
 
 Powyższe ścieżki są przykładowe. Należy wstawić swoje.
 
