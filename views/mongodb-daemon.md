@@ -48,6 +48,16 @@ A to fragment (z opcjami dla *standalone server*) pliku konfiguracyjnego:
 
 Powyższe ścieżki są przykładowe. Należy wstawić swoje.
 
+Teraz, aby uruchomić *mongod+WT* wystarczy wpisać na konsoli:
+
+    :::sh
+    mongod -f mongod.conf.yml
+
+Zobacz [MongoDB 2.8 – New WiredTiger Storage Engine Adds Compression](http://comerford.cc/wordpress/2014/11/12/mongodb-2-8-new-wiredtiger-storage-engine-adds-compression/).
+
+
+## Pokaż mi swoje logi...
+
 Czasami w logach zapisywane jest za dużo danych.
 Możemy to zmienić to na konsoli *mongo*:
 
@@ -105,49 +115,3 @@ albo z konsoli Bash:
 
 (Oczywiście, zamiast wpisywania takich rzeczy należy przygotować
 sobie prosty skrypt, który to za nas zrobi.)
-
-
-## Kompresja danych z WiredTiger, *v2.8.0-rc1*
-
-Zaczynamy od uruchomienia *mongod + WiredTiger* wpisując na konsoli
-wymagane opcje i kilka innych, które wydają się nam interesujące,
-zob. [index and collection-level options](http://source.wiredtiger.com/2.4.1/struct_w_t___s_e_s_s_i_o_n.html#a358ca4141d59c345f401c58501276bbb),
-[storage engine options](http://source.wiredtiger.com/2.4.1/group__wt.html#ga9e6adae3fc6964ef837a62795c7840ed):
-
-    :::sh
-    mongod --dbpath /ssd/db/mongodb  --storageEngine wiredTiger \
-      --wiredTigerCollectionConfig "block_compressor=bzip2" \
-      --wiredTigerEngineConfig "async=(enabled=true,threads=4),statistics=(fast)" \
-      --bind_ip 127.0.0.0
-
-Jeśli nie ma błędów, to przygotowujemy plik konfiguracyjny
-*mongod.conf.yml* w formacie YAML:
-
-    :::yaml mongod.conf.yml
-    storage:
-      dbPath: "/ssd/db/mongodb"
-      engine: "wiredtiger"
-      wiredTiger:
-       collectionConfig: "block_compressor=bzip2"
-       engineConfig: "statistics=(fast),checkpoint=(wait=120,log_size=1GB)"
-
-    # net:
-    #   bindIp: 0.0.0.0
-    #   port: 27017
-
-    # systemLog:
-    #   destination: file
-    #   path: "/home/wbzyl/.data/var/log/mongod/mongod.log"
-    #   timeStampFormat: "iso8601-utc"
-    #   logAppend: true
-
-    # processManagement:
-    #   fork: true
-    #   pidFilePath: "/home/wbzyl/.data/var/run/mongod/mongod.pid"
-
-Teraz, aby uruchomić *mongod+WT* wystarczy wpisać na konsoli:
-
-    :::sh
-    mongod -f mongod.conf.yml
-
-Zobacz [MongoDB 2.8 – New WiredTiger Storage Engine Adds Compression](http://comerford.cc/wordpress/2014/11/12/mongodb-2-8-new-wiredtiger-storage-engine-adds-compression/).
