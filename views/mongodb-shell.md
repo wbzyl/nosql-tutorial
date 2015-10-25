@@ -105,6 +105,7 @@ Jaka jest różnica w wykonaniu poniższych dwóch poleceń:
     > db.getLastError
 
 
+<!--
 ## Zapisywanie funkcji JavaScript w bazie danych
 
 Jeśli w kolekcji o nazwie *system.js* zapiszemy
@@ -129,7 +130,7 @@ do powłoki *mongo*:
 
 Zobacz też [Storing functions server-side](http://docs.mongodb.org/manual/applications/server-side-javascript/#storing-functions-server-side)
 oraz [Server-side Code Execution](http://docs.mongodb.org/manual/applications/server-side-javascript/).
-
+-->
 
 ## Operacje CRUD
 

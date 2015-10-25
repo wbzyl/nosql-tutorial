@@ -75,7 +75,6 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
 1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
 1. {%= link_to "Uruchamianie i zatrzymywanie demona mongod", "/mongodb-daemon" %}
-1. {%= link_to "GridFS w kwadrans", "/gridfs" %}
 1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
 1. {%= link_to "Aggregation Pipeline", "/mongodb-aggregation" %}
 1. {%= link_to "Kopiowanie baz danych i kolekcji", "/mongodb-copydatabases" %}
