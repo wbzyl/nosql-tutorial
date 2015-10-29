@@ -44,7 +44,7 @@ Do zapisania danych w kolekcji użyjemy prostego skryptu Ruby
 Na koniec dodamy index:
 
     :::js
-    db.dostojewski.ensureIndex({'word': 1})
+    db.dostojewski.createIndex({'word': 1})
     db.dostojewski.find({word: /^x/}, {_id: 0}).explain()
 
 *Uwaga:* Skrypt korzysta z pliku *stopwords.en* zwierającego
