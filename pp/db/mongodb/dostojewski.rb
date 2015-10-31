@@ -1,14 +1,15 @@
 #! /usr/bin/env ruby
-# -*- coding: utf-8 -*-
+
+require 'bundler/setup'
 
 # http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 require 'net/http'
 
-# http://www.ruby-doc.org/ruby-1.9/classes/Logger.html
+# http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
 require 'logger'
 
+# https://docs.mongodb.org/ecosystem/drivers/ruby/
 require 'mongo'
-include Mongo
 
 logger = Logger.new($stderr)
 logger.level = Logger::WARN # set the default level: INFO, WARN
@@ -47,9 +48,6 @@ lines = data.map do |para|
 end
 
 # delete empty strings and strip legal info (preamble and postable)
-
-lines[1..4]
-
 lines.delete('')
 book = lines[12..-56]
 
