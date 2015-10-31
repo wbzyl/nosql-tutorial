@@ -6,16 +6,15 @@ require 'bundler/setup'
 require 'net/http'
 
 # http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
-require 'logger'
+# logger levels
+# DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
 
-Mongo::Logger.logger = Logger.new($stderr)
+require 'logger'
 
 # https://docs.mongodb.org/ecosystem/drivers/ruby/
 require 'mongo'
 
-# logger = Logger.new($stderr)
-# logger levels
-# DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+logger = Mongo::Logger.logger = Logger.new($stderr)
 
 levels = {
   debug: Logger::DEBUG,
@@ -101,7 +100,7 @@ book.each_with_index do |para, n|
   end
 end
 
-puts 'Done!'
-puts "\t  database: test"
-puts "\tcollection: dostojewski"
-puts "\t      size: #{coll.find.count}"
+logger.info 'Done!'
+logger.info "\t  database: test"
+logger.info "\tcollection: dostojewski"
+logger.info "\t      size: #{coll.find.count}"
