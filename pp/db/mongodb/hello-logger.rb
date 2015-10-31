@@ -15,7 +15,7 @@ levels = {
   unknown: Logger::UNKNOWN
 }
 
-logger = Logger.new(STDOUT)
+logger = Logger.new($stdout)
 
 # set default level to Logger::INFO
 level = levels[ARGV[0].to_s.downcase.to_sym] || Logger::INFO

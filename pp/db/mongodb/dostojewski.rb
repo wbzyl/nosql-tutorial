@@ -8,11 +8,29 @@ require 'net/http'
 # http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
 require 'logger'
 
+Mongo::Logger.logger = Logger.new($stderr)
+
 # https://docs.mongodb.org/ecosystem/drivers/ruby/
 require 'mongo'
 
-logger = Logger.new($stderr)
-logger.level = Logger::WARN # set the default level: INFO, WARN
+# logger = Logger.new($stderr)
+# logger levels
+# DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+
+levels = {
+  debug: Logger::DEBUG,
+  info: Logger::INFO,
+  warn: Logger::WARN,
+  error: Logger::ERROR,
+  fatal: Logger::FATAL,
+  unknown: Logger::UNKNOWN
+}
+
+# set default level to Logger::INFO
+level = levels[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
+Mongo::Logger.logger.level = level
+
+# ----
 
 # English stopwords from Tracker, http://projects.gnome.org/tracker/
 # GitHub: git clone git://git.gnome.org/tracker ; cd data/languages/
@@ -54,9 +72,6 @@ book = lines[12..-56]
 logger.info "liczba wczytanych akapitów: #{book.size}"
 
 # updated to MongoDB Driver 2.1.2
-
-Mongo::Logger.logger = logger
-Mongo::Logger.logger.level = Logger::WARN
 
 client = Mongo::Client.new('mongodb://127.0.0.1:27017/test')
 coll = client[:dostojewski]
