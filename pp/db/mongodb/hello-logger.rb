@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby -w
 
-# https://docs.mongodb.org/ecosystem/drivers/ruby/
+# https://rubymonk.com/learning/books/4-ruby-primer-ascent/chapters/50-debugging/lessons/123-ruby_logging
 require('logger')
 
 # logger levels
@@ -21,9 +21,9 @@ logger = Logger.new($stdout)
 level = levels[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
 logger.level = level
 
-logger.debug 'Debug: created logger (low-level info for developers)'
-logger.info 'Info: program started'
-logger.warn 'Warn: nothing to do!'
-logger.error 'Error: a handleable condition occured!'
-logger.fatal 'Fatal: unhandleable error that results in a program crash.'
-logger.unknown 'Unknown: message that should always be logged.'
+logger.debug 'low-level info for developers: Created logger'
+logger.info 'generic information about system operation: Program started'
+logger.warn 'a warning: Nothing to do!'
+logger.error 'a handleable condition: Line in wrong format!'
+logger.fatal 'an unhandleable error that results in a program crash: Caught exception; exiting'
+logger.unknown 'something unknown: This can’t happen!'
