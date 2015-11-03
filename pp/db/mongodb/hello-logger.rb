@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby -w
 
+# rubocop:disable Metrics/LineLength
+
 # https://rubymonk.com/learning/books/4-ruby-primer-ascent/chapters/50-debugging/lessons/123-ruby_logging
 require('logger')
 
