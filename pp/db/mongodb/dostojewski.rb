@@ -1,17 +1,35 @@
 #! /usr/bin/env ruby
-# -*- coding: utf-8 -*-
+
+require 'bundler/setup'
 
 # http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 require 'net/http'
 
-# http://www.ruby-doc.org/ruby-1.9/classes/Logger.html
+# http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
+# logger levels
+# DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+
 require 'logger'
 
+# https://docs.mongodb.org/ecosystem/drivers/ruby/
 require 'mongo'
-include Mongo
 
-logger = Logger.new($stderr)
-logger.level = Logger::WARN # set the default level: INFO, WARN
+logger = Mongo::Logger.logger = Logger.new($stderr)
+
+levels = {
+  debug: Logger::DEBUG,
+  info: Logger::INFO,
+  warn: Logger::WARN,
+  error: Logger::ERROR,
+  fatal: Logger::FATAL,
+  unknown: Logger::UNKNOWN
+}
+
+# set default level to Logger::INFO
+level = levels[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
+Mongo::Logger.logger.level = level
+
+# ----
 
 # English stopwords from Tracker, http://projects.gnome.org/tracker/
 # GitHub: git clone git://git.gnome.org/tracker ; cd data/languages/
@@ -47,18 +65,12 @@ lines = data.map do |para|
 end
 
 # delete empty strings and strip legal info (preamble and postable)
-
-lines[1..4]
-
 lines.delete('')
 book = lines[12..-56]
 
 logger.info "liczba wczytanych akapitów: #{book.size}"
 
 # updated to MongoDB Driver 2.1.2
-
-Mongo::Logger.logger = logger
-Mongo::Logger.logger.level = Logger::WARN
 
 client = Mongo::Client.new('mongodb://127.0.0.1:27017/test')
 coll = client[:dostojewski]
@@ -88,7 +100,7 @@ book.each_with_index do |para, n|
   end
 end
 
-puts 'Done!'
-puts "\t  database: test"
-puts "\tcollection: dostojewski"
-puts "\t      size: #{coll.find.count}"
+logger.info 'Done!'
+logger.info "\t  database: test"
+logger.info "\tcollection: dostojewski"
+logger.info "\t      size: #{coll.find.count}"
