@@ -1,0 +1,25 @@
+#! /usr/bin/env ruby
+
+# https://docs.mongodb.org/manual/reference/bios-example-collection/
+
+require 'json'
+require 'time'
+
+require 'mongo'
+
+filename = ARGV[0]
+
+client = Mongo::Client.new(['127.0.0.1:27017'], database: 'test')
+bios = client[:bios]
+
+data = IO.readlines(filename, '')
+
+bios.drop
+
+data.each do |para|
+  h = JSON.parse para.gsub(/\s+/m, '')
+
+  h['birth'] = Time.parse(h['birth']).to_time if h['birth']
+  h['death'] = Time.parse(h['death']).to_time if h['death']
+  bios.insert_one h
+end
