@@ -19,7 +19,8 @@ data = IO.readlines(filename, '')
 bios.drop
 
 data.each do |para|
-  h = JSON.parse para.gsub(/\s+/m, '')
+  # h = JSON.parse para.gsub(/\s+/m, '')
+  h = JSON.parse para.strip
 
   h['birth'] = Time.parse(h['birth']).to_time if h['birth']
   h['death'] = Time.parse(h['death']).to_time if h['death']
