@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby
 
+require 'bundler/setup'
+
 # https://docs.mongodb.org/manual/reference/bios-example-collection/
 
 require 'json'
