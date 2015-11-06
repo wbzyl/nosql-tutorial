@@ -18,6 +18,12 @@ Linki do przykładów korzystających z Aggregation Pipeline w:
 * [JavaScript](https://github.com/nosql/aggregations-3/blob/master/Aggregations_in_JS.md)
 * [Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
+Joins and Other Aggregation Enhancements Coming in MongoDB v3.2.0:
+
+* [Introduction](https://www.mongodb.com/blog/post/joins-and-other-aggregation-enhancements-coming-in-mongodb-3-2-part-1-of-3-introduction)
+* [Worked Examples](https://www.mongodb.com/blog/post/joins-and-other-aggregation-enhancements-coming-in-mongodb-3-2-part-2-of-3-worked-examples)
+* [Adding Some Code Glue and Geolocation](https://www.mongodb.com/blog/post/joins-and-other-aggregation-enhancements-coming-in-mongodb-3-2-part-3-of-3-adding-some-code-glue-and-geolocation)
+
 
 ## Przykłady z *group*
 
