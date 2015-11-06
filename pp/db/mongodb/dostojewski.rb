@@ -5,18 +5,14 @@ require 'bundler/setup'
 # http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 require 'net/http'
 
-# http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
-# logger levels
-# DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
-
-require 'logger'
-
 # https://docs.mongodb.org/ecosystem/drivers/ruby/
 require 'mongo'
 
-logger = Mongo::Logger.logger = Logger.new($stderr)
+logger = Mongo::Logger.logger # get the wrapped logger
 
-levels = {
+# http://ruby-doc.org/stdlib/libdoc/logger/rdoc/index.html
+# logger levels: DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+logger_level = {
   debug: Logger::DEBUG,
   info: Logger::INFO,
   warn: Logger::WARN,
@@ -26,8 +22,7 @@ levels = {
 }
 
 # set default level to Logger::INFO
-level = levels[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
-Mongo::Logger.logger.level = level
+Mongo::Logger.level = logger_level[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
 
 # ----
 
@@ -72,7 +67,7 @@ logger.info "liczba wczytanych akapitów: #{book.size}"
 
 # updated to MongoDB Driver 2.1.2
 
-client = Mongo::Client.new('mongodb://127.0.0.1:27017/test')
+client = Mongo::Client.new('mongodb://localhost:27017/test')
 coll = client[:dostojewski]
 
 coll.drop
@@ -95,7 +90,7 @@ book.each_with_index do |para, n|
         para: n,
         letters: letters
       )
-      logger.debug "word: #{word}, para: #{n}, letters: #{letters}\n"
+      logger.debug "inserted: #{word}"
     end
   end
 end
