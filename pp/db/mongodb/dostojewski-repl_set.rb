@@ -67,7 +67,8 @@ logger.info "liczba wczytanych akapitów: #{book.size}"
 
 # updated to MongoDB Driver 2.1.2
 
-client = Mongo::Client.new('mongodb://localhost:27017/test')
+# hardcoded replica set name
+client = Mongo::Client.new('mongodb://localhost:27001/test?replicaSet=abc')
 coll = client[:dostojewski]
 
 coll.drop

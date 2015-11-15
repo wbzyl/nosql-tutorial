@@ -1,0 +1,10 @@
+# Configuration parameters: AllowURI, URISchemes.
+Metrics/LineLength:
+  Max: 122
+
+# Configuration parameters: AllowURI, URISchemes.
+Style/FileName:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
