@@ -15,7 +15,7 @@ W MongoDB do [agregacji](http://docs.mongodb.org/master/aggregation/)
 
 Linki do przykładów korzystających z Aggregation Pipeline w:
 
-* [JavaScript](https://github.com/nosql/aggregations-3/blob/master/Aggregations_in_JS.md)
+* [JavaScript](https://github.com/egzamin/nosql/blob/master/Aggregations_in_JS.md)
 * [Ruby](https://github.com/mongodb/mongo-ruby-driver/wiki/Aggregation-Framework-Examples)
 
 Joins and Other Aggregation Enhancements Coming in MongoDB v3.2.0:
