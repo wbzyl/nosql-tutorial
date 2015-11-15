@@ -27,7 +27,7 @@ W poniższych przykładach będziemy grupować dokumenty z kolekcji
 Dla przypomnienia przykładowy dokument z kolekcji *dostojewski*:
 
     :::js
-    coll.find({word: "morning"}).limit(1)
+    db.dostojewski.find({word: "morning"}).limit(1)
     {
       "_id": ObjectId("5166f63075c8ae1f2e000057"),
       "word": "morning",
