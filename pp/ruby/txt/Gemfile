@@ -1,0 +1,3 @@
+source 'https://rubygems.org'
+
+gem 'mongo', '~> 2.1.2'
