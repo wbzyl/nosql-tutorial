@@ -14,5 +14,7 @@ coll.drop
 
 ARGF.each_line do |line|
   puts "transaction: #{ARGF.lineno}"
-  coll.insert_one(_id: ARGF.lineno, t: line.rstrip.split(','))
+  coll.insert_one(_id: ARGF.lineno, t: line.rstrip.split(',').sort)
 end
+
+# db.groceries.find({ t: { $all: [ "margarine", "butter" ] } })
