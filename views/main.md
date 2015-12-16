@@ -16,7 +16,7 @@ Indeks „TIOBE” dla baz danych:
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
 
-Wizualizacja danych:
+Data visualizations tools, [more thorough and up to date, by Edoardo L'Astorina](http://inspire.blufra.me/big-data-visualization-review-of-the-20-best-tools/):
 
 - [d3.js](http://bost.ocks.org/mike/d3/workshop/):
   - [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
