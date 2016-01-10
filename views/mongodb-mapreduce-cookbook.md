@@ -77,7 +77,7 @@ Skrypt wykonujemy na konsoli *mongo*:
 ## Debugging MapReduce
 
 Jeśli funkcja map nie działa, to możemy ją wykonać poza MapReduce
-przedfiniowując funkcję *emit* i korzystając z metody *apply*. Łatwiej
+przedefiniowując funkcję *emit* i korzystając z metody *apply*. Łatwiej
 jest przetestować funkcję reduce.
 
     :::javascript debugging.js
