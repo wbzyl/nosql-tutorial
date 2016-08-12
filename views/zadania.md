@@ -64,12 +64,17 @@ W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 
 ### Zadanie 1
 
-* Zainstalować na swoim komputerze bazę [Neo4j](http://neo4j.com/).
-* Przeczytać artykuł [Import 10M Stack Overflow Questions into Neo4j In Just 3 Minutes](http://neo4j.com/blog/import-10m-stack-overflow-questions)
- i wykonać kod z tego artykułu.
-* Opisać wszystkio to co się zdarzyło w jakimś repozytorium
- w pliku _README.adoc_
- (w formacie [AsciiDoc](http://asciidoctor.org)).
+* Pobrać dane [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
+ lub [StackLite](https://github.com/dgrtwo/StackLite)
+ z pytaniami i odpowiedziami z serwisu
+ [Stack Overflow](http://stackoverflow.com).
+ Zaimportować pobrane dane do bazy PostgreSQL.
+ Następnie policzyć kilka agregacji opisanych w artykułach:
+  - [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
+  - [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
+  Wyniki przedstawić w tabelkach lub na wykresach.
+
+Wszystko opisać w repozytorium w pliku _README.md_ w formacie [Markdown](https://daringfireball.net/projects/markdown/syntax) + [GitHub Markdown](https://guides.github.com/features/mastering-markdown/).
 
 
 ### Zadanie 2
@@ -182,12 +187,9 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 -->
 
-*Zadanie 2a.* Zaimportować, do systemów baz danych:
-
-* MongoDB
-* PostgreSQL
-
-jeden ze zbiorów danych wymienionych poniżej.
+*Zadanie 2a.* Zaimportować do bazy danych MongoDB
+jeden ze zbiorów danych wymienionych poniżej lub użyć
+danych z Stack Overflow.
 
 Duże i niezbyt duże zbiory danych:
 
