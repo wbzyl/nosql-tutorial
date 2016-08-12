@@ -200,7 +200,7 @@ Duże i niezbyt duże zbiory danych:
 * [I have every publicly available Reddit comment for research. ~ 1.7 billion
   comments @ 250 GB compressed. Any interest in this?](https://www.reddit.com/r/datasets/comments/3bxlg7/i_have_every_publicly_available_reddit_comment)
   Get one month of comments @ 5.5 GB compressed.
-* [GrouLens data](http://grouplens.org/datasets):
+* [GroupLens data](http://grouplens.org/datasets):
   - [MovieLens data](http://grouplens.org/datasets/movielens);
   [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
 * [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
