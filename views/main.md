@@ -89,6 +89,7 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
 1. {%= link_to "Wtyczki ElasticSearch", "/elasticsearch-plugins" %}
 
+<!--
 
 ## CouchDB
 
@@ -107,6 +108,20 @@ Warto też przeczytać artykuł Teda Newarda,
 1. {%= link_to "Walidacja", "/couchdb-validation" %}
 1. {%= link_to "Ściąga z API", "/couchdb-api-cheatsheet" %}
 
+-->
+
+## Laboratoria
+
+*  {%= link_to "Zadania", "/zadania" %}
+
+
+## DATA
+
+* [Europarl Parallel Corpus](http://statmt.org/europarl/)
+* [GetGlue](http://getglue.com/) – your app for TV movies and sports;
+  [GetGlue sample](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz) –
+  1.4 GB, 19_831_300 JSON–ów
+
 
 <blockquote>
  <p>
@@ -122,19 +137,6 @@ Warto też przeczytać artykuł Teda Newarda,
   [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
   </p>
 </blockquote>
-
-## Laboratoria
-
-*  {%= link_to "Zadania", "/zadania" %}
-
-
-## DATA
-
-* [Europarl Parallel Corpus](http://statmt.org/europarl/)
-* [GetGlue](http://getglue.com/) – your app for TV movies and sports;
-  [GetGlue sample](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz) –
-  1.4 GB, 19_831_300 JSON–ów
-
 
 ## Różne rzeczy
 
