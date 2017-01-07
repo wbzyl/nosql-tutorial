@@ -27,7 +27,7 @@ Data visualizations tools, [more thorough and up to date, by Edoardo L'Astorina]
   - [GeoJSONLint](http://geojsonlint.com/)
 
 
-## 9.10.2015 – zaczynamy!
+## Luty 2017 – zaczynamy!
 
 * Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
   [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
