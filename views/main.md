@@ -51,23 +51,17 @@ Warto też przeczytać artykuł Teda Newarda,
 
 <blockquote>
  <p>
-   Humphry Davy zauważył, że gdy był pod wpływem gazu rozweselającego,
-   przestał go boleć ząb mądrości. Niestety, nie wyciągnął
-   logicznego wniosku, że należało wtedy wyrwać ten bolący ząb.
-   Przez następne dwa pokolenia ludzie cierpieli na stołach
-   operacyjnych. Znieczulenie po raz pierwszy zastosował
-   dentysta Horace Wells dopiero w 1884 roku.
- </p>
- <p>
-   Niektórzy uczeni twierdzą, że było to zarówno kulturalne jak i technologiczne
-   zahamowanie. W końcu XVIII wieku nie dopuszczano nawet myśli
-   o operacji bez bólu. Umiejętność radzenia sobie z bólem pacjenta
-   (przede wszystkim przez szybkość dokonywania amputacji lub ekstrakcji)
-   stanowiła zasadniczą część <b>umiejętności zawodowych</b>
-   chirurga. Do rozpoczęcia bezbolesnych zabiegów potrzebna była
-   <b>zmiana paradygmatu</b>.
- </p>
- <p class=""author">— S. Snow, Operations without pain</p>
+  In the relational databases world the data modeling process was
+  mainly a single step activity: <b>design the schema based on
+  normalization rules</b>. In the NoSQL world, designing the schema means
+  <b>analyzing data access patterns</b>.
+  Differently put the question shifted
+  from <b>how do I store data</b> to
+  <b>how will I access data</b>.
+  </p>
+  <p class="author">
+  [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
+  </p>
 </blockquote>
 
 ## MongoDB
@@ -115,6 +109,8 @@ Warto też przeczytać artykuł Teda Newarda,
 *  {%= link_to "Zadania", "/zadania" %}
 
 
+<!--
+
 ## DATA
 
 * [Europarl Parallel Corpus](http://statmt.org/europarl/)
@@ -122,21 +118,6 @@ Warto też przeczytać artykuł Teda Newarda,
   [GetGlue sample](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz) –
   1.4 GB, 19_831_300 JSON–ów
 
-
-<blockquote>
- <p>
-  In the relational databases world the data modeling process was
-  mainly a single step activity: <b>design the schema based on
-  normalization rules</b>. In the NoSQL world, designing the schema means
-  <b>analyzing data access patterns</b>.
-  Differently put the question shifted
-  from <b>how do I store data</b> to
-  <b>how will I access data</b>.
-  </p>
-  <p class="author">
-  [<a href="http://nosql.mypopescu.com/post/5623952119/schema-design-in-schema-less-datastores">Schema Design in Schema-less Datastores</a>]
-  </p>
-</blockquote>
 
 ## Różne rzeczy
 
@@ -160,3 +141,5 @@ Użyteczne linki:
    [The open source report card](http://osrc.dfm.io/) – ciekawe!
 1. Alberto Diego Prieto Löfkrantz.
    [Do you know Cassandra?](http://blogs.atlassian.com/2013/09/do-you-know-cassandra)
+
+-->
