@@ -7,7 +7,7 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
-**Big data open challenges:**
+## Luty 2017 – zaczynamy!
 
 - [Facebook’s Top Open Data Problems](https://research.facebook.com/blog/1522692927972019/facebook-s-top-open-data-problems/)
 
@@ -27,11 +27,11 @@ Data visualizations tools, [more thorough and up to date, by Edoardo L'Astorina]
   - [GeoJSONLint](http://geojsonlint.com/)
 
 
-## Luty 2017 – zaczynamy!
-
+<!--
 * Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
   [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
 * Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
+-->
 
 
 ## Co to jest „NoSQL”?
