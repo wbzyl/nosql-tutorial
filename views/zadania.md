@@ -46,8 +46,6 @@ Różne rzeczy:
  <p class="author">— <a href="http://en.wikipedia.org/wiki/John_Tukey">John Tukey</a></p>
 </blockquote>
 
-## Zaliczenie
-
 Co powinny zawierać pliki z rozwiązaniami:
 
 * informacje o komputerze na którym były wykonywane obliczenia: jaki procesor,
@@ -282,9 +280,6 @@ i mapkę umieścić w pliku z rozwiązaniem zadania.
  </p>
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
-
-## Egzamin
-
 
 ### Zadanie 3
 
