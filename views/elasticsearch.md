@@ -75,6 +75,9 @@ ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
 
+Opcjonalnie instalujemy [elasticsearch-head](https://github.com/mobz/elasticsearch-head) –
+a_web front end for an elastic search cluster_.
+
 <!--
 
 ## Instalujemy wtyczki Stempel, Head i Marvel
