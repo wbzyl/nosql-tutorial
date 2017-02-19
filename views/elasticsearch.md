@@ -12,7 +12,7 @@ Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/
 
 Książka:
 
-* [Elasticsearch – The Definitive Guide](http://www.elasticsearch.org/blog/elasticsearch-definitive-guide/)
+* [Elasticsearch – The Definitive Guide](https://www.elastic.co/guide/en/elasticsearch/guide/current/index.html)
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
@@ -54,48 +54,28 @@ Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gem
 
 ## Przykładowa instalacja z paczki
 
-Rozpakowujemy archiwum z ostatnią wersją
-[ElasticSearch](http://www.elasticsearch.org/download/) (ok. 16 MB):
+Pobieramy ostatnie wersje ElasticSearch i Kibana ze strony
+[Get Started…](https://www.elastic.co/start)
+i postępujemy według instrukcji.
 
-    :::bash
-    tar xvf elasticsearch-1.4.1.tar.gz
-    cd elasticsearch-1.4.1
-
-W katalogu *config* podmieniamy plik konfigurujący na:
+W katalogu *config* podmieniamy node name, np. na:
 
     :::yaml elasticsearch.yml
-    cluster.name: nosql
     node.name: "John Cage"
-    index.number_of_shards: 1
-    index.number_of_replicas: 0
 
-I uruchamiamy *elasticsearch*:
+I uruchamiamy *elasticsearch*.
 
-    :::bash
-    bin/elasticsearch
-
-I już! Po chwili powinien się uruchomic ES:
-
-    [INFO ][node                     ] [John Cage] version[1.4.1], pid[17491]
-    [INFO ][node                     ] [John Cage] initializing ...
-    [INFO ][plugins                  ] [John Cage] loaded [], sites []
-    [INFO ][node                     ] [John Cage] initialized
-    [INFO ][node                     ] [John Cage] starting ...
-    [INFO ][transport                ] [John Cage] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, \
-        publish_address {inet[/192.168.0.103:9300]}
-    [INFO ][discovery                ] [John Cage] nosql/iTWWzHpwRUOlNQkQM7pKGQ
-    [INFO ][cluster.service          ] [John Cage] new_master \
-        [John Cage][iTWWzHpwRUOlNQkQM7pKGQ][localhost.localdomain][inet[/192.168.0.103:9300]], \
-        reason: zen-disco-join (elected_as_master)
-
-Domyślnie ElasticSearch nasłuchuje na porcie 9200:
+Domyślnie ElasticSearch nasłuchuje na porcie 9200, a Kibana na 5601:
 
     :::bash
-    xdg-open http://localhost:9200
+    http://localhost:9200/?pretty
+    http://localhost:5601 # przechodzimy do Console w zakładce DevTools
 
 ElasticSearch zwraca wynik wyszukiwania w formacie JSON.
 Dlatego wygodnie jest już teraz zainstalować
 dodatek do Firefoks o nazwie [JSONView](http://jsonview.com/).
+
+<!--
 
 ## Instalujemy wtyczki Stempel, Head i Marvel
 
@@ -132,6 +112,7 @@ i wchodzimy na stronę wtyczki Marvel:
 
     xdg-open http://localhost:9200/_plugin/marvel/sense
 
+-->
 
 <blockquote>
  <p>The usual purpose of a full-text search engine is to return
