@@ -12,7 +12,7 @@ Zaczynamy od lektury [What's Wrong with SQL search](http://philip.greenspun.com/
 
 Książka:
 
-* [Elasticsearch – The Definitive Guide](https://www.elastic.co/guide/en/elasticsearch/guide/current/index.html)
+* [Elasticsearch – The Definitive Guide](https://www.elastic.co/guide/en/elasticsearch/guide/master/index.html)
 
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
