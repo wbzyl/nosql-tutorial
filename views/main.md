@@ -7,7 +7,7 @@
  <p class="author">– Alan Kay</p>
 </blockquote>
 
-## Luty 2017 – zaczynamy!
+## Zaczynamy – luty 2017!
 
 - [Facebook’s Top Open Data Problems](https://research.facebook.com/blog/1522692927972019/facebook-s-top-open-data-problems/)
 
