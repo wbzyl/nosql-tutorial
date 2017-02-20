@@ -121,7 +121,9 @@ i link do mapek wpisać w pliku _README.md_.
  z pytaniami i odpowiedziami z serwisu
  [Stack Overflow](http://stackoverflow.com).
  Zaimportować pobrane dane do bazy PostgreSQL.
- Następnie policzyć kilka agregacji opisanych w artykułach:
+ Następnie policzyć kilka agregacji opisanych w artykułach
+ (oczywiście, przykłady należy napisać i policzyć w MongoDB, Elasticsearch
+ i jeśli to możliwe w PostgreSQL):
   - [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
   - [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
   Wyniki przedstawić w tabelkach lub na wykresach.
