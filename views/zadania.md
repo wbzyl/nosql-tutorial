@@ -65,12 +65,12 @@ W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
 Następnie zapisać je w bazach *Elasticsearch*, *MongoDB* i *PostgreSQL*.
-Dla zapisanych danych przygotować kilka _geospatial queries_
-([MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
-[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html),
-PostgreSQL) tzn. dla obiektów Point, LineString i Polygon itd.
+Dla zapisanych danych napisać kilka _geospatial queries_, dla
+[MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
+[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html)
+i PostgreSQL, dla różnych obiektów Geo, np. Point, LineString i Polygon itd.
 
-Przykład pokazujący o co chodzi w tym zadaniu (MongoDB).
+Przykład pokazujący o co chodzi w tym zadaniu (MongoDB, Point).
 
 Poniższe obiekty Point zapisujemy w pliku _places.json_:
 
