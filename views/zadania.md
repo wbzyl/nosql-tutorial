@@ -64,9 +64,7 @@ W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 
 Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
-
-Następnie zapisać je w bazie *Elasticsearch*, *MongoDB* i *PostgreSQL*.
-
+Następnie zapisać je w bazach *Elasticsearch*, *MongoDB* i *PostgreSQL*.
 Dla zapisanych danych przygotować kilka _geospatial queries_
 ([MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
 [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html),
@@ -74,7 +72,7 @@ PostgreSQL) tzn. dla obiektów Point, LineString i Polygon itd.
 
 Przykład pokazujący o co chodzi w tym zadaniu (MongoDB).
 
-Poniższe obiekty Point zapisujemy w pliku places.json:
+Poniższe obiekty Point zapisujemy w pliku _places.json_:
 
     :::json places.json
     {"_id": "oakland",  loc: {"type": "Point", "coordinates": [-122.270833,37.804444]}}
@@ -102,16 +100,16 @@ Przykładowe zapytanie z *$near*:
 
 Wyniki zapytania zapisać w pliku i przekształcić
 za pomocą programu **Jq** )lub jakiegoś innego)
-na obiekty [GeoJSON](http://geojson.org/geojson-spec.html)
+na obiekty [GeoJSON](http://geojson.org/geojson-spec.html).
+Wynik zapisać do pliku z rozszerzeniem **.geojson**.
 
-Wynik zapisać do pliku z rozszerzeniem **.geojson**. Github po kliknięciu
-w plik z rozszerzeniem _.geojson_ wyświetla mapkę zamiast jego zawartości.
-
+Github po kliknięciu w plik z rozszerzeniem _.geojson_ wyświetla mapkę zamiast
+jego zawartości, zob.
+[Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/).
 Oto przykład,
 [places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
 
-Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/).
-Mapki umieścić w dowolnym miejscu, np. na [GitHub Pages](https://pages.github.com/);
+Mapki umieścić na dowolnej stronie html, np. na [GitHub Pages](https://pages.github.com/);
 zob. też [Publishing with GitHub Pages, now as easy as 1, 2, 3](https://github.com/blog/2289-publishing-with-github-pages-now-as-easy-as-1-2-3)
 i link do mapek wpisać w pliku _README.md_.
 
