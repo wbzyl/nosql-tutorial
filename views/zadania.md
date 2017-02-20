@@ -67,11 +67,12 @@ Wyszukać w sieci dane zawierające
 
 Następnie zapisać je w bazie *Elasticsearch*, *MongoDB* i *PostgreSQL*.
 
-Dla zapisanych danych przygotować różne
-[geospatial queries](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
-tzn. dla obiektów Point, LineString i Polygon itd.
+Dla zapisanych danych przygotować kilka _geospatial queries_
+([MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
+[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html),
+PostgreSQL) tzn. dla obiektów Point, LineString i Polygon itd.
 
-Przykład pokazujący o co chodzi w tym zadaniu (baza MongoDB).
+Przykład pokazujący o co chodzi w tym zadaniu (MongoDB).
 
 Poniższe obiekty Point zapisujemy w pliku places.json:
 
@@ -103,8 +104,10 @@ Wyniki zapytania zapisać w pliku i przekształcić
 za pomocą programu **Jq** )lub jakiegoś innego)
 na obiekty [GeoJSON](http://geojson.org/geojson-spec.html)
 
-Wynik zapisać do pliku z rozszerzeniem **.geojson**.
-Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
+Wynik zapisać do pliku z rozszerzeniem **.geojson**. Github po kliknięciu
+w plik z rozszerzeniem _.geojson_ wyświetla mapkę zamiast jego zawartości.
+
+Oto przykład,
 [places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
 
 Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/).
