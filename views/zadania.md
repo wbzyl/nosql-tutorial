@@ -107,8 +107,10 @@ Wynik zapisać do pliku z rozszerzeniem **.geojson**.
 Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
 [places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
 
-Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
-i mapkę umieścić w pliku z rozwiązaniem zadania.
+Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/).
+Mapki umieścić w dowolnym miejscu, np. na [GitHub Pages](https://pages.github.com/);
+zob. też [Publishing with GitHub Pages, now as easy as 1, 2, 3](https://github.com/blog/2289-publishing-with-github-pages-now-as-easy-as-1-2-3)
+i link do mapek wpisać w pliku _README.md_.
 
 
 ### Zadanie 1
