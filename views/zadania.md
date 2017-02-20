@@ -60,6 +60,57 @@ Co powinny zawierać pliki z rozwiązaniami:
 W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 
 
+### Zadanie GEO
+
+Wyszukać w sieci dane zawierające
+[obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
+
+Następnie zapisać je w bazie *Elasticsearch*, *MongoDB* i *PostgreSQL*.
+
+Dla zapisanych danych przygotować różne
+[geospatial queries](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
+tzn. dla obiektów Point, LineString i Polygon itd.
+
+Przykład pokazujący o co chodzi w tym zadaniu (baza MongoDB).
+
+Poniższe obiekty Point zapisujemy w pliku places.json:
+
+    :::json places.json
+    {"_id": "oakland",  loc: {"type": "Point", "coordinates": [-122.270833,37.804444]}}
+    {"_id": "augsburg", loc: {"type": "Point", "coordinates": [10.898333,48.371667]}}
+    {"_id": "namibia",  loc: {"type": "Point", "coordinates": [17.15,-22.566667]}}
+    {"_id": "australia",loc: {"type": "Point", "coordinates": [135,-25]}}}
+    {"_id": "brasilia", loc: {"type": "Point", "coordinates": [-52.95,-10.65]}}
+
+Importujemy je do kolekcji *places* w bazie *test*:
+
+    :::bash
+    mongoimport -c places < places.json
+
+Logujemy się do bazy za pomocą *mongo*. Po zalogowaniu
+dodajemy geo-indeks do kolekcji *places*:
+
+    :::js
+    db.places.ensureIndex({"loc" : "2dsphere"})
+
+Przykładowe zapytanie z *$near*:
+
+    :::js
+    var origin = {type: "Point", coordinates: [0,0]}
+    db.places.find({ loc: {$near: {$geometry: origin}} })
+
+Wyniki zapytania zapisać w pliku i przekształcić
+za pomocą programu **Jq** )lub jakiegoś innego)
+na obiekty [GeoJSON](http://geojson.org/geojson-spec.html)
+
+Wynik zapisać do pliku z rozszerzeniem **.geojson**.
+Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
+[places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
+
+Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
+i mapkę umieścić w pliku z rozwiązaniem zadania.
+
+
 ### Zadanie 1
 
 * Pobrać dane [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
@@ -224,52 +275,6 @@ po jednym dla MongoDB i PostgreSQL, który to policzą.
 W przypadku MongoDB należy użyć jednego ze sterowników
 ze strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
 W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
-
-
-*Zadanie 2d.* Wyszukać w sieci dane zawierające
-[obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
-Następnie dane zapisać w bazie *MongoDB*.
-
-Dla zapisanych danych przygotować co najmniej 4 różne
-[geospatial queries](http://docs.mongodb.org/manual/reference/operator/query-geospatial/)
-(co najmniej po jednym, dla obiektów Point, LineString i Polygon).
-
-Przykład pokazujący o co chodzi w tym zadaniu.
-
-Poniższe obiekty Point zapisujemy w pliku places.json:
-
-    :::json places.json
-    {"_id": "oakland",  loc: {"type": "Point", "coordinates": [-122.270833,37.804444]}}
-    {"_id": "augsburg", loc: {"type": "Point", "coordinates": [10.898333,48.371667]}}
-    {"_id": "namibia",  loc: {"type": "Point", "coordinates": [17.15,-22.566667]}}
-    {"_id": "australia",loc: {"type": "Point", "coordinates": [135,-25]}}}
-    {"_id": "brasilia", loc: {"type": "Point", "coordinates": [-52.95,-10.65]}}
-
-Importujemy je do kolekcji *places* w bazie *test*:
-
-    :::bash
-    mongoimport -c places < places.json
-
-Logujemy się do bazy za pomocą *mongo*. Po zalogowaniu
-dodajemy geo-indeks do kolekcji *places*:
-
-    :::js
-    db.places.ensureIndex({"loc" : "2dsphere"})
-
-Przykładowe zapytanie z *$near*:
-
-    :::js
-    var origin = {type: "Point", coordinates: [0,0]}
-    db.places.find({ loc: {$near: {$geometry: origin}} })
-
-Wyniki zapytania zapisać w pliku i przekształcić
-za pomocą programu **Jq** na [GeoJSON](http://geojson.org/geojson-spec.html).
-Wynik zapisać do pliku z rozszerzeniem **.geojson**.
-Po push na Github, serwer wyświetli zamiast zawartości mapkę. Oto przykład,
-[places.geojson](https://github.com/nosql/aggregations-3/blob/master/data/wbzyl/places.geojson).
-
-Przeczytać [Mapping geoJSON files on GitHub](https://help.github.com/articles/mapping-geojson-files-on-github/)
-i mapkę umieścić w pliku z rozwiązaniem zadania.
 
 
 <blockquote>
