@@ -23,7 +23,7 @@ Indeks „TIOBE” dla baz danych:
 Więcej informacji o „NoSQL” zebrałem {%= link_to "tutaj", "/motywacja" %}.
 -->
 
-[K. Haines][key-value stores part 1]:
+**K. Haines**<br>
 „Applications, whether web apps, simple dynamic websites or command
 line apps, frequently need some sort of persistent data store. As a
 result, databases have become ubiquitous on modern systems, and
@@ -31,7 +31,7 @@ because of this chicken and egg relationship, programmers will often
 habitually reach for a relational database when the project only calls
 for a way to persist data.”
 
-[L. Carlson, L. Richardson][ruby receptury]:
+**L. Carlson, L. Richardson**<br>
 Wszyscy chcą pozostawić po sobie coś trwałego. […]
 Każdy program, który piszemy, pozostawia jakiś ślad swojego działania
 (w najprostszym przypadku są to dane wyświetlane na standardowym
