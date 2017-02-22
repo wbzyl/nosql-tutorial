@@ -76,20 +76,17 @@ I to też [Gay marriage: the database engineering perspective](http://qntm.org/g
 
 1. {%= link_to "Co to jest MongoDB?", "/mongodb" %}
 1. {%= link_to "Interaktywna powłoka mongo", "/mongodb-shell" %}
-1. {%= link_to "Uruchamianie i zatrzymywanie demona mongod", "/mongodb-daemon" %}
 1. {%= link_to "Proste grupowania", "/mongodb-grouping" %}
 1. {%= link_to "Aggregation Pipeline", "/mongodb-aggregation" %}
 1. {%= link_to "Platforma obliczeniowa MapReduce", "/mongodb-mapreduce" %}
 1. {%= link_to "MapReduce Cookbook", "/mongodb-mapreduce-cookbook" %}
 1. {%= link_to "Wyszukiwanie pełnotekstowe", "/mongodb-full-text-search" %}
 
-
 ## Elastic / ElasticSearch
 
 1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
 1. {%= link_to "Hurtowy import danych do ElasticSearch", "/elasticsearch-import" %}
 1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
-1. {%= link_to "Wtyczki ElasticSearch", "/elasticsearch-plugins" %}
 
 <!--
 
