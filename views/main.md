@@ -4,7 +4,7 @@
    Once you have something that grows faster than education grows,
    you’re always going to get a pop culture.
  </p>
- <p class="author">– <a href="https://en.wikipedia.org/wiki/Alan_Kay">[Alan Kay</a></p>
+ <p class="author">– <a href="https://en.wikipedia.org/wiki/Alan_Kay">Alan Kay</a></p>
 </blockquote>
 
 ## Zaczynamy – luty 2017!
