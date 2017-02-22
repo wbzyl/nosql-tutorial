@@ -9,29 +9,12 @@
 
 ## Zaczynamy – luty 2017!
 
-- [Facebook’s Top Open Data Problems](https://research.facebook.com/blog/1522692927972019/facebook-s-top-open-data-problems/)
+- [Facebook’s Top Open Data Problems](https://research.fb.com/facebook-s-top-open-data-problems/)
 
 Indeks „TIOBE” dla baz danych:
 
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
   popularity ranking of database management systems
-
-Data visualizations tools, [more thorough and up to date, by Edoardo L'Astorina](http://inspire.blufra.me/big-data-visualization-review-of-the-20-best-tools/):
-
-- [d3.js](http://bost.ocks.org/mike/d3/workshop/):
-  - [filterable gallery of examples](http://biovisualize.github.com/d3visualization/)
-  - Malcolm Maclean, [D3 Tips and Tricks](https://leanpub.com/D3-Tips-and-Tricks/read)
-  - Scott Murray, [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345)
-- [c3.js](http://c3js.org/) – d3-based reusable chart library
-- [Leaflet](http://leafletjs.com/) – JavaScript library for mobile-friendly interactive maps
-  - [GeoJSONLint](http://geojsonlint.com/)
-
-
-<!--
-* Geir Kjetil Sandve, Anton Nekrutenko, James Taylor, Eivind Hovig,
-  [Ten Simple Rules for Reproducible Computational Research](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003285)
-* Kaushik Ghose, [Data Management](http://kaushikghose.wordpress.com/2013/09/26/data-management/)
--->
 
 
 ## Co to jest „NoSQL”?
@@ -42,11 +25,36 @@ Informacje o konferencji chciał umieścić na Twitterze.
 Dlatego potrzebował łatwego do wyszukiwaniu w tweetach hashtaga.
 Użył *\#nosql* zaproponowanego przez Erica Evansa z Rackspace.
 
-Zobacz też artykuł [NoSQL](http://en.wikipedia.org/wiki/NoSQL) w Wikipedii.
-
+<!--
 Więcej informacji o „NoSQL” zebrałem {%= link_to "tutaj", "/motywacja" %}.
+-->
+
+Dwa cytaty.
+
+[K. Haines][key-value stores part 1]:
+„Applications, whether web apps, simple dynamic websites or command
+line apps, frequently need some sort of persistent data store. As a
+result, databases have become ubiquitous on modern systems, and
+because of this chicken and egg relationship, programmers will often
+habitually reach for a relational database when the project only calls
+for a way to persist data.”
+
+[L. Carlson, L. Richardson][ruby receptury]:
+Wszyscy chcą pozostawić po sobie coś trwałego. […]
+Każdy program, który piszemy, pozostawia jakiś ślad swojego działania
+(w najprostszym przypadku są to dane wyświetlane na standardowym
+urządzeniu wyjściowym). Większość bardziej rozbudowanych programów
+idzie o krok dalej: zapisują one – w pliku o określonej strukturze –
+dane stanowiące rezultat jednego uruchomienia, by przy następnym
+uruchomieniu rozpocząć działanie w stanie, w którym zakończyła się
+poprzednia sesja. **Istnieje wiele sposobów takiego
+*utrwalania danych*, zarówno bardzo prostych, jak i wielce
+skomplikowanych.**
+
+Zobacz też artykuł [NoSQL](http://en.wikipedia.org/wiki/NoSQL) w Wikipedii.
 Warto też przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
+I to też [Gay marriage: the database engineering perspective](http://qntm.org/gay)
 
 
 <blockquote>
