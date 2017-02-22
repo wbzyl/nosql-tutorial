@@ -29,6 +29,10 @@ because of this chicken and egg relationship, programmers will often
 habitually reach for a relational database when the project only calls
 for a way to persist data.”
 
+- replication, sharding
+- data pipelines
+- obliczenia rozproszone (map-reduce, agregacje)
+
 **L. Carlson, L. Richardson**<br>
 Wszyscy chcą pozostawić po sobie coś trwałego. […]
 Każdy program, który piszemy, pozostawia jakiś ślad swojego działania
