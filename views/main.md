@@ -9,8 +9,6 @@
 
 ## Zaczynamy – luty 2017!
 
-- [Facebook’s Top Open Data Problems](https://research.fb.com/facebook-s-top-open-data-problems/)
-
 Indeks „TIOBE” dla baz danych:
 
 * [DB-Engines Ranking](http://db-engines.com/en/ranking) –
@@ -42,6 +40,8 @@ uruchomieniu rozpocząć działanie w stanie, w którym zakończyła się
 poprzednia sesja. **Istnieje wiele sposobów takiego
 *utrwalania danych*, zarówno bardzo prostych, jak i wielce
 skomplikowanych.**
+
+- [Facebook’s Top Open Data Problems](https://research.fb.com/facebook-s-top-open-data-problems/)
 
 W 2009 roku Johan Oskarsson organizował konferencję
 poświęconą bazom danych, które pojawiły się po roku 2000.
