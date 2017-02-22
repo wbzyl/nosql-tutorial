@@ -19,17 +19,9 @@ Indeks „TIOBE” dla baz danych:
 
 ## Co to jest „NoSQL”?
 
-W 2009 roku Johan Oskarsson organizował konferencję
-poświęconą bazom danych, które pojawiły się po roku 2000.
-Informacje o konferencji chciał umieścić na Twitterze.
-Dlatego potrzebował łatwego do wyszukiwaniu w tweetach hashtaga.
-Użył *\#nosql* zaproponowanego przez Erica Evansa z Rackspace.
-
 <!--
 Więcej informacji o „NoSQL” zebrałem {%= link_to "tutaj", "/motywacja" %}.
 -->
-
-Dwa cytaty.
 
 [K. Haines][key-value stores part 1]:
 „Applications, whether web apps, simple dynamic websites or command
@@ -50,6 +42,12 @@ uruchomieniu rozpocząć działanie w stanie, w którym zakończyła się
 poprzednia sesja. **Istnieje wiele sposobów takiego
 *utrwalania danych*, zarówno bardzo prostych, jak i wielce
 skomplikowanych.**
+
+W 2009 roku Johan Oskarsson organizował konferencję
+poświęconą bazom danych, które pojawiły się po roku 2000.
+Informacje o konferencji chciał umieścić na Twitterze.
+Dlatego potrzebował łatwego do wyszukiwaniu w tweetach hashtaga.
+Użył *\#nosql* zaproponowanego przez Erica Evansa z Rackspace.
 
 Zobacz też artykuł [NoSQL](http://en.wikipedia.org/wiki/NoSQL) w Wikipedii.
 Warto też przeczytać artykuł Teda Newarda,
