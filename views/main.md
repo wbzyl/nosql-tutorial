@@ -29,7 +29,8 @@ because of this chicken and egg relationship, programmers will often
 habitually reach for a relational database when the project only calls
 for a way to persist data.”
 
-- replication, sharding
+- replication, sharding, fault-tolerance
+  ([The Raft Consensus Algorithm](https://raft.github.io))
 - data pipelines
 - obliczenia rozproszone (map-reduce, agregacje)
 
