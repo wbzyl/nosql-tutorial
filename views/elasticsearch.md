@@ -17,19 +17,13 @@ Książka:
 Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 * [You know, for Search](http://www.elasticsearch.org/)
-* [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elasticsearch/elasticsearch-analysis-stempel) –
-  this plugin includes the **polish** analyzer and **polish_stem** token filter.
+* [Stempel (Polish) Analysis for ElasticSearch](https://github.com/elastic/elasticsearch/tree/master/plugins/) –
+  this plugin includes the **polish** analyzer and **polish_stem** token filter;
+  dokumentacja [Elasticsearch Plugins and Integrations](https://www.elastic.co/guide/en/elasticsearch/plugins/current/index.html)
 * [JSON specification for the Elasticsearch's REST API](https://github.com/elasticsearch/elasticsearch/tree/master/rest-api-spec)
-* [Guides](http://www.elasticsearch.org/guide/)
-* [References](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/index.html):
-  - [setup](http://www.elasticsearch.org/guide/reference/setup/)
-  - [search API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search.html)
-    - [aggregations](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html)
-  - [query dsl](http://www.elasticsearch.org/guide/reference/query-dsl/)
-  - [mapping](http://www.elasticsearch.org/guide/reference/mapping/)
-  - [analysis](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis.html)
-* [Modules](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules.html):
-  - [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html)
+* [Guides](https://www.elastic.co/guide/index.html)
+* [References](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html):
+* [Modules](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules.html):
   - [text scoring in scripts](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-advanced-scripting.html) –
   df, tf, ttf
 
@@ -40,14 +34,14 @@ Misc tools:
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
 * [elasticdump](https://github.com/taskrabbit/elasticsearch-dump) – import and export tools for Elasticsearch
 
-[Pobieramy ostatnią stabilną wersję](http://www.elasticsearch.org/download/) Elasticsearch
-i [instalujemy ją na swoim komputerze](http://www.elasticsearch.org/guide/reference/setup/installation.html).
+[Pobieramy ostatnią stabilną wersję](https://www.elastic.co/downloads/elasticsearch) Elasticsearch
+i instalujemy ją na swoim komputerze.
 
-[ElasticSearch driver dla języka Ruby](https://github.com/elasticsearch/elasticsearch-ruby), v1.0.6:
+[ElasticSearch driver dla języka Ruby](https://github.com/elastic/elasticsearch-ruby):
 
-* [elasticsearch](http://rubydoc.info/gems/elasticsearch)
-* [elasticsearch-transport](http://rubydoc.info/gems/elasticsearch-transport)
-* [elasticsearch-api](http://rubydoc.info/gems/elasticsearch-api)
+* [elasticsearch-rails](https://github.com/elastic/elasticsearch-rails)
+* [elasticsearch-transport](http://www.rubydoc.info/gems/elasticsearch-transport)
+* [elasticsearch-api](http://www.rubydoc.info/gems/elasticsearch-api)
 
 Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
