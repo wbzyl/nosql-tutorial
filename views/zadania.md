@@ -10,6 +10,8 @@
 
 Narzędzia przydatne w trakcie EDA:
 
+* [curl](https://curl.haxx.se/docs/httpscripting.html) – using curl to automate HTTP jobs
+* [httpie](https://httpie.org/doc) – a command line HTTP client with an intuitive UI, JSON support,
 * [JQ](http://stedolan.github.io/jq/) –
   a lightweight and flexible command-line JSON processor
 * [JSON2CSV](https://github.com/jehiah/json2csv)
