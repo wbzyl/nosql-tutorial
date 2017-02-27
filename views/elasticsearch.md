@@ -29,6 +29,9 @@ Podręczne linki do [ElasticSearch](https://github.com/elasticsearch):
 
 Misc tools:
 
+* [curl](https://curl.haxx.se/docs/httpscripting.html) – using curl to automate HTTP jobs
+* [httpie](https://httpie.org/doc) – a command line HTTP client with an intuitive UI, JSON support,
+  syntax highlighting, wget-like downloads, plugins, and more
 * [es2unix](https://github.com/elasticsearch/es2unix) – Elasticsearch API consumable by the command line
 * [stream2es](https://github.com/elasticsearch/stream2es) –
   stream data into ES (Wikipedia, Twitter, stdin, or other ESes)
