@@ -88,6 +88,15 @@ Więcej przykładów umieściłem w katalogu *pp/elasticsearch/bulk*.
 
 ## Mapping types
 
+Instalujemy the [Stempel Analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-stempel.html):
+
+    :::bash
+    elasticsearch-plugin install analysis-stempel
+
+It integrates Lucene’s Stempel analysis module for Polish into elasticsearch.
+The plugin provides the _polish_ analyzer and _polish_stem_ token filter,
+which are not configurable.
+
 „You can think of a mapping like a schema in a relational database,
 because it contains information about each field. For example,
 «artist» would be a string, while «price» could be an integer.”
