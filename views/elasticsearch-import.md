@@ -71,7 +71,7 @@ Create or ‘put-if-absent’, *create-ideas.bulk*:
 Przykład:
 
     :::bash
-    curl -s -XPOST localhost:9200/_bulk --data-binary @create-ideas.bulk ; echo
+    curl -s -XPOST localhost:9200/_bulk --data-binary @create-ideas.bulk
 
 
 ## Przykłady
@@ -96,23 +96,33 @@ Na przykład, poniższe polecenie wypisze typy przypisane automatycznie
 przez Elasticsearch dokumentom z *concepts/lec*:
 
     :::bash
-    curl -s localhost:9200/concepts/lec/_mapping | jq .
+    curl -s localhost:9200/concepts/_mapping/lec | jq .
 
 Oto wynik:
 
     :::json
     {
-      "lec": {
-        "properties": {
-          "tags": {
-            "type": "string"
-          },
-          "quote": {
-            "type": "string"
-          }
-        }
-      }
-    }
+      "concepts": {
+        "mappings": {
+          "lec": {
+            "properties": {
+              "quote": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "tags": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }}}}}}}
 
 Typy pól:
 
