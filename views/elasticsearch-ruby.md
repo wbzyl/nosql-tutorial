@@ -213,6 +213,7 @@ i wykonujemy na konsoli kilka prostych zapytań:
 Do wygodnego przeglądania statusów możemy użyć aplikacji
 [tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch), którą instalujemy jako *site plugin*.
 
+<!--
 
 ## Faceted search, czyli wyszukiwanie fasetowe
 
@@ -339,6 +340,9 @@ Co to są za liczby przy *time*:
     new Date(1332288000000);                  // Wed, 21 Mar 2012 00:00:00 GMT
     (new Date(1332288000000)).getFullYear();  // 2012
 
+-->
+
+<!--
 
 # Rivers allows to index streams
 
@@ -504,6 +508,7 @@ dane z Elasticsearch do MongoDB:
     :::bash
     node dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
 
+-->
 
 # Krótka ściąga z obiektu Date
 
