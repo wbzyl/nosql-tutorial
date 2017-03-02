@@ -101,6 +101,8 @@ which are not configurable.
 because it contains information about each field. For example,
 «artist» would be a string, while «price» could be an integer.”
 
+* [Core Simple Field Types](https://www.elastic.co/guide/en/elasticsearch/guide/master/mapping-intro.html#core-fields).
+
 Na przykład, poniższe polecenie wypisze typy przypisane automatycznie
 przez Elasticsearch dokumentom z *concepts/lec*:
 
@@ -117,6 +119,7 @@ Oto wynik:
             "properties": {
               "quote": {
                 "type": "text",
+                "analyzer": "polish"
                 "fields": {
                   "keyword": {
                     "type": "keyword",
@@ -133,11 +136,20 @@ Oto wynik:
                   }
                 }}}}}}}
 
-Typy pól:
+To better understand what is going on, you can use the analyze API
+to see how text is analyzed. Porównajmy _standard_ i _polish_ analyzers:
 
-* *core types* – *string*, *numeric*, *date*, *boolean*
-* *arrays* i *multi fields*
-* predefiniowane typy – *_ttl*, *timestamp*
+    :::text
+    GET /_analyze
+    {
+      "analyzer": "standard",
+      "text": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami."
+    }
+    GET /_analyze
+    {
+      "analyzer": "polish",
+      "text": "Żyjemy dłużej, ale mniej dokładnie i krótszymi zdaniami."
+    }
 
 A tak definiujemy swoje „mapping”:
 
