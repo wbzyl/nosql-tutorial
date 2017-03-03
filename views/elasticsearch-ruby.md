@@ -86,9 +86,6 @@ Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
 
 * {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}
 
-Przed zapisaniem w bazie JSON-a ze statusem, skrypt
-usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
-
 <blockquote>
 <p>
   <h3>Co to jest <i>mapping<i>?</h3>
@@ -97,6 +94,9 @@ usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
   which fields are searchable and if/how they are tokenized.
   </p>
 </blockquote>
+
+Przed zapisaniem w bazie JSON-a ze statusem, skrypt
+usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
 
 Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
 w bazie ElasticSearch *mapping* dla statusów.
