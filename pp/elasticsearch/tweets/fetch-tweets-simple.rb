@@ -5,13 +5,6 @@ require 'twitter'
 require 'colored'
 require 'yaml'
 
-# client = Twitter::Streaming::Client.new do |config|
-#   config.consumer_key        = "YOUR_CONSUMER_KEY"
-#   config.consumer_secret     = "YOUR_CONSUMER_SECRET"
-#   config.access_token        = "YOUR_ACCESS_TOKEN"
-#   config.access_token_secret = "YOUR_ACCESS_SECRET"
-# end
-
 # https://dev.twitter.com/apps
 #   My applications: Elasticsearch NoSQL
 #
@@ -21,8 +14,8 @@ require 'yaml'
 # password: secret
 # consumer_key: AAAAAAAAAAAAAAAAAAAAA
 # consumer_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-# oauth_token: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-# oauth_token_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+# access_token: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+# access_token_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 credentials = ARGV
 
@@ -48,18 +41,18 @@ end
 client = Twitter::Streaming::Client.new do |config|
   config.consumer_key        = twitter['consumer_key']
   config.consumer_secret     = twitter['consumer_secret']
-  config.access_token        = twitter['oauth_token']
-  config.access_token_secret = twitter['oauth_token_secret']
+  config.access_token        = twitter['access_token']
+  config.access_token_secret = twitter['access_token_secret']
 end
 
-# testing -- high volume words
-topics = %w(wow love)
+# testing -- use high volume words
+# topics = %w(wow love)
 
-# topics = %w(
-#   mongodb elasticsearch couchdb neo4j redis
-#   rails d3js
-#   deeplearning
-# )
+topics = %w(
+  mongodb elasticsearch neo4j redis
+  rails
+  deeplearning
+)
 
 client.filter(track: topics.join(',')) do |status|
   handle_tweet status
