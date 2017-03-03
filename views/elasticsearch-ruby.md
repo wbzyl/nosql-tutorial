@@ -43,8 +43,6 @@ Poniżej będziemy korzystać z następujących gemów:
 
     gem install elasticsearch twitter rainbow awesome_print
 
-{%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
-
 <blockquote>
 <p>
   <h3>Access Rate Limiting</h3>
@@ -79,6 +77,8 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
     :::bash
     ruby fetch-tweets-simple.rb ~/twitter_credentials.yml
 
+
+{%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 
 ## Twitter Stream ⟿ ElasticSearch
 
