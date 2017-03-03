@@ -89,17 +89,17 @@ Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
 Przed zapisaniem w bazie JSON-a ze statusem, skrypt
 usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
 
-Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
-w bazie ElasticSearch *mapping* dla statusów.
-
 <blockquote>
 <p>
-  <h3>Co to jest *mapping*?</h3>
+  <h3>Co to jest <i>mapping<i>?</h3>
   <p>Mapping is the process of defining how a document should be mapped to
   the Search Engine, including its searchable characteristics such as
   which fields are searchable and if/how they are tokenized.
   </p>
 </blockquote>
+
+Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
+w bazie ElasticSearch *mapping* dla statusów.
 
 **TODO:** Update the mapping below to Elasticsearch v5.2.
 
