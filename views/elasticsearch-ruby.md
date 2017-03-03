@@ -92,12 +92,16 @@ usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
 Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
 w bazie ElasticSearch *mapping* dla statusów.
 
-Co to jest *mapping*?
-„Mapping is the process of defining how a document should be mapped to
-the Search Engine, including its searchable characteristics such as
-which fields are searchable and if/how they are tokenized.”
+<blockquote>
+<p>
+  <h3>Co to jest *mapping*?</h3>
+  <p>Mapping is the process of defining how a document should be mapped to
+  the Search Engine, including its searchable characteristics such as
+  which fields are searchable and if/how they are tokenized.
+  </p>
+</blockquote>
 
-TODO: update mapping to v5.2.
+**TODO:** Update the mapping below to Elasticsearch v5.2.
 
     :::ruby create-mapping.rb
     mapping = {
@@ -137,6 +141,9 @@ i wykonujemy na konsoli kilka prostych zapytań:
 Do wygodnego przeglądania statusów możemy użyć aplikacji
 [tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch)
 (tzw. *site plugin*).
+
+
+
 
 <!--
 
