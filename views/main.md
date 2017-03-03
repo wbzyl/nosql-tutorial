@@ -89,6 +89,7 @@ Warto też przeczytać artykuł Teda Newarda,
 
 1. {%= link_to "Wyszukiwanie z ElasticSearch", "/elasticsearch" %}
 1. {%= link_to "Hurtowy import danych do ElasticSearch", "/elasticsearch-import" %}
+1. {%= link_to "Mappings & Stempel analysis for Polish", "https://nosql.github.io/nosql_101/elastic-stempel" %}
 1. {%= link_to "ElasticSearch & Ruby", "/elasticsearch-ruby" %}
 
 <!--
