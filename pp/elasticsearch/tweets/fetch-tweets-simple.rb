@@ -1,8 +1,10 @@
 #! /usr/bin/env ruby
 
 require 'bundler/setup'
+
 require 'twitter'
-require 'colored'
+require 'rainbow/ext/string'
+
 require 'yaml'
 
 # https://dev.twitter.com/apps
@@ -30,12 +32,12 @@ begin
   raw_config = File.read File.expand_path(credentials[0])
   twitter = YAML.safe_load(raw_config)
 rescue
-  puts "\n\tError: problems with #{credentials}\n".red
+  puts "\n\tError: problems with #{credentials}\n".color(:red)
   exit(1)
 end
 
 def handle_tweet(s)
-  puts "#{s.created_at.to_s.cyan}:\t#{s.text.yellow}"
+  puts "#{s.created_at.to_s.color(:cyan)}:  #{s.text.color(:yellow)}"
 end
 
 client = Twitter::Streaming::Client.new do |config|

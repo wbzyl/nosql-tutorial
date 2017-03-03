@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'colored',       '~> 1.2'
 gem 'elasticsearch', '~> 5.0.3'
 gem 'twitter',       '~> 6.1.0'
 
-# https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md#using-hash-wrappers
-# gem 'hashie',        '~> 3.5.5'
-# gem 'curb',          '~> 0.9.3'
+gem 'awesome_print', '~> 1.7.0'
+gem 'rainbow',       '~> 2.2.1'

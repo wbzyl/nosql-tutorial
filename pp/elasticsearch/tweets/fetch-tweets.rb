@@ -1,18 +1,27 @@
+#! /usr/bin/env ruby
+
 require 'bundler/setup'
 
 # https://github.com/sferik/twitter,
 # http://rdoc.info/github/sferik/twitter
 require 'twitter'
-require 'colored'
 require 'elasticsearch'
 
+require 'rainbow/ext/string'
+require 'awesome_print'
+
 require 'yaml'
+
+# helper method
+def slice(hash, *keys)
+  Hash[[keys, hash.values_at(*keys)].transpose]
+end
 
 class Status
   attr_accessor :status, :id
 
   def initialize(status)
-    @id = status[:id].to_s
+    @id = status.id.to_s
     @status = cleanup(status)
   end
 
@@ -25,16 +34,19 @@ class Status
   #   :hashtags, :urls, :user_mentions
   # puts "#{s.methods(all: false)}".red
 
+  # https://github.com/sickill/rainbow
   def cleanup(s)
-    puts "language: #{s.lang}".red
-    puts "#hashtags: #{s.hashtags.size}".bold if s.hashtags.any?
-    hashtags = s.hashtags.to_a.map { |o| o['text'] }
-    urls = s.urls.to_a.map { |o| o['expanded_url'] }
-    user_mentions = s.user_mentions.to_a.map { |o| o['screen_name'] }
+    puts "language: #{s.lang}".color(:blue)
+    # puts "#hashtags: #{s.hashtags.size}".color(:red) if s.hashtags.any?
+
+    hashtags = s.hashtags.to_a.map(&:text)
+    urls = s.urls.to_a.map(&:expanded_url)
+    user_mentions = s.user_mentions.to_a.map(&:screen_name)
     {
-      text: s[:text],
-      screen_name: s[:user][:screen_name],
-      created_at: s[:created_at],
+      language: s.lang,
+      text: s.text,
+      screen_name: s.user.screen_name,
+      created_at: s.created_at,
       hashtags: hashtags,
       urls: urls,
       user_mentions: user_mentions
@@ -68,33 +80,28 @@ twitter_client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['access_token_secret']
 end
 
+# topics = %w(wow)
 topics = %w(
   deeplearning
   mongodb elasticsearch neo4j redis
   rails
 )
 
-twitter_client.filter(track: topics.join(',')) do |status|
-  tweet = Status.new(status)
-  puts tweet.inspect
-end
-
-__END__
-
-elasticsearch_client = Elasticsearch::Client.new
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.2/query-dsl-percolate-query.html
+# http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#percolate-instance_method
+es_client = Elasticsearch::Client.new
 
 twitter_client.filter(track: topics.join(',')) do |status|
   tweet = Status.new(status)
-  # result = elasticsearch_client.percolate index: 'tweets', body: { doc: tweet.status }
-
-  # puts "#{tweet.status[:created_at].to_s.cyan}:  #{tweet.status[:text].yellow}"
-  # puts "percolated query: #{result["matches"]}".green
-
-#  result['matches'].each do |type|
-#    elasticsearch_client.index index: "tweets", type: type, id: tweet.id,
-#      body: tweet.status
-#  end
+  es_client.index index: 'tweets', type: 'statuses', id: tweet.id,
+                  body: tweet.status
+  ap slice(tweet.status, :text, :created_at, :hashtags)
 end
 
-# You can check out the statuses in your index with curl
-#   curl -s 'http://localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4' | jq .
+# You can check out the statuses in your index with curl.
+#   curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
+#   curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
+# Delete all tweets.
+#   curl -X DELETE localhost:9200/tweets
+# Count them.
+#   curl localhost:9200/tweets/_count
