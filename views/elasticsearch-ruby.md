@@ -128,14 +128,14 @@ i wykonujemy na konsoli kilka prostych zapytań:
 
     :::bash
     curl -s 'localhost:9200/tweets/_count'
-    curl -s 'localhost:9200/tweets/redis/_count'
     curl -s 'localhost:9200/tweets/_search?q=*&size=2&pretty'
     curl -s 'localhost:9200/tweets/_search?size=2&pretty'
-    curl -s 'localhost:9200/tweets/_search?_all&pretty'
+    curl -s 'localhost:9200/tweets/_search?from=10&size=2&pretty'
 
-TODO:
+### TODO
+
 Do wygodnego przeglądania statusów możemy użyć aplikacji
-[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch),
+[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch)
 (tzw. *site plugin*).
 
 <!--
