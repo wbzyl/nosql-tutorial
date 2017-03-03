@@ -1,12 +1,9 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "elasticsearch", "~> 0.4.5"
-gem "twitter",       "~> 5.5.1"
-
-gem "colored",       "~> 1.2"
+gem 'colored',       '~> 1.2'
+gem 'elasticsearch', '~> 5.0.3'
+gem 'twitter',       '~> 6.1.0'
 
 # https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md#using-hash-wrappers
-
-# gem "hashie",        "~> 2.0.5"
-
-# gem "curb",          "~> 0.8.5"
+# gem 'hashie',        '~> 3.5.5'
+# gem 'curb',          '~> 0.9.3'
