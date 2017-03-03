@@ -26,7 +26,7 @@ z [stream API](https://dev.twitter.com/docs/streaming-api):
 W pliku *tracking* wpisujemy tę linijkę:
 
     :::ruby
-    track=mongodb,elasticsearch,couchdb,neo4j,redis,emberjs,meteorjs,d3js
+    track=mongodb,elasticsearch,neo4j,redis
 
 **Uwaga:** Jeśli do listy dopiszemy słowo **wow**, wpisywane w wielu
 statusach, zostaniemy zalani tweetami – **wow!**
