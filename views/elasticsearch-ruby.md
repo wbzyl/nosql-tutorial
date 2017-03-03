@@ -41,7 +41,7 @@ ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
 
 Poniżej będziemy korzystać z następujących gemów:
 
-    gem install elasticsearch twitter colored oj
+    gem install elasticsearch twitter rainbow awesome_print
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 
@@ -61,86 +61,33 @@ Poniżej będziemy korzystać z następujących gemów:
 
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
-    :::ruby fetch-tweets-simple.rb
-    require "bundler/setup"
+* [fetch-tweets-simple.rb](ruby/fetch-tweets-simple.rb)
 
-    require 'twitter'  # version at least 5.0.0
-    require 'colored'
-    require 'yaml'
-
-    credentials = ARGV
-    unless credentials[0]
-      puts "\nUsage:"
-      puts "\truby #{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
-      puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
-      exit(1)
-    end
-
-    begin
-      raw_config = File.read File.expand_path(credentials[0])
-      twitter = YAML.load(raw_config)
-    rescue
-      puts "\n\tError: problems with #{credentials}\n".red
-      exit(1)
-    end
-
-    def handle_tweet(s)
-      puts "#{s[:created_at].to_s.cyan}:\t#{s[:text].yellow}"
-    end
-
-    # https://dev.twitter.com/apps
-    #   My applications: Elasticsearch NoSQL
-    client = Twitter::Streaming::Client.new do |config|
-      config.consumer_key        = twitter['consumer_key']
-      config.consumer_secret     = twitter['consumer_secret']
-      config.access_token        = twitter['oauth_token']
-      config.access_token_secret = twitter['oauth_token_secret']
-    end
-
-    topics = %w[
-      deeplearning
-      mongodb elasticsearch couchdb neo4j redis
-      emberjs meteorjs rails d3js
-    ]
-    client.filter(track: topics.join(",")) do |status|
-      handle_tweet status
-    end
-
-Szablon pliku YAML z *credentials*:
+Streaming API Twittera wymaga uwierzytelnienia.
+Klucze wpisujemy w pliku YAML z *credentials* wg schematu:
 
     :::yaml
-    ---
+    login: LLLLLL
+    password: PPPPPP
     consumer_key: AAAAAAAAAAAAAAAAAAAAA
     consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-    oauth_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-    oauth_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+    access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+    access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
     :::bash
-    ruby fetch-tweets-simple.rb ~/twitter.yml
+    ruby fetch-tweets-simple.rb ~/twitter_credentials.yml
 
 
 ## Twitter Stream ⟿ ElasticSearch
 
 Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
-{%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}.
+
+* {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}.
+
 Przed zapisaniem w bazie JSON-a ze statusem, skrypt
 usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
-
-**Uwaga:** Z Twitterem możemy zestawić tylko jeden strumień
-(co można wyczytać w dokumentacji do API Twittera; sprawdzić to dla v1.1 API).
-Dlatego zbierzemy wszystkie statusy z interesujących nas kategorii do jednego strumienia.
-Rozdzielimy go na poszczególne typy, przed zapisaniem w bazie.
-Wykorzystamy w tym celu [perkolację](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html).
-
-**Uwaga:** W wersji 1.0.0 Elasticsearch percolator zamieniono na
-[distributed percolator](http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html).
-
-Co oznacza *percolation*? przenikanie, przefiltrowywanie, perkolacja?
-„Let's define callback for percolation.
-Whenewer a new document is saved in the index, this block will be executed,
-and we will have access to matching queries in the `Tweet#matches` property.”
 
 Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
 w bazie ElasticSearch *mapping* dla statusów.
@@ -150,55 +97,31 @@ Co to jest *mapping*?
 the Search Engine, including its searchable characteristics such as
 which fields are searchable and if/how they are tokenized.”
 
-    :::ruby create-mapping-and-percolate.rb
-    require "bundler/setup"
+TODO: update mapping to v5.2.
 
-    require "elasticsearch"
-    require "colored"
-
+    :::ruby create-mapping.rb
     mapping = {
-      _ttl:            { enabled: true,  default: '16w'                               },
+      _ttl:            { enabled: true,  default: '16w'                              },
       properties: {
-        created_at:    { type: 'date',   format: 'YYYY-MM-dd HH:mm:ss Z'              },
-        text:          { type: 'string', index:  'analyzed',    analyzer:  'snowball' },
-        screen_name:   { type: 'string', index:  'not_analyzed'                       },
-        hashtags:      { type: 'string', index:  'not_analyzed'                       },
-        urls:          { type: 'string', index:  'not_analyzed'                       },
-        user_mentions: { type: 'string', index:  'not_analyzed'                       }
+        language:      { type: 'keyword'                                             },
+        created_at:    { type: 'date',    format: 'YYYY-MM-dd HH:mm:ss Z'            },
+        text:          { type: 'text',    index:  'analyzed',    analyzer: 'english' },
+        screen_name:   { type: 'keyword', index:  'not_analyzed'                     },
+        hashtags:      { type: 'keyword', index:  'not_analyzed'                     },
+        urls:          { type: 'keyword', index:  'not_analyzed'                     },
+        user_mentions: { type: 'keyword', index:  'not_analyzed'                     }
       }
     }
 
-    topics = %w[
-      deeplearning
-      mongodb elasticsearch couchdb neo4j redis
-      emberjs meteorjs rails
-      d3js
-    ]
+Teraz uruchamiamy skrypt *create-index.rb* i po chwili sprawdzamy
+czy *mapping* zostało zapisane w elasticsearch.
 
-    elasticsearch_client = Elasticsearch::Client.new log: true
-    elasticsearch_client.perform_request :put, '/tweets'       # create ‘tweets’ index
-
-    topics.each do |topic|
-      elasticsearch_client.indices.put_mapping index: 'tweets', type: topic,
-          body: { topic: mapping }
-    end
-    elasticsearch_client.indices.refresh index: 'tweets'
-
-    # register several queries for percolation against the tweets index
-    topics.each do |topic|
-      elasticsearch_client.index index: '_percolator', type: 'tweets', id: topic,
-          body: { query: { query_string: { query: topic } } }
-    end
-    elasticsearch_client.indices.refresh index: '_percolator'
-
-Teraz uruchamiamy skrypt *create-index-and-percolate.rb*,
-sprawdzamy czy *mapping* zostało zapisane w bazie
-i uruchamiamy skrypt *fetch-tweets.rb*:
+Jeśli nie było problemów, to uruchamiamy skrypt *fetch-tweets.rb*:
 
     :::bash
-    ruby create-index-and-percolate.rb
+    ruby create-mapping.rb
     curl 'http://localhost:9200/tweets/_mapping?pretty'
-    ruby fetch-tweets.rb
+    ruby fetch-tweets.rb ~/twitter_credentials.yml
 
 Czekamy aż kilka statusów zostanie zapisanych w bazie
 i wykonujemy na konsoli kilka prostych zapytań:
@@ -206,12 +129,14 @@ i wykonujemy na konsoli kilka prostych zapytań:
     :::bash
     curl -s 'localhost:9200/tweets/_count'
     curl -s 'localhost:9200/tweets/redis/_count'
-    curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=2&pretty'
-    curl -s 'localhost:9200/tweets/_search?size=2&sort=created_at:desc&pretty'
-    curl -s 'localhost:9200/tweets/_search?_all&sort=created_at:desc&pretty'
+    curl -s 'localhost:9200/tweets/_search?q=*&size=2&pretty'
+    curl -s 'localhost:9200/tweets/_search?size=2&pretty'
+    curl -s 'localhost:9200/tweets/_search?_all&pretty'
 
+TODO:
 Do wygodnego przeglądania statusów możemy użyć aplikacji
-[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch), którą instalujemy jako *site plugin*.
+[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch),
+(tzw. *site plugin*).
 
 <!--
 
