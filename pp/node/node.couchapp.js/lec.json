@@ -1,51 +1,51 @@
 {
   "docs": [
      {
-       "_id": "1", 
-       "created_at": [2010, 0, 1], 
-       "quotation": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.", 
+       "_id": "1",
+       "created_at": [2010, 0, 1],
+       "aphorism": "Szerzenie niewiedzy o wszechświecie musi być także naukowo opracowane.",
        "tags": ["wiedza", "nauka", "wszechświat"]
      },
      {
-       "_id": "2", 
-       "created_at": [2010, 1, 20], 
-       "quotation": "Wszyscy chcą naszego dobra. Nie dajcie go sobie zabrać.", 
+       "_id": "2",
+       "created_at": [2010, 1, 20],
+       "aphorism": "Wszyscy chcą naszego dobra. Nie dajcie go sobie zabrać.",
        "tags": ["wszyscy", "dobro"]
      },
      {
-       "_id": "3", 
-       "created_at": [2009, 6, 15], 
-       "quotation": "Za dużo orłów, za mało drobiu.", 
+       "_id": "3",
+       "created_at": [2009, 6, 15],
+       "aphorism": "Za dużo orłów, za mało drobiu.",
        "tags": ["orzeł", "drób"]
      },
      {
-       "_id": "4", 
-       "created_at": [2010, 0, 1], 
-       "quotation": "Zdanie to największa forma literacka.", 
+       "_id": "4",
+       "created_at": [2010, 0, 1],
+       "aphorism": "Zdanie to największa forma literacka.",
        "tags": ["literatura", "zdanie"]
      },
      {
-       "_id": "5", 
-       "created_at": [2010, 11, 31], 
-       "quotation": "Znasz hasło do swojego wnętrza?", 
+       "_id": "5",
+       "created_at": [2010, 11, 31],
+       "aphorism": "Znasz hasło do swojego wnętrza?",
        "tags": ["hasło", "nauka", "wnętrze"]
      },
      {
-       "_id": "6", 
-       "created_at": [2010, 1, 28], 
-       "quotation": "Miał lwi pazur, ale brudny.", 
+       "_id": "6",
+       "created_at": [2010, 1, 28],
+       "aphorism": "Miał lwi pazur, ale brudny.",
        "tags": ["lew", "pazur"]
      },
      {
-       "_id": "7", 
-       "created_at": [2010, 1, 28], 
-       "quotation": "Dlaczego ludzie uczą się matematyki? Aby nauczać matematyki innych.", 
+       "_id": "7",
+       "created_at": [2010, 1, 28],
+       "aphorism": "Dlaczego ludzie uczą się matematyki? Aby nauczać matematyki innych.",
        "tags": ["matematyka", "nauka"]
      },
      {
-       "_id": "8", 
-       "created_at": [2010, 0, 31], 
-       "quotation": "Jedną z cech głupstwa jest logika.", 
+       "_id": "8",
+       "created_at": [2010, 0, 31],
+       "aphorism": "Jedną z cech głupstwa jest logika.",
        "tags": ["logika", "nauka", "głupstwo"]
      }
    ]
