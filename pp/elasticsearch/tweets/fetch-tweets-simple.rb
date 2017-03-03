@@ -1,12 +1,21 @@
+#! /usr/bin/env ruby
+
 require 'bundler/setup'
 require 'twitter'
 require 'colored'
 require 'yaml'
 
+# client = Twitter::Streaming::Client.new do |config|
+#   config.consumer_key        = "YOUR_CONSUMER_KEY"
+#   config.consumer_secret     = "YOUR_CONSUMER_SECRET"
+#   config.access_token        = "YOUR_ACCESS_TOKEN"
+#   config.access_token_secret = "YOUR_ACCESS_SECRET"
+# end
+
 # https://dev.twitter.com/apps
 #   My applications: Elasticsearch NoSQL
 #
-# --- credentials.yml
+# --- twitter.yml
 #
 # login: me
 # password: secret
@@ -18,9 +27,9 @@ require 'yaml'
 credentials = ARGV
 
 unless credentials[0]
-  puts '\nUsage:'
+  puts "\nUsage:"
   puts "\truby #{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
-  puts '\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n'
+  puts "\truby fetch-tweets-simple.rb ~/.credentials/twitter.yml\n\n"
   exit(1)
 end
 
@@ -28,12 +37,12 @@ begin
   raw_config = File.read File.expand_path(credentials[0])
   twitter = YAML.safe_load(raw_config)
 rescue
-  puts '\n\tError: problems with #{credentials}\n'.red
+  puts "\n\tError: problems with #{credentials}\n".red
   exit(1)
 end
 
 def handle_tweet(s)
-  puts "#{s[:created_at].to_s.cyan}:\t#{s[:text].yellow}"
+  puts "#{s.created_at.to_s.cyan}:\t#{s.text.yellow}"
 end
 
 client = Twitter::Streaming::Client.new do |config|
@@ -43,13 +52,14 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['oauth_token_secret']
 end
 
-topics = %w(
-  wow
-  love
-  mongodb elasticsearch couchdb neo4j redis
-  rails d3js
-  deeplearning
-)
+# testing -- high volume words
+topics = %w(wow love)
+
+# topics = %w(
+#   mongodb elasticsearch couchdb neo4j redis
+#   rails d3js
+#   deeplearning
+# )
 
 client.filter(track: topics.join(',')) do |status|
   handle_tweet status
