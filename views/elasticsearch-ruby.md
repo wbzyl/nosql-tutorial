@@ -61,7 +61,7 @@ Poniżej będziemy korzystać z następujących gemów:
 
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
-* [fetch-tweets-simple.rb](ruby/fetch-tweets-simple.rb)
+* {%= link_to "fetch-tweets-simple.rb", "/elasticsearch/tweets/fetch-tweets-simple.rb" %}.
 
 Streaming API Twittera wymaga uwierzytelnienia.
 Klucze wpisujemy w pliku YAML z *credentials* wg schematu:
@@ -84,7 +84,7 @@ Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
 Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
 
-* {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}.
+* {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}
 
 Przed zapisaniem w bazie JSON-a ze statusem, skrypt
 usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
