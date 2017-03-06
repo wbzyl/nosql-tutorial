@@ -115,6 +115,11 @@ Mapki umieścić na dowolnej stronie html, np. na [GitHub Pages](https://pages.g
 zob. też [Publishing with GitHub Pages, now as easy as 1, 2, 3](https://github.com/blog/2289-publishing-with-github-pages-now-as-easy-as-1-2-3)
 i link do mapek wpisać w pliku _README.md_.
 
+Stronę można też przygotwać korzystając z biblioteki JavaScript
+[D3](https://d3js.org) – Data-Driven Documents.
+Zaczynamy od lektury samouczka w którym opisano jak tworzyć mapy tematyczne
+z linii poleceń – [Command-Line Cartography z _d3-geo_ i _ndjson-cli_](https://medium.com/@mbostock/command-line-cartography-part-1-897aa8f8ca2c).
+
 
 ### Zadanie 1
 
