@@ -320,10 +320,10 @@ Jakie są różnice w interpretacji zapytań z
 Wyciągamy wszystkie dokumenty z indeksu *twitter*:
 
     :::bash
-    curl -X GET 'http://localhost:9200/twitter/_search' -d '
+    curl -X GET 'http://localhost:9200/twitter/_search?pretty=true' -d '
     {
       "query": {
-        "matchAll": {}
+        "match_all": {}
       }
     }'
 
@@ -345,15 +345,15 @@ Czy poniższy przykład pozwala zrozumieć sens *multi tenancy*?
 
     curl -XPUT 'http://localhost:9200/bilbo/tweets/1' -d '
     {
-        "user": "bilbo",
-        "postDate": "2009-11-15T13:12:00",
-        "message": "Trying out Elastic Search, so far so good?"
+      "user": "bilbo",
+      "postDate": "2009-11-15T13:12:00",
+      "message": "Trying out Elastic Search, so far so good?"
     }'
     curl -XPUT 'http://localhost:9200/frodo/tweets/1' -d '
     {
-        "user": "frodo",
-        "postDate": "2009-11-15T14:12:12",
-        "message": "Another tweet, will it be indexed?"
+      "user": "frodo",
+      "postDate": "2009-11-15T14:12:12",
+      "message": "Another tweet, will it be indexed?"
     }'
 
 Wyszukiwanie „multi”, po kilku indeksach:
@@ -361,9 +361,9 @@ Wyszukiwanie „multi”, po kilku indeksach:
     :::bash
     curl -XGET 'http://localhost:9200/bilbo,frodo/_search?pretty=true' -d '
     {
-        "query": {
-            "matchAll": {}
-        }
+      "query": {
+        "match_all": {}
+      }
     }'
 
 
@@ -372,5 +372,3 @@ Wyszukiwanie „multi”, po kilku indeksach:
 Od czasu do czasu powinniśmy zapytać się ES o zdrowie:
 
     curl -s http://localhost:9200/_cluster/health
-
-Dlaczego?
