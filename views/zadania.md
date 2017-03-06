@@ -118,7 +118,7 @@ i link do mapek wpisać w pliku _README.md_.
 Stronę można też przygotwać korzystając z biblioteki JavaScript
 [D3](https://d3js.org) – Data-Driven Documents.
 Zaczynamy od lektury samouczka w którym opisano jak tworzyć mapy tematyczne
-z linii poleceń – [Command-Line Cartography z _d3-geo_ i _ndjson-cli_](https://medium.com/@mbostock/command-line-cartography-part-1-897aa8f8ca2c).
+z linii poleceń – [Command-Line Cartography z  _ndjson-cli_](https://medium.com/@mbostock/command-line-cartography-part-1-897aa8f8ca2c).
 
 
 ### Zadanie 1
