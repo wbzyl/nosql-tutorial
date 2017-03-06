@@ -48,18 +48,18 @@ i instalujemy ją na swoim komputerze.
 Gem *elasticsearch-transport* korzysta z gemu [faraday](http://rubydoc.info/gems/faraday/).
 
 
-## Przykładowa instalacja z paczki
+## Przykładowa instalacja
 
 Pobieramy ostatnie wersje ElasticSearch i Kibana ze strony
 [Get Started…](https://www.elastic.co/start)
 i postępujemy według instrukcji.
 
-W katalogu *config* podmieniamy node name, np. na:
+W katalogu *config* podmieniamy node name, przykładowo na:
 
     :::yaml elasticsearch.yml
     node.name: "John Cage"
 
-I uruchamiamy *elasticsearch*.
+I w terminalu uruchamiamy program *elasticsearch*.
 
 Domyślnie ElasticSearch nasłuchuje na porcie 9200, a Kibana na 5601:
 
@@ -229,10 +229,6 @@ Na koniec zapytamy klaster ElasticSearch o zdrowie:
     curl -s 'http://localhost:9200/_cluster/health' | jq .
     curl -s 'http://localhost:9200/_cluster/health?format=yaml'  # YAML, v1.4+
 
-Czy Elasticsearch ma REST API?
-
-* [REST API & JSON & Elasticsearch](http://www.elasticsearch.org/guide/reference/api/).
-
 
 ## Korzystamy z JSON Query Language
 
@@ -281,33 +277,52 @@ Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
        }
     }'
 
-Jaka jest różnica między wyszukiwaniem z **match**
-(w poprzednich wersjach zamiast *match* używano *text*) a z **term**?
 
-Sprawdzamy ile jest dokumentów w indeksie *twitter*:
+## Query DSL
 
-    :::bash
-    curl http://localhost:9200/twitter/_count
+„Elasticsearch provides a full Query DSL based on JSON to define queries.”
+
+Jaka jest różnica między wzapytaniami z
+[match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html), [query_string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) i
+[term](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html)?
+
+    :::json
+    GET /_search
+    {
+      "query": {
+        "match" : {
+          "message" : "this is a test"
+        }
+      }
+    }
+    {
+      "query": {
+        "query_string" : {
+          "fields" : ["message", "name"],
+          "query" : "this AND that"
+        }
+      }
+    }
+    {
+      "query": {
+        "term" : { "user" : "Kimchy" }
+      }
+    }
 
 Wyciągamy wszystkie dokumenty z indeksu *twitter*:
 
     :::bash
-    curl 'http://localhost:9200/twitter/_search?pretty=true' -d '
+    curl -X GET 'http://localhost:9200/twitter/_search' -d '
     {
         "query": {
             "matchAll": {}
         }
     }'
 
-Albo – dokumenty typu *users* z indeksu *twitter*:
+Sprawdzamy ile jest dokumentów w indeksie *twitter*:
 
     :::bash
-    curl -XGET 'http://localhost:9200/twitter/users/_search?pretty=true' -d '
-    {
-      "query": {
-        "matchAll": {}
-      }
-    }'
+    curl http://localhost:9200/twitter/_count
 
 
 ## Indeksy *Multi Tenant*
