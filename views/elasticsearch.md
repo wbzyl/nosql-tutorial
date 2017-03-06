@@ -272,17 +272,23 @@ Teraz możemy odpytywać indeks */twitter* korzystając *JSON query language*:
     }'
     curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
     {
+      "query": {
+        "query_string": {
+          "fields" : ["message", "user"],
+          "query" : "ela*"
+        }
+      }
+    }'
+    curl 'http://localhost:9200/twitter/tweets/_search?pretty=true' -d '
+    {
        "query": {
          "term": { "user": "kimchy" }
        }
     }'
 
+„Elasticsearch provides a full **Query DSL** based on JSON to define queries.”
 
-## Query DSL
-
-„Elasticsearch provides a full Query DSL based on JSON to define queries.”
-
-Jaka jest różnica między wzapytaniami z
+Jakie są różnice w interpretacji zapytań z
 [match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html), [query_string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) i
 [term](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html)?
 
@@ -291,15 +297,15 @@ Jaka jest różnica między wzapytaniami z
     {
       "query": {
         "match" : {
-          "message" : "this is a test"
+          "message" : "tweet indexed"
         }
       }
     }
     {
       "query": {
         "query_string" : {
-          "fields" : ["message", "name"],
-          "query" : "this AND that"
+          "fields" : ["message", "user"],
+          "query" : "tweet AND index*"
         }
       }
     }
@@ -314,12 +320,12 @@ Wyciągamy wszystkie dokumenty z indeksu *twitter*:
     :::bash
     curl -X GET 'http://localhost:9200/twitter/_search' -d '
     {
-        "query": {
-            "matchAll": {}
-        }
+      "query": {
+        "matchAll": {}
+      }
     }'
 
-Sprawdzamy ile jest dokumentów w indeksie *twitter*:
+A tak sprawdzamy ile jest dokumentów w indeksie *twitter*:
 
     :::bash
     curl http://localhost:9200/twitter/_count
