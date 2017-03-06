@@ -301,6 +301,7 @@ Jakie są różnice w interpretacji zapytań z
         }
       }
     }
+    GET /_search
     {
       "query": {
         "query_string" : {
@@ -309,6 +310,7 @@ Jakie są różnice w interpretacji zapytań z
         }
       }
     }
+    GET /_search
     {
       "query": {
         "term" : { "user" : "Kimchy" }
