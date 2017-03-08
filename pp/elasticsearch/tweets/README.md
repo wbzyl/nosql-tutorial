@@ -1,5 +1,7 @@
 ## Create mapping and get some tweets
 
+[Module: Elasticsearch::API::Actions ](http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions):
+
 ```sh
 ruby create_tweets_mapping.rb
 ruby fetch-tweets.rb
