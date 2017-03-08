@@ -1,5 +1,8 @@
 #! /usr/bin/env ruby
 
+# First run:
+#  ruby create_tweets_mapping.rb
+
 require 'bundler/setup'
 
 # https://github.com/sferik/twitter,
