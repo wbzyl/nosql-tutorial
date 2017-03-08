@@ -48,7 +48,7 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 # testing -- use high volume words
-topics = %w(kobiety)
+topics = %w(love)
 
 # topics = %w(
 #   mongodb elasticsearch neo4j redis
