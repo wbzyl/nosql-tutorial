@@ -3,7 +3,8 @@
 require 'bundler/setup'
 
 require 'twitter'
-require 'rainbow/ext/string'
+require 'awesome_print'
+# require 'rainbow/ext/string'
 
 require 'yaml'
 
@@ -37,7 +38,8 @@ rescue
 end
 
 def handle_tweet(s)
-  puts "#{s.created_at.to_s.color(:cyan)}:  #{s.text.color(:yellow)}"
+  # puts "#{s.created_at.to_s.color(:cyan)}: #{s.text.color(:yellow)}"
+  ap s.to_h.select { |key| [:created_at, :text].include?(key) }
 end
 
 client = Twitter::Streaming::Client.new do |config|
@@ -48,7 +50,7 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 # testing -- use high volume words
-topics = %w(love)
+topics = %w(women)
 
 # topics = %w(
 #   mongodb elasticsearch neo4j redis
