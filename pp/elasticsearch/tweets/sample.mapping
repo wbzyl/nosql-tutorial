@@ -1,0 +1,19 @@
+{
+  "mappings": {
+    "statuses": {
+      "properties": {
+        "created_at" : {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "hashtags": {
+          "type": "keyword"
+        },
+        "text": {
+          "type": "text",
+          "analyzer": "english"
+        }
+      }
+    }
+  }
+}

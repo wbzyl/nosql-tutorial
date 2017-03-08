@@ -1,3 +1,7 @@
+#! /usr/bin/env ruby
+
+require 'bundler/setup'
+
 require 'elasticsearch'
 require 'elasticsearch/extensions/ansi'
 
@@ -25,36 +29,46 @@ client.transport.reload_connections!
 # "hashtags": ["Fintech", "regtech"]
 # "urls": ["https://twitter.com/i/web/status/837690569346400257"]
 
-response = client.search index: 'tweets', q: 'GPU'
+# response = client.search index: 'tweets', q: 'GPU'
 # client.search index: 'tweets', body: { query: { match: { title: 'test' } } }
 
 # puts results.to_json
-
 # Using Hash Wrappers
 #   https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-api
-mash = Hashie::Mash.new response
-
+# mash = Hashie::Mash.new response
 # puts mash.hits.hits[4].to_json
 # ap mash.hits.hits[4]._source
 
 # puts Elasticsearch::Client.new.search.to_ansi
 
-puts response.to_ansi
+# puts response.to_ansi
 
-__END__
+client.indices.delete index: 'tweets'
 
-client.indices.create index: 'myindex', body: {
+response = client.indices.create index: 'tweets', body: {
   mappings: {
-    tweets: {
+    statuses: {
       properties: {
-        title: {
-          type: 'string',
-          analyzer: 'title_synonym'
+        created_at: {
+          type: 'date',
+          # format: 'dateOptionalTime'
+          format: 'strict_date_optional_time||epoch_millis'
+        },
+        hashtags: {
+          type: 'keyword'
+        },
+        text: {
+          type: 'text',
+          analyzer: 'english'
         }
       }
     }
   }
 }
+
+puts response.to_ansi
+
+__END__
 
 client.index index: 'myindex', type: 'tweets', id: 1, body: { title: 'Quick Brown Fox' }
 client.index index: 'myindex', type: 'tweets', id: 2, body: { title: 'Slow Black Dog' }
