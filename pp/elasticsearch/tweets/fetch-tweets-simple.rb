@@ -48,13 +48,13 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 # testing -- use high volume words
-# topics = %w(wow love)
+topics = %w(kobiety)
 
-topics = %w(
-  mongodb elasticsearch neo4j redis
-  rails
-  deeplearning
-)
+# topics = %w(
+#   mongodb elasticsearch neo4j redis
+#   rails
+#   deeplearning
+# )
 
 client.filter(track: topics.join(',')) do |status|
   handle_tweet status
