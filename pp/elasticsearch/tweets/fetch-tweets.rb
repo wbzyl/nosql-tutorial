@@ -80,12 +80,12 @@ twitter_client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['access_token_secret']
 end
 
-# topics = %w(wow)
-topics = %w(
-  deeplearning
-  mongodb elasticsearch neo4j redis
-  rails
-)
+topics = %w(love)
+# topics = %w(
+#   deeplearning
+#   mongodb elasticsearch neo4j redis
+#   rails
+# )
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/5.2/query-dsl-percolate-query.html
 # http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#percolate-instance_method

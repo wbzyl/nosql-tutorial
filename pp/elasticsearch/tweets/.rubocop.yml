@@ -23,9 +23,9 @@ Metrics/AbcSize:
 Style/Documentation:
   Enabled: false
 
-# Metrics/LineLength:
-#   Max: 120
-#
+Metrics/LineLength:
+  Max: 120
+
 # Metrics/BlockLength:
 #   Enabled: false
 #
