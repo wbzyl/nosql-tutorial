@@ -1,27 +1,38 @@
+## Create mapping and get some tweets
+
+```sh
+ruby create_tweets_mapping.rb
+ruby fetch-tweets.rb
+```
+
+```sh
+curl -X GET "localhost:9200/tweets/_search?pretty=true" -d '
+{
+  "query": { "query_string": {"query": "+women +day"} },
+  "sort": { "created_at": { "order": "desc" } }
+}' | jq .hits.hits[]._source
+```
+
 ## jQuery – ściąga z $.getJSON
 
 ```js
 $.getJSON("/tweets/_search?q=redis", function(data) { console.log(data); })
 ```
 
-```sh
-curl -X GET "localhost:9200/tweets/_search?pretty=true" -d '
-{
-  "query": { "query_string": {"query": "redis"} },
-  "sort": { "created_at": { "order": "desc" } }
-}'
-```
-
 Without `.done`:
 
 ```js
-$.getJSON("/tweets/_search", { query: {query_string: {query: "redis"} } } ,function(data) { console.log(data); })
+$.getJSON("/tweets/_search", { query: {query_string: {query: "women"}} },
+  function(data) {
+    console.log(data);
+  }
+)
 ```
 
 With `.done`:
 
 ```js
-$.getJSON( "/tweets/_search", { query: { query_string: { query: "redis"} } } )
+$.getJSON( "/tweets/_search", { query: { query_string: { query: "women"} } } )
   .done(function(data) {
     console.log(data);
   })
