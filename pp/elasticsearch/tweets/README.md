@@ -7,6 +7,8 @@ ruby create_tweets_mapping.rb
 ruby fetch-tweets.rb
 ```
 
+[Multiple date formats](https://www.elastic.co/guide/en/elasticsearch/reference/current/date.html).
+
 ```sh
 curl -X GET "localhost:9200/tweets/_search?pretty=true" -d '
 {
