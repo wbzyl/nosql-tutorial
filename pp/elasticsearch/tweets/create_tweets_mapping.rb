@@ -1,4 +1,6 @@
 require 'elasticsearch'
+require 'elasticsearch/extensions/ansi'
+
 require 'awesome_print'
 
 require 'hashie'
@@ -30,12 +32,14 @@ response = client.search index: 'tweets', q: 'GPU'
 
 # Using Hash Wrappers
 #   https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-api
-
 mash = Hashie::Mash.new response
 
 # puts mash.hits.hits[4].to_json
-ap mash.hits.hits[4]._source
+# ap mash.hits.hits[4]._source
 
+# puts Elasticsearch::Client.new.search.to_ansi
+
+puts response.to_ansi
 
 __END__
 
