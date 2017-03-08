@@ -7,3 +7,4 @@ gem 'twitter',       '~> 6.1.0'
 
 gem 'awesome_print', '~> 1.7.0'
 gem 'rainbow',       '~> 2.2.1'
+gem 'hashie',        '~> 3.5.5'

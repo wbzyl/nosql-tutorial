@@ -7,7 +7,7 @@ require 'elasticsearch/extensions/ansi'
 
 require 'awesome_print'
 
-require 'hashie'
+# require 'hashie'
 
 # curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
 # curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
@@ -51,8 +51,10 @@ response = client.indices.create index: 'tweets', body: {
       properties: {
         created_at: {
           type: 'date',
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-date-format.html
           # format: 'dateOptionalTime'
-          format: 'strict_date_optional_time||epoch_millis'
+          # 2017-03-08 17:24:45 +0000
+          format: 'yyyy-MM-dd HH:mm:ss ZZ'
         },
         hashtags: {
           type: 'keyword'
@@ -67,26 +69,3 @@ response = client.indices.create index: 'tweets', body: {
 }
 
 puts response.to_ansi
-
-__END__
-
-client.index index: 'myindex', type: 'tweets', id: 1, body: { title: 'Quick Brown Fox' }
-client.index index: 'myindex', type: 'tweets', id: 2, body: { title: 'Slow Black Dog' }
-client.index index: 'myindex', type: 'tweets', id: 3, body: { title: 'Fast White Rabbit' }
-
-client.indices.refresh index: 'myindex'
-client.search index: 'myindex', q: 'title:test'
-
-client.search index: 'myindex',
-              body: {
-                query: { match: { title: 'test' } },
-                from: 10,
-                size: 10
-              }
-
-client.msearch \
-  body: [
-    { search: { query: { match_all: {} } } },
-    { index: 'myindex', type: 'mytype', search: { query: { query_string: { query: '"Test 1"' } } } },
-    { search_type: 'count', search: { aggregations: { published: { terms: { field: 'published' } } } } }
-  ]

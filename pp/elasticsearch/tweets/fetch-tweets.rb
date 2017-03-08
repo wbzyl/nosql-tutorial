@@ -80,7 +80,9 @@ twitter_client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['access_token_secret']
 end
 
-topics = %w(love)
+# International Women's Day 2017
+topics = %w(love women)
+
 # topics = %w(
 #   deeplearning
 #   mongodb elasticsearch neo4j redis
@@ -98,10 +100,32 @@ twitter_client.filter(track: topics.join(',')) do |status|
   ap slice(tweet.status, :text, :created_at, :hashtags)
 end
 
-# You can check out the statuses in your index with curl.
-#   curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
-#   curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
-# Delete all tweets.
-#   curl -X DELETE localhost:9200/tweets
-# Count them.
-#   curl localhost:9200/tweets/_count
+__END__
+
+You can check out the statuses in your index with curl.
+
+  curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
+  curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
+
+Delete all tweets.
+
+  curl -X DELETE localhost:9200/tweets
+
+Count them.
+
+  curl localhost:9200/tweets/_count
+
+Range query.
+
+curl -X GET localhost:9200/tweets/_search -d '{
+  "query": {
+    "range" : {
+      "created_at" : {
+        "gte": "2017-03-08 17:31:53 +0000",
+        "lte": "2017-03-08 17:31:55 +0000"
+      }
+    }
+  }
+}'
+
+"lte": "now"
