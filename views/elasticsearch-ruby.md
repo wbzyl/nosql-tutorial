@@ -15,33 +15,37 @@ Będziemy zbierać statusy z Twittera.
 Nie będziemy zbierać ich „jak leci”, tylko
 te które zawierają interesujące nas słowa kluczowe.
 
+**Uwaga:** Jeśli wybrane słowo kluczowe jest wpisywane w wielu
+tweetach, np. _wow_, to zostaniemy zalani statusami – **wow!**
+
 Do filtrowania statusów skorzystamy
-z [stream API](https://dev.twitter.com/docs/streaming-api):
+z [Streaming APIs](https://dev.twitter.com/streaming/overview):
 
-* [public streams](https://dev.twitter.com/docs/streaming-apis/streams/public)
-* [POST statuses/filter](https://dev.twitter.com/docs/api/1.1/post/statuses/filter) –
-  tutaj należy skorzystać z **Oauth tool** za pomocą którego
-  generujemy przykładowe zapytanie dla programu *curl*
+* [public streams](https://dev.twitter.com/streaming/public)
+* [POST statuses/filter](https://dev.twitter.com/streaming/reference/post/statuses/filter) –
+  do testowania można użyć narzędzia [twurl](https://github.com/twitter/twurl)
 
-W pliku *tracking* wpisujemy tę linijkę:
+Streaming API Twittera wymaga uwierzytelnienia.
+Klucze i tokeny wpisujemy w pliku YAML z *credentials* wg schematu:
 
-    :::ruby
-    track=mongodb,elasticsearch,neo4j,redis
+    :::yaml
+    login: LLLLLL
+    password: PPPPPP
+    consumer_key: AAAAAAAAAAAAAAAAAAAAA
+    consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+    access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
-**Uwaga:** Jeśli do listy dopiszemy słowo **wow**, wpisywane w wielu
-statusach, zostaniemy zalani tweetami – **wow!**
-
-Jak widać statusy zawierają wiele pól i tylko kilka z nich zawiera
-interesujące dane. Niestety, na konsoli trudno jest czytać interesujące nas fragmenty.
-Są one wymieszane z jakimiś technicznymi rzeczami, np.
-*profile_sidebar_fill_color*, *profile_use_background_image* itp.
+Po utworzeniu nowej [Twitter Apps](https://apps.twitter.com),
+na jej stronie znajdziemy potrzebne klucze i tokeny.
+      
+JSON-y z tweetami (statusy) zawierają wiele pól i tylko kilka z nich zawiera
+dane nas interesujące. Można się o tym przekonać ogladając na konsoli
+dowolny status (zawierają one informacje o *profile_sidebar_fill_color*,
+*profile_use_background_image*, itp.).
 
 Dlatego, przed wypisaniem statusu na ekran, powinniśmy go „oczyścić”
 ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
-
-Poniżej będziemy korzystać z następujących gemów:
-
-    gem install elasticsearch twitter rainbow awesome_print
 
 <blockquote>
 <p>
@@ -60,17 +64,6 @@ Poniżej będziemy korzystać z następujących gemów:
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
 * {%= link_to "fetch-tweets-simple.rb", "/elasticsearch/tweets/fetch-tweets-simple.rb" %}.
-
-Streaming API Twittera wymaga uwierzytelnienia.
-Klucze wpisujemy w pliku YAML z *credentials* wg schematu:
-
-    :::yaml
-    login: LLLLLL
-    password: PPPPPP
-    consumer_key: AAAAAAAAAAAAAAAAAAAAA
-    consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-    access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-    access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 Skrypt ten uruchamiamy na konsoli w następujący sposób:
 
