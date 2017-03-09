@@ -26,12 +26,9 @@ class Status
 
   private
 
-  # strip off fields we are not interested in
-  # flatten and clean up entities
-  # we use these fields:
+  # strip off fields we are not interested in and flatten entities:
   #   :created_at, :text, :screen_name,
   #   :hashtags, :urls, :user_mentions
-  # puts "#{s.methods(all: false)}".red
 
   # https://github.com/sickill/rainbow
   def cleanup(s)
