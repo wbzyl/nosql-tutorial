@@ -4,21 +4,9 @@ require 'bundler/setup'
 
 require 'twitter'
 require 'awesome_print'
-# require 'rainbow/ext/string'
+require 'rainbow/ext/string'
 
 require 'yaml'
-
-# https://dev.twitter.com/apps
-#   My applications: Elasticsearch NoSQL
-#
-# --- twitter.yml
-#
-# login: me
-# password: secret
-# consumer_key: AAAAAAAAAAAAAAAAAAAAA
-# consumer_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-# access_token: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-# access_token_secret: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 credentials = ARGV
 
@@ -37,8 +25,8 @@ rescue
   exit(1)
 end
 
+# display only created_at and text fields
 def handle_tweet(s)
-  # puts "#{s.created_at.to_s.color(:cyan)}: #{s.text.color(:yellow)}"
   ap s.to_h.select { |key| [:created_at, :text].include?(key) }
 end
 
@@ -49,14 +37,10 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = twitter['access_token_secret']
 end
 
-# testing -- use high volume words
-topics = %w(women)
-
-# topics = %w(
-#   mongodb elasticsearch neo4j redis
-#   rails
-#   deeplearning
-# )
+# testing -- use high volume statuses
+topics = %w(love women)
+# low volume statuses
+# topics = %w(mongodb elasticsearch neo4j redis rails deeplearning)
 
 client.filter(track: topics.join(',')) do |status|
   handle_tweet status
