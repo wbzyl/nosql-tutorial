@@ -74,7 +74,7 @@ Skrypt uruchamiamy na konsoli w następujący sposób:
 
 ## Twitter Stream ⟿ ElasticSearch
 
-Do pobierania statusów i zapisywania ich w bazie wykorzystamy skrypt
+Do pobierania statusów i zapisywania ich w Elasticsearch wykorzystamy skrypt
 
 * {%= link_to "fetch-tweets.rb", "/elasticsearch/tweets/fetch-tweets.rb" %}
 
@@ -91,11 +91,14 @@ Przed zapisaniem w bazie JSON-a ze statusem, skrypt
 usuwa z niego niepotrzebne nam pola i spłaszcza jego strukturę.
 
 Zanim zaczniemy zapisywać statusy w bazie, zdefinujemy i zapiszemy
-w bazie ElasticSearch *mapping* dla statusów.
+w bazie ElasticSearch *mapping* dla statusów. W tym celu użyjemy skryptu
+_create_tweets_mapping.rb_.
 
-**TODO:** Update the mapping below to Elasticsearch v5.2.
+* {%= link_to "create_tweets_mapping.rb", "/elasticsearch/tweets/create_tweets_mapping.rb" %}
 
-    :::ruby create-mapping.rb
+Użyjemy takiego mappingu.
+
+    :::ruby create_tweets_mapping.rb
     mapping = {
       _ttl:            { enabled: true,  default: '16w'                              },
       properties: {
@@ -111,8 +114,6 @@ w bazie ElasticSearch *mapping* dla statusów.
 
 Teraz uruchamiamy skrypt *create-index.rb* i po chwili sprawdzamy
 czy *mapping* zostało zapisane w elasticsearch.
-
-Jeśli nie było problemów, to uruchamiamy skrypt *fetch-tweets.rb*:
 
     :::bash
     ruby create-mapping.rb
