@@ -57,13 +57,13 @@ Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
 Wymagane klucze i tokeny wpisujemy w pliku YAML z *credentials* wg schematu:
 
-     :::yaml
-     login: LLLLLL
-     password: PPPPPP
-     consumer_key: AAAAAAAAAAAAAAAAAAAAA
-     consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-     access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-     access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+    :::yaml twitter-credentials.yml
+    login: LLLLLL
+    password: PPPPPP
+    consumer_key: AAAAAAAAAAAAAAAAAAAAA
+    consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+    access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 Skrypt uruchamiamy na konsoli w następujący sposób:
 
