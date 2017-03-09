@@ -96,19 +96,18 @@ _create_tweets_mapping.rb_.
 
 * {%= link_to "create_tweets_mapping.rb", "/elasticsearch/tweets/create_tweets_mapping.rb" %}
 
-Użyjemy takiego mappingu.
+Użyjemy tego mappingu.
 
     :::ruby create_tweets_mapping.rb
-    mapping = {
-      _ttl:            { enabled: true,  default: '16w'                              },
-      properties: {
-        language:      { type: 'keyword'                                             },
-        created_at:    { type: 'date',    format: 'YYYY-MM-dd HH:mm:ss Z'            },
-        text:          { type: 'text',    index:  'analyzed',    analyzer: 'english' },
-        screen_name:   { type: 'keyword', index:  'not_analyzed'                     },
-        hashtags:      { type: 'keyword', index:  'not_analyzed'                     },
-        urls:          { type: 'keyword', index:  'not_analyzed'                     },
-        user_mentions: { type: 'keyword', index:  'not_analyzed'                     }
+    {
+      mappings: {
+        statuses: {
+          properties: {
+            created_at: { type: 'date', format: 'yyyy-MM-dd HH:mm:ss ZZ' },
+            hashtags: { type: 'keyword' },
+            text: { type: 'text', analyzer: 'english' }
+          }
+        }
       }
     }
 
@@ -117,10 +116,9 @@ sprawdzamy czy *mapping* zostało zapisane w Elasticsearch. Jeśli nie było
 błędów, to uruchamiamy skrypt _fetch-tweets.rb_.
 
     :::bash
-    # curl -X DELETE localhost:9200/tweets
-    curl -X PUT localhost:9200/tweets
+    curl -X DELETE localhost:9200/tweets
 
-    ruby create-mapping.rb
+    ruby create_tweets_mapping.rb
     curl 'http://localhost:9200/tweets/_mapping?pretty'
 
     ruby fetch-tweets.rb ~/twitter_credentials.yml
@@ -130,52 +128,66 @@ i wykonujemy na konsoli kilka prostych zapytań:
 
     :::bash
     curl -s 'localhost:9200/tweets/_count'
-    curl -s 'localhost:9200/tweets/_search?q=*&size=2&pretty'
-    curl -s 'localhost:9200/tweets/_search?size=2&pretty'
-    curl -s 'localhost:9200/tweets/_search?from=10&size=2&pretty'
+    curl -s 'localhost:9200/tweets/_search?q=authentic&size=1&pretty'
+    curl -s 'localhost:9200/tweets/_search?size=1&pretty'
+    curl -s 'localhost:9200/tweets/_search?from=10&size=1&pretty'
 
-### TODO
+Range query (skrót na _current time_ to `"now"`).
 
-Do wygodnego przeglądania statusów możemy użyć aplikacji
-[tweets-elasticsearch](https://github.com/wbzyl/tweets-elasticsearch)
-(tzw. *site plugin*).
-
-
-
-__END__
-
-You can check out the statuses in your index with curl.
-
-  curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
-  curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
-
-Delete all tweets.
-
-  curl -X DELETE localhost:9200/tweets
-
-Count them.
-
-  curl localhost:9200/tweets/_count
-
-Range query.
-
-curl -X GET localhost:9200/tweets/_search -d '{
-  "query": {
-    "range" : {
-      "created_at" : {
-        "gte": "2017-03-08 17:31:53 +0000",
-        "lte": "2017-03-08 17:31:55 +0000"
+    curl -s -X GET localhost:9200/tweets/_search -d '{
+      "from" : 0, "size" : 20,
+      "sort" : [ {"created_at": {"order": "desc"}} ],
+      "query": {
+        "range" : {
+          "created_at" : {
+            "gte": "2017-03-08 12:00:00 +0000",
+            "lte": "now"
+          }
+        }
       }
-    }
-  }
-}'
+    }' | jq .hits.hits[]
 
-"lte": "now"
+
+# Ściąga z obiektu Date (JavaScript)
+
+Inicjalizacja:
+
+    :::javascript
+    new Date();
+    new Date(milliseconds);
+    new Date(dateString);
+    new Date(year, month, day, hours, minutes, seconds, milliseconds);
+    // parsing
+    ms = Date.parse('2011-01-31T12:00:00.016');
+    new Date(ms); // Mon, 31 Jan 2011 12:00:00 GMT
+
+Metody:
+
+    :::js
+    d = new Date(1332288000000);
+    d.getTime();         // 1332288000000
+    d.getFullYear();     // 2011
+    d.getMonth();        //    0    (0-11)
+    d.getDate();         //   31    zwraca dzień miesiąca!
+    d.getHours();
+    d.getMinutes();
+    d.getSeconds();
+    d.getMilliseconds();
+
+Konwersja na napis:
+
+    d.toString();        // 'Mon Jan 31 2011 01:00:00 GMT+0100 (CET)'
+    d.toLocaleString();  // 'Wed Mar 21 2012 01:00:00 GMT+0100 (CET)'
+    d.toGMTString();     // 'Wed, 21 Mar 2012 00:00:00 GMT'
+
+Zobacz też [Epoch & Unix Timestamp Conversion Tools](http://www.epochconverter.com/).
 
 
 <!--
 
 ## Faceted search, czyli wyszukiwanie fasetowe
+
+**Facets w wersji 5+ to Aggregations**
 
 [Co to są fasety?](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-facets.html)
 „Facets provide aggregated data based on a search query. In the
@@ -469,37 +481,3 @@ dane z Elasticsearch do MongoDB:
     node dump-tweets.js | mongoimport --upsert -d test -c tweets --type json
 
 -->
-
-# Krótka ściąga z obiektu Date
-
-Inicjalizacja:
-
-    :::javascript
-    new Date();
-    new Date(milliseconds);
-    new Date(dateString);
-    new Date(year, month, day, hours, minutes, seconds, milliseconds);
-    // parsing
-    ms = Date.parse('2011-01-31T12:00:00.016');
-    new Date(ms); // Mon, 31 Jan 2011 12:00:00 GMT
-
-Metody:
-
-    :::js
-    d = new Date(1332288000000);
-    d.getTime();         // 1332288000000
-    d.getFullYear();     // 2011
-    d.getMonth();        //    0    (0-11)
-    d.getDate();         //   31    zwraca dzień miesiąca!
-    d.getHours();
-    d.getMinutes();
-    d.getSeconds();
-    d.getMilliseconds();
-
-Konwersja na napis:
-
-    d.toString();        // 'Mon Jan 31 2011 01:00:00 GMT+0100 (CET)'
-    d.toLocaleString();  // 'Wed Mar 21 2012 01:00:00 GMT+0100 (CET)'
-    d.toGMTString();     // 'Wed, 21 Mar 2012 00:00:00 GMT'
-
-Zobacz też [Epoch & Unix Timestamp Conversion Tools](http://www.epochconverter.com/).
