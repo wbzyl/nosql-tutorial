@@ -25,16 +25,16 @@ rescue
   exit(1)
 end
 
-# display only created_at and text fields
-def handle_tweet(s)
-  ap s.to_h.select { |key| [:created_at, :text].include?(key) }
-end
-
 client = Twitter::Streaming::Client.new do |config|
   config.consumer_key        = twitter['consumer_key']
   config.consumer_secret     = twitter['consumer_secret']
   config.access_token        = twitter['access_token']
   config.access_token_secret = twitter['access_token_secret']
+end
+
+# display only created_at and text fields
+def handle_tweet(s)
+  ap s.to_h.select { |key| [:created_at, :text].include?(key) }
 end
 
 # testing -- use high volume statuses
