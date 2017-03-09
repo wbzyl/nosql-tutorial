@@ -53,7 +53,7 @@ credentials = ARGV
 
 unless credentials[0]
   puts "\nUsage:"
-  puts "\t#{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
+  puts "\truby #{__FILE__} FILE_WITH_TWITTER_CREDENTIALS"
   puts "\truby fetch-tweets.rb ~/.credentials/twitter.yml\n\n"
   exit(1)
 end
