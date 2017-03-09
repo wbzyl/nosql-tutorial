@@ -14,7 +14,7 @@ client.transport.reload_connections!
 #   https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-date-format.html
 # ex. statuses.created_at: 2017-03-08 17:24:45 +0000
 
-mapping = {
+statuses_mapping = {
   mappings: {
     statuses: {
       properties: {
@@ -26,6 +26,6 @@ mapping = {
   }
 }
 
-response = client.indices.create index: 'tweets', body: mapping
+response = client.indices.create index: 'tweets', body: statuses_mapping
 
 puts response.to_ansi
