@@ -51,25 +51,24 @@ ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
   <p class="author"><a href="https://dev.twitter.com/docs/rate-limiting/1.1">…more on rate limiting</a></p>
 </blockquote>
 
-wpisujemy w pliku YAML z *credentials* wg schematu:
-
-   :::yaml
-   login: LLLLLL
-   password: PPPPPP
-   consumer_key: AAAAAAAAAAAAAAAAAAAAA
-   consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-   access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-   access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
 * {%= link_to "fetch-tweets-simple.rb", "/elasticsearch/tweets/fetch-tweets-simple.rb" %}.
 
-Skrypt ten uruchamiamy na konsoli w następujący sposób:
+Wymagane klucze i tokeny wpisujemy w pliku YAML z *credentials* wg schematu:
+
+     :::yaml
+     login: LLLLLL
+     password: PPPPPP
+     consumer_key: AAAAAAAAAAAAAAAAAAAAA
+     consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+     access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+     access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+
+Skrypt uruchamiamy na konsoli w następujący sposób:
 
     :::bash
     ruby fetch-tweets-simple.rb ~/twitter_credentials.yml
-
 
 {%= image_tag "/images/twitter_elasticsearch.jpeg", :alt => "[Twitter -> ElasticSearch]" %}
 
