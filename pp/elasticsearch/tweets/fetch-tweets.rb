@@ -1,13 +1,9 @@
 #! /usr/bin/env ruby
 
-# First run:
-#  ruby create_tweets_mapping.rb
-
 require 'bundler/setup'
 
-# https://github.com/sferik/twitter,
 # http://rdoc.info/github/sferik/twitter
-require 'twitter'
+require 'twitter' # https://github.com/sferik/twitter,
 require 'elasticsearch'
 
 require 'rainbow/ext/string'
@@ -39,9 +35,6 @@ class Status
 
   # https://github.com/sickill/rainbow
   def cleanup(s)
-    puts "language: #{s.lang}".color(:blue)
-    # puts "#hashtags: #{s.hashtags.size}".color(:red) if s.hashtags.any?
-
     hashtags = s.hashtags.to_a.map(&:text)
     urls = s.urls.to_a.map(&:expanded_url)
     user_mentions = s.user_mentions.to_a.map(&:screen_name)
@@ -86,49 +79,15 @@ end
 # International Women's Day 2017
 topics = %w(love women)
 
-# topics = %w(
-#   deeplearning
-#   mongodb elasticsearch neo4j redis
-#   rails
-# )
+# topics = %w(deeplearning mongodb elasticsearch neo4j redis rails)
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/5.2/query-dsl-percolate-query.html
 # http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#percolate-instance_method
-es_client = Elasticsearch::Client.new
+elastic_client = Elasticsearch::Client.new
 
 twitter_client.filter(track: topics.join(',')) do |status|
   tweet = Status.new(status)
-  es_client.index index: 'tweets', type: 'statuses', id: tweet.id,
-                  body: tweet.status
-  ap slice(tweet.status, :text, :created_at, :hashtags)
+  elastic_client.index index: 'tweets', type: 'statuses', id: tweet.id,
+                       body: tweet.status
+  ap slice(tweet.status, :language, :text, :created_at, :hashtags)
 end
-
-__END__
-
-You can check out the statuses in your index with curl.
-
-  curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
-  curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
-
-Delete all tweets.
-
-  curl -X DELETE localhost:9200/tweets
-
-Count them.
-
-  curl localhost:9200/tweets/_count
-
-Range query.
-
-curl -X GET localhost:9200/tweets/_search -d '{
-  "query": {
-    "range" : {
-      "created_at" : {
-        "gte": "2017-03-08 17:31:53 +0000",
-        "lte": "2017-03-08 17:31:55 +0000"
-      }
-    }
-  }
-}'
-
-"lte": "now"

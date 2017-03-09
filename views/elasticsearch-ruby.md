@@ -112,12 +112,17 @@ Użyjemy takiego mappingu.
       }
     }
 
-Teraz uruchamiamy skrypt *create-index.rb* i po chwili sprawdzamy
-czy *mapping* zostało zapisane w elasticsearch.
+Tworzymy index _tweets_, uruchamiamy skrypt *create-index.rb*, (po chwili)
+sprawdzamy czy *mapping* zostało zapisane w Elasticsearch. Jeśli nie było
+błędów, to uruchamiamy skrypt _fetch-tweets.rb_.
 
     :::bash
+    # curl -X DELETE localhost:9200/tweets
+    curl -X PUT localhost:9200/tweets
+
     ruby create-mapping.rb
     curl 'http://localhost:9200/tweets/_mapping?pretty'
+
     ruby fetch-tweets.rb ~/twitter_credentials.yml
 
 Czekamy aż kilka statusów zostanie zapisanych w bazie
@@ -136,6 +141,36 @@ Do wygodnego przeglądania statusów możemy użyć aplikacji
 (tzw. *site plugin*).
 
 
+
+__END__
+
+You can check out the statuses in your index with curl.
+
+  curl -s 'localhost:9200/tweets/_search?q=*&sort=created_at:desc&size=4'
+  curl -s 'localhost:9200/tweets/_search?q=*&from=0&size=4'
+
+Delete all tweets.
+
+  curl -X DELETE localhost:9200/tweets
+
+Count them.
+
+  curl localhost:9200/tweets/_count
+
+Range query.
+
+curl -X GET localhost:9200/tweets/_search -d '{
+  "query": {
+    "range" : {
+      "created_at" : {
+        "gte": "2017-03-08 17:31:53 +0000",
+        "lte": "2017-03-08 17:31:55 +0000"
+      }
+    }
+  }
+}'
+
+"lte": "now"
 
 
 <!--
