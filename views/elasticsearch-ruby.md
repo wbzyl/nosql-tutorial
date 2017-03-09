@@ -26,19 +26,9 @@ z [Streaming APIs](https://dev.twitter.com/streaming/overview):
   do testowania można użyć narzędzia [twurl](https://github.com/twitter/twurl)
 
 Streaming API Twittera wymaga uwierzytelnienia.
-Klucze i tokeny wpisujemy w pliku YAML z *credentials* wg schematu:
+Będziemy potrzebować kluczy i tokenów. Zanjdziemy je na stronie
+[Twitter Apps](https://apps.twitter.com), którą powinniśmy wcześniej utworzyć.
 
-    :::yaml
-    login: LLLLLL
-    password: PPPPPP
-    consumer_key: AAAAAAAAAAAAAAAAAAAAA
-    consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-    access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-    access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-
-Po utworzeniu nowej [Twitter Apps](https://apps.twitter.com),
-na jej stronie znajdziemy potrzebne klucze i tokeny.
-      
 JSON-y z tweetami (statusy) zawierają wiele pól i tylko kilka z nich zawiera
 dane nas interesujące. Można się o tym przekonać ogladając na konsoli
 dowolny status (zawierają one informacje o *profile_sidebar_fill_color*,
@@ -60,6 +50,16 @@ ze zbędnych rzeczy. Zrobimy to za pomocą skryptu w Ruby.
 </p>
   <p class="author"><a href="https://dev.twitter.com/docs/rate-limiting/1.1">…more on rate limiting</a></p>
 </blockquote>
+
+wpisujemy w pliku YAML z *credentials* wg schematu:
+
+   :::yaml
+   login: LLLLLL
+   password: PPPPPP
+   consumer_key: AAAAAAAAAAAAAAAAAAAAA
+   consumer_secret: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+   access_token: CCCCCCCC-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+   access_token_secret: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 Zaczniemy od skryptu działającego podobnie do polecenia z *curl*:
 
