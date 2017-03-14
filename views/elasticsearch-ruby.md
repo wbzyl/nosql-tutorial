@@ -147,6 +147,9 @@ Range query (skrót na _current time_ to `"now"`).
       }
     }' | jq .hits.hits[]
 
+W repozytorium [tweets-elasticsearch](https://github.com/nosql/tweets-elasticsearch)
+jest prosta SPA do wyszukwania tweetów w _tweets/statuses_.
+
 
 # Ściąga z obiektu Date (JavaScript)
 
