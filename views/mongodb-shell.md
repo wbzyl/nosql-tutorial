@@ -14,8 +14,10 @@ bazy danych z którą się połączyliśmy:
 
     :::bash
     mongo --quiet --port 27017
-      Mongo-Hacker 0.0.3
-      localhost(mongod-2.5.2) test>
+      MongoDB shell version v3.4.2
+      connecting to: mongodb://127.0.0.1:27017
+      MongoDB server version: 3.4.2
+      Mongo-Hacker 0.0.14
 
 Oczywiście przed wejściem na konsolę *mongo*,
 musimy uruchomić daemona *mongod*;
