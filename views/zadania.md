@@ -135,8 +135,7 @@ też w PostgreSQL; jeśli nie będzie to możliwe, to napisać dlaczego).
  lub [StackLite](https://github.com/dgrtwo/StackLite)
  z pytaniami i odpowiedziami z serwisu [Stack Overflow](http://stackoverflow.com).
 
-
-Wyniki przedstawić w tabelkach lub na wykresach.
+Wyniki przedstawić w tabelkach i na wykresach.
 
 Wszystko opisać w repozytorium w pliku _README.md_ w formacie [Markdown](https://daringfireball.net/projects/markdown/syntax) + [GitHub Markdown](https://guides.github.com/features/mastering-markdown/).
 
