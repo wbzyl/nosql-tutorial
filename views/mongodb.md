@@ -5,7 +5,7 @@
    Nie możesz zajmować się poważnie stolarką gołymi rękami
    i nie możesz zajmować się poważnie myśleniem gołym mózgiem.
  </p>
- <p class="author">— <a href="http://datacharmer.blogspot.com/">Bo Dahlbom</a></p>
+ <p class="author">— Bo Dahlbom</p>
 </blockquote>
 
 „MongoDB is a document-oriented database.
