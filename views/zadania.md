@@ -66,13 +66,14 @@ W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 
 Wyszukać w sieci dane zawierające
 [obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
-Następnie zapisać je w bazach *Elasticsearch*, *MongoDB* i *PostgreSQL*.
-Dla zapisanych danych napisać kilka _geospatial queries_, dla
-[MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/),
-[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html)
+Następnie zapisać je w bazach *Elasticsearch* i *PostgreSQL*.
+Dla zapisanych danych napisać kilka _geospatial queries_
+w [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html)
 i PostgreSQL, dla różnych obiektów Geo, np. Point, LineString i Polygon itd.
 
-Przykład pokazujący o co chodzi w tym zadaniu (MongoDB, Point).
+<!-- [MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/) -->
+
+Przykład, ale dla bazy MongoDB, pokazujący o co chodzi w tym zadaniu.
 
 Poniższe obiekty Point zapisujemy w pliku _places.json_:
 
@@ -123,17 +124,19 @@ z linii poleceń – [Command-Line Cartography z  _ndjson-cli_](https://medium.c
 
 ### Zadanie 1
 
-* Pobrać dane [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
+Zaimportować swoje dane do bazy Elasticsearch i PostgreSQL.
+Następnie policzyć kilka agregacji opisanych w artykułach poniżej
+(oczywiście, przykłady należy przeliczyć w Elasticsearch i jeśli to możliwe
+to też w PostgreSQL).
+
+- [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
+- [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
+* [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
  lub [StackLite](https://github.com/dgrtwo/StackLite)
- z pytaniami i odpowiedziami z serwisu
- [Stack Overflow](http://stackoverflow.com).
- Zaimportować pobrane dane do bazy PostgreSQL.
- Następnie policzyć kilka agregacji opisanych w artykułach
- (oczywiście, przykłady należy napisać i policzyć w MongoDB, Elasticsearch
- i jeśli to możliwe w PostgreSQL):
-  - [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
-  - [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
-  Wyniki przedstawić w tabelkach lub na wykresach.
+ z pytaniami i odpowiedziami z serwisu [Stack Overflow](http://stackoverflow.com).
+
+
+Wyniki przedstawić w tabelkach lub na wykresach.
 
 Wszystko opisać w repozytorium w pliku _README.md_ w formacie [Markdown](https://daringfireball.net/projects/markdown/syntax) + [GitHub Markdown](https://guides.github.com/features/mastering-markdown/).
 
@@ -248,12 +251,10 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 
 -->
 
-*Zadanie 2a.* Zaimportować do bazy danych MongoDB
-jeden ze zbiorów danych wymienionych poniżej lub użyć
-danych z Stack Overflow.
+*Zadanie 2a.* Zaimportować do baz danych Elasticsearch i MongoDB
+swój zbior danych.
 
-Duże i niezbyt duże zbiory danych:
-
+<!--
 * [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
   sentences from 11_038 books
 * [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
@@ -272,21 +273,21 @@ Duże i niezbyt duże zbiory danych:
 * [GetGlue and Timestamped Event Data](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz)
   (ok. 11 GB). Dane pochodzą z lat 2007–2012 – tylko filmy i przedstawienia TV.
 
+-->
 
 *Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów.
 
-*Zadanie 2c.* Policzyć kilka prostych agregacji na zaimportowanych danych.
+*Zadanie 2c.* Na zaimportowanych danych policzyć kilka prostych agregacji.
 Wyniki przedstawić graficznie lub w postaci tabelki.
 
 Przykładowo można zliczyć wszystkie tagi i wszystkie różne tagi, policzyć 100
 najczęściej i 100 najrzadziej występujących tagów.
 
-W tym zadaniu należy napisać dwa proste skrypty,
-po jednym dla MongoDB i PostgreSQL, który to policzą.
+W tym zadaniu należy napisać dwa proste skrypty (programy),
+po jednym dla Elasticsearch i PostgreSQL, który to policzą.
 
-W przypadku MongoDB należy użyć jednego ze sterowników
-ze strony [MongoDB Ecosystem](http://docs.mongodb.org/ecosystem/).
-W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
+Najlepiej użyć jednego ze sterowników dla wybranego języka programowania
+(Ruby, Python, JavaScript, Java, ) dla Elasticsearch i PostgresQL.
 
 
 <blockquote>
@@ -300,7 +301,7 @@ W przypadku PostgreSQL – należy to zrobić w jakikolwiek sposób.
 
 ### Zadanie 3
 
-1\. Wyszukać w sieci *interesujące* dane zawierające co najmniej 1_000_000 rekordów/jsonów.
+1\. Wyszukać w sieci *interesujące* dane zawierające ok. 1_000_000 rekordów/jsonów.
 
 2\. Dane zapisać w bazie MongoDB.
 
