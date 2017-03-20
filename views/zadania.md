@@ -124,10 +124,10 @@ z linii poleceń – [Command-Line Cartography z  _ndjson-cli_](https://medium.c
 
 ### Zadanie 1
 
-Zaimportować swoje dane do bazy Elasticsearch i PostgreSQL.
-Następnie policzyć kilka agregacji opisanych w artykułach poniżej
-(oczywiście, przykłady należy przeliczyć w Elasticsearch i jeśli to możliwe
-to też w PostgreSQL).
+Zaimportować swoje dane do bazy Elasticsearch i PostgreSQL. Następnie policzyć
+kilka agregacji, podobnych do agregacji opisanych w artykułach poniżej
+(oczywiście, przykłady należy przeliczyć w Elasticsearch i jeśli to możliwe to
+też w PostgreSQL; jeśli nie będzie to możliwe, to napisać dlaczego).
 
 - [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
 - [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
