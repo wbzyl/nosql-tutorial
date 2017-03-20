@@ -307,7 +307,7 @@ Najlepiej użyć jednego ze sterowników dla wybranego języka programowania
 3\. Przygotować w JavaScript co najmniej cztery agregacje korzystające
  z Aggregation Pipeline.
 
-4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w_innym
+4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w **innym**
  niż JavaScript języku programowania. Skorzystać z jednego z driverów
  wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
