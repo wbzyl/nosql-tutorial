@@ -1,23 +1,16 @@
 #### {% title "Co to jest MongoDB?" %}
 
 <blockquote>
- {%= image_tag "/images/datacharmer.gif", :alt => "[Data Charmer]" %}
  <p>
-   Data seem sometimes to have their own life and will, and they
-   refuse to behave as we wish. Then, you need a firm hand to tame
-   the wild data and turn them into quiet and obeying pets.
+   Nie możesz zajmować się poważnie stolarką gołymi rękami
+   i nie możesz zajmować się poważnie myśleniem gołym mózgiem.
  </p>
- <p class="author">— <a href="http://datacharmer.blogspot.com/">The Data Charmer</a></p>
+ <p class="author">— <a href="http://datacharmer.blogspot.com/">Bo Dahlbom</a></p>
 </blockquote>
 
-MongoDB is a document-oriented database.
+„MongoDB is a document-oriented database.
 Each MongoDB instance has multiple databases, and each database
-can have multiple collections.
-
-MongoDB can be thought of as the goodness that erupts when
-a traditional key-value store collides with a relational database
-management system, mixing their essences into something that’s not
-quite either, but rather something novel and fascinating.
+can have multiple collections.”
 
 MongoDB is written in C++ and offers the following features:
 
@@ -78,7 +71,7 @@ unable to communicate with each other (situation known as a split brain).
 (źródło: P.J. Sadalage, M. Fowler, *NoSQL Distilled*)
 
 
-## CAP i MongoDB
+## CAP & MongoDB
 
 Dane w klastrze MongoDB są *sharded* i *replicated*
 (*shard* możemy przetłumaczyć jako kawałek, *replica* – kopia).
@@ -135,61 +128,13 @@ Przykład jak to można zrobić dla dwóch *shards*
 
 Jak widać wystarczą 4 komputery.
 
-
 ## Manuale, samouczki, ściągi…
 
 * Karl Seguin. [The Little MongoDB Book](http://openmymind.net/mongodb.pdf).
-* [The MongoDB Manual](http://docs.mongodb.org/manual/);
-  [single page html](http://docs.mongodb.org/master/single/index.html),
-  źródło [github](https://github.com/mongodb/docs).
 * Pytania z [stackoverflow.com](http://stackoverflow.com/questions/tagged/mongodb).
   oznaczone etykietką *mongodb*.
-* Drivery:
-  - [Ruby MongoDB Driver API](http://api.mongodb.org/ruby/current/index.html);
-  samouczek [MongoDB Ruby Driver Tutorial](http://api.mongodb.org/ruby/current/file.TUTORIAL.html)
-  - [The Node.JS MongoDB Driver Manual](http://mongodb.github.io/node-mongodb-native/)
-
-[NoSQL DZone](http://dzone.com/mz/nosql).
-
 
 ## Schemas & Embedded/Non-Embedded Docs
 
 * [Schema Design](http://www.mongodb.org/display/DOCS/Schema+Design)
 * [Designing MongoDB Schemas with Embedded, Non-Embedded and Bucket Structures](https://openshift.redhat.com/community/blogs/designing-mongodb-schemas-with-embedded-non-embedded-and-bucket-structures)
-
-
-## MapReduce
-
-* [Translate SQL to MongoDB MapReduce](http://nosql.mypopescu.com/post/392418792/translate-sql-to-mongodb-mapreduce)
-* [NoSQL Data Modeling](http://nosql.mypopescu.com/post/451094148/nosql-data-modeling)
-* [MongoDB Tutorial: MapReduce](http://nosql.mypopescu.com/post/394779847/mongodb-tutorial-mapreduce)
-
-K. Banker, MongoDB Aggregation:
-
-* [Counting and Grouping](http://kylebanker.com/blog/2009/11/mongodb-count-group/)
-* [Grouping Elaborated](http://kylebanker.com/blog/2009/11/mongodb-advanced-grouping/)
-* [Map-Reduce Basics](http://kylebanker.com/blog/2009/12/mongodb-map-reduce-basics/)
-
-
-Przykłady:
-
-* [MapReduce Example Programs](http://holumbus.fh-wedel.de/trac/wiki/MapReduceExamples) –
- proste grafiki pokazujące o co chodzi w mapreduce
-* [MapReduce and K-Means Clustering](http://blog.data-miners.com/2008/02/mapreduce-and-k-means-clustering.html) –
- tylko dla MongoDB
-* [Cube](http://square.github.com/cube/) –
-  an open-source system for visualizing time series data, built on MongoDB,
-  Node and [D3](http://mbostock.github.com/d3/)
-
-
-## Full Text Search
-
-* [MongoDB Text Search Explained](http://blog.codecentric.de/en/2013/01/text-search-mongodb-stemming/)
-
-
-## Różne
-
-* [Being Awesome with the MongoDB Ruby Driver](http://rubylearning.com/blog/2010/12/21/being-awesome-with-the-mongodb-ruby-driver/)
-* Ricky Ho.
-  [MongoDb Architecture ](http://horicky.blogspot.com/2012/04/mongodb-architecture.html) –
-  zob. rozdział „Map/Reduce Execution”
