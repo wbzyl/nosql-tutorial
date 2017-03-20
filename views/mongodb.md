@@ -136,5 +136,5 @@ Jak widać wystarczą 4 komputery.
 
 ## Schemas & Embedded/Non-Embedded Docs
 
-* [Schema Design](http://www.mongodb.org/display/DOCS/Schema+Design)
-* [Designing MongoDB Schemas with Embedded, Non-Embedded and Bucket Structures](https://openshift.redhat.com/community/blogs/designing-mongodb-schemas-with-embedded-non-embedded-and-bucket-structures)
+* [Schema Design](https://docs.mongodb.com/manual/data-modeling/)
+* [Designing MongoDB Schemas with Embedded, Non-Embedded and Bucket Structures](https://blog.openshift.com/designing-mongodb-schemas-with-embedded-non-embedded-and-bucket-structures/)
