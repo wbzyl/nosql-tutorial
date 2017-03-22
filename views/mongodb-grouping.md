@@ -2,10 +2,12 @@
 
 Powtórka:
 
-* [Querying](http://docs.mongodb.org/manual/tutorial/query-documents/)
-* [Data Model Examples and Patterns](http://docs.mongodb.org/manual/applications/data-models/)
+* [Querying](https://docs.mongodb.com/manual/tutorial/query-documents/)
+* [Data Model Examples and Patterns](https://docs.mongodb.com/manual/applications/data-models/)
 
-[Aggregation Commands](http://docs.mongodb.org/master/reference/command/nav-aggregation/):
+Nowe:
+
+* [Aggregation Commands](https://docs.mongodb.com/master/reference/command/nav-aggregation/):
   *aggregate*, *count*, *distinct*, *group*, *mapReduce*.
 
 
