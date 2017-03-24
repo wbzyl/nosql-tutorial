@@ -287,26 +287,22 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
 
-### Zadanie 3
+### Zadanie 3 (MongoDB)
 
-1\. Wyszukać w sieci *interesujące* dane zawierające ok. 1_000_000 rekordów/jsonów.
-
-2\. Dane zapisać w bazie MongoDB.
-
-3\. Przygotować w JavaScript co najmniej cztery agregacje korzystające
+1\. Dla swoich danych napisać w języku JavaScript kilka agregacji korzystających
  z Aggregation Pipeline.
 
-4\. Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w **innym**
- niż JavaScript języku programowania. Skorzystać z jednego z driverów
+2\. Przepisać wszystkie agregacje z pkt. 1 na **inny**
+ niż JavaScript język programowania. Skorzystać z jednego z driverów
  wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
 
-### Zadanie 4
+### Zadanie 4 (MongoDB)
 
-Napisać **trzy** lub **cztery** pary funkcji map-reduce dla dowolnego dużego,
+Napisać kilka par funkcji map-reduce dla dowolnego dużego,
 czyli zawierającego co najmniej 1_000_000 rekordów/jsonów, zbioru danych.
 
-Na przykład napisać parę funkcji map-reduce, które wyszukają najczęściej
+Przykładowo napisać map-reduce, które wyszukają najczęściej
 występujące słowa w pliku [Wikipedia data
 PL](http://dumps.wikimedia.org/plwiki/) (aktualny plik z artykułami, ok. 1.3
 GB).
