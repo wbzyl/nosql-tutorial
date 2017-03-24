@@ -287,7 +287,7 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
  <p class="author">— Ernest Hemingway</p>
 </blockquote>
 
-### Zadanie 3 (MongoDB)
+### Zadanie 2 (MongoDB)
 
 1\. Dla swoich danych napisać w języku JavaScript kilka agregacji korzystających
  z Aggregation Pipeline.
@@ -297,7 +297,7 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
  wymienionych na stronie [MongoDB Drivers](http://docs.mongodb.org/ecosystem/drivers/).
 
 
-### Zadanie 4 (MongoDB)
+### Zadanie 3 (MongoDB)
 
 Napisać kilka par funkcji map-reduce dla dowolnego dużego,
 czyli zawierającego co najmniej 1_000_000 rekordów/jsonów, zbioru danych.
