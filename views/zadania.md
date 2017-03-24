@@ -122,26 +122,6 @@ Zaczynamy od lektury samouczka w którym opisano jak tworzyć mapy tematyczne
 z linii poleceń – [Command-Line Cartography z  _ndjson-cli_](https://medium.com/@mbostock/command-line-cartography-part-1-897aa8f8ca2c).
 
 
-### Zadanie 1
-
-Zaimportować swoje dane do bazy Elasticsearch i PostgreSQL. Następnie policzyć
-kilka agregacji, podobnych do agregacji opisanych w artykułach poniżej
-(oczywiście, przykłady należy przeliczyć w Elasticsearch i jeśli to możliwe to
-też w PostgreSQL; jeśli nie będzie to możliwe, to napisać dlaczego).
-
-- [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
-- [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
-* [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
- lub [StackLite](https://github.com/dgrtwo/StackLite)
- z pytaniami i odpowiedziami z serwisu [Stack Overflow](http://stackoverflow.com).
-
-Wyniki przedstawić w tabelkach i na wykresach.
-
-Wszystko opisać w repozytorium w pliku _README.md_ w formacie [Markdown](https://daringfireball.net/projects/markdown/syntax) + [GitHub Markdown](https://guides.github.com/features/mastering-markdown/).
-
-
-### Zadanie 2
-
 <blockquote>
  {%= image_tag "/images/why_manage_your_data.png", :alt => "[Why Manage Your Data]" %}
  <p>
@@ -158,9 +138,57 @@ Wszystko opisać w repozytorium w pliku _README.md_ w formacie [Markdown](https:
  <p class="author"><a href="http://kaushikghose.wordpress.com/2013/09/26/data-management/">Data Management</a></p>
 </blockquote>
 
+### Zadanie 1
+
 Przeczytać artykuł [Exploratory Data Analysis](http://en.wikipedia.org/wiki/Exploratory_Data_Analysis) (EDA)?
 
 {%= image_tag "/images/data-cleaning.png", :alt => "[Data Cleaning]" %}
+
+*Zadanie 1a.* Zaimportować do baz danych Elasticsearch i PostgreSQL
+swój zbior danych.
+
+*Zadanie 1b.* Na początek zliczyć liczbę zaimportowanych rekordów.
+Zmierzyć czas jak to długo trwało, jakie było obciążenie rdzeni procesora itp.
+
+*Zadanie 1c.* Na zaimportowanych danych policzyć kilka agregacji.
+Wyniki przedstawić graficznie lub w postaci tabelki.
+
+W tym zadaniu należy do liczenia użyć prostych skryptów (programów),
+po jednym dla Elasticsearch i PostgreSQL.
+
+Najlepiej użyć jednego ze sterowników dla wybranego języka programowania
+(np. Ruby, Python, JavaScript, Java) dla Elasticsearch i PostgresQL.
+
+Przykładowe agregacji do wykorzystania są opisane w artykułach poniżej
+(oczywiście, przykłady należy przeliczyć w Elasticsearch i jeśli to możliwe to
+też w PostgreSQL; jeśli nie będzie to możliwe – napisać dlaczego).
+
+- [Releasing the StackLite dataset of Stack Overflow questions and tags](http://varianceexplained.org/r/stack-lite/)
+- [What do we ask in Stack Overflow](http://jkunst.com/r/what-do-we-ask-in-stackoverflow/).
+* [Stack Exchange Data Dump](https://archive.org/details/stackexchange)
+ lub [StackLite](https://github.com/dgrtwo/StackLite)
+ z pytaniami i odpowiedziami z serwisu [Stack Overflow](http://stackoverflow.com).
+
+<!--
+* [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
+  sentences from 11_038 books
+* [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
+  a dedicated repository that collects collections to practice/use in MongoDB.
+* [I have every publicly available Reddit comment for research. ~ 1.7 billion
+  comments @ 250 GB compressed. Any interest in this?](https://www.reddit.com/r/datasets/comments/3bxlg7/i_have_every_publicly_available_reddit_comment)
+  Get one month of comments @ 5.5 GB compressed.
+* [GroupLens data](http://grouplens.org/datasets):
+  - [MovieLens data](http://grouplens.org/datasets/movielens);
+  [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
+* [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
+  anonymous Ratings Data from the Jester Online Joke Recommender System
+* [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/)
+  by Jure Leskovec: Online Reviews (Amazon, Movies, Beer)
+* [GeoNames](http://www.geonames.org/export/) i [Postal Codes](http://www.geonames.org/postal-codes/)
+* [GetGlue and Timestamped Event Data](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz)
+  (ok. 11 GB). Dane pochodzą z lat 2007–2012 – tylko filmy i przedstawienia TV.
+
+-->
 
 <!--
 Data sharing:
@@ -249,45 +277,6 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 [How to speed up MongoDB Aggregation using Parallelisation](http://pauldone.blogspot.com/2014/03/mongoparallelaggregation.html).
 
 -->
-
-*Zadanie 2a.* Zaimportować do baz danych Elasticsearch i MongoDB
-swój zbior danych.
-
-<!--
-* [BookCorpus](http://www.cs.toronto.edu/~mbweb) – two datatsets, 2.5GB i 2.1GB;
-  sentences from 11_038 books
-* [MongoDB JSON Data](https://github.com/ozlerhakan/mongodb-json-files) –
-  a dedicated repository that collects collections to practice/use in MongoDB.
-* [I have every publicly available Reddit comment for research. ~ 1.7 billion
-  comments @ 250 GB compressed. Any interest in this?](https://www.reddit.com/r/datasets/comments/3bxlg7/i_have_every_publicly_available_reddit_comment)
-  Get one month of comments @ 5.5 GB compressed.
-* [GroupLens data](http://grouplens.org/datasets):
-  - [MovieLens data](http://grouplens.org/datasets/movielens);
-  [movielens.org](https://movielens.org) – non-commercial, personalized movie recommendations
-* [Jester](http://www.ieor.berkeley.edu/~goldberg/jester-data/) –
-  anonymous Ratings Data from the Jester Online Joke Recommender System
-* [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/)
-  by Jure Leskovec: Online Reviews (Amazon, Movies, Beer)
-* [GeoNames](http://www.geonames.org/export/) i [Postal Codes](http://www.geonames.org/postal-codes/)
-* [GetGlue and Timestamped Event Data](http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz)
-  (ok. 11 GB). Dane pochodzą z lat 2007–2012 – tylko filmy i przedstawienia TV.
-
--->
-
-*Zadanie 2b.* Zliczyć liczbę zaimportowanych rekordów.
-
-*Zadanie 2c.* Na zaimportowanych danych policzyć kilka prostych agregacji.
-Wyniki przedstawić graficznie lub w postaci tabelki.
-
-Przykładowo można zliczyć wszystkie tagi i wszystkie różne tagi, policzyć 100
-najczęściej i 100 najrzadziej występujących tagów.
-
-W tym zadaniu należy napisać dwa proste skrypty (programy),
-po jednym dla Elasticsearch i PostgreSQL, który to policzą.
-
-Najlepiej użyć jednego ze sterowników dla wybranego języka programowania
-(Ruby, Python, JavaScript, Java, ) dla Elasticsearch i PostgresQL.
-
 
 <blockquote>
  {%= image_tag "/images/hemingway_and_marlins.jpg", :alt => "[Ernest Hemingway and marlins]" %}
