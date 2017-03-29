@@ -32,7 +32,7 @@ Mongo::Logger.level = logger_level[ARGV[0].to_s.downcase.to_sym] || Logger::INFO
 stop = IO.read('stopwords.en').split("\n")
 logger.info "liczba wczytanych stopwords: #{stop.length}"
 
-uri = 'http://www.gutenberg.org/cache/epub/2638/pg2638.txt'
+uri = 'http://www.gutenberg.org/files/2638/2638-0.txt'
 filename = 'Dostoevsky_Feodor-The_Idiot.txt'
 
 # Gutenberg
