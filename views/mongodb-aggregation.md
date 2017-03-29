@@ -9,7 +9,7 @@
 W MongoDB do [agregacji](https://docs.mongodb.org/master/aggregation/)
 (grupowania) danych używamy:
 
-1. polecenia [group](https://docs.mongodb.org/master/reference/command/group/#dbcmd.group)
+1. polecenia [group](https://docs.mongodb.com/master/reference/command/group/)
 1. [Aggregation Pipeline](https://docs.mongodb.org/manual/core/aggregation-pipeline/)
 1. [Aggregation Pipeline Operators](https://docs.mongodb.com/master/reference/operator/aggregation/)
 1. polecenia [mapReduce](https://docs.mongodb.org/master/core/map-reduce/)
