@@ -290,7 +290,10 @@ Na przykład tak jak to opisano w artykule Paula Done’a,
 ### Zadanie 2 (MongoDB)
 
 1\. Dla swoich danych napisać w języku JavaScript kilka agregacji korzystających
- z Aggregation Pipeline.
+ z Aggregation Pipeline. W agregacjach należy użyć wszystkich tzw.
+ _Stage Operators_ opisanych w dokumentacji
+ [Aggregation Pipeline Operators](https://docs.mongodb.com/manual/reference/operator/aggregation/)
+ (można pominąć operatory $redact, $sample, $out, $replaceRoot).
 
 2\. Przepisać wszystkie agregacje z pkt. 1 na **inny**
  niż JavaScript język programowania. Skorzystać z jednego z driverów
