@@ -1,16 +1,6 @@
 #### {% title "MapReduce Cookbook" %}
 
-Przykłady z repozytorium *Mongo* oraz ze strony:
-
-* K. Banker. [A Cookbook for MongoDB](http://cookbook.mongodb.org/index.html) –
-  zawiera kilka przykładów z MapReduce
-
-Google o MongoDB MapReduce:
-
-* [Yet another MongoDB Map Reduce tutorial](http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/) –
-  fajne ilustracje
 * [Malware, MongoDB and Map/Reduce : A New Analyst Approach](http://blog.9bplus.com/malware-mongodb-and-mapreduce-a-new-analyst-a)
-
 
 ## Korzystamy ze „zmiennych globalnych”
 
