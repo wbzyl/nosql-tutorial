@@ -93,10 +93,9 @@ Przykładowe zapytanie z *$near*:
     var origin = {type: "Point", coordinates: [0,0]}
     db.places.find({ loc: {$near: {$geometry: origin}} })
 
-Wyniki zapytania zapisać w pliku i przekształcić
-za pomocą programu **Jq** )lub jakiegoś innego)
-na obiekty [GeoJSON](http://geojson.org/geojson-spec.html).
-Wynik zapisać do pliku z rozszerzeniem **.geojson**.
+Wyniki zapytania zapisać w pliku i przekształcić za pomocą programu **Jq** ) lub
+jakiegoś innego) na obiekty GeoJSON. Wynik zapisać do pliku z rozszerzeniem
+**.geojson**.
 
 Github po kliknięciu w plik z rozszerzeniem _.geojson_ wyświetla mapkę zamiast
 jego zawartości, zob.
