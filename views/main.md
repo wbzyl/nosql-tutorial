@@ -54,11 +54,12 @@ Informacje o konferencji chciał umieścić na Twitterze.
 Dlatego potrzebował łatwego do wyszukiwaniu w tweetach hashtaga.
 Użył *\#nosql* zaproponowanego przez Erica Evansa z Rackspace.
 
+<!--
 Zobacz też artykuł [NoSQL](http://en.wikipedia.org/wiki/NoSQL) w Wikipedii.
 Warto też przeczytać artykuł Teda Newarda,
 [The Vietnam of Computer Science](http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx).
 (I to też [Gay marriage: the database engineering perspective](http://qntm.org/gay).)
-
+-->
 
 <blockquote>
  <p>

@@ -172,36 +172,3 @@ zdefiniowano wiele użytecznych funkcji, na przykład:
     Array.sum([1, 1, 2]);           //=> 4
     printjson({a: 1, b: "x"});
     db.results.find({count: {$gt: 300}}).forEach(function(o) { printjson(o.letters); });
-
-
-## TODO: przykład użycia *keyf*
-
-*keyf* – a JavaScript function that, when applied to a document, generates a key
-for that document. This is useful when the key for grouping needs to be calculated.
-Use this instead of key to specify a key that is not a single/multiple existing fields.
-
-For instance if you wanted to group a result set by the day of the week
-each document was created on but didn’t actually store that value, then you
-could use a key function to generate the key:
-
-    :::js
-    function(doc) {
-      return {day: doc.created_at.getDay();
-    }
-
-This function will generate keys like this one:
-
-    :::json
-    {"day": 1}
-
-Przyda się? Do generowania *keyf*?
-
-    :::js
-    word.split("").filter(function(c) { return /[aeiou]/.test(c); })
-
-
-## Różności
-
-* [SQL to Aggregation Pipeline Mapping Chart](http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/)
-* Kristina Chodorow,
-  [Hacking Chess with the MongoDB Pipeline](http://www.snailinaturtleneck.com/blog/2012/01/26/hacking-chess-with-the-mongodb-pipeline/)
