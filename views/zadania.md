@@ -34,10 +34,6 @@ GitHub:
   zob. przykład pokazujący jak importować dane do bazy SQLite
 * [Working with data on the command line](http://www.datamazing.co.uk/2014/01/25/working-with-data-on-the-command-line)
 
-Różne rzeczy:
-
-* [The Science of Scientific Writing](http://www.americanscientist.org/issues/id.877,y.0,no.,content.true,page.1,css.print/issue.aspx)
-
 <blockquote>
  {%= image_tag "/images/tukey-john.jpg", :alt => "[John Tukey]" %}
  <p>
@@ -64,12 +60,8 @@ W repozytorium należy umieścić też skrypty wykorzystane w obliczeniach.
 
 ### Zadanie GEO
 
-Wyszukać w sieci dane zawierające
-[obiekty GeoJSON](http://geojson.org/geojson-spec.html#examples).
-Następnie zapisać je w bazach *Elasticsearch* i *PostgreSQL*.
-Dla zapisanych danych napisać kilka _geospatial queries_
-w [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/guide/master/geoloc.html)
-i PostgreSQL, dla różnych obiektów Geo, np. Point, LineString i Polygon itd.
+Obiekty GeoJSON zapisać w bazie *PostgreSQL*.
+Dla zapisanych danych napisać kilka _geospatial queries_.
 
 <!-- [MongoDB](http://docs.mongodb.org/manual/reference/operator/query-geospatial/) -->
 
